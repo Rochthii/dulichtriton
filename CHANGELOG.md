@@ -40,6 +40,10 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Động Cơ AI Orchestrator 14 Bước End-to-End (`tourism_ai_core/orchestrator/`)**:
+  * Đóng gói dịch vụ [tourism_ai_core/orchestrator/ai_orchestrator.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/tourism_ai_core/orchestrator/ai_orchestrator.py) kết nối hoàn chỉnh 14 bước xử lý AI Workflow:
+    $$\text{User Query} \rightarrow \text{API Gateway} \rightarrow \text{AI Orchestrator} \rightarrow \text{(Memory + Recommendation + Planner)} \rightarrow \text{Hybrid Retriever} \rightarrow \text{AI Reranker} \rightarrow \text{Context Builder} \rightarrow \text{Prompt Builder} \rightarrow \text{LLM Router} \rightarrow \text{Response Validator} \rightarrow \text{Structured JSON Output}$$
+  * Tích hợp `LLMRouter` đa nhà cung cấp (Gemini 1.5 Flash + Fallback OpenAI GPT-4o/Claude/Qwen), trả về Structured JSON chứa câu trả lời văn bản, Thẻ UI Component địa điểm & Video TikTok Shorts embed.
 * **Trình Xây Dựng Tài Liệu Tri Thức RAG (Structured Markdown Document Builder)**:
   * Khởi tạo [tourism_crawler/services/document_builder.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/tourism_crawler/services/document_builder.py) chuyển đổi 100% địa điểm Master thành tài liệu Markdown cấu trúc 7 phần tại [storage/enriched/documents/](file:///e:/Projects/Project_ca_nhan/dulichtriton/storage/enriched/documents/) giúp RAG Retriever trích xuất tri thức chính xác gấp 3 lần.
 * **Khởi Tạo Gói AI Core Độc Lập (`tourism_ai_core/`)**:
