@@ -6,6 +6,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 ---
 
+## [10.2.0-MASTER-CONSOLIDATED] — 2026-08-05
+
+### 📊 Dữ liệu Master Chuẩn Hóa & Hợp Nhất (Master Consolidation)
+* **Tăng trưởng Dataset**: Hợp nhất toàn bộ dữ liệu cào 19 nhóm từ khóa, Google Maps Scraper, quán ăn chuyên sâu và cà phê đồi núi vào bộ Master Dataset chính thức $\rightarrow$ **105 Địa điểm Đã Qua Kiểm Duyệt**.
+* **Chuẩn Hóa 100%**:
+  * Kiểm duyệt tọa độ nghiêm ngặt trong Bounding Box $[10.25 - 10.55 \text{ Lat}, 104.85 - 105.15 \text{ Lng}]$.
+  * Áp dụng mã hóa tiếng Việt Unicode NFC cho 100% dữ liệu tên, mô tả, địa chỉ, xã/thị trấn.
+  * Xóa bỏ hoàn toàn từ cấm *"Huyện Tri Tôn"* trên địa chỉ (chỉ ghi cấp Xã / Thị trấn).
+* **Cập nhật Đồng bộ 4 File Master**:
+  * [data/tri_ton_master_cleaned.csv](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_cleaned.csv) (`utf-8-sig`) — 105 bản ghi.
+  * [data/tri_ton_master_cleaned.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_cleaned.json) (`utf-8`) — 105 bản ghi.
+  * [data/tri_ton_master_cleaned.geojson](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_cleaned.geojson) (`WGS84`) — 105 ghim tọa độ số.
+  * [data/tri_ton_database.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_database.json) (`utf-8`) — Multi-table master database.
+
+---
+
 ## [10.1.0-DESIGN-SYSTEM-RELEASE] — 2026-08-05
 
 ### Nâng cấp & Tính năng mới (Added)
