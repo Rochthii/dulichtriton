@@ -1,5 +1,127 @@
 [
   {
+    "place_id": "PL001",
+    "name": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+    "category": "Hồ nước",
+    "subcategory": null,
+    "address": "Núi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+    "commune": "Xã Núi Tô",
+    "district": "Tri Tôn",
+    "province": "An Giang",
+    "latitude": 10.4216,
+    "longitude": 105.0118,
+    "google_maps_url": "https://maps.google.com/?q=10.4216,105.0118",
+    "phone": null,
+    "website": null,
+    "business_status": "OPERATIONAL",
+    "opening_hours": "06:00 - 18:00",
+    "price_level": "Miễn phí",
+    "rating": 4.6,
+    "review_count": 1850,
+    "photos": [],
+    "photo_urls": [],
+    "review_samples": [],
+    "keywords": [
+      "that son",
+      "lake tà pạ (tuyệt tình cốc)",
+      "bay nui",
+      "tri ton",
+      "attractions_nature",
+      "an giang",
+      "xã núi tô",
+      "hồ tà pạ (tuyệt tình cốc)",
+      "ho ta pa tuyet tinh coc"
+    ],
+    "description": "",
+    "short_description": "",
+    "tags": [
+      "Núi Tô",
+      "bảy núi",
+      "tri tôn",
+      "attractions_nature",
+      "an giang"
+    ],
+    "slug": "ho-ta-pa-tuyet-tinh-coc",
+    "search_keywords": [
+      "that son",
+      "lake tà pạ (tuyệt tình cốc)",
+      "bay nui",
+      "tri ton",
+      "attractions_nature",
+      "an giang",
+      "xã núi tô",
+      "hồ tà pạ (tuyệt tình cốc)",
+      "ho ta pa tuyet tinh coc"
+    ],
+    "aliases": [
+      "Lake Tà Pạ (Tuyệt Tình Cốc)",
+      "ho ta pa tuyet tinh coc",
+      "Hồ Tà Pạ (Tuyệt Tình Cốc)"
+    ],
+    "tourism_category": "attractions_nature",
+    "travel_tags": [
+      "Núi Tô",
+      "bảy núi",
+      "tri tôn",
+      "attractions_nature",
+      "an giang"
+    ],
+    "suitable_for": [
+      "adventure",
+      "nature",
+      "camping"
+    ],
+    "recommended_duration": "2 - 3 giờ",
+    "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
+    "family_friendly": true,
+    "couple_friendly": true,
+    "kids_friendly": true,
+    "parking": true,
+    "wifi": false,
+    "ticket_required": false,
+    "sentiment_analysis": {
+      "sentiment_score": 4.8,
+      "positive_highlights": [
+        "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
+      ],
+      "suitable_for_tags": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    },
+    "nearby_places": [],
+    "knowledge_graph": [
+      {
+        "subject": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+        "relation": "LOCATED_IN",
+        "object": "Xã Núi Tô"
+      },
+      {
+        "subject": "Xã Núi Tô",
+        "relation": "PART_OF",
+        "object": "Tri Tôn, An Giang"
+      },
+      {
+        "subject": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+        "relation": "CATEGORY_IS",
+        "object": "attractions_nature"
+      },
+      {
+        "subject": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+        "relation": "HAS_FEATURE",
+        "object": "Nước Hồ Xanh Trong Ngọc"
+      },
+      {
+        "subject": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+        "relation": "BEST_TIME_TO_VISIT",
+        "object": "Hoàng Hôn & Mùa Lúa Chín"
+      }
+    ],
+    "confidence_score": 95.0,
+    "is_active": true
+  },
+  {
     "place_id": "PL002",
     "name": "Hồ Soài So",
     "category": "Hồ nước",
@@ -90,43 +212,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL016",
-        "name": "Suối Vàng Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 237.8,
-        "distance_km": 0.24
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 245.4,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Soài So",
@@ -238,43 +324,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF008",
-        "name": "Mây Coffee & Tea Hồ Soài Chék",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CF002",
-        "name": "Windy Hill Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 124.8,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Soài Chék",
@@ -386,43 +436,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 56.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 79.3,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 90.3,
-        "distance_km": 0.09
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Ô Thum",
@@ -539,43 +553,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 797.1,
-        "distance_km": 0.8
-      },
-      {
-        "place_id": "PL017",
-        "name": "Núi Dài (Ngọa Long Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1472.1,
-        "distance_km": 1.47
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Ô Tà Sóc",
@@ -687,43 +665,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 2534.0,
-        "distance_km": 2.53
-      },
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 2606.6,
-        "distance_km": 2.61
-      },
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 2679.5,
-        "distance_km": 2.68
-      },
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 2679.5,
-        "distance_km": 2.68
-      },
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 2898.5,
-        "distance_km": 2.9
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Ô Tà Lọt",
@@ -835,43 +777,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL019",
-        "name": "Vách Đá Đứng Latina",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL006",
-        "name": "Hồ Ô Tà Lọt",
-        "category": "attractions_nature",
-        "distance_meters": 4396.2,
-        "distance_km": 4.4
-      },
-      {
-        "place_id": "CK010",
-        "name": "Cổng Trời Tri Tôn Vòm Khmer",
-        "category": "checkin_spots",
-        "distance_meters": 4559.0,
-        "distance_km": 4.56
-      },
-      {
-        "place_id": "HG004",
-        "name": "Chùa Cổng Trời Koh Kas",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 4559.0,
-        "distance_km": 4.56
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 4784.2,
-        "distance_km": 4.78
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Đá Latina",
@@ -980,43 +886,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL009",
-        "name": "Đá Vồ Hội Mẹ Cô Tô",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK014",
-        "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
-        "category": "checkin_spots",
-        "distance_meters": 234.0,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 1100.3,
-        "distance_km": 1.1
-      },
-      {
-        "place_id": "PL015",
-        "name": "Vườn Mãng Cầu Núi Tô",
-        "category": "attractions_nature",
-        "distance_meters": 1105.4,
-        "distance_km": 1.11
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 1131.2,
-        "distance_km": 1.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Núi Cô Tô (Phụng Hoàng Sơn)",
@@ -1125,43 +995,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK014",
-        "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL008",
-        "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 946.2,
-        "distance_km": 0.95
-      },
-      {
-        "place_id": "PL015",
-        "name": "Vườn Mãng Cầu Núi Tô",
-        "category": "attractions_nature",
-        "distance_meters": 951.3,
-        "distance_km": 0.95
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 976.9,
-        "distance_km": 0.98
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Đá Vồ Hội Mẹ Cô Tô",
@@ -1270,43 +1104,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_097",
-        "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_098",
-        "name": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
-        "category": "checkin_spots",
-        "distance_meters": 912.2,
-        "distance_km": 0.91
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 2795.8,
-        "distance_km": 2.8
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 2823.5,
-        "distance_km": 2.82
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 2865.3,
-        "distance_km": 2.87
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Du Lịch Đồi Tức Dụp",
@@ -1420,43 +1218,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK002",
-        "name": "Con Đường Tơ Lụa Tà Pạ",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK001",
-        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
-        "category": "checkin_spots",
-        "distance_meters": 346.4,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "TT_091",
-        "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 351.1,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 448.1,
-        "distance_km": 0.45
-      },
-      {
-        "place_id": "TT_101",
-        "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 495.0,
-        "distance_km": 0.49
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cánh Đồng Lúa Tà Pạ",
@@ -1575,43 +1337,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 881.8,
-        "distance_km": 0.88
-      },
-      {
-        "place_id": "PL017",
-        "name": "Núi Dài (Ngọa Long Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1620.7,
-        "distance_km": 1.62
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Rừng Tầm Vông Ô Tà Sóc",
@@ -1720,43 +1446,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 320.2,
-        "distance_km": 0.32
-      },
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 396.3,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 396.3,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 473.0,
-        "distance_km": 0.47
-      },
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 550.0,
-        "distance_km": 0.55
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cánh Đồng Lúa Ba Chúc",
@@ -1865,43 +1555,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 90.3,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 125.5,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 159.6,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Vườn Nho Nông Trại Ô Thum",
@@ -2015,43 +1669,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 311.9,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 313.0,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 396.4,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 417.5,
-        "distance_km": 0.42
-      },
-      {
-        "place_id": "TT_090",
-        "name": "Soài Chek Homestay & Coffee",
-        "category": "cafes_and_homestays",
-        "distance_meters": 467.9,
-        "distance_km": 0.47
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Vườn Mãng Cầu Núi Tô",
@@ -2160,43 +1778,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL002",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 263.3,
-        "distance_km": 0.26
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Suối Vàng Soài So",
@@ -2305,43 +1887,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 1044.1,
-        "distance_km": 1.04
-      },
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 1472.1,
-        "distance_km": 1.47
-      },
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 1472.1,
-        "distance_km": 1.47
-      },
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 1546.2,
-        "distance_km": 1.55
-      },
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 1620.7,
-        "distance_km": 1.62
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Núi Dài (Ngọa Long Sơn)",
@@ -2450,43 +1996,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 111.2,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "FD011",
-        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD012",
-        "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
-        "category": "food_and_restaurants",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cánh Đồng Thốt Nốt Chau Lăng",
@@ -2600,43 +2110,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL007",
-        "name": "Hồ Đá Latina",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL006",
-        "name": "Hồ Ô Tà Lọt",
-        "category": "attractions_nature",
-        "distance_meters": 4456.4,
-        "distance_km": 4.46
-      },
-      {
-        "place_id": "CK010",
-        "name": "Cổng Trời Tri Tôn Vòm Khmer",
-        "category": "checkin_spots",
-        "distance_meters": 4614.9,
-        "distance_km": 4.61
-      },
-      {
-        "place_id": "HG004",
-        "name": "Chùa Cổng Trời Koh Kas",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 4614.9,
-        "distance_km": 4.61
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 4838.2,
-        "distance_km": 4.84
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Vách Đá Đứng Latina",
@@ -2745,43 +2219,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF011",
-        "name": "Lang Lang Coffee & Tea",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "EV001",
-        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF004",
-        "name": "Anpalm Cafe Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 83.5,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 94.8,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
@@ -2890,43 +2328,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG001",
-        "name": "Chùa Tà Pạ (Chùa Núi)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 258.8,
-        "distance_km": 0.26
-      },
-      {
-        "place_id": "CK002",
-        "name": "Con Đường Tơ Lụa Tà Pạ",
-        "category": "checkin_spots",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      },
-      {
-        "place_id": "TT_095",
-        "name": "Hồ Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 289.9,
-        "distance_km": 0.29
-      },
-      {
-        "place_id": "PL011",
-        "name": "Cánh Đồng Lúa Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 346.4,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "TT_093",
-        "name": "Chùa Tà Pạ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 393.0,
-        "distance_km": 0.39
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
@@ -3035,43 +2437,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL011",
-        "name": "Cánh Đồng Lúa Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK001",
-        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
-        "category": "checkin_spots",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      },
-      {
-        "place_id": "TT_091",
-        "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 422.3,
-        "distance_km": 0.42
-      },
-      {
-        "place_id": "TT_095",
-        "name": "Hồ Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 426.7,
-        "distance_km": 0.43
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 500.4,
-        "distance_km": 0.5
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Tơ Lụa Tà Pạ",
@@ -3190,43 +2556,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF008",
-        "name": "Mây Coffee & Tea Hồ Soài Chék",
-        "category": "cafes_and_homestays",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "CF002",
-        "name": "Windy Hill Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 159.6,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Tơ Lụa Soài Chék",
@@ -3335,43 +2665,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG003",
-        "name": "Chùa Hàng Còng (Krăng Krốch)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 247.8,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "FD011",
-        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-        "category": "food_and_restaurants",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 322.8,
-        "distance_km": 0.32
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Vòm Còng Châu Lăng",
@@ -3480,43 +2774,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG010",
-        "name": "Chùa Mới Ô Lâm",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 245.4,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "FD003",
-        "name": "Gà Đốt Ô Thum Kim Suổl",
-        "category": "food_and_restaurants",
-        "distance_meters": 245.4,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 374.3,
-        "distance_km": 0.37
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 389.9,
-        "distance_km": 0.39
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 396.4,
-        "distance_km": 0.4
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
@@ -3630,43 +2888,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 836.9,
-        "distance_km": 0.84
-      },
-      {
-        "place_id": "PL017",
-        "name": "Núi Dài (Ngọa Long Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1546.2,
-        "distance_km": 1.55
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Con Đường Tre Tầm Vông Ô Tà Sóc",
@@ -3775,43 +2997,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 797.1,
-        "distance_km": 0.8
-      },
-      {
-        "place_id": "HG008",
-        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 797.1,
-        "distance_km": 0.8
-      },
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 836.9,
-        "distance_km": 0.84
-      },
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 881.8,
-        "distance_km": 0.88
-      },
-      {
-        "place_id": "PL017",
-        "name": "Núi Dài (Ngọa Long Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1044.1,
-        "distance_km": 1.04
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
@@ -3920,43 +3106,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL013",
-        "name": "Cánh Đồng Lúa Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 707.4,
-        "distance_km": 0.71
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 810.3,
-        "distance_km": 0.81
-      },
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 834.9,
-        "distance_km": 0.83
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 834.9,
-        "distance_km": 0.83
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 865.8,
-        "distance_km": 0.87
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)",
@@ -4065,43 +3215,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK019",
-        "name": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
-        "category": "checkin_spots",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "CK018",
-        "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
-        "category": "checkin_spots",
-        "distance_meters": 199.5,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 1414.7,
-        "distance_km": 1.41
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 1427.8,
-        "distance_km": 1.43
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 1437.3,
-        "distance_km": 1.44
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hàng Thốt Nốt Trái Tim An Tức",
@@ -4222,43 +3336,7 @@
         "couple"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG004",
-        "name": "Chùa Cổng Trời Koh Kas",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 276.3,
-        "distance_km": 0.28
-      },
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 322.8,
-        "distance_km": 0.32
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 351.1,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 393.0,
-        "distance_km": 0.39
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cổng Trời Tri Tôn Vòm Khmer",
@@ -4367,43 +3445,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 55.6,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 199.4,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 229.0,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "CK010",
-        "name": "Cổng Trời Tri Tôn Vòm Khmer",
-        "category": "checkin_spots",
-        "distance_meters": 276.3,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cây Thốt Nốt Cô Độc Chau Lăng",
@@ -4424,6 +3466,130 @@
         "subject": "Cây Thốt Nốt Cô Độc Chau Lăng",
         "relation": "FAMOUS_FOR",
         "object": "Mật Thốt Nốt Tươi & Bánh Bò Thốt Nốt"
+      }
+    ],
+    "confidence_score": 95.0,
+    "is_active": true
+  },
+  {
+    "place_id": "CK012",
+    "name": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+    "category": "Điểm check-in sống ảo",
+    "subcategory": null,
+    "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+    "commune": "Xã Ô Lâm",
+    "district": "Tri Tôn",
+    "province": "An Giang",
+    "latitude": 10.378,
+    "longitude": 104.992,
+    "google_maps_url": "https://maps.google.com/?q=10.378,104.992",
+    "phone": null,
+    "website": null,
+    "business_status": "OPERATIONAL",
+    "opening_hours": "Tự do",
+    "price_level": "Miễn phí",
+    "rating": 4.6,
+    "review_count": 890,
+    "photos": [],
+    "photo_urls": [],
+    "review_samples": [],
+    "keywords": [
+      "cầu gỗ mộc mạc hồ ô thum",
+      "that son",
+      "bay nui",
+      "tri ton",
+      "checkin_spots",
+      "an giang",
+      "cầu gỗ mộc mạc lake ô thum",
+      "xã ô lâm",
+      "cau go moc mac ho o thum"
+    ],
+    "description": "",
+    "short_description": "",
+    "tags": [
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "checkin_spots",
+      "Ô Lâm"
+    ],
+    "slug": "cau-go-moc-mac-ho-o-thum",
+    "search_keywords": [
+      "cầu gỗ mộc mạc hồ ô thum",
+      "that son",
+      "bay nui",
+      "tri ton",
+      "checkin_spots",
+      "an giang",
+      "cầu gỗ mộc mạc lake ô thum",
+      "xã ô lâm",
+      "cau go moc mac ho o thum"
+    ],
+    "aliases": [
+      "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+      "cau go moc mac ho o thum",
+      "Cầu Gỗ Mộc Mạc Lake Ô Thum"
+    ],
+    "tourism_category": "checkin_spots",
+    "travel_tags": [
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "checkin_spots",
+      "Ô Lâm"
+    ],
+    "suitable_for": [
+      "adventure",
+      "nature",
+      "camping",
+      "solo",
+      "photography",
+      "couple"
+    ],
+    "recommended_duration": "30 - 45 phút",
+    "best_visit_time": "Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30)",
+    "family_friendly": true,
+    "couple_friendly": true,
+    "kids_friendly": true,
+    "parking": true,
+    "wifi": false,
+    "ticket_required": false,
+    "sentiment_analysis": {
+      "sentiment_score": 4.8,
+      "positive_highlights": [
+        "Cảnh quan thiên nhiên & View chụp ảnh sống ảo tuyệt đẹp",
+        "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
+      ],
+      "suitable_for_tags": [
+        "adventure",
+        "nature",
+        "camping",
+        "solo",
+        "photography",
+        "couple"
+      ]
+    },
+    "nearby_places": [],
+    "knowledge_graph": [
+      {
+        "subject": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+        "relation": "LOCATED_IN",
+        "object": "Xã Ô Lâm"
+      },
+      {
+        "subject": "Xã Ô Lâm",
+        "relation": "PART_OF",
+        "object": "Tri Tôn, An Giang"
+      },
+      {
+        "subject": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+        "relation": "CATEGORY_IS",
+        "object": "checkin_spots"
+      },
+      {
+        "subject": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+        "relation": "FAMOUS_FOR",
+        "object": "Gà Đốt Lá Chúc Ô Thum"
       }
     ],
     "confidence_score": 95.0,
@@ -4517,43 +3683,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 124.8,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "CF008",
-        "name": "Mây Coffee & Tea Hồ Soài Chék",
-        "category": "cafes_and_homestays",
-        "distance_meters": 148.2,
-        "distance_km": 0.15
-      },
-      {
-        "place_id": "CF002",
-        "name": "Windy Hill Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 245.5,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
@@ -4669,43 +3799,7 @@
         "couple"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL009",
-        "name": "Đá Vồ Hội Mẹ Cô Tô",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL008",
-        "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 234.0,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 869.3,
-        "distance_km": 0.87
-      },
-      {
-        "place_id": "PL015",
-        "name": "Vườn Mãng Cầu Núi Tô",
-        "category": "attractions_nature",
-        "distance_meters": 874.4,
-        "distance_km": 0.87
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 900.0,
-        "distance_km": 0.9
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
@@ -4719,6 +3813,125 @@
       },
       {
         "subject": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
+        "relation": "CATEGORY_IS",
+        "object": "checkin_spots"
+      }
+    ],
+    "confidence_score": 95.0,
+    "is_active": true
+  },
+  {
+    "place_id": "CK015",
+    "name": "Cầu Cây Dã Ngoại Hồ Soài So",
+    "category": "Điểm check-in ven hồ",
+    "subcategory": null,
+    "address": "Thị trấn Tri Tôn, An Giang",
+    "commune": "Thị trấn Tri Tôn",
+    "district": "Tri Tôn",
+    "province": "An Giang",
+    "latitude": 10.4052,
+    "longitude": 105.0252,
+    "google_maps_url": "https://maps.google.com/?q=10.4052,105.0252",
+    "phone": null,
+    "website": null,
+    "business_status": "OPERATIONAL",
+    "opening_hours": "Tự do",
+    "price_level": "Miễn phí",
+    "rating": 4.5,
+    "review_count": 410,
+    "photos": [],
+    "photo_urls": [],
+    "review_samples": [],
+    "keywords": [
+      "that son",
+      "thị trấn tri tôn",
+      "cầu cây dã ngoại hồ soài so",
+      "tri ton",
+      "cau cay da ngoai ho soai so",
+      "an giang",
+      "checkin_spots",
+      "cầu cây dã ngoại lake soài so",
+      "bay nui"
+    ],
+    "description": "",
+    "short_description": "",
+    "tags": [
+      "Tri Tôn",
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "checkin_spots"
+    ],
+    "slug": "cau-cay-da-ngoai-ho-soai-so",
+    "search_keywords": [
+      "that son",
+      "thị trấn tri tôn",
+      "cầu cây dã ngoại hồ soài so",
+      "tri ton",
+      "cau cay da ngoai ho soai so",
+      "an giang",
+      "checkin_spots",
+      "cầu cây dã ngoại lake soài so",
+      "bay nui"
+    ],
+    "aliases": [
+      "cau cay da ngoai ho soai so",
+      "Cầu Cây Dã Ngoại Hồ Soài So",
+      "Cầu Cây Dã Ngoại Lake Soài So"
+    ],
+    "tourism_category": "checkin_spots",
+    "travel_tags": [
+      "Tri Tôn",
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "checkin_spots"
+    ],
+    "suitable_for": [
+      "adventure",
+      "nature",
+      "camping",
+      "solo",
+      "photography",
+      "couple"
+    ],
+    "recommended_duration": "30 - 45 phút",
+    "best_visit_time": "Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30)",
+    "family_friendly": true,
+    "couple_friendly": true,
+    "kids_friendly": true,
+    "parking": true,
+    "wifi": false,
+    "ticket_required": false,
+    "sentiment_analysis": {
+      "sentiment_score": 4.8,
+      "positive_highlights": [
+        "Cảnh quan thiên nhiên & View chụp ảnh sống ảo tuyệt đẹp",
+        "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
+      ],
+      "suitable_for_tags": [
+        "adventure",
+        "nature",
+        "camping",
+        "solo",
+        "photography",
+        "couple"
+      ]
+    },
+    "nearby_places": [],
+    "knowledge_graph": [
+      {
+        "subject": "Cầu Cây Dã Ngoại Hồ Soài So",
+        "relation": "LOCATED_IN",
+        "object": "Thị trấn Tri Tôn"
+      },
+      {
+        "subject": "Thị trấn Tri Tôn",
+        "relation": "PART_OF",
+        "object": "Tri Tôn, An Giang"
+      },
+      {
+        "subject": "Cầu Cây Dã Ngoại Hồ Soài So",
         "relation": "CATEGORY_IS",
         "object": "checkin_spots"
       }
@@ -4814,43 +4027,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 55.8,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 79.3,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 93.6,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.5,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
@@ -4964,43 +4141,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF005",
-        "name": "Tiệm Cà Phê Nhà Quê",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD016",
-        "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "TT_087",
-        "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 124.8,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 202.8,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 218.3,
-        "distance_km": 0.22
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Căn Nhà Gỗ Vintage Nhà Quê",
@@ -5109,43 +4250,7 @@
         "solo"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK009",
-        "name": "Hàng Thốt Nốt Trái Tim An Tức",
-        "category": "checkin_spots",
-        "distance_meters": 199.5,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "CK019",
-        "name": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
-        "category": "checkin_spots",
-        "distance_meters": 203.3,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 1215.6,
-        "distance_km": 1.22
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 1229.2,
-        "distance_km": 1.23
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 1239.2,
-        "distance_km": 1.24
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
@@ -5259,43 +4364,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK009",
-        "name": "Hàng Thốt Nốt Trái Tim An Tức",
-        "category": "checkin_spots",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "CK018",
-        "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
-        "category": "checkin_spots",
-        "distance_meters": 203.3,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 1418.9,
-        "distance_km": 1.42
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 1432.5,
-        "distance_km": 1.43
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 1442.3,
-        "distance_km": 1.44
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
@@ -5409,43 +4478,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 90.3,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 146.0,
-        "distance_km": 0.15
-      },
-      {
-        "place_id": "PL002",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 237.8,
-        "distance_km": 0.24
-      },
-      {
-        "place_id": "PL016",
-        "name": "Suối Vàng Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 263.3,
-        "distance_km": 0.26
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
@@ -5564,43 +4597,7 @@
         "religion"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_095",
-        "name": "Hồ Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 206.1,
-        "distance_km": 0.21
-      },
-      {
-        "place_id": "TT_093",
-        "name": "Chùa Tà Pạ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 218.4,
-        "distance_km": 0.22
-      },
-      {
-        "place_id": "CK001",
-        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
-        "category": "checkin_spots",
-        "distance_meters": 258.8,
-        "distance_km": 0.26
-      },
-      {
-        "place_id": "CK002",
-        "name": "Con Đường Tơ Lụa Tà Pạ",
-        "category": "checkin_spots",
-        "distance_meters": 506.7,
-        "distance_km": 0.51
-      },
-      {
-        "place_id": "PL011",
-        "name": "Cánh Đồng Lúa Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 582.3,
-        "distance_km": 0.58
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Tà Pạ (Chùa Núi)",
@@ -5722,43 +4719,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "EV002",
-        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_092",
-        "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Xà Tón (Wat Xvayton)",
@@ -5870,43 +4831,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK004",
-        "name": "Con Đường Vòm Còng Châu Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 311.9,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 322.8,
-        "distance_km": 0.32
-      },
-      {
-        "place_id": "FD011",
-        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-        "category": "food_and_restaurants",
-        "distance_meters": 346.4,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 398.9,
-        "distance_km": 0.4
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Hàng Còng (Krăng Krốch)",
@@ -6018,43 +4943,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK010",
-        "name": "Cổng Trời Tri Tôn Vòm Khmer",
-        "category": "checkin_spots",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 276.3,
-        "distance_km": 0.28
-      },
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 322.8,
-        "distance_km": 0.32
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 351.1,
-        "distance_km": 0.35
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 393.0,
-        "distance_km": 0.39
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Cổng Trời Koh Kas",
@@ -6163,43 +5052,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_084",
-        "name": "Nhà hàng Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Di Tích Nhà Mồ Ba Chúc",
@@ -6311,43 +5164,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "TT_084",
-        "name": "Nhà hàng Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Phi Lai Ba Chúc",
@@ -6459,43 +5276,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_084",
-        "name": "Nhà hàng Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Tam Bửu Ba Chúc",
@@ -6604,43 +5385,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL005",
-        "name": "Hồ Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CK006",
-        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-        "category": "checkin_spots",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL012",
-        "name": "Rừng Tầm Vông Ô Tà Sóc",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK007",
-        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
-        "category": "attractions_nature",
-        "distance_meters": 797.1,
-        "distance_km": 0.8
-      },
-      {
-        "place_id": "PL017",
-        "name": "Núi Dài (Ngọa Long Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1472.1,
-        "distance_km": 1.47
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Di Tích Căn Cứ Ô Tà Sóc",
@@ -6752,43 +5497,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 90.3,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 109.4,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "PL002",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "PL016",
-        "name": "Suối Vàng Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Soài So Khmer",
@@ -6900,43 +5609,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD003",
-        "name": "Gà Đốt Ô Thum Kim Suổl",
-        "category": "food_and_restaurants",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 161.7,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Mới Ô Lâm",
@@ -7043,43 +5716,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
@@ -7191,43 +5828,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 43.8,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Kiều Tiên Gà Đốt Ô Thum",
@@ -7339,43 +5940,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG010",
-        "name": "Chùa Mới Ô Lâm",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 161.7,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Gà Đốt Ô Thum Kim Suổl",
@@ -7487,43 +6052,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 109.4,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 132.5,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Gà Đốt Ô Thum Thảo Nguyên",
@@ -7635,43 +6164,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_083",
-        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
-        "category": "food_and_restaurants",
-        "distance_meters": 56.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 93.6,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 111.2,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Gà Đốt Vương Ngọc Ô Thum",
@@ -7788,43 +6281,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 111.2,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "FD012",
-        "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Đu Đủ Đâm RiNa Khmer",
@@ -7936,43 +6393,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 55.6,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      },
-      {
-        "place_id": "FD012",
-        "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
-        "category": "food_and_restaurants",
-        "distance_meters": 247.8,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Đu Đủ Đâm Ly Ly",
@@ -8084,43 +6505,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK011",
-        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 199.4,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "FD011",
-        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Đu Đủ Đâm Ty Tri Tôn",
@@ -8232,43 +6617,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 59.0,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD013",
-        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-        "category": "attractions_nature",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bún Nước Lèo Sơ Nương Khmer",
@@ -8380,43 +6729,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 32.8,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 33.4,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bún Nước Lèo Dook Tri Tôn",
@@ -8528,43 +6841,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD012",
-        "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 247.8,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "CK004",
-        "name": "Con Đường Vòm Còng Châu Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
@@ -8676,43 +6953,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD011",
-        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "PL018",
-        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
-        "category": "attractions_nature",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "FD006",
-        "name": "Quán Đu Đủ Đâm RiNa Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 245.4,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "FD007",
-        "name": "Quán Đu Đủ Đâm Ly Ly",
-        "category": "food_and_restaurants",
-        "distance_meters": 247.8,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Lò Bánh Bò Thốt Nốt Út Dứt",
@@ -8824,43 +7065,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_101",
-        "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 89.3,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 109.2,
-        "distance_km": 0.11
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bánh Canh Lò Rèn (>30 năm)",
@@ -8969,43 +7174,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_084",
-        "name": "Nhà hàng Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bò 7 Món Ba Chúc",
@@ -9114,43 +7283,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_084",
-        "name": "Nhà hàng Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Cháo Bò Trái Trúc Ba Chúc",
@@ -9259,43 +7392,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK017",
-        "name": "Căn Nhà Gỗ Vintage Nhà Quê",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "CF005",
-        "name": "Tiệm Cà Phê Nhà Quê",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_087",
-        "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 171.6,
-        "distance_km": 0.17
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
@@ -9404,43 +7501,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 15.6,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 24.5,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 24.8,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 62.4,
-        "distance_km": 0.06
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bò Nướng Trái Trúc Tri Tôn",
@@ -9549,43 +7610,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 159.6,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF008",
-        "name": "Mây Coffee & Tea Hồ Soài Chék",
-        "category": "cafes_and_homestays",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      },
-      {
-        "place_id": "CF002",
-        "name": "Windy Hill Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 276.3,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Ruộng Coffee & Homestay Tri Tôn",
@@ -9694,43 +7719,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CF008",
-        "name": "Mây Coffee & Tea Hồ Soài Chék",
-        "category": "cafes_and_homestays",
-        "distance_meters": 122.7,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 245.5,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 276.3,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Windy Hill Coffee & Homestay Tri Tôn",
@@ -9839,43 +7828,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 32.8,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 33.4,
-        "distance_km": 0.03
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "CHẠM Coffee & Tea Tri Tôn",
@@ -9984,43 +7937,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 76.6,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CF011",
-        "name": "Lang Lang Coffee & Tea",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "EV001",
-        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Anpalm Cafe Tri Tôn",
@@ -10129,43 +8046,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK017",
-        "name": "Căn Nhà Gỗ Vintage Nhà Quê",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD016",
-        "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_087",
-        "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      },
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 249.5,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Tiệm Cà Phê Nhà Quê",
@@ -10274,43 +8155,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 109.4,
-        "distance_km": 0.11
-      },
-      {
-        "place_id": "CF010",
-        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-        "category": "cafes_and_homestays",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "PL002",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 245.4,
-        "distance_km": 0.25
-      },
-      {
-        "place_id": "PL016",
-        "name": "Suối Vàng Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 279.0,
-        "distance_km": 0.28
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "An Sơn Trà Quán",
@@ -10419,43 +8264,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD013",
-        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-        "category": "attractions_nature",
-        "distance_meters": 142.5,
-        "distance_km": 0.14
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 144.2,
-        "distance_km": 0.14
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 159.6,
-        "distance_km": 0.16
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "NY Coffee & Tea Tri Tôn",
@@ -10567,43 +8376,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CF002",
-        "name": "Windy Hill Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 122.7,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 148.2,
-        "distance_km": 0.15
-      },
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Mây Coffee & Tea Hồ Soài Chék",
@@ -10712,43 +8485,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 59.0,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD013",
-        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-        "category": "attractions_nature",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quy Coffee House Tri Tôn",
@@ -10860,43 +8597,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG009",
-        "name": "Chùa Soài So Khmer",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "CK020",
-        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-        "category": "attractions_nature",
-        "distance_meters": 146.0,
-        "distance_km": 0.15
-      },
-      {
-        "place_id": "PL016",
-        "name": "Suối Vàng Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "CF006",
-        "name": "An Sơn Trà Quán",
-        "category": "cafes_and_homestays",
-        "distance_meters": 173.2,
-        "distance_km": 0.17
-      },
-      {
-        "place_id": "PL002",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 175.5,
-        "distance_km": 0.18
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
@@ -11005,43 +8706,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "EV001",
-        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF004",
-        "name": "Anpalm Cafe Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 142.5,
-        "distance_km": 0.14
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Lang Lang Coffee & Tea",
@@ -11150,43 +8815,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF013",
-        "name": "Rồng Vàng Resort Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 195.0,
-        "distance_km": 0.19
-      },
-      {
-        "place_id": "CF011",
-        "name": "Lang Lang Coffee & Tea",
-        "category": "cafes_and_homestays",
-        "distance_meters": 198.2,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "EV001",
-        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 198.2,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 247.8,
-        "distance_km": 0.25
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Tuyết Anh Homestay & Coffee",
@@ -11295,43 +8924,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF012",
-        "name": "Tuyết Anh Homestay & Coffee",
-        "category": "cafes_and_homestays",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "CF011",
-        "name": "Lang Lang Coffee & Tea",
-        "category": "cafes_and_homestays",
-        "distance_meters": 311.9,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "EV001",
-        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 311.9,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 314.0,
-        "distance_km": 0.31
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 371.7,
-        "distance_km": 0.37
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Rồng Vàng Resort Tri Tôn",
@@ -11447,43 +9040,7 @@
         "religion"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF011",
-        "name": "Lang Lang Coffee & Tea",
-        "category": "cafes_and_homestays",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 31.2,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF004",
-        "name": "Anpalm Cafe Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 123.9,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 142.5,
-        "distance_km": 0.14
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
@@ -11595,43 +9152,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_092",
-        "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
@@ -11745,43 +9266,7 @@
         "foodie"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD002",
-        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 43.8,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "CK016",
-        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
-        "category": "checkin_spots",
-        "distance_meters": 55.8,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "PL004",
-        "name": "Hồ Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 56.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 56.7,
-        "distance_km": 0.06
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 125.5,
-        "distance_km": 0.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
@@ -11895,43 +9380,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD014",
-        "name": "Quán Bò 7 Món Ba Chúc",
-        "category": "food_and_restaurants",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "HG007",
-        "name": "Chùa Tam Bửu Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "HG005",
-        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "FD015",
-        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
-        "category": "attractions_nature",
-        "distance_meters": 155.9,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "HG006",
-        "name": "Chùa Phi Lai Ba Chúc",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 233.9,
-        "distance_km": 0.23
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Nhà hàng Bò 7 Món Ba Chúc",
@@ -12038,43 +9487,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 24.8,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 32.8,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 33.4,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 59.0,
-        "distance_km": 0.06
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
@@ -12188,43 +9601,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_103",
-        "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
-        "category": "food_and_restaurants",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_099",
-        "name": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 550.1,
-        "distance_km": 0.55
-      },
-      {
-        "place_id": "HG003",
-        "name": "Chùa Hàng Còng (Krăng Krốch)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 1749.7,
-        "distance_km": 1.75
-      },
-      {
-        "place_id": "CK004",
-        "name": "Con Đường Vòm Còng Châu Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 1805.2,
-        "distance_km": 1.81
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 1933.8,
-        "distance_km": 1.93
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
@@ -12338,43 +9715,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD016",
-        "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
-        "category": "attractions_nature",
-        "distance_meters": 78.0,
-        "distance_km": 0.08
-      },
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 93.6,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "TT_100",
-        "name": "Chợ Trung Tâm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 103.7,
-        "distance_km": 0.1
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 104.4,
-        "distance_km": 0.1
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
@@ -12488,43 +9829,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_096",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_094",
-        "name": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 451.4,
-        "distance_km": 0.45
-      },
-      {
-        "place_id": "PL008",
-        "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1699.9,
-        "distance_km": 1.7
-      },
-      {
-        "place_id": "PL009",
-        "name": "Đá Vồ Hội Mẹ Cô Tô",
-        "category": "attractions_nature",
-        "distance_meters": 1832.1,
-        "distance_km": 1.83
-      },
-      {
-        "place_id": "CK014",
-        "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
-        "category": "checkin_spots",
-        "distance_meters": 1899.6,
-        "distance_km": 1.9
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
@@ -12538,6 +9843,125 @@
       },
       {
         "subject": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
+        "relation": "CATEGORY_IS",
+        "object": "cafes_and_homestays"
+      }
+    ],
+    "confidence_score": 95.0,
+    "is_active": true
+  },
+  {
+    "place_id": "TT_089",
+    "name": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
+    "category": "cafes_and_homestays",
+    "subcategory": null,
+    "address": "Khu vực Hồ Ô Tà Lọt, Xã An Hảo, An Giang",
+    "commune": "Xã An Hảo",
+    "district": "Tri Tôn",
+    "province": "An Giang",
+    "latitude": 10.478,
+    "longitude": 104.962,
+    "google_maps_url": "https://maps.google.com/?q=10.478,104.962",
+    "phone": null,
+    "website": null,
+    "business_status": "OPERATIONAL",
+    "opening_hours": "08:00 - 20:00",
+    "price_level": "Tùy món / Dịch vụ",
+    "rating": 4.5,
+    "review_count": 290,
+    "photos": [],
+    "photo_urls": [],
+    "review_samples": [],
+    "keywords": [
+      "that son",
+      "cafes_and_homestays",
+      "tri ton",
+      "xã an hảo",
+      "an giang",
+      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "quan ca phe diem check in bo ho o ta lot",
+      "bay nui",
+      "quán cà phê & điểm check-in bờ hồ ô tà lọt"
+    ],
+    "description": "Quán coffee view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
+    "short_description": "Quán coffee view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
+    "tags": [
+      "An Hảo",
+      "cafes_and_homestays",
+      "bảy núi",
+      "tri tôn",
+      "an giang"
+    ],
+    "slug": "quan-ca-phe-diem-check-in-bo-ho-o-ta-lot",
+    "search_keywords": [
+      "that son",
+      "cafes_and_homestays",
+      "tri ton",
+      "xã an hảo",
+      "an giang",
+      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "quan ca phe diem check in bo ho o ta lot",
+      "bay nui",
+      "quán cà phê & điểm check-in bờ hồ ô tà lọt"
+    ],
+    "aliases": [
+      "quan ca phe diem check in bo ho o ta lot",
+      "Quán Cà Phê & Điểm Check-in Bờ Lake Ô Tà Lọt",
+      "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt"
+    ],
+    "tourism_category": "cafes_and_homestays",
+    "travel_tags": [
+      "An Hảo",
+      "cafes_and_homestays",
+      "bảy núi",
+      "tri tôn",
+      "an giang"
+    ],
+    "suitable_for": [
+      "adventure",
+      "nature",
+      "camping",
+      "solo",
+      "photography",
+      "couple"
+    ],
+    "recommended_duration": "1 - 2 giờ",
+    "best_visit_time": "Chiều (15:00 - 17:30)",
+    "family_friendly": true,
+    "couple_friendly": true,
+    "kids_friendly": true,
+    "parking": true,
+    "wifi": true,
+    "ticket_required": false,
+    "sentiment_analysis": {
+      "sentiment_score": 4.8,
+      "positive_highlights": [
+        "Cảnh quan thiên nhiên & View chụp ảnh sống ảo tuyệt đẹp",
+        "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
+      ],
+      "suitable_for_tags": [
+        "adventure",
+        "nature",
+        "camping",
+        "solo",
+        "photography",
+        "couple"
+      ]
+    },
+    "nearby_places": [],
+    "knowledge_graph": [
+      {
+        "subject": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
+        "relation": "LOCATED_IN",
+        "object": "Xã An Hảo"
+      },
+      {
+        "subject": "Xã An Hảo",
+        "relation": "PART_OF",
+        "object": "Tri Tôn, An Giang"
+      },
+      {
+        "subject": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
         "relation": "CATEGORY_IS",
         "object": "cafes_and_homestays"
       }
@@ -12633,43 +10057,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "CF001",
-        "name": "Ruộng Coffee & Homestay Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 444.8,
-        "distance_km": 0.44
-      },
-      {
-        "place_id": "CK013",
-        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-        "category": "checkin_spots",
-        "distance_meters": 467.5,
-        "distance_km": 0.47
-      },
-      {
-        "place_id": "PL015",
-        "name": "Vườn Mãng Cầu Núi Tô",
-        "category": "attractions_nature",
-        "distance_meters": 467.9,
-        "distance_km": 0.47
-      },
-      {
-        "place_id": "PL003",
-        "name": "Hồ Soài Chék",
-        "category": "attractions_nature",
-        "distance_meters": 566.6,
-        "distance_km": 0.57
-      },
-      {
-        "place_id": "CK003",
-        "name": "Con Đường Tơ Lụa Soài Chék",
-        "category": "checkin_spots",
-        "distance_meters": 584.8,
-        "distance_km": 0.58
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Soài Chek Homestay & Coffee",
@@ -12778,43 +10166,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_101",
-        "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 144.2,
-        "distance_km": 0.14
-      },
-      {
-        "place_id": "FD013",
-        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-        "category": "attractions_nature",
-        "distance_meters": 188.3,
-        "distance_km": 0.19
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 198.2,
-        "distance_km": 0.2
-      },
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 218.4,
-        "distance_km": 0.22
-      },
-      {
-        "place_id": "EV002",
-        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 218.4,
-        "distance_km": 0.22
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
@@ -12926,43 +10278,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "EV002",
-        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "TT_104",
-        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-        "category": "attractions_nature",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 129.1,
-        "distance_km": 0.13
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Xvayton (Chùa Cũ 500 năm)",
@@ -13074,43 +10390,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_095",
-        "name": "Hồ Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 126.0,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "HG001",
-        "name": "Chùa Tà Pạ (Chùa Núi)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 218.4,
-        "distance_km": 0.22
-      },
-      {
-        "place_id": "CK001",
-        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
-        "category": "checkin_spots",
-        "distance_meters": 393.0,
-        "distance_km": 0.39
-      },
-      {
-        "place_id": "CK002",
-        "name": "Con Đường Tơ Lụa Tà Pạ",
-        "category": "checkin_spots",
-        "distance_meters": 552.7,
-        "distance_km": 0.55
-      },
-      {
-        "place_id": "PL011",
-        "name": "Cánh Đồng Lúa Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 630.0,
-        "distance_km": 0.63
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chùa Tà Pạ",
@@ -13229,43 +10509,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_096",
-        "name": "Hồ Soài So",
-        "category": "attractions_nature",
-        "distance_meters": 396.4,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "TT_088",
-        "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
-        "category": "cafes_and_homestays",
-        "distance_meters": 451.4,
-        "distance_km": 0.45
-      },
-      {
-        "place_id": "CK005",
-        "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
-        "category": "checkin_spots",
-        "distance_meters": 1489.8,
-        "distance_km": 1.49
-      },
-      {
-        "place_id": "HG010",
-        "name": "Chùa Mới Ô Lâm",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 1732.3,
-        "distance_km": 1.73
-      },
-      {
-        "place_id": "FD003",
-        "name": "Gà Đốt Ô Thum Kim Suổl",
-        "category": "food_and_restaurants",
-        "distance_meters": 1732.3,
-        "distance_km": 1.73
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
@@ -13377,43 +10621,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_093",
-        "name": "Chùa Tà Pạ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 126.0,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "HG001",
-        "name": "Chùa Tà Pạ (Chùa Núi)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 206.1,
-        "distance_km": 0.21
-      },
-      {
-        "place_id": "CK001",
-        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
-        "category": "checkin_spots",
-        "distance_meters": 289.9,
-        "distance_km": 0.29
-      },
-      {
-        "place_id": "CK002",
-        "name": "Con Đường Tơ Lụa Tà Pạ",
-        "category": "checkin_spots",
-        "distance_meters": 426.7,
-        "distance_km": 0.43
-      },
-      {
-        "place_id": "PL011",
-        "name": "Cánh Đồng Lúa Tà Pạ",
-        "category": "attractions_nature",
-        "distance_meters": 504.0,
-        "distance_km": 0.5
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Tà Pạ",
@@ -13535,43 +10743,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_088",
-        "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
-        "category": "cafes_and_homestays",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_094",
-        "name": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 396.4,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "PL008",
-        "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
-        "category": "attractions_nature",
-        "distance_meters": 1617.0,
-        "distance_km": 1.62
-      },
-      {
-        "place_id": "PL009",
-        "name": "Đá Vồ Hội Mẹ Cô Tô",
-        "category": "attractions_nature",
-        "distance_meters": 1755.3,
-        "distance_km": 1.76
-      },
-      {
-        "place_id": "CK014",
-        "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
-        "category": "checkin_spots",
-        "distance_meters": 1825.5,
-        "distance_km": 1.83
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Hồ Soài So",
@@ -13680,43 +10852,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL010",
-        "name": "Khu Du Lịch Đồi Tức Dụp",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 0.0,
-        "distance_km": 0.0
-      },
-      {
-        "place_id": "TT_098",
-        "name": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
-        "category": "checkin_spots",
-        "distance_meters": 912.2,
-        "distance_km": 0.91
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 2795.8,
-        "distance_km": 2.8
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 2823.5,
-        "distance_km": 2.82
-      },
-      {
-        "place_id": "FD001",
-        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
-        "category": "food_and_restaurants",
-        "distance_meters": 2865.3,
-        "distance_km": 2.87
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
@@ -13830,43 +10966,7 @@
         "kids"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "PL010",
-        "name": "Khu Du Lịch Đồi Tức Dụp",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 912.2,
-        "distance_km": 0.91
-      },
-      {
-        "place_id": "TT_097",
-        "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 912.2,
-        "distance_km": 0.91
-      },
-      {
-        "place_id": "FD004",
-        "name": "Gà Đốt Ô Thum Thảo Nguyên",
-        "category": "food_and_restaurants",
-        "distance_meters": 1915.3,
-        "distance_km": 1.92
-      },
-      {
-        "place_id": "PL014",
-        "name": "Vườn Nho Nông Trại Ô Thum",
-        "category": "attractions_nature",
-        "distance_meters": 1944.4,
-        "distance_km": 1.94
-      },
-      {
-        "place_id": "FD005",
-        "name": "Gà Đốt Vương Ngọc Ô Thum",
-        "category": "food_and_restaurants",
-        "distance_meters": 1975.5,
-        "distance_km": 1.98
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
@@ -13983,43 +11083,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_103",
-        "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
-        "category": "food_and_restaurants",
-        "distance_meters": 396.3,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "TT_086",
-        "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
-        "category": "attractions_nature",
-        "distance_meters": 550.1,
-        "distance_km": 0.55
-      },
-      {
-        "place_id": "HG003",
-        "name": "Chùa Hàng Còng (Krăng Krốch)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 2212.4,
-        "distance_km": 2.21
-      },
-      {
-        "place_id": "CK004",
-        "name": "Con Đường Vòm Còng Châu Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 2259.0,
-        "distance_km": 2.26
-      },
-      {
-        "place_id": "CK010",
-        "name": "Cổng Trời Tri Tôn Vòm Khmer",
-        "category": "checkin_spots",
-        "distance_meters": 2320.5,
-        "distance_km": 2.32
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
@@ -14126,43 +11190,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD017",
-        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 24.5,
-        "distance_km": 0.02
-      },
-      {
-        "place_id": "FD010",
-        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 32.8,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 33.4,
-        "distance_km": 0.03
-      },
-      {
-        "place_id": "TT_085",
-        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
-        "category": "food_and_restaurants",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 59.7,
-        "distance_km": 0.06
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Chợ Trung Tâm Tri Tôn",
@@ -14269,43 +11297,7 @@
         "family"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "FD013",
-        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-        "category": "attractions_nature",
-        "distance_meters": 46.8,
-        "distance_km": 0.05
-      },
-      {
-        "place_id": "FD009",
-        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
-        "category": "food_and_restaurants",
-        "distance_meters": 104.4,
-        "distance_km": 0.1
-      },
-      {
-        "place_id": "CF009",
-        "name": "Quy Coffee House Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 104.4,
-        "distance_km": 0.1
-      },
-      {
-        "place_id": "CF003",
-        "name": "CHẠM Coffee & Tea Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 135.0,
-        "distance_km": 0.13
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 141.0,
-        "distance_km": 0.14
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
@@ -14321,6 +11313,125 @@
         "subject": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
         "relation": "CATEGORY_IS",
         "object": "attractions_nature"
+      }
+    ],
+    "confidence_score": 95.0,
+    "is_active": true
+  },
+  {
+    "place_id": "TT_102",
+    "name": "Gà Đốt Ô Thum Siêu Bó",
+    "category": "food_and_restaurants",
+    "subcategory": null,
+    "address": "Hồ Ô Thum, Xã Ô Lâm, An Giang",
+    "commune": "Xã Ô Lâm",
+    "district": "Tri Tôn",
+    "province": "An Giang",
+    "latitude": 10.3775,
+    "longitude": 104.9921,
+    "google_maps_url": "https://maps.google.com/?q=10.3775,104.9921",
+    "phone": null,
+    "website": null,
+    "business_status": "OPERATIONAL",
+    "opening_hours": "08:00 - 20:00",
+    "price_level": "Tùy món / Dịch vụ",
+    "rating": 4.6,
+    "review_count": 1420,
+    "photos": [],
+    "photo_urls": [],
+    "review_samples": [],
+    "keywords": [
+      "that son",
+      "food_and_restaurants",
+      "bay nui",
+      "ga dot o thum sieu bo",
+      "tri ton",
+      "an giang",
+      "gà đốt ô thum siêu bó",
+      "xã ô lâm"
+    ],
+    "description": "Gà đốt lá chúc giòn da thơm cay bản địa tại bờ hồ Ô Thum.",
+    "short_description": "Gà đốt lá chúc giòn da thơm cay bản địa tại bờ hồ Ô Thum.",
+    "tags": [
+      "food_and_restaurants",
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "Ô Lâm"
+    ],
+    "slug": "ga-dot-o-thum-sieu-bo",
+    "search_keywords": [
+      "that son",
+      "food_and_restaurants",
+      "bay nui",
+      "ga dot o thum sieu bo",
+      "tri ton",
+      "an giang",
+      "gà đốt ô thum siêu bó",
+      "xã ô lâm"
+    ],
+    "aliases": [
+      "ga dot o thum sieu bo",
+      "Gà Đốt Ô Thum Siêu Bó"
+    ],
+    "tourism_category": "food_and_restaurants",
+    "travel_tags": [
+      "food_and_restaurants",
+      "bảy núi",
+      "tri tôn",
+      "an giang",
+      "Ô Lâm"
+    ],
+    "suitable_for": [
+      "adventure",
+      "nature",
+      "camping",
+      "family",
+      "foodie"
+    ],
+    "recommended_duration": "45 - 60 phút",
+    "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
+    "family_friendly": true,
+    "couple_friendly": true,
+    "kids_friendly": true,
+    "parking": true,
+    "wifi": true,
+    "ticket_required": false,
+    "sentiment_analysis": {
+      "sentiment_score": 4.8,
+      "positive_highlights": [
+        "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị",
+        "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
+      ],
+      "suitable_for_tags": [
+        "adventure",
+        "nature",
+        "camping",
+        "family",
+        "foodie"
+      ]
+    },
+    "nearby_places": [],
+    "knowledge_graph": [
+      {
+        "subject": "Gà Đốt Ô Thum Siêu Bó",
+        "relation": "LOCATED_IN",
+        "object": "Xã Ô Lâm"
+      },
+      {
+        "subject": "Xã Ô Lâm",
+        "relation": "PART_OF",
+        "object": "Tri Tôn, An Giang"
+      },
+      {
+        "subject": "Gà Đốt Ô Thum Siêu Bó",
+        "relation": "CATEGORY_IS",
+        "object": "food_and_restaurants"
+      },
+      {
+        "subject": "Gà Đốt Ô Thum Siêu Bó",
+        "relation": "FAMOUS_FOR",
+        "object": "Gà Đốt Lá Chúc Ô Thum"
       }
     ],
     "confidence_score": 95.0,
@@ -14414,43 +11525,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "TT_086",
-        "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
-        "category": "attractions_nature",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_099",
-        "name": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 396.3,
-        "distance_km": 0.4
-      },
-      {
-        "place_id": "HG003",
-        "name": "Chùa Hàng Còng (Krăng Krốch)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 1862.4,
-        "distance_km": 1.86
-      },
-      {
-        "place_id": "CK004",
-        "name": "Con Đường Vòm Còng Châu Lăng",
-        "category": "checkin_spots",
-        "distance_meters": 1914.5,
-        "distance_km": 1.91
-      },
-      {
-        "place_id": "FD008",
-        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
-        "category": "food_and_restaurants",
-        "distance_meters": 2029.9,
-        "distance_km": 2.03
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
@@ -14559,43 +11634,7 @@
         "camping"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "EV002",
-        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "TT_092",
-        "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 117.4,
-        "distance_km": 0.12
-      },
-      {
-        "place_id": "TT_105",
-        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 156.0,
-        "distance_km": 0.16
-      },
-      {
-        "place_id": "TT_091",
-        "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 198.2,
-        "distance_km": 0.2
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Quán Bò Nướng Bánh Tráng Tư Liêm",
@@ -14707,43 +11746,7 @@
         "culture"
       ]
     },
-    "nearby_places": [
-      {
-        "place_id": "HG002",
-        "name": "Chùa Xà Tón (Wat Xvayton)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "EV002",
-        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "TT_092",
-        "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
-        "category": "khmer_pagodas_heritage",
-        "distance_meters": 39.6,
-        "distance_km": 0.04
-      },
-      {
-        "place_id": "PL020",
-        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-        "category": "attractions_nature",
-        "distance_meters": 94.8,
-        "distance_km": 0.09
-      },
-      {
-        "place_id": "CF004",
-        "name": "Anpalm Cafe Tri Tôn",
-        "category": "cafes_and_homestays",
-        "distance_meters": 122.7,
-        "distance_km": 0.12
-      }
-    ],
+    "nearby_places": [],
     "knowledge_graph": [
       {
         "subject": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",

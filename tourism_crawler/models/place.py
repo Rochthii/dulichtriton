@@ -59,8 +59,10 @@ class PlaceRawModel(BaseModel):
 class PlaceEnrichedModel(PlaceRawModel):
     slug: str
     search_keywords: List[str]
+    aliases: List[str] = Field(default_factory=list)
     tourism_category: str
     travel_tags: List[str]
+    suitable_for: List[str] = Field(default_factory=list) # family, couple, photography, culture...
     recommended_duration: str
     best_visit_time: str
     family_friendly: bool = True
@@ -69,5 +71,8 @@ class PlaceEnrichedModel(PlaceRawModel):
     parking: bool = True
     wifi: bool = True
     ticket_required: bool = False
+    sentiment_analysis: Dict[str, Any] = Field(default_factory=dict)
+    nearby_places: List[Dict[str, Any]] = Field(default_factory=list) # Recommendation Graph
+    knowledge_graph: List[Dict[str, str]] = Field(default_factory=list) # Triples (Subject, Relation, Object)
     confidence_score: float = 95.0
     is_active: bool = True

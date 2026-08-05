@@ -1,6 +1,8 @@
 import unicodedata
 from typing import Dict, Any, List
 from tourism_crawler.models.place import PlaceRawModel, PlaceEnrichedModel, generate_slug, normalize_nfc
+from tourism_crawler.services.review_mining_service import ReviewMiningService
+from tourism_crawler.services.knowledge_graph_service import KnowledgeGraphService
 
 class PlaceEnrichmentService:
     """Service to automatically enrich scraped place records for AI RAG readiness."""
@@ -44,7 +46,18 @@ class PlaceEnrichmentService:
             duration = "2 - 3 giờ"
             ticket_required = "tức dụp" in lower_name
 
-        # Search Keywords List
+        # Review & Sentiment Mining
+        sentiment_info = ReviewMiningService.analyze_place_reviews(name, raw.category, desc)
+        suitable_for = sentiment_info.get("suitable_for_tags", ["family", "couple"])
+
+        # Search Keywords List & Aliases
+        aliases = [
+            name,
+            generate_slug(name).replace("-", " "),
+            name.replace("Chùa", "Wat").replace("Hồ", "Lake"),
+            name.replace("Khóm", "Ấp")
+        ]
+
         keywords = set([
             name.lower(),
             commune.lower(),
@@ -53,7 +66,7 @@ class PlaceEnrichmentService:
             "an giang",
             "bay nui",
             "that son"
-        ] + [k.lower() for k in raw.keywords])
+        ] + [k.lower() for k in raw.keywords] + [a.lower() for a in aliases])
 
         travel_tags = list(set([
             tourism_category,
@@ -63,7 +76,7 @@ class PlaceEnrichmentService:
             "an giang"
         ] + raw.tags))
 
-        return PlaceEnrichedModel(
+        enriched = PlaceEnrichedModel(
             place_id=raw.place_id,
             name=name,
             category=raw.category,
@@ -91,16 +104,23 @@ class PlaceEnrichmentService:
             tags=travel_tags,
             slug=slug,
             search_keywords=list(keywords),
+            aliases=list(set(aliases)),
             tourism_category=tourism_category,
             travel_tags=travel_tags,
+            suitable_for=suitable_for,
             recommended_duration=duration,
             best_visit_time=best_visit_time,
-            family_friendly=True,
-            couple_friendly=True,
-            kids_friendly=True,
+            family_friendly="family" in suitable_for or True,
+            couple_friendly="couple" in suitable_for or True,
+            kids_friendly="kids" in suitable_for or True,
             parking=True,
             wifi=tourism_category in ["food_and_restaurants", "cafes_and_homestays"],
             ticket_required=ticket_required,
+            sentiment_analysis=sentiment_info,
             confidence_score=95.0,
             is_active=True
         )
+
+        # Knowledge Graph Triples
+        enriched.knowledge_graph = KnowledgeGraphService.build_knowledge_graph(enriched)
+        return enriched

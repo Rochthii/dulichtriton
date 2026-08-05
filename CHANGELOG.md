@@ -40,6 +40,14 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Hạ Tầng Data Engineering 10 Lớp Doanh Nghiệp (10-Layer Enterprise Data Pipeline)**:
+  * Nâng cấp gói `tourism_crawler/` đáp ứng trọn vẹn 10 lớp dữ liệu chuyên sâu theo chuẩn Lead Data Engineer & AI Architect:
+    1. **Phân tầng Lưu trữ (`storage/`)**: Tách biệt 5 cấp độ thư mục `storage/raw/`, `storage/normalized/`, `storage/enriched/`, `storage/verified/` & `storage/exports/`.
+    2. **Kiểm duyệt Chất lượng (`DataValidationService`)**: Validate tọa độ Bounding Box, số điện thoại, quy chuẩn địa chỉ không chứa *"Huyện Tri Tôn"*, trạng thái hoạt động & rating.
+    3. **Review Sentiment Mining (`ReviewMiningService`)**: Khai phá từ khóa cảm xúc, điểm nổi bật & tự động tạo thẻ phân loại đối tượng phù hợp (`suitable_for`: family, couple, photography, culture, nature).
+    4. **Đồ Thị Gợi Ý Khoảng Cách (`RecommendationGraphService`)**: Tính toán Ma trận khoảng cách Haversine và sinh Đồ thị gợi ý các địa điểm lân cận (`nearby_places` trong bán kính < 5km).
+    5. **Knowledge Graph Triples (`KnowledgeGraphService`)**: Tự động trích xuất bộ ba tri thức `(Subject, Relation, Object)` cho khả năng suy luận AI.
+    6. **RAG Embedding Chunker (`EmbeddingChunkerService`)**: Phân đoạn dữ liệu thành 200 RAG vector passages tại [storage/enriched/rag_embedding_chunks.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/storage/enriched/rag_embedding_chunks.json).
 * **Hạ Tầng Crawl Dữ Liệu Google Maps Chuyên Nghiệp (Apify Google Maps Data Pipeline)**:
   * Khởi tạo gói dịch vụ `tourism_crawler/` hoàn chỉnh chuẩn Data Engineering Architecture:
     * `tourism_crawler/models/place.py`: Pydantic v2 schemas (`PlaceRawModel`, `PlaceEnrichedModel`).

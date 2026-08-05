@@ -1,0 +1,2308 @@
+[
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Soài So. Vị trí: Sườn núi Cô Tô, Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (670 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL002",
+      "name": "Hồ Soài So",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Soài So: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL002",
+      "name": "Hồ Soài So",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Soài Chék. Vị trí: Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (320 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL003",
+      "name": "Hồ Soài Chék",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Soài Chék: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL003",
+      "name": "Hồ Soài Chék",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Ô Thum. Vị trí: Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (1890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL004",
+      "name": "Hồ Ô Thum",
+      "commune": "Xã Ô Lâm",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Ô Thum: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 20:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL004",
+      "name": "Hồ Ô Thum",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Ô Tà Sóc. Vị trí: Xã Lương Phi, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL005",
+      "name": "Hồ Ô Tà Sóc",
+      "commune": "Xã Lương Phi",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Ô Tà Sóc: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL005",
+      "name": "Hồ Ô Tà Sóc",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Ô Tà Lọt. Vị trí: Xã An Hảo, Tri Tôn, An Giang, Xã An Hảo, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (290 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL006",
+      "name": "Hồ Ô Tà Lọt",
+      "commune": "Xã An Hảo",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Ô Tà Lọt: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL006",
+      "name": "Hồ Ô Tà Lọt",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Đá Latina. Vị trí: Xã An Hảo, Tri Tôn, An Giang, Xã An Hảo, Tri Tôn, An Giang. Danh mục: Hồ nước (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (940 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL007",
+      "name": "Hồ Đá Latina",
+      "commune": "Xã An Hảo",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Đá Latina: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL007",
+      "name": "Hồ Đá Latina",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Núi Cô Tô (Phụng Hoàng Sơn). Vị trí: Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Núi (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (1120 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL008",
+      "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Núi Cô Tô (Phụng Hoàng Sơn): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL008",
+      "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Đá Vồ Hội Mẹ Cô Tô. Vị trí: Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Săn mây (attractions_nature). Mô tả: . Đánh giá: 4.8 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL009",
+      "name": "Đá Vồ Hội Mẹ Cô Tô",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Đá Vồ Hội Mẹ Cô Tô: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL009",
+      "name": "Đá Vồ Hội Mẹ Cô Tô",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Du Lịch Đồi Tức Dụp. Vị trí: Ấp Ninh Hòa, Xã An Tức, Tri Tôn, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: Di tích lịch sử (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.5 sao (2100 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL010",
+      "name": "Khu Du Lịch Đồi Tức Dụp",
+      "commune": "Xã An Tức",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Du Lịch Đồi Tức Dụp: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: 60.000 VNĐ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL010",
+      "name": "Khu Du Lịch Đồi Tức Dụp",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cánh Đồng Lúa Tà Pạ. Vị trí: Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Cánh đồng (attractions_nature). Mô tả: . Đánh giá: 4.8 sao (1500 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL011",
+      "name": "Cánh Đồng Lúa Tà Pạ",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cánh Đồng Lúa Tà Pạ: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL011",
+      "name": "Cánh Đồng Lúa Tà Pạ",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Rừng Tầm Vông Ô Tà Sóc. Vị trí: Xã Lương Phi, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Rừng sinh thái (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (410 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL012",
+      "name": "Rừng Tầm Vông Ô Tà Sóc",
+      "commune": "Xã Lương Phi",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Rừng Tầm Vông Ô Tà Sóc: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL012",
+      "name": "Rừng Tầm Vông Ô Tà Sóc",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cánh Đồng Lúa Ba Chúc. Vị trí: Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Cánh đồng (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (350 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL013",
+      "name": "Cánh Đồng Lúa Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cánh Đồng Lúa Ba Chúc: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL013",
+      "name": "Cánh Đồng Lúa Ba Chúc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Vườn Nho Nông Trại Ô Thum. Vị trí: Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Nông trại (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL014",
+      "name": "Vườn Nho Nông Trại Ô Thum",
+      "commune": "Xã Ô Lâm",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Vườn Nho Nông Trại Ô Thum: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:30 - 17:30. Giá vé: 10.000 VNĐ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL014",
+      "name": "Vườn Nho Nông Trại Ô Thum",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Vườn Mãng Cầu Núi Tô. Vị trí: Sườn Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Nông trại (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (280 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL015",
+      "name": "Vườn Mãng Cầu Núi Tô",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Vườn Mãng Cầu Núi Tô: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL015",
+      "name": "Vườn Mãng Cầu Núi Tô",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Suối Vàng Soài So. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Suối sinh thái (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (430 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL016",
+      "name": "Suối Vàng Soài So",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Suối Vàng Soài So: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL016",
+      "name": "Suối Vàng Soài So",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Núi Dài (Ngọa Long Sơn). Vị trí: Xã Lương Phi, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Núi (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (390 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL017",
+      "name": "Núi Dài (Ngọa Long Sơn)",
+      "commune": "Xã Lương Phi",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Núi Dài (Ngọa Long Sơn): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL017",
+      "name": "Núi Dài (Ngọa Long Sơn)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cánh Đồng Thốt Nốt Chau Lăng. Vị trí: Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Cánh đồng (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (610 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL018",
+      "name": "Cánh Đồng Thốt Nốt Chau Lăng",
+      "commune": "Xã Chau Lăng",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cánh Đồng Thốt Nốt Chau Lăng: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL018",
+      "name": "Cánh Đồng Thốt Nốt Chau Lăng",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Vách Đá Đứng Latina. Vị trí: Xã An Hảo, Tri Tôn, An Giang, Xã An Hảo, Tri Tôn, An Giang. Danh mục: Check-in thiên nhiên (checkin_spots). Mô tả: . Đánh giá: 4.6 sao (480 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL019",
+      "name": "Vách Đá Đứng Latina",
+      "commune": "Xã An Hảo",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Vách Đá Đứng Latina: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL019",
+      "name": "Vách Đá Đứng Latina",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Bãi Thả Diều Hoàng Hôn Tri Tôn. Vị trí: Sân đua bò Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Tọa độ chill hoàng hôn (attractions_nature). Mô tả: . Đánh giá: 4.8 sao (1150 lượt đánh giá).",
+    "metadata": {
+      "place_id": "PL020",
+      "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Bãi Thả Diều Hoàng Hôn Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 16:00 - 18:30. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "PL020",
+      "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948). Vị trí: Tuyến đường tránh kết nối ĐT941 - ĐT948, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Cung đường ngắm núi Cô Tô chill nhất An Giang (checkin_spots). Mô tả: . Đánh giá: 4.9 sao (2100 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK001",
+      "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948): Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do (Chiều 16:00 - 17:30 đẹp nhất). Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK001",
+      "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Tơ Lụa Tà Pạ. Vị trí: Đồng lúa Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Con đường tơ lụa (checkin_spots). Mô tả: . Đánh giá: 4.8 sao (1280 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK002",
+      "name": "Con Đường Tơ Lụa Tà Pạ",
+      "commune": "Xã Núi Tô",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Tơ Lụa Tà Pạ: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK002",
+      "name": "Con Đường Tơ Lụa Tà Pạ",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Tơ Lụa Soài Chék. Vị trí: Ven hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Con đường tơ lụa (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK003",
+      "name": "Con Đường Tơ Lụa Soài Chék",
+      "commune": "Xã Núi Tô",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Tơ Lụa Soài Chék: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK003",
+      "name": "Con Đường Tơ Lụa Soài Chék",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Vòm Còng Châu Lăng. Vị trí: Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Con đường nhiếp ảnh (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (940 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK004",
+      "name": "Con Đường Vòm Còng Châu Lăng",
+      "commune": "Xã Chau Lăng",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Vòm Còng Châu Lăng: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK004",
+      "name": "Con Đường Vòm Còng Châu Lăng",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Thốt Nốt Ô Lâm - Cô Tô. Vị trí: Tuyến đường Ô Lâm - Núi Tô, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Con đường nhiếp ảnh (checkin_spots). Mô tả: . Đánh giá: 4.6 sao (720 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK005",
+      "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+      "commune": "Xã Ô Lâm",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Thốt Nốt Ô Lâm - Cô Tô: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK005",
+      "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Con Đường Tre Tầm Vông Ô Tà Sóc. Vị trí: Xã Lương Phi, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Con đường nhiếp ảnh (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (610 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK006",
+      "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
+      "commune": "Xã Lương Phi",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Con Đường Tre Tầm Vông Ô Tà Sóc: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK006",
+      "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cung Đường Ven Vách Đá Núi Dài (Lương Phi). Vị trí: Tuyến Lương Phi - Lê Trì, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Cung đường phượt ngắm núi (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (540 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK007",
+      "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
+      "commune": "Xã Lương Phi",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cung Đường Ven Vách Đá Núi Dài (Lương Phi): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK007",
+      "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc). Vị trí: Tuyến Ba Chúc - Lạc Quới, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Cung đường biên giới (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (680 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK008",
+      "name": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK008",
+      "name": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hàng Thốt Nốt Trái Tim An Tức. Vị trí: Xã An Tức, Tri Tôn, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: Điểm check-in biểu tượng (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (1560 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK009",
+      "name": "Hàng Thốt Nốt Trái Tim An Tức",
+      "commune": "Xã An Tức",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hàng Thốt Nốt Trái Tim An Tức: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK009",
+      "name": "Hàng Thốt Nốt Trái Tim An Tức",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cổng Trời Tri Tôn Vòm Khmer. Vị trí: Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Điểm check-in biểu tượng (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (1320 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK010",
+      "name": "Cổng Trời Tri Tôn Vòm Khmer",
+      "commune": "Xã Chau Lăng",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cổng Trời Tri Tôn Vòm Khmer: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: culture, solo, photography, family, religion, couple. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK010",
+      "name": "Cổng Trời Tri Tôn Vòm Khmer",
+      "suitable_for": [
+        "culture",
+        "solo",
+        "photography",
+        "family",
+        "religion",
+        "couple"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cây Thốt Nốt Cô Độc Chau Lăng. Vị trí: Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Điểm check-in độc đáo (checkin_spots). Mô tả: . Đánh giá: 4.6 sao (540 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK011",
+      "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
+      "commune": "Xã Chau Lăng",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cây Thốt Nốt Cô Độc Chau Lăng: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK011",
+      "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee. Vị trí: Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Điểm check-in sống ảo (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (780 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK013",
+      "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
+      "commune": "Xã Núi Tô",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: 06:30 - 18:30. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK013",
+      "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo). Vị trí: Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Tọa độ săn ảnh đỉnh núi (checkin_spots). Mô tả: . Đánh giá: 4.8 sao (920 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK014",
+      "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
+      "commune": "Xã Núi Tô",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo): Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping, solo, photography, couple. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK014",
+      "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping",
+        "solo",
+        "photography",
+        "couple"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Nấc Thang Thiên Đường Kiều Tiên Ô Thum. Vị trí: Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Tiểu cảnh check-in (checkin_spots). Mô tả: . Đánh giá: 4.5 sao (460 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK016",
+      "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
+      "commune": "Xã Ô Lâm",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Nấc Thang Thiên Đường Kiều Tiên Ô Thum: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: 08:00 - 19:00. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK016",
+      "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Căn Nhà Gỗ Vintage Nhà Quê. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Góc chụp Đà Lạt (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK017",
+      "name": "Căn Nhà Gỗ Vintage Nhà Quê",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Căn Nhà Gỗ Vintage Nhà Quê: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 06:30 - 21:00. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK017",
+      "name": "Căn Nhà Gỗ Vintage Nhà Quê",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cầu Khỉ Giữa Cánh Đồng Thốt Nốt. Vị trí: Xã An Tức, Tri Tôn, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: Điểm check-in mộc mạc (checkin_spots). Mô tả: . Đánh giá: 4.6 sao (380 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK018",
+      "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
+      "commune": "Xã An Tức",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cầu Khỉ Giữa Cánh Đồng Thốt Nốt: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: Tự do. Giá vé: Miễn phí. Phù hợp cho: couple, photography, solo. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK018",
+      "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
+      "suitable_for": [
+        "couple",
+        "photography",
+        "solo"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quầy Thốt Nốt Tươi Cụm Trái Tim. Vị trí: Chân cụm thốt nốt trái tim, Xã An Tức, Tri Tôn, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: Góc giải khát chill (checkin_spots). Mô tả: . Đánh giá: 4.7 sao (640 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK019",
+      "name": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
+      "commune": "Xã An Tức",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quầy Thốt Nốt Tươi Cụm Trái Tim: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: 07:00 - 18:00. Giá vé: 10k - 20k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK019",
+      "name": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Góc ảnh Việt phục cổ trang (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (420 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CK020",
+      "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 07:00 - 21:00. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CK020",
+      "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Tà Pạ (Chùa Núi). Vị trí: Đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Chùa Khmer (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.7 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG001",
+      "name": "Chùa Tà Pạ (Chùa Núi)",
+      "commune": "Xã Núi Tô",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Tà Pạ (Chùa Núi): Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping, culture, family, religion. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG001",
+      "name": "Chùa Tà Pạ (Chùa Núi)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping",
+        "culture",
+        "family",
+        "religion"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Xà Tón (Wat Xvayton). Vị trí: Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Chùa Khmer cổ (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.7 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG002",
+      "name": "Chùa Xà Tón (Wat Xvayton)",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Xà Tón (Wat Xvayton): Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG002",
+      "name": "Chùa Xà Tón (Wat Xvayton)",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Hàng Còng (Krăng Krốch). Vị trí: Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Chùa Khmer cổ (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.6 sao (780 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG003",
+      "name": "Chùa Hàng Còng (Krăng Krốch)",
+      "commune": "Xã Chau Lăng",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Hàng Còng (Krăng Krốch): Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG003",
+      "name": "Chùa Hàng Còng (Krăng Krốch)",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Cổng Trời Koh Kas. Vị trí: Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Chùa Khmer (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.6 sao (1320 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG004",
+      "name": "Chùa Cổng Trời Koh Kas",
+      "commune": "Xã Chau Lăng",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Cổng Trời Koh Kas: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG004",
+      "name": "Chùa Cổng Trời Koh Kas",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Di Tích Nhà Mồ Ba Chúc. Vị trí: Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Di tích Quốc gia (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.7 sao (1340 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG005",
+      "name": "Khu Di Tích Nhà Mồ Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Di Tích Nhà Mồ Ba Chúc: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG005",
+      "name": "Khu Di Tích Nhà Mồ Ba Chúc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Phi Lai Ba Chúc. Vị trí: Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Chùa tâm linh (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.6 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG006",
+      "name": "Chùa Phi Lai Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Phi Lai Ba Chúc: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG006",
+      "name": "Chùa Phi Lai Ba Chúc",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Tam Bửu Ba Chúc. Vị trí: Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Chùa tâm linh (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.6 sao (480 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG007",
+      "name": "Chùa Tam Bửu Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Tam Bửu Ba Chúc: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG007",
+      "name": "Chùa Tam Bửu Ba Chúc",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Di Tích Căn Cứ Ô Tà Sóc. Vị trí: Xã Lương Phi, Tri Tôn, An Giang, Xã Lương Phi, Tri Tôn, An Giang. Danh mục: Di tích lịch sử (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.6 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG008",
+      "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
+      "commune": "Xã Lương Phi",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Di Tích Căn Cứ Ô Tà Sóc: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 07:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG008",
+      "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Soài So Khmer. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Chùa Khmer (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.5 sao (310 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG009",
+      "name": "Chùa Soài So Khmer",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Soài So Khmer: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG009",
+      "name": "Chùa Soài So Khmer",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Mới Ô Lâm. Vị trí: Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Chùa Khmer (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.5 sao (270 lượt đánh giá).",
+    "metadata": {
+      "place_id": "HG010",
+      "name": "Chùa Mới Ô Lâm",
+      "commune": "Xã Ô Lâm",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Mới Ô Lâm: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 06:00 - 18:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "HG010",
+      "name": "Chùa Mới Ô Lâm",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Siêu Gà Đốt Ô Thum (Chau Siêu). Vị trí: Tỉnh lộ 15, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Gà Đốt Ô Thum (food_and_restaurants). Mô tả: . Đánh giá: 4.6 sao (1450 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD001",
+      "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Siêu Gà Đốt Ô Thum (Chau Siêu): Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 09:00 - 18:00. Giá vé: 250k - 320k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD001",
+      "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Kiều Tiên Gà Đốt Ô Thum. Vị trí: Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Gà Đốt Ô Thum (food_and_restaurants). Mô tả: . Đánh giá: 4.5 sao (920 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD002",
+      "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Kiều Tiên Gà Đốt Ô Thum: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 19:30. Giá vé: 250k - 330k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD002",
+      "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Gà Đốt Ô Thum Kim Suổl. Vị trí: Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Gà Đốt Ô Thum (food_and_restaurants). Mô tả: . Đánh giá: 4.5 sao (780 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD003",
+      "name": "Gà Đốt Ô Thum Kim Suổl",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Gà Đốt Ô Thum Kim Suổl: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 06:00 - 23:00. Giá vé: 260k - 350k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD003",
+      "name": "Gà Đốt Ô Thum Kim Suổl",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Gà Đốt Ô Thum Thảo Nguyên. Vị trí: Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Gà Đốt Ô Thum (food_and_restaurants). Mô tả: . Đánh giá: 4.5 sao (810 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD004",
+      "name": "Gà Đốt Ô Thum Thảo Nguyên",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Gà Đốt Ô Thum Thảo Nguyên: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 19:00. Giá vé: 250k - 320k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD004",
+      "name": "Gà Đốt Ô Thum Thảo Nguyên",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Gà Đốt Vương Ngọc Ô Thum. Vị trí: Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: Gà Đốt Ô Thum (food_and_restaurants). Mô tả: . Đánh giá: 4.4 sao (450 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD005",
+      "name": "Gà Đốt Vương Ngọc Ô Thum",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Gà Đốt Vương Ngọc Ô Thum: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 19:00. Giá vé: 250k - 320k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD005",
+      "name": "Gà Đốt Vương Ngọc Ô Thum",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Đu Đủ Đâm RiNa Khmer. Vị trí: Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Đặc sản Khmer (food_and_restaurants). Mô tả: . Đánh giá: 4.8 sao (1680 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD006",
+      "name": "Quán Đu Đủ Đâm RiNa Khmer",
+      "commune": "Xã Chau Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Đu Đủ Đâm RiNa Khmer: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 12:00 - 19:00. Giá vé: 20k - 35k. Phù hợp cho: foodie, religion, family, culture. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD006",
+      "name": "Quán Đu Đủ Đâm RiNa Khmer",
+      "suitable_for": [
+        "foodie",
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Đu Đủ Đâm Ly Ly. Vị trí: Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Đặc sản Khmer (food_and_restaurants). Mô tả: . Đánh giá: 4.6 sao (720 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD007",
+      "name": "Quán Đu Đủ Đâm Ly Ly",
+      "commune": "Xã Chau Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Đu Đủ Đâm Ly Ly: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 11:30 - 18:30. Giá vé: 20k - 35k. Phù hợp cho: foodie, religion, family, culture. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD007",
+      "name": "Quán Đu Đủ Đâm Ly Ly",
+      "suitable_for": [
+        "foodie",
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Đu Đủ Đâm Ty Tri Tôn. Vị trí: Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Đặc sản Khmer (food_and_restaurants). Mô tả: . Đánh giá: 4.5 sao (510 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD008",
+      "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
+      "commune": "Xã Chau Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Đu Đủ Đâm Ty Tri Tôn: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 12:00 - 19:00. Giá vé: 20k - 35k. Phù hợp cho: foodie, religion, family, culture. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD008",
+      "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
+      "suitable_for": [
+        "foodie",
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bún Nước Lèo Sơ Nương Khmer. Vị trí: Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Bún nước lèo (food_and_restaurants). Mô tả: . Đánh giá: 4.7 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD009",
+      "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bún Nước Lèo Sơ Nương Khmer: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 06:00 - 11:00. Giá vé: 25k - 35k. Phù hợp cho: foodie, religion, family, culture. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD009",
+      "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
+      "suitable_for": [
+        "foodie",
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bún Nước Lèo Dook Tri Tôn. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Bún nước lèo (food_and_restaurants). Mô tả: . Đánh giá: 4.5 sao (410 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD010",
+      "name": "Quán Bún Nước Lèo Dook Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bún Nước Lèo Dook Tri Tôn: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 06:00 - 11:00. Giá vé: 25k - 35k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD010",
+      "name": "Quán Bún Nước Lèo Dook Tri Tôn",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Lò Bánh Bò Thốt Nốt Nướng Út Cột. Vị trí: Tỉnh Lộ 941, Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Đặc sản mua quà (food_and_restaurants). Mô tả: . Đánh giá: 4.8 sao (1150 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD011",
+      "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
+      "commune": "Xã Chau Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Lò Bánh Bò Thốt Nốt Nướng Út Cột: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 07:00 - 18:00. Giá vé: 35k - 50k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD011",
+      "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Lò Bánh Bò Thốt Nốt Út Dứt. Vị trí: Xã Chau Lăng, Tri Tôn, An Giang, Xã Chau Lăng, Tri Tôn, An Giang. Danh mục: Đặc sản mua quà (food_and_restaurants). Mô tả: . Đánh giá: 4.6 sao (580 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD012",
+      "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
+      "commune": "Xã Chau Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Lò Bánh Bò Thốt Nốt Út Dứt: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 07:00 - 18:00. Giá vé: 35k - 50k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD012",
+      "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bánh Canh Lò Rèn (>30 năm). Vị trí: 114 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Bánh canh (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD013",
+      "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bánh Canh Lò Rèn (>30 năm): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 06:00 - 17:00. Giá vé: 30k - 45k. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "FD013",
+      "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bò 7 Món Ba Chúc. Vị trí: Tỉnh lộ 955N, Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Bò 7 món (food_and_restaurants). Mô tả: . Đánh giá: 4.6 sao (670 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD014",
+      "name": "Quán Bò 7 Món Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bò 7 Món Ba Chúc: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 09:00 - 21:00. Giá vé: 80k - 200k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "FD014",
+      "name": "Quán Bò 7 Món Ba Chúc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Cháo Bò Trái Trúc Ba Chúc. Vị trí: Thị trấn Ba Chúc, Tri Tôn, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: Cháo bò (attractions_nature). Mô tả: . Đánh giá: 4.6 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD015",
+      "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Cháo Bò Trái Trúc Ba Chúc: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 06:00 - 14:00. Giá vé: 30k - 50k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "FD015",
+      "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10. Vị trí: Cầu Số 10, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Bánh xèo miền Tây (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (740 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD016",
+      "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 14:00 - 20:00. Giá vé: 30k - 50k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "FD016",
+      "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bò Nướng Trái Trúc Tri Tôn. Vị trí: Đường Hùng Vương, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Bò nướng Bảy Núi (attractions_nature). Mô tả: . Đánh giá: 4.7 sao (810 lượt đánh giá).",
+    "metadata": {
+      "place_id": "FD017",
+      "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bò Nướng Trái Trúc Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 16:00 - 22:00. Giá vé: 90k - 180k. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "FD017",
+      "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Ruộng Coffee & Homestay Tri Tôn. Vị trí: Đường vào Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Quán Cà Phê & Homestay (cafes_and_homestays). Mô tả: . Đánh giá: 4.6 sao (860 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF001",
+      "name": "Ruộng Coffee & Homestay Tri Tôn",
+      "commune": "Xã Núi Tô",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Ruộng Coffee & Homestay Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 06:30 - 18:30. Giá vé: 20k - 45k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF001",
+      "name": "Ruộng Coffee & Homestay Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Windy Hill Coffee & Homestay Tri Tôn. Vị trí: Khu du lịch Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Quán Cà Phê & Homestay (cafes_and_homestays). Mô tả: . Đánh giá: 4.7 sao (720 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF002",
+      "name": "Windy Hill Coffee & Homestay Tri Tôn",
+      "commune": "Xã Núi Tô",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Windy Hill Coffee & Homestay Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 06:00 - 20:00. Giá vé: 25k - 55k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF002",
+      "name": "Windy Hill Coffee & Homestay Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: CHẠM Coffee & Tea Tri Tôn. Vị trí: 120 Hùng Vương, Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.6 sao (510 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF003",
+      "name": "CHẠM Coffee & Tea Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan CHẠM Coffee & Tea Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 22:00. Giá vé: 20k - 45k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF003",
+      "name": "CHẠM Coffee & Tea Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Anpalm Cafe Tri Tôn. Vị trí: Đường Trần Hưng Đạo, Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.5 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF004",
+      "name": "Anpalm Cafe Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Anpalm Cafe Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 22:00. Giá vé: 25k - 50k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF004",
+      "name": "Anpalm Cafe Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Tiệm Cà Phê Nhà Quê. Vị trí: Cầu Số 10, Xã Tà Đảnh / Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.5 sao (640 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF005",
+      "name": "Tiệm Cà Phê Nhà Quê",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Tiệm Cà Phê Nhà Quê: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 06:30 - 21:00. Giá vé: 15k - 35k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF005",
+      "name": "Tiệm Cà Phê Nhà Quê",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: An Sơn Trà Quán. Vị trí: Gần Suối Vàng Soài So, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.6 sao (410 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF006",
+      "name": "An Sơn Trà Quán",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan An Sơn Trà Quán: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 21:00. Giá vé: 20k - 40k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF006",
+      "name": "An Sơn Trà Quán",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: NY Coffee & Tea Tri Tôn. Vị trí: 66 Trần Phú, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.4 sao (380 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF007",
+      "name": "NY Coffee & Tea Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan NY Coffee & Tea Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 21:30. Giá vé: 20k - 40k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF007",
+      "name": "NY Coffee & Tea Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Mây Coffee & Tea Hồ Soài Chék. Vị trí: Ven bờ Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.5 sao (340 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF008",
+      "name": "Mây Coffee & Tea Hồ Soài Chék",
+      "commune": "Xã Núi Tô",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Mây Coffee & Tea Hồ Soài Chék: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 06:30 - 18:30. Giá vé: 20k - 40k. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF008",
+      "name": "Mây Coffee & Tea Hồ Soài Chék",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quy Coffee House Tri Tôn. Vị trí: Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.5 sao (490 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF009",
+      "name": "Quy Coffee House Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quy Coffee House Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 06:00 - 22:00. Giá vé: 18k - 40k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF009",
+      "name": "Quy Coffee House Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Cà Phê Mùa Gió Lên Hồ Soài So. Vị trí: Khu vực Hồ Soài So, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.5 sao (310 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF010",
+      "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Cà Phê Mùa Gió Lên Hồ Soài So: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 18:00. Giá vé: 20k - 40k. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF010",
+      "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Lang Lang Coffee & Tea. Vị trí: Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Quán Cà Phê (cafes_and_homestays). Mô tả: . Đánh giá: 4.4 sao (270 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF011",
+      "name": "Lang Lang Coffee & Tea",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Lang Lang Coffee & Tea: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 07:00 - 21:30. Giá vé: 20k - 38k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF011",
+      "name": "Lang Lang Coffee & Tea",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Tuyết Anh Homestay & Coffee. Vị trí: 86 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Homestay (cafes_and_homestays). Mô tả: . Đánh giá: 4.6 sao (390 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF012",
+      "name": "Tuyết Anh Homestay & Coffee",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Tuyết Anh Homestay & Coffee: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 24/7. Giá vé: 250k - 450k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "CF012",
+      "name": "Tuyết Anh Homestay & Coffee",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Rồng Vàng Resort Tri Tôn. Vị trí: 19 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Resort (attractions_nature). Mô tả: . Đánh giá: 4.5 sao (620 lượt đánh giá).",
+    "metadata": {
+      "place_id": "CF013",
+      "name": "Rồng Vàng Resort Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Rồng Vàng Resort Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 24/7. Giá vé: 500k - 900k. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "CF013",
+      "name": "Rồng Vàng Resort Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Lễ Hội Đua Bò Bảy Núi Tri Tôn. Vị trí: Sân đua bò Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Lễ hội Khmer (attractions_nature). Mô tả: . Đánh giá: 4.9 sao (2500 lượt đánh giá).",
+    "metadata": {
+      "place_id": "EV001",
+      "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Lễ Hội Đua Bò Bảy Núi Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: Lễ Sene Dolta. Giá vé: Miễn phí. Phù hợp cho: adventure, nature, camping, culture, family, religion. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "EV001",
+      "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping",
+        "culture",
+        "family",
+        "religion"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón. Vị trí: Chùa Xà Tón, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: Di sản Quốc gia (khmer_pagodas_heritage). Mô tả: . Đánh giá: 4.8 sao (980 lượt đánh giá).",
+    "metadata": {
+      "place_id": "EV002",
+      "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 17:00. Giá vé: Miễn phí. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "EV002",
+      "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Nhà hàng Gà Đốt Ô Thum Siêu Bó. Vị trí: Khu vực Hồ Ô Thum, Xã Ô Lâm, An Giang, Xã Ô Lâm, Tri Tôn, An Giang. Danh mục: food_and_restaurants (food_and_restaurants). Mô tả: Nhà hàng phục vụ gà đốt lá chúc nướng niêu đất truyền thống tại bờ hồ Ô Thum.. Đánh giá: 4.6 sao (1420 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_083",
+      "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
+      "commune": "Xã Ô Lâm",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Nhà hàng Gà Đốt Ô Thum Siêu Bó: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping, family, foodie. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_083",
+      "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping",
+        "family",
+        "foodie"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Nhà hàng Bò 7 Món Ba Chúc. Vị trí: Tỉnh lộ 955N, Thị trấn Ba Chúc, An Giang, Thị trấn Ba Chúc, Tri Tôn, An Giang. Danh mục: food_and_restaurants (food_and_restaurants). Mô tả: Nhà hàng thịt bò Bảy Núi nướng bơ tỏi và lẩu bò trái trúc thơm lừng.. Đánh giá: 4.6 sao (670 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_084",
+      "name": "Nhà hàng Bò 7 Món Ba Chúc",
+      "commune": "Thị trấn Ba Chúc",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Nhà hàng Bò 7 Món Ba Chúc: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_084",
+      "name": "Nhà hàng Bò 7 Món Ba Chúc",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bún Nước Lèo Tri Tôn Chị Tư. Vị trí: Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (food_and_restaurants). Mô tả: Quán bún nước lèo cá lóc đồng mắm bò hóc truyền thống kèm heo quay.. Đánh giá: 4.8 sao (650 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_085",
+      "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bún Nước Lèo Tri Tôn Chị Tư: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_085",
+      "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ. Vị trí: Tỉnh lộ 948, Xã Châu Lăng, An Giang, Xã Châu Lăng, Tri Tôn, An Giang. Danh mục: food_and_restaurants (attractions_nature). Mô tả: Lò thắng đường thốt nốt mật ngào dẻo thủ công chính gốc.. Đánh giá: 4.9 sao (340 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_086",
+      "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
+      "commune": "Xã Châu Lăng",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_086",
+      "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn. Vị trí: Khu ẩm thực Chợ Tri Tôn, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (attractions_nature). Mô tả: Bánh bò thốt nốt nướng ngào nước cốt dừa dẻo thơm.. Đánh giá: 4.8 sao (480 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_087",
+      "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_087",
+      "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cà Phê Suối Tri Tôn View Núi Cô Tô. Vị trí: Khu vực Hồ Soài So, Thị trấn Cô Tô, An Giang, Thị trấn Cô Tô, Tri Tôn, An Giang. Danh mục: cafes_and_homestays (cafes_and_homestays). Mô tả: Quán cà phê suối tự nhiên nước mát lạnh góc view chân núi Cô Tô.. Đánh giá: 4.6 sao (360 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_088",
+      "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
+      "commune": "Thị trấn Cô Tô",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cà Phê Suối Tri Tôn View Núi Cô Tô: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_088",
+      "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Soài Chek Homestay & Coffee. Vị trí: Ấp Kè Sen, Xã Núi Tô, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: cafes_and_homestays (cafes_and_homestays). Mô tả: Homestay sân vườn không gian thoáng đãng view hồ Soài Chek.. Đánh giá: 4.7 sao (450 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_090",
+      "name": "Soài Chek Homestay & Coffee",
+      "commune": "Xã Núi Tô",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Soài Chek Homestay & Coffee: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_090",
+      "name": "Soài Chek Homestay & Coffee",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn. Vị trí: Đường Tran Hung Dao, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: cafes_and_homestays (cafes_and_homestays). Mô tả: Khách sạn phòng sạch sẽ tiện nghi trung tâm Thị trấn Tri Tôn.. Đánh giá: 4.4 sao (310 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_091",
+      "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "cafes_and_homestays"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn: Thời điểm đẹp nhất: Chiều (15:00 - 17:30). Thời lượng gợi ý: 1 - 2 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_091",
+      "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Xvayton (Chùa Cũ 500 năm). Vị trí: Khóm 3, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: khmer_pagodas_heritage (khmer_pagodas_heritage). Mô tả: Ngôi chùa Khmer cổ nhất An Giang lưu giữ nhiều bộ kinh lá buông độc đáo.. Đánh giá: 4.8 sao (1250 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_092",
+      "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Xvayton (Chùa Cũ 500 năm): Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_092",
+      "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chùa Tà Pạ. Vị trí: Ngọn đồi Tà Pạ, Xã Núi Tô, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: khmer_pagodas_heritage (khmer_pagodas_heritage). Mô tả: Ngôi chùa Khmer trên ngọn đồi Tà Pạ có kiến trúc tháp nhọn uy nghi.. Đánh giá: 4.7 sao (980 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_093",
+      "name": "Chùa Tà Pạ",
+      "commune": "Xã Núi Tô",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chùa Tà Pạ: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_093",
+      "name": "Chùa Tà Pạ",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn). Vị trí: Thị trấn Cô Tô, An Giang, Thị trấn Cô Tô, Tri Tôn, An Giang. Danh mục: attractions_nature (attractions_nature). Mô tả: Ngọn núi cao 614m danh sơn Thất Sơn Bảy Núi có Hồ Soài So và suối Ô Tà Sóc.. Đánh giá: 4.7 sao (2100 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_094",
+      "name": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
+      "commune": "Thị trấn Cô Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn): Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_094",
+      "name": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Tà Pạ. Vị trí: Xã Núi Tô, An Giang, Xã Núi Tô, Tri Tôn, An Giang. Danh mục: attractions_nature (attractions_nature). Mô tả: Hồ nước xanh trong ngọc tuyệt đẹp được mệnh danh là Tuyệt Tình Cốc Bảy Núi.. Đánh giá: 4.7 sao (2850 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_095",
+      "name": "Hồ Tà Pạ",
+      "commune": "Xã Núi Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Tà Pạ: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_095",
+      "name": "Hồ Tà Pạ",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Hồ Soài So. Vị trí: Chân núi Cô Tô, Thị trấn Cô Tô, An Giang, Thị trấn Cô Tô, Tri Tôn, An Giang. Danh mục: attractions_nature (attractions_nature). Mô tả: Hồ thủy lợi thơ mộng soi bóng dãy núi Phụng Hoàng Sơn.. Đánh giá: 4.6 sao (1340 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_096",
+      "name": "Hồ Soài So",
+      "commune": "Thị trấn Cô Tô",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Hồ Soài So: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_096",
+      "name": "Hồ Soài So",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Di Tích Lịch Sử Đồi Tức Dụp. Vị trí: Ấp Ninh Hòa, Xã An Tức, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: attractions_nature (khmer_pagodas_heritage). Mô tả: Ngọn đồi 2 triệu đô căn cứ kháng chiến kiên cường với hệ thống hang đá huyền bí.. Đánh giá: 4.6 sao (3100 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_097",
+      "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+      "commune": "Xã An Tức",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Di Tích Lịch Sử Đồi Tức Dụp: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_097",
+      "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cánh Đồng Thốt Nốt Trái Tim An Tức. Vị trí: Xã An Tức, An Giang, Xã An Tức, Tri Tôn, An Giang. Danh mục: checkin_spots (checkin_spots). Mô tả: Hàng cây thốt nốt tự nhiên tạo thành hình trái tim độc đáo giữa cánh đồng.. Đánh giá: 4.7 sao (1890 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_098",
+      "name": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
+      "commune": "Xã An Tức",
+      "category": "checkin_spots"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cánh Đồng Thốt Nốt Trái Tim An Tức: Thời điểm đẹp nhất: Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30). Thời lượng gợi ý: 30 - 45 phút. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: couple, family, kids. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_098",
+      "name": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
+      "suitable_for": [
+        "couple",
+        "family",
+        "kids"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Cổng Trời Tri Tôn (Cổng Chùa Koh Kas). Vị trí: Ấp An Hòa, Xã Châu Lăng, An Giang, Xã Châu Lăng, Tri Tôn, An Giang. Danh mục: checkin_spots (khmer_pagodas_heritage). Mô tả: Cổng chùa Khmer cổ hoa văn tinh xảo đứng trần giữa đồng lúa.. Đánh giá: 4.8 sao (2450 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_099",
+      "name": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
+      "commune": "Xã Châu Lăng",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Cổng Trời Tri Tôn (Cổng Chùa Koh Kas): Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_099",
+      "name": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Chợ Trung Tâm Tri Tôn. Vị trí: Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (attractions_nature). Mô tả: Chợ trung tâm sầm uất ngập tràn ẩm thực bánh bò thốt nốt, bún nước lèo.. Đánh giá: 4.5 sao (1120 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_100",
+      "name": "Chợ Trung Tâm Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Chợ Trung Tâm Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_100",
+      "name": "Chợ Trung Tâm Tri Tôn",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Khu Ẩm Thực Chợ Đêm Tri Tôn. Vị trí: Quảng trường Quảng Tế, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (attractions_nature). Mô tả: Khu phố chợ đêm sầm uất bán đồ ăn vặt thốt nốt, xiên nướng, cháo bò.. Đánh giá: 4.6 sao (780 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_101",
+      "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Khu Ẩm Thực Chợ Đêm Tri Tôn: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: foodie, family. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_101",
+      "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+      "suitable_for": [
+        "foodie",
+        "family"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Đu Đủ Đâm & Cánh Gà Nướng Rô. Vị trí: Tỉnh lộ 948, Xã Châu Lăng, An Giang, Xã Châu Lăng, Tri Tôn, An Giang. Danh mục: food_and_restaurants (food_and_restaurants). Mô tả: Món đu đủ đâm Khmer giòn sần sật cay chua cay ăn kèm cánh gà nướng.. Đánh giá: 4.7 sao (590 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_103",
+      "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
+      "commune": "Xã Châu Lăng",
+      "category": "food_and_restaurants"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Đu Đủ Đâm & Cánh Gà Nướng Rô: Thời điểm đẹp nhất: Trưa (11:00 - 13:30) & Tối (17:30 - 20:00). Thời lượng gợi ý: 45 - 60 phút. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Có.",
+    "metadata": {
+      "place_id": "TT_103",
+      "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Quán Bò Nướng Bánh Tráng Tư Liêm. Vị trí: Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (attractions_nature). Mô tả: Bò Bảy Núi nướng vỉ thơm lừng cuốn bánh tráng chấm mắm bò hóc.. Đánh giá: 4.6 sao (520 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_104",
+      "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "attractions_nature"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Quán Bò Nướng Bánh Tráng Tư Liêm: Thời điểm đẹp nhất: Cả ngày (Chiều mát đẹp nhất). Thời lượng gợi ý: 2 - 3 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: adventure, nature, camping. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_104",
+      "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+      "suitable_for": [
+        "adventure",
+        "nature",
+        "camping"
+      ]
+    }
+  },
+  {
+    "chunk_type": "overview",
+    "content": "Địa điểm: Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ. Vị trí: Trước cổng Chùa Xvayton, Thị trấn Tri Tôn, An Giang, Thị trấn Tri Tôn, Tri Tôn, An Giang. Danh mục: food_and_restaurants (khmer_pagodas_heritage). Mô tả: Các món bánh dân gian Khmer đượm vị thốt nốt dừa tươi nướng giòn.. Đánh giá: 4.8 sao (410 lượt đánh giá).",
+    "metadata": {
+      "place_id": "TT_105",
+      "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "khmer_pagodas_heritage"
+    }
+  },
+  {
+    "chunk_type": "travel_guide",
+    "content": "Kinh nghiệm tham quan Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ: Thời điểm đẹp nhất: Sáng sớm (07:00 - 09:30). Thời lượng gợi ý: 1 - 1.5 giờ. Giờ mở cửa: 08:00 - 20:00. Giá vé: Tùy món / Dịch vụ. Phù hợp cho: religion, family, culture. Chỗ đậu xe: Có. Wifi: Không.",
+    "metadata": {
+      "place_id": "TT_105",
+      "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
+      "suitable_for": [
+        "religion",
+        "family",
+        "culture"
+      ]
+    }
+  }
+]
