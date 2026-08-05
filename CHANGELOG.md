@@ -40,6 +40,9 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Đồng Bộ Tài Liệu Mô Hình Doanh Thu & Hệ Thống Quản Lý Admin (`docs/monetization_and_marketing_strategy.md`)**:
+  * **5 Dòng Tiền Doanh Thu (5 Monetization Streams)**: Đã cập nhật bảng chi tiết Phí gian hàng AI Verified Partner (200k-500k/tháng), Quảng cáo đặt chỗ trước, Tài trợ số hóa chính quyền, Hoa hồng Affiliate Booking & Phí kết nối Local Guide.
+  * **Kiến Trúc Phân Quyền Admin Portal & Partner Portal (`/admin` & `/partner`)**: Đồ họa hóa sơ đồ phân quyền RBAC, quản lý địa điểm, duyệt gian hàng Tích Xanh & Nhật ký Audit Log bất biến chuẩn Production Real.
 * **Tối Ưu Hóa Production & Kiểm Định RAG Tự Động (Production Optimization & 100% RAG Eval)**:
   * **Kho Test Golden Dataset (`tests/golden_dataset.json`)**: Đóng gói bộ câu hỏi chuẩn benchmark đánh giá độ chính xác RAG.
   * **Trình Đánh Giá Tự Động (`tests/test_rag_eval.py`)**: Khởi tạo test runner đo lường Faithfulness & Accuracy tự động $\rightarrow$ Đạt điểm tuyệt đối **100.0% Faithfulness & Accuracy Score**.
