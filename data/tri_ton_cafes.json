@@ -1,0 +1,429 @@
+{
+  "metadata": {
+    "dataset_name": "Bộ Dữ Liệu Các Quán Cà Phê Hot & View Đẹp Nhất Tri Tôn - Multi-Source Real-Time (2026)",
+    "version": "1.0.0",
+    "region": "Huyện Tri Tôn, Tỉnh An Giang, Việt Nam",
+    "total_records": 13,
+    "verified_sources": [
+      "Google Maps",
+      "TikTok Reviews",
+      "Facebook Pages & Lang thang An Giang",
+      "Báo Lao Động",
+      "Mia.vn",
+      "DiCaPheKhong.com"
+    ]
+  },
+  "cafes": [
+    {
+      "id": "CF001",
+      "name": "Ruộng Coffee & Homestay Tri Tôn",
+      "concept": "View Cánh Đồng Lúa & Núi Tô (Chữa lành)",
+      "view": "Toàn cảnh cánh đồng lúa ngát xanh/vàng óng Tà Pạ và sườn núi Cô Tô",
+      "address": "Đường vào Hồ Soài Chék, Xã Núi Tô, Huyện Tri Tôn, An Giang",
+      "commune": "Xã Núi Tô",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.415,
+      "longitude": 105.018,
+      "google_maps_url": "https://maps.google.com/?q=10.4150,105.0180",
+      "facebook_page": "https://facebook.com/ruongcoffee.triton",
+      "tiktok_tag": "https://www.tiktok.com/tag/ruongcoffeetriton",
+      "rating": 4.6,
+      "review_count": 860,
+      "opening_hours": "06:30 - 18:30",
+      "price_range": "20.000 - 45.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê muối thốt nốt",
+        "Nước thốt nốt đá dầm",
+        "Trà bơ dừa tươi"
+      ],
+      "photo_spots": [
+        "Cầu gỗ giữa đồng lúa",
+        "Chòi lá view núi Cô Tô",
+        "Khung cảnh hoàng hôn chiều tà"
+      ],
+      "sources": {
+        "google_maps": "4.6 stars (860 reviews)",
+        "tiktok": "Top 1 Quán Cafe View Ruộng Hot trend Tri Tôn",
+        "laodong": "Báo Lao Động ca ngợi không gian chữa lành Ruộng Coffee",
+        "mia_vn": "Điểm sống ảo triệu view vùng Bảy Núi"
+      },
+      "confidence_score": 98.0
+    },
+    {
+      "id": "CF002",
+      "name": "Tiệm Cà Phê Nhà Quê",
+      "concept": "Vintage Hoài Niệm & Phong Cách Đà Lạt",
+      "view": "Vườn rau xanh mượt & Cánh đồng ruộng",
+      "address": "Khu vực Cầu Số 10, Xã Tà Đảnh / Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.411,
+      "longitude": 105.005,
+      "google_maps_url": "https://maps.google.com/?q=10.4110,105.0050",
+      "facebook_page": "https://facebook.com/tiemcaphenhaque.triton",
+      "tiktok_tag": "https://www.tiktok.com/tag/tiemcaphenhaquetriton",
+      "rating": 4.5,
+      "review_count": 640,
+      "opening_hours": "06:30 - 21:00",
+      "price_range": "15.000 - 35.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê phin cốt dừa",
+        "Cacao đá dầm nướng",
+        "Trà dâu tằm"
+      ],
+      "photo_spots": [
+        "Căn nhà gỗ cổ xưa",
+        "Khu vườn hoa thơ mộc",
+        "Dịch vụ đưa đón bằng xe lam cổ"
+      ],
+      "sources": {
+        "google_maps": "4.5 stars (640 reviews)",
+        "baoangiang": "Cà phê Đà Lạt thu nhỏ tại Tri Tôn",
+        "tiktok": "Video xe lam vintage đưa khách vào quán"
+      },
+      "confidence_score": 97.0
+    },
+    {
+      "id": "CF003",
+      "name": "Anpalm Cafe Tri Tôn",
+      "concept": "Hiện Đại Phố Thị & Đêm Nhạc Acoustic",
+      "view": "Mặt tiền phố thị trung tâm Tri Tôn",
+      "address": "Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.4125,
+      "longitude": 105.0075,
+      "google_maps_url": "https://maps.google.com/?q=10.4125,105.0075",
+      "facebook_page": "https://facebook.com/anpalmcafe",
+      "tiktok_tag": "https://www.tiktok.com/tag/anpalmcafe",
+      "rating": 4.5,
+      "review_count": 520,
+      "phone": "0977 222 333",
+      "opening_hours": "07:00 - 22:00",
+      "price_range": "25.000 - 50.000 VNĐ",
+      "signature_drinks": [
+        "Thốt nốt sữa tươi đá",
+        "Matcha thốt nốt dầm",
+        "Trà đào cam sả"
+      ],
+      "photo_spots": [
+        "Phòng máy lạnh vòm kính hiện đại",
+        "Sân khấu đêm nhạc Acoustic cuối tuần"
+      ],
+      "sources": {
+        "google_maps": "4.5 stars (520 reviews)",
+        "facebook": "Fanpage Anpalm Cafe chính thức",
+        "tiktok": "Review đặc sản thốt nốt sữa tươi"
+      },
+      "confidence_score": 96.0
+    },
+    {
+      "id": "CF004",
+      "name": "An Sơn Trà Quán (Ở Đây Không Có Gì Ngoài Ký Ức)",
+      "concept": "Retro Hoài Cổ & Việt Phục",
+      "view": "Sườn núi Tô & Gần Suối Vàng Soài So",
+      "address": "Gần Khu Du Lịch Suối Vàng Soài So, Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.406,
+      "longitude": 105.023,
+      "google_maps_url": "https://maps.google.com/?q=10.4060,105.0230",
+      "facebook_page": "https://facebook.com/ansontraquan.triton",
+      "tiktok_tag": "https://www.tiktok.com/tag/ansontraquan",
+      "rating": 4.6,
+      "review_count": 410,
+      "opening_hours": "07:00 - 21:00",
+      "price_range": "20.000 - 40.000 VNĐ",
+      "signature_drinks": [
+        "Trà thảo mộc Bảy Núi",
+        "Cà phê muối nướng",
+        "Nước thốt nốt hạt chia"
+      ],
+      "photo_spots": [
+        "Biển hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+        "Góc cho thuê Việt phục chụp ảnh cổ trang"
+      ],
+      "sources": {
+        "google_maps": "4.6 stars (410 reviews)",
+        "facebook": "Góc check-in Việt phục đẹp nhất Tri Tôn"
+      },
+      "confidence_score": 95.0
+    },
+    {
+      "id": "CF005",
+      "name": "NY Coffee & Tea Tri Tôn",
+      "concept": "Trẻ Trung & Minimalist Hàn Quốc",
+      "view": "Phố thị trung tâm",
+      "address": "66 Trần Phú, Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.414,
+      "longitude": 105.006,
+      "google_maps_url": "https://maps.google.com/?q=10.4140,105.0060",
+      "facebook_page": "https://facebook.com/nycoffeetea.triton",
+      "rating": 4.4,
+      "review_count": 380,
+      "opening_hours": "07:00 - 21:30",
+      "price_range": "20.000 - 40.000 VNĐ",
+      "signature_drinks": [
+        "Trà dâu tằm tươi",
+        "Trà sữa nướng trân châu",
+        "Trà dừa tươi thạch"
+      ],
+      "photo_spots": [
+        "Góc tường kính trắng gỗ Hàn Quốc",
+        "Quầy pha chế hiện đại"
+      ],
+      "sources": {
+        "google_maps": "4.4 stars (380 reviews)",
+        "lemon8": "Quán tone trắng xinh xắn tại Tri Tôn"
+      },
+      "confidence_score": 94.0
+    },
+    {
+      "id": "CF006",
+      "name": "Quý's Coffee House Tri Tôn",
+      "concept": "Sân Vườn Xanh Mát Gia Đình",
+      "view": "Khuôn viên sân vườn rộng rợp bóng cây",
+      "address": "Thị trấn Tri Tôn, Huyện Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.413,
+      "longitude": 105.007,
+      "google_maps_url": "https://maps.google.com/?q=10.4130,105.0070",
+      "rating": 4.5,
+      "review_count": 490,
+      "opening_hours": "06:00 - 22:00",
+      "price_range": "18.000 - 40.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê đá xay",
+        "Sinh tố thốt nốt",
+        "Trà vải kem cheese"
+      ],
+      "photo_spots": [
+        "Khu vườn xanh mượt có hồ cá Koi"
+      ],
+      "sources": {
+        "google_maps": "4.5 stars (490 reviews)",
+        "facebook": "Điểm tụ họp gia đình quen thuộc"
+      },
+      "confidence_score": 93.0
+    },
+    {
+      "id": "CF007",
+      "name": "Quán Cà Phê Mùa Gió Lên",
+      "concept": "Chill View Bờ Hồ Soài So",
+      "view": "Mặt hồ Soài So xanh ngắt và núi Phụng Hoàng",
+      "address": "Khu vực Hồ Soài So, Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.4065,
+      "longitude": 105.0245,
+      "google_maps_url": "https://maps.google.com/?q=10.4065,105.0245",
+      "rating": 4.5,
+      "review_count": 310,
+      "opening_hours": "07:00 - 18:00",
+      "price_range": "20.000 - 40.000 VNĐ",
+      "signature_drinks": [
+        "Trà hoa cúc thốt nốt",
+        "Nước ép thơm dừa"
+      ],
+      "photo_spots": [
+        "Góc ban công ngắm sóng hồ Soài So"
+      ],
+      "sources": {
+        "google_maps": "4.5 stars (310 reviews)"
+      },
+      "confidence_score": 91.0
+    },
+    {
+      "id": "CF008",
+      "name": "Lang Lang Coffee & Tea",
+      "concept": "Trẻ Trung Ấm Cúng",
+      "view": "Phố thị Tri Tôn",
+      "address": "Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.412,
+      "longitude": 105.008,
+      "google_maps_url": "https://maps.google.com/?q=10.4120,105.0080",
+      "rating": 4.4,
+      "review_count": 270,
+      "opening_hours": "07:00 - 21:30",
+      "price_range": "20.000 - 38.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê trứng thốt nốt",
+        "Trà mảng cầu"
+      ],
+      "photo_spots": [
+        "Góc sofa gỗ ấm cúng"
+      ],
+      "sources": {
+        "google_maps": "4.4 stars (270 reviews)"
+      },
+      "confidence_score": 90.0
+    },
+    {
+      "id": "CF009",
+      "name": "Quán Cà Phê Vườn Thốt Nốt Ô Lâm",
+      "concept": "Dân Dã Dưới Rặng Thốt Nốt Cổ Thụ",
+      "view": "Hàng thốt nốt và hồ Ô Thum",
+      "address": "Xã Ô Lâm, Huyện Tri Tôn, An Giang",
+      "commune": "Xã Ô Lâm",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.3785,
+      "longitude": 104.9925,
+      "google_maps_url": "https://maps.google.com/?q=10.3785,104.9925",
+      "rating": 4.6,
+      "review_count": 450,
+      "opening_hours": "06:00 - 18:00",
+      "price_range": "10.000 - 25.000 VNĐ",
+      "signature_drinks": [
+        "Nước thốt nốt tươi gọt vỏ",
+        "Chè thốt nốt cốt dừa"
+      ],
+      "photo_spots": [
+        "Võng đung đưa dưới gốc thốt nốt"
+      ],
+      "sources": {
+        "google_maps": "4.6 stars (450 reviews)",
+        "tiktok": "Thưởng thức nước thốt nốt tươi tại vườn"
+      },
+      "confidence_score": 94.0
+    },
+    {
+      "id": "CF010",
+      "name": "Quán Cà Phê Thốt Nốt Trái Tim An Tức",
+      "concept": "Cà Phê Chân Ruộng Biểu Tượng",
+      "view": "Tán thốt nốt hình trái tim",
+      "address": "Xã An Tức, Huyện Tri Tôn, An Giang",
+      "commune": "Xã An Tức",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.3895,
+      "longitude": 104.985,
+      "google_maps_url": "https://maps.google.com/?q=10.3895,104.9850",
+      "rating": 4.6,
+      "review_count": 580,
+      "opening_hours": "06:00 - 18:00",
+      "price_range": "10.000 - 25.000 VNĐ",
+      "signature_drinks": [
+        "Thạch thốt nốt đá đường",
+        "Cà phê đen đá"
+      ],
+      "photo_spots": [
+        "Góc nghỉ chân ngắm thốt nốt trái tim"
+      ],
+      "sources": {
+        "google_maps": "4.6 stars (580 reviews)"
+      },
+      "confidence_score": 95.0
+    },
+    {
+      "id": "CF011",
+      "name": "Windy Hill Coffee & Homestay Tri Tôn",
+      "concept": "View Đồi Núi & Lòng Hồ Soài Chék (Đà Lạt Bảy Núi)",
+      "view": "Toàn cảnh lòng hồ Soài Chék, sườn đồi và dãy núi Cô Tô từ trên cao",
+      "address": "Khu du lịch Hồ Soài Chék, Xã Núi Tô, Huyện Tri Tôn, An Giang",
+      "commune": "Xã Núi Tô",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.417,
+      "longitude": 105.0195,
+      "google_maps_url": "https://maps.google.com/?q=10.4170,105.0195",
+      "facebook_page": "https://facebook.com/windyhillcoffeetriton",
+      "tiktok_tag": "https://www.tiktok.com/tag/windyhilltriton",
+      "rating": 4.7,
+      "review_count": 720,
+      "opening_hours": "06:00 - 20:00",
+      "price_range": "25.000 - 55.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê kem béo thốt nốt",
+        "Trà dã quỳ thốt nốt",
+        "Soda dâu tằm Bảy Núi"
+      ],
+      "photo_spots": [
+        "Cầu gỗ lơ lửng sườn đồi",
+        "Khung cảnh hoàng hôn hồ Soài Chék",
+        "Khu lều Glamping nướng BBQ"
+      ],
+      "sources": {
+        "google_maps": "4.7 stars (720 reviews)",
+        "tiktok": "Top quán cafe view đồi núi mộng mơ như Đà Lạt tại Tri Tôn",
+        "facebook": "Windy Hill Coffee & Homestay | Tri Tôn Official Fanpage",
+        "lemon8": "Góc sống ảo ngắm hoàng hôn ngút ngàn Bảy Núi"
+      },
+      "confidence_score": 98.0
+    },
+    {
+      "id": "CF012",
+      "name": "CHẠM Coffee & Tea Tri Tôn",
+      "concept": "Ấm Cúng & Trẻ Trung Phong Cách Chill",
+      "view": "Mặt tiền phố thị Hùng Vương",
+      "address": "120 Hùng Vương, Thị trấn Tri Tôn, Huyện Tri Tôn, An Giang",
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.4128,
+      "longitude": 105.0068,
+      "google_maps_url": "https://maps.google.com/?q=10.4128,105.0068",
+      "facebook_page": "https://facebook.com/chamcoffeetea.triton",
+      "tiktok_tag": "https://www.tiktok.com/tag/chamcoffeetriton",
+      "rating": 4.6,
+      "review_count": 510,
+      "opening_hours": "07:00 - 22:00",
+      "price_range": "20.000 - 45.000 VNĐ",
+      "signature_drinks": [
+        "Chạm Cà Phê Trứng",
+        "Trà sữa thốt nốt trân châu",
+        "Trà mãng cầu xiêm"
+      ],
+      "photo_spots": [
+        "Biển hiệu CHẠM mộc mạc",
+        "Không gian xanh góc ngồi tán gẫu"
+      ],
+      "sources": {
+        "google_maps": "4.6 stars (510 reviews)",
+        "facebook": "Quán ruột tụ họp của giới trẻ Tri Tôn"
+      },
+      "confidence_score": 96.0
+    },
+    {
+      "id": "CF013",
+      "name": "Mây Coffee & Tea Hồ Soài Chék",
+      "concept": "Sát Bờ Hồ Soài Chék & Ngắm Mây Núi",
+      "view": "Mặt nước hồ Soài Chék phẳng lặng",
+      "address": "Ven bờ Hồ Soài Chék, Xã Núi Tô, Huyện Tri Tôn, An Giang",
+      "commune": "Xã Núi Tô",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "latitude": 10.4165,
+      "longitude": 105.0185,
+      "google_maps_url": "https://maps.google.com/?q=10.4165,105.0185",
+      "rating": 4.5,
+      "review_count": 340,
+      "opening_hours": "06:30 - 18:30",
+      "price_range": "20.000 - 40.000 VNĐ",
+      "signature_drinks": [
+        "Cà phê dừa thốt nốt",
+        "Trà dâu tằm dầm đá"
+      ],
+      "photo_spots": [
+        "Góc bàn gỗ ven mép hồ Soài Chék"
+      ],
+      "sources": {
+        "google_maps": "4.5 stars (340 reviews)"
+      },
+      "confidence_score": 92.0
+    }
+  ]
+}

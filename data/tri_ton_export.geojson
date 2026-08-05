@@ -1,0 +1,571 @@
+{
+  "type": "FeatureCollection",
+  "name": "Tri_Ton_Tourism_Points",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0118,
+          10.4216
+        ]
+      },
+      "properties": {
+        "id": "PL001",
+        "name": "Hồ Tà Pạ",
+        "name_en": "Ta Pa Lake",
+        "category": "Hồ nước",
+        "subcategory": "Check-in thiên nhiên",
+        "short_description": "Tuyệt Tình Cốc miền Tây",
+        "address": "Núi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.4216,
+        "longitude": 105.0118,
+        "google_maps_url": "https://maps.google.com/?q=10.4216,105.0118",
+        "ticket_price": "Miễn phí",
+        "rating": 4.6,
+        "review_count": 1250
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0135,
+          10.4208
+        ]
+      },
+      "properties": {
+        "id": "PL002",
+        "name": "Chùa Tà Pạ",
+        "name_en": "Ta Pa Pagoda",
+        "category": "Chùa Khmer",
+        "subcategory": "Tâm linh",
+        "short_description": "Ngôi chùa chênh vách núi",
+        "address": "Đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.4208,
+        "longitude": 105.0135,
+        "google_maps_url": "https://maps.google.com/?q=10.4208,105.0135",
+        "ticket_price": "Miễn phí",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.009,
+          10.418
+        ]
+      },
+      "properties": {
+        "id": "PL003",
+        "name": "Cánh Đồng Lúa Tà Pạ",
+        "name_en": "Ta Pa Rice Fields",
+        "category": "Cánh đồng",
+        "subcategory": "Danh thắng",
+        "short_description": "Thảm lúa ô màu & con đường tơ lụa",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.418,
+        "longitude": 105.009,
+        "google_maps_url": "https://maps.google.com/?q=10.4180,105.0090",
+        "ticket_price": "Miễn phí",
+        "rating": 4.8,
+        "review_count": 1500
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.025,
+          10.405
+        ]
+      },
+      "properties": {
+        "id": "PL004",
+        "name": "Hồ Soài So",
+        "name_en": "Soai So Lake",
+        "category": "Hồ nước",
+        "subcategory": "Khu sinh thái",
+        "short_description": "Suối Vàng Soài So dưới chân núi Cô Tô",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.405,
+        "longitude": 105.025,
+        "google_maps_url": "https://maps.google.com/?q=10.4050,105.0250",
+        "ticket_price": "Miễn phí",
+        "rating": 4.5,
+        "review_count": 670
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.015,
+          10.4
+        ]
+      },
+      "properties": {
+        "id": "PL005",
+        "name": "Núi Cô Tô & Đá Vồ Hội",
+        "name_en": "Co To Mountain",
+        "category": "Núi",
+        "subcategory": "Săn mây",
+        "short_description": "Đỉnh núi cao 614m đón bình minh ngắm trọn Bảy Núi",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.4,
+        "longitude": 105.015,
+        "google_maps_url": "https://maps.google.com/?q=10.4000,105.0150",
+        "ticket_price": "Miễn phí",
+        "rating": 4.7,
+        "review_count": 980
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.019,
+          10.416
+        ]
+      },
+      "properties": {
+        "id": "PL006",
+        "name": "Hồ Soài Chék",
+        "name_en": "Soai Chek Lake",
+        "category": "Hồ nước",
+        "subcategory": "Check-in",
+        "short_description": "Hồ nước bình yên sườn đồi Tà Pạ",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.416,
+        "longitude": 105.019,
+        "google_maps_url": "https://maps.google.com/?q=10.4160,105.0190",
+        "ticket_price": "Miễn phí",
+        "rating": 4.5,
+        "review_count": 320
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.992,
+          10.378
+        ]
+      },
+      "properties": {
+        "id": "PL007",
+        "name": "Hồ Ô Thum",
+        "name_en": "O Thum Lake",
+        "category": "Hồ nước",
+        "subcategory": "Gà đốt Ô Thum",
+        "short_description": "Thủ phủ món gà đốt Ô Thum và cầu gỗ mộc",
+        "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.378,
+        "longitude": 104.992,
+        "google_maps_url": "https://maps.google.com/?q=10.3780,104.9920",
+        "ticket_price": "Miễn phí",
+        "rating": 4.6,
+        "review_count": 1890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9667,
+          10.3702
+        ]
+      },
+      "properties": {
+        "id": "PL008",
+        "name": "Khu Du Lịch Đồi Tức Dụp",
+        "name_en": "Tuc Dup Hill",
+        "category": "Di tích lịch sử",
+        "subcategory": "Khu du lịch",
+        "short_description": "Ngọn đồi 2 triệu USD với hệ thống hang động granite",
+        "address": "Ấp Ninh Hòa, Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.3702,
+        "longitude": 104.9667,
+        "ticket_price": "60.000 VNĐ",
+        "rating": 4.5,
+        "review_count": 2100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.985,
+          10.3895
+        ]
+      },
+      "properties": {
+        "id": "PL009",
+        "name": "Hàng Thốt Nốt Trái Tim",
+        "name_en": "Heart Palmyra Palms",
+        "category": "Điểm check-in",
+        "subcategory": "Biểu tượng",
+        "short_description": "Cụm thốt nốt cổ thụ tạo hình trái tim tự nhiên",
+        "address": "Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.3895,
+        "longitude": 104.985,
+        "ticket_price": "Miễn phí",
+        "rating": 4.6,
+        "review_count": 1420
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.002,
+          10.441
+        ]
+      },
+      "properties": {
+        "id": "PL010",
+        "name": "Cổng Trời Tri Tôn (Chùa Koh Kas)",
+        "name_en": "Koh Kas Gate",
+        "category": "Điểm check-in",
+        "subcategory": "Kiến trúc Khmer",
+        "short_description": "Cổng chùa vòm Khmer trần giữa đồng lúa",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.441,
+        "longitude": 105.002,
+        "ticket_price": "Miễn phí",
+        "rating": 4.6,
+        "review_count": 1100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.001,
+          10.435
+        ]
+      },
+      "properties": {
+        "id": "PL011",
+        "name": "Chùa Hàng Còng (Krăng Krốch)",
+        "name_en": "Krang Kroch Pagoda",
+        "category": "Chùa Khmer",
+        "subcategory": "Thắng cảnh",
+        "short_description": "Vòm cây còng cổ thụ trăm tuổi dẫn vào chùa",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.435,
+        "longitude": 105.001,
+        "ticket_price": "Miễn phí",
+        "rating": 4.6,
+        "review_count": 780
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.952,
+          10.456
+        ]
+      },
+      "properties": {
+        "id": "PL012",
+        "name": "Khu Di Tích & Hồ Ô Tà Sóc",
+        "name_en": "O Ta Soc Lake",
+        "category": "Di tích lịch sử",
+        "subcategory": "Rừng tầm vông",
+        "short_description": "Căn cứ Tỉnh ủy An Giang ngầm dưới lòng đá",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.456,
+        "longitude": 104.952,
+        "ticket_price": "Miễn phí",
+        "rating": 4.5,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.908,
+          10.495
+        ]
+      },
+      "properties": {
+        "id": "PL013",
+        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
+        "name_en": "Ba Chuc Memorial Site",
+        "category": "Di tích lịch sử",
+        "subcategory": "Di tích Quốc gia",
+        "short_description": "Nơi tưởng niệm 3.157 nạn nhân thảm sát Ba Chúc 1978",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.495,
+        "longitude": 104.908,
+        "ticket_price": "Miễn phí",
+        "rating": 4.7,
+        "review_count": 1340
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0088,
+          10.4132
+        ]
+      },
+      "properties": {
+        "id": "PL014",
+        "name": "Chùa Xà Tón (Wat Xvayton)",
+        "name_en": "Xvayton Pagoda",
+        "category": "Chùa Khmer",
+        "subcategory": "Di tích Quốc gia",
+        "short_description": "Ngôi chùa Khmer cổ nhất An Giang bảo tồn Kinh Lá Buông",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.4132,
+        "longitude": 105.0088,
+        "ticket_price": "Miễn phí",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.002,
+          10.482
+        ]
+      },
+      "properties": {
+        "id": "PL015",
+        "name": "Hồ Đá Latina",
+        "name_en": "Latina Lake",
+        "category": "Hồ nước",
+        "subcategory": "Cắm trại",
+        "short_description": "Hồ vách đá đứng hoang sơ mộc mạc",
+        "address": "Xã An Hảo, Tri Tôn, An Giang",
+        "commune": "Xã An Hảo",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.482,
+        "longitude": 105.002,
+        "ticket_price": "Miễn phí",
+        "rating": 4.5,
+        "review_count": 940
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.952,
+          10.456
+        ]
+      },
+      "properties": {
+        "id": "DP001",
+        "name": "Quán Nước & Thốt Nốt Sữa Rừng Tầm Vông Ô Tà Sóc",
+        "category": "Cà phê & Quán nước dã ngoại",
+        "address": "Đường vào Căn cứ Ô Tà Sóc, Xã Lương Phi, Huyện Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.456,
+        "longitude": 104.952,
+        "google_maps_url": "https://maps.google.com/?q=10.4560,104.9520",
+        "rating": 4.7,
+        "review_count": 420,
+        "signature_items": [
+          "Thốt nốt sữa tươi mát lạnh",
+          "Nước thốt nốt ướp lạnh",
+          "Bánh bò thốt nốt"
+        ],
+        "description": "Quán nghỉ chân rợp bóng rừng tầm vông xanh mát dẫn tới lòng hồ Ô Tà Sóc.",
+        "confidence_score": 96.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.962,
+          10.478
+        ]
+      },
+      "properties": {
+        "id": "DP002",
+        "name": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
+        "category": "Cà phê view lòng hồ",
+        "address": "Khu vực Hồ Ô Tà Lọt, Xã An Hảo / Tri Tôn, An Giang",
+        "commune": "Xã An Hảo",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.478,
+        "longitude": 104.962,
+        "google_maps_url": "https://maps.google.com/?q=10.4780,104.9620",
+        "rating": 4.5,
+        "review_count": 290,
+        "signature_items": [
+          "Cà phê phin đá thốt nốt",
+          "Trà dâu tằm dầm"
+        ],
+        "description": "Quán view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
+        "confidence_score": 94.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0072,
+          10.4135
+        ]
+      },
+      "properties": {
+        "id": "DP003",
+        "name": "Quán Bánh Canh Lò Rèn Tri Tôn (>30 năm)",
+        "category": "Quán ăn đặc sản truyền thống",
+        "address": "114 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.4135,
+        "longitude": 105.0072,
+        "google_maps_url": "https://maps.google.com/?q=10.4135,105.0072",
+        "rating": 4.7,
+        "review_count": 890,
+        "signature_items": [
+          "Bánh canh bột gạo Sóc thủ công",
+          "Giò heo giòn bì",
+          "Nước dùng ngọt thanh xương ống"
+        ],
+        "description": "Quán bánh canh gia truyền nổi tiếng nhất Tri Tôn có tuổi đời trên 30 năm.",
+        "confidence_score": 98.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.909,
+          10.496
+        ]
+      },
+      "properties": {
+        "id": "DP004",
+        "name": "Quán Bò 7 Món & Cháo Bò Bảy Núi Ba Chúc",
+        "category": "Quán ăn đặc sản thịt bò Bảy Núi",
+        "address": "Tỉnh lộ 955N, Thị trấn Ba Chúc, Huyện Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.496,
+        "longitude": 104.909,
+        "google_maps_url": "https://maps.google.com/?q=10.4960,104.9090",
+        "rating": 4.6,
+        "review_count": 670,
+        "signature_items": [
+          "Cháo bò trái trúc",
+          "Bò nướng bơ tỏi",
+          "Lẩu bò Bảy Núi ăn kèm rau rừng"
+        ],
+        "description": "Quán bò tươi Bảy Núi trứ danh vùng Ba Chúc được phượt thủ yêu thích.",
+        "confidence_score": 96.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.991,
+          10.378
+        ]
+      },
+      "properties": {
+        "id": "DP005",
+        "name": "Quán Ăn Gà Đốt Ô Thum Thảo Nguyên",
+        "category": "Quán ăn ẩm thực Gà Đốt Ô Thum",
+        "address": "Khu vực Hồ Ô Thum, Xã Ô Lâm, Huyện Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "district": "Tri Tôn",
+        "province": "An Giang",
+        "latitude": 10.378,
+        "longitude": 104.991,
+        "google_maps_url": "https://maps.google.com/?q=10.3780,104.9910",
+        "rating": 4.5,
+        "review_count": 810,
+        "signature_items": [
+          "Gà đốt lá chúc da giòn",
+          "Tham quan vườn nho sai trái"
+        ],
+        "description": "Quán gà đốt có không gian rộng rãi kết hợp tham quan vườn nho độc đáo.",
+        "confidence_score": 95.0
+      }
+    }
+  ]
+}

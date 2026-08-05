@@ -1,0 +1,83 @@
+﻿id,name,category_group,category,address,commune,latitude,longitude,rating,review_count,ticket_price,opening_hours,phone
+PL001,Hồ Tà Pạ (Tuyệt Tình Cốc),attractions_nature,Hồ nước,"Núi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4216,105.0118,4.6,1850,Miễn phí,06:00 - 18:00,
+PL002,Hồ Soài So,attractions_nature,Hồ nước,"Sườn núi Cô Tô, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.405,105.025,4.5,670,Miễn phí,06:00 - 18:00,
+PL003,Hồ Soài Chék,attractions_nature,Hồ nước,"Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.416,105.019,4.5,320,Miễn phí,06:00 - 18:00,
+PL004,Hồ Ô Thum,attractions_nature,Hồ nước,"Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.378,104.992,4.6,1890,Miễn phí,07:00 - 20:00,
+PL005,Hồ Ô Tà Sóc,attractions_nature,Hồ nước,"Xã Lương Phi, Tri Tôn, An Giang",Xã Lương Phi,10.456,104.952,4.5,520,Miễn phí,07:00 - 17:00,
+PL006,Hồ Ô Tà Lọt,attractions_nature,Hồ nước,"Xã An Hảo, Tri Tôn, An Giang",Xã An Hảo,10.478,104.962,4.5,290,Miễn phí,07:00 - 17:00,
+PL007,Hồ Đá Latina,attractions_nature,Hồ nước,"Xã An Hảo, Tri Tôn, An Giang",Xã An Hảo,10.482,105.002,4.5,940,Miễn phí,Tự do,
+PL008,Núi Cô Tô (Phụng Hoàng Sơn),attractions_nature,Núi,"Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4,105.015,4.7,1120,Miễn phí,Tự do,
+PL009,Đá Vồ Hội Mẹ Cô Tô,attractions_nature,Săn mây,"Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.401,105.016,4.8,890,Miễn phí,Tự do,
+PL010,Khu Du Lịch Đồi Tức Dụp,attractions_nature,Di tích lịch sử,"Ấp Ninh Hòa, Xã An Tức, Tri Tôn, An Giang",Xã An Tức,10.3702,104.9667,4.5,2100,60.000 VNĐ,07:00 - 17:00,
+PL011,Cánh Đồng Lúa Tà Pạ,attractions_nature,Cánh đồng,"Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.418,105.009,4.8,1500,Miễn phí,Tự do,
+PL012,Rừng Tầm Vông Ô Tà Sóc,attractions_nature,Rừng sinh thái,"Xã Lương Phi, Tri Tôn, An Giang",Xã Lương Phi,10.457,104.953,4.6,410,Miễn phí,07:00 - 17:00,
+PL013,Cánh Đồng Lúa Ba Chúc,attractions_nature,Cánh đồng,"Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.493,104.905,4.6,350,Miễn phí,Tự do,
+PL014,Vườn Nho Nông Trại Ô Thum,attractions_nature,Nông trại,"Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.3782,104.9912,4.5,520,10.000 VNĐ,07:30 - 17:30,
+PL015,Vườn Mãng Cầu Núi Tô,attractions_nature,Nông trại,"Sườn Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.408,105.021,4.5,280,Miễn phí,07:00 - 17:00,
+PL016,Suối Vàng Soài So,attractions_nature,Suối sinh thái,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4055,105.0255,4.5,430,Miễn phí,07:00 - 17:00,
+PL017,Núi Dài (Ngọa Long Sơn),attractions_nature,Núi,"Xã Lương Phi, Tri Tôn, An Giang",Xã Lương Phi,10.45,104.94,4.6,390,Miễn phí,Tự do,
+PL018,Cánh Đồng Thốt Nốt Chau Lăng,attractions_nature,Cánh đồng,"Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.437,105.003,4.6,610,Miễn phí,Tự do,
+PL019,Vách Đá Đứng Latina,attractions_nature,Check-in thiên nhiên,"Xã An Hảo, Tri Tôn, An Giang",Xã An Hảo,10.4825,105.0025,4.6,480,Miễn phí,Tự do,
+PL020,Bãi Thả Diều Hoàng Hôn Tri Tôn,attractions_nature,Tọa độ chill hoàng hôn,"Sân đua bò Huyện Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4122,105.0082,4.8,1150,Miễn phí,16:00 - 18:30,
+CK001,Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948),checkin_spots,Cung đường ngắm núi Cô Tô chill nhất An Giang,"Tuyến đường tránh kết nối ĐT941 - ĐT948, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.419,105.012,4.9,2100,Miễn phí,Tự do (Chiều 16:00 - 17:30 đẹp nhất),
+CK002,Con Đường Tơ Lụa Tà Pạ,checkin_spots,Con đường tơ lụa,"Đồng lúa Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4185,105.0095,4.8,1280,Miễn phí,Tự do,
+CK003,Con Đường Tơ Lụa Soài Chék,checkin_spots,Con đường tơ lụa,"Ven hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4162,105.0188,4.7,890,Miễn phí,Tự do,
+CK004,Con Đường Vòm Còng Châu Lăng,checkin_spots,Con đường nhiếp ảnh,"Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.4355,105.0015,4.7,940,Miễn phí,Tự do,
+CK005,Con Đường Thốt Nốt Ô Lâm - Cô Tô,checkin_spots,Con đường nhiếp ảnh,"Tuyến đường Ô Lâm - Núi Tô, Tri Tôn, An Giang",Xã Ô Lâm,10.38,104.995,4.6,720,Miễn phí,Tự do,
+CK006,Con Đường Tre Tầm Vông Ô Tà Sóc,checkin_spots,Con đường nhiếp ảnh,"Xã Lương Phi, Tri Tôn, An Giang",Xã Lương Phi,10.4565,104.9525,4.7,610,Miễn phí,Tự do,
+CK007,Cung Đường Ven Vách Đá Núi Dài (Lương Phi),checkin_spots,Cung đường phượt ngắm núi,"Tuyến Lương Phi - Lê Trì, Tri Tôn, An Giang",Xã Lương Phi,10.458,104.945,4.7,540,Miễn phí,Tự do,
+CK008,Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc),checkin_spots,Cung đường biên giới,"Tuyến Ba Chúc - Lạc Quới, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.498,104.901,4.7,680,Miễn phí,Tự do,
+CK009,Hàng Thốt Nốt Trái Tim An Tức,checkin_spots,Điểm check-in biểu tượng,"Xã An Tức, Tri Tôn, An Giang",Xã An Tức,10.3895,104.985,4.7,1560,Miễn phí,Tự do,
+CK010,Cổng Trời Tri Tôn Vòm Khmer,checkin_spots,Điểm check-in biểu tượng,"Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.441,105.002,4.7,1320,Miễn phí,Tự do,
+CK011,Cây Thốt Nốt Cô Độc Chau Lăng,checkin_spots,Điểm check-in độc đáo,"Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.439,105.0035,4.6,540,Miễn phí,Tự do,
+CK012,Cầu Gỗ Mộc Mạc Hồ Ô Thum,checkin_spots,Điểm check-in sống ảo,"Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.378,104.992,4.6,890,Miễn phí,Tự do,
+CK013,Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee,checkin_spots,Điểm check-in sống ảo,"Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4152,105.0182,4.7,780,Miễn phí,06:30 - 18:30,
+CK014,Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo),checkin_spots,Tọa độ săn ảnh đỉnh núi,"Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4015,105.0165,4.8,920,Miễn phí,Tự do,
+CK015,Cầu Cây Dã Ngoại Hồ Soài So,checkin_spots,Điểm check-in ven hồ,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4052,105.0252,4.5,410,Miễn phí,Tự do,
+CK016,Nấc Thang Thiên Đường Kiều Tiên Ô Thum,checkin_spots,Tiểu cảnh check-in,"Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.3776,104.9926,4.5,460,Miễn phí,08:00 - 19:00,
+CK017,Căn Nhà Gỗ Vintage Nhà Quê,checkin_spots,Góc chụp Đà Lạt,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4112,105.0052,4.6,520,Miễn phí,06:30 - 21:00,
+CK018,Cầu Khỉ Giữa Cánh Đồng Thốt Nốt,checkin_spots,Điểm check-in mộc mạc,"Xã An Tức, Tri Tôn, An Giang",Xã An Tức,10.388,104.986,4.6,380,Miễn phí,Tự do,
+CK019,Quầy Thốt Nốt Tươi Cụm Trái Tim,checkin_spots,Góc giải khát chill,"Chân cụm thốt nốt trái tim, Xã An Tức, Tri Tôn, An Giang",Xã An Tức,10.3896,104.9851,4.7,640,10k - 20k,07:00 - 18:00,
+CK020,Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức,checkin_spots,Góc ảnh Việt phục cổ trang,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4062,105.0232,4.7,420,Miễn phí,07:00 - 21:00,
+HG001,Chùa Tà Pạ (Chùa Núi),khmer_pagodas_heritage,Chùa Khmer,"Đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4208,105.0135,4.7,890,Miễn phí,06:00 - 18:00,
+HG002,Chùa Xà Tón (Wat Xvayton),khmer_pagodas_heritage,Chùa Khmer cổ,"Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4132,105.0088,4.7,890,Miễn phí,06:00 - 18:00,
+HG003,Chùa Hàng Còng (Krăng Krốch),khmer_pagodas_heritage,Chùa Khmer cổ,"Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.435,105.001,4.6,780,Miễn phí,06:00 - 18:00,
+HG004,Chùa Cổng Trời Koh Kas,khmer_pagodas_heritage,Chùa Khmer,"Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.441,105.002,4.6,1320,Miễn phí,06:00 - 18:00,
+HG005,Khu Di Tích Nhà Mồ Ba Chúc,khmer_pagodas_heritage,Di tích Quốc gia,"Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.495,104.908,4.7,1340,Miễn phí,07:00 - 17:00,
+HG006,Chùa Phi Lai Ba Chúc,khmer_pagodas_heritage,Chùa tâm linh,"Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.4945,104.9075,4.6,520,Miễn phí,06:00 - 18:00,
+HG007,Chùa Tam Bửu Ba Chúc,khmer_pagodas_heritage,Chùa tâm linh,"Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.4955,104.9085,4.6,480,Miễn phí,06:00 - 18:00,
+HG008,Khu Di Tích Căn Cứ Ô Tà Sóc,khmer_pagodas_heritage,Di tích lịch sử,"Xã Lương Phi, Tri Tôn, An Giang",Xã Lương Phi,10.456,104.952,4.6,520,Miễn phí,07:00 - 17:00,
+HG009,Chùa Soài So Khmer,khmer_pagodas_heritage,Chùa Khmer,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.406,105.024,4.5,310,Miễn phí,06:00 - 18:00,
+HG010,Chùa Mới Ô Lâm,khmer_pagodas_heritage,Chùa Khmer,"Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.379,104.993,4.5,270,Miễn phí,06:00 - 18:00,
+FD001,Quán Siêu Gà Đốt Ô Thum (Chau Siêu),food_and_restaurants,Gà Đốt Ô Thum,"Tỉnh lộ 15, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.3785,104.9915,4.6,1450,250k - 320k,09:00 - 18:00,0989 123 456
+FD002,Quán Kiều Tiên Gà Đốt Ô Thum,food_and_restaurants,Gà Đốt Ô Thum,"Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.3775,104.9925,4.5,920,250k - 330k,08:00 - 19:30,0912 345 678
+FD003,Gà Đốt Ô Thum Kim Suổl,food_and_restaurants,Gà Đốt Ô Thum,"Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.379,104.993,4.5,780,260k - 350k,06:00 - 23:00,0977 888 999
+FD004,Gà Đốt Ô Thum Thảo Nguyên,food_and_restaurants,Gà Đốt Ô Thum,"Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.378,104.991,4.5,810,250k - 320k,08:00 - 19:00,0988 777 666
+FD005,Gà Đốt Vương Ngọc Ô Thum,food_and_restaurants,Gà Đốt Ô Thum,"Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",Xã Ô Lâm,10.377,104.992,4.4,450,250k - 320k,08:00 - 19:00,0918 222 333
+FD006,Quán Đu Đủ Đâm RiNa Khmer,food_and_restaurants,Đặc sản Khmer,"Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.438,105.003,4.8,1680,20k - 35k,12:00 - 19:00,0979 111 222
+FD007,Quán Đu Đủ Đâm Ly Ly,food_and_restaurants,Đặc sản Khmer,"Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.4385,105.0035,4.6,720,20k - 35k,11:30 - 18:30,0988 333 444
+FD008,Quán Đu Đủ Đâm Ty Tri Tôn,food_and_restaurants,Đặc sản Khmer,"Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.4375,105.0025,4.5,510,20k - 35k,12:00 - 19:00,
+FD009,Quán Bún Nước Lèo Sơ Nương Khmer,food_and_restaurants,Bún nước lèo,"Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.413,105.007,4.7,890,25k - 35k,06:00 - 11:00,
+FD010,Quán Bún Nước Lèo Dook Tri Tôn,food_and_restaurants,Bún nước lèo,"Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4125,105.0065,4.5,410,25k - 35k,06:00 - 11:00,
+FD011,Lò Bánh Bò Thốt Nốt Nướng Út Cột,food_and_restaurants,Đặc sản mua quà,"Tỉnh Lộ 941, Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.436,105.004,4.8,1150,35k - 50k,07:00 - 18:00,0919 888 777
+FD012,Lò Bánh Bò Thốt Nốt Út Dứt,food_and_restaurants,Đặc sản mua quà,"Xã Chau Lăng, Tri Tôn, An Giang",Xã Chau Lăng,10.4365,105.0045,4.6,580,35k - 50k,07:00 - 18:00,0918 666 555
+FD013,Quán Bánh Canh Lò Rèn (>30 năm),food_and_restaurants,Bánh canh,"114 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4135,105.0072,4.7,890,30k - 45k,06:00 - 17:00,
+FD014,Quán Bò 7 Món Ba Chúc,food_and_restaurants,Bò 7 món,"Tỉnh lộ 955N, Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.496,104.909,4.6,670,80k - 200k,09:00 - 21:00,
+FD015,Quán Cháo Bò Trái Trúc Ba Chúc,food_and_restaurants,Cháo bò,"Thị trấn Ba Chúc, Tri Tôn, An Giang",Thị trấn Ba Chúc,10.495,104.908,4.6,520,30k - 50k,06:00 - 14:00,
+FD016,Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10,food_and_restaurants,Bánh xèo miền Tây,"Cầu Số 10, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4115,105.0055,4.7,740,30k - 50k,14:00 - 20:00,
+FD017,Quán Bò Nướng Trái Trúc Tri Tôn,food_and_restaurants,Bò nướng Bảy Núi,"Đường Hùng Vương, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4126,105.0066,4.7,810,90k - 180k,16:00 - 22:00,
+CF001,Ruộng Coffee & Homestay Tri Tôn,cafes_and_homestays,Quán Cà Phê & Homestay,"Đường vào Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.415,105.018,4.6,860,20k - 45k,06:30 - 18:30,0988 111 222
+CF002,Windy Hill Coffee & Homestay Tri Tôn,cafes_and_homestays,Quán Cà Phê & Homestay,"Khu du lịch Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.417,105.0195,4.7,720,25k - 55k,06:00 - 20:00,0977 444 555
+CF003,CHẠM Coffee & Tea Tri Tôn,cafes_and_homestays,Quán Cà Phê,"120 Hùng Vương, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4128,105.0068,4.6,510,20k - 45k,07:00 - 22:00,
+CF004,Anpalm Cafe Tri Tôn,cafes_and_homestays,Quán Cà Phê,"Đường Trần Hưng Đạo, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4125,105.0075,4.5,520,25k - 50k,07:00 - 22:00,0977 222 333
+CF005,Tiệm Cà Phê Nhà Quê,cafes_and_homestays,Quán Cà Phê,"Cầu Số 10, Xã Tà Đảnh / Tri Tôn, An Giang",Thị trấn Tri Tôn,10.411,105.005,4.5,640,15k - 35k,06:30 - 21:00,
+CF006,An Sơn Trà Quán,cafes_and_homestays,Quán Cà Phê,"Gần Suối Vàng Soài So, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.406,105.023,4.6,410,20k - 40k,07:00 - 21:00,
+CF007,NY Coffee & Tea Tri Tôn,cafes_and_homestays,Quán Cà Phê,"66 Trần Phú, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.414,105.006,4.4,380,20k - 40k,07:00 - 21:30,
+CF008,Mây Coffee & Tea Hồ Soài Chék,cafes_and_homestays,Quán Cà Phê,"Ven bờ Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.4165,105.0185,4.5,340,20k - 40k,06:30 - 18:30,
+CF009,Quy Coffee House Tri Tôn,cafes_and_homestays,Quán Cà Phê,"Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.413,105.007,4.5,490,18k - 40k,06:00 - 22:00,
+CF010,Quán Cà Phê Mùa Gió Lên Hồ Soài So,cafes_and_homestays,Quán Cà Phê,"Khu vực Hồ Soài So, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4065,105.0245,4.5,310,20k - 40k,07:00 - 18:00,
+CF011,Lang Lang Coffee & Tea,cafes_and_homestays,Quán Cà Phê,"Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.412,105.008,4.4,270,20k - 38k,07:00 - 21:30,
+CF012,Tuyết Anh Homestay & Coffee,cafes_and_homestays,Homestay,"86 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.411,105.0095,4.6,390,250k - 450k,24/7,0918 345 678
+CF013,Rồng Vàng Resort Tri Tôn,cafes_and_homestays,Resort,"19 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang",Thị trấn Tri Tôn,10.41,105.01,4.5,620,500k - 900k,24/7,0296 3869 999
+EV001,Lễ Hội Đua Bò Bảy Núi Tri Tôn,events_and_culture,Lễ hội Khmer,"Sân đua bò Huyện Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.412,105.008,4.9,2500,Miễn phí,Lễ Sene Dolta,
+EV002,Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón,events_and_culture,Di sản Quốc gia,"Chùa Xà Tón, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4132,105.0088,4.8,980,Miễn phí,08:00 - 17:00,

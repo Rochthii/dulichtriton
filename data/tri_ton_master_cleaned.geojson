@@ -1,0 +1,1653 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "dataset_name": "Bộ Dữ Liệu Du Lịch Tri Tôn 82 Thực Thể Mở Rộng Tuyến Tránh Tri Tôn & Cung Đường Đẹp Báo An Giang",
+    "version": "10.0.0-BYPASS-SCENIC-ROADS",
+    "region": "Tri Tôn, Tỉnh An Giang, Việt Nam",
+    "total_records": 82,
+    "data_quality_standard": "Normalized Unicode NFC, Aligned with Vietnam Administrative Reform, Verified WGS84 Coordinates",
+    "last_updated": "2026-08-05"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0118,
+          10.4216
+        ]
+      },
+      "properties": {
+        "id": "PL001",
+        "name": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Núi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.6,
+        "review_count": 1850
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.025,
+          10.405
+        ]
+      },
+      "properties": {
+        "id": "PL002",
+        "name": "Hồ Soài So",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Sườn núi Cô Tô, Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 670
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.019,
+          10.416
+        ]
+      },
+      "properties": {
+        "id": "PL003",
+        "name": "Hồ Soài Chék",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.5,
+        "review_count": 320
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.992,
+          10.378
+        ]
+      },
+      "properties": {
+        "id": "PL004",
+        "name": "Hồ Ô Thum",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.6,
+        "review_count": 1890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.952,
+          10.456
+        ]
+      },
+      "properties": {
+        "id": "PL005",
+        "name": "Hồ Ô Tà Sóc",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.5,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.962,
+          10.478
+        ]
+      },
+      "properties": {
+        "id": "PL006",
+        "name": "Hồ Ô Tà Lọt",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Xã An Hảo, Tri Tôn, An Giang",
+        "commune": "Xã An Hảo",
+        "rating": 4.5,
+        "review_count": 290
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.002,
+          10.482
+        ]
+      },
+      "properties": {
+        "id": "PL007",
+        "name": "Hồ Đá Latina",
+        "category_group": "attractions_nature",
+        "category": "Hồ nước",
+        "address": "Xã An Hảo, Tri Tôn, An Giang",
+        "commune": "Xã An Hảo",
+        "rating": 4.5,
+        "review_count": 940
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.015,
+          10.4
+        ]
+      },
+      "properties": {
+        "id": "PL008",
+        "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+        "category_group": "attractions_nature",
+        "category": "Núi",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.7,
+        "review_count": 1120
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.016,
+          10.401
+        ]
+      },
+      "properties": {
+        "id": "PL009",
+        "name": "Đá Vồ Hội Mẹ Cô Tô",
+        "category_group": "attractions_nature",
+        "category": "Săn mây",
+        "address": "Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.8,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9667,
+          10.3702
+        ]
+      },
+      "properties": {
+        "id": "PL010",
+        "name": "Khu Du Lịch Đồi Tức Dụp",
+        "category_group": "attractions_nature",
+        "category": "Di tích lịch sử",
+        "address": "Ấp Ninh Hòa, Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "rating": 4.5,
+        "review_count": 2100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.009,
+          10.418
+        ]
+      },
+      "properties": {
+        "id": "PL011",
+        "name": "Cánh Đồng Lúa Tà Pạ",
+        "category_group": "attractions_nature",
+        "category": "Cánh đồng",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.8,
+        "review_count": 1500
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.953,
+          10.457
+        ]
+      },
+      "properties": {
+        "id": "PL012",
+        "name": "Rừng Tầm Vông Ô Tà Sóc",
+        "category_group": "attractions_nature",
+        "category": "Rừng sinh thái",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.6,
+        "review_count": 410
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.905,
+          10.493
+        ]
+      },
+      "properties": {
+        "id": "PL013",
+        "name": "Cánh Đồng Lúa Ba Chúc",
+        "category_group": "attractions_nature",
+        "category": "Cánh đồng",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.6,
+        "review_count": 350
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9912,
+          10.3782
+        ]
+      },
+      "properties": {
+        "id": "PL014",
+        "name": "Vườn Nho Nông Trại Ô Thum",
+        "category_group": "attractions_nature",
+        "category": "Nông trại",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.021,
+          10.408
+        ]
+      },
+      "properties": {
+        "id": "PL015",
+        "name": "Vườn Mãng Cầu Núi Tô",
+        "category_group": "attractions_nature",
+        "category": "Nông trại",
+        "address": "Sườn Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.5,
+        "review_count": 280
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0255,
+          10.4055
+        ]
+      },
+      "properties": {
+        "id": "PL016",
+        "name": "Suối Vàng Soài So",
+        "category_group": "attractions_nature",
+        "category": "Suối sinh thái",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 430
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.94,
+          10.45
+        ]
+      },
+      "properties": {
+        "id": "PL017",
+        "name": "Núi Dài (Ngọa Long Sơn)",
+        "category_group": "attractions_nature",
+        "category": "Núi",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.6,
+        "review_count": 390
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.003,
+          10.437
+        ]
+      },
+      "properties": {
+        "id": "PL018",
+        "name": "Cánh Đồng Thốt Nốt Chau Lăng",
+        "category_group": "attractions_nature",
+        "category": "Cánh đồng",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 610
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0025,
+          10.4825
+        ]
+      },
+      "properties": {
+        "id": "PL019",
+        "name": "Vách Đá Đứng Latina",
+        "category_group": "attractions_nature",
+        "category": "Check-in thiên nhiên",
+        "address": "Xã An Hảo, Tri Tôn, An Giang",
+        "commune": "Xã An Hảo",
+        "rating": 4.6,
+        "review_count": 480
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0082,
+          10.4122
+        ]
+      },
+      "properties": {
+        "id": "PL020",
+        "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+        "category_group": "attractions_nature",
+        "category": "Tọa độ chill hoàng hôn",
+        "address": "Sân đua bò Huyện Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.8,
+        "review_count": 1150
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.012,
+          10.419
+        ]
+      },
+      "properties": {
+        "id": "CK001",
+        "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+        "category_group": "checkin_spots",
+        "category": "Cung đường ngắm núi Cô Tô chill nhất An Giang",
+        "address": "Tuyến đường tránh kết nối ĐT941 - ĐT948, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.9,
+        "review_count": 2100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0095,
+          10.4185
+        ]
+      },
+      "properties": {
+        "id": "CK002",
+        "name": "Con Đường Tơ Lụa Tà Pạ",
+        "category_group": "checkin_spots",
+        "category": "Con đường tơ lụa",
+        "address": "Đồng lúa Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.8,
+        "review_count": 1280
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0188,
+          10.4162
+        ]
+      },
+      "properties": {
+        "id": "CK003",
+        "name": "Con Đường Tơ Lụa Soài Chék",
+        "category_group": "checkin_spots",
+        "category": "Con đường tơ lụa",
+        "address": "Ven hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0015,
+          10.4355
+        ]
+      },
+      "properties": {
+        "id": "CK004",
+        "name": "Con Đường Vòm Còng Châu Lăng",
+        "category_group": "checkin_spots",
+        "category": "Con đường nhiếp ảnh",
+        "address": "Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.7,
+        "review_count": 940
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.995,
+          10.38
+        ]
+      },
+      "properties": {
+        "id": "CK005",
+        "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+        "category_group": "checkin_spots",
+        "category": "Con đường nhiếp ảnh",
+        "address": "Tuyến đường Ô Lâm - Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.6,
+        "review_count": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9525,
+          10.4565
+        ]
+      },
+      "properties": {
+        "id": "CK006",
+        "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
+        "category_group": "checkin_spots",
+        "category": "Con đường nhiếp ảnh",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.7,
+        "review_count": 610
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.945,
+          10.458
+        ]
+      },
+      "properties": {
+        "id": "CK007",
+        "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
+        "category_group": "checkin_spots",
+        "category": "Cung đường phượt ngắm núi",
+        "address": "Tuyến Lương Phi - Lê Trì, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.7,
+        "review_count": 540
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.901,
+          10.498
+        ]
+      },
+      "properties": {
+        "id": "CK008",
+        "name": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)",
+        "category_group": "checkin_spots",
+        "category": "Cung đường biên giới",
+        "address": "Tuyến Ba Chúc - Lạc Quới, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.7,
+        "review_count": 680
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.985,
+          10.3895
+        ]
+      },
+      "properties": {
+        "id": "CK009",
+        "name": "Hàng Thốt Nốt Trái Tim An Tức",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in biểu tượng",
+        "address": "Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "rating": 4.7,
+        "review_count": 1560
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.002,
+          10.441
+        ]
+      },
+      "properties": {
+        "id": "CK010",
+        "name": "Cổng Trời Tri Tôn Vòm Khmer",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in biểu tượng",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.7,
+        "review_count": 1320
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0035,
+          10.439
+        ]
+      },
+      "properties": {
+        "id": "CK011",
+        "name": "Cây Thốt Nốt Cô Độc Chau Lăng",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in độc đáo",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 540
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.992,
+          10.378
+        ]
+      },
+      "properties": {
+        "id": "CK012",
+        "name": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in sống ảo",
+        "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.6,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0182,
+          10.4152
+        ]
+      },
+      "properties": {
+        "id": "CK013",
+        "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in sống ảo",
+        "address": "Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.7,
+        "review_count": 780
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0165,
+          10.4015
+        ]
+      },
+      "properties": {
+        "id": "CK014",
+        "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
+        "category_group": "checkin_spots",
+        "category": "Tọa độ săn ảnh đỉnh núi",
+        "address": "Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.8,
+        "review_count": 920
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0252,
+          10.4052
+        ]
+      },
+      "properties": {
+        "id": "CK015",
+        "name": "Cầu Cây Dã Ngoại Hồ Soài So",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in ven hồ",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 410
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9926,
+          10.3776
+        ]
+      },
+      "properties": {
+        "id": "CK016",
+        "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
+        "category_group": "checkin_spots",
+        "category": "Tiểu cảnh check-in",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 460
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0052,
+          10.4112
+        ]
+      },
+      "properties": {
+        "id": "CK017",
+        "name": "Căn Nhà Gỗ Vintage Nhà Quê",
+        "category_group": "checkin_spots",
+        "category": "Góc chụp Đà Lạt",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.6,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.986,
+          10.388
+        ]
+      },
+      "properties": {
+        "id": "CK018",
+        "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
+        "category_group": "checkin_spots",
+        "category": "Điểm check-in mộc mạc",
+        "address": "Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "rating": 4.6,
+        "review_count": 380
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9851,
+          10.3896
+        ]
+      },
+      "properties": {
+        "id": "CK019",
+        "name": "Quầy Thốt Nốt Tươi Cụm Trái Tim",
+        "category_group": "checkin_spots",
+        "category": "Góc giải khát chill",
+        "address": "Chân cụm thốt nốt trái tim, Xã An Tức, Tri Tôn, An Giang",
+        "commune": "Xã An Tức",
+        "rating": 4.7,
+        "review_count": 640
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0232,
+          10.4062
+        ]
+      },
+      "properties": {
+        "id": "CK020",
+        "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+        "category_group": "checkin_spots",
+        "category": "Góc ảnh Việt phục cổ trang",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 420
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0135,
+          10.4208
+        ]
+      },
+      "properties": {
+        "id": "HG001",
+        "name": "Chùa Tà Pạ (Chùa Núi)",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer",
+        "address": "Đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0088,
+          10.4132
+        ]
+      },
+      "properties": {
+        "id": "HG002",
+        "name": "Chùa Xà Tón (Wat Xvayton)",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer cổ",
+        "address": "Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.001,
+          10.435
+        ]
+      },
+      "properties": {
+        "id": "HG003",
+        "name": "Chùa Hàng Còng (Krăng Krốch)",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer cổ",
+        "address": "Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 780
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.002,
+          10.441
+        ]
+      },
+      "properties": {
+        "id": "HG004",
+        "name": "Chùa Cổng Trời Koh Kas",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer",
+        "address": "Ấp An Hòa, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 1320
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.908,
+          10.495
+        ]
+      },
+      "properties": {
+        "id": "HG005",
+        "name": "Khu Di Tích Nhà Mồ Ba Chúc",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Di tích Quốc gia",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.7,
+        "review_count": 1340
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9075,
+          10.4945
+        ]
+      },
+      "properties": {
+        "id": "HG006",
+        "name": "Chùa Phi Lai Ba Chúc",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa tâm linh",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.6,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9085,
+          10.4955
+        ]
+      },
+      "properties": {
+        "id": "HG007",
+        "name": "Chùa Tam Bửu Ba Chúc",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa tâm linh",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.6,
+        "review_count": 480
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.952,
+          10.456
+        ]
+      },
+      "properties": {
+        "id": "HG008",
+        "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Di tích lịch sử",
+        "address": "Xã Lương Phi, Tri Tôn, An Giang",
+        "commune": "Xã Lương Phi",
+        "rating": 4.6,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.024,
+          10.406
+        ]
+      },
+      "properties": {
+        "id": "HG009",
+        "name": "Chùa Soài So Khmer",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 310
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.993,
+          10.379
+        ]
+      },
+      "properties": {
+        "id": "HG010",
+        "name": "Chùa Mới Ô Lâm",
+        "category_group": "khmer_pagodas_heritage",
+        "category": "Chùa Khmer",
+        "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 270
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9915,
+          10.3785
+        ]
+      },
+      "properties": {
+        "id": "FD001",
+        "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
+        "category_group": "food_and_restaurants",
+        "category": "Gà Đốt Ô Thum",
+        "address": "Tỉnh lộ 15, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.6,
+        "review_count": 1450
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9925,
+          10.3775
+        ]
+      },
+      "properties": {
+        "id": "FD002",
+        "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
+        "category_group": "food_and_restaurants",
+        "category": "Gà Đốt Ô Thum",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 920
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.993,
+          10.379
+        ]
+      },
+      "properties": {
+        "id": "FD003",
+        "name": "Gà Đốt Ô Thum Kim Suổl",
+        "category_group": "food_and_restaurants",
+        "category": "Gà Đốt Ô Thum",
+        "address": "Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 780
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.991,
+          10.378
+        ]
+      },
+      "properties": {
+        "id": "FD004",
+        "name": "Gà Đốt Ô Thum Thảo Nguyên",
+        "category_group": "food_and_restaurants",
+        "category": "Gà Đốt Ô Thum",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.5,
+        "review_count": 810
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.992,
+          10.377
+        ]
+      },
+      "properties": {
+        "id": "FD005",
+        "name": "Gà Đốt Vương Ngọc Ô Thum",
+        "category_group": "food_and_restaurants",
+        "category": "Gà Đốt Ô Thum",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+        "commune": "Xã Ô Lâm",
+        "rating": 4.4,
+        "review_count": 450
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.003,
+          10.438
+        ]
+      },
+      "properties": {
+        "id": "FD006",
+        "name": "Quán Đu Đủ Đâm RiNa Khmer",
+        "category_group": "food_and_restaurants",
+        "category": "Đặc sản Khmer",
+        "address": "Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.8,
+        "review_count": 1680
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0035,
+          10.4385
+        ]
+      },
+      "properties": {
+        "id": "FD007",
+        "name": "Quán Đu Đủ Đâm Ly Ly",
+        "category_group": "food_and_restaurants",
+        "category": "Đặc sản Khmer",
+        "address": "Sóc Phnôm Pi, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0025,
+          10.4375
+        ]
+      },
+      "properties": {
+        "id": "FD008",
+        "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
+        "category_group": "food_and_restaurants",
+        "category": "Đặc sản Khmer",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.5,
+        "review_count": 510
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.007,
+          10.413
+        ]
+      },
+      "properties": {
+        "id": "FD009",
+        "name": "Quán Bún Nước Lèo Sơ Nương Khmer",
+        "category_group": "food_and_restaurants",
+        "category": "Bún nước lèo",
+        "address": "Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0065,
+          10.4125
+        ]
+      },
+      "properties": {
+        "id": "FD010",
+        "name": "Quán Bún Nước Lèo Dook Tri Tôn",
+        "category_group": "food_and_restaurants",
+        "category": "Bún nước lèo",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 410
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.004,
+          10.436
+        ]
+      },
+      "properties": {
+        "id": "FD011",
+        "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
+        "category_group": "food_and_restaurants",
+        "category": "Đặc sản mua quà",
+        "address": "Tỉnh Lộ 941, Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.8,
+        "review_count": 1150
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0045,
+          10.4365
+        ]
+      },
+      "properties": {
+        "id": "FD012",
+        "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
+        "category_group": "food_and_restaurants",
+        "category": "Đặc sản mua quà",
+        "address": "Xã Chau Lăng, Tri Tôn, An Giang",
+        "commune": "Xã Chau Lăng",
+        "rating": 4.6,
+        "review_count": 580
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0072,
+          10.4135
+        ]
+      },
+      "properties": {
+        "id": "FD013",
+        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+        "category_group": "food_and_restaurants",
+        "category": "Bánh canh",
+        "address": "114 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 890
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.909,
+          10.496
+        ]
+      },
+      "properties": {
+        "id": "FD014",
+        "name": "Quán Bò 7 Món Ba Chúc",
+        "category_group": "food_and_restaurants",
+        "category": "Bò 7 món",
+        "address": "Tỉnh lộ 955N, Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.6,
+        "review_count": 670
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.908,
+          10.495
+        ]
+      },
+      "properties": {
+        "id": "FD015",
+        "name": "Quán Cháo Bò Trái Trúc Ba Chúc",
+        "category_group": "food_and_restaurants",
+        "category": "Cháo bò",
+        "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "rating": 4.6,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0055,
+          10.4115
+        ]
+      },
+      "properties": {
+        "id": "FD016",
+        "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
+        "category_group": "food_and_restaurants",
+        "category": "Bánh xèo miền Tây",
+        "address": "Cầu Số 10, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 740
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0066,
+          10.4126
+        ]
+      },
+      "properties": {
+        "id": "FD017",
+        "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
+        "category_group": "food_and_restaurants",
+        "category": "Bò nướng Bảy Núi",
+        "address": "Đường Hùng Vương, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.7,
+        "review_count": 810
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.018,
+          10.415
+        ]
+      },
+      "properties": {
+        "id": "CF001",
+        "name": "Ruộng Coffee & Homestay Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê & Homestay",
+        "address": "Đường vào Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.6,
+        "review_count": 860
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0195,
+          10.417
+        ]
+      },
+      "properties": {
+        "id": "CF002",
+        "name": "Windy Hill Coffee & Homestay Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê & Homestay",
+        "address": "Khu du lịch Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.7,
+        "review_count": 720
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0068,
+          10.4128
+        ]
+      },
+      "properties": {
+        "id": "CF003",
+        "name": "CHẠM Coffee & Tea Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "120 Hùng Vương, Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.6,
+        "review_count": 510
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0075,
+          10.4125
+        ]
+      },
+      "properties": {
+        "id": "CF004",
+        "name": "Anpalm Cafe Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Đường Trần Hưng Đạo, Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 520
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.005,
+          10.411
+        ]
+      },
+      "properties": {
+        "id": "CF005",
+        "name": "Tiệm Cà Phê Nhà Quê",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Cầu Số 10, Xã Tà Đảnh / Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 640
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.023,
+          10.406
+        ]
+      },
+      "properties": {
+        "id": "CF006",
+        "name": "An Sơn Trà Quán",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Gần Suối Vàng Soài So, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.6,
+        "review_count": 410
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.006,
+          10.414
+        ]
+      },
+      "properties": {
+        "id": "CF007",
+        "name": "NY Coffee & Tea Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "66 Trần Phú, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.4,
+        "review_count": 380
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0185,
+          10.4165
+        ]
+      },
+      "properties": {
+        "id": "CF008",
+        "name": "Mây Coffee & Tea Hồ Soài Chék",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Ven bờ Hồ Soài Chék, Xã Núi Tô, Tri Tôn, An Giang",
+        "commune": "Xã Núi Tô",
+        "rating": 4.5,
+        "review_count": 340
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.007,
+          10.413
+        ]
+      },
+      "properties": {
+        "id": "CF009",
+        "name": "Quy Coffee House Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 490
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0245,
+          10.4065
+        ]
+      },
+      "properties": {
+        "id": "CF010",
+        "name": "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Khu vực Hồ Soài So, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 310
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.008,
+          10.412
+        ]
+      },
+      "properties": {
+        "id": "CF011",
+        "name": "Lang Lang Coffee & Tea",
+        "category_group": "cafes_and_homestays",
+        "category": "Quán Cà Phê",
+        "address": "Đường Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.4,
+        "review_count": 270
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0095,
+          10.411
+        ]
+      },
+      "properties": {
+        "id": "CF012",
+        "name": "Tuyết Anh Homestay & Coffee",
+        "category_group": "cafes_and_homestays",
+        "category": "Homestay",
+        "address": "86 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.6,
+        "review_count": 390
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.01,
+          10.41
+        ]
+      },
+      "properties": {
+        "id": "CF013",
+        "name": "Rồng Vàng Resort Tri Tôn",
+        "category_group": "cafes_and_homestays",
+        "category": "Resort",
+        "address": "19 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.5,
+        "review_count": 620
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.008,
+          10.412
+        ]
+      },
+      "properties": {
+        "id": "EV001",
+        "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
+        "category_group": "events_and_culture",
+        "category": "Lễ hội Khmer",
+        "address": "Sân đua bò Huyện Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.9,
+        "review_count": 2500
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.0088,
+          10.4132
+        ]
+      },
+      "properties": {
+        "id": "EV002",
+        "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
+        "category_group": "events_and_culture",
+        "category": "Di sản Quốc gia",
+        "address": "Chùa Xà Tón, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "rating": 4.8,
+        "review_count": 980
+      }
+    }
+  ]
+}

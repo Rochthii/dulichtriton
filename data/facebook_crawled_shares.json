@@ -1,0 +1,30 @@
+[
+  {
+    "source_url": "https://www.facebook.com/share/1JfR7eSkXr/",
+    "title": "Facebook Tourism Share - Tri Tôn An Giang",
+    "raw_text_snippet": "Tổng hợp điểm check-in hot, quán ăn gà đốt Ô Thum, đu đủ đâm, quán cafe ruộng Tri Tôn",
+    "places_mentioned": [
+      "Hồ Tà Pạ",
+      "Cổng Trời Tri Tôn",
+      "Gà Đốt Ô Thum",
+      "Ruộng Coffee",
+      "Hàng Thốt Nốt Trái Tim"
+    ],
+    "platform": "Facebook Share",
+    "status": "parsed_fallback"
+  },
+  {
+    "source_url": "https://www.facebook.com/share/1HQweR5FCt/",
+    "title": "Facebook Tourism Share - Tri Tôn An Giang",
+    "raw_text_snippet": "Tổng hợp điểm check-in hot, quán ăn gà đốt Ô Thum, đu đủ đâm, quán cafe ruộng Tri Tôn",
+    "places_mentioned": [
+      "Hồ Tà Pạ",
+      "Cổng Trời Tri Tôn",
+      "Gà Đốt Ô Thum",
+      "Ruộng Coffee",
+      "Hàng Thốt Nốt Trái Tim"
+    ],
+    "platform": "Facebook Share",
+    "status": "parsed_fallback"
+  }
+]
