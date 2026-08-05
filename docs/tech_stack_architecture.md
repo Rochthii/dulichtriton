@@ -1,59 +1,60 @@
-# BỘ CÔNG NGHỆ TOÀN CẢNH & TỐI ƯU NHẤT (DU LỊCH TRI TÔN AI PLATFORM)
+# BỘ CÔNG NGHỆ TOÀN CẢNH & KIẾN TRÚC TỐI ƯU HÓA (DU LỊCH TRI TÔN AI)
 
 ---
 
-## 🚀 1. TỔNG QUAN LỰA CHỌN CÔNG NGHỆ (TECH STACK SUMMARY)
+## 🎯 1. ĐÁNH GIÁ KIẾN TRÚC & ĐIỀU CHỈNH CHUYÊN GIA
 
-Hệ thống **Du Lịch Tri Tôn** được thiết kế theo kiến trúc hiện đại, tập trung vào **Tốc độ tải cực nhanh (< 2s)**, **Chuẩn SEO Google Số 1**, **Bảo mật chuẩn Production** và **Đồng bộ UI/UX 100% (No Emoji)**.
+Nền tảng **Du Lịch Tri Tôn** được thiết kế theo tiêu chuẩn **Software Architect**, đảm bảo mở rộng linh hoạt khi hệ thống phát triển lớn, không bị phụ thuộc vào một nhà cung cấp LLM duy nhất và sẵn sàng cho các tính năng AI nâng cao (Tối ưu hóa tuyến đường, Reranking RAG, Map Clustering).
 
 ```
-[ Frontend: Next.js 14 (Vercel) ] ──(REST API/RAG)──> [ Backend: FastAPI Python 3.11 ]
-                 │                                                │
-                 └───(Direct Query / Auth)───────> [ Database: Supabase PostgreSQL + pgvector ]
+[ Frontend: Next.js 14 App Router (Vercel) ]
+                 │
+                 ▼
+[ Backend: FastAPI Gateway (Python 3.11) ]
+                 │
+ ┌───────────────┼───────────────────────────────┐
+ │               │                               │
+ ▼               ▼                               ▼
+[ AI Orchestrator Service ]       [ Vector & Retrieval Service ]       [ GIS & Route Service ]
+ (Gemini / OpenAI / Claude)         (pgvector + Reranker)              (PostGIS + OSRM + MapLibre)
 ```
 
 ---
 
-## 🛠️ 2. LỰA CHỌN CHI TIẾT THEO 6 LỚP KỸ THUẬT
+## 🛠️ 2. LỰA CHỌN CÔNG NGHỆ THEO LỚP KỸ THUẬT NÂNG CẤP
 
-### 2.1. Lớp Frontend & Giao Diện Người Dùng (Client Layer)
-* **Khung ứng dụng chính**: **Next.js 14 (App Router & React 18)**
-  * *Lý do chọn*: Hỗ trợ Server Components, Server-Side Rendering (SSR) & Incremental Static Regeneration (ISR) giúp tối ưu SEO Top 1 Google cho các địa điểm du lịch.
-* **Tối ưu Giao diện (Styling)**: **TailwindCSS**
-  * *Lý do chọn*: Tối ưu dung lượng CSS bundle nhỏ nhẹ, cấu hình sẵn hệ màu Design Tokens (`#1B4D3E` Xanh Bảy Núi, `#D99B26` Vàng thốt nốt, `#0F172A` Đen đá).
-* **Bộ Icon đồ họa**: **Lucide React SVG Icons**
-  * *Lý do chọn*: Đảm bảo quy tắc **0% Emoji**, 100% biểu tượng SVG sắc nét, đồng bộ chuẩn chuyên nghiệp.
-* **Triển khai Frontend (Deployment)**: **Vercel**
-  * *Lý do chọn*: Hạ tầng Edge Network toàn cầu, tự động tối ưu hóa hình ảnh WebP và tích hợp CI/CD với GitHub.
+### 2.1. Lớp AI Orchestration & Multi-LLM Layer
+* **AI Orchestrator Engine**: Tách rời luồng AI gọi LLM trực tiếp. Tự động Quản lý Caching, Fallback linh hoạt, Dynamic Routing và A/B Testing giữa nhiều nhà cung cấp:
+  * **Primary LLM**: Google Gemini 1.5 Flash (Tốc độ siêu nhanh, phản hồi tiếng Việt mượt).
+  * **Fallback LLM**: OpenAI GPT-4o / Claude 3.5 Sonnet / Qwen 2.5 (Xử lý truy vấn phức tạp hoặc phục hồi khi dịch vụ chính gián đoạn).
 
-### 2.2. Lớp Cơ Sở Dữ Liệu & Tìm Kiếm Vector (Database & RAG Layer)
-* **Hệ quản trị CSDL**: **Supabase (PostgreSQL 15)**
-  * *Lý do chọn*: PostgreSQL chuẩn công nghiệp, hỗ trợ RLS (Row Level Security), giao dịch nguyên tử (Atomic Transactions) và Supabase Auth tích hợp.
-* **Công nghệ Tìm kiếm Vector (RAG)**: **Extension `pgvector`**
-  * *Lý do chọn*: Tích hợp trực tiếp trong PostgreSQL, lưu trữ Vector Embedding 1536 chiều, cho phép tìm kiếm ngữ nghĩa (Semantic Search) đồng thời với truy vấn dữ liệu quan hệ mà không cần duy trì thêm server vector độc lập (như Pinecone/Weaviate).
-* **Bảo mật & Phân quyền**: **Supabase Auth & RLS**
-  * *Lý do chọn*: Phân quyền người dùng, Chủ gian hàng (Partner) và Quản trị viên (Admin) trực tiếp từ phía Server.
+### 2.2. Lớp RAG & Vector Service Tách Biệt
+* **Vector & Embedding Service**: Độc lập hóa hoàn toàn luồng Vectorize & Retrieval:
+  $$\text{Documents} \longrightarrow \text{Chunking} \longrightarrow \text{Embedding (1536d)} \longrightarrow \text{Metadata} \longrightarrow \text{pgvector} \longrightarrow \text{Retriever} \longrightarrow \text{Cross-Encoder Reranker} \longrightarrow \text{LLM Output}$$
+* **Hệ CSDL Vector**: **Supabase PostgreSQL 15 + Extension `pgvector`**.
 
-### 2.3. Lớp Backend Core & Dịch Vụ AI Chatbot (Backend Layer)
-* **Khung dịch vụ API**: **FastAPI (Python 3.11)**
-  * *Lý do chọn*: Tốc độ thực thi cực nhanh (Async I/O dựa trên Starlette/Pydantic), tự động tạo tài liệu OpenAPI/Swagger.
-* **Chuẩn hóa & Kiểm duyệt Dữ liệu**: **Pydantic v2 & Unicode NFC**
-  * *Lý do chọn*: Validate dữ liệu đầu vào/đầu ra, chuẩn hóa tiếng Việt Unicode NFC tự động trước khi ghi CSDL.
-* **Mô hình AI Core (LLM Engine)**: **Google Gemini API (Gemini 1.5 Flash / Pro)**
-  * *Lý do chọn*: Phản hồi tiếng Việt tự nhiên, tốc độ siêu nhanh (< 1.5s), hỗ trợ sinh định dạng Structured JSON để nhúng Thẻ UI & Video TikTok.
+### 2.3. Lớp GIS & Tối Ưu Hóa Tuyến Đường (Route Optimization)
+* **Bộ tứ GIS hoàn chỉnh**: **Leaflet + MapLibre GL + PostGIS + OSRM (Open Source Routing Machine)**.
+  * *MapLibre GL / Leaflet*: Hiển thị bản đồ tương tác mượt mà, Map Clustering & Heatmap trên di động.
+  * *PostGIS Extension*: Xử lý truy vấn không gian phức tạp (Bán kính bán kính điểm ăn uống gần nhất).
+  * *OSRM Service*: AI tự động tính toán & tối ưu hóa đường đi ngắn nhất giữa các điểm tham quan trong tour 2D1N.
 
-### 2.4. Lớp Bản Đồ Số GIS (GIS & Mapping Layer)
-* **Thư viện Bản đồ**: **Leaflet.js / MapLibre GL**
-  * *Lý do chọn*: Nhẹ, mượt trên thiết bị di động, **0% chi phí API** (so với Google Maps API đắt đỏ), dễ tùy biến Custom SVG Marker cho 105 địa điểm Tri Tôn.
-* **Định dạng Tọa độ**: **WGS84 GeoJSON Standard**
+### 2.4. Lớp Frontend Web Portal
+* **Next.js 14 (App Router & React 18)**: Server-Side Rendering (SSR) & Incremental Static Regeneration (ISR) tối ưu SEO Top 1 Google.
+* **TailwindCSS**: Design tokens (`#1B4D3E` Emerald Green, `#D99B26` Golden Palm).
+* **Lucide React Icons**: Đảm bảo quy tắc **0% Emoji**, 100% SVG icons.
 
-### 2.5. Lớp Nhúng Media & Video Thực Tế (Media Layer)
-* **Nhúng Video Review**: **TikTok Embed API & YouTube Shorts iFrame**
-  * *Lý do chọn*: Cho phép du khách xem video thực tế 15-30s của phượt thủ/tiktoker mà không làm nặng server.
-* **Lưu trữ Hình ảnh**: **Cloudinary / Supabase Storage**
-  * *Lý do chọn*: Tự động nén ảnh WebP, resize linh hoạt theo màn hình di động.
+---
 
-### 2.6. Lớp DevOps & Quản Lý Mã Nguồn (DevOps & CI/CD)
-* **Quản lý mã nguồn**: **Git & GitHub (`https://github.com/Rochthii/dulichtriton.git`)**
-* **Nhật ký Hệ thống (Audit Log)**: **Immutable Audit Trail Logger**
-  * *Lý do chọn*: Lưu vết tác vụ admin (Ai, Làm gì, Khi nào, Từ đâu) đúng quy tắc Production-Real.
+## 🚀 3. THỨ TỰ TRIỂN KHAI DỰ ÁN AI-FIRST (EXECUTION ORDER)
+
+Để đảm bảo nền tảng dữ liệu vững chắc và tránh việc phải Refactor mã nguồn về sau, dự án triển khai nghiêm ngặt theo lộ trình **AI-First**:
+
+1. **Knowledge Base (Hoàn thiện)**: Chuẩn hóa 105 địa điểm Master, video, lịch trình, nhà xe, văn hóa Khmer.
+2. **Database Schema (Đang thực hiện)**: Tạo CSDL Supabase PostgreSQL + `pgvector` + `PostGIS`.
+3. **Crawler**: Công cụ cào & làm sạch dữ liệu tự động 19 nhóm địa điểm.
+4. **AI Flow & Orchestrator**: Triển khai 9 bước AI Pipeline & AI Orchestrator Engine (`docs/ai_workflow.md`).
+5. **Backend**: Phát triển dịch vụ FastAPI REST APIs & AI Modular Services.
+6. **Frontend**: Xây dựng Web Portal Next.js 14 & AI Chatbot Widget.
+7. **Admin CMS**: Trang quản trị duyệt gian hàng Partner & xem Audit Logs.
+8. **Deployment**: Triển khai Vercel + Supabase Production.
