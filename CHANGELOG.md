@@ -40,6 +40,14 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Hạ Tầng Crawl Dữ Liệu Google Maps Chuyên Nghiệp (Apify Google Maps Data Pipeline)**:
+  * Khởi tạo gói dịch vụ `tourism_crawler/` hoàn chỉnh chuẩn Data Engineering Architecture:
+    * `tourism_crawler/models/place.py`: Pydantic v2 schemas (`PlaceRawModel`, `PlaceEnrichedModel`).
+    * `tourism_crawler/crawler/apify_scraper.py`: Trình sinh 156+ từ khóa tìm kiếm tự động phủ 15 Xã/Thị trấn và kết nối Apify Scraper API.
+    * `tourism_crawler/services/enrichment_service.py`: Tự động làm giàu dữ liệu (SEO Slug, Travel Tags, Giờ tham quan tốt nhất, Thời lượng khuyến nghị, Ràng buộc xe & đỗ xe).
+    * `tourism_crawler/services/deduplication_service.py`: Khử trùng lặp đa tầng (Google Place ID + Haversine Distance < 50m).
+    * `tourism_crawler/database/schema.sql`: Khởi tạo DDL SQL Schema cho Supabase PostgreSQL + `pgvector` + `PostGIS`.
+    * `tourism_crawler/export/exporter.py`: Trình xuất dữ liệu sinh tự động 3 tài sản Production: [export/places.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/export/places.json), [export/places.csv](file:///e:/Projects/Project_ca_nhan/dulichtriton/export/places.csv) & [export/seed_places.sql](file:///e:/Projects/Project_ca_nhan/dulichtriton/export/seed_places.sql).
 * **Tái Cấu Trúc Kiến Trúc Theo Chuẩn Software Architect**:
   * Khởi tạo tài liệu quan trọng nhất [docs/ai_workflow.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/ai_workflow.md) chi tiết hóa Quy trình AI Assistant 9 bước, luồng RAG Retriever/Reranker, AI Orchestrator Multi-LLM (Gemini / OpenAI / Claude / Qwen fallback) và cấu trúc Modular AI Services.
   * Nâng cấp [docs/tech_stack_architecture.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tech_stack_architecture.md) & [docs/02_System_Architecture.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/02_System_Architecture.md): Tách rời Vector & Embedding Service, bổ sung GIS Layer (Leaflet + MapLibre + PostGIS + OSRM cho AI Route Optimization) và chuyển đổi Lộ trình phát triển sang **AI-First Execution Order**.

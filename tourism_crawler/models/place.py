@@ -1,55 +1,73 @@
-from sqlalchemy import String, Float, Boolean, Text, JSON, Integer
-from sqlalchemy.orm import Mapped, mapped_column
-from tourism_crawler.models.base import Base, TimestampMixin
+import unicodedata
+import re
+from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field, field_validator
 
+def normalize_nfc(text: Optional[str]) -> str:
+    """Normalize text to Unicode NFC and strip banned phrase 'Huyện Tri Tôn'."""
+    if not text:
+        return ""
+    text = unicodedata.normalize("NFC", str(text))
+    text = text.replace("Huyện Tri Tôn, ", "").replace(", Huyện Tri Tôn", "").replace("Huyện Tri Tôn", "")
+    return text.strip()
 
-class PlaceModel(Base, TimestampMixin):
-    __tablename__ = "places"
+def generate_slug(text: str) -> str:
+    """Generate SEO-friendly URL slug from Vietnamese text."""
+    text = normalize_nfc(text).lower()
+    text = re.sub(r'[àáạảãâầấậẩẫăằắặẳẵ]', 'a', text)
+    text = re.sub(r'[èéẹẻẽêềếệểễ]', 'e', text)
+    text = re.sub(r'[ìíịỉĩ]', 'i', text)
+    text = re.sub(r'[òóọỏõôồốộổỗơờớợởỡ]', 'o', text)
+    text = re.sub(r'[ùúụủũưừứựửữ]', 'u', text)
+    text = re.sub(r'[ỳýỵỷỹ]', 'y', text)
+    text = re.sub(r'[đ]', 'd', text)
+    text = re.sub(r'[^a-z0-9\s-]', '', text)
+    text = re.sub(r'[\s-]+', '-', text).strip('-')
+    return text
 
-    id: Mapped[str] = mapped_column(String(64), primary_key=True)
-    name: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
-    english_name: Mapped[str] = mapped_column(String(255), nullable=True)
-    category: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
-    subcategory: Mapped[str] = mapped_column(String(100), nullable=True)
-    description: Mapped[str] = mapped_column(Text, nullable=True)
-    full_description: Mapped[str] = mapped_column(Text, nullable=True)
-    address: Mapped[str] = mapped_column(Text, nullable=False)
-    commune: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
-    district: Mapped[str] = mapped_column(String(100), default="Tri Tôn")
-    province: Mapped[str] = mapped_column(String(100), default="An Giang")
-    country: Mapped[str] = mapped_column(String(100), default="Việt Nam")
-    latitude: Mapped[float] = mapped_column(Float, nullable=False)
-    longitude: Mapped[float] = mapped_column(Float, nullable=False)
-    google_maps_url: Mapped[str] = mapped_column(Text, nullable=True)
-    website: Mapped[str] = mapped_column(String(500), nullable=True)
-    facebook: Mapped[str] = mapped_column(String(500), nullable=True)
-    tiktok: Mapped[str] = mapped_column(String(500), nullable=True)
-    youtube: Mapped[str] = mapped_column(String(500), nullable=True)
-    phone: Mapped[str] = mapped_column(String(50), nullable=True)
-    email: Mapped[str] = mapped_column(String(100), nullable=True)
-    opening_hours: Mapped[str] = mapped_column(String(100), nullable=True)
-    ticket_price: Mapped[str] = mapped_column(String(200), nullable=True)
-    parking_fee: Mapped[str] = mapped_column(String(200), nullable=True)
-    average_cost: Mapped[str] = mapped_column(String(200), nullable=True)
-    rating: Mapped[float] = mapped_column(Float, default=0.0)
-    review_count: Mapped[int] = mapped_column(Integer, default=0)
-    best_time: Mapped[str] = mapped_column(String(200), nullable=True)
-    best_season: Mapped[str] = mapped_column(String(200), nullable=True)
-    recommended_duration: Mapped[str] = mapped_column(String(100), nullable=True)
-    tags: Mapped[dict] = mapped_column(JSON, default=list)
-    images: Mapped[dict] = mapped_column(JSON, default=dict)
-    videos: Mapped[dict] = mapped_column(JSON, default=list)
-    facilities: Mapped[dict] = mapped_column(JSON, default=list)
-    accessibility: Mapped[str] = mapped_column(Text, nullable=True)
-    has_parking: Mapped[bool] = mapped_column(Boolean, default=True)
-    has_wifi: Mapped[bool] = mapped_column(Boolean, default=False)
-    has_toilet: Mapped[bool] = mapped_column(Boolean, default=True)
-    has_restaurant: Mapped[bool] = mapped_column(Boolean, default=False)
-    has_hotel: Mapped[bool] = mapped_column(Boolean, default=False)
-    children_friendly: Mapped[bool] = mapped_column(Boolean, default=True)
-    family_friendly: Mapped[bool] = mapped_column(Boolean, default=True)
-    pet_friendly: Mapped[bool] = mapped_column(Boolean, default=False)
-    drone_allowed: Mapped[bool] = mapped_column(Boolean, default=True)
-    status: Mapped[str] = mapped_column(String(50), default="verified")
-    confidence_score: Mapped[float] = mapped_column(Float, default=100.0)
-    sources_count: Mapped[int] = mapped_column(Integer, default=3)
+class PlaceRawModel(BaseModel):
+    place_id: str = Field(..., description="Google Place ID")
+    name: str = Field(..., description="Place Name")
+    category: str = Field(default="Địa điểm du lịch")
+    subcategory: Optional[str] = Field(default=None)
+    address: str = Field(..., description="Full Address")
+    commune: str = Field(default="Thị trấn Tri Tôn")
+    district: str = Field(default="Tri Tôn")
+    province: str = Field(default="An Giang")
+    latitude: float = Field(..., ge=10.25, le=10.55)
+    longitude: float = Field(..., ge=104.85, le=105.15)
+    google_maps_url: Optional[str] = Field(default=None)
+    phone: Optional[str] = Field(default=None)
+    website: Optional[str] = Field(default=None)
+    business_status: str = Field(default="OPERATIONAL")
+    opening_hours: str = Field(default="07:00 - 18:00")
+    price_level: Optional[str] = Field(default="Miễn phí")
+    rating: float = Field(default=4.5, ge=0.0, le=5.0)
+    review_count: int = Field(default=0, ge=0)
+    photos: List[str] = Field(default_factory=list)
+    photo_urls: List[str] = Field(default_factory=list)
+    review_samples: List[str] = Field(default_factory=list)
+    keywords: List[str] = Field(default_factory=list)
+    description: str = Field(default="")
+    short_description: str = Field(default="")
+    tags: List[str] = Field(default_factory=list)
+
+    @field_validator("name", "address", "commune", "description", mode="before")
+    def nfc_clean(cls, v):
+        return normalize_nfc(v)
+
+class PlaceEnrichedModel(PlaceRawModel):
+    slug: str
+    search_keywords: List[str]
+    tourism_category: str
+    travel_tags: List[str]
+    recommended_duration: str
+    best_visit_time: str
+    family_friendly: bool = True
+    couple_friendly: bool = True
+    kids_friendly: bool = True
+    parking: bool = True
+    wifi: bool = True
+    ticket_required: bool = False
+    confidence_score: float = 95.0
+    is_active: bool = True
