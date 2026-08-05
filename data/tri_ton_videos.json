@@ -1,0 +1,44 @@
+[
+  {
+    "id": "vid-001",
+    "place_id": "tt-003",
+    "place_name": "Hồ Tà Pạ",
+    "title": "Trải nghiệm Hồ Tà Pạ mùa nước xanh trong ngọc - Tri Tôn An Giang",
+    "platform": "tiktok",
+    "author": "@phuot_miennui",
+    "duration_seconds": 45,
+    "embed_url": "https://www.tiktok.com/embed/v2/7234567890123456789",
+    "video_url": "https://www.tiktok.com/@phuot_miennui/video/7234567890123456789",
+    "thumbnail": "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+    "keywords": ["ho ta pa", "nuoc xanh", "tri ton", "checkin an giang"],
+    "is_approved": true
+  },
+  {
+    "id": "vid-002",
+    "place_id": "tt-002",
+    "place_name": "Gà Đốt Ô Thum",
+    "title": "Bí kíp thưởng thức Gà Đốt lá chúc Ô Thum giòn ngon chuẩn vị bản địa",
+    "platform": "tiktok",
+    "author": "@amthuc_baynui",
+    "duration_seconds": 58,
+    "embed_url": "https://www.tiktok.com/embed/v2/7234567890999999999",
+    "video_url": "https://www.tiktok.com/@amthuc_baynui/video/7234567890999999999",
+    "thumbnail": "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b",
+    "keywords": ["ga dot o thum", "dac san tri ton", "la chuc", "o lam"],
+    "is_approved": true
+  },
+  {
+    "id": "vid-003",
+    "place_id": "tt-001",
+    "place_name": "Chùa Xvayton",
+    "title": "Khám phá ngôi Chùa Khmer cổ nhất An Giang 500 năm tuổi tại Tri Tôn",
+    "platform": "youtube_shorts",
+    "author": "Văn Hóa Bảy Núi",
+    "duration_seconds": 60,
+    "embed_url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "video_url": "https://www.youtube.com/shorts/dQw4w9WgXcQ",
+    "thumbnail": "https://images.unsplash.com/photo-1548013146-72479768bada",
+    "keywords": ["chua xvayton", "van hoa khmer", "chua co tri ton"],
+    "is_approved": true
+  }
+]

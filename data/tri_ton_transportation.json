@@ -1,0 +1,34 @@
+{
+  "bus_companies": [
+    {
+      "name": "Nhà Xe Phương Trang (FUTA Bus Lines)",
+      "route": "TP.HCM (Bến xe Miền Tây) ➔ Bến xe Tri Tôn",
+      "frequency": "Mỗi 1 giờ / chuyến (24/7)",
+      "ticket_price": "175,000 VND / vé",
+      "phone": "1900 6067",
+      "pickup_point": "Bến xe Miền Tây / Trạm dừng chân Tri Tôn"
+    },
+    {
+      "name": "Nhà Xe Huệ Nghĩa",
+      "route": "TP.HCM ➔ Thị trấn Tri Tôn / Ba Chúc",
+      "frequency": "Mỗi 2 giờ / chuyến",
+      "ticket_price": "170,000 VND / vé",
+      "phone": "1900 636497",
+      "pickup_point": "Bến xe Tri Tôn, Xã Ba Chúc"
+    }
+  ],
+  "motorbike_rentals": [
+    {
+      "name": "Thuê Xe Máy Tri Tôn - Trọng Nghĩa",
+      "address": "Thị trấn Tri Tôn, An Giang",
+      "price_per_day": "120,000 - 150,000 VND / ngày",
+      "phone": "0918 123 456",
+      "note": "Giao xe tận Bến xe Tri Tôn hoặc Homestay."
+    }
+  ],
+  "road_guidance": {
+    "from_hcmc": "TP.HCM ➔ Cao tốc Trung Lương - Mỹ Thuận ➔ Cầu Vàm Cống ➔ QL91 ➔ ĐT941 ➔ Thị trấn Tri Tôn (Khoảng 210km - 4.5 tiếng).",
+    "from_can_tho": "Cần Thơ ➔ QL91B ➔ Long Xuyên ➔ ĐT941 ➔ Tri Tôn (Khoảng 110km - 2.5 tiếng).",
+    "vehicle_advisory": "Ô tô 7-16 chỗ đi tuyến tránh Tri Tôn để tránh hẻm nhỏ tại các vùng hồ núi."
+  }
+}

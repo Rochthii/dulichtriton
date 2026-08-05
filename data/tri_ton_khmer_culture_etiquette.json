@@ -1,0 +1,24 @@
+{
+  "festivals": [
+    {
+      "name": "Lễ hội Đua bò Bảy Núi",
+      "time": "Cuối tháng 8 - Đầu tháng 9 âm lịch (Dịp lễ Đôl Ta của người Khmer)",
+      "location": "Sân đua bò Chùa Thơ Mít, Xã Vĩnh Trung / Xã Châu Lăng",
+      "description": "Lễ hội thể thao văn hóa độc đáo nổi tiếng nhất vùng Bảy Núi, thu hút hàng vạn du khách và nhiếp ảnh gia.",
+      "tip": "Đến sớm từ 06:30 AM để chọn vị trí chụp ảnh đẹp quanh sân đua bún bùn."
+    },
+    {
+      "name": "Lễ Đôl Ta (Cúng ông bà Khmer)",
+      "time": "Tháng 8 - Tháng 9 âm lịch",
+      "location": "Tất cả các Chùa Khmer tại Tri Tôn",
+      "description": "Lễ báo hiếu tổ tiên quan trọng nhất của cộng đồng người Khmer Nam Bộ."
+    }
+  ],
+  "pagoda_etiquette": [
+    "Trang phục kín đáo, lịch sự (không mặc áo ba lỗ, quần đùi mỏng khi vào chánh điện).",
+    "Bỏ nón mũ, giày dép bên ngoài trước khi bước vào điện thờ.",
+    "Chắp tay chào kính trọng chư tăng Khmer theo nghi thức bản địa.",
+    "Không chỉ trỏ hoặc tự ý chạm vào linh vật, tượng Phật linh thiêng.",
+    "Giữ không gian yên tĩnh, không xả rác tại khuôn viên chùa."
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "faq-001",
+    "question": "Nên đi du lịch Tri Tôn vào thời điểm nào đẹp nhất trong năm?",
+    "answer": "Tri Tôn đẹp nhất vào 2 thời điểm: Mùa lúa chín vàng (Tháng 8 - Tháng 9 & Tháng 11 - Tháng 12) và Mùa nước nổi (Tháng 9 - Tháng 11) khi các hồ Tà Pạ, Soài So dâng nước xanh trong ngọc.",
+    "category": "Kinh nghiệm chung"
+  },
+  {
+    "id": "faq-002",
+    "question": "Ăn Gà đốt Ô Thum có cần gọi đặt trước không?",
+    "answer": "Rất nên gọi đặt trước! Món gà đốt lá chúc Ô Thum được ướp và đốt tươi từ 35-45 phút. Nếu không đặt trước, bạn sẽ phải chờ khá lâu dưới trời nắng trưa.",
+    "category": "Ẩm thực"
+  },
+  {
+    "id": "faq-003",
+    "question": "Hồ Tà Pạ có thu vé vào cổng không?",
+    "answer": "Hồ Tà Pạ mở cửa tham quan tự do miễn phí. Bạn chỉ cần trả phí gửi xe máy/ô tô khoảng 5,000 - 20,000 VND.",
+    "category": "Chi phí & Vé"
+  },
+  {
+    "id": "faq-004",
+    "question": "Mua đường thốt nốt nguyên chất ở đâu chuẩn vị Tri Tôn?",
+    "answer": "Bạn nên mua tại các lò nấu đường thốt nốt truyền thống tại Xã Châu Lăng hoặc Xã Ô Lâm. Đường thắng từ mật tươi ngào dẻo, thơm lừng không pha đường cát.",
+    "category": "Đặc sản làm quà"
+  }
+]

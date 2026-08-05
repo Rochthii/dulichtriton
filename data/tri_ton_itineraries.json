@@ -1,0 +1,96 @@
+[
+  {
+    "id": "iti-2d1n-nature-food",
+    "title": "Lịch trình 2 Ngày 1 Đêm: Khám phá Thiên nhiên & Ẩm thực Bảy Núi",
+    "days": 2,
+    "style": "nature_and_gastronomy",
+    "target_persona": "Gen Z & Gia đình trẻ",
+    "recommended_vehicle": "Xe máy / Ô tô 4-7 chỗ",
+    "summary": "Tour trải nghiệm trọn vẹn Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer 500 năm và ngắm hoàng hôn Hồ Soài So.",
+    "items": [
+      {
+        "day": 1,
+        "time_slot": "Sáng (07:00 - 11:30)",
+        "place_id": "tt-001",
+        "place_name": "Bún nước lèo Tri Tôn & Chùa Xvayton",
+        "activity": "Thưởng thức bún nước lèo đậm đà buổi sáng tại Thị trấn Tri Tôn, sau đó thăm Chùa Xvayton (Chùa Cũ) cổ nhất An Giang.",
+        "note": "Trang phục lịch sự khi vào chánh điện chùa Khmer."
+      },
+      {
+        "day": 1,
+        "time_slot": "Trưa (11:30 - 14:00)",
+        "place_id": "tt-002",
+        "place_name": "Quán Gà Đốt Ô Thum Chính Gốc",
+        "activity": "Thưởng thức Gà đốt lá chúc Ô Thum da giòn ngon chuẩn vị bản địa tại Xã Ô Lâm.",
+        "note": "Gọi điện đặt món trước 40 phút để không phải chờ lâu."
+      },
+      {
+        "day": 1,
+        "time_slot": "Chiều (14:30 - 17:30)",
+        "place_id": "tt-003",
+        "place_name": "Hồ Tà Pạ & Chùa Tà Pạ",
+        "activity": "Check-in hồ nước xanh ngọc Tà Pạ, vãn cảnh Chùa Tà Pạ uy nghiêm trên đỉnh đồi ngắm toàn cảnh cánh đồng.",
+        "note": "Thời điểm chụp ảnh xanh nhất từ 15:00 - 16:30."
+      },
+      {
+        "day": 1,
+        "time_slot": "Tối (18:30 - 21:00)",
+        "place_id": "tt-004",
+        "place_name": "Bò nướng bánh tráng Tri Tôn & Homestay Soài Chek",
+        "activity": "Ăn tối bò nướng bánh tráng thơm lừng và nghỉ đêm tại Homestay view đồi.",
+        "note": "Đặt phòng trước vào dịp cuối tuần."
+      },
+      {
+        "day": 2,
+        "time_slot": "Sáng (07:30 - 11:00)",
+        "place_id": "tt-005",
+        "place_name": "Đồi Tức Dụp & Cây thốt nốt trái tim",
+        "activity": "Tham quan Di tích lịch sử Đồi Tức Dụp (Ngọn đồi 2 triệu đô), check-in hàng thốt nốt trái tim Xã An Tức.",
+        "note": "Mang nón nón che nắng khi chụp ảnh ngoài đồng thốt nốt."
+      },
+      {
+        "day": 2,
+        "time_slot": "Trưa (11:30 - 13:30)",
+        "place_id": "tt-006",
+        "place_name": "Bánh xèo trứng đà điểu & Nước thốt nốt tươi",
+        "activity": "Ăn trưa bánh xèo rau rừng và uống nước thốt nốt ướp lạnh giải nhiệt.",
+        "note": "Mua đường thốt nốt nguyên chất tại lò Xã Châu Lăng làm quà."
+      }
+    ]
+  },
+  {
+    "id": "iti-1d-checkin-express",
+    "title": "Lịch trình 1 Ngày: Check-in Siêu Tốc Các Điểm Hot Tri Tôn",
+    "days": 1,
+    "style": "checkin_express",
+    "target_persona": "Phượt thủ & Bạn trẻ đi trong ngày",
+    "recommended_vehicle": "Xe máy",
+    "summary": "Hành trình 1 ngày tinh gọn chinh phục Hồ Tà Pạ, Cổng trời Tri Tôn và Gà đốt Ô Thum.",
+    "items": [
+      {
+        "day": 1,
+        "time_slot": "Sáng (08:00 - 11:30)",
+        "place_id": "tt-003",
+        "place_name": "Hồ Tà Pạ & Cổng Trời Tri Tôn",
+        "activity": "Săn ảnh tuyệt đẹp tại Cổng trời Châu Lăng và Hồ Tà Pạ.",
+        "note": "Đi sớm để tránh nắng gắt."
+      },
+      {
+        "day": 1,
+        "time_slot": "Trưa (12:00 - 14:00)",
+        "place_id": "tt-002",
+        "place_name": "Gà đốt Ô Thum & Kem thốt nốt",
+        "activity": "Ăn trưa gà đốt và tráng miệng kem thốt nốt dừa tươi.",
+        "note": "Nên đặt trước 30-45 phút."
+      },
+      {
+        "day": 1,
+        "time_slot": "Chiều (14:30 - 17:00)",
+        "place_id": "tt-007",
+        "place_name": "Hồ Soài So & Cà phê Suối Tri Tôn",
+        "activity": "Thư giãn ngắm cảnh núi Cô Tô tại Hồ Soài So trước khi trở về.",
+        "note": "Mua bánh bò thốt nốt nướng tại thị trấn làm quà."
+      }
+    ]
+  }
+]
