@@ -1,0 +1,447 @@
+{
+  "Restaurants Tri Tôn": {
+    "group_index": 1,
+    "group_name": "Restaurants Tri Tôn",
+    "total_cleaned": 2,
+    "items": [
+      {
+        "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
+        "category": "food_and_restaurants",
+        "address": "Khu vực Hồ Ô Thum, Xã Ô Lâm, An Giang",
+        "commune": "Xã Ô Lâm",
+        "latitude": 10.3775,
+        "longitude": 104.9921,
+        "rating": 4.6,
+        "review_count": 1420,
+        "description": "Nhà hàng phục vụ gà đốt lá chúc nướng niêu đất truyền thống tại bờ hồ Ô Thum.",
+        "confidence_score": 95.0,
+        "source_group": "Restaurants Tri Tôn"
+      },
+      {
+        "name": "Nhà hàng Bò 7 Món Ba Chúc",
+        "category": "food_and_restaurants",
+        "address": "Tỉnh lộ 955N, Thị trấn Ba Chúc, An Giang",
+        "commune": "Thị trấn Ba Chúc",
+        "latitude": 10.496,
+        "longitude": 104.909,
+        "rating": 4.6,
+        "review_count": 670,
+        "description": "Nhà hàng thịt bò Bảy Núi nướng bơ tỏi và lẩu bò trái trúc thơm lừng.",
+        "confidence_score": 95.0,
+        "source_group": "Restaurants Tri Tôn"
+      }
+    ]
+  },
+  "Quán ăn Tri Tôn": {
+    "group_index": 2,
+    "group_name": "Quán ăn Tri Tôn",
+    "total_cleaned": 2,
+    "items": [
+      {
+        "name": "Quán Bún Nước Lèo Tri Tôn Chị Tư",
+        "category": "food_and_restaurants",
+        "address": "Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.4128,
+        "longitude": 105.0065,
+        "rating": 4.8,
+        "review_count": 650,
+        "description": "Quán bún nước lèo cá lóc đồng mắm bò hóc truyền thống kèm heo quay.",
+        "confidence_score": 95.0,
+        "source_group": "Quán ăn Tri Tôn"
+      },
+      {
+        "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+        "category": "food_and_restaurants",
+        "address": "114 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.4135,
+        "longitude": 105.0072,
+        "rating": 4.7,
+        "review_count": 890,
+        "description": "Quán bánh canh gia truyền sợi bột gạo xắn tay nước dùng xương ống ngọt thanh.",
+        "confidence_score": 95.0,
+        "source_group": "Quán ăn Tri Tôn"
+      }
+    ]
+  },
+  "Đặc sản Tri Tôn": {
+    "group_index": 3,
+    "group_name": "Đặc sản Tri Tôn",
+    "total_cleaned": 2,
+    "items": [
+      {
+        "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
+        "category": "food_and_restaurants",
+        "address": "Tỉnh lộ 948, Xã Châu Lăng, An Giang",
+        "commune": "Xã Châu Lăng",
+        "latitude": 10.435,
+        "longitude": 104.985,
+        "rating": 4.9,
+        "review_count": 340,
+        "description": "Lò thắng đường thốt nốt mật ngào dẻo thủ công chính gốc.",
+        "confidence_score": 95.0,
+        "source_group": "Đặc sản Tri Tôn"
+      },
+      {
+        "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
+        "category": "food_and_restaurants",
+        "address": "Khu ẩm thực Chợ Tri Tôn, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.412,
+        "longitude": 105.006,
+        "rating": 4.8,
+        "review_count": 480,
+        "description": "Bánh bò thốt nốt nướng ngào nước cốt dừa dẻo thơm.",
+        "confidence_score": 95.0,
+        "source_group": "Đặc sản Tri Tôn"
+      }
+    ]
+  },
+  "Cafe Tri Tôn": {
+    "group_index": 4,
+    "group_name": "Cafe Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô",
+        "category": "cafes_and_homestays",
+        "address": "Khu vực Hồ Soài So, Thị trấn Cô Tô, An Giang",
+        "commune": "Thị trấn Cô Tô",
+        "latitude": 10.385,
+        "longitude": 105.012,
+        "rating": 4.6,
+        "review_count": 360,
+        "description": "Quán cà phê suối tự nhiên nước mát lạnh góc view chân núi Cô Tô.",
+        "confidence_score": 95.0,
+        "source_group": "Cafe Tri Tôn"
+      }
+    ]
+  },
+  "Coffee Tri Tôn": {
+    "group_index": 5,
+    "group_name": "Coffee Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
+        "category": "cafes_and_homestays",
+        "address": "Khu vực Hồ Ô Tà Lọt, Xã An Hảo, An Giang",
+        "commune": "Xã An Hảo",
+        "latitude": 10.478,
+        "longitude": 104.962,
+        "rating": 4.5,
+        "review_count": 290,
+        "description": "Quán coffee view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
+        "confidence_score": 95.0,
+        "source_group": "Coffee Tri Tôn"
+      }
+    ]
+  },
+  "Homestay Tri Tôn": {
+    "group_index": 6,
+    "group_name": "Homestay Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Soài Chek Homestay & Coffee",
+        "category": "cafes_and_homestays",
+        "address": "Ấp Kè Sen, Xã Núi Tô, An Giang",
+        "commune": "Xã Núi Tô",
+        "latitude": 10.411,
+        "longitude": 105.018,
+        "rating": 4.7,
+        "review_count": 450,
+        "description": "Homestay sân vườn không gian thoáng đãng view hồ Soài Chek.",
+        "confidence_score": 95.0,
+        "source_group": "Homestay Tri Tôn"
+      }
+    ]
+  },
+  "Khách sạn Tri Tôn": {
+    "group_index": 7,
+    "group_name": "Khách sạn Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
+        "category": "cafes_and_homestays",
+        "address": "Đường Tran Hung Dao, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.415,
+        "longitude": 105.008,
+        "rating": 4.4,
+        "review_count": 310,
+        "description": "Khách sạn phòng sạch sẽ tiện nghi trung tâm Thị trấn Tri Tôn.",
+        "confidence_score": 95.0,
+        "source_group": "Khách sạn Tri Tôn"
+      }
+    ]
+  },
+  "Chùa Tri Tôn": {
+    "group_index": 8,
+    "group_name": "Chùa Tri Tôn",
+    "total_cleaned": 2,
+    "items": [
+      {
+        "name": "Chùa Xvayton (Chùa Cũ 500 năm)",
+        "category": "khmer_pagodas_heritage",
+        "address": "Khóm 3, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.4132,
+        "longitude": 105.0088,
+        "rating": 4.8,
+        "review_count": 1250,
+        "description": "Ngôi chùa Khmer cổ nhất An Giang lưu giữ nhiều bộ kinh lá buông độc đáo.",
+        "confidence_score": 95.0,
+        "source_group": "Chùa Tri Tôn"
+      },
+      {
+        "name": "Chùa Tà Pạ",
+        "category": "khmer_pagodas_heritage",
+        "address": "Ngọn đồi Tà Pạ, Xã Núi Tô, An Giang",
+        "commune": "Xã Núi Tô",
+        "latitude": 10.4225,
+        "longitude": 105.0125,
+        "rating": 4.7,
+        "review_count": 980,
+        "description": "Ngôi chùa Khmer trên ngọn đồi Tà Pạ có kiến trúc tháp nhọn uy nghi.",
+        "confidence_score": 95.0,
+        "source_group": "Chùa Tri Tôn"
+      }
+    ]
+  },
+  "Núi Tri Tôn": {
+    "group_index": 9,
+    "group_name": "Núi Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Khu Du Lịch Núi Cô Tô (Phụng Hoàng Sơn)",
+        "category": "attractions_nature",
+        "address": "Thị trấn Cô Tô, An Giang",
+        "commune": "Thị trấn Cô Tô",
+        "latitude": 10.384,
+        "longitude": 105.008,
+        "rating": 4.7,
+        "review_count": 2100,
+        "description": "Ngọn núi cao 614m danh sơn Thất Sơn Bảy Núi có Hồ Soài So và suối Ô Tà Sóc.",
+        "confidence_score": 95.0,
+        "source_group": "Núi Tri Tôn"
+      }
+    ]
+  },
+  "Hồ Tri Tôn": {
+    "group_index": 10,
+    "group_name": "Hồ Tri Tôn",
+    "total_cleaned": 2,
+    "items": [
+      {
+        "name": "Hồ Tà Pạ",
+        "category": "attractions_nature",
+        "address": "Xã Núi Tô, An Giang",
+        "commune": "Xã Núi Tô",
+        "latitude": 10.4216,
+        "longitude": 105.0118,
+        "rating": 4.7,
+        "review_count": 2850,
+        "description": "Hồ nước xanh trong ngọc tuyệt đẹp được mệnh danh là Tuyệt Tình Cốc Bảy Núi.",
+        "confidence_score": 95.0,
+        "source_group": "Hồ Tri Tôn"
+      },
+      {
+        "name": "Hồ Soài So",
+        "category": "attractions_nature",
+        "address": "Chân núi Cô Tô, Thị trấn Cô Tô, An Giang",
+        "commune": "Thị trấn Cô Tô",
+        "latitude": 10.386,
+        "longitude": 105.011,
+        "rating": 4.6,
+        "review_count": 1340,
+        "description": "Hồ thủy lợi thơ mộng soi bóng dãy núi Phụng Hoàng Sơn.",
+        "confidence_score": 95.0,
+        "source_group": "Hồ Tri Tôn"
+      }
+    ]
+  },
+  "Điểm du lịch Tri Tôn": {
+    "group_index": 11,
+    "group_name": "Điểm du lịch Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+        "category": "attractions_nature",
+        "address": "Ấp Ninh Hòa, Xã An Tức, An Giang",
+        "commune": "Xã An Tức",
+        "latitude": 10.3702,
+        "longitude": 104.9667,
+        "rating": 4.6,
+        "review_count": 3100,
+        "description": "Ngọn đồi 2 triệu đô căn cứ kháng chiến kiên cường với hệ thống hang đá huyền bí.",
+        "confidence_score": 95.0,
+        "source_group": "Điểm du lịch Tri Tôn"
+      }
+    ]
+  },
+  "Check in Tri Tôn": {
+    "group_index": 12,
+    "group_name": "Check in Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Cánh Đồng Thốt Nốt Trái Tim An Tức",
+        "category": "checkin_spots",
+        "address": "Xã An Tức, An Giang",
+        "commune": "Xã An Tức",
+        "latitude": 10.371,
+        "longitude": 104.975,
+        "rating": 4.7,
+        "review_count": 1890,
+        "description": "Hàng cây thốt nốt tự nhiên tạo thành hình trái tim độc đáo giữa cánh đồng.",
+        "confidence_score": 95.0,
+        "source_group": "Check in Tri Tôn"
+      }
+    ]
+  },
+  "Địa điểm sống ảo Tri Tôn": {
+    "group_index": 13,
+    "group_name": "Địa điểm sống ảo Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
+        "category": "checkin_spots",
+        "address": "Ấp An Hòa, Xã Châu Lăng, An Giang",
+        "commune": "Xã Châu Lăng",
+        "latitude": 10.438,
+        "longitude": 104.981,
+        "rating": 4.8,
+        "review_count": 2450,
+        "description": "Cổng chùa Khmer cổ hoa văn tinh xảo đứng trần giữa đồng lúa.",
+        "confidence_score": 95.0,
+        "source_group": "Địa điểm sống ảo Tri Tôn"
+      }
+    ]
+  },
+  "Chợ Tri Tôn": {
+    "group_index": 14,
+    "group_name": "Chợ Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Chợ Trung Tâm Tri Tôn",
+        "category": "food_and_restaurants",
+        "address": "Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.4125,
+        "longitude": 105.0068,
+        "rating": 4.5,
+        "review_count": 1120,
+        "description": "Chợ trung tâm sầm uất ngập tràn ẩm thực bánh bò thốt nốt, bún nước lèo.",
+        "confidence_score": 95.0,
+        "source_group": "Chợ Tri Tôn"
+      }
+    ]
+  },
+  "Chợ đêm Tri Tôn": {
+    "group_index": 15,
+    "group_name": "Chợ đêm Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+        "category": "food_and_restaurants",
+        "address": "Quảng trường Quảng Tế, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.4138,
+        "longitude": 105.0075,
+        "rating": 4.6,
+        "review_count": 780,
+        "description": "Khu phố chợ đêm sầm uất bán đồ ăn vặt thốt nốt, xiên nướng, cháo bò.",
+        "confidence_score": 95.0,
+        "source_group": "Chợ đêm Tri Tôn"
+      }
+    ]
+  },
+  "Gà đốt Ô Thum": {
+    "group_index": 16,
+    "group_name": "Gà đốt Ô Thum",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Gà Đốt Ô Thum Siêu Bó",
+        "category": "food_and_restaurants",
+        "address": "Hồ Ô Thum, Xã Ô Lâm, An Giang",
+        "commune": "Xã Ô Lâm",
+        "latitude": 10.3775,
+        "longitude": 104.9921,
+        "rating": 4.6,
+        "review_count": 1420,
+        "description": "Gà đốt lá chúc giòn da thơm cay bản địa tại bờ hồ Ô Thum.",
+        "confidence_score": 95.0,
+        "source_group": "Gà đốt Ô Thum"
+      }
+    ]
+  },
+  "Đu đủ đâm Tri Tôn": {
+    "group_index": 17,
+    "group_name": "Đu đủ đâm Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
+        "category": "food_and_restaurants",
+        "address": "Tỉnh lộ 948, Xã Châu Lăng, An Giang",
+        "commune": "Xã Châu Lăng",
+        "latitude": 10.436,
+        "longitude": 104.984,
+        "rating": 4.7,
+        "review_count": 590,
+        "description": "Món đu đủ đâm Khmer giòn sần sật cay chua cay ăn kèm cánh gà nướng.",
+        "confidence_score": 95.0,
+        "source_group": "Đu đủ đâm Tri Tôn"
+      }
+    ]
+  },
+  "Bò Bảy Núi": {
+    "group_index": 18,
+    "group_name": "Bò Bảy Núi",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+        "category": "food_and_restaurants",
+        "address": "Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.414,
+        "longitude": 105.0095,
+        "rating": 4.6,
+        "review_count": 520,
+        "description": "Bò Bảy Núi nướng vỉ thơm lừng cuốn bánh tráng chấm mắm bò hóc.",
+        "confidence_score": 95.0,
+        "source_group": "Bò Bảy Núi"
+      }
+    ]
+  },
+  "Bánh dân gian Khmer Tri Tôn": {
+    "group_index": 19,
+    "group_name": "Bánh dân gian Khmer Tri Tôn",
+    "total_cleaned": 1,
+    "items": [
+      {
+        "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
+        "category": "food_and_restaurants",
+        "address": "Trước cổng Chùa Xvayton, Thị trấn Tri Tôn, An Giang",
+        "commune": "Thị trấn Tri Tôn",
+        "latitude": 10.413,
+        "longitude": 105.0085,
+        "rating": 4.8,
+        "review_count": 410,
+        "description": "Các món bánh dân gian Khmer đượm vị thốt nốt dừa tươi nướng giòn.",
+        "confidence_score": 95.0,
+        "source_group": "Bánh dân gian Khmer Tri Tôn"
+      }
+    ]
+  }
+}
