@@ -40,6 +40,8 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Quy Chuẩn Công Nghệ Tối Ưu (Optimal Tech Stack Architecture)**:
+  * Khởi tạo tài liệu [docs/tech_stack_architecture.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tech_stack_architecture.md) hoạch định bộ công nghệ tối ưu cho 6 lớp kỹ thuật (Next.js 14, Supabase PostgreSQL + pgvector, FastAPI Python 3.11, Google Gemini AI, Leaflet GIS & Vercel).
 * **Phạm vi Bản phát hành MVP (MVP Release Scope)**:
   * Khởi tạo tài liệu [docs/mvp_scope_and_checklist.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/mvp_scope_and_checklist.md) quy định rõ ràng danh mục chức năng Frontend (Trang chủ, Địa điểm, Chi tiết Hồ Tà Pạ nhúng TikTok, Ẩm thực Gà đốt & AI Chatbot Widget), CSDL Supabase, API FastAPI Core và tiêu chí hoàn thành MVP.
 * **Nghiên cứu Dữ liệu Chuyên sâu (Deep Data Research)**:
