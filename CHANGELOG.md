@@ -19,7 +19,8 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Bộ Tài liệu Kỹ thuật Cô đọng**: Tách 12 file tài liệu kỹ thuật trong `docs/` (`01_Project_Overview.md` đến `11_Roadmap.md` & `README.md`).
 * **AI Agent Skill**: Khởi tạo [.agents/skills/triton_product_design/SKILL.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/.agents/skills/triton_product_design/SKILL.md) đóng gói bộ quy tắc thiết kế & Tech Stack (Next.js + Supabase + Vercel).
 * **Hạ tầng & Bảo mật (Security & Git)**:
-  * Khởi tạo file [.gitignore](file:///e:/Projects/Project_ca_nhan/dulichtriton/.gitignore) loại bỏ 100% các file nhạy cảm (`.env`, `.env.local`), virtualenv (`venv/`), `node_modules/`, `.next/`, `logs/` chuẩn bị push lên repository `https://github.com/Rochthii/dulichtriton.git`.
+  * Khởi tạo file [.gitignore](file:///e:/Projects/Project_ca_nhan/dulichtriton/.gitignore) loại bỏ 100% các file nhạy cảm (`.env`, `.env.local`), virtualenv (`venv/`), `node_modules/`, `.next/`, `logs/`.
+  * Khởi tạo repository Git, commit 140 files mã nguồn/tài liệu và đẩy trực tiếp lên GitHub: `https://github.com/Rochthii/dulichtriton.git` trên nhánh `main`.
 * **Chuyện Kể & Thương hiệu**:
   * Viết mới file [README.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/README.md) cô đọng, chuyên nghiệp với câu chuyện cảm hứng từ tác giả **Chăm Rốch Thi** (*Người con Tri Tôn, An Giang*).
 * **AI Agent Rules & Protocol**:
