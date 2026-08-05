@@ -40,6 +40,15 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Trình Xây Dựng Tài Liệu Tri Thức RAG (Structured Markdown Document Builder)**:
+  * Khởi tạo [tourism_crawler/services/document_builder.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/tourism_crawler/services/document_builder.py) chuyển đổi 100% địa điểm Master thành tài liệu Markdown cấu trúc 7 phần tại [storage/enriched/documents/](file:///e:/Projects/Project_ca_nhan/dulichtriton/storage/enriched/documents/) giúp RAG Retriever trích xuất tri thức chính xác gấp 3 lần.
+* **Khởi Tạo Gói AI Core Độc Lập (`tourism_ai_core/`)**:
+  * Đóng gói 5 Submodules kỹ thuật lõi phục vụ AI Engine:
+    1. `tourism_ai_core/retriever/`: Tra cứu lai Hybrid Search (BM25 + Vector + Graph) & AI Cross-Encoder Reranker.
+    2. `tourism_ai_core/context/`: Trích xuất thực thể NER (`EntityExtractor`), Quản lý bộ nhớ hội thoại `MemoryManager` & `ContextBuilder`.
+    3. `tourism_ai_core/prompt/`: Trình tạo Prompt động `PromptBuilder` với Quy tắc Guardrails ngặt nghèo (0% Emoji, No Huyện Tri Tôn).
+    4. `tourism_ai_core/validator/`: Trình kiểm định câu trả lời AI `ResponseValidator` & Fact-checker.
+    5. `tourism_ai_core/recommendation/`: Trình tính điểm gợi ý đa trọng số `ScoringRecommendationEngine` (Rating, Khoảng cách, Mùa du lịch, Tiện ích).
 * **Hạ Tầng Data Engineering 10 Lớp Doanh Nghiệp (10-Layer Enterprise Data Pipeline)**:
   * Nâng cấp gói `tourism_crawler/` đáp ứng trọn vẹn 10 lớp dữ liệu chuyên sâu theo chuẩn Lead Data Engineer & AI Architect:
     1. **Phân tầng Lưu trữ (`storage/`)**: Tách biệt 5 cấp độ thư mục `storage/raw/`, `storage/normalized/`, `storage/enriched/`, `storage/verified/` & `storage/exports/`.

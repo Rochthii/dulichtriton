@@ -22,36 +22,36 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "lake tà pạ (tuyệt tình cốc)",
-      "bay nui",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "ho ta pa tuyet tinh coc",
+      "lake tà pạ (tuyệt tình cốc)",
+      "an giang",
+      "tri ton",
       "hồ tà pạ (tuyệt tình cốc)",
-      "ho ta pa tuyet tinh coc"
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "ho-ta-pa-tuyet-tinh-coc",
     "search_keywords": [
-      "that son",
-      "lake tà pạ (tuyệt tình cốc)",
-      "bay nui",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "ho ta pa tuyet tinh coc",
+      "lake tà pạ (tuyệt tình cốc)",
+      "an giang",
+      "tri ton",
       "hồ tà pạ (tuyệt tình cốc)",
-      "ho ta pa tuyet tinh coc"
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
       "Lake Tà Pạ (Tuyệt Tình Cốc)",
@@ -62,14 +62,14 @@
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -85,9 +85,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -145,53 +145,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "lake soài so",
+      "thị trấn tri tôn",
       "hồ soài so",
+      "an giang",
       "tri ton",
       "ho soai so",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "ho-soai-so",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "lake soài so",
+      "thị trấn tri tôn",
       "hồ soài so",
+      "an giang",
       "tri ton",
       "ho soai so",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
-      "Lake Soài So",
+      "Hồ Soài So",
       "ho soai so",
-      "Hồ Soài So"
+      "Lake Soài So"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -207,9 +207,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -256,36 +256,36 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "ho soai chek",
-      "lake soài chék",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui",
-      "hồ soài chék"
+      "that son",
+      "lake soài chék",
+      "an giang",
+      "tri ton",
+      "hồ soài chék",
+      "ho soai chek",
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "ho-soai-chek",
     "search_keywords": [
-      "that son",
-      "ho soai chek",
-      "lake soài chék",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui",
-      "hồ soài chék"
+      "that son",
+      "lake soài chék",
+      "an giang",
+      "tri ton",
+      "hồ soài chék",
+      "ho soai chek",
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
       "Hồ Soài Chék",
@@ -296,14 +296,14 @@
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -319,9 +319,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -370,52 +370,52 @@
     "keywords": [
       "that son",
       "ho o thum",
-      "hồ ô thum",
-      "bay nui",
-      "lake ô thum",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "hồ ô thum",
+      "attractions_nature",
+      "lake ô thum",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "attractions_nature",
-      "Ô Lâm"
+      "tri tôn",
+      "attractions_nature"
     ],
     "slug": "ho-o-thum",
     "search_keywords": [
       "that son",
       "ho o thum",
-      "hồ ô thum",
-      "bay nui",
-      "lake ô thum",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "hồ ô thum",
+      "attractions_nature",
+      "lake ô thum",
+      "bay nui"
     ],
     "aliases": [
-      "Lake Ô Thum",
+      "ho o thum",
       "Hồ Ô Thum",
-      "ho o thum"
+      "Lake Ô Thum"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "attractions_nature",
-      "Ô Lâm"
+      "tri tôn",
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -431,9 +431,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -486,53 +486,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã lương phi",
-      "ho o ta soc",
-      "tri ton",
       "lake ô tà sóc",
-      "attractions_nature",
-      "an giang",
       "hồ ô tà sóc",
+      "an giang",
+      "xã lương phi",
+      "tri ton",
+      "attractions_nature",
+      "ho o ta soc",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "slug": "ho-o-ta-soc",
     "search_keywords": [
       "that son",
-      "xã lương phi",
-      "ho o ta soc",
-      "tri ton",
       "lake ô tà sóc",
-      "attractions_nature",
-      "an giang",
       "hồ ô tà sóc",
+      "an giang",
+      "xã lương phi",
+      "tri ton",
+      "attractions_nature",
+      "ho o ta soc",
       "bay nui"
     ],
     "aliases": [
-      "ho o ta soc",
+      "Lake Ô Tà Sóc",
       "Hồ Ô Tà Sóc",
-      "Lake Ô Tà Sóc"
+      "ho o ta soc"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -548,9 +548,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -599,12 +599,12 @@
     "keywords": [
       "that son",
       "hồ ô tà lọt",
-      "ho o ta lot",
-      "tri ton",
-      "xã an hảo",
-      "an giang",
-      "attractions_nature",
       "lake ô tà lọt",
+      "an giang",
+      "tri ton",
+      "attractions_nature",
+      "xã an hảo",
+      "ho o ta lot",
       "bay nui"
     ],
     "description": "",
@@ -612,39 +612,39 @@
     "tags": [
       "An Hảo",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "ho-o-ta-lot",
     "search_keywords": [
       "that son",
       "hồ ô tà lọt",
-      "ho o ta lot",
-      "tri ton",
-      "xã an hảo",
-      "an giang",
-      "attractions_nature",
       "lake ô tà lọt",
+      "an giang",
+      "tri ton",
+      "attractions_nature",
+      "xã an hảo",
+      "ho o ta lot",
       "bay nui"
     ],
     "aliases": [
+      "Lake Ô Tà Lọt",
       "Hồ Ô Tà Lọt",
-      "ho o ta lot",
-      "Lake Ô Tà Lọt"
+      "ho o ta lot"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "An Hảo",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -660,9 +660,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -713,10 +713,10 @@
       "ho da latina",
       "hồ đá latina",
       "lake đá latina",
-      "tri ton",
-      "xã an hảo",
-      "attractions_nature",
       "an giang",
+      "tri ton",
+      "attractions_nature",
+      "xã an hảo",
       "bay nui"
     ],
     "description": "",
@@ -724,9 +724,9 @@
     "tags": [
       "An Hảo",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "ho-da-latina",
     "search_keywords": [
@@ -734,29 +734,29 @@
       "ho da latina",
       "hồ đá latina",
       "lake đá latina",
-      "tri ton",
-      "xã an hảo",
-      "attractions_nature",
       "an giang",
+      "tri ton",
+      "attractions_nature",
+      "xã an hảo",
       "bay nui"
     ],
     "aliases": [
-      "Hồ Đá Latina",
       "Lake Đá Latina",
+      "Hồ Đá Latina",
       "ho da latina"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "An Hảo",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -772,9 +772,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -821,13 +821,13 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "nui co to phung hoang son",
-      "núi cô tô (phụng hoàng sơn)",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "núi cô tô (phụng hoàng sơn)",
+      "an giang",
+      "tri ton",
+      "nui co to phung hoang son",
+      "attractions_nature",
       "bay nui"
     ],
     "description": "",
@@ -835,37 +835,37 @@
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "nui-co-to-phung-hoang-son",
     "search_keywords": [
-      "that son",
-      "nui co to phung hoang son",
-      "núi cô tô (phụng hoàng sơn)",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "núi cô tô (phụng hoàng sơn)",
+      "an giang",
+      "tri ton",
+      "nui co to phung hoang son",
+      "attractions_nature",
       "bay nui"
     ],
     "aliases": [
-      "nui co to phung hoang son",
-      "Núi Cô Tô (Phụng Hoàng Sơn)"
+      "Núi Cô Tô (Phụng Hoàng Sơn)",
+      "nui co to phung hoang son"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -881,9 +881,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -930,34 +930,34 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
       "da vo hoi me co to",
-      "tri ton",
       "an giang",
+      "tri ton",
       "attractions_nature",
-      "xã núi tô",
-      "bay nui",
-      "đá vồ hội mẹ cô tô"
+      "đá vồ hội mẹ cô tô",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "da-vo-hoi-me-co-to",
     "search_keywords": [
+      "xã núi tô",
       "that son",
       "da vo hoi me co to",
-      "tri ton",
       "an giang",
+      "tri ton",
       "attractions_nature",
-      "xã núi tô",
-      "bay nui",
-      "đá vồ hội mẹ cô tô"
+      "đá vồ hội mẹ cô tô",
+      "bay nui"
     ],
     "aliases": [
       "da vo hoi me co to",
@@ -967,9 +967,9 @@
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
       "couple",
@@ -1042,30 +1042,30 @@
       "that son",
       "xã an tức",
       "khu du lịch đồi tức dụp",
-      "khmer_pagodas_heritage",
-      "khu du lich doi tuc dup",
-      "tri ton",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "khu du lich doi tuc dup",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "bảy núi",
+      "an giang",
       "khmer_pagodas_heritage",
       "An Tức",
-      "bảy núi",
-      "tri tôn",
-      "an giang"
+      "tri tôn"
     ],
     "slug": "khu-du-lich-doi-tuc-dup",
     "search_keywords": [
       "that son",
       "xã an tức",
       "khu du lịch đồi tức dụp",
-      "khmer_pagodas_heritage",
-      "khu du lich doi tuc dup",
-      "tri ton",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "khu du lich doi tuc dup",
       "bay nui"
     ],
     "aliases": [
@@ -1074,11 +1074,11 @@
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
+      "bảy núi",
+      "an giang",
       "khmer_pagodas_heritage",
       "An Tức",
-      "bảy núi",
-      "tri tôn",
-      "an giang"
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -1153,46 +1153,46 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "canh dong lua ta pa",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui",
-      "cánh đồng lúa tà pạ"
+      "that son",
+      "an giang",
+      "tri ton",
+      "canh dong lua ta pa",
+      "cánh đồng lúa tà pạ",
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "canh-dong-lua-ta-pa",
     "search_keywords": [
-      "that son",
-      "canh dong lua ta pa",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui",
-      "cánh đồng lúa tà pạ"
+      "that son",
+      "an giang",
+      "tri ton",
+      "canh dong lua ta pa",
+      "cánh đồng lúa tà pạ",
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
-      "canh dong lua ta pa",
-      "Cánh Đồng Lúa Tà Pạ"
+      "Cánh Đồng Lúa Tà Pạ",
+      "canh dong lua ta pa"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
       "couple",
@@ -1273,50 +1273,50 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã lương phi",
       "rung tam vong o ta soc",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "bay nui",
-      "rừng tầm vông ô tà sóc"
+      "xã lương phi",
+      "tri ton",
+      "rừng tầm vông ô tà sóc",
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "slug": "rung-tam-vong-o-ta-soc",
     "search_keywords": [
       "that son",
-      "xã lương phi",
       "rung tam vong o ta soc",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "bay nui",
-      "rừng tầm vông ô tà sóc"
+      "xã lương phi",
+      "tri ton",
+      "rừng tầm vông ô tà sóc",
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
-      "Rừng Tầm Vông Ô Tà Sóc",
-      "rung tam vong o ta soc"
+      "rung tam vong o ta soc",
+      "Rừng Tầm Vông Ô Tà Sóc"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -1332,9 +1332,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -1382,32 +1382,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn ba chúc",
-      "cánh đồng lúa ba chúc",
-      "tri ton",
       "canh dong lua ba chuc",
-      "attractions_nature",
       "an giang",
+      "tri ton",
+      "cánh đồng lúa ba chúc",
+      "thị trấn ba chúc",
+      "attractions_nature",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "slug": "canh-dong-lua-ba-chuc",
     "search_keywords": [
       "that son",
-      "thị trấn ba chúc",
-      "cánh đồng lúa ba chúc",
-      "tri ton",
       "canh dong lua ba chuc",
-      "attractions_nature",
       "an giang",
+      "tri ton",
+      "cánh đồng lúa ba chúc",
+      "thị trấn ba chúc",
+      "attractions_nature",
       "bay nui"
     ],
     "aliases": [
@@ -1417,9 +1417,9 @@
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "suitable_for": [
@@ -1491,33 +1491,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "vuon nho nong trai o thum",
-      "bay nui",
       "vườn nho nông trại ô thum",
+      "vuon nho nong trai o thum",
+      "an giang",
+      "xã ô lâm",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "xã ô lâm"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "attractions_nature",
-      "Ô Lâm"
+      "tri tôn",
+      "attractions_nature"
     ],
     "slug": "vuon-nho-nong-trai-o-thum",
     "search_keywords": [
       "that son",
-      "vuon nho nong trai o thum",
-      "bay nui",
       "vườn nho nông trại ô thum",
+      "vuon nho nong trai o thum",
+      "an giang",
+      "xã ô lâm",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "xã ô lâm"
+      "bay nui"
     ],
     "aliases": [
       "Vườn Nho Nông Trại Ô Thum",
@@ -1525,11 +1525,11 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "attractions_nature",
-      "Ô Lâm"
+      "tri tôn",
+      "attractions_nature"
     ],
     "suitable_for": [
       "couple",
@@ -1604,13 +1604,13 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "vườn mãng cầu núi tô",
-      "tri ton",
-      "vuon mang cau nui to",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "an giang",
+      "tri ton",
+      "vườn mãng cầu núi tô",
+      "attractions_nature",
+      "vuon mang cau nui to",
       "bay nui"
     ],
     "description": "",
@@ -1618,19 +1618,19 @@
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "vuon-mang-cau-nui-to",
     "search_keywords": [
-      "that son",
-      "vườn mãng cầu núi tô",
-      "tri ton",
-      "vuon mang cau nui to",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
+      "that son",
+      "an giang",
+      "tri ton",
+      "vườn mãng cầu núi tô",
+      "attractions_nature",
+      "vuon mang cau nui to",
       "bay nui"
     ],
     "aliases": [
@@ -1641,14 +1641,14 @@
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -1664,9 +1664,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -1715,49 +1715,49 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "suoi vang soai so",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "suoi vang soai so",
+      "suối vàng soài so",
       "attractions_nature",
-      "bay nui",
-      "suối vàng soài so"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "suoi-vang-soai-so",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "suoi vang soai so",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "suoi vang soai so",
+      "suối vàng soài so",
       "attractions_nature",
-      "bay nui",
-      "suối vàng soài so"
+      "bay nui"
     ],
     "aliases": [
-      "suoi vang soai so",
-      "Suối Vàng Soài So"
+      "Suối Vàng Soài So",
+      "suoi vang soai so"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -1773,9 +1773,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -1823,50 +1823,50 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "nui dai ngoa long son",
+      "núi dài (ngọa long sơn)",
+      "an giang",
       "xã lương phi",
-      "bay nui",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "nui dai ngoa long son",
-      "núi dài (ngọa long sơn)"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "slug": "nui-dai-ngoa-long-son",
     "search_keywords": [
       "that son",
+      "nui dai ngoa long son",
+      "núi dài (ngọa long sơn)",
+      "an giang",
       "xã lương phi",
-      "bay nui",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "nui dai ngoa long son",
-      "núi dài (ngọa long sơn)"
+      "bay nui"
     ],
     "aliases": [
-      "Núi Dài (Ngọa Long Sơn)",
-      "nui dai ngoa long son"
+      "nui dai ngoa long son",
+      "Núi Dài (Ngọa Long Sơn)"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -1882,9 +1882,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -1932,32 +1932,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã chau lăng",
-      "tri ton",
-      "attractions_nature",
       "cánh đồng thốt nốt chau lăng",
-      "an giang",
       "canh dong thot not chau lang",
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "attractions_nature",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
-      "tri tôn",
-      "attractions_nature",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "attractions_nature"
     ],
     "slug": "canh-dong-thot-not-chau-lang",
     "search_keywords": [
       "that son",
-      "xã chau lăng",
-      "tri ton",
-      "attractions_nature",
       "cánh đồng thốt nốt chau lăng",
-      "an giang",
       "canh dong thot not chau lang",
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "attractions_nature",
       "bay nui"
     ],
     "aliases": [
@@ -1967,10 +1967,10 @@
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "bảy núi",
-      "tri tôn",
-      "attractions_nature",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "attractions_nature"
     ],
     "suitable_for": [
       "couple",
@@ -2047,11 +2047,11 @@
     "keywords": [
       "that son",
       "vach da dung latina",
-      "tri ton",
-      "xã an hảo",
-      "an giang",
       "checkin_spots",
       "bay nui",
+      "an giang",
+      "tri ton",
+      "xã an hảo",
       "vách đá đứng latina"
     ],
     "description": "",
@@ -2059,32 +2059,32 @@
     "tags": [
       "An Hảo",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "vach-da-dung-latina",
     "search_keywords": [
       "that son",
       "vach da dung latina",
-      "tri ton",
-      "xã an hảo",
-      "an giang",
       "checkin_spots",
       "bay nui",
+      "an giang",
+      "tri ton",
+      "xã an hảo",
       "vách đá đứng latina"
     ],
     "aliases": [
-      "Vách Đá Đứng Latina",
-      "vach da dung latina"
+      "vach da dung latina",
+      "Vách Đá Đứng Latina"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "An Hảo",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2155,44 +2155,44 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "bai tha dieu hoang hon tri ton",
-      "tri ton",
-      "an giang",
       "bãi thả diều hoàng hôn tri tôn",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
       "attractions_nature",
+      "bai tha dieu hoang hon tri ton",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "bai-tha-dieu-hoang-hon-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "bai tha dieu hoang hon tri ton",
-      "tri ton",
-      "an giang",
       "bãi thả diều hoàng hôn tri tôn",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
       "attractions_nature",
+      "bai tha dieu hoang hon tri ton",
       "bay nui"
     ],
     "aliases": [
-      "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-      "bai tha dieu hoang hon tri ton"
+      "bai tha dieu hoang hon tri ton",
+      "Bãi Thả Diều Hoàng Hôn Tri Tôn"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -2264,50 +2264,50 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "con duong tuyen tranh tri ton dt941 dt948",
       "thị trấn tri tôn",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "bay nui",
-      "con duong tuyen tranh tri ton dt941 dt948",
-      "con đường tuyến tránh tri tôn (đt941 - đt948)"
+      "con đường tuyến tránh tri tôn (đt941 - đt948)",
+      "tri ton",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn",
+      "Tri Tôn"
     ],
     "slug": "con-duong-tuyen-tranh-tri-ton-dt941-dt948",
     "search_keywords": [
       "that son",
+      "con duong tuyen tranh tri ton dt941 dt948",
       "thị trấn tri tôn",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "bay nui",
-      "con duong tuyen tranh tri ton dt941 dt948",
-      "con đường tuyến tránh tri tôn (đt941 - đt948)"
+      "con đường tuyến tránh tri tôn (đt941 - đt948)",
+      "tri ton",
+      "bay nui"
     ],
     "aliases": [
-      "con duong tuyen tranh tri ton dt941 dt948",
-      "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)"
+      "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+      "con duong tuyen tranh tri ton dt941 dt948"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn",
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "30 - 45 phút",
     "best_visit_time": "Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30)",
@@ -2323,9 +2323,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -2372,46 +2372,46 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
-      "con duong to lua ta pa",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "con đường tơ lụa tà pạ"
+      "tri ton",
+      "con đường tơ lụa tà pạ",
+      "con duong to lua ta pa",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "con-duong-to-lua-ta-pa",
     "search_keywords": [
+      "xã núi tô",
       "that son",
-      "con duong to lua ta pa",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "con đường tơ lụa tà pạ"
+      "tri ton",
+      "con đường tơ lụa tà pạ",
+      "con duong to lua ta pa",
+      "bay nui"
     ],
     "aliases": [
-      "con duong to lua ta pa",
-      "Con Đường Tơ Lụa Tà Pạ"
+      "Con Đường Tơ Lụa Tà Pạ",
+      "con duong to lua ta pa"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2491,13 +2491,13 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "con đường tơ lụa soài chék",
-      "con duong to lua soai chek",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "xã núi tô",
+      "that son",
+      "checkin_spots",
+      "con đường tơ lụa soài chék",
+      "an giang",
+      "tri ton",
+      "con duong to lua soai chek",
       "bay nui"
     ],
     "description": "",
@@ -2505,32 +2505,32 @@
     "tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "con-duong-to-lua-soai-chek",
     "search_keywords": [
-      "that son",
-      "con đường tơ lụa soài chék",
-      "con duong to lua soai chek",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "xã núi tô",
+      "that son",
+      "checkin_spots",
+      "con đường tơ lụa soài chék",
+      "an giang",
+      "tri ton",
+      "con duong to lua soai chek",
       "bay nui"
     ],
     "aliases": [
-      "con duong to lua soai chek",
-      "Con Đường Tơ Lụa Soài Chék"
+      "Con Đường Tơ Lụa Soài Chék",
+      "con duong to lua soai chek"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2602,44 +2602,44 @@
     "keywords": [
       "that son",
       "con duong vom cong chau lang",
+      "checkin_spots",
+      "an giang",
+      "tri ton",
       "con đường vòm còng châu lăng",
       "xã chau lăng",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "slug": "con-duong-vom-cong-chau-lang",
     "search_keywords": [
       "that son",
       "con duong vom cong chau lang",
+      "checkin_spots",
+      "an giang",
+      "tri ton",
       "con đường vòm còng châu lăng",
       "xã chau lăng",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "bay nui"
     ],
     "aliases": [
-      "Con Đường Vòm Còng Châu Lăng",
-      "con duong vom cong chau lang"
+      "con duong vom cong chau lang",
+      "Con Đường Vòm Còng Châu Lăng"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2709,46 +2709,46 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "con đường thốt nốt ô lâm - cô tô",
       "that son",
-      "bay nui",
-      "con duong thot not o lam co to",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "con đường thốt nốt ô lâm - cô tô",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "con duong thot not o lam co to",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "con-duong-thot-not-o-lam-co-to",
     "search_keywords": [
+      "con đường thốt nốt ô lâm - cô tô",
       "that son",
-      "bay nui",
-      "con duong thot not o lam co to",
-      "tri ton",
       "checkin_spots",
       "an giang",
-      "con đường thốt nốt ô lâm - cô tô",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "con duong thot not o lam co to",
+      "bay nui"
     ],
     "aliases": [
-      "con duong thot not o lam co to",
-      "Con Đường Thốt Nốt Ô Lâm - Cô Tô"
+      "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+      "con duong thot not o lam co to"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2824,32 +2824,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã lương phi",
-      "con duong tre tam vong o ta soc",
-      "tri ton",
       "con đường tre tầm vông ô tà sóc",
       "checkin_spots",
+      "con duong tre tam vong o ta soc",
       "an giang",
+      "xã lương phi",
+      "tri ton",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn"
     ],
     "slug": "con-duong-tre-tam-vong-o-ta-soc",
     "search_keywords": [
       "that son",
-      "xã lương phi",
-      "con duong tre tam vong o ta soc",
-      "tri ton",
       "con đường tre tầm vông ô tà sóc",
       "checkin_spots",
+      "con duong tre tam vong o ta soc",
       "an giang",
+      "xã lương phi",
+      "tri ton",
       "bay nui"
     ],
     "aliases": [
@@ -2858,11 +2858,11 @@
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -2933,32 +2933,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "cung đường ven vách đá núi dài (lương phi)",
-      "xã lương phi",
       "cung duong ven vach da nui dai luong phi",
+      "cung đường ven vách đá núi dài (lương phi)",
+      "an giang",
+      "xã lương phi",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "slug": "cung-duong-ven-vach-da-nui-dai-luong-phi",
     "search_keywords": [
       "that son",
-      "cung đường ven vách đá núi dài (lương phi)",
-      "xã lương phi",
       "cung duong ven vach da nui dai luong phi",
+      "cung đường ven vách đá núi dài (lương phi)",
+      "an giang",
+      "xã lương phi",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
@@ -2967,16 +2967,16 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Lương Phi",
       "bảy núi",
-      "tri tôn",
+      "Lương Phi",
       "an giang",
+      "tri tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -2992,9 +2992,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -3043,32 +3043,32 @@
     "keywords": [
       "that son",
       "cung duong bien gioi kenh vinh te ba chuc",
-      "thị trấn ba chúc",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "thị trấn ba chúc",
       "attractions_nature",
-      "bay nui",
-      "cung đường biên giới kênh vĩnh tế (ba chúc)"
+      "cung đường biên giới kênh vĩnh tế (ba chúc)",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "slug": "cung-duong-bien-gioi-kenh-vinh-te-ba-chuc",
     "search_keywords": [
       "that son",
       "cung duong bien gioi kenh vinh te ba chuc",
-      "thị trấn ba chúc",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "thị trấn ba chúc",
       "attractions_nature",
-      "bay nui",
-      "cung đường biên giới kênh vĩnh tế (ba chúc)"
+      "cung đường biên giới kênh vĩnh tế (ba chúc)",
+      "bay nui"
     ],
     "aliases": [
       "cung duong bien gioi kenh vinh te ba chuc",
@@ -3077,9 +3077,9 @@
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "suitable_for": [
@@ -3151,45 +3151,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "hang thot not trai tim an tuc",
       "xã an tức",
-      "tri ton",
-      "an giang",
       "checkin_spots",
       "hàng thốt nốt trái tim an tức",
-      "bay nui",
-      "hang thot not trai tim an tuc"
+      "an giang",
+      "tri ton",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "slug": "hang-thot-not-trai-tim-an-tuc",
     "search_keywords": [
       "that son",
+      "hang thot not trai tim an tuc",
       "xã an tức",
-      "tri ton",
-      "an giang",
       "checkin_spots",
       "hàng thốt nốt trái tim an tức",
-      "bay nui",
-      "hang thot not trai tim an tuc"
+      "an giang",
+      "tri ton",
+      "bay nui"
     ],
     "aliases": [
-      "hang thot not trai tim an tuc",
-      "Hàng Thốt Nốt Trái Tim An Tức"
+      "Hàng Thốt Nốt Trái Tim An Tức",
+      "hang thot not trai tim an tuc"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -3265,53 +3265,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã chau lăng",
-      "bay nui",
-      "cong troi tri ton vom khmer",
-      "tri ton",
       "checkin_spots",
+      "cổng trời tri tôn vòm khmer",
+      "cong troi tri ton vom khmer",
       "an giang",
-      "cổng trời tri tôn vòm khmer"
+      "tri ton",
+      "xã chau lăng",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "slug": "cong-troi-tri-ton-vom-khmer",
     "search_keywords": [
       "that son",
-      "xã chau lăng",
-      "bay nui",
-      "cong troi tri ton vom khmer",
-      "tri ton",
       "checkin_spots",
+      "cổng trời tri tôn vòm khmer",
+      "cong troi tri ton vom khmer",
       "an giang",
-      "cổng trời tri tôn vòm khmer"
+      "tri ton",
+      "xã chau lăng",
+      "bay nui"
     ],
     "aliases": [
-      "cong troi tri ton vom khmer",
-      "Cổng Trời Tri Tôn Vòm Khmer"
+      "Cổng Trời Tri Tôn Vòm Khmer",
+      "cong troi tri ton vom khmer"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "suitable_for": [
-      "culture",
-      "solo",
-      "photography",
       "family",
-      "religion",
-      "couple"
+      "photography",
+      "couple",
+      "solo",
+      "culture",
+      "religion"
     ],
     "recommended_duration": "30 - 45 phút",
     "best_visit_time": "Sáng (07:30 - 09:00) & Hoàng hôn (16:30 - 17:30)",
@@ -3328,12 +3328,12 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "culture",
-        "solo",
-        "photography",
         "family",
-        "religion",
-        "couple"
+        "photography",
+        "couple",
+        "solo",
+        "culture",
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -3381,45 +3381,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "checkin_spots",
       "cây thốt nốt cô độc chau lăng",
-      "xã chau lăng",
+      "an giang",
       "cay thot not co doc chau lang",
       "tri ton",
-      "checkin_spots",
-      "an giang",
+      "xã chau lăng",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "slug": "cay-thot-not-co-doc-chau-lang",
     "search_keywords": [
       "that son",
+      "checkin_spots",
       "cây thốt nốt cô độc chau lăng",
-      "xã chau lăng",
+      "an giang",
       "cay thot not co doc chau lang",
       "tri ton",
-      "checkin_spots",
-      "an giang",
+      "xã chau lăng",
       "bay nui"
     ],
     "aliases": [
-      "Cây Thốt Nốt Cô Độc Chau Lăng",
-      "cay thot not co doc chau lang"
+      "cay thot not co doc chau lang",
+      "Cây Thốt Nốt Cô Độc Chau Lăng"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "checkin_spots",
       "an giang",
-      "Chau Lăng"
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -3494,56 +3494,56 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "cầu gỗ mộc mạc hồ ô thum",
       "that son",
-      "bay nui",
-      "tri ton",
+      "cau go moc mac ho o thum",
       "checkin_spots",
-      "an giang",
+      "cầu gỗ mộc mạc hồ ô thum",
       "cầu gỗ mộc mạc lake ô thum",
+      "an giang",
       "xã ô lâm",
-      "cau go moc mac ho o thum"
+      "tri ton",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "cau-go-moc-mac-ho-o-thum",
     "search_keywords": [
-      "cầu gỗ mộc mạc hồ ô thum",
       "that son",
-      "bay nui",
-      "tri ton",
+      "cau go moc mac ho o thum",
       "checkin_spots",
-      "an giang",
+      "cầu gỗ mộc mạc hồ ô thum",
       "cầu gỗ mộc mạc lake ô thum",
+      "an giang",
       "xã ô lâm",
-      "cau go moc mac ho o thum"
+      "tri ton",
+      "bay nui"
     ],
     "aliases": [
       "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
-      "cau go moc mac ho o thum",
-      "Cầu Gỗ Mộc Mạc Lake Ô Thum"
+      "Cầu Gỗ Mộc Mạc Lake Ô Thum",
+      "cau go moc mac ho o thum"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
-      "solo",
       "photography",
+      "adventure",
+      "solo",
+      "camping",
       "couple"
     ],
     "recommended_duration": "30 - 45 phút",
@@ -3561,11 +3561,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
-        "solo",
         "photography",
+        "adventure",
+        "solo",
+        "camping",
         "couple"
       ]
     },
@@ -3618,13 +3618,13 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "cau go giua dong lua ruong coffee",
-      "cầu gỗ giữa đồng lúa ruộng coffee",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "xã núi tô",
+      "that son",
+      "cầu gỗ giữa đồng lúa ruộng coffee",
+      "checkin_spots",
+      "an giang",
+      "tri ton",
+      "cau go giua dong lua ruong coffee",
       "bay nui"
     ],
     "description": "",
@@ -3632,32 +3632,32 @@
     "tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "cau-go-giua-dong-lua-ruong-coffee",
     "search_keywords": [
-      "that son",
-      "cau go giua dong lua ruong coffee",
-      "cầu gỗ giữa đồng lúa ruộng coffee",
-      "tri ton",
-      "an giang",
-      "checkin_spots",
       "xã núi tô",
+      "that son",
+      "cầu gỗ giữa đồng lúa ruộng coffee",
+      "checkin_spots",
+      "an giang",
+      "tri ton",
+      "cau go giua dong lua ruong coffee",
       "bay nui"
     ],
     "aliases": [
-      "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
-      "cau go giua dong lua ruong coffee"
+      "cau go giua dong lua ruong coffee",
+      "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -3727,53 +3727,53 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "đá vồ hội đổ (mỏm đá sống ảo)",
+      "xã núi tô",
       "that son",
-      "tri ton",
+      "đá vồ hội đổ (mỏm đá sống ảo)",
       "checkin_spots",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "da vo hoi do mom da song ao"
+      "tri ton",
+      "da vo hoi do mom da song ao",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "da-vo-hoi-do-mom-da-song-ao",
     "search_keywords": [
-      "đá vồ hội đổ (mỏm đá sống ảo)",
+      "xã núi tô",
       "that son",
-      "tri ton",
+      "đá vồ hội đổ (mỏm đá sống ảo)",
       "checkin_spots",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "da vo hoi do mom da song ao"
+      "tri ton",
+      "da vo hoi do mom da song ao",
+      "bay nui"
     ],
     "aliases": [
-      "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
-      "da vo hoi do mom da song ao"
+      "da vo hoi do mom da song ao",
+      "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
-      "tri tôn",
       "checkin_spots",
-      "an giang"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
-      "solo",
       "photography",
+      "adventure",
+      "solo",
+      "camping",
       "couple"
     ],
     "recommended_duration": "30 - 45 phút",
@@ -3791,11 +3791,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
-        "solo",
         "photography",
+        "adventure",
+        "solo",
+        "camping",
         "couple"
       ]
     },
@@ -3845,54 +3845,54 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "cầu cây dã ngoại hồ soài so",
-      "tri ton",
+      "checkin_spots",
       "cau cay da ngoai ho soai so",
       "an giang",
-      "checkin_spots",
+      "tri ton",
       "cầu cây dã ngoại lake soài so",
+      "cầu cây dã ngoại hồ soài so",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn",
+      "Tri Tôn"
     ],
     "slug": "cau-cay-da-ngoai-ho-soai-so",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "cầu cây dã ngoại hồ soài so",
-      "tri ton",
+      "checkin_spots",
       "cau cay da ngoai ho soai so",
       "an giang",
-      "checkin_spots",
+      "tri ton",
       "cầu cây dã ngoại lake soài so",
+      "cầu cây dã ngoại hồ soài so",
       "bay nui"
     ],
     "aliases": [
-      "cau cay da ngoai ho soai so",
       "Cầu Cây Dã Ngoại Hồ Soài So",
+      "cau cay da ngoai ho soai so",
       "Cầu Cây Dã Ngoại Lake Soài So"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "tri tôn",
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
-      "solo",
       "photography",
+      "adventure",
+      "solo",
+      "camping",
       "couple"
     ],
     "recommended_duration": "30 - 45 phút",
@@ -3910,11 +3910,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
-        "solo",
         "photography",
+        "adventure",
+        "solo",
+        "camping",
         "couple"
       ]
     },
@@ -3963,33 +3963,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "nac thang thien duong kieu tien o thum",
-      "bay nui",
-      "nấc thang thiên đường kiều tiên ô thum",
-      "tri ton",
       "checkin_spots",
+      "nac thang thien duong kieu tien o thum",
+      "nấc thang thiên đường kiều tiên ô thum",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "slug": "nac-thang-thien-duong-kieu-tien-o-thum",
     "search_keywords": [
       "that son",
-      "nac thang thien duong kieu tien o thum",
-      "bay nui",
-      "nấc thang thiên đường kiều tiên ô thum",
-      "tri ton",
       "checkin_spots",
+      "nac thang thien duong kieu tien o thum",
+      "nấc thang thiên đường kiều tiên ô thum",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "bay nui"
     ],
     "aliases": [
       "nac thang thien duong kieu tien o thum",
@@ -3997,11 +3997,11 @@
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
-      "an giang",
       "checkin_spots",
-      "Ô Lâm"
+      "an giang",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -4078,43 +4078,43 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "căn nhà gỗ vintage nhà quê",
-      "tri ton",
+      "can nha go vintage nha que",
       "an giang",
+      "tri ton",
+      "căn nhà gỗ vintage nhà quê",
       "attractions_nature",
-      "bay nui",
-      "can nha go vintage nha que"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "can-nha-go-vintage-nha-que",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "căn nhà gỗ vintage nhà quê",
-      "tri ton",
+      "can nha go vintage nha que",
       "an giang",
+      "tri ton",
+      "căn nhà gỗ vintage nhà quê",
       "attractions_nature",
-      "bay nui",
-      "can nha go vintage nha que"
+      "bay nui"
     ],
     "aliases": [
-      "can nha go vintage nha que",
-      "Căn Nhà Gỗ Vintage Nhà Quê"
+      "Căn Nhà Gỗ Vintage Nhà Quê",
+      "can nha go vintage nha que"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -4187,31 +4187,31 @@
     "keywords": [
       "that son",
       "xã an tức",
-      "cau khi giua canh dong thot not",
       "cầu khỉ giữa cánh đồng thốt nốt",
-      "tri ton",
       "checkin_spots",
       "an giang",
+      "tri ton",
+      "cau khi giua canh dong thot not",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "slug": "cau-khi-giua-canh-dong-thot-not",
     "search_keywords": [
       "that son",
       "xã an tức",
-      "cau khi giua canh dong thot not",
       "cầu khỉ giữa cánh đồng thốt nốt",
-      "tri ton",
       "checkin_spots",
       "an giang",
+      "tri ton",
+      "cau khi giua canh dong thot not",
       "bay nui"
     ],
     "aliases": [
@@ -4220,11 +4220,11 @@
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -4300,45 +4300,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "xã an tức",
-      "tri ton",
       "quầy thốt nốt tươi cụm trái tim",
+      "xã an tức",
+      "quay thot not tuoi cum trai tim",
       "checkin_spots",
       "an giang",
-      "bay nui",
-      "quay thot not tuoi cum trai tim"
+      "tri ton",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "slug": "quay-thot-not-tuoi-cum-trai-tim",
     "search_keywords": [
       "that son",
-      "xã an tức",
-      "tri ton",
       "quầy thốt nốt tươi cụm trái tim",
+      "xã an tức",
+      "quay thot not tuoi cum trai tim",
       "checkin_spots",
       "an giang",
-      "bay nui",
-      "quay thot not tuoi cum trai tim"
+      "tri ton",
+      "bay nui"
     ],
     "aliases": [
-      "Quầy Thốt Nốt Tươi Cụm Trái Tim",
-      "quay thot not tuoi cum trai tim"
+      "quay thot not tuoi cum trai tim",
+      "Quầy Thốt Nốt Tươi Cụm Trái Tim"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -4414,32 +4414,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "bien hieu o day khong co gi ngoai ky uc",
       "biển hiệu ở đây không có gì ngoài ký ức",
+      "thị trấn tri tôn",
+      "an giang",
+      "bien hieu o day khong co gi ngoai ky uc",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "bien-hieu-o-day-khong-co-gi-ngoai-ky-uc",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "bien hieu o day khong co gi ngoai ky uc",
       "biển hiệu ở đây không có gì ngoài ký ức",
+      "thị trấn tri tôn",
+      "an giang",
+      "bien hieu o day khong co gi ngoai ky uc",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
@@ -4448,10 +4448,10 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -4522,56 +4522,56 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
-      "xã núi tô",
+      "chua ta pa chua nui",
       "wat tà pạ (wat núi)",
-      "bay nui",
       "chùa tà pạ (chùa núi)",
-      "chua ta pa chua nui"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "chua-ta-pa-chua-nui",
     "search_keywords": [
+      "xã núi tô",
       "that son",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
-      "xã núi tô",
+      "chua ta pa chua nui",
       "wat tà pạ (wat núi)",
-      "bay nui",
       "chùa tà pạ (chùa núi)",
-      "chua ta pa chua nui"
+      "bay nui"
     ],
     "aliases": [
-      "Chùa Tà Pạ (Chùa Núi)",
       "Wat Tà Pạ (Wat Núi)",
+      "Chùa Tà Pạ (Chùa Núi)",
       "chua ta pa chua nui"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
       "Núi Tô",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
+      "family",
+      "adventure",
       "camping",
       "culture",
-      "family",
       "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
@@ -4589,11 +4589,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
+        "family",
+        "adventure",
         "camping",
         "culture",
-        "family",
         "religion"
       ]
     },
@@ -4652,53 +4652,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "chùa xà tón (wat xvayton)",
-      "wat xà tón (wat xvayton)",
-      "khmer_pagodas_heritage",
-      "chua xa ton wat xvayton",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "chua xa ton wat xvayton",
+      "wat xà tón (wat xvayton)",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "chua-xa-ton-wat-xvayton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "chùa xà tón (wat xvayton)",
-      "wat xà tón (wat xvayton)",
-      "khmer_pagodas_heritage",
-      "chua xa ton wat xvayton",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "chua xa ton wat xvayton",
+      "wat xà tón (wat xvayton)",
       "bay nui"
     ],
     "aliases": [
       "Chùa Xà Tón (Wat Xvayton)",
-      "chua xa ton wat xvayton",
-      "Wat Xà Tón (Wat Xvayton)"
+      "Wat Xà Tón (Wat Xvayton)",
+      "chua xa ton wat xvayton"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -4714,9 +4714,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -4764,53 +4764,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "wat hàng còng (krăng krốch)",
       "chùa hàng còng (krăng krốch)",
-      "xã chau lăng",
-      "chua hang cong krang kroch",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
+      "xã chau lăng",
+      "wat hàng còng (krăng krốch)",
+      "chua hang cong krang kroch",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "chua-hang-cong-krang-kroch",
     "search_keywords": [
       "that son",
-      "wat hàng còng (krăng krốch)",
       "chùa hàng còng (krăng krốch)",
-      "xã chau lăng",
-      "chua hang cong krang kroch",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
+      "xã chau lăng",
+      "wat hàng còng (krăng krốch)",
+      "chua hang cong krang kroch",
       "bay nui"
     ],
     "aliases": [
-      "chua hang cong krang kroch",
+      "Wat Hàng Còng (Krăng Krốch)",
       "Chùa Hàng Còng (Krăng Krốch)",
-      "Wat Hàng Còng (Krăng Krốch)"
+      "chua hang cong krang kroch"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -4826,9 +4826,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -4876,53 +4876,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "an giang",
       "chùa cổng trời koh kas",
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "wat cổng trời koh kas",
       "xã chau lăng",
       "chua cong troi koh kas",
-      "khmer_pagodas_heritage",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "wat cổng trời koh kas"
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "chua-cong-troi-koh-kas",
     "search_keywords": [
       "that son",
+      "an giang",
       "chùa cổng trời koh kas",
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "wat cổng trời koh kas",
       "xã chau lăng",
       "chua cong troi koh kas",
-      "khmer_pagodas_heritage",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "wat cổng trời koh kas"
+      "bay nui"
     ],
     "aliases": [
-      "chua cong troi koh kas",
       "Chùa Cổng Trời Koh Kas",
+      "chua cong troi koh kas",
       "Wat Cổng Trời Koh Kas"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -4938,9 +4938,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -4988,44 +4988,44 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "khu di tich nha mo ba chuc",
-      "khmer_pagodas_heritage",
-      "thị trấn ba chúc",
-      "tri ton",
+      "khu di tích nhà mồ ba chúc",
       "an giang",
-      "bay nui",
-      "khu di tích nhà mồ ba chúc"
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "thị trấn ba chúc",
+      "khu di tich nha mo ba chuc",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "slug": "khu-di-tich-nha-mo-ba-chuc",
     "search_keywords": [
       "that son",
-      "khu di tich nha mo ba chuc",
-      "khmer_pagodas_heritage",
-      "thị trấn ba chúc",
-      "tri ton",
+      "khu di tích nhà mồ ba chúc",
       "an giang",
-      "bay nui",
-      "khu di tích nhà mồ ba chúc"
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "thị trấn ba chúc",
+      "khu di tich nha mo ba chuc",
+      "bay nui"
     ],
     "aliases": [
-      "Khu Di Tích Nhà Mồ Ba Chúc",
-      "khu di tich nha mo ba chuc"
+      "khu di tich nha mo ba chuc",
+      "Khu Di Tích Nhà Mồ Ba Chúc"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "suitable_for": [
@@ -5098,33 +5098,33 @@
     "keywords": [
       "that son",
       "chùa phi lai ba chúc",
-      "chua phi lai ba chuc",
-      "khmer_pagodas_heritage",
-      "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
       "wat phi lai ba chúc",
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "chua phi lai ba chuc",
+      "thị trấn ba chúc",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "slug": "chua-phi-lai-ba-chuc",
     "search_keywords": [
       "that son",
       "chùa phi lai ba chúc",
-      "chua phi lai ba chuc",
-      "khmer_pagodas_heritage",
-      "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
       "wat phi lai ba chúc",
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "chua phi lai ba chuc",
+      "thị trấn ba chúc",
       "bay nui"
     ],
     "aliases": [
@@ -5134,16 +5134,16 @@
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -5159,9 +5159,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -5209,53 +5209,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "wat tam bửu ba chúc",
-      "khmer_pagodas_heritage",
       "chua tam buu ba chuc",
-      "thị trấn ba chúc",
-      "tri ton",
+      "chùa tam bửu ba chúc",
+      "wat tam bửu ba chúc",
       "an giang",
-      "bay nui",
-      "chùa tam bửu ba chúc"
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "thị trấn ba chúc",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "slug": "chua-tam-buu-ba-chuc",
     "search_keywords": [
       "that son",
-      "wat tam bửu ba chúc",
-      "khmer_pagodas_heritage",
       "chua tam buu ba chuc",
-      "thị trấn ba chúc",
-      "tri ton",
+      "chùa tam bửu ba chúc",
+      "wat tam bửu ba chúc",
       "an giang",
-      "bay nui",
-      "chùa tam bửu ba chúc"
+      "khmer_pagodas_heritage",
+      "tri ton",
+      "thị trấn ba chúc",
+      "bay nui"
     ],
     "aliases": [
-      "Wat Tam Bửu Ba Chúc",
       "Chùa Tam Bửu Ba Chúc",
+      "Wat Tam Bửu Ba Chúc",
       "chua tam buu ba chuc"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn",
       "Ba Chúc"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -5271,9 +5271,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -5321,45 +5321,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "khu di tích căn cứ ô tà sóc",
       "khu di tich can cu o ta soc",
-      "xã lương phi",
-      "khmer_pagodas_heritage",
-      "tri ton",
+      "khu di tích căn cứ ô tà sóc",
       "an giang",
+      "xã lương phi",
+      "tri ton",
+      "khmer_pagodas_heritage",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Lương Phi",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "Lương Phi",
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "khu-di-tich-can-cu-o-ta-soc",
     "search_keywords": [
       "that son",
-      "khu di tích căn cứ ô tà sóc",
       "khu di tich can cu o ta soc",
-      "xã lương phi",
-      "khmer_pagodas_heritage",
-      "tri ton",
+      "khu di tích căn cứ ô tà sóc",
       "an giang",
+      "xã lương phi",
+      "tri ton",
+      "khmer_pagodas_heritage",
       "bay nui"
     ],
     "aliases": [
-      "Khu Di Tích Căn Cứ Ô Tà Sóc",
-      "khu di tich can cu o ta soc"
+      "khu di tich can cu o ta soc",
+      "Khu Di Tích Căn Cứ Ô Tà Sóc"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Lương Phi",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "Lương Phi",
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -5430,53 +5430,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "chua soai so khmer",
       "thị trấn tri tôn",
-      "bay nui",
-      "khmer_pagodas_heritage",
-      "wat soài so khmer",
-      "tri ton",
       "an giang",
       "chùa soài so khmer",
-      "chua soai so khmer"
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "wat soài so khmer",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "chua-soai-so-khmer",
     "search_keywords": [
       "that son",
+      "chua soai so khmer",
       "thị trấn tri tôn",
-      "bay nui",
-      "khmer_pagodas_heritage",
-      "wat soài so khmer",
-      "tri ton",
       "an giang",
       "chùa soài so khmer",
-      "chua soai so khmer"
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "wat soài so khmer",
+      "bay nui"
     ],
     "aliases": [
+      "chua soai so khmer",
       "Chùa Soài So Khmer",
-      "Wat Soài So Khmer",
-      "chua soai so khmer"
+      "Wat Soài So Khmer"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -5492,9 +5492,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -5542,53 +5542,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "chùa mới ô lâm",
-      "chua moi o lam",
-      "bay nui",
-      "khmer_pagodas_heritage",
-      "tri ton",
+      "wat mới ô lâm",
       "an giang",
       "xã ô lâm",
-      "wat mới ô lâm"
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "chùa mới ô lâm",
+      "chua moi o lam",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "khmer_pagodas_heritage",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "chua-moi-o-lam",
     "search_keywords": [
       "that son",
-      "chùa mới ô lâm",
-      "chua moi o lam",
-      "bay nui",
-      "khmer_pagodas_heritage",
-      "tri ton",
+      "wat mới ô lâm",
       "an giang",
       "xã ô lâm",
-      "wat mới ô lâm"
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "chùa mới ô lâm",
+      "chua moi o lam",
+      "bay nui"
     ],
     "aliases": [
       "chua moi o lam",
-      "Wat Mới Ô Lâm",
-      "Chùa Mới Ô Lâm"
+      "Chùa Mới Ô Lâm",
+      "Wat Mới Ô Lâm"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "khmer_pagodas_heritage",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -5604,9 +5604,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -5654,33 +5654,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
-      "tri ton",
-      "an giang",
-      "quan sieu ga dot o thum chau sieu",
       "quán siêu gà đốt ô thum (chau siêu)",
-      "xã ô lâm"
+      "bay nui",
+      "an giang",
+      "xã ô lâm",
+      "tri ton",
+      "quan sieu ga dot o thum chau sieu",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-sieu-ga-dot-o-thum-chau-sieu",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
-      "tri ton",
-      "an giang",
-      "quan sieu ga dot o thum chau sieu",
       "quán siêu gà đốt ô thum (chau siêu)",
-      "xã ô lâm"
+      "bay nui",
+      "an giang",
+      "xã ô lâm",
+      "tri ton",
+      "quan sieu ga dot o thum chau sieu",
+      "food_and_restaurants"
     ],
     "aliases": [
       "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
@@ -5688,15 +5688,15 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -5712,8 +5712,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -5766,49 +5766,49 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "quán kiều tiên gà đốt ô thum",
-      "food_and_restaurants",
-      "bay nui",
       "quan kieu tien ga dot o thum",
+      "bay nui",
+      "quán kiều tiên gà đốt ô thum",
+      "xã ô lâm",
       "tri ton",
       "an giang",
-      "xã ô lâm"
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-kieu-tien-ga-dot-o-thum",
     "search_keywords": [
       "that son",
-      "quán kiều tiên gà đốt ô thum",
-      "food_and_restaurants",
-      "bay nui",
       "quan kieu tien ga dot o thum",
+      "bay nui",
+      "quán kiều tiên gà đốt ô thum",
+      "xã ô lâm",
       "tri ton",
       "an giang",
-      "xã ô lâm"
+      "food_and_restaurants"
     ],
     "aliases": [
-      "quan kieu tien ga dot o thum",
-      "Quán Kiều Tiên Gà Đốt Ô Thum"
+      "Quán Kiều Tiên Gà Đốt Ô Thum",
+      "quan kieu tien ga dot o thum"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -5824,8 +5824,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -5878,33 +5878,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "gà đốt ô thum kim suổl",
       "bay nui",
-      "ga dot o thum kim suol",
-      "tri ton",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "ga dot o thum kim suol",
+      "gà đốt ô thum kim suổl",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "ga-dot-o-thum-kim-suol",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "gà đốt ô thum kim suổl",
       "bay nui",
-      "ga dot o thum kim suol",
-      "tri ton",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "ga dot o thum kim suol",
+      "gà đốt ô thum kim suổl",
+      "food_and_restaurants"
     ],
     "aliases": [
       "Gà Đốt Ô Thum Kim Suổl",
@@ -5912,15 +5912,15 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -5936,8 +5936,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -5990,33 +5990,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "gà đốt ô thum thảo nguyên",
-      "food_and_restaurants",
-      "bay nui",
       "ga dot o thum thao nguyen",
-      "tri ton",
+      "bay nui",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "gà đốt ô thum thảo nguyên",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "ga-dot-o-thum-thao-nguyen",
     "search_keywords": [
       "that son",
-      "gà đốt ô thum thảo nguyên",
-      "food_and_restaurants",
-      "bay nui",
       "ga dot o thum thao nguyen",
-      "tri ton",
+      "bay nui",
       "an giang",
-      "xã ô lâm"
+      "xã ô lâm",
+      "tri ton",
+      "gà đốt ô thum thảo nguyên",
+      "food_and_restaurants"
     ],
     "aliases": [
       "ga dot o thum thao nguyen",
@@ -6024,15 +6024,15 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6048,8 +6048,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6102,49 +6102,49 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
+      "ga dot vuong ngoc o thum",
       "gà đốt vương ngọc ô thum",
-      "tri ton",
+      "bay nui",
       "an giang",
       "xã ô lâm",
-      "ga dot vuong ngoc o thum"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "ga-dot-vuong-ngoc-o-thum",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
+      "ga dot vuong ngoc o thum",
       "gà đốt vương ngọc ô thum",
-      "tri ton",
+      "bay nui",
       "an giang",
       "xã ô lâm",
-      "ga dot vuong ngoc o thum"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "ga dot vuong ngoc o thum",
-      "Gà Đốt Vương Ngọc Ô Thum"
+      "Gà Đốt Vương Ngọc Ô Thum",
+      "ga dot vuong ngoc o thum"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6160,8 +6160,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6214,33 +6214,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "quan du du dam rina khmer",
-      "xã chau lăng",
-      "tri ton",
-      "an giang",
       "bay nui",
-      "quán đu đủ đâm rina khmer"
+      "quán đu đủ đâm rina khmer",
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "quan du du dam rina khmer",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-du-du-dam-rina-khmer",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "quan du du dam rina khmer",
-      "xã chau lăng",
-      "tri ton",
-      "an giang",
       "bay nui",
-      "quán đu đủ đâm rina khmer"
+      "quán đu đủ đâm rina khmer",
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "quan du du dam rina khmer",
+      "food_and_restaurants"
     ],
     "aliases": [
       "Quán Đu Đủ Đâm RiNa Khmer",
@@ -6248,17 +6248,17 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
       "religion",
+      "culture",
       "family",
-      "culture"
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6275,10 +6275,10 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "foodie",
         "religion",
+        "culture",
         "family",
-        "culture"
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6326,51 +6326,51 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
       "quan du du dam ly ly",
-      "tri ton",
       "quán đu đủ đâm ly ly",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "xã chau lăng",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-du-du-dam-ly-ly",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
       "quan du du dam ly ly",
-      "tri ton",
       "quán đu đủ đâm ly ly",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "xã chau lăng",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "Quán Đu Đủ Đâm Ly Ly",
-      "quan du du dam ly ly"
+      "quan du du dam ly ly",
+      "Quán Đu Đủ Đâm Ly Ly"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
       "religion",
+      "culture",
       "family",
-      "culture"
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6387,10 +6387,10 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "foodie",
         "religion",
+        "culture",
         "family",
-        "culture"
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6438,33 +6438,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
+      "quan du du dam ty tri ton",
+      "bay nui",
+      "an giang",
+      "tri ton",
       "xã chau lăng",
       "quán đu đủ đâm ty tri tôn",
-      "quan du du dam ty tri ton",
-      "tri ton",
-      "an giang",
-      "bay nui"
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-du-du-dam-ty-tri-ton",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
+      "quan du du dam ty tri ton",
+      "bay nui",
+      "an giang",
+      "tri ton",
       "xã chau lăng",
       "quán đu đủ đâm ty tri tôn",
-      "quan du du dam ty tri ton",
-      "tri ton",
-      "an giang",
-      "bay nui"
+      "food_and_restaurants"
     ],
     "aliases": [
       "Quán Đu Đủ Đâm Ty Tri Tôn",
@@ -6472,17 +6472,17 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
       "religion",
+      "culture",
       "family",
-      "culture"
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6499,10 +6499,10 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "foodie",
         "religion",
+        "culture",
         "family",
-        "culture"
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6550,51 +6550,51 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "food_and_restaurants",
       "quan bun nuoc leo so nuong khmer",
+      "thị trấn tri tôn",
       "quán bún nước lèo sơ nương khmer",
-      "tri ton",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-bun-nuoc-leo-so-nuong-khmer",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "food_and_restaurants",
       "quan bun nuoc leo so nuong khmer",
+      "thị trấn tri tôn",
       "quán bún nước lèo sơ nương khmer",
-      "tri ton",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "quan bun nuoc leo so nuong khmer",
-      "Quán Bún Nước Lèo Sơ Nương Khmer"
+      "Quán Bún Nước Lèo Sơ Nương Khmer",
+      "quan bun nuoc leo so nuong khmer"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
       "religion",
+      "culture",
       "family",
-      "culture"
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6611,10 +6611,10 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "foodie",
         "religion",
+        "culture",
         "family",
-        "culture"
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6668,48 +6668,48 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "food_and_restaurants",
-      "quan bun nuoc leo dook tri ton",
-      "tri ton",
-      "an giang",
       "bay nui",
-      "quán bún nước lèo dook tri tôn"
+      "an giang",
+      "tri ton",
+      "quán bún nước lèo dook tri tôn",
+      "quan bun nuoc leo dook tri ton",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-bun-nuoc-leo-dook-tri-ton",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "food_and_restaurants",
-      "quan bun nuoc leo dook tri ton",
-      "tri ton",
-      "an giang",
       "bay nui",
-      "quán bún nước lèo dook tri tôn"
+      "an giang",
+      "tri ton",
+      "quán bún nước lèo dook tri tôn",
+      "quan bun nuoc leo dook tri ton",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "Quán Bún Nước Lèo Dook Tri Tôn",
-      "quan bun nuoc leo dook tri ton"
+      "quan bun nuoc leo dook tri ton",
+      "Quán Bún Nước Lèo Dook Tri Tôn"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6725,8 +6725,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6779,49 +6779,49 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
-      "lo banh bo thot not nuong ut cot",
-      "tri ton",
-      "lò bánh bò thốt nốt nướng út cột",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "xã chau lăng",
+      "lò bánh bò thốt nốt nướng út cột",
+      "lo banh bo thot not nuong ut cot",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "lo-banh-bo-thot-not-nuong-ut-cot",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
-      "lo banh bo thot not nuong ut cot",
-      "tri ton",
-      "lò bánh bò thốt nốt nướng út cột",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "xã chau lăng",
+      "lò bánh bò thốt nốt nướng út cột",
+      "lo banh bo thot not nuong ut cot",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
-      "lo banh bo thot not nuong ut cot"
+      "lo banh bo thot not nuong ut cot",
+      "Lò Bánh Bò Thốt Nốt Nướng Út Cột"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6837,8 +6837,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -6891,49 +6891,49 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
-      "tri ton",
       "lo banh bo thot not ut dut",
-      "an giang",
       "bay nui",
-      "lò bánh bò thốt nốt út dứt"
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "lò bánh bò thốt nốt út dứt",
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "lo-banh-bo-thot-not-ut-dut",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "xã chau lăng",
-      "tri ton",
       "lo banh bo thot not ut dut",
-      "an giang",
       "bay nui",
-      "lò bánh bò thốt nốt út dứt"
+      "an giang",
+      "tri ton",
+      "xã chau lăng",
+      "lò bánh bò thốt nốt út dứt",
+      "food_and_restaurants"
     ],
     "aliases": [
-      "lo banh bo thot not ut dut",
-      "Lò Bánh Bò Thốt Nốt Út Dứt"
+      "Lò Bánh Bò Thốt Nốt Út Dứt",
+      "lo banh bo thot not ut dut"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
+      "Chau Lăng",
       "an giang",
-      "Chau Lăng"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -6949,8 +6949,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -7004,48 +7004,48 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "bay nui",
+      "tri ton",
+      "quan banh canh lo ren 30 nam",
       "quán bánh canh lò rèn (>30 năm)",
-      "quan banh canh lo ren 30 nam"
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "quan-banh-canh-lo-ren-30-nam",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "tri ton",
-      "attractions_nature",
       "an giang",
-      "bay nui",
+      "tri ton",
+      "quan banh canh lo ren 30 nam",
       "quán bánh canh lò rèn (>30 năm)",
-      "quan banh canh lo ren 30 nam"
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
-      "Quán Bánh Canh Lò Rèn (>30 năm)",
-      "quan banh canh lo ren 30 nam"
+      "quan banh canh lo ren 30 nam",
+      "Quán Bánh Canh Lò Rèn (>30 năm)"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -7061,8 +7061,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -7110,45 +7110,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
+      "quán bò 7 món ba chúc",
+      "bay nui",
+      "an giang",
+      "tri ton",
       "quan bo 7 mon ba chuc",
       "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "quán bò 7 món ba chúc"
+      "food_and_restaurants"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ba Chúc"
+      "tri tôn",
+      "Ba Chúc",
+      "food_and_restaurants"
     ],
     "slug": "quan-bo-7-mon-ba-chuc",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
+      "quán bò 7 món ba chúc",
+      "bay nui",
+      "an giang",
+      "tri ton",
       "quan bo 7 mon ba chuc",
       "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "quán bò 7 món ba chúc"
+      "food_and_restaurants"
     ],
     "aliases": [
-      "quan bo 7 mon ba chuc",
-      "Quán Bò 7 Món Ba Chúc"
+      "Quán Bò 7 Món Ba Chúc",
+      "quan bo 7 mon ba chuc"
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ba Chúc"
+      "tri tôn",
+      "Ba Chúc",
+      "food_and_restaurants"
     ],
     "suitable_for": [
       "couple",
@@ -7221,9 +7221,9 @@
       "that son",
       "quan chao bo trai truc ba chuc",
       "quán cháo bò trái trúc ba chúc",
-      "thị trấn ba chúc",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "thị trấn ba chúc",
       "attractions_nature",
       "bay nui"
     ],
@@ -7231,9 +7231,9 @@
     "short_description": "",
     "tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "slug": "quan-chao-bo-trai-truc-ba-chuc",
@@ -7241,9 +7241,9 @@
       "that son",
       "quan chao bo trai truc ba chuc",
       "quán cháo bò trái trúc ba chúc",
-      "thị trấn ba chúc",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "thị trấn ba chúc",
       "attractions_nature",
       "bay nui"
     ],
@@ -7254,9 +7254,9 @@
     "tourism_category": "attractions_nature",
     "travel_tags": [
       "bảy núi",
+      "an giang",
       "tri tôn",
       "attractions_nature",
-      "an giang",
       "Ba Chúc"
     ],
     "suitable_for": [
@@ -7328,44 +7328,44 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "quán bánh xèo tép bông điên điển cầu số 10",
       "thị trấn tri tôn",
-      "quan banh xeo tep bong dien dien cau so 10",
-      "tri ton",
       "an giang",
+      "tri ton",
       "attractions_nature",
-      "bay nui",
-      "quán bánh xèo tép bông điên điển cầu số 10"
+      "quan banh xeo tep bong dien dien cau so 10",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "quan-banh-xeo-tep-bong-dien-dien-cau-so-10",
     "search_keywords": [
       "that son",
+      "quán bánh xèo tép bông điên điển cầu số 10",
       "thị trấn tri tôn",
-      "quan banh xeo tep bong dien dien cau so 10",
-      "tri ton",
       "an giang",
+      "tri ton",
       "attractions_nature",
-      "bay nui",
-      "quán bánh xèo tép bông điên điển cầu số 10"
+      "quan banh xeo tep bong dien dien cau so 10",
+      "bay nui"
     ],
     "aliases": [
-      "quan banh xeo tep bong dien dien cau so 10",
-      "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10"
+      "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
+      "quan banh xeo tep bong dien dien cau so 10"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -7437,50 +7437,50 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
-      "bay nui",
       "quán bò nướng trái trúc tri tôn",
-      "quan bo nuong trai truc tri ton"
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "quan bo nuong trai truc tri ton",
+      "attractions_nature",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "quan-bo-nuong-trai-truc-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
-      "bay nui",
       "quán bò nướng trái trúc tri tôn",
-      "quan bo nuong trai truc tri ton"
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "quan bo nuong trai truc tri ton",
+      "attractions_nature",
+      "bay nui"
     ],
     "aliases": [
-      "Quán Bò Nướng Trái Trúc Tri Tôn",
-      "quan bo nuong trai truc tri ton"
+      "quan bo nuong trai truc tri ton",
+      "Quán Bò Nướng Trái Trúc Tri Tôn"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -7496,9 +7496,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -7545,34 +7545,34 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
+      "ruong coffee homestay tri ton",
       "ruộng coffee & homestay tri tôn",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "ruong coffee homestay tri ton"
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "ruong-coffee-homestay-tri-ton",
     "search_keywords": [
+      "xã núi tô",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
+      "ruong coffee homestay tri ton",
       "ruộng coffee & homestay tri tôn",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "ruong coffee homestay tri ton"
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "aliases": [
       "Ruộng Coffee & Homestay Tri Tôn",
@@ -7581,10 +7581,10 @@
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -7654,33 +7654,33 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
       "windy hill coffee homestay tri ton",
-      "xã núi tô",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
       "windy hill coffee & homestay tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "windy-hill-coffee-homestay-tri-ton",
     "search_keywords": [
+      "xã núi tô",
       "that son",
       "windy hill coffee homestay tri ton",
-      "xã núi tô",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
       "windy hill coffee & homestay tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
@@ -7690,10 +7690,10 @@
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -7764,45 +7764,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "cham coffee tea tri ton",
-      "cafes_and_homestays",
-      "tri ton",
+      "chạm coffee & tea tri tôn",
+      "thị trấn tri tôn",
       "an giang",
-      "bay nui",
-      "chạm coffee & tea tri tôn"
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "cham-coffee-tea-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "cham coffee tea tri ton",
-      "cafes_and_homestays",
-      "tri ton",
+      "chạm coffee & tea tri tôn",
+      "thị trấn tri tôn",
       "an giang",
-      "bay nui",
-      "chạm coffee & tea tri tôn"
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "aliases": [
-      "cham coffee tea tri ton",
-      "CHẠM Coffee & Tea Tri Tôn"
+      "CHẠM Coffee & Tea Tri Tôn",
+      "cham coffee tea tri ton"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -7873,32 +7873,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "anpalm cafe tri ton",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
+      "thị trấn tri tôn",
       "anpalm cafe tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "anpalm-cafe-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "anpalm cafe tri ton",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
+      "thị trấn tri tôn",
       "anpalm cafe tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
@@ -7907,11 +7907,11 @@
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -7982,45 +7982,45 @@
     "review_samples": [],
     "keywords": [
       "tiệm cà phê nhà quê",
-      "thị trấn tri tôn",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
       "tiem ca phe nha que",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "tiem-ca-phe-nha-que",
     "search_keywords": [
       "tiệm cà phê nhà quê",
-      "thị trấn tri tôn",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
-      "an giang",
       "tiem ca phe nha que",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
-      "tiem ca phe nha que",
-      "Tiệm Cà Phê Nhà Quê"
+      "Tiệm Cà Phê Nhà Quê",
+      "tiem ca phe nha que"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8092,9 +8092,9 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "an sơn trà quán",
       "an son tra quan",
       "bay nui"
@@ -8102,34 +8102,34 @@
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "an-son-tra-quan",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "an sơn trà quán",
       "an son tra quan",
       "bay nui"
     ],
     "aliases": [
-      "An Sơn Trà Quán",
-      "an son tra quan"
+      "an son tra quan",
+      "An Sơn Trà Quán"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8200,32 +8200,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "ny coffee tea tri ton",
       "thị trấn tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
       "ny coffee & tea tri tôn",
       "an giang",
-      "ny coffee tea tri ton",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "ny-coffee-tea-tri-ton",
     "search_keywords": [
       "that son",
+      "ny coffee tea tri ton",
       "thị trấn tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
       "ny coffee & tea tri tôn",
       "an giang",
-      "ny coffee tea tri ton",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
@@ -8234,11 +8234,11 @@
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8308,35 +8308,35 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
-      "mây coffee & tea hồ soài chék",
       "mây coffee & tea lake soài chék",
+      "an giang",
+      "tri ton",
       "cafes_and_homestays",
       "may coffee tea ho soai chek",
-      "tri ton",
-      "an giang",
-      "xã núi tô",
+      "mây coffee & tea hồ soài chék",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "may-coffee-tea-ho-soai-chek",
     "search_keywords": [
+      "xã núi tô",
       "that son",
-      "mây coffee & tea hồ soài chék",
       "mây coffee & tea lake soài chék",
+      "an giang",
+      "tri ton",
       "cafes_and_homestays",
       "may coffee tea ho soai chek",
-      "tri ton",
-      "an giang",
-      "xã núi tô",
+      "mây coffee & tea hồ soài chék",
       "bay nui"
     ],
     "aliases": [
@@ -8347,15 +8347,15 @@
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "1 - 2 giờ",
     "best_visit_time": "Chiều (15:00 - 17:30)",
@@ -8371,9 +8371,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -8421,32 +8421,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "quy coffee house tri ton",
       "quy coffee house tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
+      "quy coffee house tri ton",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "quy-coffee-house-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "quy coffee house tri ton",
       "quy coffee house tri tôn",
-      "cafes_and_homestays",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
+      "quy coffee house tri ton",
       "bay nui"
     ],
     "aliases": [
@@ -8455,11 +8455,11 @@
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8530,53 +8530,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "quán cà phê mùa gió lên lake soài so",
       "quan ca phe mua gio len ho soai so",
-      "cafes_and_homestays",
-      "tri ton",
+      "thị trấn tri tôn",
+      "quán cà phê mùa gió lên hồ soài so",
       "an giang",
-      "bay nui",
-      "quán cà phê mùa gió lên hồ soài so"
+      "tri ton",
+      "cafes_and_homestays",
+      "quán cà phê mùa gió lên lake soài so",
+      "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "quan-ca-phe-mua-gio-len-ho-soai-so",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "quán cà phê mùa gió lên lake soài so",
       "quan ca phe mua gio len ho soai so",
-      "cafes_and_homestays",
-      "tri ton",
+      "thị trấn tri tôn",
+      "quán cà phê mùa gió lên hồ soài so",
       "an giang",
-      "bay nui",
-      "quán cà phê mùa gió lên hồ soài so"
+      "tri ton",
+      "cafes_and_homestays",
+      "quán cà phê mùa gió lên lake soài so",
+      "bay nui"
     ],
     "aliases": [
       "Quán Cà Phê Mùa Gió Lên Hồ Soài So",
-      "Quán Cà Phê Mùa Gió Lên Lake Soài So",
-      "quan ca phe mua gio len ho soai so"
+      "quan ca phe mua gio len ho soai so",
+      "Quán Cà Phê Mùa Gió Lên Lake Soài So"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "1 - 2 giờ",
     "best_visit_time": "Chiều (15:00 - 17:30)",
@@ -8592,9 +8592,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -8642,45 +8642,45 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "lang lang coffee tea",
       "thị trấn tri tôn",
       "lang lang coffee & tea",
-      "cafes_and_homestays",
-      "tri ton",
-      "lang lang coffee tea",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "lang-lang-coffee-tea",
     "search_keywords": [
       "that son",
+      "lang lang coffee tea",
       "thị trấn tri tôn",
       "lang lang coffee & tea",
-      "cafes_and_homestays",
-      "tri ton",
-      "lang lang coffee tea",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
-      "Lang Lang Coffee & Tea",
-      "lang lang coffee tea"
+      "lang lang coffee tea",
+      "Lang Lang Coffee & Tea"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8752,31 +8752,31 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "tuyết anh homestay & coffee",
-      "cafes_and_homestays",
-      "tri ton",
       "tuyet anh homestay coffee",
       "an giang",
+      "tri ton",
+      "tuyết anh homestay & coffee",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "tuyet-anh-homestay-coffee",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "tuyết anh homestay & coffee",
-      "cafes_and_homestays",
-      "tri ton",
       "tuyet anh homestay coffee",
       "an giang",
+      "tri ton",
+      "tuyết anh homestay & coffee",
+      "cafes_and_homestays",
       "bay nui"
     ],
     "aliases": [
@@ -8785,11 +8785,11 @@
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -8860,44 +8860,44 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "rong vang resort tri ton",
-      "rồng vàng resort tri tôn",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "tri ton",
+      "rồng vàng resort tri tôn",
       "attractions_nature",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "rong-vang-resort-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "rong vang resort tri ton",
-      "rồng vàng resort tri tôn",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "tri ton",
+      "rồng vàng resort tri tôn",
       "attractions_nature",
       "bay nui"
     ],
     "aliases": [
-      "Rồng Vàng Resort Tri Tôn",
-      "rong vang resort tri ton"
+      "rong vang resort tri ton",
+      "Rồng Vàng Resort Tri Tôn"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -8969,52 +8969,52 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "le hoi dua bo bay nui tri ton",
       "thị trấn tri tôn",
       "lễ hội đua bò bảy núi tri tôn",
-      "le hoi dua bo bay nui tri ton",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "le-hoi-dua-bo-bay-nui-tri-ton",
     "search_keywords": [
       "that son",
+      "le hoi dua bo bay nui tri ton",
       "thị trấn tri tôn",
       "lễ hội đua bò bảy núi tri tôn",
-      "le hoi dua bo bay nui tri ton",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
-      "le hoi dua bo bay nui tri ton",
-      "Lễ Hội Đua Bò Bảy Núi Tri Tôn"
+      "Lễ Hội Đua Bò Bảy Núi Tri Tôn",
+      "le hoi dua bo bay nui tri ton"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
+      "family",
+      "adventure",
       "camping",
       "culture",
-      "family",
       "religion"
     ],
     "recommended_duration": "2 - 3 giờ",
@@ -9032,11 +9032,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
+        "family",
+        "adventure",
         "camping",
         "culture",
-        "family",
         "religion"
       ]
     },
@@ -9085,53 +9085,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "nghe thuat viet kinh la buong chua xa ton",
-      "khmer_pagodas_heritage",
       "nghệ thuật viết kinh lá buông chùa xà tón",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "nghệ thuật viết kinh lá buông wat xà tón",
+      "nghe thuat viet kinh la buong chua xa ton",
       "bay nui"
     ],
     "description": "",
     "short_description": "",
     "tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "nghe-thuat-viet-kinh-la-buong-chua-xa-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "nghe thuat viet kinh la buong chua xa ton",
-      "khmer_pagodas_heritage",
       "nghệ thuật viết kinh lá buông chùa xà tón",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "nghệ thuật viết kinh lá buông wat xà tón",
+      "nghe thuat viet kinh la buong chua xa ton",
       "bay nui"
     ],
     "aliases": [
       "Nghệ Thuật Viết Kinh Lá Buông Wat Xà Tón",
-      "nghe thuat viet kinh la buong chua xa ton",
-      "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón"
+      "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
+      "nghe thuat viet kinh la buong chua xa ton"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -9147,9 +9147,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -9197,33 +9197,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
       "nhà hàng gà đốt ô thum siêu bó",
-      "tri ton",
+      "bay nui",
       "an giang",
+      "xã ô lâm",
+      "tri ton",
       "nha hang ga dot o thum sieu bo",
-      "xã ô lâm"
+      "food_and_restaurants"
     ],
     "description": "Nhà hàng phục vụ gà đốt lá chúc nướng niêu đất truyền thống tại bờ hồ Ô Thum.",
     "short_description": "Nhà hàng phục vụ gà đốt lá chúc nướng niêu đất truyền thống tại bờ hồ Ô Thum.",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "nha-hang-ga-dot-o-thum-sieu-bo",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
       "nhà hàng gà đốt ô thum siêu bó",
-      "tri ton",
+      "bay nui",
       "an giang",
+      "xã ô lâm",
+      "tri ton",
       "nha hang ga dot o thum sieu bo",
-      "xã ô lâm"
+      "food_and_restaurants"
     ],
     "aliases": [
       "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
@@ -9231,18 +9231,18 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
       "family",
-      "foodie"
+      "foodie",
+      "adventure",
+      "camping"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -9259,11 +9259,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
         "family",
-        "foodie"
+        "foodie",
+        "adventure",
+        "camping"
       ]
     },
     "nearby_places": [],
@@ -9316,33 +9316,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
+      "bay nui",
+      "an giang",
+      "tri ton",
+      "nha hang bo 7 mon ba chuc",
       "nhà hàng bò 7 món ba chúc",
       "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "nha hang bo 7 mon ba chuc"
+      "food_and_restaurants"
     ],
     "description": "Nhà hàng thịt bò Bảy Núi nướng bơ tỏi và lẩu bò trái trúc thơm lừng.",
     "short_description": "Nhà hàng thịt bò Bảy Núi nướng bơ tỏi và lẩu bò trái trúc thơm lừng.",
     "tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ba Chúc"
+      "tri tôn",
+      "Ba Chúc",
+      "food_and_restaurants"
     ],
     "slug": "nha-hang-bo-7-mon-ba-chuc",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
+      "bay nui",
+      "an giang",
+      "tri ton",
+      "nha hang bo 7 mon ba chuc",
       "nhà hàng bò 7 món ba chúc",
       "thị trấn ba chúc",
-      "tri ton",
-      "an giang",
-      "bay nui",
-      "nha hang bo 7 mon ba chuc"
+      "food_and_restaurants"
     ],
     "aliases": [
       "nha hang bo 7 mon ba chuc",
@@ -9350,16 +9350,16 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ba Chúc"
+      "tri tôn",
+      "Ba Chúc",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -9375,9 +9375,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -9425,33 +9425,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "food_and_restaurants",
       "quán bún nước lèo tri tôn chị tư",
-      "tri ton",
       "quan bun nuoc leo tri ton chi tu",
+      "thị trấn tri tôn",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "description": "Quán bún nước lèo cá lóc đồng mắm bò hóc truyền thống kèm heo quay.",
     "short_description": "Quán bún nước lèo cá lóc đồng mắm bò hóc truyền thống kèm heo quay.",
     "tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "slug": "quan-bun-nuoc-leo-tri-ton-chi-tu",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "food_and_restaurants",
       "quán bún nước lèo tri tôn chị tư",
-      "tri ton",
       "quan bun nuoc leo tri ton chi tu",
+      "thị trấn tri tôn",
+      "bay nui",
       "an giang",
-      "bay nui"
+      "tri ton",
+      "food_and_restaurants"
     ],
     "aliases": [
       "Quán Bún Nước Lèo Tri Tôn Chị Tư",
@@ -9459,15 +9459,15 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "Tri Tôn",
-      "food_and_restaurants",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Tri Tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -9483,8 +9483,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -9538,44 +9538,44 @@
     "keywords": [
       "that son",
       "lo duong thot not nguyen chat chau lang ut hue",
-      "bay nui",
+      "an giang",
       "xã châu lăng",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "lò đường thốt nốt nguyên chất châu lăng - út huệ"
+      "lò đường thốt nốt nguyên chất châu lăng - út huệ",
+      "bay nui"
     ],
     "description": "Lò thắng đường thốt nốt mật ngào dẻo thủ công chính gốc.",
     "short_description": "Lò thắng đường thốt nốt mật ngào dẻo thủ công chính gốc.",
     "tags": [
-      "Châu Lăng",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "Châu Lăng",
+      "attractions_nature"
     ],
     "slug": "lo-duong-thot-not-nguyen-chat-chau-lang-ut-hue",
     "search_keywords": [
       "that son",
       "lo duong thot not nguyen chat chau lang ut hue",
-      "bay nui",
+      "an giang",
       "xã châu lăng",
       "tri ton",
       "attractions_nature",
-      "an giang",
-      "lò đường thốt nốt nguyên chất châu lăng - út huệ"
+      "lò đường thốt nốt nguyên chất châu lăng - út huệ",
+      "bay nui"
     ],
     "aliases": [
-      "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
-      "lo duong thot not nguyen chat chau lang ut hue"
+      "lo duong thot not nguyen chat chau lang ut hue",
+      "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Châu Lăng",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "Châu Lăng",
+      "attractions_nature"
     ],
     "suitable_for": [
       "couple",
@@ -9653,19 +9653,19 @@
       "that son",
       "thị trấn tri tôn",
       "tiem banh bo thot not nuong cho tri ton",
+      "an giang",
       "tri ton",
       "tiệm bánh bò thốt nốt nướng chợ tri tôn",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "Bánh bò thốt nốt nướng ngào nước cốt dừa dẻo thơm.",
     "short_description": "Bánh bò thốt nốt nướng ngào nước cốt dừa dẻo thơm.",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "tiem-banh-bo-thot-not-nuong-cho-tri-ton",
@@ -9673,22 +9673,22 @@
       "that son",
       "thị trấn tri tôn",
       "tiem banh bo thot not nuong cho tri ton",
+      "an giang",
       "tri ton",
       "tiệm bánh bò thốt nốt nướng chợ tri tôn",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
-      "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
-      "tiem banh bo thot not nuong cho tri ton"
+      "tiem banh bo thot not nuong cho tri ton",
+      "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
@@ -9765,32 +9765,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "cà phê suối tri tôn view núi cô tô",
       "thị trấn cô tô",
-      "cafes_and_homestays",
-      "tri ton",
-      "ca phe suoi tri ton view nui co to",
+      "cà phê suối tri tôn view núi cô tô",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
+      "ca phe suoi tri ton view nui co to",
       "bay nui"
     ],
     "description": "Quán cà phê suối tự nhiên nước mát lạnh góc view chân núi Cô Tô.",
     "short_description": "Quán cà phê suối tự nhiên nước mát lạnh góc view chân núi Cô Tô.",
     "tags": [
-      "cafes_and_homestays",
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "ca-phe-suoi-tri-ton-view-nui-co-to",
     "search_keywords": [
       "that son",
-      "cà phê suối tri tôn view núi cô tô",
       "thị trấn cô tô",
-      "cafes_and_homestays",
-      "tri ton",
-      "ca phe suoi tri ton view nui co to",
+      "cà phê suối tri tôn view núi cô tô",
       "an giang",
+      "tri ton",
+      "cafes_and_homestays",
+      "ca phe suoi tri ton view nui co to",
       "bay nui"
     ],
     "aliases": [
@@ -9799,16 +9799,16 @@
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "cafes_and_homestays",
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "1 - 2 giờ",
     "best_visit_time": "Chiều (15:00 - 17:30)",
@@ -9824,9 +9824,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -9873,56 +9873,56 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "quán cà phê & điểm check-in bờ hồ ô tà lọt",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
-      "xã an hảo",
       "an giang",
-      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "tri ton",
+      "cafes_and_homestays",
       "quan ca phe diem check in bo ho o ta lot",
-      "bay nui",
-      "quán cà phê & điểm check-in bờ hồ ô tà lọt"
+      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "xã an hảo",
+      "bay nui"
     ],
     "description": "Quán coffee view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
     "short_description": "Quán coffee view lòng hồ Ô Tà Lọt tĩnh lặng nép mình dưới chân dãy núi Dài.",
     "tags": [
       "An Hảo",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "quan-ca-phe-diem-check-in-bo-ho-o-ta-lot",
     "search_keywords": [
+      "quán cà phê & điểm check-in bờ hồ ô tà lọt",
       "that son",
-      "cafes_and_homestays",
-      "tri ton",
-      "xã an hảo",
       "an giang",
-      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "tri ton",
+      "cafes_and_homestays",
       "quan ca phe diem check in bo ho o ta lot",
-      "bay nui",
-      "quán cà phê & điểm check-in bờ hồ ô tà lọt"
+      "quán cà phê & điểm check-in bờ lake ô tà lọt",
+      "xã an hảo",
+      "bay nui"
     ],
     "aliases": [
-      "quan ca phe diem check in bo ho o ta lot",
+      "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
       "Quán Cà Phê & Điểm Check-in Bờ Lake Ô Tà Lọt",
-      "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt"
+      "quan ca phe diem check in bo ho o ta lot"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
       "An Hảo",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
-      "solo",
       "photography",
+      "adventure",
+      "solo",
+      "camping",
       "couple"
     ],
     "recommended_duration": "1 - 2 giờ",
@@ -9940,11 +9940,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
-        "solo",
         "photography",
+        "adventure",
+        "solo",
+        "camping",
         "couple"
       ]
     },
@@ -9992,51 +9992,51 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
       "soài chek homestay & coffee",
-      "cafes_and_homestays",
-      "tri ton",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "soai chek homestay coffee"
+      "tri ton",
+      "cafes_and_homestays",
+      "soai chek homestay coffee",
+      "bay nui"
     ],
     "description": "Homestay sân vườn không gian thoáng đãng view hồ Soài Chek.",
     "short_description": "Homestay sân vườn không gian thoáng đãng view hồ Soài Chek.",
     "tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "slug": "soai-chek-homestay-coffee",
     "search_keywords": [
+      "xã núi tô",
       "that son",
       "soài chek homestay & coffee",
-      "cafes_and_homestays",
-      "tri ton",
       "an giang",
-      "xã núi tô",
-      "bay nui",
-      "soai chek homestay coffee"
+      "tri ton",
+      "cafes_and_homestays",
+      "soai chek homestay coffee",
+      "bay nui"
     ],
     "aliases": [
-      "soai chek homestay coffee",
-      "Soài Chek Homestay & Coffee"
+      "Soài Chek Homestay & Coffee",
+      "soai chek homestay coffee"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
       "Núi Tô",
-      "cafes_and_homestays",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "cafes_and_homestays",
+      "tri tôn"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "1 - 2 giờ",
     "best_visit_time": "Chiều (15:00 - 17:30)",
@@ -10052,9 +10052,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -10103,44 +10103,44 @@
     "keywords": [
       "that son",
       "thị trấn tri tôn",
-      "nha nghi khach san trieu gia tri ton",
-      "cafes_and_homestays",
-      "tri ton",
+      "nhà nghi & khách sạn triệu gia tri tôn",
       "an giang",
-      "bay nui",
-      "nhà nghi & khách sạn triệu gia tri tôn"
+      "nha nghi khach san trieu gia tri ton",
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "description": "Khách sạn phòng sạch sẽ tiện nghi trung tâm Thị trấn Tri Tôn.",
     "short_description": "Khách sạn phòng sạch sẽ tiện nghi trung tâm Thị trấn Tri Tôn.",
     "tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "nha-nghi-khach-san-trieu-gia-tri-ton",
     "search_keywords": [
       "that son",
       "thị trấn tri tôn",
-      "nha nghi khach san trieu gia tri ton",
-      "cafes_and_homestays",
-      "tri ton",
+      "nhà nghi & khách sạn triệu gia tri tôn",
       "an giang",
-      "bay nui",
-      "nhà nghi & khách sạn triệu gia tri tôn"
+      "nha nghi khach san trieu gia tri ton",
+      "tri ton",
+      "cafes_and_homestays",
+      "bay nui"
     ],
     "aliases": [
-      "nha nghi khach san trieu gia tri ton",
-      "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn"
+      "Nhà Nghi & Khách Sạn Triệu Gia Tri Tôn",
+      "nha nghi khach san trieu gia tri ton"
     ],
     "tourism_category": "cafes_and_homestays",
     "travel_tags": [
-      "Tri Tôn",
-      "cafes_and_homestays",
       "bảy núi",
+      "an giang",
+      "cafes_and_homestays",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
       "couple",
@@ -10211,53 +10211,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "chua xvayton chua cu 500 nam",
       "wat xvayton (wat cũ 500 năm)",
-      "khmer_pagodas_heritage",
       "chùa xvayton (chùa cũ 500 năm)",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "bay nui"
     ],
     "description": "Ngôi chùa Khmer cổ nhất An Giang lưu giữ nhiều bộ kinh lá buông độc đáo.",
     "short_description": "Ngôi chùa Khmer cổ nhất An Giang lưu giữ nhiều bộ kinh lá buông độc đáo.",
     "tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "chua-xvayton-chua-cu-500-nam",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "chua xvayton chua cu 500 nam",
       "wat xvayton (wat cũ 500 năm)",
-      "khmer_pagodas_heritage",
       "chùa xvayton (chùa cũ 500 năm)",
-      "tri ton",
+      "thị trấn tri tôn",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "bay nui"
     ],
     "aliases": [
-      "Wat Xvayton (Wat Cũ 500 năm)",
+      "chua xvayton chua cu 500 nam",
       "Chùa Xvayton (Chùa Cũ 500 năm)",
-      "chua xvayton chua cu 500 nam"
+      "Wat Xvayton (Wat Cũ 500 năm)"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -10273,9 +10273,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -10322,54 +10322,54 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
+      "xã núi tô",
       "that son",
-      "chua ta pa",
       "wat tà pạ",
-      "chùa tà pạ",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
-      "xã núi tô",
+      "chua ta pa",
+      "chùa tà pạ",
       "bay nui"
     ],
     "description": "Ngôi chùa Khmer trên ngọn đồi Tà Pạ có kiến trúc tháp nhọn uy nghi.",
     "short_description": "Ngôi chùa Khmer trên ngọn đồi Tà Pạ có kiến trúc tháp nhọn uy nghi.",
     "tags": [
       "Núi Tô",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "slug": "chua-ta-pa",
     "search_keywords": [
+      "xã núi tô",
       "that son",
-      "chua ta pa",
       "wat tà pạ",
-      "chùa tà pạ",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
-      "xã núi tô",
+      "chua ta pa",
+      "chùa tà pạ",
       "bay nui"
     ],
     "aliases": [
       "chua ta pa",
-      "Wat Tà Pạ",
-      "Chùa Tà Pạ"
+      "Chùa Tà Pạ",
+      "Wat Tà Pạ"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
       "Núi Tô",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "tri tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -10385,9 +10385,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -10445,31 +10445,31 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "khu du lich nui co to phung hoang son",
       "thị trấn cô tô",
-      "khu du lịch núi cô tô (phụng hoàng sơn)",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "khu du lich nui co to phung hoang son",
+      "khu du lịch núi cô tô (phụng hoàng sơn)",
       "attractions_nature",
       "bay nui"
     ],
     "description": "Ngọn núi cao 614m danh sơn Thất Sơn Bảy Núi có Hồ Soài So và suối Ô Tà Sóc.",
     "short_description": "Ngọn núi cao 614m danh sơn Thất Sơn Bảy Núi có Hồ Soài So và suối Ô Tà Sóc.",
     "tags": [
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "attractions_nature",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "tri tôn",
+      "attractions_nature"
     ],
     "slug": "khu-du-lich-nui-co-to-phung-hoang-son",
     "search_keywords": [
       "that son",
-      "khu du lich nui co to phung hoang son",
       "thị trấn cô tô",
-      "khu du lịch núi cô tô (phụng hoàng sơn)",
-      "tri ton",
       "an giang",
+      "tri ton",
+      "khu du lich nui co to phung hoang son",
+      "khu du lịch núi cô tô (phụng hoàng sơn)",
       "attractions_nature",
       "bay nui"
     ],
@@ -10479,16 +10479,16 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "attractions_nature",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "tri tôn",
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -10504,9 +10504,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -10553,36 +10553,36 @@
     "photo_urls": [],
     "review_samples": [],
     "keywords": [
-      "that son",
-      "lake tà pạ",
-      "ho ta pa",
-      "hồ tà pạ",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui"
+      "that son",
+      "bay nui",
+      "an giang",
+      "tri ton",
+      "lake tà pạ",
+      "attractions_nature",
+      "ho ta pa",
+      "hồ tà pạ"
     ],
     "description": "Hồ nước xanh trong ngọc tuyệt đẹp được mệnh danh là Tuyệt Tình Cốc Bảy Núi.",
     "short_description": "Hồ nước xanh trong ngọc tuyệt đẹp được mệnh danh là Tuyệt Tình Cốc Bảy Núi.",
     "tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "slug": "ho-ta-pa",
     "search_keywords": [
-      "that son",
-      "lake tà pạ",
-      "ho ta pa",
-      "hồ tà pạ",
-      "tri ton",
-      "attractions_nature",
-      "an giang",
       "xã núi tô",
-      "bay nui"
+      "that son",
+      "bay nui",
+      "an giang",
+      "tri ton",
+      "lake tà pạ",
+      "attractions_nature",
+      "ho ta pa",
+      "hồ tà pạ"
     ],
     "aliases": [
       "ho ta pa",
@@ -10593,14 +10593,14 @@
     "travel_tags": [
       "Núi Tô",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "attractions_nature",
-      "an giang"
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -10616,9 +10616,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -10679,20 +10679,20 @@
       "lake soài so",
       "thị trấn cô tô",
       "hồ soài so",
+      "an giang",
       "tri ton",
       "ho soai so",
-      "an giang",
       "attractions_nature",
       "bay nui"
     ],
     "description": "Hồ thủy lợi thơ mộng soi bóng dãy núi Phụng Hoàng Sơn.",
     "short_description": "Hồ thủy lợi thơ mộng soi bóng dãy núi Phụng Hoàng Sơn.",
     "tags": [
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "attractions_nature",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "tri tôn",
+      "attractions_nature"
     ],
     "slug": "ho-soai-so",
     "search_keywords": [
@@ -10700,29 +10700,29 @@
       "lake soài so",
       "thị trấn cô tô",
       "hồ soài so",
+      "an giang",
       "tri ton",
       "ho soai so",
-      "an giang",
       "attractions_nature",
       "bay nui"
     ],
     "aliases": [
-      "Lake Soài So",
+      "Hồ Soài So",
       "ho soai so",
-      "Hồ Soài So"
+      "Lake Soài So"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "bảy núi",
-      "tri tôn",
       "Cô Tô",
-      "attractions_nature",
-      "an giang"
+      "bảy núi",
+      "an giang",
+      "tri tôn",
+      "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -10738,9 +10738,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -10789,30 +10789,30 @@
     "keywords": [
       "that son",
       "xã an tức",
-      "khmer_pagodas_heritage",
       "khu di tich lich su doi tuc dup",
-      "tri ton",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "khu di tích lịch sử đồi tức dụp",
       "bay nui"
     ],
     "description": "Ngọn đồi 2 triệu đô căn cứ kháng chiến kiên cường với hệ thống hang đá huyền bí.",
     "short_description": "Ngọn đồi 2 triệu đô căn cứ kháng chiến kiên cường với hệ thống hang đá huyền bí.",
     "tags": [
+      "bảy núi",
+      "an giang",
       "khmer_pagodas_heritage",
       "An Tức",
-      "bảy núi",
-      "tri tôn",
-      "an giang"
+      "tri tôn"
     ],
     "slug": "khu-di-tich-lich-su-doi-tuc-dup",
     "search_keywords": [
       "that son",
       "xã an tức",
-      "khmer_pagodas_heritage",
       "khu di tich lich su doi tuc dup",
-      "tri ton",
       "an giang",
+      "khmer_pagodas_heritage",
+      "tri ton",
       "khu di tích lịch sử đồi tức dụp",
       "bay nui"
     ],
@@ -10822,11 +10822,11 @@
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
+      "bảy núi",
+      "an giang",
       "khmer_pagodas_heritage",
       "An Tức",
-      "bảy núi",
-      "tri tôn",
-      "an giang"
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -10903,44 +10903,44 @@
     "keywords": [
       "that son",
       "xã an tức",
-      "canh dong thot not trai tim an tuc",
       "cánh đồng thốt nốt trái tim an tức",
-      "tri ton",
       "checkin_spots",
       "an giang",
+      "tri ton",
+      "canh dong thot not trai tim an tuc",
       "bay nui"
     ],
     "description": "Hàng cây thốt nốt tự nhiên tạo thành hình trái tim độc đáo giữa cánh đồng.",
     "short_description": "Hàng cây thốt nốt tự nhiên tạo thành hình trái tim độc đáo giữa cánh đồng.",
     "tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "slug": "canh-dong-thot-not-trai-tim-an-tuc",
     "search_keywords": [
       "that son",
       "xã an tức",
-      "canh dong thot not trai tim an tuc",
       "cánh đồng thốt nốt trái tim an tức",
-      "tri ton",
       "checkin_spots",
       "an giang",
+      "tri ton",
+      "canh dong thot not trai tim an tuc",
       "bay nui"
     ],
     "aliases": [
-      "Cánh Đồng Thốt Nốt Trái Tim An Tức",
-      "canh dong thot not trai tim an tuc"
+      "canh dong thot not trai tim an tuc",
+      "Cánh Đồng Thốt Nốt Trái Tim An Tức"
     ],
     "tourism_category": "checkin_spots",
     "travel_tags": [
-      "An Tức",
       "bảy núi",
-      "tri tôn",
+      "checkin_spots",
       "an giang",
-      "checkin_spots"
+      "An Tức",
+      "tri tôn"
     ],
     "suitable_for": [
       "couple",
@@ -11016,53 +11016,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "cổng trời tri tôn (cổng chùa koh kas)",
-      "khmer_pagodas_heritage",
       "cổng trời tri tôn (cổng wat koh kas)",
-      "xã châu lăng",
-      "cong troi tri ton cong chua koh kas",
-      "tri ton",
       "an giang",
+      "xã châu lăng",
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "cổng trời tri tôn (cổng chùa koh kas)",
+      "cong troi tri ton cong chua koh kas",
       "bay nui"
     ],
     "description": "Cổng chùa Khmer cổ hoa văn tinh xảo đứng trần giữa đồng lúa.",
     "short_description": "Cổng chùa Khmer cổ hoa văn tinh xảo đứng trần giữa đồng lúa.",
     "tags": [
-      "Châu Lăng",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "Châu Lăng",
+      "tri tôn"
     ],
     "slug": "cong-troi-tri-ton-cong-chua-koh-kas",
     "search_keywords": [
       "that son",
-      "cổng trời tri tôn (cổng chùa koh kas)",
-      "khmer_pagodas_heritage",
       "cổng trời tri tôn (cổng wat koh kas)",
-      "xã châu lăng",
-      "cong troi tri ton cong chua koh kas",
-      "tri ton",
       "an giang",
+      "xã châu lăng",
+      "tri ton",
+      "khmer_pagodas_heritage",
+      "cổng trời tri tôn (cổng chùa koh kas)",
+      "cong troi tri ton cong chua koh kas",
       "bay nui"
     ],
     "aliases": [
+      "Cổng Trời Tri Tôn (Cổng Wat Koh Kas)",
       "cong troi tri ton cong chua koh kas",
-      "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)",
-      "Cổng Trời Tri Tôn (Cổng Wat Koh Kas)"
+      "Cổng Trời Tri Tôn (Cổng Chùa Koh Kas)"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Châu Lăng",
-      "khmer_pagodas_heritage",
       "bảy núi",
-      "tri tôn",
-      "an giang"
+      "an giang",
+      "khmer_pagodas_heritage",
+      "Châu Lăng",
+      "tri tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -11078,9 +11078,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -11128,32 +11128,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "chợ trung tâm tri tôn",
-      "tri ton",
-      "an giang",
-      "attractions_nature",
       "cho trung tam tri ton",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "chợ trung tâm tri tôn",
+      "attractions_nature",
       "bay nui"
     ],
     "description": "Chợ trung tâm sầm uất ngập tràn ẩm thực bánh bò thốt nốt, bún nước lèo.",
     "short_description": "Chợ trung tâm sầm uất ngập tràn ẩm thực bánh bò thốt nốt, bún nước lèo.",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "cho-trung-tam-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "chợ trung tâm tri tôn",
-      "tri ton",
-      "an giang",
-      "attractions_nature",
       "cho trung tam tri ton",
+      "thị trấn tri tôn",
+      "an giang",
+      "tri ton",
+      "chợ trung tâm tri tôn",
+      "attractions_nature",
       "bay nui"
     ],
     "aliases": [
@@ -11162,15 +11162,15 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -11186,8 +11186,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -11235,32 +11235,32 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "khu ẩm thực chợ đêm tri tôn",
       "khu am thuc cho dem tri ton",
+      "khu ẩm thực chợ đêm tri tôn",
+      "thị trấn tri tôn",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "Khu phố chợ đêm sầm uất bán đồ ăn vặt thốt nốt, xiên nướng, cháo bò.",
     "short_description": "Khu phố chợ đêm sầm uất bán đồ ăn vặt thốt nốt, xiên nướng, cháo bò.",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "khu-am-thuc-cho-dem-tri-ton",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
-      "khu ẩm thực chợ đêm tri tôn",
       "khu am thuc cho dem tri ton",
+      "khu ẩm thực chợ đêm tri tôn",
+      "thị trấn tri tôn",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
@@ -11269,15 +11269,15 @@
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "foodie",
-      "family"
+      "family",
+      "foodie"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -11293,8 +11293,8 @@
         "Ẩm thực đặc sản bản địa hương vị thơm ngon chuẩn vị"
       ],
       "suitable_for_tags": [
-        "foodie",
-        "family"
+        "family",
+        "foodie"
       ]
     },
     "nearby_places": [],
@@ -11342,33 +11342,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
-      "ga dot o thum sieu bo",
-      "tri ton",
-      "an giang",
       "gà đốt ô thum siêu bó",
-      "xã ô lâm"
+      "ga dot o thum sieu bo",
+      "bay nui",
+      "an giang",
+      "xã ô lâm",
+      "tri ton",
+      "food_and_restaurants"
     ],
     "description": "Gà đốt lá chúc giòn da thơm cay bản địa tại bờ hồ Ô Thum.",
     "short_description": "Gà đốt lá chúc giòn da thơm cay bản địa tại bờ hồ Ô Thum.",
     "tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "slug": "ga-dot-o-thum-sieu-bo",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
-      "bay nui",
-      "ga dot o thum sieu bo",
-      "tri ton",
-      "an giang",
       "gà đốt ô thum siêu bó",
-      "xã ô lâm"
+      "ga dot o thum sieu bo",
+      "bay nui",
+      "an giang",
+      "xã ô lâm",
+      "tri ton",
+      "food_and_restaurants"
     ],
     "aliases": [
       "ga dot o thum sieu bo",
@@ -11376,18 +11376,18 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
+      "Ô Lâm",
       "bảy núi",
-      "tri tôn",
       "an giang",
-      "Ô Lâm"
+      "tri tôn",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "adventure",
       "nature",
-      "camping",
       "family",
-      "foodie"
+      "foodie",
+      "adventure",
+      "camping"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -11404,11 +11404,11 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
         "nature",
-        "camping",
         "family",
-        "foodie"
+        "foodie",
+        "adventure",
+        "camping"
       ]
     },
     "nearby_places": [],
@@ -11461,33 +11461,33 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "food_and_restaurants",
+      "quán đu đủ đâm & cánh gà nướng rô",
+      "bay nui",
       "quan du du dam canh ga nuong ro",
+      "an giang",
       "xã châu lăng",
       "tri ton",
-      "quán đu đủ đâm & cánh gà nướng rô",
-      "an giang",
-      "bay nui"
+      "food_and_restaurants"
     ],
     "description": "Món đu đủ đâm Khmer giòn sần sật cay chua cay ăn kèm cánh gà nướng.",
     "short_description": "Món đu đủ đâm Khmer giòn sần sật cay chua cay ăn kèm cánh gà nướng.",
     "tags": [
-      "food_and_restaurants",
-      "Châu Lăng",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Châu Lăng",
+      "food_and_restaurants"
     ],
     "slug": "quan-du-du-dam-canh-ga-nuong-ro",
     "search_keywords": [
       "that son",
-      "food_and_restaurants",
+      "quán đu đủ đâm & cánh gà nướng rô",
+      "bay nui",
       "quan du du dam canh ga nuong ro",
+      "an giang",
       "xã châu lăng",
       "tri ton",
-      "quán đu đủ đâm & cánh gà nướng rô",
-      "an giang",
-      "bay nui"
+      "food_and_restaurants"
     ],
     "aliases": [
       "quan du du dam canh ga nuong ro",
@@ -11495,16 +11495,16 @@
     ],
     "tourism_category": "food_and_restaurants",
     "travel_tags": [
-      "food_and_restaurants",
-      "Châu Lăng",
       "bảy núi",
+      "an giang",
       "tri tôn",
-      "an giang"
+      "Châu Lăng",
+      "food_and_restaurants"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "45 - 60 phút",
     "best_visit_time": "Trưa (11:00 - 13:30) & Tối (17:30 - 20:00)",
@@ -11520,9 +11520,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],
@@ -11570,50 +11570,50 @@
     "review_samples": [],
     "keywords": [
       "that son",
-      "thị trấn tri tôn",
       "quan bo nuong banh trang tu liem",
+      "thị trấn tri tôn",
       "quán bò nướng bánh tráng tư liêm",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "description": "Bò Bảy Núi nướng vỉ thơm lừng cuốn bánh tráng chấm mắm bò hóc.",
     "short_description": "Bò Bảy Núi nướng vỉ thơm lừng cuốn bánh tráng chấm mắm bò hóc.",
     "tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "slug": "quan-bo-nuong-banh-trang-tu-liem",
     "search_keywords": [
       "that son",
-      "thị trấn tri tôn",
       "quan bo nuong banh trang tu liem",
+      "thị trấn tri tôn",
       "quán bò nướng bánh tráng tư liêm",
+      "an giang",
       "tri ton",
       "attractions_nature",
-      "an giang",
       "bay nui"
     ],
     "aliases": [
-      "quan bo nuong banh trang tu liem",
-      "Quán Bò Nướng Bánh Tráng Tư Liêm"
+      "Quán Bò Nướng Bánh Tráng Tư Liêm",
+      "quan bo nuong banh trang tu liem"
     ],
     "tourism_category": "attractions_nature",
     "travel_tags": [
-      "Tri Tôn",
       "bảy núi",
-      "tri tôn",
       "an giang",
+      "tri tôn",
+      "Tri Tôn",
       "attractions_nature"
     ],
     "suitable_for": [
-      "adventure",
+      "camping",
       "nature",
-      "camping"
+      "adventure"
     ],
     "recommended_duration": "2 - 3 giờ",
     "best_visit_time": "Cả ngày (Chiều mát đẹp nhất)",
@@ -11629,9 +11629,9 @@
         "Khí hậu trong lành thích hợp dã ngoại khám phá Bảy Núi"
       ],
       "suitable_for_tags": [
-        "adventure",
+        "camping",
         "nature",
-        "camping"
+        "adventure"
       ]
     },
     "nearby_places": [],
@@ -11679,53 +11679,53 @@
     "review_samples": [],
     "keywords": [
       "that son",
+      "tiệm bánh kẹp thốt nốt & bánh cốt dừa wat cũ",
       "thị trấn tri tôn",
       "tiệm bánh kẹp thốt nốt & bánh cốt dừa chùa cũ",
-      "tiem banh kep thot not banh cot dua chua cu",
-      "tiệm bánh kẹp thốt nốt & bánh cốt dừa wat cũ",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
+      "tiem banh kep thot not banh cot dua chua cu",
       "bay nui"
     ],
     "description": "Các món bánh dân gian Khmer đượm vị thốt nốt dừa tươi nướng giòn.",
     "short_description": "Các món bánh dân gian Khmer đượm vị thốt nốt dừa tươi nướng giòn.",
     "tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "slug": "tiem-banh-kep-thot-not-banh-cot-dua-chua-cu",
     "search_keywords": [
       "that son",
+      "tiệm bánh kẹp thốt nốt & bánh cốt dừa wat cũ",
       "thị trấn tri tôn",
       "tiệm bánh kẹp thốt nốt & bánh cốt dừa chùa cũ",
-      "tiem banh kep thot not banh cot dua chua cu",
-      "tiệm bánh kẹp thốt nốt & bánh cốt dừa wat cũ",
+      "an giang",
       "khmer_pagodas_heritage",
       "tri ton",
-      "an giang",
+      "tiem banh kep thot not banh cot dua chua cu",
       "bay nui"
     ],
     "aliases": [
-      "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
       "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Wat Cũ",
+      "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
       "tiem banh kep thot not banh cot dua chua cu"
     ],
     "tourism_category": "khmer_pagodas_heritage",
     "travel_tags": [
-      "Tri Tôn",
-      "khmer_pagodas_heritage",
       "bảy núi",
+      "an giang",
+      "khmer_pagodas_heritage",
       "tri tôn",
-      "an giang"
+      "Tri Tôn"
     ],
     "suitable_for": [
-      "religion",
+      "culture",
       "family",
-      "culture"
+      "religion"
     ],
     "recommended_duration": "1 - 1.5 giờ",
     "best_visit_time": "Sáng sớm (07:00 - 09:30)",
@@ -11741,9 +11741,9 @@
         "Kiến trúc Phật giáo Khmer cổ kính thanh tĩnh"
       ],
       "suitable_for_tags": [
-        "religion",
+        "culture",
         "family",
-        "culture"
+        "religion"
       ]
     },
     "nearby_places": [],

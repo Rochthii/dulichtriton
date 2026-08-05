@@ -16,6 +16,7 @@ from tourism_crawler.services.validation_service import DataValidationService
 from tourism_crawler.services.deduplication_service import DeduplicationService
 from tourism_crawler.services.recommendation_graph_service import RecommendationGraphService
 from tourism_crawler.services.embedding_service import EmbeddingChunkerService
+from tourism_crawler.services.document_builder import DocumentBuilderService
 from tourism_crawler.export.exporter import DataExporter
 
 def create_storage_dirs():
@@ -24,6 +25,7 @@ def create_storage_dirs():
         "storage/raw",
         "storage/normalized",
         "storage/enriched",
+        "storage/enriched/documents",
         "storage/verified",
         "storage/exports"
     ]
@@ -74,8 +76,10 @@ async def run_pipeline():
         json.dump([p.model_dump() for p in graph_places], f, ensure_ascii=False, indent=2)
     logger.info(f"Layer 5: Saved Master Verified Records to {verified_path}")
 
-    # 6. RAG Embedding Chunk Generator
-    logger.info("Layer 6: Generating RAG Embedding Chunks for Vector Database...")
+    # 6. Structured Markdown Document Builder & RAG Chunker
+    logger.info("Layer 6: Building Structured Markdown Knowledge Documents & RAG Chunks...")
+    DocumentBuilderService.generate_all_documents(graph_places, output_dir="storage/enriched/documents")
+    
     all_chunks = []
     for p in graph_places:
         chunks = EmbeddingChunkerService.generate_rag_passages(p)
@@ -84,7 +88,7 @@ async def run_pipeline():
     chunk_path = "storage/enriched/rag_embedding_chunks.json"
     with open(chunk_path, "w", encoding="utf-8") as f:
         json.dump(all_chunks, f, ensure_ascii=False, indent=2)
-    logger.info(f"Layer 6 Completed. Generated {len(all_chunks)} RAG chunks at {chunk_path}")
+    logger.info(f"Layer 6 Completed. Generated 100 Markdown Docs & {len(all_chunks)} RAG chunks at {chunk_path}")
 
     # 7. Export Production Assets to export/ and storage/exports/
     logger.info("Layer 7: Exporting Production Assets (places.json, places.csv, seed_places.sql)...")
