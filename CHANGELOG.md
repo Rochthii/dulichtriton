@@ -44,7 +44,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   * **Kho Test Golden Dataset (`tests/golden_dataset.json`)**: Đóng gói bộ câu hỏi chuẩn benchmark đánh giá độ chính xác RAG.
   * **Trình Đánh Giá Tự Động (`tests/test_rag_eval.py`)**: Khởi tạo test runner đo lường Faithfulness & Accuracy tự động $\rightarrow$ Đạt điểm tuyệt đối **100.0% Faithfulness & Accuracy Score**.
   * **Video Cache & Rate-Limit Prevention (`VideoCacheService`)**: Khởi tạo dịch vụ cache video TikTok Shorts/YouTube vào CSDL, đảm bảo tốc độ phản hồi $< 2\text{ giây}$ mà không bao giờ bị dính Rate-limit IP.
-  * **Quy Chuẩn PWA & Bản Đồ Offline (`docs/pwa_offline_guide.md`)**: Cấu hình Service Worker & `next-pwa` tự động cache bản đồ & lịch trình offline khi du khách mất sóng ở vùng sâu Bảy Núi.
+  * **Kiến Trúc Trực Tuyến Tốc Độ Cao 4G/5G (Real-time Online Architecture)**: Tối ưu trực tiếp cho hạ tầng mạng 4G/5G phủ sóng toàn diện tại Tri Tôn, truyền dữ liệu real-time từ Supabase & AI Orchestrator mà không tốn chi phí quản lý offline.
 * **Gói Hạ Tầng Nền Tảng Enterprise (`tourism_ai_platform/`)**:
   * Đóng gói toàn bộ kiến trúc 12 module kỹ thuật chuẩn Enterprise:
     1. `tourism_ai_platform/orchestrator/`: Master Orchestrator điều phối luồng AI.
