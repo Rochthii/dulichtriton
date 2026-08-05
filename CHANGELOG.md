@@ -18,6 +18,8 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **User Personas & Pain Points**: Khởi tạo [docs/user_personas_and_pain_points.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/user_personas_and_pain_points.md) phân tích 4 chân dung du khách & Ma trận điểm mù UI/UX.
 * **Bộ Tài liệu Kỹ thuật Cô đọng**: Tách 12 file tài liệu kỹ thuật trong `docs/` (`01_Project_Overview.md` đến `11_Roadmap.md` & `README.md`).
 * **AI Agent Skill**: Khởi tạo [.agents/skills/triton_product_design/SKILL.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/.agents/skills/triton_product_design/SKILL.md) đóng gói bộ quy tắc thiết kế & Tech Stack (Next.js + Supabase + Vercel).
+* **Phạm vi Bản phát hành MVP (MVP Release Scope)**:
+  * Khởi tạo tài liệu [docs/mvp_scope_and_checklist.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/mvp_scope_and_checklist.md) quy định rõ ràng danh mục chức năng Frontend (Trang chủ, Địa điểm, Chi tiết Hồ Tà Pạ nhúng TikTok, Ẩm thực Gà đốt & AI Chatbot Widget), CSDL Supabase, API FastAPI Core và tiêu chí hoàn thành MVP.
 * **Nghiên cứu Dữ liệu Chuyên sâu (Deep Data Research)**:
   * Khởi tạo tài liệu [docs/tri_ton_comprehensive_data_research.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tri_ton_comprehensive_data_research.md) nghiên cứu sâu 7 trụ cột dữ liệu (Hành chính 15 Xã/Thị trấn, Địa lý Thất Sơn Bảy Núi, Di sản Đồi Tức Dụp & Ba Chúc, Văn hóa 3 Đại lễ Khmer & Đua bò, Ẩm thực Gà đốt & Bún nước lèo, Mùa du lịch & Cảnh báo đường xá).
 * **Dữ liệu Hệ thống Chi tiết (Extended Datasets)**:

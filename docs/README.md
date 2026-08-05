@@ -21,3 +21,4 @@ Hệ thống Website Du lịch thông minh kết hợp Chatbot AI và Video tr�
 15. [CHANGELOG.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/CHANGELOG.md) — Nhật ký ghi vết lịch sử nâng cấp và cập nhật phiên bản hệ thống.
 16. [Monetization & Marketing Strategy](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/monetization_and_marketing_strategy.md) — Chiến lược mô hình doanh thu đa dòng & Kế hoạch quảng bá thương hiệu.
 17. [Comprehensive Data Research](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tri_ton_comprehensive_data_research.md) — Tài liệu nghiên cứu sâu 7 trụ cột dữ liệu Địa lý, Hành chính 15 Xã, Di sản Lịch sử, Văn hóa Khmer, Ẩm thực & Đường xá Tri Tôn.
+18. [MVP Scope & Checklist](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/mvp_scope_and_checklist.md) — Danh mục phạm vi chức năng, tiêu chí hoàn thiện & checklist phát triển cho bản phát hành MVP đầu tiên.
