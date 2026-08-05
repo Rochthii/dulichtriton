@@ -40,6 +40,14 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
   * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
   * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
+* **Gói Hạ Tầng Nền Tảng Enterprise (`tourism_ai_platform/`)**:
+  * Đóng gói toàn bộ kiến trúc 12 module kỹ thuật chuẩn Enterprise:
+    1. `tourism_ai_platform/orchestrator/`: Master Orchestrator điều phối luồng AI.
+    2. `tourism_ai_platform/adapters/`: Trình tương thích đa nhà cung cấp LLM (`GeminiAdapter`, `OpenAIAdapter`, `ClaudeAdapter`).
+    3. `tourism_ai_platform/retriever/`: Động cơ tra cứu lai `HybridSearchEngine`.
+    4. `tourism_ai_platform/planner/`: Trình lên lịch trình tour AI `AITripPlanner`.
+    5. `tourism_ai_platform/guardrails/`: Động cơ kiểm soát quy chuẩn `GuardrailsEngine` (0% Emoji, No Huyện Tri Tôn).
+    6. `tourism_ai_platform/config/`: Cấu hình tham số hệ thống `settings.py`.
 * **Động Cơ AI Orchestrator 14 Bước End-to-End (`tourism_ai_core/orchestrator/`)**:
   * Đóng gói dịch vụ [tourism_ai_core/orchestrator/ai_orchestrator.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/tourism_ai_core/orchestrator/ai_orchestrator.py) kết nối hoàn chỉnh 14 bước xử lý AI Workflow:
     $$\text{User Query} \rightarrow \text{API Gateway} \rightarrow \text{AI Orchestrator} \rightarrow \text{(Memory + Recommendation + Planner)} \rightarrow \text{Hybrid Retriever} \rightarrow \text{AI Reranker} \rightarrow \text{Context Builder} \rightarrow \text{Prompt Builder} \rightarrow \text{LLM Router} \rightarrow \text{Response Validator} \rightarrow \text{Structured JSON Output}$$
