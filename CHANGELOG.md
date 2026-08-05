@@ -18,6 +18,8 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **User Personas & Pain Points**: Khởi tạo [docs/user_personas_and_pain_points.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/user_personas_and_pain_points.md) phân tích 4 chân dung du khách & Ma trận điểm mù UI/UX.
 * **Bộ Tài liệu Kỹ thuật Cô đọng**: Tách 12 file tài liệu kỹ thuật trong `docs/` (`01_Project_Overview.md` đến `11_Roadmap.md` & `README.md`).
 * **AI Agent Skill**: Khởi tạo [.agents/skills/triton_product_design/SKILL.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/.agents/skills/triton_product_design/SKILL.md) đóng gói bộ quy tắc thiết kế & Tech Stack (Next.js + Supabase + Vercel).
+* **Chiến lược Kinh doanh & Marketing**:
+  * Khởi tạo tài liệu [docs/monetization_and_marketing_strategy.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/monetization_and_marketing_strategy.md) hoạch định 4 nguồn doanh thu (Partner Listing, Affiliate Booking, Local Ads, Tour Guide) và 4 kênh quảng bá thương hiệu (TikTok/Shorts, SEO Top 1 Google, Sticker QR Offline, Viral Lịch trình).
 * **Hạ tầng & Bảo mật (Security & Git)**:
   * Khởi tạo file [.gitignore](file:///e:/Projects/Project_ca_nhan/dulichtriton/.gitignore) loại bỏ 100% các file nhạy cảm (`.env`, `.env.local`), virtualenv (`venv/`), `node_modules/`, `.next/`, `logs/`.
   * Khởi tạo repository Git, commit 140 files mã nguồn/tài liệu và đẩy trực tiếp lên GitHub: `https://github.com/Rochthii/dulichtriton.git` trên nhánh `main`.

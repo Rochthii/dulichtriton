@@ -19,3 +19,4 @@ Hệ thống Website Du lịch thông minh kết hợp Chatbot AI và Video tr�
 13. [UI Prototype Showcase](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/ui_prototype_showcase.md) — Bộ ảnh thiết kế Prototype 13 màn hình đồng bộ giao diện Web Portal & Chatbot AI.
 14. [Design System & Component Specs](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/design_system_specification.md) — Quy chuẩn thiết kế đồng bộ 100% màu sắc, kiểu chữ, Lucide SVG icons, responsive grid & quy cách linh kiện 16 màn hình.
 15. [CHANGELOG.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/CHANGELOG.md) — Nhật ký ghi vết lịch sử nâng cấp và cập nhật phiên bản hệ thống.
+16. [Monetization & Marketing Strategy](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/monetization_and_marketing_strategy.md) — Chiến lược mô hình doanh thu đa dòng & Kế hoạch quảng bá thương hiệu.
