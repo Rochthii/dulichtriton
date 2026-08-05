@@ -1,0 +1,42 @@
+[
+  {
+    "id": "gold-001",
+    "query": "Tầm trưa 12h ăn gì ở Tri Tôn ngon gần Hồ Tà Pạ?",
+    "ground_truth_place": "Quán Gà Đốt Ô Thum Siêu Bó",
+    "ground_truth_commune": "Xã Ô Lâm",
+    "expected_keywords": ["gà đốt", "ô thum", "lá chúc", "đặt trước"],
+    "banned_phrases": ["Huyện Tri Tôn"]
+  },
+  {
+    "id": "gold-002",
+    "query": "Ngôi chùa Khmer cổ nhất An Giang nằm ở đâu?",
+    "ground_truth_place": "Chùa Xvayton (Chùa Cũ)",
+    "ground_truth_commune": "Thị trấn Tri Tôn",
+    "expected_keywords": ["xvayton", "chùa cũ", "500 năm", "lá buông"],
+    "banned_phrases": ["Huyện Tri Tôn"]
+  },
+  {
+    "id": "gold-003",
+    "query": "Đi Hồ Tà Pạ có cần mua vé vào cổng không?",
+    "ground_truth_place": "Hồ Tà Pạ",
+    "ground_truth_commune": "Xã Núi Tô",
+    "expected_keywords": ["tự do", "miễn phí", "gửi xe"],
+    "banned_phrases": ["Huyện Tri Tôn"]
+  },
+  {
+    "id": "gold-004",
+    "query": "Gà đốt Ô Thum chế biến mất bao lâu?",
+    "ground_truth_place": "Gà Đốt Ô Thum",
+    "ground_truth_commune": "Xã Ô Lâm",
+    "expected_keywords": ["35 - 45 phút", "đặt trước"],
+    "banned_phrases": ["Huyện Tri Tôn"]
+  },
+  {
+    "id": "gold-005",
+    "query": "Mua đường thốt nốt nguyên chất ở đâu uy tín?",
+    "ground_truth_place": "Lò Đường Thốt Nốt Út Huệ",
+    "ground_truth_commune": "Xã Châu Lăng",
+    "expected_keywords": ["châu lăng", "ngào mật", "thủ công"],
+    "banned_phrases": ["Huyện Tri Tôn"]
+  }
+]
