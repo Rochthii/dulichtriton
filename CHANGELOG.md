@@ -18,6 +18,9 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **User Personas & Pain Points**: Khởi tạo [docs/user_personas_and_pain_points.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/user_personas_and_pain_points.md) phân tích 4 chân dung du khách & Ma trận điểm mù UI/UX.
 * **Bộ Tài liệu Kỹ thuật Cô đọng**: Tách 12 file tài liệu kỹ thuật trong `docs/` (`01_Project_Overview.md` đến `11_Roadmap.md` & `README.md`).
 * **AI Agent Skill**: Khởi tạo [.agents/skills/triton_product_design/SKILL.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/.agents/skills/triton_product_design/SKILL.md) đóng gói bộ quy tắc thiết kế & Tech Stack (Next.js + Supabase + Vercel).
+* **Công cụ Crawl Data Google Maps (Food & Specialty Scraper)**:
+  * Khởi tạo và chạy thành công script [scripts/build_full_google_maps_crawler.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/build_full_google_maps_crawler.py) cào sạch dữ liệu các quán ăn, gà đốt Ô Thum, bún nước lèo, bánh canh lò rèn, bò nướng Ba Chúc, lò đường thốt nốt Châu Lăng & cà phê view đồi toàn cảnh Tri Tôn từ Google Maps.
+  * Xuất dữ liệu đã kiểm duyệt Bounding Box & chuẩn hóa NFC vào [data/crawled_tri_ton.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/crawled_tri_ton.json).
 * **Phạm vi Bản phát hành MVP (MVP Release Scope)**:
   * Khởi tạo tài liệu [docs/mvp_scope_and_checklist.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/mvp_scope_and_checklist.md) quy định rõ ràng danh mục chức năng Frontend (Trang chủ, Địa điểm, Chi tiết Hồ Tà Pạ nhúng TikTok, Ẩm thực Gà đốt & AI Chatbot Widget), CSDL Supabase, API FastAPI Core và tiêu chí hoàn thành MVP.
 * **Nghiên cứu Dữ liệu Chuyên sâu (Deep Data Research)**:
