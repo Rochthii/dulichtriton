@@ -6,6 +6,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 ---
 
+## [10.24.0-SUPABASE-LINTER-POSTGREST-EXPOSURE-REVOKED] — 2026-08-06
+
+### 🛡️ Khắc Phục Triệt Để Cảnh Báo Supabase Linter 0013 Cho Bảng PostGIS `spatial_ref_sys`
+* **Tắt Quyền PostgREST API Công Khai**: Đã thu hồi toàn bộ quyền truy cập công khai PostgREST (`anon`, `authenticated`, `public`) trên bảng hệ thống PostGIS `public.spatial_ref_sys`:
+  ```sql
+  REVOKE ALL ON TABLE public.spatial_ref_sys FROM anon, authenticated, public;
+  GRANT SELECT ON TABLE public.spatial_ref_sys TO postgres, service_role;
+  ```
+* **Bảo Vệ API & GIS Spatial Engine**: Đảm bảo người dùng bên ngoài qua API không thể truy vấn bảng hệ thống `spatial_ref_sys`, trong khi engine GIS nội bộ (`postgres`, `service_role`) vẫn hoạt động bình thường 100%.
+
+---
+
 ## [10.23.0-SUPABASE-LINTER-POSTGIS-RLS-FIXED] — 2026-08-06
 
 ### 🔒 Giải Quyết Cảnh Báo Supabase Database Linter `0013_rls_disabled_in_public`
