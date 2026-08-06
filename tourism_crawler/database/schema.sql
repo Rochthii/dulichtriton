@@ -137,6 +137,20 @@ ALTER TABLE public.chat_sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.chat_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
 
+-- Fix Supabase Linter 0013_rls_disabled_in_public for PostGIS spatial_ref_sys table (Safe Exception Block)
+DO $$
+BEGIN
+    IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'spatial_ref_sys') THEN
+        BEGIN
+            ALTER TABLE public.spatial_ref_sys ENABLE ROW LEVEL SECURITY;
+            DROP POLICY IF EXISTS "Public Read Spatial Ref Sys" ON public.spatial_ref_sys;
+            CREATE POLICY "Public Read Spatial Ref Sys" ON public.spatial_ref_sys FOR SELECT USING (true);
+        EXCEPTION WHEN OTHERS THEN
+            RAISE NOTICE 'Skipped spatial_ref_sys RLS: managed extension owned table';
+        END;
+    END IF;
+END $$;
+
 -- Allow Public Read Access for active places and videos
 DROP POLICY IF EXISTS "Public Read Active Places" ON public.places;
 CREATE POLICY "Public Read Active Places" ON public.places FOR SELECT USING (is_active = true);

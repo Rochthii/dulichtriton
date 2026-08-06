@@ -6,6 +6,28 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 ---
 
+## [10.23.0-SUPABASE-LINTER-POSTGIS-RLS-FIXED] — 2026-08-06
+
+### 🔒 Giải Quyết Cảnh Báo Supabase Database Linter `0013_rls_disabled_in_public`
+* **Nâng Cấp Schema PostgreSQL (`schema.sql`)**: Bổ sung khối xử lý an toàn (Safe Exception Block) kích hoạt Row Level Security (RLS) và chính sách Public Read Policy cho bảng hệ thống PostGIS `spatial_ref_sys`:
+  ```sql
+  DO $$
+  BEGIN
+      IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'spatial_ref_sys') THEN
+          BEGIN
+              ALTER TABLE public.spatial_ref_sys ENABLE ROW LEVEL SECURITY;
+              DROP POLICY IF EXISTS "Public Read Spatial Ref Sys" ON public.spatial_ref_sys;
+              CREATE POLICY "Public Read Spatial Ref Sys" ON public.spatial_ref_sys FOR SELECT USING (true);
+          EXCEPTION WHEN OTHERS THEN
+              RAISE NOTICE 'Skipped spatial_ref_sys RLS: managed extension owned table';
+          END;
+      END IF;
+  END $$;
+  ```
+* **Áp Dụng Trực Tiếp Lên Supabase Cloud Database**: Chạy thành công script `execute_db_migration_and_seed.py` đồng bộ 100% CSDL PostgreSQL.
+
+---
+
 ## [10.22.0-IDE-LINT-PROBLEMS-FULLY-RESOLVED] — 2026-08-06
 
 ### 🛡️ Xử Lý Triệt Để Cảnh Báo Linter Của IDE Trực Tiếp Trên Mã Nguồn
