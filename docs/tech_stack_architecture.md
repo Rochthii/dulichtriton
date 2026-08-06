@@ -39,7 +39,16 @@ Nền tảng **Du Lịch Tri Tôn** được thiết kế theo tiêu chuẩn **S
   * *PostGIS Extension*: Xử lý truy vấn không gian phức tạp (Bán kính bán kính điểm ăn uống gần nhất).
   * *OSRM Service*: AI tự động tính toán & tối ưu hóa đường đi ngắn nhất giữa các điểm tham quan trong tour 2D1N.
 
-### 2.4. Lớp Frontend Web Portal
+### 2.4. Lớp Lưu Trữ & Tối Ưu Hóa Hình Ảnh Cloudinary Media Service
+* **Cloudinary Media API Integration**: Quản lý và lưu trữ toàn bộ kho ảnh địa điểm, đặc sản Gà Đốt Ô Thum và homestay Tri Tôn.
+* **Tự Động Nén & Tối Ưu Hóa Ảnh (Auto Optimization Protocol)**:
+  * Tự động resize kích thước tối đa 1200px (`w_1200,c_limit`).
+  * Tự động chuyển đổi sang định dạng **WebP** thế hệ mới (`f_auto,q_auto`) giúp giảm 75% dung lượng ảnh mà vẫn giữ nguyên độ nét.
+  * Trả về URL HTTPS bảo mật đã tối ưu lưu vào bảng `public.places.photos` trong CSDL PostgreSQL.
+* **Dynamic Environment Security**: Load động biến `CLOUDINARY_URL` từ tệp `.env.local` / `.env` bảo vệ an toàn 100% credential theo `RULE-20`.
+
+
+### 2.5. Lớp Frontend Web Portal
 * **Next.js 14 (App Router & React 18)**: Server-Side Rendering (SSR) & Incremental Static Regeneration (ISR) tối ưu SEO Top 1 Google.
 * **TailwindCSS**: Design tokens (`#1B4D3E` Emerald Green, `#D99B26` Golden Palm).
 * **Lucide React Icons**: Đảm bảo quy tắc **0% Emoji**, 100% SVG icons.
