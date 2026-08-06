@@ -19,6 +19,8 @@ Chatbot du lịch AI chuyên về Tri Tôn, An Giang, Việt Nam.
 9. ALWAYS use Supabase (PostgreSQL + pgvector) for DB and Next.js / React deployed on Vercel for Frontend
 10. ALWAYS design UI/UX User-Centric: solve pain points, build Personas, uncover user blind spots, focus on real behavior for long-term retention
 11. ALWAYS update CHANGELOG.md whenever making any code changes, feature additions, or system updates
+12. NEVER hardcode API keys or credentials in code — ALWAYS load dynamically from git-ignored .env / .env.local files
+13. ALWAYS self-critique, cross-verify multiple times across technical dimensions, and stress-test every solution until the optimal path is agreed upon
 
 ## Architecture Summary
 Intent → NER → RAG DB Query → LLM → Structured JSON → UI (Next.js/React + Supabase)
@@ -29,8 +31,10 @@ data/tri_ton_master_cleaned.csv (82 records, version 10.0.0)
 ## Changelog & Progress Track
 → [CHANGELOG.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/CHANGELOG.md)
 
-## Full Knowledge Base
+## Full Knowledge Base & Skills
 → .agents/ (9 specialized files)
+→ [.agents/skills/triton_workflow_execution_standard/SKILL.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/.agents/skills/triton_workflow_execution_standard/SKILL.md) (Standard Skill)
+
 
 ## Tech Stack
 Next.js / React | Vercel | Supabase (PostgreSQL+pgvector) | Python 3.11 FastAPI | Pydantic v2 | Lucide SVG Icons

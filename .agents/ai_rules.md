@@ -79,3 +79,13 @@ All UI/UX design decisions must stem from empathy with the end user: solve real 
 ## RULE-19: Mandatory Changelog Updates
 **Severity: HIGH**
 ALWAYS update `CHANGELOG.md` whenever performing any code modifications, documentation updates, dataset versioning, or feature additions. Every change must be recorded with timestamp/version.
+
+## RULE-20: Environment Variable Security Standard
+**Severity: CRITICAL**
+NEVER hardcode API keys, passwords, DB tokens, or credentials directly inside source code or scripts. ALWAYS read credentials dynamically from environment variables (`.env` / `.env.local` / `process.env` / `os.getenv`). Keep credentials strictly in git-ignored `.env` / `.env.local` files.
+
+## RULE-21: Mandatory Self-Critique & Multi-Perspective Verification Standard
+**Severity: CRITICAL**
+Before executing any architectural design, code modification, database migration, or feature implementation, AI MUST systematically self-critique, cross-verify across multiple technical perspectives (security, performance, edge cases, scalability, data integrity), stress-test potential failure points, and iterate until the optimal solution is agreed upon.
+
+
