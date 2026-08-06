@@ -45,9 +45,7 @@ description: Full Design System Tokens (Color, Typography, Lucide SVG Icons, 16-
 15. `15_dark_mode_visual_spec`: Giao diện Chế độ Tối toàn hệ thống.
 16. `16_auth_login_modal`: Modal Đăng nhập & Phân quyền Supabase Auth.
 
-## 5. UI/UX & Product Design Philosophy (User-Centric First)
-* **Empathy & Perspective**: Always put yourself directly in the user's shoes.
-* **User Pain Points**: Solve confusion about what to do in Tri Ton, lack of exact coordinates, long food waiting times (Ga Dot 40m), and travel scams.
-* **User Personas**: Gen Z Check-in Hunter, Weekend Family Escape, Khmer Heritage & Spiritual Pilgrims, Local Foodies.
-* **User Blind Spots**: Proactively inform users about seasonal water changes (Ho Ta Pa), food prep times (Ga Dot 35-45m), narrow roads for 7-seat cars, and Khmer temple etiquette.
-* **Behavioral Focus & Retention**: Instant load (<2s), offline QR export, nearby WGS84 recommendations to build long-term retention.
+## 6. Strict Mandatory Prototype Alignment
+* **MANDATORY SPECIFICATION**: All Frontend developments MUST strictly align with the prototype layouts specified in [docs/ui_prototype_showcase.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/ui_prototype_showcase.md).
+* **DIRECTORY SCAFFOLDING**: The frontend MUST maintain complete directory scaffolding for all 13 core screens (`places`, `food`, `itinerary`, `stay`, `culture`, `map`, `guide`, `partner`, `admin`) before building full UI components.
+

@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #1B4D3E;
+  --color-primary-hover: #143B2F;
+  --color-primary-light: #E6F0EC;
+  
+  --color-secondary: #D99B26;
+  --color-secondary-hover: #B8801C;
+  --color-secondary-light: #FFF8E7;
+
+  --color-bg-light: #F8F9FA;
+  --color-text-main: #0F172A;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+}
+
+@theme inline {
+  --color-primary: #1B4D3E;
+  --color-primary-hover: #143B2F;
+  --color-primary-light: #E6F0EC;
+  --color-secondary: #D99B26;
+  --color-secondary-hover: #B8801C;
+  --color-secondary-light: #FFF8E7;
+}
+
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.emerald-gradient {
+  background: linear-gradient(135deg, #1B4D3E 0%, #143B2F 100%);
+}
+
+.golden-badge {
+  background-color: #FFF8E7;
+  color: #B8801C;
+  border: 1px solid #FDE68A;
+}
+
+.glass-header {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+}

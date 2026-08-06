@@ -1,0 +1,22 @@
+import React from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { Calendar, QrCode, Sparkles, MapPin } from 'lucide-react';
+
+export default function ItineraryPage() {
+  return (
+    <div className="min-h-screen flex flex-col bg-[#F8F9FA]">
+      <Header />
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-2xl p-10 border border-slate-200 text-center">
+          <Calendar className="w-10 h-10 text-[#1B4D3E] mx-auto mb-3" />
+          <h1 className="text-2xl font-bold text-slate-900">Trợ Lý Lập Lịch Trình AI Tour 2D1N (Màn hình 06 & 11)</h1>
+          <p className="text-xs text-slate-500 max-w-md mx-auto mt-2">
+            Khung thư mục `src/app/itinerary/` đã khởi tạo. Tích hợp thuật toán tính khoảng cách WGS84 & Modal Xuất QR Code / PDF Offline.
+          </p>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
