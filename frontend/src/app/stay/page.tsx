@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import HotPlacesSection from "@/components/HotPlacesSection";
 import { Hotel, MapPin, Star, ChevronRight, Wifi, Car, ShieldCheck } from "lucide-react";
 
 interface StayItem {
@@ -23,16 +24,18 @@ export default function StayPage() {
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, commune, rating, photos")
+          .select("id, slug, name, category, commune, rating, photos, image_url, video_url")
           .or("category.ilike.%lưu trú%,category.ilike.%homestay%,category.ilike.%khách sạn%,category.ilike.%nhà nghỉ%");
 
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
-            let img = "https://lh3.googleusercontent.com/aida-public/AB6AXuCEZigADSpj84ieydADEOQHzdJZkN0zsctfaByCdnhe7Kptx1Rh3rpQPiK_hjkkL8vcmOG_-QNX9DqegPHEImIum516b2ArKqeKj_Vbp100cfGcbYNgqKDSGzFPxRW0_JVid0sV9Cn7iq3iDqYedl_zXYdczxg_yNfXTv7mVYhB7Q7iYVr0Au6Gnca0TseXgBfR-tcZ93cZSXI4kPrWVLj7_bPRI6BrolBWKhcxcdwLrQlroi3tOWw7Iw";
-            if (Array.isArray(item.photos) && item.photos.length > 0) {
-              img = item.photos[0];
-            } else if (typeof item.photos === "string" && item.photos.startsWith("http")) {
-              img = item.photos;
+            let img = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop";
+            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              img = item.image_url;
+            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+              const p0 = item.photos[0];
+              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
             }
             return {
               id: item.id,
@@ -40,7 +43,8 @@ export default function StayPage() {
               category: item.category || "Lưu Trú Tri Tôn",
               commune: item.commune || "Tri Tôn",
               rating: item.rating || 4.8,
-              image_url: img
+              image_url: img,
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`
             };
           });
           setStays(formatted);
@@ -92,6 +96,13 @@ export default function StayPage() {
       </div>
 
       <main className="relative z-10 mx-auto w-full max-w-container-max flex-grow flex-col space-y-10 px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+        
+        {/* Dynamic Stay Hot Section */}
+        <HotPlacesSection
+          limit={3}
+          title="🔥 TOP ĐIỂM DỪNG CHÂN & LƯU TRÚ HOT"
+          subtitle="Các Homestay & Khách sạn view đồi núi thơ mộng được du khách yêu thích nhất Tri Tôn"
+        />
         
         {/* Header Hero Section */}
         <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#063821] via-[#0D4B2D] to-[#125C37] text-white p-8 sm:p-12 shadow-2xl border border-emerald-500/20">

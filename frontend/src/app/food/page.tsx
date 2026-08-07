@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import HotPlacesSection from "@/components/HotPlacesSection";
 import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Sparkles } from "lucide-react";
 
 interface FoodItem {
@@ -25,16 +26,18 @@ export default function FoodPage() {
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, commune, rating, photos, opening_hours")
+          .select("id, slug, name, category, commune, rating, photos, image_url, video_url, opening_hours")
           .or("category.ilike.%ẩm thực%,category.ilike.%quán%,category.ilike.%bún%,category.ilike.%cháo%,category.ilike.%bánh%,category.ilike.%gà%");
 
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
-            let img = "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g";
-            if (Array.isArray(item.photos) && item.photos.length > 0) {
-              img = item.photos[0];
-            } else if (typeof item.photos === "string" && item.photos.startsWith("http")) {
-              img = item.photos;
+            let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
+            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              img = item.image_url;
+            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+              const p0 = item.photos[0];
+              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
             }
             return {
               id: item.id,
@@ -43,6 +46,7 @@ export default function FoodPage() {
               commune: item.commune || "Tri Tôn",
               rating: item.rating || 4.8,
               image_url: img,
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`,
               hours: item.opening_hours || "06:00 - 20:00"
             };
           });
@@ -98,6 +102,14 @@ export default function FoodPage() {
       </div>
 
       <main className="relative z-10 mx-auto w-full max-w-container-max flex-grow flex-col space-y-10 px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+        
+        {/* Dynamic Food Hot Section */}
+        <HotPlacesSection
+          categoryFilter="ẩm thực"
+          limit={3}
+          title="🔥 TOP QUÁN ĂN & ĐẶC SẢN HOT NHẤT TRI TÔN"
+          subtitle="Ma trận các quán ăn chuẩn giờ mở cửa, được đánh giá cao nhất bởi thực khách Bảy Núi"
+        />
         
         {/* Header Hero Section */}
         <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#063821] via-[#0D4B2D] to-[#125C37] text-white p-8 sm:p-12 shadow-2xl border border-emerald-500/20">

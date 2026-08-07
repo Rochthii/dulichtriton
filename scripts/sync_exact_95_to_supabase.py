@@ -19,7 +19,7 @@ def get_env():
     return env_vars
 
 def main():
-    print("=== LIVE SUPABASE DATA SEEDER (DU LỊCH TRI TÔN) ===")
+    print("=== EXACT 95 CANONICAL PLACES SYNC TO SUPABASE LIVE ===")
     env = get_env()
     supabase_url = env.get("NEXT_PUBLIC_SUPABASE_URL")
     service_role_key = env.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -30,26 +30,51 @@ def main():
 
     # Load master json
     master_json_path = "data/tri_ton_master_cleaned.json"
-    if not os.path.exists(master_json_path):
-        print(f"ERROR: {master_json_path} not found")
-        return
-
     with open(master_json_path, "r", encoding="utf-8") as f:
         places = json.load(f)
 
-    print(f"Loaded {len(places)} master places to seed into Supabase.")
+    clean_ids = set(p["id"] for p in places)
+    print(f"Clean Canonical Local Dataset: {len(clean_ids)} places.")
 
-    # Prepare payload for Supabase REST API: POST /rest/v1/places?on_conflict=id
-    rest_url = f"{supabase_url}/rest/v1/places?on_conflict=id"
+    headers = {
+        "apikey": service_role_key,
+        "Authorization": f"Bearer {service_role_key}",
+        "Content-Type": "application/json"
+    }
+
+    # 1. Fetch current IDs in Supabase DB
+    get_url = f"{supabase_url}/rest/v1/places?select=id"
+    req_get = urllib.request.Request(get_url, headers=headers, method="GET")
     
-    seen_slugs = set()
+    with urllib.request.urlopen(req_get) as resp:
+        db_records = json.loads(resp.read().decode("utf-8"))
+        db_ids = set(r["id"] for r in db_records)
+
+    print(f"Current DB Total Records: {len(db_ids)}")
+
+    # Obsolete IDs to purge from DB
+    obsolete_ids = list(db_ids - clean_ids)
+    if obsolete_ids:
+        print(f"Purging {len(obsolete_ids)} obsolete/duplicate records from DB...")
+        # Chunk delete requests if necessary
+        chunk_size = 30
+        for i in range(0, len(obsolete_ids), chunk_size):
+            chunk = obsolete_ids[i:i+chunk_size]
+            del_url = f"{supabase_url}/rest/v1/places?id=in.({','.join(chunk)})"
+            req_del = urllib.request.Request(del_url, headers=headers, method="DELETE")
+            with urllib.request.urlopen(req_del) as resp_del:
+                pass
+        print("Obsolete records purged cleanly.")
+
+    # 2. Upsert 95 clean places payload
+    rest_url = f"{supabase_url}/rest/v1/places?on_conflict=id"
     payload = []
     for p in places:
         rec_id = p.get("id")
         name = p.get("name", "")
         base_slug = name.lower().replace(" ", "-").replace("(", "").replace(")", "").replace("/", "-")
         slug = f"{base_slug}-{rec_id.lower()}"
-        category = p.get("category", "attractions_nature")
+        category = p.get("category", "Attractions & Nature")
         address = p.get("address", "")
         commune = p.get("commune", "")
         lat = float(p.get("latitude", 0))
@@ -78,28 +103,31 @@ def main():
             "rating": rating,
             "review_count": review_count,
             "confidence_score": confidence,
+            "image_url": p.get("image_url", ""),
+            "video_url": p.get("video_url", ""),
+            "photos": p.get("photos", []),
+            "aliases": p.get("aliases", []),
+            "data_flags": p.get("data_flags", []),
+            "is_hot": p.get("is_hot", False),
+            "hot_rank": p.get("hot_rank", 99),
+            "golden_time_windows": p.get("golden_time_windows", []),
+            "hot_score": p.get("hot_score", 0),
             "is_active": True
         }
         payload.append(record)
 
-    headers = {
-        "apikey": service_role_key,
-        "Authorization": f"Bearer {service_role_key}",
-        "Content-Type": "application/json",
-        "Prefer": "resolution=merge-duplicates"
-    }
-
     req_data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(rest_url, data=req_data, headers=headers, method="POST")
+    headers["Prefer"] = "resolution=merge-duplicates"
+    req_post = urllib.request.Request(rest_url, data=req_data, headers=headers, method="POST")
 
     try:
-        with urllib.request.urlopen(req) as resp:
-            print(f"SUPABASE SEED SUCCESS! HTTP Status: {resp.status}")
+        with urllib.request.urlopen(req_post) as resp_post:
+            print(f"UPSERT SUCCESS! HTTP Status: {resp_post.status}")
     except urllib.error.HTTPError as e:
-        err_body = e.read().decode("utf-8")
         print(f"HTTP Error {e.code}: {e.reason}")
-        print(f"Details: {err_body}")
-        print("\nNOTE: Make sure to execute tourism_crawler/database/schema.sql in Supabase SQL Editor first to create the 'places' table!")
+        print("Details:", e.read().decode("utf-8"))
+
+    print("=== EXACT SYNC FINISHED ===")
 
 if __name__ == "__main__":
     main()

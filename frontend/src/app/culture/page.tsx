@@ -2,6 +2,7 @@
 
 import { Landmark, MapPin, Calendar, Compass, Clock, Star, Sparkles, ChevronRight, Award, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import HotPlacesSection from "@/components/HotPlacesSection";
 
 export default function CulturePage() {
   const cultures = [
@@ -57,6 +58,14 @@ export default function CulturePage() {
       </div>
 
       <main className="relative z-10 mx-auto w-full max-w-container-max flex-grow flex-col space-y-10 px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+        
+        {/* Dynamic Culture Hot Section */}
+        <HotPlacesSection
+          categoryFilter="chùa"
+          limit={3}
+          title="🔥 TOP DI SẢN & VĂN HÓA KHMER HOT"
+          subtitle="Những ngôi chùa Khmer cổ kính và di sản văn hóa tâm linh nổi tiếng nhất Tri Tôn"
+        />
         
         {/* Header Hero Section */}
         <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#063821] via-[#0D4B2D] to-[#125C37] text-white p-8 sm:p-12 shadow-2xl border border-emerald-500/20">

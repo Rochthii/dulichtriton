@@ -34,15 +34,15 @@ def main():
         cursor.execute("SELECT COUNT(*) FROM public.videos;")
         videos_count = cursor.fetchone()[0]
         
-        # Check sample place
-        cursor.execute("SELECT id, name, commune, address FROM public.places LIMIT 3;")
-        samples = cursor.fetchall()
+        # Check Hot Top 12 places
+        cursor.execute("SELECT id, hot_rank, name, commune, golden_time_windows, hot_score FROM public.places WHERE is_hot = TRUE ORDER BY hot_rank ASC LIMIT 6;")
+        hot_samples = cursor.fetchall()
         
         print(f"✅ PLACES TABLE COUNT: {places_count} records")
         print(f"✅ VIDEOS TABLE COUNT: {videos_count} records")
-        print("\nSAMPLE RECORDED PLACES IN SUPABASE:")
-        for s in samples:
-            print(f" - [{s[0]}] {s[1]} ({s[2]}) - Address: {s[3]}")
+        print("\n🔥 TOP HOT PLACES LIVE IN SUPABASE DB:")
+        for h in hot_samples:
+            print(f" - Top {h[1]} [{h[0]}] {h[2]} ({h[3]}) - Golden Time: {h[4]} - Score: {h[5]}")
             
         cursor.close()
         conn.close()

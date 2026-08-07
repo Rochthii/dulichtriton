@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import HotPlacesSection from "@/components/HotPlacesSection";
+import GoldenTimeWidget from "@/components/GoldenTimeWidget";
 import {
   MapPin,
   Clock,
@@ -12,7 +14,10 @@ import {
   Map,
   Play,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
+  Sparkles,
+  Flame,
+  Filter
 } from "lucide-react";
 
 interface Place {
@@ -22,6 +27,7 @@ interface Place {
   commune: string;
   rating?: number;
   image_url: string;
+  video_url?: string;
   opening_hours?: string;
   ticket_required?: boolean;
 }
@@ -29,6 +35,7 @@ interface Place {
 export default function PlacesPage() {
   const [activeCategory, setActiveCategory] = useState("Thiên nhiên");
   const [selectedCommune, setSelectedCommune] = useState("Tất cả Xã/Thị trấn");
+  const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,9 +61,13 @@ export default function PlacesPage() {
         const { data, error } = await query;
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb";
-            if (Array.isArray(item.photos) && item.photos.length > 0) {
-              img = item.photos[0];
+            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
+            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              img = item.image_url;
+            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+              const p0 = item.photos[0];
+              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
             }
             return {
               id: item.id,
@@ -65,6 +76,7 @@ export default function PlacesPage() {
               commune: item.commune || "Tri Tôn",
               rating: item.rating || 4.8,
               image_url: img,
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`,
               opening_hours: item.opening_hours || "Giờ mở cửa: 06:00 - 18:00",
               ticket_required: item.ticket_required || false
             };
@@ -115,12 +127,32 @@ export default function PlacesPage() {
     <div className="flex min-h-screen flex-col bg-background font-body-base text-on-background antialiased">
       <main className="mx-auto w-full max-w-container-max flex-grow px-margin-mobile py-8 md:px-margin-desktop md:py-12">
         
+        {/* Dynamic Hot Places Section */}
+        <HotPlacesSection limit={6} title="🔥 CÁC ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT" />
+
+        {/* Real-time Golden Time Widget */}
+        <GoldenTimeWidget />
+
         {/* Section Title & Filter Dropdowns */}
         <section className="mb-12">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
             <h1 className="font-display-lg text-display-lg-mobile text-primary md:text-display-lg font-bold">
-              Lọc địa điểm ({places.length} Địa Điểm Live)
+              Lọc địa điểm ({(tiktokOnlyFilter ? places.filter(p => p.video_url).length : places.length)} Địa Điểm Live)
             </h1>
+
+            {/* TikTok Reels Filter Toggle Button */}
+            <button
+              onClick={() => setTiktokOnlyFilter(!tiktokOnlyFilter)}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs shadow-md transition-all ${
+                tiktokOnlyFilter
+                  ? "bg-slate-900 text-amber-400 border border-amber-400/50 shadow-amber-500/20"
+                  : "bg-surface border border-outline-variant text-on-surface hover:border-primary"
+              }`}
+            >
+              <Play className={`h-4 w-4 ${tiktokOnlyFilter ? "fill-amber-400 text-amber-400" : "text-emerald-700"}`} />
+              <span>🎵 BỘ LỌC TIKTOK REELS HOT-TREND</span>
+              {tiktokOnlyFilter && <span className="ml-1 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black">BẬT</span>}
+            </button>
           </div>
 
           {/* 4 Select Dropdowns */}
@@ -206,12 +238,12 @@ export default function PlacesPage() {
 
         {/* Places Grid */}
         <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {places.map((place) => (
+          {(tiktokOnlyFilter ? places.filter(p => p.video_url && p.video_url.length > 0) : places).map((place) => (
             <article
               key={place.id}
               className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-outline-variant/30 bg-surface-container-lowest shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
-              <Link href={`/places`} className="relative aspect-video overflow-hidden">
+              <Link href={`/places/${place.slug}`} className="relative aspect-video overflow-hidden">
                 <img
                   src={place.image_url}
                   alt={place.name}
@@ -220,11 +252,17 @@ export default function PlacesPage() {
                 <div className="absolute left-4 top-4 rounded-full bg-secondary/90 px-3 py-1 font-badge-tag text-white shadow-sm backdrop-blur-sm text-xs font-semibold">
                   {place.commune}
                 </div>
+                {place.video_url && (
+                  <div className="absolute right-4 top-4 rounded-full bg-slate-900/90 text-amber-400 px-2.5 py-1 font-badge-tag text-[10px] font-black shadow-sm backdrop-blur-sm flex items-center gap-1">
+                    <Play className="h-3 w-3 fill-amber-400" />
+                    <span>TikTok Reels</span>
+                  </div>
+                )}
               </Link>
 
               <div className="flex flex-grow flex-col p-6">
-                <Link href={`/places`}>
-                  <h3 className="mb-3 flex items-center gap-2 font-headline-md text-headline-md text-primary font-bold text-lg">
+                <Link href={`/places/${place.slug}`}>
+                  <h3 className="mb-3 flex items-center gap-2 font-headline-md text-headline-md text-primary font-bold text-lg group-hover:text-emerald-700 transition-colors">
                     <MapPin className="h-5 w-5 text-secondary fill-secondary shrink-0" />
                     {place.name}
                   </h3>
@@ -245,21 +283,25 @@ export default function PlacesPage() {
                   </p>
                 </div>
 
-                <div className="mt-auto flex gap-3">
+                <div className="mt-auto flex gap-2">
                   <Link
-                    href={`/map`}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full border border-primary bg-surface py-2.5 font-label-bold text-xs font-bold text-primary transition-colors hover:bg-emerald-light"
+                    href={`/places/${place.slug}`}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-primary py-2.5 font-label-bold text-xs font-bold text-white shadow-sm hover:bg-emerald-800 transition-colors"
                   >
-                    <Map className="h-4 w-4" /> Xem bản đồ
+                    Chi tiết
                   </Link>
-                  <a
-                    href={`https://www.tiktok.com/search?q=${encodeURIComponent(place.name + " Tri Tôn An Giang")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-primary py-2.5 font-label-bold text-xs font-bold text-white shadow-sm transition-colors hover:bg-emerald-800 relative z-20 cursor-pointer"
-                  >
-                    <Play className="h-4 w-4 fill-white" /> Xem TikTok
-                  </a>
+
+                  {place.video_url && (
+                    <a
+                      href={place.video_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2.5 rounded-full bg-slate-900 text-amber-400 hover:bg-slate-800 transition-colors shadow-sm"
+                      title="Xem TikTok Review thực tế"
+                    >
+                      <Play className="h-4 w-4 fill-amber-400" />
+                    </a>
+                  )}
                 </div>
               </div>
             </article>

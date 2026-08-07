@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import HotPlacesSection from "@/components/HotPlacesSection";
+import GoldenTimeWidget from "@/components/GoldenTimeWidget";
 import {
   Search,
   Mountain,
@@ -74,16 +76,20 @@ export default function HomePage() {
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, commune, rating, photos")
-          .limit(8);
+          .select("id, slug, name, category, commune, rating, photos, image_url, video_url, is_hot, hot_rank, golden_time_windows")
+          .order("is_hot", { ascending: false })
+          .order("hot_rank", { ascending: true })
+          .limit(12);
 
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb";
-            if (Array.isArray(item.photos) && item.photos.length > 0) {
-              img = item.photos[0];
-            } else if (typeof item.photos === "string" && item.photos.startsWith("http")) {
-              img = item.photos;
+            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
+            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              img = item.image_url;
+            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+              const p0 = item.photos[0];
+              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
             }
             return {
               id: item.id,
@@ -92,7 +98,11 @@ export default function HomePage() {
               category: item.category || "Du lịch Bảy Núi",
               commune: item.commune || "Tri Tôn",
               rating: item.rating || 4.8,
-              image_url: img
+              is_hot: item.is_hot || false,
+              hot_rank: item.hot_rank || 99,
+              golden_time_windows: item.golden_time_windows || [],
+              image_url: img,
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`
             };
           });
           setPlaces(formatted);
@@ -298,20 +308,33 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col bg-background font-body-base text-on-surface antialiased">
       <main className="mx-auto flex w-full max-w-container-max flex-grow flex-col gap-section-gap px-margin-mobile py-8 md:px-margin-desktop md:py-12">
 
-        {/* Hero Section (Giữ Nguyên Như Thỏa Thuận) */}
-        <section className="group relative h-[400px] w-full overflow-hidden rounded-3xl shadow-sm md:h-[500px]">
+        {/* Hero Section nổi bật với ảnh cảnh quan Bảy Núi */}
+        <section className="group relative h-[420px] w-full overflow-hidden rounded-3xl shadow-xl md:h-[520px]">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
             style={{
-              backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9Bb1I8smfhwEhFGoqAmMmmD4i9I_1R-HlUsHn926sRs5ldXherBcKqxnHoirULTA-PaVlVf5Y6kXM5-tDGFMlh_J10R_IRBKCP0kEK1yFlbXym-5Ml5q1Lz1MXl-t95ucr9kT4GfEW2ax67Kz8REG5Ltfv75KTF3E2fFKExFXian3x6K3uXFJFwfge7A4dGTFDTgY966TsFLaPtTsF-J3pP1O6nRaJ-cgbM1crO6IZK-zDU8v2TG41A')`
+              backgroundImage: `url('https://cdn.tgdd.vn/Files/2023/11/06/1554179/top-8-dia-diem-du-lich-tri-ton-an-giang-nen-trai-nghiem-202311061412586340.jpg')`
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-            <h1 className="mb-8 text-center font-display-lg text-display-lg-mobile text-white text-shadow-sm md:text-display-lg">
-              AI Search Bar
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-xs font-extrabold border border-white/30 shadow-lg">
+              <Sparkles className="h-4 w-4 text-amber-300" />
+              <span>Cổng Thông Tin Du Lịch Thông Minh Tri Tôn</span>
+            </div>
+
+            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight drop-shadow-2xl max-w-4xl">
+              Khám Phá Vẻ Đẹp <br className="hidden sm:inline" />
+              <span className="text-amber-300 drop-shadow-md">
+                Huyền Bí Bảy Núi Tri Tôn
+              </span>
             </h1>
-            <div className="relative w-full max-w-2xl">
+
+            <p className="text-xs sm:text-sm md:text-base text-slate-100 max-w-2xl font-medium drop-shadow-md hidden sm:block">
+              Nơi miền đất của 82 thắng cảnh tuyệt đẹp, di sản tâm linh Khmer lâu đời và bản đồ ẩm thực Cháo bò lá trúc độc đáo.
+            </p>
+
+            <div className="relative w-full max-w-2xl pt-2">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -319,25 +342,36 @@ export default function HomePage() {
                     window.location.href = `/places?search=${encodeURIComponent(searchQuery)}`;
                   }
                 }}
-                className="glass-panel flex items-center rounded-full p-2 shadow-lg transition-transform focus-within:scale-[1.02]"
+                className="glass-panel flex items-center rounded-full p-2 shadow-2xl transition-transform focus-within:scale-[1.02] bg-white/90 backdrop-blur-xl border border-white/60"
               >
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Hỏi AI Du Lịch Tri Tôn (VD: 'Quán cháo bò ngon nhất'...)"
-                  className="w-full flex-grow rounded-l-full border-none bg-transparent px-6 py-3 font-body-lg text-body-lg text-on-surface outline-none placeholder:text-on-surface-variant/70 focus:ring-0"
+                  className="w-full flex-grow rounded-l-full border-none bg-transparent px-6 py-3 font-body-lg text-body-lg text-slate-800 outline-none placeholder:text-slate-500 focus:ring-0 text-xs sm:text-sm font-medium"
                 />
                 <button
                   type="submit"
-                  className="flex min-w-[48px] items-center justify-center rounded-full bg-secondary p-3 text-white shadow-sm transition-colors hover:bg-golden-hover md:px-6 md:py-3 shrink-0"
+                  className="flex min-w-[48px] items-center justify-center rounded-full bg-secondary p-3 text-white shadow-md transition-colors hover:bg-golden-hover md:px-6 md:py-3 shrink-0 font-bold text-xs"
                 >
                   <Search className="h-5 w-5" />
+                  <span className="hidden md:inline ml-2">Tìm Kiếm AI</span>
                 </button>
               </form>
             </div>
           </div>
         </section>
+
+        {/* Dynamic Top 6 Hot Places Section */}
+        <HotPlacesSection
+          limit={6}
+          title="🔥 TOP ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT"
+          subtitle="Danh sách 6 điểm check-in, di sản & ẩm thực hot nhất Bảy Núi được du khách yêu thích nhất"
+        />
+
+        {/* Real-Time Golden Time Widget */}
+        <GoldenTimeWidget />
 
         {/* Danh mục nổi bật (Quick Filter Category) */}
         <section className="flex flex-col gap-6">
@@ -418,7 +452,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 2: VĂN HÓA & LỄ HỘI KHMER (ĐỒNG BỘ 100% VỚI CÁC SECTION KHÁC) */}
+        {/* SECTION 2: VĂN HÓA & LỄ HỘI KHMER */}
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-emerald-200/80 pb-4">
             <div>
@@ -442,152 +476,101 @@ export default function HomePage() {
             {cultureEvents.map((ev, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between space-y-4 group"
+                className="bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className={`px-2.5 py-1 rounded-xl text-[11px] font-extrabold ${ev.badgeColor}`}>
-                      {ev.status}
-                    </span>
-                    <span className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
-                      <Calendar className="h-3.5 w-3.5 text-amber-500" />
+                <div>
+                  <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+                    <img
+                      src={
+                        idx === 0
+                          ? "https://lh3.googleusercontent.com/aida-public/AB6AXuA0a_ShvHqoLBzzQeBZPBVukoFsxHkKwXzcTE2T6K_xPyk67rYycDNJbkuK17L9mWsVhNHt61xA_rUHEZVNHKRhdP_2FifG80aCCtsRoh5M6AnzI1M0-Ph_03-SGI5d3LxCK8Tci5VwUmdtgQTARcov5Z1dut3OWHedU55-M9Smk9jgkYBSvoqmN9XIH3zKtZx8pZY9PYDY29mHsuXs8YFP921mu6oTsHeKkO9mBiIH2Z3DCkVCnXsbsg"
+                          : idx === 1
+                          ? "https://lh3.googleusercontent.com/aida-public/AB6AXuCIkt4mKcSMtN9qwWrnCavUNbd04V9-GYHPHeebFZyKXuiRnw6MUL1Qw2bsIsFB9nvNb4nwM87r5AbatwHdBlVeQ6ENzVwUmrHSBEYkmJ-cjCHYFjZRl6fz6VwL9RqMKrXt9pUigCmz71KjXxWSbsdcL3WCIX30VH8iXFopWhWSndEEy2G6dEqkpAdYMEoHcl-n0bTUj6Z7O50iAwa7xx_6bYi5N00srNzVSwgRc_6FXYAO_50JqasE4w"
+                          : "https://images.unsplash.com/photo-1540555700478-4be289fbecef"
+                      }
+                      alt={ev.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded-xl text-[11px] font-extrabold shadow-sm bg-white/90 backdrop-blur-md">
+                      <span className={ev.status === "Sắp diễn ra" ? "text-rose-600 font-extrabold" : ev.status === "Di sản Quốc gia" ? "text-amber-600 font-extrabold" : "text-emerald-700 font-extrabold"}>
+                        {ev.status}
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-amber-300 font-bold text-[11px]">
+                      <Calendar className="h-3 w-3 text-amber-300" />
                       {ev.time}
-                    </span>
+                    </div>
                   </div>
-                  <h3 className="font-heading font-extrabold text-lg text-slate-900 group-hover:text-emerald-800 transition-colors pt-1">
-                    {ev.name}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                    {ev.desc}
-                  </p>
+
+                  <div className="p-6 space-y-2">
+                    <h3 className="font-heading font-extrabold text-lg text-slate-900 group-hover:text-emerald-800 transition-colors">
+                      {ev.name}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed font-light">
+                      {ev.desc}
+                    </p>
+                  </div>
                 </div>
-                <div className="pt-3 border-t border-slate-100 text-xs font-bold text-emerald-800 flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-                  <span>{ev.location}</span>
+
+                <div className="p-6 pt-0 border-t border-slate-100 flex items-center justify-between pt-3">
+                  <span className="text-xs font-bold text-emerald-800 flex items-center gap-1">
+                    <MapPin className="h-3.5 w-3.5 text-emerald-600" />
+                    {ev.location}
+                  </span>
+                  <Link href="/culture" className="text-xs font-bold text-slate-900 hover:underline flex items-center gap-0.5">
+                    <span>Xem thêm</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* TỐI ƯU SECTION 3 & TIKTOK: LIVE DATA GRID (KHÁM PHÁ THẮNG CẢNH 106 ĐỊA ĐIỂM + TIKTOK REELS) */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+        {/* SECTION 3: TIKTOK REELS SHOWCASE (STREAMLINED FULL WIDTH) */}
+        <section className="flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+            <h2 className="font-headline-md text-2xl font-bold text-on-surface flex items-center gap-2">
+              <span>🎵 TikTok Video Reviews Thực Tế</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold">
+                6 Reels Hot-Trend
+              </span>
+            </h2>
+            <Link href="/places" className="text-xs font-bold text-emerald-800 hover:underline">
+              Khám phá thêm trên TikTok &gt;
+            </Link>
+          </div>
 
-          {/* Left Column: Khám phá Địa điểm Hot Nhất (Live from Supabase) */}
-          <section className="flex flex-col gap-6 lg:col-span-7">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1">
-                  <Compass className="h-4 w-4" /> Cơ Sở Dữ Liệu Thực Tế
-                </span>
-                <h2 className="font-headline-md text-2xl font-bold text-on-surface">
-                  Địa điểm Hot Nhất (106 Địa Điểm)
-                </h2>
-              </div>
-              <Link href="/places" className="text-xs font-bold text-emerald-800 hover:underline">
-                Xem tất cả &gt;
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {places.map((place) => (
-                <Link
-                  key={place.id}
-                  href={`/places`}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-outline-variant/20 bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="relative h-48 overflow-hidden bg-surface-variant">
-                    <img
-                      src={place.image_url}
-                      alt={place.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute left-3 top-3 rounded-full bg-surface-container-lowest/90 px-3 py-1 font-badge-tag text-badge-tag text-on-surface shadow-sm backdrop-blur-sm text-xs font-semibold">
-                      {place.category}
-                    </div>
-                    <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-surface-container-lowest/90 px-2 py-1 font-badge-tag text-badge-tag text-secondary shadow-sm backdrop-blur-sm text-xs font-bold">
-                      {place.rating}{" "}
-                      <Star className="h-3 w-3 fill-secondary text-secondary" />
-                    </div>
-                  </div>
-                  <div className="flex items-start justify-between p-5">
-                    <div>
-                      <h3 className="mb-1 font-headline-sm text-lg font-bold text-on-surface transition-colors group-hover:text-primary line-clamp-1">
-                        {place.name}
-                      </h3>
-                      <p className="flex items-center gap-1 font-body-sm text-xs font-medium text-slate-500">
-                        {place.commune}
-                      </p>
-                    </div>
-                    <span
-                      aria-label="View on map"
-                      className="rounded-full p-2 text-primary transition-colors hover:bg-emerald-light shrink-0"
-                    >
-                      <MapPin className="h-5 w-5" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          {/* Right Column: TikTok Video Reviews (6 Reels) */}
-          <section className="flex flex-col gap-6 lg:col-span-5">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-              <h2 className="font-headline-md text-2xl font-bold text-on-surface flex items-center gap-2">
-                <span>TikTok video Reviews</span>
-                <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold">
-                  6 Reels
-                </span>
-              </h2>
-              <div className="flex gap-2">
-                <button
-                  aria-label="Previous video"
-                  className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-variant"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  aria-label="Next video"
-                  className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-variant"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {tiktokVideos.map((video) => (
-                <div
-                  key={video.id}
-                  onClick={() => setSelectedVideo(video)}
-                  className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl shadow-sm border border-slate-200/60"
-                >
-                  <img
-                    src={video.img}
-                    alt={video.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/30 shadow-lg backdrop-blur-md transition-transform group-hover:scale-110">
-                      <Play className="ml-0.5 h-5 w-5 fill-white text-white" />
-                    </div>
-                  </div>
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
-                    <p className="text-[11px] font-bold text-white line-clamp-2 leading-tight">
-                      {video.title}
-                    </p>
-                    <span className="inline-block px-1.5 py-0.5 rounded bg-black/50 text-[10px] font-semibold text-rose-300">
-                      {video.stat}
-                    </span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {tiktokVideos.map((video) => (
+              <div
+                key={video.id}
+                onClick={() => setSelectedVideo(video)}
+                className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl shadow-sm border border-slate-200/60 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <img
+                  src={video.img}
+                  alt={video.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/30 shadow-lg backdrop-blur-md transition-transform group-hover:scale-110">
+                    <Play className="ml-0.5 h-5 w-5 fill-white text-white" />
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-
-        </div>
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
+                  <p className="text-[11px] font-bold text-white line-clamp-2 leading-tight">
+                    {video.title}
+                  </p>
+                  <span className="inline-block px-1.5 py-0.5 rounded bg-black/50 text-[10px] font-semibold text-rose-300">
+                    {video.stat}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* TỐI ƯU SECTION 4: LƯU TRÚ & HOMESTAY VIEW NÚI NỔI BẬT */}
         <section className="space-y-6">

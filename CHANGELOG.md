@@ -4,6 +4,181 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.99.0-SYNCHRONIZED-GOLDEN-TIME-WIDGET-THEME] — 2026-08-07
+
+### 🎨 Đồng Bộ Hóa Phối Màu Component GoldenTimeWidget Theo Thiết Kế Chuẩn Bảy Núi
+* **Loại Bỏ Màu Cam Nhạt Chói Mắt**:
+  * Thay thế nền cam chói (`bg-amber-600`) cũ bằng màu Xanh Rừng Núi Sang Trọng (`bg-gradient-to-br from-[#0F2D24] via-[#1B4D3E] to-[#143B2F]`) đồng bộ 100% với tông màu chủ đạo của toàn hệ thống Du Lịch Tri Tôn.
+  * Tinh chỉnh các nút bấm khung giờ (06:00 Sáng, 12:00 Trưa, 16:30 Chiều, 19:00 Tối) và đồng hồ Real-Time dạng Huy hiệu Vàng Ấm (`#D99B26`), viền `border-[#D99B26]/30` tinh tế và không gây chói mắt.
+* **Kiểm Định Đóng Gói Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.98.0-HOMEPAGE-LAYOUT-STREAMLINING] — 2026-08-07
+
+### 🎨 Tối Ưu Tinh Gọn Giao Diện Trang Chủ (Giữ Nguyên 100% Hero Banner & Thanh Tìm Kiếm AI)
+* **Giữ Nguyên Khung Hero Banner**: Giữ nguyên vẹn 100% phần Hero Banner hình ảnh đồi núi và Thanh tìm kiếm AI (`Search Query`).
+* **Tối Ưu Tinh Gọn Các Section Bên Dưới**:
+  * Tinh chỉnh `HotPlacesSection` về **Top 6 Địa điểm Hot** hàng đầu với tiêu đề và mô tả gọn gàng, tránh việc hiển thị quá dài.
+  * Tích hợp `GoldenTimeWidget` dạng thẻ đồng hồ real-time phẳng thanh lịch.
+  * Loại bỏ danh sách lặp trùng 2 lần địa điểm ở cột bên trái; chuyển phần `TikTok Video Reviews` (6 Reels) sang dạng Grid 6 cột tràn khung cực kỳ thoáng mắt.
+* **Kiểm Định Đóng Gói Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.5s, 17/17 routes prerendered).
+
+## [10.97.0-FIXED-DUPLICATE-HEADER-AND-FOOTER] — 2026-08-07
+
+### 🧹 Sửa Triệt Để Lỗi Lặp Trùng 2 Header & 2 Footer Trên Trang `/planner` Và `/itinerary`
+* **Loại Bỏ Lặp Trùng Component Header/Footer**:
+  * Đã loại bỏ các component `<Header />` và `<Footer />` khai báo dư thừa trong [planner/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/planner/page.tsx) và [itinerary/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/itinerary/page.tsx).
+  * Tận dụng triệt để khung layout gốc `<SiteNav />` và `<SiteFooter />` duy nhất được quy định tại [layout.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/layout.tsx).
+* **Kiểm Định Giao Diện & Biên Dịch**:
+  * Đã xác nhận trên trình duyệt web: Trang `/planner` chỉ còn duy nhất 1 Thanh Menu Header ở đầu trang và 1 Chân trang Footer ở cuối trang.
+  * Biên dịch sản xuất thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.96.0-VISUAL-NODE-DIAGRAM-AND-TIKTOK-HASHTAGS] — 2026-08-07
+
+### 🗺️ Nâng Cấp Giao Diện Sơ Đồ Node Lịch Trình Đẹp Chuẩn, Ảnh Thực Tế & Tích Hợp Link TikTok Hashtag 100%
+* **Thiết Kế Giao Diện Sơ Đồ Trực Quan (Visual Node Diagram Flow)**:
+  * Nâng cấp component [ItineraryClientPage.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ItineraryClientPage.tsx) hiển thị lịch trình dạng Sơ đồ Node liên kết với huy hiệu `NODE #1`, `NODE #2`, ... kèm khoảng cách di chuyển giữa các điểm (VD: `📍 Di chuyển 3.2km (10 phút)`).
+* **Đồng Bộ Ảnh Thực Tế & Thông Tin Chi Tiết Tất Cả Các Mốc Điểm Đến**:
+  * Mỗi mốc lịch trình hiển thị ảnh thực tế sắc nét, Huy hiệu Rating Star, Nhãn danh mục, Mã ID bài bản (`[PL001]`, `[FD009]`, `[HG002]`), Xã/Thị trấn và Banner cảnh báo lưu ý.
+* **Gán Link TikTok Hashtag Trực Tiếp**:
+  * Tích hợp Nút bấm Hashtag TikTok thực tế (VD: `#HoTaPaTriTon`, `#BunNuocLeoSoNuong`, `#GaDotOThumLaTruc`, `#CongTroiKohKas`) dẫn trực tiếp đến trang xem TikTok Reels review của du khách.
+* **Kiểm Định Biên Dịch Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.95.0-REMOVED-AI-HARD-RULES-UI-BOX] — 2026-08-07
+
+### 🗑️ Loại Bỏ Khối Hiển Thị "5 Quy Tắc Cứng AI Engine Khi Sinh Lịch Trình" Khỏi Giao Diện
+* **Tinh Chỉnh Giao Diện Trang Lịch Trình**:
+  * Đã xóa bỏ khối UI `🤖 5 Quy Tắc Cứng AI Engine Khi Sinh Lịch Trình` trong component [ItineraryClientPage.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ItineraryClientPage.tsx) theo yêu cầu du khách.
+  * Mở rộng phần `🎚️ Biến Thể Lịch Trình Theo Mùa / Sự Kiện` dạng Grid 3 cột tràn viền tinh tế và thoáng mắt hơn.
+* **Kiểm Định Đóng Gói Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.94.0-PLANNER-ROUTE-LAYOUT-SYNC] — 2026-08-07
+
+### 🔗 Đồng Bộ Hóa Đường Dẫn `/planner` & `/itinerary` Đầy Đủ Giao Diện Layout & Trợ Lý AI
+* **Khắc Phục Thiếu Layout Trên Route `/planner`**:
+  * Cập nhật file [planner/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/planner/page.tsx) tích hợp đầy đủ `<Header />`, `<Footer />`, `<ChatbotWidget />` và gọi hiển thị [ItineraryClientPage.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ItineraryClientPage.tsx).
+  * Đảm bảo cả 2 đường dẫn truy cập **http://localhost:3000/planner** và **http://localhost:3000/itinerary** đều mở ra giao diện đầy đủ 3 Tour Canonical, 5 Biến thể mùa & 5 AI Hard Rules với thanh điều hướng chuẩn.
+* **Kiểm Định Đóng Gói Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.93.0-MASTER-CANONICAL-ITINERARIES-UI-INTEGRATION] — 2026-08-07
+
+### 🗺️ Nạp Dữ Liệu & Gọi Hiển Thị 3 Lịch Trình Tối Ưu Cụm Địa Lý, 5 Biến Thể Mùa & 5 AI Hard Rules Trên Trang Itinerary / Planner
+* **Tích Hợp Dữ Liệu 3 Lịch Trình Chuẩn Canonical**:
+  * Cập nhật component giao diện [ItineraryClientPage.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ItineraryClientPage.tsx) hiển thị chính xác dữ liệu từ [tri_ton_master_itineraries_and_rules.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_itineraries_and_rules.json):
+    * **Tour 1 Ngày Classic** (05:30–21:00, ~35km): 11 mốc thời gian chi tiết (PL001 -> HG001 -> PL011 -> FD009 -> HG002 -> CK010 -> FD006 -> FD011 -> FD001 -> CF001 -> CK001 -> FD017).
+    * **Tour 2 Ngày 1 Đêm** (Ngủ homestay Tuyết Anh/Rồng Vàng/Soài Chek, ~80km): Ngày 1 (Tà Pạ - Soài So - Ô Thum - Tuyến tránh - Chợ đêm) & Ngày 2 (Về nguồn Ba Chúc + An Tức).
+    * **Tour 3 Ngày 2 Đêm** (Thêm cụm phía Tây, ~120km): Ngày 1 (Tà Pạ - Soài So), Ngày 2 (Châu Lăng - Ô Thum - An Tức), Ngày 3 (Ô Tà Sóc - Núi Dài).
+* **Tích Hợp 5 Biến Thể Lịch Trình Theo Mùa / Sự Kiện**:
+  * Trực quan hóa bảng hoán đổi tự động của AI engine: Mùa lúa chín & Nước nổi (T9-T11), Dịp Lễ hội Đua bò Sene Dolta, Mùa khô cao điểm (T3-T5), Khách đến muộn sau 20h, và Gia đình đi cùng trẻ nhỏ.
+* **Mã Hóa 5 Quy Tắc Cứng AI Engine (AI Hard Rules)**:
+  * Trực quan hóa 5 quy tắc chống lỗi vận hành: Ma trận giờ mở cửa quán ăn, Cụm địa lý không quay đầu, Khung hoàng hôn vàng chốt tour, Nhắc nhở đặt gà đốt trước 45p, và Mã QR offline.
+* **Kiểm Định Đóng Gói Sản Xuất**:
+  * Biên dịch thành công `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered).
+
+## [10.92.0-REALTIME-GOLDEN-TIME-WIDGET-AND-TIKTOK-REELS-FILTER] — 2026-08-07
+
+### ✨ Phát Triển Widget Real-Time "Đang Trong Khung Giờ Vàng" & Bộ Lọc Video TikTok Reels
+* **Xây Dựng Thư Viện Xử Lý Giờ Vàng Real-Time**:
+  * Tạo utility [goldenTime.ts](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/lib/goldenTime.ts) tự động phân tích và đối chiếu giờ hệ thống thời gian thực với `golden_time_windows` của từng POI trong cơ sở dữ liệu.
+* **Tạo Widget Tự Động Phát Hiện Khung Giờ Vàng**:
+  * Xây dựng component UI [GoldenTimeWidget.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/GoldenTimeWidget.tsx) hiển thị đồng hồ hệ thống Live (`HH:MM:SS`), tự động phát hiện và làm nổi bật các địa điểm đang trong giờ đẹp nhất trong ngày (Bình minh 06:00, Trưa ăn gà 12:00, Hoàng hôn 16:30, Chợ đêm 19:00).
+  * Tích hợp bộ giả lập chuyển đổi khung giờ thử nghiệm cho người dùng.
+* **Bổ Sung Bộ Lọc Video TikTok Reels Hot-Trend**:
+  * Thêm nút chuyển đổi bộ lọc `🎵 BỘ LỌC TIKTOK REELS HOT-TREND` trên trang Khám phá [places/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/places/page.tsx), lọc và hiển thị riêng các địa điểm có video ngắn thực tế kèm nút xem review nhanh.
+* **Tích Hợp & Kiểm Định Biên Dịch**:
+  * Tích hợp thành công Widget Giờ Vàng trên Trang Chủ [page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/page.tsx) và Trang Địa Điểm [places/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/places/page.tsx).
+  * Biên dịch thành công `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.7s, 17/17 routes prerendered).
+
+## [10.91.0-HOMEPAGE-TOP-12-HOT-PLACES-PRIORITIZATION] — 2026-08-07
+
+### 🔥 Ưu Tiên Hiển Thị Top 12 Địa Điểm Hot Nổi Tiếng Nhất Ngay Đầu Trang Chủ (Homepage Landing Page)
+* **Tối Ưu Truy Vấn Sắp Xếp Ưu Tiên Địa Điểm Hot**:
+  * Chỉnh sửa hàm `loadLivePlaces()` trong trang chủ [page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/page.tsx) ép quy tắc truy vấn Supabase `.order("is_hot", { ascending: false }).order("hot_rank", { ascending: true })`.
+  * Tăng hạn mức hiển thị `HotPlacesSection` lên đúng **12 địa điểm Hot Top** hàng đầu ngay dưới thanh tìm kiếm Hero Section.
+* **Đồng Bộ Thứ Tự Xếp Hạng 12 Hot Spots Thực Tế**:
+  * Đảm bảo thứ tự hiển thị ưu tiên tuyệt đối từ Rank #1 đến Rank #12: #1 Hồ Tà Pạ, #2 Đồi Tức Dụp, #3 Cổng Trời Koh Kas, #4 Lễ Hội Đua Bò, #5 Tuyến Tránh ĐT941, #6 Thốt Nốt Trái Tim, #7 Hồ Ô Thum, #8 Chùa Xà Tón, #9 Cánh Đồng Tà Pạ, #10 Đu Đủ Đâm RiNa, #11 Bánh Bò Út Cột, #12 Bãi Thả Diều.
+* **Kiểm Định Biên Dịch Sản Xuất**:
+  * Biên dịch thành công 100% bằng `npm run build` (Next.js 16.3.0 Turbopack compiled in 2.6s, 17/17 routes prerendered thành công).
+
+## [10.90.0-HOT-PLACES-FEATURE-AND-SQL-SCHEMA-MIGRATION] — 2026-08-07
+
+### 🔥 Phát Triển Chức Năng Hiển Thị Địa Điểm Hot Top Trên Tất Cả Các Trang & Nâng Cấp SQL Database
+* **Nâng Cấp Schema SQL PostgreSQL Table `places`**:
+  * Thực thi script [migrate_hot_places_schema.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/migrate_hot_places_schema.py) bổ sung các cột `is_hot BOOLEAN`, `hot_rank INT`, `golden_time_windows TEXT[]`, `hot_score NUMERIC` vào cơ sở dữ liệu Supabase.
+  * Gán nhãn và nạp dữ liệu Hot Top 12 địa điểm nổi tiếng nhất Tri Tôn (Hồ Tà Pạ, Đồi Tức Dụp, Cổng Trời Koh Kas, Lễ hội Đua Bò, Tuyến Tránh ĐT941, Thốt Nốt Trái Tim, Hồ Ô Thum, Chùa Xà Tón, Cánh Đồng Tà Pạ, Đu Đủ Đâm RiNa, Bánh Bò Út Cột, Bãi Thả Diều) vào DB thực tế (`HTTP Status 200`).
+* **Xây Dựng Component Dùng Chung `HotPlacesSection.tsx`**:
+  * Phát triển component UI [HotPlacesSection.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/HotPlacesSection.tsx) hiển thị các thẻ địa điểm HOT có Huy hiệu TOP #Rank, Rating Star, Badge Khung giờ vàng trải nghiệm và Nút xem TikTok review thực tế.
+* **Tích Hợp Chức Năng Địa Điểm Hot Trên 100% Các Trang Cốt Lõi**:
+  * Tích hợp thành công section Hot Top vào 6 trang chủ lực: Trang Chủ (`/`), Địa Điểm (`/places`), Ẩm Thực (`/food`), Lưu Trú (`/stay`), Văn Hóa (`/culture`), Lên Lịch Trình (`/planner`).
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` (17/17 routes prerendered, 0% lỗi TypeScript/Next.js).
+
+## [10.80.0-MASTER-ITINERARIES-AND-AI SCHEDULING-RULES] — 2026-08-07
+
+### 🧭 Chuẩn Hóa Bộ Quy Tắc Lịch Trình Tối Ưu, 12 Điểm Hot Top & Ma Trận Giờ Mở Cửa Ẩm Thực
+* **Lưu Trữ Cấu Trúc Master JSON & Tài Liệu Tri Thức**:
+  * Tạo file cấu trúc chuẩn [tri_ton_master_itineraries_and_rules.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_itineraries_and_rules.json) chứa 12 địa điểm Hot Top đẩy trang chủ (xếp theo hot score = rating x reviews), ma trận giờ mở cửa ẩm thực (Sáng/Trưa/Xế/Tối/Khuya), danh mục cà phê theo view, 3 tour tối ưu cụm địa lý (1 ngày Classic, 2N1Đ, 3N2Đ) và 5 quy tắc cứng cho AI engine.
+  * Xuất tài liệu tri thức RAG [tri_ton_master_itineraries_and_rules.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tri_ton_master_itineraries_and_rules.md) phục vụ prompt context cho AI Chatbot Agent.
+* **Quy Tắc Xếp Lịch Trình Chống Lỗi Vận Hành**:
+  * Ép khung giờ bán của quán ăn (VD: Bún nước lèo chỉ bán sáng <11h, Đu đủ đâm RiNa bán từ 12h, Bánh xèo bán từ 14h, Gà đốt Ô Thum tự động nhắc đặt trước 45p).
+  * Giới hạn tối đa 2 cụm địa lý/ngày tránh chạy vòng quay đầu; chốt khung hoàng hôn 16h-18h30 tại Tuyến Tránh ĐT941 (CK001) hoặc Bãi thả diều (PL020).
+
+## [10.73.0-FRONTEND-LIVE-REAL-MEDIA-INTEGRATION] — 2026-08-07
+
+### 🎨 Tích Hợp Hiển Thị Link Ảnh Thật & Video TikTok Live Trực Tiếp Trên Giao Diện Frontend Next.js
+* **Liên Kết Dữ Liệu Real Media Từ Supabase DB Lên 4 Trang Cốt Lõi**:
+  * Cập nhật các trang [page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/page.tsx), [places/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/places/page.tsx), [food/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/food/page.tsx), [stay/page.tsx](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/app/stay/page.tsx).
+  * Chỉnh sửa logic hàm bóc tách hình ảnh `extractImageUrl()`: Ưu tiên lấy trường `image_url` thực tế từ DB hoặc phần tử `photos[0].url` dạng chuỗi/đối tượng thay vì dùng ảnh mẫu AI fallback.
+* **Liên Kết Trực Tiếp Link Video TikTok Review Thực Tế**:
+  * Tải và liên kết thuộc tính `video_url` từ Supabase DB cho từng thẻ địa điểm, cho phép du khách click chuyển hướng trực tiếp tới video review TikTok thực tế.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` (17/17 trang static/dynamic prerendered, 0% lỗi TypeScript/Next.js).
+
+## [10.72.0-REAL-MEDIA-LINKS-AND-SUPABASE-SCHEMA-MIGRATION] — 2026-08-07
+
+### 🖼️ Nạp Link Ảnh Thật & Video Trải Nghiệm Thực Tế Lên Live Supabase DB
+* **Nâng Cấp Schema PostgreSQL Table `places`**:
+  * Thực thi script [migrate_places_schema.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/migrate_places_schema.py) bổ sung các cột `image_url TEXT`, `video_url TEXT`, `photos JSONB`, `aliases TEXT[]`, `data_flags TEXT[]` vào bảng `public.places`.
+* **Nạp Link Ảnh & Video Trải Nghiệm Thực Tế (Real Media Links)**:
+  * Xây dựng script [enrich_media_links.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/enrich_media_links.py) bổ sung link ảnh Unsplash/Cổng du lịch An Giang độ phân giải cao và link video TikTok/YouTube review thực tế cho toàn bộ **95 địa điểm**.
+* **Đồng Bộ Hoàn Hoàn Lên Live Supabase Database**:
+  * Thực thi lại [sync_exact_95_to_supabase.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/sync_exact_95_to_supabase.py) nạp thành công 100% dữ liệu 95 địa điểm kèm hình ảnh, video, danh xưng phụ (`aliases`) và cờ kiểm định (`data_flags`).
+  * Kiểm định live thành công: `HTTP Status 200` với 95 địa điểm có link media hoạt động.
+
+## [10.71.0-CANONICAL-95-PLACES-DEDUPLICATION-AND-SUPABASE-EXACT-SYNC] — 2026-08-07
+
+### 🎯 Thực Thi Merge 11 Cặp Trùng Lặp & Đồng Bộ Chính Xác 95 Bản Ghi Master Lên Live Supabase DB
+* **Xử Lý Merge Thực Thể (Place Entity Resolution)**:
+  * Thực thi script [merge_clean_export.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/merge_clean_export.py) xử lý 11 cặp trùng lặp (TT_095→PL001 Hồ Tà Pạ, TT_096→PL002 Hồ Soài So, TT_097→PL010 Đồi Tức Dụp, TT_098→CK009 Thốt nốt trái tim, TT_099→CK010 Cổng Trời, TT_092→HG002 Chùa Xà Tón, TT_093→HG001 Chùa Tà Pạ, TT_094→PL008 Núi Cô Tô, TT_084→FD014 Bò 7 Món Ba Chúc, TT_102→FD018 Gà Đốt Siêu Bó, TT_106→FD020 Lò đường Út Huệ).
+  * Chuyển đổi mã 11 bản ghi TT_* sống sót sang mã chuẩn category (FD018..FD024, CF014..CF017, PL021 Chợ Tri Tôn, PL022 Chợ đêm Tri Tôn).
+* **Chuẩn Hóa Đơn Vị Hành Chính & Sửa Lỗi Giờ Hoạt Động**:
+  * Sửa triệt để lỗi "Xã Cô Tô" -> Xã Núi Tô / Thị trấn Tri Tôn; sửa "Chau Lăng" -> Châu Lăng; sửa "Tran Hung Dao" -> Trần Hưng Đạo.
+  * Điều chỉnh giờ mở cửa bất hợp lý của Chợ Đêm Tri Tôn (`17:00 - 22:00`) và Chợ Trung Tâm Tri Tôn (`05:00 - 20:00`).
+* **Đồng Bộ Tuyệt Đối 95 Bản Ghi Lên Live Supabase Database**:
+  * Xây dựng script [sync_exact_95_to_supabase.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/sync_exact_95_to_supabase.py) thanh lọc 13 bản ghi thừa cũ trong DB và upsert 95 bản ghi master chuẩn xác.
+  * Kiểm định live thành công 100%: Bảng `places` trên Supabase ghi nhận đúng **95 bản ghi**.
+
+## [10.70.0-PANDAS-DATA-CLEANING-AND-JUPYTER-NOTEBOOK-PIPELINE] — 2026-08-07
+
+### 🐼 Xử Lý Chuẩn Hóa Dữ Liệu Du Lịch Tri Tôn Bằng Pandas & Jupyter Notebook Pipeline
+* **Tích Hợp Thư Viện Pandas 2.2.3 / 3.0.5 Cho Data Engineering**:
+  * Xây dựng script tự động [pandas_data_cleaner.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/pandas_data_cleaner.py) và Notebook [tri_ton_master_data_cleaning.ipynb](file:///e:/Projects/Project_ca_nhan/dulichtriton/notebooks/tri_ton_master_data_cleaning.ipynb) để xử lý toàn bộ 106 địa điểm du lịch Tri Tôn.
+* **Chuẩn Hóa Văn Bản Tiếng Việt NFC & Sửa Lỗi Đơn Vị Hành Chính**:
+  * Tự động loại bỏ cụm từ bị cấm "Huyện Tri Tôn" theo quy tắc AGENTS.
+  * Khắc phục triệt để lỗi đơn vị hành chính: chuyển đổi "Xã Cô Tô" thành "Xã Núi Tô" / "Thị trấn Tri Tôn"; đồng bộ "Xã Chau Lăng" thành "Xã Châu Lăng".
+* **Xác Minh Tọa Độ GIS Bounding Box & Lọc Trùng Trùng Lặp**:
+  * Kiểm toán 100% bản ghi với hệ tọa độ WGS84 trong khung địa lý Tri Tôn `[10.25 - 10.55 Lat, 104.85 - 105.15 Lng]`.
+  * Khử trùng lặp (Deduplication) dựa trên chuỗi tên địa điểm NFC kết hợp tọa độ làm tròn 3 chữ số thập phân (`round(lat, 3)`, `round(lng, 3)`).
+* **Đồng Bộ Dữ Liệu Sạch Lên Live Supabase PostgreSQL**:
+  * Đã sửa lỗi trùng lặp slug và thiết lập cơ chế Upsert `on_conflict=id` trong [seed_supabase_live.py](file:///e:/Projects/Project_ca_nhan/dulichtriton/scripts/seed_supabase_live.py).
+  * Thực thi thành công nạp/đồng bộ toàn bộ **106 địa điểm chuẩn hóa** lên cơ sở dữ liệu Supabase thực tế (HTTP Status 200).
+* **Xuất File Master Định Dạng CSV UTF-8-SIG & JSON**:
+  * Ghi file sạch [tri_ton_master_cleaned.csv](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_cleaned.csv) (UTF-8-SIG cho Excel) và [tri_ton_master_cleaned.json](file:///e:/Projects/Project_ca_nhan/dulichtriton/data/tri_ton_master_cleaned.json) (UTF-8 cho RAG & Supabase).
+
 ## [10.69.0-FRONTEND-HOMEPAGE-LANDINGPAGE-AND-LIVE-DATA-UPGRADED] — 2026-08-07
 
 ### 🚀 Nâng Cấp Toàn Diện Trang Chủ Landing Page, Đồng Bộ Giao Diện 1:1 & Nạp Dữ Liệu Live Supabase
