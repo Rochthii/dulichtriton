@@ -67,10 +67,14 @@ Mỗi địa điểm lưu trữ mảng JSONB `photos` trên PostgreSQL với đ�
 ## 🎨 4. Chuẩn Mực Phát Triển Frontend Web Portal Next.js 14
 
 ### 📐 Design Tokens & Palette
-* **Primary Emerald Green**: `#1B4D3E` (Xanh đại ngàn Bảy Núi — dùng cho Header, Button chính, CTA).
-* **Secondary Golden Palm**: `#D99B26` (Vàng thốt nốt & Khmer — dùng cho Badges, Rating Stars, Highlight).
-* **Neutral Dark Slate**: `#0F172A` (Text chính & Dark Mode).
-* **Surface Background**: `#F8F9FA` (Nền sáng ngà ấm áp).
+* **Primary Emerald Green**: `#1B4D3E` / `#0F5132` (Xanh đại ngàn Bảy Núi — dùng cho Header, Button chính, CTA).
+* **Secondary Golden Palm**: `#D99B26` / `#E5A93C` (Vàng thốt nốt & Khmer — dùng cho Badges, Rating Stars, Highlight).
+* **Neutral Dark Slate**: `#0F172A` (Text chính & High contrast text trên nền sáng).
+* **Surface Background**: `#F4F9F5` / `#F8F9FA` (Nền sáng ngà ấm áp).
+
+### 📺 TikTok Media & Hashtag Redirect Protocol
+* **Pop-up Modal TikTok Reels**: Hiển thị Pop-up xem trực tiếp thông tin review video TikTok trên Trang chủ.
+* **Hashtag Redirect Button**: Nút "Xem TikTok" ở Trang Khám phá (`/places`) tự động sinh đường dẫn TikTok Search mở tab mới chính xác từng địa điểm.
 
 ### 🚫 Quy Chuẩn 0% Emoji & SVG Icons Only
 * **TUYỆT ĐỐI KHÔNG DÙNG EMOJI** trong mã nguồn hay giao diện UI.
@@ -87,7 +91,7 @@ Mỗi địa điểm lưu trữ mảng JSONB `photos` trên PostgreSQL với đ�
   ```
 
 ### 🔄 Dynamic Data Fetching Standard (0% Hardcoded Code)
-* Tất cả dữ liệu hiển thị trên các màn hình (`/`, `/places`, `/places/[id]`) phải được nạp động từ Supabase CSDL qua Service `@/lib/places` (`getFeaturedPlaces()`, `getPlacesByCommune()`, `getPlaceById()`).
+* Tất cả dữ liệu hiển thị trên các màn hình (`/`, `/places`, `/places/[id]`, `/food`, `/stay`) phải được nạp động từ Supabase CSDL qua Service `@/lib/places` (`getFeaturedPlaces()`, `getPlacesByCommune()`, `getPlaceById()`).
 
 ---
 

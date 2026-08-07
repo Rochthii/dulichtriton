@@ -4,7 +4,27 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.68.0-DESIGN-SPECIFICATION-UPGRADED-100-PERCENT] — 2026-08-07
+## [10.69.0-FRONTEND-HOMEPAGE-LANDINGPAGE-AND-LIVE-DATA-UPGRADED] — 2026-08-07
+
+### 🚀 Nâng Cấp Toàn Diện Trang Chủ Landing Page, Đồng Bộ Giao Diện 1:1 & Nạp Dữ Liệu Live Supabase
+* **Tái Thiết Kế Trang Chủ Thành Full Landing Page Sang Trọng**:
+  * Chuyển đổi Trang chủ (`/`) thành Landing Page đa tầng gồm 7 section phong phú: *Storytelling Hero Section, 4 Danh mục nổi bật đã Việt hóa, Widget Thời tiết Bảy Núi real-time & Khung giờ vàng phượt Hồ Tà Pạ, Gợi ý Lộ trình phượt 24h khuyên dùng, Section Ẩm thực Bản đồ Vị giác, Section Di sản & Lễ hội Khmer sôi động, Section 106 Địa điểm live Supabase DB + 6 TikTok Reels Pop-up Modal, Section Homestay view núi & Bản đồ GIS trực tuyến*.
+* **Tích Hợp Modal Xem Trực Tiếp Video TikTok Pop-up**:
+  * Bổ sung tính năng nhấp vào 6 video TikTok Reels trên Trang chủ để xem Pop-up review chi tiết, thông tin tác giả và nút chuyển tiếp ứng dụng TikTok.
+* **Việt Hóa 100% Quick Filter Category**:
+  * Chuyển đổi các nhãn tiếng Anh cũ (*Quick filter category, Mountain, Utensils, Landmarks, Camera*) thành tiếng Việt bản địa thân thiện: *Danh mục nổi bật, Danh Thắng & Tâm Linh, Ẩm Thực Đặc Sản, Văn Hóa Khmer, Check-in & Sinh Thái*.
+* **Đồng Bộ Giao Diện 1:1 Chuẩn Theme 1 (Deep Emerald & Warm Gold)**:
+  * Nâng cấp giao diện các trang con (`/culture`, `/planner`, `/food`, `/stay`) bám sát chuẩn thiết kế Theme 1 với phông chữ Outfit/Inter sắc nét và kính mờ `Glassmorphism`.
+* **Khắc Phục Lỗi Độ Tương Phản Màu Chữ (Text Contrast Fix)**:
+  * Sửa lỗi chữ bị mờ trong các thẻ di sản Khmer từ `text-white/text-slate-300` sang màu tối `text-slate-900` & `text-slate-600` tương phản cao, rõ nét 100% trên nền trắng.
+* **Kích Hoạt Liên Kết Nút "Xem TikTok" Theo TikTok Search Hashtag**:
+  * Cập nhật nút "Xem TikTok" ở Trang Khám phá (`/places`) tự động tạo đường dẫn tìm kiếm trực tiếp `https://www.tiktok.com/search?q=...` chính xác từng địa điểm.
+* **Nạp Dữ Liệu Thực Tế Live Supabase PostgreSQL**:
+  * Tích hợp kết nối dữ liệu 106 địa điểm bảng `places` real-time lên các trang `/places`, `/food`, `/stay` và `/`.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 4.6 giây (17/17 routes static/dynamic prerendered, 0% lỗi TypeScript/Next.js).
+
+---
 
 ### 📐 Nâng Cấp 100% Đầy Đủ Tài Liệu Quy Chuẩn Thiết Kế (`DESIGN.md`)
 * **Thêm SVG Icon System Tokens (No Emoji Policy)**: Khai báo 18 mã Lucide SVG icons bắt buộc cho từng loại thành phần UI (Search, MapPin, Map, Utensils, Home, Landmark, QrCode...).
