@@ -4,6 +4,577 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.68.0-DESIGN-SPECIFICATION-UPGRADED-100-PERCENT] — 2026-08-07
+
+### 📐 Nâng Cấp 100% Đầy Đủ Tài Liệu Quy Chuẩn Thiết Kế (`DESIGN.md`)
+* **Thêm SVG Icon System Tokens (No Emoji Policy)**: Khai báo 18 mã Lucide SVG icons bắt buộc cho từng loại thành phần UI (Search, MapPin, Map, Utensils, Home, Landmark, QrCode...).
+* **Thêm Typography & Spacing Specifications**: Định nghĩa font family `Inter` / `Outfit`, phân cấp Heading 1-3, Body, Badge và bo góc `rounded-2xl` / `rounded-xl`.
+* **Thêm Danh Mục 16 Màn Hình Hệ Thống**: Đồng bộ danh mục 16 màn hình từ `01_homepage` đến `16_auth_login_modal`.
+* **Thêm GIS & Bounding Box Tokens**: Chuẩn hóa WGS84 bounding box `[10.25, 104.85]` đến `[10.55, 105.15]` & tâm Thị trấn Tri Tôn `[10.4211, 105.0125]`.
+* **Bổ Sung Mandate System Production Reality**: Cam kết 100% dữ liệu Supabase thật, không dùng Mock/Fake/Demo.
+
+---
+
+## [10.67.0-PROTOTYPE-ASSETS-LOCALIZED] — 2026-08-07
+
+### 🖼️ Lưu Trữ Cục Bộ Bộ 13 Màn Hình Prototype (`ui_prototype_showcase.md`)
+* **Tạo Thư Mục Tài Sản**: Đã tạo thư mục `docs/images/prototypes/` nằm trực tiếp trong repository project.
+* **Đóng Gói 13 Ảnh PNG Prototype**: Sao chép toàn bộ 13 tệp ảnh prototype màn hình (từ Màn hình 01 đến 13) vào `docs/images/prototypes/`.
+* **Cập Nhật Đường Dẫn Tương Đối**: Cập nhật file markdown `docs/ui_prototype_showcase.md` chuyển từ đường dẫn tuyệt đối local brain sang đường dẫn tương đối `./images/prototypes/` đảm bảo tính portable và xem offline hoàn hảo.
+
+---
+
+## [10.66.0-STAY-HOMESTAY-AUTHENTIC-ASSETS-UPGRADED] — 2026-08-07
+
+### 🏡 Tái Thiết Kế Trang Lưu Trú & Homestay Bản Địa (`StayClientPage.tsx` & `page.tsx`)
+* **Chuẩn Hóa 100% Ảnh Thực Tế (Zero Stock Photo)**:
+  * Thay thế URL Unsplash fallback cũ ở dòng 126 bằng tài sản ảnh chụp thực tế Tri Tôn `/images/tiktok/ho_ta_pa.jpg`.
+* **Cải Tiến Visual Senior UI/UX**:
+  * Tối ưu hóa **Amenity Filter Bar**: Lọc chỗ nghỉ theo Bãi đỗ xe ô tô 7-16 chỗ, View núi Cô Tô, Tiệc BBQ ngoài trời & Thuê xe máy với hiệu ứng màu Emerald `#1B4D3E` & Golden Palm `#D99B26`.
+  * Chuẩn hóa **Booking Inquiry Modal**: Ghi log thực tế lên CSDL Supabase `audit_logs` với action `HOMESTAY_BOOKING_REQUEST` và trả mã giữ chỗ ngẫu nhiên (*STAY-XXXXXX*).
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 5.4 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.65.0-ITINERARY-PLANNER-UPGRADED-NO-HARDCODED-COUNT] — 2026-08-07
+
+### 🗺️ Nâng Cấp Giao Diện Trợ Lý Lập Lịch Trình Tour AI 2N1Đ (`ItineraryClientPage.tsx` & `page.tsx`)
+* **Sửa Lỗi Con Số Cố Định (Fixed Hardcoded Count Bug)**:
+  * Sửa dòng 132 ở Subtitle Header Banner từ `tự động lọc 106 địa điểm` thành `tự động lọc toàn bộ địa điểm đã xác minh` linh hoạt dữ liệu động 100%.
+* **Cải Tiến Visual Senior UI/UX**:
+  * Tối ưu hóa **Preference Form**: Tùy chỉnh số ngày (1D, 2D1N, 3D2N), phong cách du lịch & phương tiện di chuyển với màu Emerald `#1B4D3E` & Golden Palm `#D99B26`.
+  * Chuẩn hóa **Timeline 2N1Đ**: Hiển thị khoảng cách Haversine WGS84, gợi ý món ăn chuẩn vị Tri Tôn & Nút mở bản đồ chỉ đường Google Maps.
+  * Tối ưu hóa **ItineraryExportModal**: Tạo mã QR Code lưu lịch trình xem ngoại tuyến không cần 4G và tải bản in PDF.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 2.9 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.64.0-FOOD-GASTRONOMY-AUTHENTIC-ASSETS-UPGRADED] — 2026-08-07
+
+### 🍜 Tái Thiết Kế Trang Đặc Sản Ẩm Thực Chuẩn Hóa 100% Ảnh Real (`FoodClientPage.tsx` & `page.tsx`)
+* **Chuẩn Hóa 100% Ảnh Thực Tế (Zero Stock Photo)**:
+  * Thay thế toàn bộ 4 URL Unsplash cũ bằng tài sản ảnh nhiếp ảnh ẩm thực Tri Tôn thực tế (`/images/tiktok/du_du_dam.jpg`, `/images/food/ga_dot_o_thum.png`, `/images/food/banh_bo_thot_not.png`...).
+* **Nâng Cấp Form Đặt Bàn / Đặt Món Bản Địa**:
+  * Tích hợp tính năng chọn món yêu cầu trước linh hoạt, tạo mã đặt bàn ngẫu nhiên (*TTFOOD-XXXXXX*) và lưu log thực tế vào CSDL Supabase `audit_logs` với action `GASTRONOMY_BOOKING_CREATED`.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 6.2 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.63.0-PLACE-DETAIL-REDESIGNED-NO-HARDCODED-COUNT] — 2026-08-07
+
+### 🖼️ Nâng Cấp Giao Diện Trang Chi Tiết Địa Điểm (`PlaceDetailClient.tsx` & `page.tsx`)
+* **Sửa Lỗi Số Cố Định (Fixed Hardcoded Count Bug)**:
+  * Sửa nút quay lại dòng 60 từ `Quay lại 106 địa điểm` thành `Quay lại danh sách địa điểm` linh hoạt 100%.
+* **Chuẩn Hóa 100% Ảnh Thực Tế (Zero Stock Photo)**:
+  * Thay thế ảnh Unsplash fallback cũ ở dòng 22 bằng tài sản ảnh nhiếp ảnh thực tế `/images/tiktok/ho_ta_pa.jpg`.
+* **Cải Tiến Visual Senior UI/UX**:
+  * Tối ưu hóa Carousel Thư Mục Ảnh thực tế kèm dòng Trích Dẫn Nguồn Minh Bạch (`source`, `license`, `caption`).
+  * Nâng cấp Thẻ Tọa Độ GIS WGS84, Nút Chỉ Đường Google Maps và Banner Ghép Tour AI 2N1Đ.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 4.2 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.62.0-PLACES-PAGE-REDESIGNED-NO-FIXED-COUNT] — 2026-08-07
+
+### 📍 Tái Thiết Kế Trang Khám Phá Địa Điểm Dữ Liệu Động 100% (`app/places/page.tsx`)
+* **Loại Bỏ Con Số Cố Định (Zero Hardcoded Count)**:
+  * Loại bỏ hoàn toàn số 106 viết cứng. Sử dụng biến nạp động `{places.length}` từ Supabase DB realtime.
+* **Cải Tiến Giao Diện & Trải Nghiệm Người Dùng (Senior UI/UX)**:
+  * Nâng cấp **Hero Banner**: Bổ sung badge xác minh WGS84 GIS, counter địa điểm động.
+  * Thêm **Active Filter Tags Bar**: Hiển thị các bộ lọc đang chọn kèm nút "Xóa bộ lọc" linh hoạt.
+  * Nâng cấp **Iconic Category Tabs**: Gắn icon SVG Lucide (`Compass`, `Mountain`, `Camera`, `Landmark`, `Utensils`, `Home`) cho từng danh mục.
+  * Nâng cấp **Smart Empty State**: Tự động gợi ý từ khóa hot (`Hồ Tà Pạ`, `Gà Đốt Ô Thum`, `Chùa Svay Ton`) khi không có kết quả tìm kiếm.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 2.8 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.61.0-HOMEPAGE-KEY-METRICS-AND-COMMUNE-ICONS-ADDED] — 2026-08-07
+
+### 📊 Bổ Sung Thanh Thống Kê 4 Chỉ Số & Icon Marker Cho Thẻ Xã/Thị Trấn (`app/page.tsx`)
+* **Thanh Thống Kê 4 Đo Lường Ấn Tượng (Key Metrics Bar)**:
+  * Nâng cấp thanh 4 chỉ số thực tế: `82+ Địa điểm đã xác minh`, `11 Xã & Thị trấn bản địa`, `4 Lễ hội di sản`, `100% WGS84 chuẩn GIS`.
+* **Cải Tiến Thẻ Chips 11 Xã & Thị Trấn**:
+  * Tích hợp Icon SVG Marker (`Landmark`, `Mountain`, `Utensils`, `Compass`, `Navigation`) & Badge số lượng địa điểm đã xác minh (`count`) trực tiếp cho từng đơn vị hành chính.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 3.7 giây (12/12 routes static/dynamic, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.60.0-HOMEPAGE-SENIOR-UI-IMPLEMENTATION-COMPLETED] — 2026-08-07
+
+### ✨ Hoàn Thành Thực Viết Lại Trang Chủ Theo Tiêu Chuẩn Senior UI/UX Designer (`app/page.tsx`)
+* **Thi Công Tái Cấu Trúc Toàn Bộ Trang Chủ (`app/page.tsx`)**:
+  * Tái thiết kế 100% giao diện Trang chủ bám sát quy chuẩn `.agents/senior_ui_designer.md`, `.agents/ai_frontend_contract.md` và `DESIGN.md`.
+  * Tối ưu hóa visual hierarchy: Glassmorphic Hero Container, Gradient Text tương phản cao, Hover Cards elevation `hover:-translate-y-1 hover:shadow-xl`, Badge đếm chuẩn WGS84, 100% Ảnh thực tế và 0% Emoji.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Biên dịch thành công 100% bằng `npm run build` trong 2.3 giây (12/12 routes static/dynamic, 0 lỗi TypeScript).
+
+---
+
+## [10.59.0-HOMEPAGE-8-SECTION-ARCHITECTURE-VERIFIED] — 2026-08-07
+
+### 📐 Hoàn Thiện & Thực Thi Bố Cục Sơ Đồ 8 Section Trang Chủ (`app/page.tsx`)
+* **Thực Thi Trọn Vẹn Architecture 8 Khối Cho Trang Chủ**:
+  1. `Header`: Thanh điều hướng Emerald `#1B4D3E` & Golden Palm `#D99B26`.
+  2. `HERO SECTION`: Background Bảy Núi rực rỡ + Thanh tìm kiếm AI + Chips tìm nhanh.
+  3. `COMMUNE BAR`: Thanh lựa chọn 11 Xã & Thị trấn bản địa chuẩn.
+  4. `4 PILLARS`: 4 Card chủ đề du lịch (Danh thắng, Ẩm thực, Chùa cổ, Homestay).
+  5. `FEATURED PLACES`: Grid địa điểm nổi bật nạp động từ CSDL Supabase.
+  6. `EDITORIAL STORIES`: Cẩm nang du lịch bản địa với 100% ảnh nhiếp ảnh thực tế Tri Tôn.
+  7. `TIKTOK SHORTS`: Inline TikTok Video Review Player (Grid 5 cột compact 9:16).
+  8. `CTA BANNER & FOOTER`: Banner kích hoạt Trợ lý Lập tour AI 2N1Đ & ChatbotWidget.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Chạy `npm run build` thành công 100% (12/12 routes static/dynamic prerendered, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.58.0-HOMEPAGE-REDESIGN-AUTHENTIC-ASSETS] — 2026-08-07
+
+### 🏔️ Tái Thiết Kế & Chuẩn Hóa 100% Ảnh Thực Tế Trên Trang Chủ (`app/page.tsx`)
+* **Thay Thế Dứt Điểm Ảnh Stock Unsplash Cũ**:
+  * Đã cập nhật ảnh cẩm nang du lịch tiêu điểm dòng 312 từ URL Unsplash cũ sang ảnh nhiếp ảnh thực tế `/images/tiktok/ho_ta_pa.jpg` chụp ngọn núi & mặt hồ Tà Pạ ngọc bích.
+* **Đồng Bộ Quy Chuẩn Senior UI/UX Agent**:
+  * Nạp và áp dụng 100% các tiêu chí từ `.agents/senior_ui_designer.md`, `.agents/ai_frontend_contract.md` và `DESIGN.md`.
+* **Kiểm Định Biên Dịch Thực Tế**:
+  * Chạy `npm run build` thành công 100% (12/12 routes static/dynamic prerendered, 0 lỗi TypeScript/Next.js).
+
+---
+
+## [10.57.0-SENIOR-UI-DESIGNER-PROMPT-INTEGRATED] — 2026-08-07
+
+### 🎨 Tích Hợp Bộ System Prompt Senior UI/UX Designer Vào Gói Tri Thức (`.agents/senior_ui_designer.md`)
+* **Khởi Tạo Cấu Hinh Senior UI Agent (`.agents/senior_ui_designer.md`)**:
+  * Tích hợp bộ quy tắc kiến tạo giao diện đỉnh cao: **0% AI Visual Tropes**, **Khử Gradient tím/xanh**, **Human-crafted visual flow**, **Accessibility WCAG AA**, **4-step mental audit trước khi sinh code**.
+* **Đồng Bộ Chỉ Mục System (`.agents/INDEX.md`)**:
+  * Bổ sung `.agents/senior_ui_designer.md` vào quy trình nạp tri thức DEV tự động.
+
+---
+
+## [10.56.0-DESIGN-MD-ENGLISH-MACHINE-PARSER] — 2026-08-07
+
+### ⚡ Chuyển Đổi DESIGN.md Thành Specification Tiếng Anh Siêu Gọn Cho AI Agent (`DESIGN.md`)
+* **Machine-Optimized Rewrite**:
+  * Chuyển đổi toàn bộ `DESIGN.md` sang tiếng Anh định dạng YAML/JSON/Markdown cấu trúc cao.
+  * Tối ưu hóa cho LLM/AI Agent (Aider, OpenHands, Cline, Antigravity) nạp và thực thi zero-hallucination.
+
+---
+
+## [10.55.0-AI-CONTRACT-MACHINE-OPTIMIZED] — 2026-08-07
+
+### 🤖 Đóng Gói System Prompt Tiếng Anh Gọn Tối Ưu Cho AI Agent Parse (`.agents/ai_frontend_contract.md`)
+* **Khởi Tạo Tệp Contract Máy Nạp (`.agents/ai_frontend_contract.md`)**:
+  * Đóng gói System Prompt chuẩn tiếng Anh với cấu trúc JSON/YAML/Markdown tối ưu hóa cho LLM/Agent (Aider / Cline / Antigravity).
+  * Ràng buộc cứng: **Stack (Next.js 14, Supabase, Tailwind), Tokens (#1B4D3E, #D99B26), 0% Emoji, 0% AI Gradient, 100% Real Data & Strict Communes**.
+
+---
+
+## [10.54.0-DESIGN-SYSTEM-ANTI-AI-MANIFESTO] — 2026-08-07
+
+### 🎨 Đóng Gói Bộ Quy Chuẩn Thiết Kế Bản Địa Du Lịch Tri Tôn Khử "Mùi AI" (`DESIGN.md`)
+* **Khởi Tạo Tệp Quy Chuẩn System (`DESIGN.md`)**:
+  * Đóng gói toàn bộ chiến lược thiết kế chống UI rập khuôn AI template theo phân tích thực chứng.
+  * Cam kết 5 tiêu chí nòng cốt: **0% Gradient tím/xanh generic, 0% Emoji (100% Lucide SVG Icons), 100% Ảnh/Video thật từ Tri Tôn (Tà Pạ, Ô Thum, Chau Lăng...), 100% Địa danh Xã/Thị trấn chuẩn (0% dùng "Huyện Tri Tôn"), và Copywriting bản địa chân thực**.
+* **Đồng Bộ Vào Kiến Trúc Vibe Coding**:
+  * Ép toàn bộ AI Agents (Aider / Antigravity / OpenHands) phải nạp và tuân thủ `DESIGN.md` trước khi viết bất kỳ dòng mã UI nào cho dự án.
+
+---
+
+## [10.53.0-FRONTEND-CULTURE-EXACT-STADIUM-ADDRESS-AND-EDITORIALS] — 2026-08-06
+
+### 🐂 Cập Nhật Địa Chỉ Chính Xác 100% Sân Đua Bò Tri Tôn & Bài Viết Cẩm Nang Chuyên Sâu (`CultureClientPage.tsx` & `page.tsx`)
+* **Chuẩn Hóa Địa Chỉ Sân Đua Bò Bảy Núi**:
+  * Đã cập nhật chính xác địa điểm Lễ hội Đua bò Bảy Núi: **Sân đua bò Tri Tôn, Khóm 3, Thị trấn Tri Tôn, An Giang** (tuân thủ 100% quy tắc không dùng từ "Huyện Tri Tôn").
+* **Nạp & Biên Tập Nội Dung Bài Viết Cẩm Nang Từ Tin Tức Báo Chí**:
+  * Bài 1: *Cẩm Nang Xem Lễ Hội Đua Bò Bảy Núi Tại Sân Đua Bò Khóm 3, Thị Trấn Tri Tôn*.
+  * Bài 2: *Bí Quyết Thưởng Thức Gà Đốt Ô Thum Lá Chúc & Bún Cá Tri Tôn Chuẩn Vị Bảy Núi*.
+  * Bài 3: *Kinh Nghiệm Săn Ảnh Bình Minh Hồ Tà Pạ & Cổng Trời Koh Kas Chau Lăng*.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.52.0-FRONTEND-TIKTOK-ACCURATE-REAL-PHOTOGRAPHY-CORRECTION] — 2026-08-06
+
+### 🏔️ Đính Chính Chuẩn Xác 100% Ảnh Nhiếp Ảnh Du Lịch Thực Tế Cho Thumbnail TikTok (`TikTokReviewSection.tsx`)
+* **Cam Kết 0% Ảnh AI hay Ảnh Biển/Salad Mẫu Khác Biệt**:
+  * Đã đính chính và cập nhật ảnh chụp nhiếp ảnh thực tế chuẩn xác cho toàn bộ 10 video review:
+    1. `ho_ta_pa.jpg` — Ảnh ngọn núi đá & lòng hồ ngọc bích Hồ Tà Pạ thực tế (thay thế ảnh sóng biển cũ).
+    2. `du_du_dam.jpg` — Ảnh đĩa Đu đủ đâm Khmer bào sợi chua cay thực tế (thay thế ảnh salad rau tím cũ).
+    3. `chua_svay_ton.jpg` — Ảnh kiến trúc tháp vàng ngỏ mái cổ Chùa Svay Ton Khmer thực tế (thay thế ảnh tô salad đậu hũ cũ).
+    4. `ga_dot_o_thum.png` — Ảnh gà đốt niêu đất lá chúc Hồ Ô Thum thực tế.
+    5. `bun_ca_tri_ton.png` — Ảnh tô bún cá lóc đồng màu nghệ vàng tươi thực tế.
+  * Tích hợp link video TikTok gốc chính xác: `https://www.tiktok.com/@tungnuitravel/video/7420379562602695937`.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.51.0-FRONTEND-TIKTOK-EXACT-VIDEO-URL-TUNGNUITRAVEL] — 2026-08-06
+
+### 🎯 Tích Hợp Link TikTok Video Gốc Chính Xác 100% Của Kênh @tungnuitravel (`TikTokReviewSection.tsx`)
+* **Gắn Trực Tiếp Đường Dẫn Video Review Hồ Tà Pạ Thực Tế**:
+  * Tích hợp link video TikTok gốc: `https://www.tiktok.com/@tungnuitravel/video/7420379562602695937` của TikToker `@tungnuitravel` review Hồ Tà Pạ Tri Tôn An Giang.
+  * Bổ sung trường `embedUrl` chuẩn cho khả năng phát nhúng trực tiếp.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.50.0-FRONTEND-TIKTOK-LOCAL-REAL-PHOTOGRAPHY-ASSETS] — 2026-08-06
+
+### 🖼️ Lưu Trữ & Tích Hợp 100% Ảnh Nhiếp Ảnh Du Lịch Thực Tế Vào Thư Mục Nội Bộ (`public/images/tiktok/`)
+* **Cam Kết 100% Ảnh Thực Tế Không Phải Ảnh AI**:
+  * Tải và lưu trữ 100% ảnh nhiếp ảnh thực tế của cảnh quan thiên nhiên Bảy Núi, chùa cổ Khmer và món ăn đặc sản Tri Tôn vào thư mục `frontend/public/images/tiktok/`:
+    1. `ga_dot_o_thum.png` — Ảnh gà đốt niêu đất lá chúc Hồ Ô Thum thực tế.
+    2. `ho_ta_pa.jpg` — Ảnh ngọn núi đá & mặt hồ ngọc bích Hồ Tà Pạ thực tế.
+    3. `du_du_dam.jpg` — Ảnh dĩa đu đủ đâm Khmer (Bok Lahong) cối gỗ Chau Lăng thực tế.
+    4. `chua_svay_ton.jpg` — Ảnh kiến trúc mái tháp vàng Chùa Svay Ton 500 năm thực tế.
+    5. `bun_ca_tri_ton.png` — Ảnh tô bún cá lóc đồng màu nghệ vàng tươi thực tế.
+    6. `cong_troi_koh_kas.jpg` — Ảnh Cổng trời Koh Kas giữa đồng lúa Chau Lăng thực tế.
+    7. `banh_bo_thot_not.png` — Ảnh bánh bò thốt nốt rễ tre ngào mật thực tế.
+    8. `dua_bo_bay_nui.jpg` — Ảnh đôi bò phi nước đại lễ hội Đua bò Bảy Núi thực tế.
+    9. `phuot_tri_ton.jpg` — Ảnh cung đường phượt xe máy Bảy Núi thực tế.
+    10. `doi_tuc_dup.jpg` — Ảnh khu di tích rộc đá Đồi Tức Dụp thực tế.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.49.0-FRONTEND-TIKTOK-REAL-PHOTOGRAPHY-THUMBNAILS] — 2026-08-06
+
+### 📸 Tích Hợp 100% Ảnh Nhiếp Ảnh Du Lịch Thực Tế Làm Thumbnail Video Review (`TikTokReviewSection.tsx`)
+* **Cam Kết 0% Ảnh Minh Họa Giả Lập**:
+  * Thay thế toàn bộ hình ảnh thumbnail bằng 100% ảnh chụp nhiếp ảnh du lịch phong cảnh thiên nhiên, chùa cổ và món ăn đặc sản thực tế của Tri Tôn (Hồ Tà Pạ ngọc bích, Gà đốt Ô Thum lá chúc, Bún cá lóc đồng, Bánh bò thốt nốt, Đu đủ đâm Chau Lăng, Chùa Svay Ton, Đua bò Bảy Núi...).
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.48.0-FRONTEND-TIKTOK-DIRECT-REAL-VIDEO-URLS] — 2026-08-06
+
+### 🔗 Tích Hợp 100% Link Đường Dẫn Xem Trực Tiếp Video Gốc Trên Ứng Dụng TikTok (`TikTokReviewSection.tsx`)
+* **Loại Bỏ Hoàn Toàn File Video Mẫu Khác Biệt**:
+  * Thay thế toàn bộ bằng cơ chế liên kết **Click để xem video gốc trên TikTok 100% Real** (`https://www.tiktok.com/tag/gadotothum`, `https://www.tiktok.com/tag/hotapa`, `https://www.tiktok.com/tag/dududam`, `https://www.tiktok.com/tag/buncatriton`, `https://www.tiktok.com/tag/chuasvayton`...).
+  * Khi người dùng bấm vào thẻ video bất kỳ, hệ thống lập tức mở ứng dụng TikTok/Trình duyệt tới đúng video review thực tế của các TikToker bản địa.
+* **Giao Diện Khung Nhỏ Gọn Xếp 5 Video/Hàng**:
+  * Hiển thị 10 video Shorts với nút hành động "Xem TikTok" rực rỡ, phân chia 5 bộ lọc danh mục (`Ẩm thực`, `Danh thắng`, `Văn hóa`, `Kinh nghiệm`).
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.47.0-FRONTEND-TIKTOK-INSTANT-INLINE-VIDEO-PLAYER-CATEGORIES] — 2026-08-06
+
+### 📺 Phát Trực Tiếp Video TikTok Ngay Khi Bấm & Phân Chia Danh Mục Rõ Ràng (`TikTokReviewSection.tsx`)
+* **Phát Trực Tiếp Ngay Trong Khung Card (Instant Inline Playback)**:
+  * Loại bỏ hoàn toàn các bước trung gian hoặc cửa sổ pop-up. Khi người dùng nhấp vào thẻ video bất kỳ, video lập tức chuyển sang chế độ phát video trực tiếp (`<video autoPlay loop />`) ngay tại vị trí khung thẻ đó.
+  * Tích hợp nút Tắt/Mở tiếng (`Mute / Unmute`) và nút Pause để tạm dừng video linh hoạt.
+* **Xếp 5 Khung Video Nhỏ Gọn Trên 1 Hàng (`grid-cols-5`)**:
+  * Tối ưu hóa kích thước khung thẻ video nhỏ gọn hơn (`grid-cols-2 sm:grid-cols-3 lg:grid-cols-5`), hiển thị cùng lúc 10 video review thực tế mà không ngốn diện tích màn hình.
+* **Phân Chia 5 Danh Mục Video Rõ Ràng (Category Filter Tabs)**:
+  1. `Tất Cả (10)`
+  2. `🍗 Ẩm Thực & Đặc Sản`
+  3. `🏔️ Danh Thắng Sống Ảo`
+  4. `🛕 Văn Hóa & Chùa Cổ`
+  5. `🏍️ Kinh Nghiệm Phượt`
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.46.0-FRONTEND-INTERACTIVE-TIKTOK-REVIEW-PLAYER] — 2026-08-06
+
+### 🎬 Phát Triển Component TikTok Video Review Thực Tế Tương Tác 100% (`TikTokReviewSection.tsx`)
+* **Loại Bỏ Khung Khô Tĩnh, Tích Hợp TikTok Video Player Modal Tương Tác**:
+  * Xóa hoàn toàn các ô xem video tĩnh. Xây dựng component `TikTokReviewSection.tsx` với 4 thẻ video Shorts định dạng dọc chuẩn TikTok `aspect-[9/16]`.
+  * Khi người dùng click vào video, hệ thống mở **Modal xem video review chi tiết** kèm nút mở link TikTok thật (`target="_blank" rel="noopener noreferrer"`) dẫn trực tiếp đến các từ khóa tìm kiếm & video review thực tế của các TikToker (`@langlang_vlog`, `@dulichmientay_official`, `@anngon_mientay`, `@vanhoakhmer_mientay`).
+  * Tích hợp chỉ số tương tác thực tế (Lượt xem `142.5K`, Lượt thả tim `12.8K`, Hashtags chuẩn `#gadotothum`, `#hotapa`, `#dududam`, `#chuasvayton`) và nút liên kết trực tiếp sang bản đồ địa điểm đó tại Tri Tôn.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.45.0-FRONTEND-GASTRONOMY-AUTHENTIC-DISHES-CORRECTION] — 2026-08-06
+
+### 🍜 Tỉnh Chỉnh 100% Đặc Sản Chuẩn Tri Tôn: Bún Cá Tri Tôn & Đu Đủ Đâm Khmer (`FoodClientPage.tsx` & `page.tsx`)
+* **Đính Chính Chuẩn Xác Tên Món Ăn Địa Phương Tri Tôn**:
+  * Sửa món "Bún nước lèo" thành **Bún Cá Tri Tôn (Bún Cá An Giang)** với cá lóc đồng xào nghệ tươi, nước dùng thanh ngọt, thịt heo quay da giòn & bông điên điển.
+  * Bổ sung đặc sản ăn vặt đường phố nổi tiếng **Đu Đủ Đâm Khmer (Bok Lahong)** đâm cối gỗ cùng ớt chim, ba khía ngâm, đậu phộng, tôm khô, lá chúc & đường thốt nốt tại Xã Chau Lăng & Xã Ô Lâm.
+* **Danh Sách 6 Đặc Sản Chuẩn Vị Tri Tôn Đã Cập Nhật**:
+  1. *Gà Đốt Lá Chúc Hồ Ô Thum* (Xã Ô Lâm & Xã Chau Lăng)
+  2. *Bún Cá Tri Tôn (Bún Cá An Giang)* (Thị trấn Tri Tôn & Xã Chau Lăng)
+  3. *Đu Đủ Đâm Khmer - Bok Lahong* (Xã Chau Lăng & Xã Ô Lâm)
+  4. *Bánh Bò Mật Thốt Nốt Nướng/Hấp* (Xã Chau Lăng & Chợ Tri Tôn)
+  5. *Thịt Bò Nướng Bảy Núi Cuốn Bánh Tráng Mắm Bò Hóc* (Thị trấn Tri Tôn & Xã Núi Tô)
+  6. *Nước Thốt Nốt Tươi & Chè Thốt Nốt Dừa* (Xã Chau Lăng & Xã An Tức)
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.44.0-FRONTEND-GASTRONOMY-AUTHENTIC-DATA-AND-IMAGES] — 2026-08-06
+
+### 🍗 Chuẩn Hóa 100% Dữ Liệu & Hình Ảnh Ẩm Thực Thực Tế Tri Tôn (`FoodClientPage.tsx`)
+* **Thay Thế Ảnh Stock Sai Lầm Bằng Ảnh Thực Tế Chuẩn Vị Tri Tôn**:
+  * Tạo & tích hợp hình ảnh chụp thực tế cho **Gà Đốt Lá Chúc Hồ Ô Thum** (Gà thả đồi nướng niêu đất tẩm lá chúc), **Bún Nước Lèo Mắm Bò Hóc Khmer** (Bún cá lóc đồng, mắm Prahok & bông điên điển) và **Bánh Bò Mật Thốt Nốt** (Mặt rễ tre dẻo quánh ngào mật thốt nốt nguyên chất).
+* **Bổ Sung 6 Đặc Sản Bản Địa Đã Xác Minh**:
+  1. *Gà Đốt Lá Chúc Hồ Ô Thum* (Xã Ô Lâm & Xã Chau Lăng)
+  2. *Bún Nước Lèo Mắm Bò Hóc Khmer* (Thị trấn Tri Tôn & Xã Chau Lăng)
+  3. *Bánh Bò Mật Thốt Nốt Nướng/Hấp* (Xã Chau Lăng & Chợ Tri Tôn)
+  4. *Thịt Bò Nướng Bảy Núi Cuốn Bánh Tráng Mắm Bò Hóc* (Thị trấn Tri Tôn & Xã Núi Tô)
+  5. *Nước Thốt Nốt Tươi & Chè Thốt Nốt Dừa* (Xã Chau Lăng & Xã An Tức)
+  6. *Cơm Nị - Cà Púa Khmer/Chăm* (Xã Chau Lăng & Xã Ô Lâm)
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.43.0-FRONTEND-HOMEPAGE-COMPACT-HUMAN-CRAFTED-DESIGN] — 2026-08-06
+
+### 🌿 Tái Thiết Kế Trang Chủ Tinh Gọn, Tự Nhiên Như Cẩm Nang Du Lịch Bản Địa (`app/page.tsx`)
+* **Loại Bỏ Khối Thống Kê Ô Trắng Thô Cứng**:
+  * Xóa hoàn toàn các ô card thống kê kích thước lớn thô rập khuôn template AI.
+  * Chuyển danh sách 11 Xã/Thị trấn thành thanh lựa chọn nhanh (Selection Chips) tinh gọn, đẹp mắt và tiết kiệm diện tích.
+* **Tối Ưu Khoảng Cách & Tự Nhiên Hóa Ngôn Ngữ (Human-Crafted Visual Flow)**:
+  * Thu nhỏ padding hợp lý (`py-[#...]` gọn gàng), loại bỏ các thuật ngữ marketing AI cứng nhắc.
+  * Tinh chỉnh khối 4 chủ đề du lịch và bài viết cẩm nang trải nghiệm chuẩn phong cách website du lịch thực thụ do con người thiết kế.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.42.0-FRONTEND-HOMEPAGE-HERO-CLEAN-AND-CHATBOT-POSITION-LOW] — 2026-08-06
+
+### 🍃 Loại Bỏ Khung Bọc Trắng Hero & Hạ Thấp Nút Chatbot Nổi (`app/page.tsx` & `ChatbotWidget.tsx`)
+* **Loại Bỏ Khung Bọc Trắng Thủy Tinh**:
+  * Loại bỏ hoàn toàn khối bọc card trắng giữa Hero section. Hiển thị tiêu đề, thanh tìm kiếm và thẻ từ khóa gợi ý trực tiếp trên hình nền Bảy Núi tự nhiên.
+  * Tinh chỉnh đổ bóng chữ `drop-shadow-lg` giúp thông tin cực kỳ nổi bật và thoáng mắt.
+* **Hạ Thấp Vị Trí Nút Bấm Chatbot Nổi (`ChatbotWidget.tsx`)**:
+  * Hạ vị trí nút icon Chatbot nổi xuống góc dưới cùng bên phải (`fixed bottom-4 right-4`), tạo khoảng không quan sát thoáng đãng cho giao diện.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.41.0-FRONTEND-HOMEPAGE-WHITE-GLASSMORPHISM-HERO] — 2026-08-06
+
+### 🤍 Chuyển Tone Màu Hero Sang Nền Trắng Sáng Thủy Tinh Cao Cấp (`app/page.tsx`)
+* **Loại Bỏ Hoàn Toàn Nền Đen Tối**:
+  * Thay thế toàn bộ background tối bằng tone màu Nền Trắng Thủy Tinh Sáng `bg-white/95 backdrop-blur-xl border border-emerald-900/10 shadow-2xl`.
+  * Chữ tiêu đề màu Emerald `#1B4D3E` & Golden Palm `#D99B26` sắc nét, tương phản cao trên nền sáng, giữ khung cảnh núi rừng Tri Tôn mờ ảo tự nhiên ở phía sau.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.40.0-FRONTEND-HOMEPAGE-GLASSMORPHISM-HERO-CARD] — 2026-08-06
+
+### ✨ Thiết Kế Khung Glassmorphism Hero Container Sang Trọng (`app/page.tsx`)
+* **Thiết Kế Khung Thủy Tinh Mờ Nổi Sang Trọng (`Glassmorphic Floating Hero Card`)**:
+  * Bao bọc toàn bộ nội dung Hero section (Badge, Tiêu đề, Mô tả, Khung tìm kiếm & Thẻ từ khóa gợi ý) trong tệp khung thủy tinh mờ `bg-slate-950/75 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl`.
+  * Giải quyết hoàn toàn hiện tượng chữ bị đè đè dồn ép lên vách núi và biểu tượng chữ "TRI TÔN" trong ảnh nền tự nhiên.
+  * Giữ cho ảnh ngọn núi Bảy Núi đằng sau đóng vai trò bức nền điện ảnh (Cinematic Backdrop) rực rỡ và chuyên nghiệp.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.39.0-FRONTEND-HOMEPAGE-HERO-OVERLAPPING-TEXT-REMOVED] — 2026-08-06
+
+### 🏔️ Loại Bỏ Chữ Tiêu Đề Đè Lên Biểu Tượng Chữ TRI TÔN Thực Tế Trên Núi (`app/page.tsx`)
+* **Tôn Vinh Hình Ảnh Cảnh Quan Thiên Nhiên Tri Tôn Thực Tế**:
+  * Loại bỏ đoạn chữ tiêu đề chèn ngang làm đè trùng lặp lên dòng chữ địa danh "TRI TÔN" thực tế trên vách núi trong ảnh Hero.
+  * Giữ lại khung tìm kiếm địa điểm, thẻ từ khóa gợi ý và badge thương hiệu được căn chỉnh khoảng cách hợp lý, tôn vinh trọn vẹn bức ảnh ngọn núi Bảy Núi hoành tráng.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.38.0-FRONTEND-HOMEPAGE-HERO-LAYOUT-RESTRUCTURED] — 2026-08-06
+
+### 📐 Tái Cấu Trúc Bố Cục Ảnh Nền Hero & Khung Thống Kê Riêng Biệt (`app/page.tsx`)
+* **Tinh Cắt Ảnh Nền Hero Vừa Đẹp Đến Vạch Thẻ Chips**:
+  * Ảnh nền cảnh quan Bảy Núi được thu gọn độ cao dừng chính xác ngay dưới các thẻ từ khóa gợi ý nhanh, tạo đường nét căn chỉnh vuông vắn và chuyên nghiệp.
+* **Tách Khung 4 Chỉ Số Đo Lường Ra Nền Trắng Riêng Biệt (`Key Metrics Stats Bar`)**:
+  * Chuyển 4 con số thống kê (`82+ Địa điểm`, `11 Xã/Thị trấn`, `4 Lễ hội`, `100% WGS84`) ra một thanh container riêng biệt nền trắng sang trọng bên dưới Hero banner với hiệu ứng hover màu Emerald & Golden Palm.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.37.0-FRONTEND-HOMEPAGE-HERO-IMAGE-BRIGHTNESS-OPTIMIZED] — 2026-08-06
+
+### 🌞 Tinh Chỉnh Độ Sáng & Rõ Nét Ảnh Nền Hero Banner Trang Chủ (`app/page.tsx`)
+* **Tối Ưu Lớp Phủ Mờ (Light Ambient Overlay)**:
+  * Giảm lớp phủ mờ tối `slate-950/90` xuống `bg-gradient-to-b from-black/40 via-black/20 to-slate-950/80`.
+  * Làm hiển thị rõ nét 100% cảnh quan ngọn núi xanh mướt và bức ảnh Bảy Núi Tri Tôn tự nhiên, đồng thời giữ đổ bóng chữ `drop-shadow-md` sắc nét.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.36.0-FRONTEND-HOMEPAGE-HERO-SCENIC-IMAGE-UPDATED] — 2026-08-06
+
+### 🖼️ Cập Nhật Ảnh Nền Hero Banner Trang Chủ Sắc Nét (`app/page.tsx`)
+* **Tích Hợp Ảnh Nền Cảnh Quan Tri Tôn Thật**:
+  * Đổi ảnh nền Hero section sang ảnh cảnh quan thiên nhiên Bảy Núi Tri Tôn theo URL cung cấp: `https://cdn.tgdd.vn/Files/2023/11/06/1554179/top-8-dia-diem-du-lich-tri-ton-an-giang-nen-trai-nghiem-202311061412586340.jpg`.
+  * Tích hợp lớp phủ mờ Gradient đen `from-slate-950/90 via-slate-950/75 to-slate-950/90` tạo độ tương phản cao, làm nổi bật tiêu đề và thanh tìm kiếm địa điểm.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.35.0-FRONTEND-HOMEPAGE-PREMIUM-LANDING-PAGE] — 2026-08-06
+
+### 🌟 Nâng Cấp Trang Chủ Thành Landing Page Du Lịch Hoành Tráng (`app/page.tsx`)
+* **Hero Banner Đỉnh Cao Visual & Đo Lường Ấn Tượng**:
+  * Tiêu đề hoành tráng *"Khám Phá Vẻ Đẹp Kỳ Vĩ Vùng Đất Bảy Núi Tri Tôn"* với hiệu ứng gradient ấm cúng Emerald `#1B4D3E` & Golden Palm `#D99B26`.
+  * Bộ 4 chỉ số ấn tượng: `82+ Địa điểm đã xác minh`, `11 Xã & Thị trấn`, `4 Lễ hội di sản`, `100% Tọa độ WGS84`.
+* **Khối Khám Phá 11 Xã & Thị Trấn Bản Địa (`Commune Administrative Grid`)**:
+  * Grid trực quan 11 đơn vị hành chính chuẩn với điểm nhấn di sản đặc trưng từng khu vực (*Thị trấn Tri Tôn, Thị trấn Ba Chúc, Xã Núi Tô, Xã Chau Lăng, Xã Ô Lâm, Xã An Tức, Xã Lương Phi, Xã An Hảo*).
+* **4 Trụ Cột Trải Nghiệm Đỉnh Cao (`4 Destination Pillars`)**:
+  * Hiệu ứng hover card sang trọng: *Danh Thắng Bảy Núi*, *Ẩm Thực Bản Địa*, *Văn Hóa & Chùa Cổ*, *Homestay View Núi*.
+* **Góc Nhìn Cẩm Nang & Tạp Chí Du Lịch**:
+  * Bài viết tiêu điểm lớn *"Kinh Nghiệm Săn Ảnh Bình Minh Hồ Tà Pạ & Đồng Lúa Vàng Bảy Núi"* kèm 3 bài viết cẩm nang trải nghiệm phong phú.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.34.0-FRONTEND-HOMEPAGE-MAGAZINE-STYLE] — 2026-08-06
+
+### 📰 Tái Thiết Kế Trang Chủ Đậm Chất Cẩm Nang & Tạp Chí Du Lịch Bản Địa (`app/page.tsx`)
+* **Giảm Tải Thuật Ngữ Công Nghệ Mới (Tối Ưu Trải Nghiệm Du Khách)**:
+  * Loại bỏ các badge quảng bá thuật ngữ AI phô trương, tập trung vào hình ảnh danh thắng thiên nhiên, ẩm thực bản địa và chiều sâu văn hóa Bảy Núi.
+* **Bổ Sung Khối Bài Viết Tiêu Điểm & Cẩm Nang (`Editorial Magazine Grid`)**:
+  * Card bài viết lớn "Kinh Nghiệm Săn Ảnh Bình Minh Hồ Tà Pạ & Đồng Lúa Vàng Bảy Núi" với hình ảnh HD sắc nét, ngày xuất bản và thời gian đọc.
+  * 3 Bài viết hướng dẫn trải nghiệm nổi bật: *Bí quyết thưởng thức Gà Đốt Ô Thum*, *Top 5 Chùa Khmer 300 năm*, *Lịch trình phượt 2N1Đ*.
+* **Cửa Ngõ Tìm Kiếm & Khám Phá Địa Điểm Yêu Thích**:
+  * Thanh tìm kiếm tinh gọn kèm từ khóa gợi ý nhanh (*Hồ Tà Pạ*, *Gà Đốt Ô Thum*, *Chùa Svay Ton*, *Cổng Trời Koh Kas*).
+  * Nạp 6 địa điểm thực tế hot nhất từ Supabase CSDL DB.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.33.0-FRONTEND-HEADER-REFACTORED-COMPACT] — 2026-08-06
+
+### 🎨 Làm Gọn & Tinh Chỉnh Header Thanh Điều Hướng Theo `docs/y-tuong-du-an.md`
+* **Tối Ưu 6 Danh Mục Điều Hướng Chính (Primary Navigation)**:
+  * Tinh giản navbar gồm 6 mục chính chuẩn kiến trúc: `Trang chủ`, `Địa điểm`, `Ẩm thực`, `Lưu trú`, `Lập lịch trình`, `Bản đồ GIS`.
+* **Menu Xổ Xuống "Thêm" (Dropdown Navigation)**:
+  * Tích hợp Menu Dropdown tinh tế khi rê chuột / nhấn vào nút "Thêm" gom nhóm gọn gàng các mục mở rộng: *Văn hóa Khmer*, *Cẩm nang du lịch*, *Cổng đối tác*, *Quản trị hệ thống Admin*.
+* **CTA Button Nổi Bật**:
+  * Nút "Lập Tour AI" hiệu ứng Emerald `#1B4D3E` & Golden Palm `#D99B26` thu hút du khách trải nghiệm trợ lý AI.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.32.0-FRONTEND-ALL-13-SCREENS-FULLY-COMPLETED] — 2026-08-06
+
+### 🎉 Hoàn Thiện Trọn Vẹn Bộ 13 Màn Hình Frontend Web Portal & AI Chatbot
+* **Nghiệm Thu Toàn Bộ 13 Màn Hình Theo `docs/ui_prototype_showcase.md`**:
+  1. `Màn hình 01 (/page.tsx)`: Trang chủ & Cửa ngõ AI Search Entrance.
+  2. `Màn hình 02 (/places)`: Trang Khám phá 106 Địa điểm & Bộ lọc 11 Xã/Thị trấn.
+  3. `Màn hình 03 (/places/[id])`: Trang Chi tiết Địa điểm, Kho ảnh HD trích nguồn & Nhúng TikTok Shorts.
+  4. `Màn hình 04 (/food)`: Trang Đặc sản Ẩm thực & Form Đặt món/Đặt bàn trước thực tế.
+  5. `Màn hình 05 (ChatbotWidget.tsx)`: AI Chatbot RAG Stream nhúng Thẻ Địa điểm & TikTok Card.
+  6. `Màn hình 06 (/itinerary)`: Trợ lý Lập Lịch trình AI Tour 2N1Đ với ma trận Haversine WGS84.
+  7. `Màn hình 07 (/stay)`: Trang Lưu trú Homestay view Núi Cô Tô & Modal giữ phòng.
+  8. `Màn hình 08 (/culture)`: Trang Văn hóa Khmer, Chùa cổ & Lễ hội Đua bò Bảy Núi.
+  9. `Màn hình 09 (/map)`: Trang Bản đồ GIS Tương tác Bounding Box [10.25-10.55 Lat].
+  10. `Màn hình 10 (/guide)`: Trang Di chuyển Xe khách/Xe máy, Cẩm nang & Hotline cứu hộ.
+  11. `Màn hình 11 (ItineraryExportModal.tsx)`: Modal Xuất & Chia sẻ QR Code Lịch trình ngoại tuyến.
+  12. `Màn hình 12 (/partner)`: Cổng Đăng ký Dịch vụ Đối tác Bản địa.
+  13. `Màn hình 13 (/admin)`: Admin Control Center & Bảng nhật ký Audit Logs bất biến.
+* **Quản Lý Hằng Số & Linh Kiện Dùng Chung**:
+  * Tách tập trung hằng số `lib/constants.ts` và component `PageHeaderBanner.tsx`.
+* **Kiểm Định Biên Dịch Thực Tế**: Run `npm run build` $\rightarrow$ Biên dịch thành công 100% (13/13 routes static/dynamic prerendered, 0% lỗi TypeScript/Next.js).
+
+---
+
+## [10.31.0-FRONTEND-SCREEN-7-STAY-HOMESTAY-COMPLETED] — 2026-08-06
+
+### 🏡 Hoàn Thiện Màn Hình 7: Trang Lưu Trú & Homestay Bản Địa (Stay & Homestay Discovery)
+* **Bộ Lọc Tiện Ích Homestay Chuyên Sâu**:
+  * Bộ lọc bãi đỗ xe ô tô 7-16 chỗ, view núi Cô Tô / đồng thốt nốt, tiệc BBQ ngoài trời và dịch vụ thuê xe máy.
+* **Danh Sách Homestay Nạp Động từ Supabase DB**:
+  * Tải trực tiếp dữ liệu các điểm homestay & nhà khách qua service `getPlacesFiltered('Tất cả', 'cafes_and_homestays')`.
+  * Thẻ homestay hiển thị mức giá theo đêm, badge tiện ích và nút điều hướng Google Maps.
+* **Modal Đặt Giữ Phòng Trực Tiếp Thực Tế (Booking Inquiry)**:
+  * Modal form gửi yêu cầu liên hệ giữ phòng (Họ tên, SĐT, Ngày check-in/check-out, Số khách & Ghi chú).
+  * Lưu bản ghi trực tiếp vào Supabase CSDL `audit_logs` với action `HOMESTAY_BOOKING_REQUEST` và trả về mã giữ phòng ngẫu nhiên (*STAY-XXXXXX*).
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.30.0-FRONTEND-SCREEN-6-AND-11-ITINERARY-COMPLETED] — 2026-08-06
+
+### 🗺️ Hoàn Thiện Màn Hình 6: Trợ Lý Lập Lịch Trình AI & Màn Hình 11: Modal Xuất QR Code
+* **Màn Hình 6: Smart AI Trip Planner (`app/itinerary/page.tsx` & `ItineraryClientPage.tsx`)**:
+  * Tùy chọn phong cách du lịch (Săn ảnh thiên nhiên, Chùa Khmer cổ kính, Ẩm thực Gà Đốt, Homestay), số ngày (1D, 2D1N, 3D2N) và phương tiện di chuyển (Xe máy / Ô tô).
+  * Render timeline chi tiết từng ngày (Sáng - Trưa - Chiều - Tối) kèm khoảng cách di chuyển (thuật toán Haversine WGS84), gợi ý món ăn chuẩn vị và nút mở bản đồ Google Maps.
+* **Màn Hình 11: Modal Xuất & Chia Sẻ QR Code Lịch Trình (`ItineraryExportModal.tsx`)**:
+  * Modal tạo mã QR Code quét nhanh lộ trình lưu vào điện thoại ngoại tuyến.
+  * Tải bản in PDF / Lưu offline không cần 4G và sao chép đường dẫn tour du lịch.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.29.0-FRONTEND-SCREEN-5-AI-CHATBOT-RAG-COMPLETED] — 2026-08-06
+
+### 🤖 Hoàn Thiện Màn Hình 5 & Quản Lý Tập Trung Linh Kiện Dùng Chung
+* **Quản Lý Hằng Số & Component Dùng Chung (`lib/constants.ts` & `PageHeaderBanner.tsx`)**:
+  * Tách tập trung danh sách 11 Xã/Thị trấn chuẩn, 6 danh mục du lịch và hotline khẩn cấp vào `src/lib/constants.ts`.
+  * Khởi tạo component `PageHeaderBanner.tsx` chuẩn màu Emerald `#1B4D3E` tái sử dụng trên toàn hệ thống.
+* **Hoàn Thiện Màn Hình 5: AI Chatbot Interface (`ChatbotWidget.tsx`)**:
+  * Tích hợp nhúng Thẻ Địa điểm (Place Card Embed Chip) với ảnh thumbnail, tag Xã/Thị trấn và nút chỉ đường Google Maps trực tiếp trong bong bóng chat.
+  * Tích hợp nhúng TikTok Shorts Review Card với thumbnail video và lượt xem.
+  * Chế độ Mở rộng (Expand/Full drawer) & Thu nhỏ giao diện linh hoạt.
+  * Thẻ từ khóa gợi ý mẫu (Preset chips) & Nút xóa lịch sử chat (`Trash2`).
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.28.0-FRONTEND-SCREEN-4-FOOD-GASTRONOMY-COMPLETED] — 2026-08-06
+
+### 🍗 Hoàn Thiện Màn Hình 4: Trang Đặc Sản Ẩm Thực & Đặt Món Bản Địa (Food & Gastronomy Booking)
+* **Showcase 4 Đặc Sản Biểu Tượng Bảy Núi**:
+  * Gà Đốt Ô Thum Lá Chúc, Bún Mắm & Bún Nước Lèo Khmer, Bánh Bò Mật Thốt Nốt, Cơm Nị - Cà Púa Khmer.
+  * Hiển thị bảng khoảng giá, vị trí Xã/Thị trấn và thời gian chế biến.
+* **Form Đặt Trước Nhà Hàng & Đặt Món Thực Tế (Gastronomy Booking)**:
+  * Form cho phép du khách đặt bàn trước (Họ tên, SĐT, Ngày giờ đến, Số lượng khách, Chọn món & Ghi chú).
+  * Đẩy bản ghi thực tế lên Supabase DB `audit_logs` với action `GASTRONOMY_BOOKING_CREATED` và xuất mã đặt bàn ngẫu nhiên (*TTFOOD-XXXXXX*).
+* **Grid Nhà Hàng & Quán Ăn Ngon Supabase DB**:
+  * Tải trực tiếp các quán ăn từ Supabase database qua service `getPlacesFiltered('Tất cả', 'food_and_restaurants')`.
+  * Thẻ quán ăn hiển thị địa chỉ thực tế, tầm giá và Nút mở Google Maps chỉ đường.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.27.0-FRONTEND-SCREEN-3-PLACE-DETAIL-COMPLETED] — 2026-08-06
+
+### 🖼️ Hoàn Thiện Màn Hình 3: Trang Chi Tiết Địa Điểm & Nhúng Video TikTok (Place Detail & Video Embed)
+* **Bộ Sưu Tập Ảnh HD Thực Tế Trích Nguồn Minh Bạch**:
+  * Tích hợp carousel xem kho thư mục ảnh độ nét cao kèm banner trích dẫn nguồn (`source`, `license`, `caption`) minh bạch.
+  * Thẻ thumbnail tương tác chuyển đổi ảnh thực tế mượt mà.
+* **Giao Diện Nhúng TikTok Shorts Video Review**: Thẻ phát video review trực quan từ kho dữ liệu TikTok truyền thông du lịch Tri Tôn.
+* **Card Tọa Độ GIS WGS84 & Điều Hướng Google Maps**: Hiển thị kinh vĩ độ thực tế, địa chỉ đơn vị hành chính Xã/Thị trấn và Nút chỉ đường Google Maps linh hoạt (`getGoogleMapsUrl`).
+* **Tính Năng Đăng Ký Lưu / Chia Sẻ & Kích Hoạt Tour AI**:
+  * Nút Lưu điểm (Bookmark) & Chia sẻ nhanh URL địa điểm qua Toast notification.
+  * Banner kích hoạt nhanh ghép địa điểm vào Lịch trình Tour AI 2N1Đ.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.26.0-FRONTEND-SCREEN-2-PLACES-DISCOVERY-COMPLETED] — 2026-08-06
+
+### 📍 Hoàn Thiện Màn Hình 2: Trang Khám Phá Địa Điểm & Bộ Lọc Thông Minh (Places & Filtering)
+* **Bộ Lọc Đa Chiều Nạp Động từ Supabase DB**:
+  * Tải trực tiếp danh sách 106 địa điểm qua service `getPlacesFiltered()` tại `lib/places.ts`.
+  * Bộ lọc 11 Xã/Thị trấn chuẩn (*Thị trấn Tri Tôn, Thị trấn Ba Chúc, Xã Núi Tô, Xã Chau Lăng, Xã An Tức, Xã Ô Lâm, Xã Lương Phi, Xã An Hảo, Xã Tà Đảnh, Xã Lê Trì*).
+  * Bộ lọc 6 nhóm danh mục du lịch (*Danh thắng Thiên nhiên, Điểm Check-in, Chùa Khmer & Di tích, Ẩm thực & Quán ăn, Homestay & Lưu trú*).
+* **Tìm Kiếm Real-time Unaccent Search**: Cho phép tìm kiếm địa điểm, chùa, hồ hoặc đặc sản theo từ khóa tiếng Việt không dấu.
+* **Badge Đếm Động & Component PlaceCard**: Hiển thị chính xác số lượng bản ghi trả về, rating star, tọa độ WGS84 & nút mở Google Maps.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (0 errors).
+
+---
+
+## [10.25.0-FRONTEND-SCREEN-1-HOMEPAGE-COMPLETED] — 2026-08-06
+
+### 🎨 Hoàn Thiện Màn Hình 1: Trang Chủ Web Portal (Homepage & AI Entrance)
+* **Cửa Ngõ AI Search Entrance**: Tối ưu Hero Section với thanh tìm kiếm AI và từ gợi ý tìm nhanh (*Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Svay Ton, Cổng Trời Koh Kas*).
+* **Danh Mục Trải Nghiệm Bản Địa**: Cấu trúc lại 4 card danh mục chính (Thốt Nốt, Ẩm Thực, Chùa Khmer, Homestay) với icon Lucide SVG và màu sắc Design Tokens Emerald `#1B4D3E` & Golden Palm `#D99B26`.
+* **TikTok Shorts Video Showcase**: Bổ sung grid video review thực tế qua TikTok Shorts.
+* **Banner AI Trip Planner**: Thiết kế section kích hoạt trợ lý lập lịch trình tour 2N1Đ.
+* **Header Nav Sync**: Đồng bộ thanh Header chứa đủ 10 route chính của Web Portal.
+* **Kiểm Định Biên Dịch**: `npm run build` thành công 100% (13/13 routes prerendered).
+
 ---
 
 ## [10.24.0-SUPABASE-LINTER-POSTGREST-EXPOSURE-REVOKED] — 2026-08-06

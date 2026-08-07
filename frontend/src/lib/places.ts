@@ -30,6 +30,13 @@ export async function getFeaturedPlaces(limit: number = 6): Promise<Place[]> {
  * Fetch all places filtered by commune dynamically from Supabase
  */
 export async function getPlacesByCommune(commune?: string): Promise<Place[]> {
+  return getPlacesFiltered(commune);
+}
+
+/**
+ * Fetch all places filtered by commune and category dynamically from Supabase
+ */
+export async function getPlacesFiltered(commune?: string, category?: string): Promise<Place[]> {
   try {
     let query = supabase
       .from('places')
@@ -41,16 +48,20 @@ export async function getPlacesByCommune(commune?: string): Promise<Place[]> {
       query = query.eq('commune', commune);
     }
 
+    if (category && category !== 'Tất cả') {
+      query = query.or(`category.eq.${category},tourism_category.eq.${category}`);
+    }
+
     const { data, error } = await query;
 
     if (error || !data) {
-      console.error('Error fetching places by commune:', error);
+      console.error('Error fetching places from Supabase:', error);
       return [];
     }
 
     return data as Place[];
   } catch (err) {
-    console.error('Failed to query Supabase places by commune:', err);
+    console.error('Failed to query Supabase places:', err);
     return [];
   }
 }
@@ -77,3 +88,4 @@ export async function getPlaceById(id: string): Promise<Place | null> {
     return null;
   }
 }
+

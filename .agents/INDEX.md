@@ -1,7 +1,7 @@
-﻿# INDEX — AI Knowledge Package (.agents/)
+# INDEX — AI Knowledge Package (.agents/)
 
 ## Load Order by Session Type
-- DEV: AGENTS.md -> response_format.md -> coding_dna.md -> ai_rules.md
+- DEV: AGENTS.md -> response_format.md -> coding_dna.md -> ai_rules.md -> senior_ui_designer.md -> ai_frontend_contract.md
 - CHATBOT: AGENTS.md -> response_format.md -> ai_persona.md -> prompt_library.md
 - ADMIN/REVIEW: AGENTS.md -> response_format.md -> ai_rules.md -> permanent_memory.md
 
@@ -17,3 +17,5 @@
 9. coding_dna.md — Code standards & patterns
 10. brand_vocabulary.md — Terms & UI copy
 11. brand_identity.md — Brand system
+12. senior_ui_designer.md — Senior UI/UX Designer Agent System Prompt
+13. ai_frontend_contract.md — English machine-readable AI Frontend Contract
