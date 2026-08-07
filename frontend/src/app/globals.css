@@ -1,48 +1,58 @@
+@import "./lovable.css";
 @import "tailwindcss";
 
-:root {
-  --color-primary: #1B4D3E;
-  --color-primary-hover: #143B2F;
-  --color-primary-light: #E6F0EC;
-  
-  --color-secondary: #D99B26;
-  --color-secondary-hover: #B8801C;
-  --color-secondary-light: #FFF8E7;
+@layer base {
+  :root {
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
-  --color-bg-light: #F8F9FA;
-  --color-text-main: #0F172A;
-  --color-text-muted: #64748B;
-  --color-border: #E2E8F0;
+    --primary: #0F5132;
+    --primary-hover: #0A3622;
+    --primary-light: #E8F5E9;
+    --secondary: #D97706;
+    --secondary-hover: #B45309;
+    --secondary-light: #FEF3C7;
+    --surface-bg: #F8FAFC;
+    --surface-card: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+  }
+
+  body {
+    background-color: var(--surface-bg);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
 }
 
-@theme inline {
-  --color-primary: #1B4D3E;
-  --color-primary-hover: #143B2F;
-  --color-primary-light: #E6F0EC;
-  --color-secondary: #D99B26;
-  --color-secondary-hover: #B8801C;
-  --color-secondary-light: #FFF8E7;
+.glass-nav {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-body {
-  background-color: var(--color-bg-light);
-  color: var(--color-text-main);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  margin: 0;
-  padding: 0;
+.hero-gradient {
+  background: linear-gradient(135deg, #0F5132 0%, #166534 50%, #15803D 100%);
 }
 
-.emerald-gradient {
-  background: linear-gradient(135deg, #1B4D3E 0%, #143B2F 100%);
-}
-
-.golden-badge {
-  background-color: #FFF8E7;
-  color: #B8801C;
+.badge-gold {
+  background-color: #FEF3C7;
+  color: #B45309;
   border: 1px solid #FDE68A;
 }
 
-.glass-header {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(15, 81, 50, 0.15);
 }
