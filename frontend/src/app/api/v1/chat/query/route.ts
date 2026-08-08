@@ -11,25 +11,30 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Huyện Tri Tôn, Tỉnh An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
 
-QUY TẮC ĐỊNH DẠNG CÂU TRẢ LỜI CHUẨN (MANDATORY FORMATTING CONTRACT):
+QUY TẮC PHẠM VI & ĐỊNH DẠNG ĐẦU RA CAO CẤP (HIGH-QUALITY RESPONSE CONTRACT):
 1. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi nằm ngoài phạm vi Tri Tôn, phản hồi chính xác: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
+   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" trong mô tả địa danh, luôn gọi tên Xã / Thị trấn cụ thể (VD: Xã Núi Tô, Xã Ô Lâm, Xã Lương Phi, Thị trấn Tri Tôn).
 
-2. **Cấu trúc câu trả lời chuẩn & Trình bày gọn gàng**:
-   Trình bày rõ ràng bằng Markdown với tiêu đề (###), in đậm (**text**), danh sách gạch đầu dòng (-) và khoảng cách dòng hợp lý.
-   
-   Nếu người dùng hỏi về **LỊCH TRÌNH / TOUR DU LỊCH**, bắt buộc trả lời theo cấu trúc Lộ trình Khung giờ chuẩn sau:
-   ### 🌟 Tóm Tắt Lịch Trình Tour
-   (Giới thiệu ngắn 1-2 câu về tổng quan tour Bảy Núi)
+2. **Cấu trúc câu trả lời nâng cao**:
+   Sử dụng trình bày Markdown chuyên nghiệp với tiêu đề (###), in đậm (**text**), danh sách gạch đầu dòng (-) và bố cục mạch lạc.
 
-   ### 📅 Lộ Trình Chi Tiết
-   - **Sáng (06:00 - 11:30)**: [Tên địa điểm] — [Hoạt động & Trải nghiệm check-in]
-   - **Trưa (11:30 - 13:30)**: [Thưởng thức đặc sản Gà Đốt Ô Thum / Cháo Bò] — [Quán đề xuất]
-   - **Chiều (14:00 - 17:30)**: [Tên địa điểm] — [Khung giờ vàng hoàng hôn]
-   - **Tối (18:00 - 21:00)**: [Lưu trú Homestay / Dạo phố]
+   MẪU PHẢN HỒI KHI HỎI VỀ ĐỊA ĐIỂM / LỊCH TRÌNH / ẨM THỰC:
+   ### 🌟 [Tên địa điểm / Tên tour gợi ý]
+   [Giới thiệu hấp dẫn 1-2 câu về vẻ đẹp hoặc nét đặc sắc của điểm đến].
 
-   ### 💡 Lưu Ý & Mẹo Trải Nghiệm
-   - [Nên đi trang phục gì, phương tiện di chuyển, thời tiết]`;
+   ### 📅 Lộ Trình Khung Giờ Đề Xuất
+   - **Sáng (06:00 - 11:30)**: [Hoạt động ngắm bình minh, chụp ảnh check-in]
+   - **Trưa (11:30 - 13:30)**: [Thưởng thức Gà Đốt Ô Thum / Cháo bò lá trúc tại quán nổi tiếng]
+   - **Chiều (14:00 - 17:30)**: [Khám phá di sản Chùa Khmer / Hồ nước & Hoàng hôn]
+   - **Tối (18:00 - 21:00)**: [Lưu trú Homestay view núi / Dạo phố đêm Tri Tôn]
+
+   ### 🍜 Đặc Sản & Trải Nghiệm Không Thể Bỏ Qua
+   - **[Tên món đặc sản]**: [Mô tả vị ngon & Mẹo ăn chuẩn vị địa phương]
+
+   ### 💡 Mẹo Trải Nghiệm & Khung Giờ Vàng
+   - **Thời điểm vàng**: [Khung giờ chụp ảnh đẹp nhất trong ngày]
+   - **Phương tiện & Lưu ý**: [Đường đi, trang phục đi Chùa Khmer thích hợp]`;
 
 // Multi-LLM Fallback Generator
 async function generateAIResponse(userQuery: string, ragContext: string): Promise<string> {
@@ -156,11 +161,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(data);
       }
     } catch {
-      // Backend not running -> Seamlessly fallback to Next.js Direct Multi-LLM RAG Engine
+      // Backend not running -> Fallback to Next.js Direct Multi-LLM RAG Engine
     }
 
     // 2. Direct Next.js RAG Engine Execution
-    // Check out of scope keywords
     const lowerQuery = queryStr.toLowerCase();
     const isOutScope =
       (lowerQuery.includes('hà nội') || lowerQuery.includes('sài gòn') || lowerQuery.includes('đà nẵng') || lowerQuery.includes('thời tiết mỹ') || lowerQuery.includes('cổ phiếu')) &&
@@ -175,10 +179,10 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Query Supabase for relevant places
+    // Query Supabase for enriched place metadata
     const { data: places } = await supabase
       .from('places')
-      .select('id, slug, name, commune, category, rating, image_url, description')
+      .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_range, best_time_to_visit')
       .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
       .limit(4);
 
@@ -187,7 +191,12 @@ export async function POST(req: NextRequest) {
 
     if (places && places.length > 0) {
       ragContext = places
-        .map((p) => `- ${p.name} (${p.commune}): ${p.category}. Đánh giá: ${p.rating}/5. Mới: ${p.description || ''}`)
+        .map(
+          (p) =>
+            `- ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}. Đánh giá: ${p.rating}/5. Khung giờ vàng: ${
+              Array.isArray(p.golden_time_windows) ? p.golden_time_windows.join(', ') : 'Cả ngày'
+            }. Mô tả: ${p.description || ''}`
+        )
         .join('\n');
 
       places.forEach((p) => {
@@ -205,12 +214,14 @@ export async function POST(req: NextRequest) {
       // Fetch top 3 hot places as fallback context
       const { data: hotPlaces } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, rating, image_url')
+        .select('id, slug, name, commune, category, rating, image_url, golden_time_windows')
         .eq('is_hot', true)
         .limit(3);
 
       if (hotPlaces) {
-        ragContext = hotPlaces.map((p) => `- ${p.name} (${p.commune}): ${p.category}`).join('\n');
+        ragContext = hotPlaces
+          .map((p) => `- ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}`)
+          .join('\n');
         hotPlaces.forEach((p) => formattedPlaces.push(p));
       }
     }
@@ -224,16 +235,39 @@ export async function POST(req: NextRequest) {
       .select('id, title, video_url, thumbnail_url, author_name, view_count')
       .limit(2);
 
+    // Context-aware dynamic suggestions
+    let suggestions = [
+      'Đặc sản Gà Đốt Ô Thum ở đâu ngon?',
+      'Lộ trình tham quan 2 ngày 1 đêm Tri Tôn',
+      'Khung giờ chụp ảnh đẹp nhất Hồ Tà Pạ',
+    ];
+
+    if (lowerQuery.includes('ăn') || lowerQuery.includes('gà đốt') || lowerQuery.includes('cháo bò')) {
+      suggestions = [
+        'Quán Gà Đốt Ô Thum chuẩn vị nhất',
+        'Địa chỉ quán Cháo Bò lá trúc nổi tiếng',
+        'Bún nước lèo Khmer Tri Tôn',
+      ];
+    } else if (lowerQuery.includes('chùa') || lowerQuery.includes('khmer') || lowerQuery.includes('văn hóa')) {
+      suggestions = [
+        'Đường lên Chùa Tà Pạ',
+        'Cổng trời Chùa Koh Kas',
+        'Lễ hội Đua bò Khmer Tri Tôn diễn ra khi nào?',
+      ];
+    } else if (lowerQuery.includes('ở') || lowerQuery.includes('homestay') || lowerQuery.includes('khách sạn')) {
+      suggestions = [
+        'Homestay view núi Cô Tô đẹp nhất',
+        'Khách sạn trung tâm Thị trấn Tri Tôn',
+        'Khu cắm trại Hồ Ô Thum',
+      ];
+    }
+
     return NextResponse.json({
       text_response: aiTextResponse,
       ui_components: formattedPlaces.length > 0 ? [{ type: 'place_grid', data: formattedPlaces }] : [],
       places: formattedPlaces,
       videos: videos || [],
-      suggestions: [
-        'Đặc sản Gà Đốt Ô Thum ở đâu ngon?',
-        'Lộ trình tham quan 2 ngày 1 đêm Tri Tôn',
-        'Khung giờ chụp ảnh đẹp nhất Hồ Tà Pạ',
-      ],
+      suggestions,
     });
   } catch (error: unknown) {
     console.error('[ChatProxy] Error:', error);
