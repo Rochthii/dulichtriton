@@ -36,6 +36,35 @@ QUY TẮC PHẠM VI & ĐỊNH DẠNG ĐẦU RA CAO CẤP (HIGH-QUALITY RESPONSE 
    - **Thời điểm vàng**: [Khung giờ chụp ảnh đẹp nhất trong ngày]
    - **Phương tiện & Lưu ý**: [Đường đi, trang phục đi Chùa Khmer thích hợp]`;
 
+async function generateQueryEmbedding(text: string): Promise<number[] | null> {
+  const geminiKeys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean) as string[];
+  for (const key of geminiKeys) {
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${key}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'models/gemini-embedding-001',
+            content: { parts: [{ text }] },
+            outputDimensionality: 768,
+          }),
+          signal: AbortSignal.timeout(3500),
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        const vector = data?.embedding?.values;
+        if (Array.isArray(vector) && vector.length > 0) return vector;
+      }
+    } catch {
+      // fallback silently
+    }
+  }
+  return null;
+}
+
 // Multi-LLM Fallback Generator
 async function generateAIResponse(userQuery: string, ragContext: string): Promise<string> {
   const fullPrompt = `${SYSTEM_PROMPT}\n\nThông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
@@ -179,12 +208,30 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Query Supabase for enriched place metadata
-    const { data: places } = await supabase
-      .from('places')
-      .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_range, best_time_to_visit')
-      .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
-      .limit(4);
+    // Hybrid Semantic Vector Search (pgvector RPC match_places -> ILIKE Fallback)
+    let places: any[] = [];
+    const queryVector = await generateQueryEmbedding(queryStr);
+
+    if (queryVector) {
+      const { data: vectorMatches } = await supabase.rpc('match_places', {
+        query_embedding: queryVector,
+        match_threshold: 0.3,
+        match_count: 5,
+      });
+      if (vectorMatches && vectorMatches.length > 0) {
+        places = vectorMatches;
+      }
+    }
+
+    // Fallback to Full-Text ILIKE if no vector matches found
+    if (!places || places.length === 0) {
+      const { data: textMatches } = await supabase
+        .from('places')
+        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_range, best_time_to_visit')
+        .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
+        .limit(4);
+      if (textMatches) places = textMatches;
+    }
 
     let ragContext = '';
     const formattedPlaces: any[] = [];
