@@ -7,6 +7,7 @@ import {
   MapPin, Play, Navigation, Maximize2, Minimize2, Trash2, ArrowRight
 } from 'lucide-react';
 import { getGoogleMapsUrl } from '@/lib/utils';
+import VideoChatCard from './VideoChatCard';
 
 interface EmbeddedSpot {
   name: string;
@@ -20,6 +21,7 @@ interface EmbeddedVideo {
   title: string;
   views: string;
   imageUrl: string;
+  embedUrl?: string;
 }
 
 interface Message {
@@ -52,7 +54,7 @@ export default function ChatbotWidget() {
     'Homestay view núi Cô Tô'
   ];
 
-  const handleSend = (queryText?: string) => {
+  const handleSend = async (queryText?: string) => {
     const textToSend = queryText || input;
     if (!textToSend.trim()) return;
 
@@ -67,68 +69,48 @@ export default function ChatbotWidget() {
     if (!queryText) setInput('');
     setIsTyping(true);
 
-    // Simulate AI RAG Engine Stream Response
-    setTimeout(() => {
-      let replyText = 'Tôi đã tra cứu CSDL Supabase 106 địa điểm Tri Tôn cho câu hỏi của bạn.';
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/chat/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: textToSend, session_id: 'user_session' })
+      });
+
+      if (!response.ok) throw new Error('API Error');
+      const data = await response.json();
+      const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+
       let spotEmbed: EmbeddedSpot | undefined = undefined;
+      if (parsedData.ui_components && parsedData.ui_components.length > 0) {
+        spotEmbed = parsedData.ui_components[0];
+      }
+
       let videoEmbed: EmbeddedVideo | undefined = undefined;
-
-      const lower = textToSend.toLowerCase();
-
-      if (lower.includes('lịch trình') || lower.includes('tour')) {
-        replyText = 'Lộ trình 2 ngày 1 đêm tối ưu:\n• Ngày 1: Sáng đón bình minh Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô). Trưa ăn Gà Đốt lá chúc Ô Thum (Xã Ô Lâm). Chiều check-in Cổng Trời Koh Kas (Xã Chau Lăng).\n• Ngày 2: Chinh phục Di tích Đồi Tức Dụp (Xã An Tức) & mua sắm đặc sản bánh bò thốt nốt tại Thị trấn Tri Tôn.';
-        spotEmbed = {
-          name: 'Hồ Tà Pạ',
-          commune: 'Xã Núi Tô',
-          category: 'Danh thắng Thiên nhiên',
-          imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-          rating: 4.9
-        };
-      } else if (lower.includes('gà đốt') || lower.includes('ăn')) {
-        replyText = 'Quán Gà Đốt Ô Thum nổi tiếng nhất tập trung tại lòng Hồ Ô Thum (Xã Ô Lâm, Tri Tôn). Gà thả vườn được đốt trực tiếp với lá chúc rừng Bảy Núi nồng nàn. Nên đặt bàn trước 45 phút để không phải chờ!';
-        spotEmbed = {
-          name: 'Quán Gà Đốt Ô Thum Siêu Ngon',
-          commune: 'Xã Ô Lâm',
-          category: 'Ẩm thực & Quán ăn',
-          imageUrl: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=800&auto=format&fit=crop',
-          rating: 4.8
-        };
-        videoEmbed = {
-          title: 'Review Gà Đốt Ô Thum Lá Chúc Chuẩn Vị Bảy Núi',
-          views: '28.9K lượt xem',
-          imageUrl: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=800&auto=format&fit=crop'
-        };
-      } else if (lower.includes('tà pạ') || lower.includes('chùa')) {
-        replyText = 'Chùa Tà Pạ và Hồ Tà Pạ nằm trên ngọn núi Tà Pạ (Xã Núi Tô, Tri Tôn). Đường bê tông lên chùa phẳng đẹp, xe máy và ô tô di chuyển an toàn. Chùa xây theo kiến trúc Phật giáo Nam tông Khmer vô cùng nguy nga.';
-        spotEmbed = {
-          name: 'Chùa Tà Pạ',
-          commune: 'Xã Núi Tô',
-          category: 'Chùa Khmer & Di tích',
-          imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop',
-          rating: 4.9
-        };
-      } else if (lower.includes('homestay') || lower.includes('ở')) {
-        replyText = 'Danh sách Homestay có view Núi Cô Tô và cánh đồng thốt nốt đẹp nhất tập trung tại Xã Núi Tô và Thị trấn Tri Tôn. Giá chỉ từ 350.000đ/đêm có sân nướng BBQ.';
-        spotEmbed = {
-          name: 'Cô Tô Mountain Homestay',
-          commune: 'Xã Núi Tô',
-          category: 'Homestay & Lưu trú',
-          imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
-          rating: 4.7
-        };
+      if (parsedData.videos && parsedData.videos.length > 0) {
+        videoEmbed = parsedData.videos[0];
       }
 
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'assistant',
-        text: replyText,
+        text: parsedData.text_response || 'Xin lỗi, tôi chưa hiểu ý bạn.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         spot: spotEmbed,
         video: videoEmbed,
       };
       setMessages(prev => [...prev, botMsg]);
+    } catch (error) {
+      console.error('Chatbot API Error:', error);
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: 'assistant',
+        text: 'Xin lỗi, server AI hiện đang bận hoặc chưa khởi động. Vui lòng thử lại sau!',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, 700);
+    }
   };
 
   const handleClearHistory = () => {
@@ -292,18 +274,12 @@ export default function ChatbotWidget() {
 
                   {/* EMBEDDED TIKTOK SHORTS CARD */}
                   {msg.video && (
-                    <div className="bg-slate-900 text-white rounded-xl p-3 shadow-xs flex items-center gap-3 border border-slate-800">
-                      <div className="w-12 h-14 bg-slate-800 rounded-lg overflow-hidden relative shrink-0 flex items-center justify-center">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={msg.video.imageUrl} alt={msg.video.title} className="w-full h-full object-cover opacity-60" />
-                        <Play className="w-5 h-5 text-white absolute z-10" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="text-[10px] text-rose-400 font-bold uppercase block">TikTok Shorts Review</span>
-                        <h5 className="font-bold text-xs text-white truncate">{msg.video.title}</h5>
-                        <span className="text-[10px] text-slate-400 block">{msg.video.views}</span>
-                      </div>
-                    </div>
+                    <VideoChatCard
+                      title={msg.video.title}
+                      views={msg.video.views}
+                      imageUrl={msg.video.imageUrl}
+                      embedUrl={msg.video.embedUrl}
+                    />
                   )}
 
                 </div>

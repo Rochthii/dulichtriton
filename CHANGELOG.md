@@ -4,6 +4,19 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [12.0.0-CHATBOT-AI-FASTAPI-PHASE2] — 2026-08-08
+
+### Chatbot AI TRIA Thực Tế — Phase 2 Complete
+* **Backend API Gateway (FastAPI)**:
+  * Tạo server Python FastAPI độc lập tại `backend/main.py`.
+  * Cung cấp API `POST /api/v1/chat/query` hứng query từ Next.js và giao tiếp với `tourism_ai_core`.
+  * Bổ sung `fastapi` và `uvicorn` vào `requirements.txt`.
+* **Frontend UI (VideoChatCard & ChatbotWidget)**:
+  * Xóa bỏ hoàn toàn luồng mock `setTimeout` giả lập độ trễ trong Chatbot.
+  * Tích hợp `fetch` trực tiếp tới API FastAPI.
+  * Tạo mới `frontend/src/components/VideoChatCard.tsx` cho phép mở trực tiếp video review TikTok ngay trong bong bóng chat.
+* **AI Core**: Cập nhật mock JSON payload của `ai_orchestrator.py` để trả về đúng cấu trúc hỗ trợ `video` cho Frontend.
+
 ## [11.2.0-NO-LOGIN-AND-B2B-MONETIZATION] — 2026-08-08
 
 ### Cập Nhật Chiến Lược: Quy Tắc No-Login Cho Du Khách & Mô Hình Dòng Tiền B2B/B2G
