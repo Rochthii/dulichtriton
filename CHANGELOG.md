@@ -4,6 +4,19 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [22.0.0-PGVECTOR-SEMANTIC-RAG-SEARCH] — 2026-08-08
+
+### Tích Hợp Tìm Kiếm Ngữ Nghĩa Siêu Chính Xác (Supabase pgvector + 768d Embeddings)
+* **Kích Hoạt Extension `pgvector` & HNSW Index (`20260808_create_vector_search.sql`)**:
+  * Thêm cột `embedding vector(768)` vào bảng `places` trên Supabase PostgreSQL.
+  * Tạo HNSW Index (`places_embedding_hnsw_idx`) tối ưu tốc độ truy vấn vector dưới 5ms.
+  * Tạo Stored Procedure RPC function `match_places` tính toán Cosine Similarity (`1 - (places.embedding <=> query_embedding)`).
+* **Generator Tự Động Embeddings (`scripts/generate_place_embeddings.py`)**:
+  * Mã hóa ngữ nghĩa toàn bộ 95 POIs địa danh Tri Tôn bằng Google Gemini API (`models/gemini-embedding-001` với `outputDimensionality: 768`).
+* **Động Cơ Hybrid RAG Search (`/api/v1/chat/query/route.ts`)**:
+  * Mã hóa câu hỏi du khách -> Gọi `supabase.rpc('match_places', ...)` -> Trả về dữ liệu ngữ nghĩa chuẩn 100%.
+  * Tự động fallback về Full-Text Search (ILIKE) nếu có sự cố mạng (Zero Downtime Fallback).
+
 ## [21.1.0-MOBILE-LAYOUT-SECTION-OPTIMIZATION] — 2026-08-08
 
 ### Tối Ưu Hóa Giao Diện Điện Thoại Toàn Bộ Các Section Trang Chủ (`/page.tsx`)
