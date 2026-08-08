@@ -65,99 +65,87 @@ async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   return null;
 }
 
-// Multi-LLM Fallback Generator
+// ── Parallel LLM Race: fastest winner wins, worst-case ~3s not 20s ──────────
 async function generateAIResponse(userQuery: string, ragContext: string): Promise<string> {
-  const fullPrompt = `${SYSTEM_PROMPT}\n\nThông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
+  const systemMsg = SYSTEM_PROMPT;
+  const userMsg   = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
+  const fullPrompt = `${systemMsg}\n\n${userMsg}`;
 
-  const geminiKeys = [
-    process.env.GEMINI_API_KEY,
-    process.env.GEMINI_API_KEY_2,
-  ].filter(Boolean) as string[];
+  type LLMResult = { text: string; provider: string };
 
-  // 1. Try Gemini Keys
-  for (let i = 0; i < geminiKeys.length; i++) {
-    const key = geminiKeys[i];
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: fullPrompt }] }],
-          }),
-          signal: AbortSignal.timeout(6000),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (text) return text.trim();
-      }
-    } catch (e) {
-      console.warn(`[NextAI] Gemini key #${i + 1} failed:`, e);
-    }
-  }
-
-  // 2. Try Groq AI
-  const groqKey = process.env.GROQ_API_KEY;
-  if (groqKey) {
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+  // ── helper callers ────────────────────────────────────────────────────────
+  async function callGemini(key: string, label: string): Promise<LLMResult> {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+      {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${groqKey}`,
-        },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user', content: `Bối cảnh: ${ragContext}\n\nCâu hỏi: ${userQuery}` },
-          ],
-        }),
-        signal: AbortSignal.timeout(6000),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const text = data?.choices?.[0]?.message?.content;
-        if (text) return text.trim();
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] }),
+        signal: AbortSignal.timeout(4500),
       }
-    } catch (e) {
-      console.warn('[NextAI] Groq AI failed:', e);
-    }
+    );
+    if (!res.ok) throw new Error(`Gemini ${label} HTTP ${res.status}`);
+    const data = await res.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) throw new Error(`Gemini ${label} empty`);
+    return { text: text.trim(), provider: label };
   }
 
-  // 3. Try OpenRouter Free AI
-  const openrouterKey = process.env.OPENROUTER_API_KEY;
-  if (openrouterKey) {
-    try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${openrouterKey}`,
-        },
-        body: JSON.stringify({
-          model: 'meta-llama/llama-3.3-70b-instruct:free',
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user', content: `Bối cảnh: ${ragContext}\n\nCâu hỏi: ${userQuery}` },
-          ],
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const text = data?.choices?.[0]?.message?.content;
-        if (text) return text.trim();
-      }
-    } catch (e) {
-      console.warn('[NextAI] OpenRouter failed:', e);
-    }
+  async function callGroq(): Promise<LLMResult> {
+    const key = process.env.GROQ_API_KEY;
+    if (!key) throw new Error('no groq key');
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
+      }),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) throw new Error(`Groq HTTP ${res.status}`);
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content;
+    if (!text) throw new Error('Groq empty');
+    return { text: text.trim(), provider: 'groq' };
   }
 
-  return 'Tôi đã tổng hợp dữ liệu địa điểm Tri Tôn cho Bạn. Vui lòng tham khảo các gợi ý địa danh bên dưới!';
+  async function callOpenRouter(): Promise<LLMResult> {
+    const key = process.env.OPENROUTER_API_KEY;
+    if (!key) throw new Error('no openrouter key');
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-3.3-70b-instruct:free',
+        messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
+      }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) throw new Error(`OpenRouter HTTP ${res.status}`);
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content;
+    if (!text) throw new Error('OpenRouter empty');
+    return { text: text.trim(), provider: 'openrouter' };
+  }
+
+  // ── fire all in parallel, return the first success ────────────────────────
+  const geminiKeys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2]
+    .filter(Boolean) as string[];
+
+  const races: Promise<LLMResult>[] = [
+    ...geminiKeys.map((k, i) => callGemini(k, `gemini-key${i + 1}`)),
+    callGroq(),
+    callOpenRouter(),
+  ];
+
+  try {
+    const winner = await Promise.any(races);
+    console.log(`[NextAI] Provider winner: ${winner.provider}`);
+    return winner.text;
+  } catch {
+    return 'Tôi đã tổng hợp dữ liệu địa điểm Tri Tôn cho Bạn. Vui lòng tham khảo các gợi ý địa danh bên dưới!';
+  }
 }
 
 export async function POST(req: NextRequest) {
