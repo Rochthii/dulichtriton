@@ -1,10 +1,9 @@
 {
-  "name": "tri-ton-tourism-ai",
-  "version": "10.32.0",
+  "name": "dulichtriton-root",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
-    "start": "npm --prefix frontend run start"
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd frontend && npm start"
   }
 }
