@@ -4,7 +4,55 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [11.2.0-NO-LOGIN-AND-B2B-MONETIZATION] — 2026-08-08
+
+### Cập Nhật Chiến Lược: Quy Tắc No-Login Cho Du Khách & Mô Hình Dòng Tiền B2B/B2G
+* Cập nhật `docs/PRODUCT_STRATEGY.md` (v1.2):
+  * **Quy tắc No-Login (Zero-Friction UI)**: Đưa tính năng đăng nhập vào MUST-NOT ở bản MVP. Du khách dùng miễn phí 100% không rào cản. Lưu Wishlist & Tour bằng LocalStorage/IndexedDB; Xuất QR/PDF offline 1-click.
+  * **Mô hình Dòng tiền B2B/B2G**: Khẳng định 100% không thu tiền du khách. Dòng tiền nuôi bộ máy đến từ 4 nguồn B2B/B2G địa phương ở Version 2 (Phí Tích xanh ưu tiên hiển thị 200k-500k/tháng, Hoa hồng đặt bàn 5-10%, Truyền thông lễ hội văn hóa địa phương B2G, Nhượng quyền White-label SaaS).
+
+## [11.1.0-PRODUCT-STRATEGY-DOC] — 2026-08-08
+
+### Tài Liệu Chiến Lược Sản Phẩm Toàn Diện (PRODUCT_STRATEGY.md)
+* Tạo mới `docs/PRODUCT_STRATEGY.md` — Bản chiến lược tổng hợp thay thế 3 docs cũ sơ sài (`mvp_scope_and_checklist.md`, `11_Roadmap.md`, `user_personas_and_pain_points.md`).
+* Tích hợp phân tích GenZ thực tế: JTBD "2 phút chốt chuyến đi", 3 Personas (Phượt thủ, Nhóm ăn uống, Gia đình), ma trận Pain Points vs Solutions.
+* Xác định rõ MVP v1.0 PUBLIC: 5 MUST-HAVE, 6 MUST-NOT, Definition of Done đo trên 100 beta users GenZ.
+* Roadmap 4 Phase: Phase 1 (done), Phase 2 Chatbot AI, Phase 3 Analytics+Beta Launch, Phase 4 v1.0 PUBLIC.
+* V1 (Tin & Quay lại) và V2 (Tiền & Hệ sinh thái) có metrics cụ thể.
+* Analytics Events Spec: 16 custom events TypeScript cho Vercel Analytics.
+* 3-cửa quy tắc ra quyết định chống scope creep.
+
+## [11.0.0-VIDEO-FIRST-PHASE1] — 2026-08-08
+
+
+### Video-First Architecture — Phase 1 Complete
+
+* **Task 1.1 — VideoModal Component** (`frontend/src/components/VideoModal.tsx`):
+  * Tạo mới component Modal fullscreen nhúng iframe TikTok oEmbed / YouTube trực tiếp trong trang.
+  * Backdrop blur, nút X đóng, auto-mute, responsive 9:16 mobile, hiển thị metadata Creator | Views | Hashtags.
+  * Export interface `VideoItem` tái sử dụng xuyên suốt hệ thống (`TikTokReviewSection`, `VideoGallery`, `ChatbotWidget`).
+
+* **Task 1.2 — Nâng cấp TikTokReviewSection** (`frontend/src/components/TikTokReviewSection.tsx`):
+  * Thay thế `window.open(tab mới)` bằng mở `VideoModal` nội bộ khi có `embedUrl`.
+  * Fallback an toàn: video không có `embedUrl` vẫn mở TikTok tab như cũ.
+  * Loại bỏ Emoji trong category labels theo NO EMOJI POLICY. Nút badge thay đổi: "Xem ngay" (xanh Emerald) vs "TikTok" (đỏ).
+
+* **Task 1.3 — VideoGallery + Tab trên PlaceDetail**:
+  * Tạo mới `frontend/src/components/VideoGallery.tsx`: layout 1 video Featured (16:9) + stack 3 Shorts bên cạnh.
+  * Cập nhật `frontend/src/components/PlaceDetailClient.tsx`: Thêm Tab navigation [Ảnh Thực Tế] / [Video Review].
+  * Lazy-fetch API `/api/v1/places/[id]/videos` khi user chọn Tab Video. Spinner loading + empty state TikTok search fallback.
+
+* **Task 1.4 — API Routes Videos** (Next.js App Router):
+  * Tạo `frontend/src/app/api/v1/places/[id]/videos/route.ts`: `GET` → Query Supabase bảng `videos` theo `place_id`, trả `{ videos[], total }`.
+  * Tạo `frontend/src/app/api/v1/videos/trending/route.ts`: `GET` → Top 10 video view cao nhất toàn hệ thống.
+  * Dùng `SUPABASE_SERVICE_ROLE_KEY` cho server-side queries, đảm bảo RLS bypass an toàn.
+
+* **Task 1.5 — Seed Data** (`scripts/seed_videos.py`):
+  * Tạo Python script seed 10 bản ghi video thực tế vào Supabase `public.videos`.
+  * Upsert on_conflict `video_url` đảm bảo idempotent khi chạy lại.
+
 ## [10.99.0-SYNCHRONIZED-GOLDEN-TIME-WIDGET-THEME] — 2026-08-07
+
 
 ### 🎨 Đồng Bộ Hóa Phối Màu Component GoldenTimeWidget Theo Thiết Kế Chuẩn Bảy Núi
 * **Loại Bỏ Màu Cam Nhạt Chói Mắt**:

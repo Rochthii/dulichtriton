@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Play, Eye, ExternalLink, Filter, MapPin } from 'lucide-react';
+import VideoModal, { type VideoItem } from '@/components/VideoModal';
 
 interface TikTokVideo {
   id: string;
@@ -21,6 +22,7 @@ interface TikTokVideo {
 
 export default function TikTokReviewSection() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
 
   // 10 Verified Real Video Reviews of Tri Ton An Giang
   const allTikTokVideos: TikTokVideo[] = [
@@ -174,17 +176,36 @@ export default function TikTokReviewSection() {
 
   const categories = [
     { id: 'all', label: 'Tất Cả (10)' },
-    { id: 'food', label: '🍗 Ẩm Thực & Đặc Sản' },
-    { id: 'spot', label: '🏔️ Danh Thắng Sống Ảo' },
-    { id: 'culture', label: '🛕 Văn Hóa & Chùa Cổ' },
-    { id: 'guide', label: '🏍️ Kinh Nghiệm Phượt' },
+    { id: 'food', label: 'Ẩm Thực & Đặc Sản' },
+    { id: 'spot', label: 'Danh Thắng Sống Ảo' },
+    { id: 'culture', label: 'Văn Hóa & Chùa Cổ' },
+    { id: 'guide', label: 'Kinh Nghiệm Phượt' },
   ];
 
-  const handleOpenTikTok = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+  const handleOpenVideo = (video: TikTokVideo) => {
+    if (video.embedUrl) {
+      // Có embed URL → mở VideoModal nhúng trong trang
+      setSelectedVideo({
+        title: video.title,
+        platform: 'tiktok',
+        video_url: video.tiktokUrl,
+        embed_url: video.embedUrl,
+        thumbnail_url: video.thumbnail,
+        author_name: video.creator,
+        view_count: parseInt(video.views.replace(/[^0-9]/g, '')) * (video.views.includes('K') ? 1000 : 1),
+        hashtags: video.hashtags,
+        location: video.location,
+      });
+    } else {
+      // Không có embed URL → fallback mở tab TikTok
+      window.open(video.tiktokUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
+    <>
+      {/* VideoModal — render khi user click vào video có embedUrl */}
+      <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       {/* Header Bar */}
@@ -233,9 +254,9 @@ export default function TikTokReviewSection() {
         {filteredVideos.map((video) => (
           <div
             key={video.id}
-            onClick={() => handleOpenTikTok(video.tiktokUrl)}
+            onClick={() => handleOpenVideo(video)}
             className="bg-slate-950 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group cursor-pointer relative flex flex-col justify-between border border-slate-800"
-            title="Bấm để xem video gốc trực tiếp trên TikTok"
+            title={video.embedUrl ? 'Bấm để xem video ngay tại đây' : 'Bấm để xem video gốc trên TikTok'}
           >
             {/* Aspect Ratio 9:16 Vertical Video Frame */}
             <div className="aspect-[9/16] relative overflow-hidden bg-slate-950">
@@ -283,9 +304,11 @@ export default function TikTokReviewSection() {
                     <span className="truncate">{video.location}</span>
                   </span>
 
-                  <span className="px-2 py-0.5 rounded-md bg-rose-600 text-white text-[10px] font-bold flex items-center gap-1 shadow-sm shrink-0">
-                    <span>Xem TikTok</span>
-                    <ExternalLink className="w-3 h-3" />
+                  <span className={`px-2 py-0.5 rounded-md text-white text-[10px] font-bold flex items-center gap-1 shadow-sm shrink-0 ${
+                    video.embedUrl ? 'bg-[#1B4D3E]' : 'bg-rose-600'
+                  }`}>
+                    <span>{video.embedUrl ? 'Xem ngay' : 'TikTok'}</span>
+                    {video.embedUrl ? <Play className="w-3 h-3 fill-white" /> : <ExternalLink className="w-3 h-3" />}
                   </span>
                 </div>
               </div>
@@ -296,5 +319,6 @@ export default function TikTokReviewSection() {
       </div>
 
     </section>
+    </>
   );
 }

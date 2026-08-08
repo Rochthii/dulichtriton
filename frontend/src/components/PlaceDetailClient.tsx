@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   MapPin, Navigation, Clock, Tag, Star, Camera, ShieldCheck, 
@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { getGoogleMapsUrl, formatPrice } from '@/lib/utils';
+import VideoGallery from '@/components/VideoGallery';
+import { type VideoItem } from '@/components/VideoModal';
 
 interface PlaceDetailClientProps {
   place: Place;
@@ -29,8 +31,24 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
+  const [activeTab, setActiveTab] = useState<'photos' | 'videos'>('photos');
+  const [placeVideos, setPlaceVideos] = useState<VideoItem[]>([]);
+  const [videosLoading, setVideosLoading] = useState(false);
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
   const mapsUrl = getGoogleMapsUrl(place.name, place.commune);
+
+  // Fetch videos khi chuyển sang Tab Video
+  useEffect(() => {
+    if (activeTab !== 'videos' || placeVideos.length > 0) return;
+    setVideosLoading(true);
+    fetch(`/api/v1/places/${place.id}/videos`)
+      .then((r) => r.json())
+      .then((data) => {
+        setPlaceVideos(data.videos ?? []);
+      })
+      .catch(() => setPlaceVideos([]))
+      .finally(() => setVideosLoading(false));
+  }, [activeTab, place.id, placeVideos.length]);
 
   const handleShare = () => {
     if (navigator.clipboard) {
@@ -150,8 +168,36 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
         </div>
       </div>
 
+      {/* ── TAB NAVIGATION: Ảnh | Video Review ── */}
+      <div className="flex items-center gap-1 mb-6 bg-slate-100 p-1 rounded-xl w-fit">
+        <button
+          onClick={() => setActiveTab('photos')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+            activeTab === 'photos'
+              ? 'bg-white text-[#1B4D3E] shadow-sm'
+              : 'text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Camera className="w-3.5 h-3.5" />
+          Ảnh Thực Tế
+        </button>
+        <button
+          onClick={() => setActiveTab('videos')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+            activeTab === 'videos'
+              ? 'bg-white text-rose-600 shadow-sm'
+              : 'text-slate-500 hover:text-slate-700'
+          }`}
+        >
+          <Video className="w-3.5 h-3.5" />
+          Video Review
+        </button>
+      </div>
+
       {/* PHOTO GALLERY SECTION WITH EXPLICIT SOURCE ATTRIBUTION */}
-      <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-8">
+      <section className={`bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-8 ${
+        activeTab === 'photos' ? 'block' : 'hidden'
+      }`}>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Camera className="w-5 h-5 text-[#1B4D3E]" />
@@ -208,6 +254,30 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           </div>
         )}
       </section>
+
+      {/* VIDEO GALLERY SECTION — Hiển thị khi Tab Video được chọn */}
+      {activeTab === 'videos' && (
+        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-8">
+          <div className="flex items-center gap-2 mb-6">
+            <Video className="w-5 h-5 text-rose-600" />
+            <h2 className="text-xl font-bold text-slate-900">Video Review Thực Tế</h2>
+            <span className="ml-auto text-xs text-slate-500 font-medium">
+              {videosLoading ? 'Đang tải...' : `${placeVideos.length} video`}
+            </span>
+          </div>
+          {videosLoading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-2 border-[#1B4D3E] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            <VideoGallery
+              videos={placeVideos}
+              placeName={place.name}
+              placeHashtag={place.name.toLowerCase().replace(/\s+/g, '')}
+            />
+          )}
+        </section>
+      )}
 
       {/* TIKTOK SHORTS EMBED & GIS LOCATION CARDS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
