@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
 import GoldenTimeWidget from "@/components/GoldenTimeWidget";
+import TikTokFeedSection from "@/components/TikTokFeedSection";
 import {
   Search,
   Mountain,
@@ -306,24 +307,24 @@ export default function HomePage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-body-base text-on-surface antialiased">
-      <main className="mx-auto flex w-full max-w-container-max flex-grow flex-col gap-section-gap px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+      <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col gap-6 sm:gap-8 md:gap-10 px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
 
         {/* Hero Section nổi bật với ảnh cảnh quan Bảy Núi */}
-        <section className="group relative h-[420px] w-full overflow-hidden rounded-3xl shadow-xl md:h-[520px]">
+        <section className="group relative h-[360px] sm:h-[450px] md:h-[520px] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
             style={{
               backgroundImage: `url('https://cdn.tgdd.vn/Files/2023/11/06/1554179/top-8-dia-diem-du-lich-tri-ton-an-giang-nen-trai-nghiem-202311061412586340.jpg')`
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-xs font-extrabold border border-white/30 shadow-lg">
-              <Sparkles className="h-4 w-4 text-amber-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-4 sm:space-y-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-extrabold border border-white/30 shadow-lg">
+              <Sparkles className="h-3.5 w-3.5 text-amber-300" />
               <span>Cổng Thông Tin Du Lịch Thông Minh Tri Tôn</span>
             </div>
 
-            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight drop-shadow-2xl max-w-4xl">
+            <h1 className="font-heading font-extrabold text-2xl sm:text-4xl md:text-6xl text-white tracking-tight leading-tight drop-shadow-2xl max-w-4xl">
               Khám Phá Vẻ Đẹp <br className="hidden sm:inline" />
               <span className="text-amber-300 drop-shadow-md">
                 Huyền Bí Bảy Núi Tri Tôn
@@ -334,7 +335,7 @@ export default function HomePage() {
               Nơi miền đất của 82 thắng cảnh tuyệt đẹp, di sản tâm linh Khmer lâu đời và bản đồ ẩm thực Cháo bò lá trúc độc đáo.
             </p>
 
-            <div className="relative w-full max-w-2xl pt-2">
+            <div className="relative w-full max-w-2xl pt-1 sm:pt-2">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -342,20 +343,20 @@ export default function HomePage() {
                     window.location.href = `/places?search=${encodeURIComponent(searchQuery)}`;
                   }
                 }}
-                className="glass-panel flex items-center rounded-full p-2 shadow-2xl transition-transform focus-within:scale-[1.02] bg-white/90 backdrop-blur-xl border border-white/60"
+                className="glass-panel flex items-center rounded-full p-1.5 sm:p-2 shadow-2xl transition-transform focus-within:scale-[1.02] bg-white/95 backdrop-blur-xl border border-white/60"
               >
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Hỏi AI Du Lịch Tri Tôn (VD: 'Quán cháo bò ngon nhất'...)"
-                  className="w-full flex-grow rounded-l-full border-none bg-transparent px-6 py-3 font-body-lg text-body-lg text-slate-800 outline-none placeholder:text-slate-500 focus:ring-0 text-xs sm:text-sm font-medium"
+                  placeholder="Hỏi AI Du Lịch Tri Tôn..."
+                  className="w-full flex-grow rounded-l-full border-none bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-800 outline-none placeholder:text-slate-400 focus:ring-0 font-medium"
                 />
                 <button
                   type="submit"
-                  className="flex min-w-[48px] items-center justify-center rounded-full bg-secondary p-3 text-white shadow-md transition-colors hover:bg-golden-hover md:px-6 md:py-3 shrink-0 font-bold text-xs"
+                  className="flex min-w-[42px] sm:min-w-[48px] items-center justify-center rounded-full bg-secondary p-2.5 sm:p-3 text-white shadow-md transition-colors hover:bg-golden-hover md:px-6 md:py-3 shrink-0 font-bold text-xs"
                 >
-                  <Search className="h-5 w-5" />
+                  <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="hidden md:inline ml-2">Tìm Kiếm AI</span>
                 </button>
               </form>
@@ -369,6 +370,11 @@ export default function HomePage() {
           title="🔥 TOP ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT"
           subtitle="Danh sách 6 điểm check-in, di sản & ẩm thực hot nhất Bảy Núi được du khách yêu thích nhất"
         />
+
+        {/* SECTION 2: TIKTOK REELS SHOWCASE (POSITION 3 RIGHT AFTER HOT PLACES) */}
+        <section className="flex flex-col gap-4">
+          <TikTokFeedSection variant="grid" maxSlides={4} showTitle={true} />
+        </section>
 
         {/* Real-Time Golden Time Widget */}
         <GoldenTimeWidget />
@@ -416,11 +422,11 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
             {gourmetFoods.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="relative h-48 w-full bg-slate-100">
@@ -472,11 +478,11 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none md:grid md:grid-cols-3 md:overflow-visible">
             {cultureEvents.map((ev, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="snap-start shrink-0 w-[82vw] max-w-[320px] md:w-auto md:max-w-none bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
@@ -527,49 +533,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 3: TIKTOK REELS SHOWCASE (STREAMLINED FULL WIDTH) */}
-        <section className="flex flex-col gap-6">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <h2 className="font-headline-md text-2xl font-bold text-on-surface flex items-center gap-2">
-              <span>🎵 TikTok Video Reviews Thực Tế</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold">
-                6 Reels Hot-Trend
-              </span>
-            </h2>
-            <Link href="/places" className="text-xs font-bold text-emerald-800 hover:underline">
-              Khám phá thêm trên TikTok &gt;
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {tiktokVideos.map((video) => (
-              <div
-                key={video.id}
-                onClick={() => setSelectedVideo(video)}
-                className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-2xl shadow-sm border border-slate-200/60 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <img
-                  src={video.img}
-                  alt={video.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/70" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/30 shadow-lg backdrop-blur-md transition-transform group-hover:scale-110">
-                    <Play className="ml-0.5 h-5 w-5 fill-white text-white" />
-                  </div>
-                </div>
-                <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
-                  <p className="text-[11px] font-bold text-white line-clamp-2 leading-tight">
-                    {video.title}
-                  </p>
-                  <span className="inline-block px-1.5 py-0.5 rounded bg-black/50 text-[10px] font-semibold text-rose-300">
-                    {video.stat}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* SECTION 3: TIKTOK REELS SHOWCASE (STREAMLINED GRID CARDS) */}
+        <section className="flex flex-col gap-4">
+          <TikTokFeedSection variant="grid" maxSlides={4} showTitle={true} />
         </section>
 
         {/* TỐI ƯU SECTION 4: LƯU TRÚ & HOMESTAY VIEW NÚI NỔI BẬT */}
@@ -588,9 +554,9 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-3 sm:overflow-visible">
             {featuredStays.map((stay, idx) => (
-              <div key={idx} className="bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+              <div key={idx} className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                 <div>
                   <div className="relative h-48 w-full bg-slate-100">
                     <img src={stay.img} alt={stay.name} className="w-full h-full object-cover" />

@@ -9,6 +9,21 @@ import {
 import { Place } from '@/components/PlaceCard';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import PageHeaderBanner from './PageHeaderBanner';
+import dynamic from 'next/dynamic';
+import { Download } from 'lucide-react';
+import ItineraryExportModal from './ItineraryExportModal';
+
+const MapComponent = dynamic(() => import('./MapComponent'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[480px] sm:min-h-[580px] rounded-3xl bg-slate-900 border border-slate-200 flex items-center justify-center text-white">
+      <div className="flex flex-col items-center gap-4 animate-pulse">
+        <MapPin className="w-8 h-8 text-[#D99B26]" />
+        <span>Đang tải Bản Đồ Số GIS...</span>
+      </div>
+    </div>
+  )
+});
 
 interface MapClientPageProps {
   places: Place[];
@@ -18,6 +33,7 @@ export default function MapClientPage({ places }: MapClientPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedCommune, setSelectedCommune] = useState<string>('all');
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(places[0] || null);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   const communes = [
     'all',
@@ -32,7 +48,7 @@ export default function MapClientPage({ places }: MapClientPageProps) {
   ];
 
   const categories = [
-    { key: 'all', label: 'Tất cả 106 địa điểm' },
+    { key: 'all', label: `Tất cả ${places.length} địa điểm` },
     { key: 'attractions_nature', label: 'Danh thắng Thiên nhiên' },
     { key: 'checkin_spots', label: 'Điểm Check-in' },
     { key: 'khmer_pagodas_heritage', label: 'Chùa Khmer & Di tích' },
@@ -107,6 +123,17 @@ export default function MapClientPage({ places }: MapClientPageProps) {
             ))}
           </div>
         </div>
+        
+        {/* Export Button */}
+        <div className="pt-2 border-t border-slate-100 flex justify-end">
+          <button 
+            onClick={() => setIsExportModalOpen(true)}
+            className="px-4 py-2 bg-[#D99B26] hover:bg-[#c2891d] text-slate-900 font-bold text-xs rounded-xl flex items-center gap-2 shadow-md transition-all"
+          >
+            <Download className="w-4 h-4" />
+            Lưu Lịch Trình (Offline PDF/QR)
+          </button>
+        </div>
 
       </div>
 
@@ -114,56 +141,12 @@ export default function MapClientPage({ places }: MapClientPageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         
         {/* Main Map Container (2 Cols) */}
-        <div className="lg:col-span-2 bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 shadow-lg relative min-h-[480px] sm:min-h-[580px] flex flex-col justify-between p-6 text-white">
-          
-          {/* Top Map Status Overlay */}
-          <div className="flex flex-wrap items-center justify-between gap-2 z-10">
-            <div className="bg-slate-950/85 backdrop-blur-md px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border border-white/10">
-              <Compass className="w-4 h-4 text-[#D99B26] animate-spin" style={{ animationDuration: '8s' }} />
-              <span>Bounding Box WGS84 [10.25 - 10.55 Lat]</span>
-            </div>
-
-            <div className="bg-[#1B4D3E] px-3.5 py-2 rounded-xl text-xs font-bold text-white shadow-md">
-              Hiển thị {filteredPlaces.length} Pins
-            </div>
-          </div>
-
-          {/* Simulated Interactive Map Pin Grid Overlay */}
-          <div className="my-auto py-12 px-4 relative">
-            <div className="max-w-md mx-auto text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-[#1B4D3E]/80 border-2 border-[#D99B26] text-[#D99B26] flex items-center justify-center mx-auto shadow-2xl animate-pulse">
-                <MapPin className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold">Bản Đồ Số PostGIS WGS84 Bảy Núi</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Tích hợp chỉ mục PostGIS GiST Spatial Index. Chọn một địa điểm bên danh sách để xem ghim tọa độ chính xác và mở điều hướng Google Maps.
-              </p>
-
-              {/* Pins Chip Matrix */}
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-2 max-h-40 overflow-y-auto">
-                {filteredPlaces.slice(0, 15).map(p => (
-                  <button
-                    key={p.id}
-                    onClick={() => setSelectedPlace(p)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border ${
-                      selectedPlace?.id === p.id
-                        ? 'bg-[#D99B26] text-slate-900 border-[#D99B26] scale-105 shadow-md'
-                        : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
-                    }`}
-                  >
-                    📍 {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Map Info Footer */}
-          <div className="bg-slate-950/85 backdrop-blur-md p-3.5 rounded-xl text-[11px] text-slate-400 flex items-center justify-between border border-white/10 z-10">
-            <span>Đơn vị đo lường: WGS84 EPSG:4326</span>
-            <span className="text-[#D99B26] font-semibold">Tự động tối ưu bán kính 5km</span>
-          </div>
-
+        <div className="lg:col-span-2 relative min-h-[480px] sm:min-h-[580px]">
+          <MapComponent 
+            places={filteredPlaces} 
+            selectedPlace={selectedPlace} 
+            onSelectPlace={setSelectedPlace} 
+          />
         </div>
 
         {/* Selected Place Preview Side Panel (1 Col) */}
@@ -184,9 +167,14 @@ export default function MapClientPage({ places }: MapClientPageProps) {
               <div className="h-44 bg-slate-900 rounded-2xl overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={selectedPlace.photos?.[0]?.url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'}
+                  src={
+                    selectedPlace.image_url ||
+                    selectedPlace.photos?.[0]?.url ||
+                    '/images/tiktok/ho_ta_pa.jpg'
+                  }
                   alt={selectedPlace.name}
                   className="w-full h-full object-cover"
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/images/tiktok/ho_ta_pa.jpg'; }}
                 />
               </div>
 
@@ -245,6 +233,8 @@ export default function MapClientPage({ places }: MapClientPageProps) {
         </div>
 
       </div>
+      
+      {isExportModalOpen && <ItineraryExportModal onClose={() => setIsExportModalOpen(false)} />}
     </>
   );
 }

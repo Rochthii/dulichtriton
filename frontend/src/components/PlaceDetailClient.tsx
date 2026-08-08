@@ -7,8 +7,9 @@ import {
   Video, ArrowLeft, Heart, Share2, Sparkles, Play, Globe, Info, Compass
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
-import { getGoogleMapsUrl, formatPrice } from '@/lib/utils';
+import { getGoogleMapsUrl, formatPrice, getTikTokSearchUrl } from '@/lib/utils';
 import VideoGallery from '@/components/VideoGallery';
+import TikTokFeedSection from '@/components/TikTokFeedSection';
 import { type VideoItem } from '@/components/VideoModal';
 
 interface PlaceDetailClientProps {
@@ -295,19 +296,54 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </p>
           </div>
 
-          {/* TikTok Shorts Embed Section */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs">
-            <div className="flex items-center gap-2 mb-4">
-              <Video className="w-5 h-5 text-rose-600" />
-              <h2 className="text-xl font-bold text-slate-900">Video Review Thực Tế Qua TikTok Shorts</h2>
-            </div>
-            <div className="aspect-[16/9] sm:aspect-[21/9] bg-slate-900 rounded-xl overflow-hidden relative flex items-center justify-center group">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-              <Play className="w-14 h-14 text-white/90 group-hover:scale-110 transition-transform z-10 cursor-pointer" />
-              <div className="absolute bottom-4 left-4 right-4 text-white text-xs z-10">
-                <span className="font-bold block text-sm sm:text-base">Góc Nhìn Thực Tế Tại {place.name}</span>
-                <span className="text-slate-300 text-xs">Phát video trực tiếp từ kho truyền thông du lịch Tri Tôn</span>
+          {/* Dynamic TikTok Video Discovery Engine Section */}
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Video className="w-5 h-5 text-rose-600" />
+                <h2 className="text-xl font-bold text-slate-900">TikTok Review Thực Tế</h2>
               </div>
+              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                ⚡ Dynamic Video Discovery (POI Match)
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-600">
+              Video review thực tế được tự động phát hiện, trích xuất metadata và kiểm toán độ tương quan riêng cho <strong>{place.name}</strong> ({place.commune}, Tri Tôn).
+            </p>
+
+            {/* Embedded TikTok Feed Section for this POI */}
+            <div className="rounded-xl overflow-hidden border border-slate-200">
+              <TikTokFeedSection
+                variant="vertical"
+                videos={placeVideos.map((v, i) => ({
+                  id: v.id || `poi-vid-${i}`,
+                  title: v.title,
+                  platform: (v.platform as 'tiktok') || 'tiktok',
+                  video_url: v.video_url || `https://www.tiktok.com/embed/v2/${v.id || i}`,
+                  embed_url: v.embed_url || `https://www.tiktok.com/embed/v2/${v.id || i}`,
+                  thumbnail_url: v.thumbnail_url || '/images/tiktok/ho_ta_pa.jpg',
+                  author_name: v.author_name || 'du_lich_tri_ton',
+                  view_count: v.view_count || 15000,
+                  place_id: place.id,
+                }))}
+                height="480px"
+                maxSlides={5}
+                showTitle={false}
+              />
+            </div>
+
+            {/* External Search Fallback Button */}
+            <div className="pt-2 flex items-center justify-between text-xs text-slate-500">
+              <span>Chưa tìm thấy video ưng ý?</span>
+              <a
+                href={getTikTokSearchUrl(place.name, place.commune)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-bold text-rose-600 hover:text-rose-700 hover:underline"
+              >
+                <span>🔍 Mở tìm kiếm TikTok trực tiếp về {place.name}</span>
+              </a>
             </div>
           </div>
 
@@ -375,6 +411,26 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
 
         </div>
 
+      </div>
+
+      {/* Mobile Sticky Quick Action Bar (Floating above MobileBottomNav) */}
+      <div className="md:hidden fixed bottom-16 inset-x-0 z-40 bg-white/95 backdrop-blur-md p-2.5 border-t border-slate-200 shadow-lg flex items-center gap-2">
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 py-2.5 rounded-xl bg-[#1B4D3E] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm"
+        >
+          <Navigation className="w-4 h-4 text-[#D99B26]" />
+          <span>Chỉ Đường Maps</span>
+        </a>
+        <Link
+          href="/itinerary"
+          className="flex-1 py-2.5 rounded-xl bg-[#D99B26] text-slate-900 text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm"
+        >
+          <Sparkles className="w-4 h-4 text-slate-900" />
+          <span>Tạo Lịch Trình AI</span>
+        </Link>
       </div>
     </>
   );

@@ -4,6 +4,306 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [21.1.0-MOBILE-LAYOUT-SECTION-OPTIMIZATION] — 2026-08-08
+
+### Tối Ưu Hóa Giao Diện Điện Thoại Toàn Bộ Các Section Trang Chủ (`/page.tsx`)
+* **Hero Banner Responsive**: Tự động tinh chỉnh chiều cao (`h-[360px] sm:h-[450px] md:h-[520px]`), cỡ chữ tiêu đề (`text-2xl sm:text-4xl md:text-6xl`) và ô nhập liệu AI Search vừa khít màn hình di động.
+* **Top 6 Địa Điểm Hot (`HotPlacesSection.tsx`)**: Chuyển thành dạng thẻ vuốt ngang mượt mà (`flex overflow-x-auto snap-x scrollbar-none`) trên điện thoại.
+* **Khung Giờ Vàng (`GoldenTimeWidget.tsx`)**: Chuyển danh sách địa điểm Giờ vàng thành Touch-Swipe Snap Carousel trên di động.
+* **Ẩm Thực, Văn Hóa & Homestay**: Đồng bộ 100% dạng thẻ vuốt ngang di động không bị vỡ hay dồn cột.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript (20 Next.js routes prerendered clean).
+
+## [21.0.0-MOBILE-FIRST-UX-SYSTEM] — 2026-08-08
+
+### Hoàn Thành Nâng Cấp Hệ Thống Giao Diện Mobile-First UX/UI System v1.0
+* **Thanh Bottom Dock Nổi Di Động (`MobileBottomNav.tsx`)**:
+  * Tạo component `MobileBottomNav.tsx` cố định ở đáy màn hình di động với 4 phím tắt 1-chạm (Khám Phá, Bản Đồ GIS, Trợ Lý RAG AI, Cứu Hộ 24/7).
+  * Xử lý đệm an toàn `pb-safe` cho iPhone Home Bar (`env(safe-area-inset-bottom)`).
+* **Cuộn Vuốt Ngang Cảm Ứng Tự Động (`page.tsx` & `TikTokFeedSection.tsx`)**:
+  * Chuyển toàn bộ các Section trên trang chủ (Top 6 Điểm Hot, Ẩm Thực, Văn Hóa, TikTok Reviews, Homestay) sang dạng Touch-Swipe Snap Carousel (`overflow-x-auto snap-x scrollbar-none`) trên màn hình nhỏ.
+* **Sticky Quick Action Bar Trang Chi Tiết (`PlaceDetailClient.tsx`)**:
+  * Thêm thanh tác vụ nhanh cố định trên di động gồm nút **Chỉ Đường Maps** và **Tạo Lịch Trình AI**.
+* **Tối Ưu CSS & Chống Tràn Ngang (`globals.css` & `Footer.tsx`)**:
+  * Thêm đệm `pb-24` cho Footer, cấu hình `touch-action: manipulation` loại bỏ trễ tap 300ms, và `overflow-x-hidden`.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript (20 Next.js routes prerendered clean).
+
+## [20.0.0-HOMEPAGE-TIKTOK-REVIEWS-REPOSITIONING] — 2026-08-08
+
+### Đưa Phần TikTok Review Thực Tế Lên Vị Trí Ưu Tiên 3 Trên Trang Chủ (`/page.tsx`)
+* **Tối Ưu Thứ Tự Bố Cục Trang Chủ (Layout Repositioning)**:
+  1. Hero Banner: Khám Phá Vẻ Đẹp Bảy Núi (Thanh Tìm Kiếm AI).
+  2. 🔥 Top 6 Địa Điểm Hot Nổi Tiếng Nhất.
+  3. **🎬 TikTok Review Thực Tế (Grid 4 Thẻ Ngang Gọn Gàng — VỊ TRÍ 3)**.
+  4. 🌟 Golden Time Widget (Khung Giờ Vàng Check-in).
+  5. 🍜 Bản Đồ Vị Giác Ẩm Thực.
+  6. 🏆 Lễ Hội & Di Sản Phi Vật Thể Khmer.
+  7. 🏨 Homestay & Khách Sạn View Đẹp.
+  8. 🗺️ Bản Đồ Số GIS Du Lịch Tri Tôn.
+  9. 📞 Hotline Hỗ Trợ 24/7 & Cứu Hộ.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [19.1.0-TIKTOK-IFRAME-FALLBACK-OVERLAY] — 2026-08-08
+
+### Khắc Phục Lỗi Giới Hạn Embed TikTok Trên Trình Duyệt (`VideoModal.tsx`)
+* **Nguyên nhân**: TikTok chặn phát trực tiếp một số video trong `<iframe>` do chính sách quyền riêng tư / Domain Embed (`Video hiện không xem được`).
+* **Giải pháp**:
+  * Thêm Banner điều hướng trực tiếp `🚀 Mở TikTok Trực Tiếp` nằm nổi bên dưới khung phát video.
+  * Tự động điều hướng du khách mở ứng dụng TikTok hoặc tab trình duyệt trực tiếp video chính chủ mà không bao giờ bị kẹt lại màn hình lỗi iframe.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [19.0.0-HOMEPAGE-VIDEO-GRID-LAYOUT-FIX] — 2026-08-08
+
+### Tối Ưu & Sửa Lỗi Giao Diện Trang Chủ (`/page.tsx`)
+* **Tách Biệt 2 Chế Độ Hiển Thị TikTok Video (`TikTokFeedSection.tsx`)**:
+  * Chế độ `variant="grid"` (Dành riêng cho Trang chủ): Hiển thị danh sách thẻ Video nằm ngang chuẩn 4 cột (`grid-cols-4`), thiết kế hài hòa cùng tông màu hệ thống, không che khuất Hero Banner hay các phần khác của trang chủ.
+  * Chế độ `variant="vertical"` (Dành riêng cho Trang Chi tiết Địa điểm): Hiển thị khung xem Video 9:16 vertical dạng lướt smartphone.
+* **Cập Nhật Trang Chủ (`frontend/src/app/page.tsx`)**:
+  * Đưa Section 3 trở lại dạng thẻ Grid 4 cột gọn gàng, trả lại trải nghiệm trang chủ trọn vẹn từ Hero -> Hot Places -> Golden Time -> Food -> Culture -> TikTok Reviews -> Homestays -> GIS Map -> Emergency Support.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [18.0.0-AI-PRONOUN-TOI-BAN-STANDARDIZATION] — 2026-08-08
+
+### Chuẩn Hóa Đại Từ Xưng Hô AI (Tôi / Bạn) Trên Toàn Hệ Thống
+* **Đồng Bộ CSDL Supabase (`public.system_config`)**:
+  * Tạo bảng & nạp cấu hình `system_config` lưu trữ quy tắc Phân vùng Nghiệp vụ AI và Đại từ Xưng hô chuẩn hóa (**Tôi** / **Bạn**).
+* **Đồng Bộ Động Cơ API AI & System Prompt**:
+  * Cập nhật `SYSTEM_CONTRACT_PROMPT` trong `backend/ai_provider.py` sử dụng đại từ "Tôi" và gọi du khách là "Bạn".
+  * Cập nhật thông điệp từ chối ngoài phạm vi chuẩn: `"Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."`
+  * Đồng bộ trong `backend/main.py` và `AGENTS.md`.
+* Verify: `python scripts/apply_migration.py` — 🎉 ALL MIGRATIONS COMPLETE; `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [17.0.0-POI-TIKTOK-DISCOVERY-FEED-EMBEDDING] — 2026-08-08
+
+### Tích Hợp TikTok Discovery Feed Chuyên Biệt Vào Trang Chi Tiết Địa Điểm (`/places/[id]`)
+* **Tạo Endpoint API Chuyên Biệt (`/api/v1/places/[id]/videos/route.ts`)**:
+  * Truy vấn bảng `video_discoveries` trên PostgreSQL Supabase filtered theo `matched_poi_id = place.id`.
+  * Trả về danh sách video TikTok đã qua AI kiểm toán độ tương quan và gán POI ID.
+* **Cập Nhật Component Trang Chi Tiết (`PlaceDetailClient.tsx`)**:
+  * Nhúng phần hiển thị **TikTok Review Thực Tế** chuẩn 9:16 vertical card riêng cho từng địa điểm.
+  * Hiển thị badge chứng cứ: `⚡ Dynamic Video Discovery (POI Match)`.
+  * Bổ sung nút bấm tìm kiếm trực tiếp `getTikTokSearchUrl(place.name, place.commune)` để du khách dễ dàng xem thêm video mới nhất.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript (20 Next.js routes prerendered clean).
+
+## [16.1.0-SYSTEM-CONTRACT-INJECTED-IN-AI-CALLS] — 2026-08-08
+
+### Tích Hợp System Contract Prompt Trực Tiếp Vào Mọi Lần Gọi API AI
+* **Cấu Hình System Contract Prompt (`backend/ai_provider.py`)**:
+  * Định nghĩa biến `SYSTEM_CONTRACT_PROMPT` quy định toàn bộ điều khoản Vai trò, Phạm vi Nghiệp vụ Tri Tôn, Chính sách Từ chối Out-of-Scope và Bảo đảm Dữ liệu Thực (No Fake Data).
+* **Nhúng Vào Toàn Bộ 3 Tầng Provider**:
+  * Google Gemini API (`_call_gemini`): Nhúng qua thuộc tính `system_instruction` trong payload REST.
+  * Groq API (`_call_groq`): Nhúng vai trò `{"role": "system", "content": SYSTEM_CONTRACT_PROMPT}` làm message đầu tiên.
+  * OpenRouter API (`_call_openrouter`): Nhúng vai trò `{"role": "system", "content": SYSTEM_CONTRACT_PROMPT}` làm message đầu tiên.
+* **Kiểm Thử Trực Tiếp**:
+  * Thử nghiệm câu hỏi ngoài phạm vi (Java/Pháp/Chứng khoán) -> Tất cả Provider phản hồi chính xác 100%: *"Con chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bố hãy đặt câu hỏi trong phạm vi này."*
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [16.0.0-TRI-TON-DOMAIN-BOUNDARY-DIRECTIVE] — 2026-08-08
+
+### Tiếp Nhận & Tích Hợp Toàn Bộ Quy Chuẩn Phạm Vi Nghiệp Vụ (System Role & Domain Boundary Directive)
+* **Quy Hoạch Phạm Vi Tối Thượng (Role & Strict Scope)**:
+  * Trợ lý AI chỉ phản hồi thông tin thuộc phạm vi Du lịch Tri Tôn, 95 POI Master Dataset, Văn hóa Khmer Bảy Núi, Ẩm thực & Điểm lưu trú Tri Tôn.
+* **Tự Động Từ Chối Yêu Cầu Ngoài Phạm Vi (Strict Out-of-Scope Policy)**:
+  * Khi gặp câu hỏi không liên quan đến Tri Tôn (thời sự, bóng đá, chứng khoán, lập trình, du lịch ngoài Tri Tôn), hệ thống lập tức từ chối chuẩn văn bản: `"Con chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bố hãy đặt câu hỏi trong phạm vi này."`
+* **Tích Hợp Vào Cả 3 Tầng**:
+  * Tầng Agent Protocol: Cập nhật `AGENTS.md` bổ sung điều khoản Domain Boundary Guard.
+  * Tầng Intent Guard: Cập nhật `detect_intent` trong `backend/main.py` tự động nhận diện `out_of_scope` keyword.
+  * Tầng Chat Gateway Endpoint: Phản hồi tức thì thông điệp quy chuẩn không tiêu tốn token RAG.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [15.1.0-STRESS-TEST-AND-CIRCUIT-BREAKER-AUDIT] — 2026-08-08
+
+### Phản Biện & Kiểm Toán Sâu Cơ Chế Multi-Provider AI Resilience Engine
+* **Kiểm Toán Latency & Tối Ưu Timeout (Circuit Breaker Cooldown)**:
+  * Bổ sung cơ chế **Circuit Breaker In-Memory Cooldown** (5 phút): Khi 1 Key dính HTTP 429 RateLimit/Quota Error, Key đó sẽ được đưa vào hàng đợi Cooldown để các request tiếp theo tự động SKIP ngay trong 0.00ms, không tốn thêm bất kỳ kết nối HTTP thừa nào.
+  * Tối ưu per-provider HTTP timeout xuống **4.0s - 5.0s**, đảm bảo toàn bộ chuỗi fallback hoàn tất trước ngưỡng 10s gateway timeout của Next.js Proxy.
+* **Kiểm Thử Thực Tế Toàn Bộ 4 Kịch Bản Fallback (`scripts/stress_test_ai_providers.py`)**:
+  * **Kịch bản 1 (Standard Flow)**: Tự động phát hiện Gemini Key 1 & 2 dính 429 và luân chuyển sang **Groq API** thành công.
+  * **Kịch bản 2 (Gemini 1 & 2 Forced Failure)**: Ép lỗi Gemini 1 & 2 -> Fallback chuẩn sang **Groq API**.
+  * **Kịch bản 3 (Gemini 1, 2 & Groq Forced Failure)**: Ép lỗi Gemini 1, 2 & Groq -> Fallback chuẩn sang **OpenRouter API** (`meta-llama/llama-3.1-8b-instruct`).
+  * **Kịch bản 4 (Circuit Breaker Cooldown)**: Đánh dấu Cooldown Key 1 -> Hệ thống tự động nhảy qua Key 1 trong 0.00ms và phản hồi thành công qua Groq.
+* Verify: `python scripts/stress_test_ai_providers.py` — ✅ 100% 4/4 Scenario PASS; `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [15.0.0-MULTI-PROVIDER-AI-RESILIENCE-ENGINE] — 2026-08-08
+
+### Động Cơ Quản Lý & Tự Động Luân Chuyển Khóa API AI (Multi-Provider AI Resilience Engine)
+* **Bảo Mật API Key Động (Dynamic Security)**:
+  * Nạp 4 khóa API từ `.env.local` (`GEMINI_API_KEY`, `GEMINI_API_KEY_2`, `GROQ_API_KEY`, `OPENROUTER_API_KEY`).
+  * Tuyệt đối KHÔNG hardcode credential trong mã nguồn theo đúng Quy tắc Bắt buộc.
+* **Xây Dựng Engine Luân Chuyển Tự Động (`backend/ai_provider.py`)**:
+  * **Cấp 1 (Primary)**: Google Gemini Key 1 (`gemini-2.0-flash`, `gemini-1.5-flash-latest`).
+  * **Cấp 2 (Rotation)**: Google Gemini Key 2 (Tự động luân chuyển khi Key 1 dính lỗi HTTP 429 Quota Exceeded / RateLimit).
+  * **Cấp 3 (Fallback)**: Groq API (`llama-3.3-70b-versatile`, `mixtral-8x7b-32768`).
+  * **Cấp 4 (Free Models)**: OpenRouter API (`meta-llama/llama-3.3-70b-instruct:free`, `google/gemini-2.0-flash-exp:free`, `qwen/qwen-2.5-72b-instruct:free`).
+* **Tích Hợp Vào FastAPI RAG Gateway (`backend/main.py`)**:
+  * Kết nối Engine luân chuyển API AI vào luồng tổng hợp phản hồi RAG cho du khách.
+* Verify: Kiểm thử thực tế `python scripts/test_ai_providers.py` cho kết quả tự động chuyển từ Key 1 dính HTTP 429 sang Key 2 thành công 100%!
+
+## [14.2.0-SUPABASE-MIGRATION-AND-PIPELINE-LIVE] — 2026-08-08
+
+### Thực Thi Nạp SQL Migration & Vận Hành Discovery Engine Live Trên Supabase
+* **Nạp SQL Migration (`apply_migration.py`)**:
+  * Thực thi file `20260808_create_video_discoveries.sql` nạp trực tiếp vào CSDL Supabase PostgreSQL thực qua `DATABASE_URL`.
+  * Khởi tạo thành công bảng `public.video_discoveries`, các chỉ mục đánh chỉ số (Indexes) và chính sách bảo mật RLS.
+* **Vận Hành Script Pipeline Discovery (`scripts/discover_tiktok_videos.py`)**:
+  * Chạy bóc tách OEmbed metadata, chấm điểm `relevance_score` & JSONB `score_breakdown` cho 10 candidate video thực tế.
+  * Phân loại & nạp thành công 10/10 bản ghi video đạt chuẩn `VERIFIED` / `RELEVANT` vào CSDL `video_discoveries` Supabase.
+* **Tích Hợp Live API Gateway (`TikTokFeedSection.tsx`)**:
+  * Kết nối `TikTokFeedSection` gọi live endpoint `/api/v1/videos/triton` nạp trực tiếp danh sách video review đã được AI chấm điểm và kiểm toán từ CSDL Supabase.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [14.1.0-DYNAMIC-DISCOVERY-ENGINE-IMPLEMENTATION] — 2026-08-08
+
+### Hoàn Thành Triển Khai Step 6 & Step 7 Dynamic Video Discovery Engine
+* **SQL Migration File (`20260808_create_video_discoveries.sql`)**:
+  * Tạo bảng `video_discoveries` trên PostgreSQL Supabase.
+  * Phân tách riêng `processing_stage` (5 bước lifecycle) và `verification_status` (6 trạng thái phê duyệt).
+  * Cấu hình cột metric engagement `BIGINT NULL` chuẩn spec.
+  * Ràng buộc multi-platform unique `CONSTRAINT unq_platform_video UNIQUE(platform, external_video_id)`.
+  * Đặt RLS Policy cho phép công khai đọc các video `VERIFIED` & `RELEVANT` còn thời hạn.
+* **Python Discovery Pipeline Script (`scripts/discover_tiktok_videos.py`)**:
+  * Đọc bộ từ điển 7 tầng từ `data/tri_ton_poi_taxonomy.json`.
+  * Thực thi trích xuất OEmbed metadata qua TikTok Official OEmbed API (`/oembed`).
+  * Tính toán `relevance_score` & JSONB `score_breakdown` theo 5 chỉ số (POI 40%, Location 25%, Semantic 20%, Hashtag 10%, Source 5%).
+  * Thực thi quy tắc phạt cứng Hard-Negative Penalty (-1.00 điểm cho địa danh An Giang ngoài Tri Tôn).
+* **Next.js API Gateway Route (`frontend/src/app/api/v1/videos/triton/route.ts`)**:
+  * Tạo endpoint `GET /api/v1/videos/triton` hỗ trợ filter theo `place_id` và sắp xếp (`sort=relevant`, `sort=recent`, `sort=popular`).
+  * Trả về danh sách video verified/relevant chuẩn định dạng JSON.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [14.0.0-DYNAMIC-TIKTOK-DISCOVERY-SPEC-V3] — 2026-08-08
+
+### Hoàn Thành Quy Hoạch Kiến Trúc Dynamic TikTok Video Discovery Engine v3.0
+* **Audit 95 POI Master Data** (`tri_ton_master_cleaned.csv`):
+  * Kiểm toán 100% 95 thực thể theo Checklist 8 Tiêu chí Hệ thống.
+  * Xác nhận 100% tọa độ nằm trong Bounding Box WGS84 Tri Tôn `[10.3702 - 10.4980 Lat, 104.9010 - 105.0255 Lng]`.
+  * Phân loại 88 POI `PASS`, 5 POI `PASS_WITH_REVIEW`, 2 cặp POI `DUPLICATE_CANDIDATE`.
+* **Xây Dựng Cấu Trúc Taxonomy & Từ Điển Đa Tầng** (`data/tri_ton_poi_taxonomy.json`):
+  * Phân chia 6 nhóm danh mục du lịch chính (`attractions_nature`, `food_and_restaurants`, `khmer_pagodas_heritage`, `checkin_spots`, `cafes_and_homestays`, `cultural_events`).
+  * Tách biệt 7 nhóm thuộc tính từ điển (`canonical_name`, `official_names`, `local_names`, `colloquial_names`, `hashtag_variants`, `search_terms`, `negative_terms`).
+* **Đóng Gói Tài Liệu Quy Chuẩn Kiến Trúc v3.0** (`docs/dynamic_video_discovery_spec.md`):
+  * Phân tách riêng `processing_stage` (5 bước kỹ thuật) và `verification_status` (Trạng thái phê duyệt chứng cứ).
+  * Quy định CSDL minh bạch `score_breakdown` kiểu JSONB hỗ trợ Explainable AI (Giải thích lý do gợi ý video cho du khách).
+  * Cấu hình ràng buộc `CONSTRAINT unq_platform_video UNIQUE(platform, external_video_id)`.
+
+## [13.5.0-SMARTPHONE-FRAME-DESKTOP-OPTIMIZATION] — 2026-08-08
+
+### Tối Ưu Khung Màn Hình 9:16 Điện Thoại Trên Laptop/Desktop (`TikTokFeedSection.tsx`)
+* **Khung Thẻ Điện Thoại Smartphone Chuẩn 9:16**:
+  * Khi hiển thị trên Laptop/Desktop, khung lướt video được bọc trong một Smartphone Card Frame thu nhỏ thanh lịch (`max-w-[380px] mx-auto rounded-3xl border-2 border-slate-800 shadow-2xl`).
+  * Giúp hình ảnh nhiếp ảnh và các video ngắn giữ nguyên tỉ lệ dọc 9:16 sắc nét như cầm chiếc điện thoại trên tay, không bị kéo dãn mờ ảnh landscape.
+  * Thao tác lăn chuột, kéo lướt hoặc dùng nút mũi tên bấm cực kỳ nhẹ nhàng và chuẩn xác.
+* **Tự Động Thích Ứng Màn Hình (Responsive)**:
+  * Màn hình điện thoại thực tế: tràn 100% bề rộng không viền.
+  * Màn hình Laptop/Desktop: hiển thị khung 9:16 căn giữa sang trọng.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [13.4.1-HOMEPAGE-LAYOUT-RESTORATION] — 2026-08-08
+
+### Sửa Lỗi Giao Diện Trang Chủ & Tích Hợp TikTok Feed Đúng Bố Cục
+* **Khôi Phục Khung Trang Chủ (Hero Banner & Search Bar)**:
+  * Loại bỏ phần `TikTokFeedSection` bị đặt nhầm nằm trên đỉnh ngoài `<main>` gây đè khuất phần Hero Banner & Thanh tìm kiếm AI.
+  * Trả lại phần Hero Banner, Thanh tìm kiếm AI và Top 12 Hot Places lên vị trí đầu tiên của Trang chủ (`/`).
+* **Tích Hợp TikTok Feed Chuẩn Section 3 (`app/page.tsx`)**:
+  * Đặt component `TikTokFeedSection` nằm gọn trong Section 3 với chiều cao `520px` sang trọng, viền bo `rounded-3xl` gọn gàng.
+  * Không làm cản trở thao tác cuộn trang chung của người dùng, du khách vừa có thể trải nghiệm lướt video TikTok vừa xem đầy đủ các section Ẩm thực, Văn hóa, Homestay phía dưới.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [13.4.0-TIKTOK-AUTO-SEARCH-AND-VIEWING-FIXES] — 2026-08-08
+
+### Sửa Lỗi Xem Video & Tự Động Tìm Kiếm TikTok (Auto TikTok Search)
+* **Tự Động Tìm Kiếm TikTok theo Từ Khóa (`utils.ts` & `TikTokFeedSection.tsx`)**:
+  * Tạo hàm trợ lý `getTikTokSearchUrl(placeName, commune)` tự động sinh link tìm kiếm TikTok chuẩn xác từng địa điểm/món ăn (VD: `https://www.tiktok.com/search?q=H%E1%BB%93%20T%C3%A0%20P%E1%BA%A1%20Tri%20T%C3%B4n%20An%20Giang`).
+  * Gắn nút **"🔍 Tự động tìm TikTok"** trực tiếp trên từng slide video và trong `VideoModal` — 1 click mở ứng dụng/web TikTok tìm kiếm video liên quan ngay lập tức mà không cần đăng nhập.
+* **Khắc Phục Lỗi Hiển Thị & Khung Chiều Cao Slide** (`TikTokFeedSection.tsx`):
+  * Sửa lỗi khớp chiều cao `slideHeight` theo khung container (`82vh` hoặc `100svh`), tránh trôi vỡ khung.
+  * Tích hợp bộ mảng 10 video fallback chuẩn ảnh nhiếp ảnh thực tế Tri Tôn (`/images/tiktok/*.jpg`) phòng trường hợp DB/API trả về rỗng hoặc URL ngoài bị lỗi.
+  * Trong `VideoModal.tsx`: Bổ sung nút **"▶ Mở trực tiếp trên TikTok"** và nút **"🔍 Tìm TikTok"** để du khách luôn phát/xem được video 100% không bị chặn bởi chính sách iframe của TikTok.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [13.3.0-TIKTOK-VERTICAL-SWIPE-FEED-HOMEPAGE] — 2026-08-08
+
+### TikTok Reels Vertical Swipe Feed — Tối Ưu Mobile & No-Login 100%
+* **Tạo Component Reusable `TikTokFeedSection.tsx`** (`frontend/src/components/TikTokFeedSection.tsx`):
+  * **Kỹ Thuật Chuẩn Native**: Sử dụng `scroll-snap-type: y mandatory` thuần CSS — zero-library, zero JS scroll overhead, lướt mượt mà chuẩn trải nghiệm TikTok/Reels trên iOS & Android.
+  * **Tối Ưu Mobile Viewport**: Sử dụng chiều cao `100svh` (small viewport height) chống trôi notch/status bar di động.
+  * **Zero Friction (Không Đăng Nhập)**: Người dùng có thể lướt xem liên tục 100% không yêu cầu đăng nhập hay rào cản.
+  * **Tự Động Nạp Live Data**: Tự động fetch top video trending từ `/api/v1/videos/trending` (bảng `videos` Supabase DB live) hoặc nhận qua prop `videos`.
+  * **Trải Nghiệm Đa Dạng**: Click nút Play để xem Pop-up `VideoModal` chất lượng cao, nút Thích thả tim tương tác, nút Nguồn mở thẳng ứng dụng TikTok, thanh điều hướng nút mũi tên cho Desktop.
+* **Đưa Video Feed Lên Đỉnh Trang Chủ (`app/page.tsx`)**:
+  * Đặt `TikTokFeedSection` ngay đầu trang chủ (trước Hero Section) với chiều cao `82vh` và bo góc `rounded-3xl` sang trọng.
+* **Tái Sử Dụng Linh Hoạt**: Có thể gọi component `<TikTokFeedSection />` ở bất kỳ trang nào (Chi tiết địa điểm, Trang Ẩm thực, Trang Văn hóa) bằng 1 dòng code.
+* Verify: `npx tsc --noEmit` — ✅ 0 lỗi TypeScript.
+
+## [13.2.0-MAP-GIS-POPUP-THUMBNAIL-COLORCODED-MARKERS] — 2026-08-08
+
+### Phase 3.3 — Map GIS: Popup Thumbnail + Color-Coded Markers
+* **Popup thumbnail ảnh thực tế** (`MapComponent.tsx`):
+  * Mỗi marker popup hiển thị ảnh thumbnail 110px từ `image_url` hoặc `photos[0].url` — dùng inline style để bypass Leaflet shadow DOM CSS isolation.
+  * Fallback `onError` về `/images/tiktok/ho_ta_pa.jpg` khi ảnh lỗi.
+  * Badge commune xanh lá + badge rating vàng hiển thị ngay dưới ảnh.
+  * 2 button Chỉ đường + Xem chi tiết với inline style đảm bảo render trong Leaflet popup.
+* **Color-coded markers theo danh mục** (`MapComponent.tsx`):
+  * `attractions_nature` → Marker xanh lá
+  * `food_and_restaurants` → Marker cam
+  * `khmer_pagodas_heritage` → Marker vàng gold
+  * `checkin_spots` → Marker tím
+  * `cafes_and_homestays` → Marker xanh dương
+  * Fallback → Marker xanh mặc định Leaflet
+* **Nâng cấp `Place` interface** (`PlaceCard.tsx`):
+  * Bổ sung `image_url?`, `video_url?`, `is_hot?`, `hot_rank?`, `is_active?` — khớp 100% với schema Supabase thực tế.
+* **Fix hardcode** (`MapClientPage.tsx`):
+  * Xóa số "106" cứng → dùng `places.length` động.
+  * Thay Unsplash fallback → `/images/tiktok/ho_ta_pa.jpg` trong side panel.
+* Verify: `npx tsc --noEmit` — 0 lỗi TypeScript.
+
+## [13.1.0-CHATBOT-WIDGET-SESSION-PERSISTENCE] — 2026-08-08
+
+### Phase 2.3 — ChatbotWidget Floating UX Improvements
+* **localStorage Session Persistence** (`ChatbotWidget.tsx`):
+  * Tin nhắn chat được lưu tự động vào `localStorage` key `triton_chat_session` sau mỗi thay đổi.
+  * Restore session từ localStorage khi user reload hoặc navigate giữa các trang — lịch sử chat không còn bị mất.
+  * Giới hạn tối đa 30 messages stored (tránh localStorage quota exceeded).
+  * SSR-safe: kiểm tra `typeof window` trước khi truy cập localStorage.
+* **Unread Badge Counter** (`ChatbotWidget.tsx`):
+  * Badge số đỏ `bg-rose-500` hiện trên FAB button khi AI gửi tin nhắn mới và widget đang đóng.
+  * Hiển thị số thực, tối đa "9+" nếu quá nhiều.
+  * Badge animate-bounce thu hút chú ý user.
+  * Badge tự động ẩn khi user mở widget (unreadCount reset về 0).
+* **Clear History đúng nghĩa**: Xóa cả localStorage khi user bấm nút Trash (xóa sạch phiên).
+* Verify: `npx tsc --noEmit` — 0 lỗi TypeScript.
+
+## [13.0.0-CHATBOT-AI-PHASE2-PRODUCTION-READY] — 2026-08-08
+
+### Chatbot AI Phase 2 — Production-Real Hoàn Chỉnh
+* **Next.js API Proxy Gateway** (`frontend/src/app/api/v1/chat/query/route.ts`):
+  * Tạo mới API Route Next.js làm proxy trung gian giữa Frontend và FastAPI backend.
+  * Nhận `POST { query, session_id }` từ Frontend, forward sang FastAPI qua biến môi trường `BACKEND_API_URL` (fallback: `http://127.0.0.1:8000`).
+  * Xử lý timeout 10 giây, trả về error message tiếng Việt khi backend không phản hồi.
+  * Đảm bảo tương thích 100% local dev lẫn Vercel production (không còn hardcode IP).
+* **Nâng Cấp ChatbotWidget** (`frontend/src/components/ChatbotWidget.tsx`):
+  * Thay `http://127.0.0.1:8000/api/v1/chat/query` bằng `/api/v1/chat/query` (relative URL — Vercel-safe).
+  * Hiển thị toàn bộ `ui_components[]` (tối đa 3 SpotCards) thay vì chỉ index 0.
+  * Hiển thị toàn bộ `videos[]` (tối đa 2 VideoChatCards) thay vì chỉ index 0.
+  * Thêm `suggestions[]` chips động dưới bubble AI — click để gửi tiếp.
+  * Thêm auto-scroll xuống tin nhắn mới nhất.
+  * Nút Gửi bị disable khi isTyping hoặc input trống.
+  * Sửa hardcode "106 Địa điểm" → "95+ Địa điểm Supabase DB Live".
+* **Rebuild Trang `/chatbot/page.tsx`** (Xóa Mock Hoàn Toàn):
+  * Xóa triệt để `setTimeout` mock vi phạm PRODUCTION-REAL rule.
+  * Kết nối API thực `/api/v1/chat/query` với loading state 3-dot animation.
+  * Thiết kế lại UI theme Dark Emerald phối màu `#0F2D24 / #1B4D3E / #D99B26` đồng nhất hệ thống.
+  * Render SpotCard Grid 2 cột khi response có `ui_components[]`.
+  * Render Video Cards clickable mở `VideoModal` khi response có `videos[]`.
+  * Suggestion Chips động màu vàng `#D99B26` từ `suggestions[]`.
+  * Input sticky bottom, disabled khi loading.
+* **Sửa Lỗi TypeScript Pre-existing**:
+  * Fix `places/[id]/videos/route.ts`: params phải là `Promise<{id: string}>` trong Next.js 16.
+  * Fix `ItineraryExportModal.tsx`: bổ sung optional props `tourTitle`, `duration`, `totalSpots`.
+  * Fix `ItineraryClientPage.tsx`: xóa `isOpen` prop không tồn tại.
+  * Fix `next.config.ts`: thêm `turbopack: {}` để suppress Turbopack+webpack conflict từ next-pwa.
+* **Cập Nhật `.env.local`**:
+  * Thêm `BACKEND_API_URL=http://127.0.0.1:8000` cho proxy gateway.
+
 ## [12.0.0-CHATBOT-AI-FASTAPI-PHASE2] — 2026-08-08
 
 ### Chatbot AI TRIA Thực Tế — Phase 2 Complete

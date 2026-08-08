@@ -6,6 +6,7 @@ import {
   Compass, MapPin, Utensils, Bed, Calendar, Map, 
   Landmark, BookOpen, Briefcase, ShieldAlert, Sparkles, Menu, X, ChevronDown 
 } from 'lucide-react';
+import MobileBottomNav from '@/components/MobileBottomNav';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -188,6 +189,9 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* Persistent Mobile Bottom Navigation Dock Bar */}
+      <MobileBottomNav />
     </header>
   );
 }

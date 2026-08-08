@@ -24,3 +24,12 @@ export function formatPrice(price: string): string {
   }
   return price;
 }
+
+/**
+ * Dynamic TikTok Search Link Generator
+ * Creates an exact search query link for any place, food, or keyword in Tri Tôn.
+ */
+export function getTikTokSearchUrl(placeName: string, commune?: string): string {
+  const query = `${placeName} ${commune ? commune + ' ' : ''}Tri Tôn An Giang`.trim();
+  return `https://www.tiktok.com/search?q=${encodeURIComponent(query)}`;
+}

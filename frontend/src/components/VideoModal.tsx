@@ -107,8 +107,9 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
         </div>
 
         {/* ── Video Player ── */}
+        {/* ── Video Player ── */}
         <div
-          className={`w-full bg-black ${isShorts ? 'aspect-[9/16]' : 'aspect-video'}`}
+          className={`relative w-full bg-black ${isShorts ? 'aspect-[9/16]' : 'aspect-video'}`}
         >
           <iframe
             src={buildEmbedUrl(video.embed_url, video.platform)}
@@ -118,6 +119,22 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
             allowFullScreen
             loading="lazy"
           />
+
+          {/* Fallback Direct Link Overlay Banner */}
+          <div className="absolute bottom-3 left-3 right-3 z-20 flex items-center justify-between bg-black/85 backdrop-blur-md p-2.5 rounded-xl border border-white/20 shadow-lg">
+            <span className="text-[11px] text-slate-200 font-medium truncate max-w-[55%]">
+              Nếu video không tự phát trong iframe:
+            </span>
+            <a
+              href={video.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(video.title + " Tri Tôn An Giang")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-extrabold text-white bg-rose-600 hover:bg-rose-700 px-3.5 py-1.5 rounded-lg shadow-md transition-all animate-pulse"
+            >
+              <span>Mở TikTok Trực Tiếp 🚀</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         {/* ── Metadata Footer ── */}
@@ -156,16 +173,27 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
             ))}
           </div>
 
-          {/* CTA: Xem gốc */}
-          <a
-            href={video.video_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#1B4D3E] hover:bg-[#143B2F] px-3.5 py-2 rounded-xl transition-colors border border-[#D99B26]/20"
-          >
-            <ExternalLink className="w-3.5 h-3.5 text-[#D99B26]" />
-            Xem trên {platformLabel}
-          </a>
+          {/* CTA Buttons: Xem gốc & Tự động tìm TikTok */}
+          <div className="flex items-center gap-2 pt-1">
+            <a
+              href={video.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(video.title + " Tri Tôn An Giang")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-bold text-white bg-[#1B4D3E] hover:bg-[#143B2F] px-3.5 py-2.5 rounded-xl transition-colors border border-[#D99B26]/30 shadow-md"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-[#D99B26]" />
+              Xem trên {platformLabel}
+            </a>
+
+            <a
+              href={`https://www.tiktok.com/search?q=${encodeURIComponent(video.title + " Tri Tôn An Giang")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1 text-xs font-bold text-slate-900 bg-[#D99B26] hover:bg-[#c48a22] px-3.5 py-2.5 rounded-xl transition-colors shadow-md"
+            >
+              🔍 Tìm TikTok
+            </a>
+          </div>
         </div>
       </div>
     </div>

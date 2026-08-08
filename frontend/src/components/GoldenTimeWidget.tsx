@@ -171,11 +171,11 @@ export default function GoldenTimeWidget() {
           Đang kiểm tra thời điểm trải nghiệm đẹp nhất...
         </div>
       ) : goldenPlaces.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible relative z-10">
           {goldenPlaces.map((place) => (
             <div
               key={place.id}
-              className="flex flex-col rounded-2xl bg-white text-slate-900 shadow-xl overflow-hidden border border-amber-300/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+              className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none flex flex-col rounded-2xl bg-white text-slate-900 shadow-xl overflow-hidden border border-amber-300/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
               <div className="relative h-44 w-full bg-slate-100">
                 <img

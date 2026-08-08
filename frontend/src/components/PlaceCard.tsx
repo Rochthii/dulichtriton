@@ -28,6 +28,11 @@ export interface Place {
   review_count?: number;
   confidence_score?: number;
   photos?: PlacePhoto[];
+  image_url?: string;
+  video_url?: string;
+  is_hot?: boolean;
+  hot_rank?: number;
+  is_active?: boolean;
 }
 
 interface PlaceCardProps {

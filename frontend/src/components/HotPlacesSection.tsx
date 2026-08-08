@@ -163,12 +163,12 @@ export default function HotPlacesSection({
         </Link>
       </div>
 
-      {/* Grid Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Grid Cards (Touch-Swipe Snap Carousel on Mobile) */}
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible">
         {hotPlaces.map((place) => (
           <div
             key={place.id}
-            className="group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
             {/* Top Rank Badge */}
             <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-400 font-extrabold text-xs shadow-md border border-amber-400/40">

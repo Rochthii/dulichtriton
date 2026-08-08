@@ -670,7 +670,6 @@ export default function ItineraryClientPage() {
       {/* Export Modal */}
       {showExportModal && (
         <ItineraryExportModal
-          isOpen={showExportModal}
           onClose={() => setShowExportModal(false)}
           tourTitle={days === '1' ? 'Tour 1 Ngày Classic Bảy Núi' : days === '2' ? 'Tour 2 Ngày 1 Đêm Thất Sơn' : 'Tour 3 Ngày 2 Đêm Trải Nghiệm Chuyên Sâu'}
           duration={days === '1' ? '1 Ngày (05:30 - 21:00)' : days === '2' ? '2 Ngày 1 Đêm' : '3 Ngày 2 Đêm'}

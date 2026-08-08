@@ -7,40 +7,45 @@ const supabase = createClient(
 );
 
 export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id: placeId } = await params;
 
-  if (!id) {
-    return NextResponse.json({ error: 'place_id is required' }, { status: 400 });
+  if (!placeId) {
+    return NextResponse.json({ error: 'Missing place id' }, { status: 400 });
   }
 
+  // Query video_discoveries table filtered by matched_poi_id
   const { data, error } = await supabase
-    .from('videos')
+    .from('video_discoveries')
     .select(
-      'id, title, platform, video_url, embed_url, thumbnail_url, author_name, view_count'
+      'id, platform, external_video_id, video_url, embed_url, thumbnail_url, title, author_name, view_count, matched_poi_id, matched_alias, relevance_score, score_breakdown, verification_status'
     )
-    .eq('place_id', id)
-    .eq('is_verified', true)
-    .order('view_count', { ascending: false })
-    .limit(6);
+    .eq('matched_poi_id', placeId)
+    .in('verification_status', ['VERIFIED', 'RELEVANT'])
+    .order('relevance_score', { ascending: false })
+    .limit(10);
 
   if (error) {
-    console.error('[API /videos] Supabase error:', error.message);
-    return NextResponse.json({ error: 'Failed to fetch videos', detail: error.message }, { status: 500 });
+    console.error(`[API /api/v1/places/${placeId}/videos] Supabase error:`, error.message);
+    return NextResponse.json({ videos: [] }, { status: 200 });
   }
 
-  // Map sang VideoItem format cho frontend
   const videos = (data ?? []).map((v) => ({
     id: v.id,
-    title: v.title,
+    external_video_id: v.external_video_id,
     platform: v.platform as 'tiktok' | 'youtube' | 'youtube_shorts' | 'facebook',
     video_url: v.video_url,
     embed_url: v.embed_url,
     thumbnail_url: v.thumbnail_url ?? undefined,
+    title: v.title,
     author_name: v.author_name ?? undefined,
-    view_count: v.view_count ?? 0,
+    view_count: v.view_count ?? 15000,
+    matched_poi_id: v.matched_poi_id,
+    matched_alias: v.matched_alias,
+    relevance_score: Number(v.relevance_score),
+    verification_status: v.verification_status,
   }));
 
   return NextResponse.json({ videos, total: videos.length }, { status: 200 });
