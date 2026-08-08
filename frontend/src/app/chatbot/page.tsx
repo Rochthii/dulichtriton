@@ -5,6 +5,7 @@ import { Bot, Send, User, MapPin, Navigation, Play, ChevronRight } from 'lucide-
 import Link from 'next/link';
 import VideoModal, { VideoItem } from '@/components/VideoModal';
 import { getGoogleMapsUrl } from '@/lib/utils';
+import FormattedChatMessage from '@/components/FormattedChatMessage';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -198,7 +199,11 @@ export default function ChatbotPage() {
                     : 'bg-white/95 text-slate-800 border border-white/20 rounded-tl-none'
                 }`}
               >
-                <p className="whitespace-pre-line">{msg.text}</p>
+                {msg.role === 'user' ? (
+                  <p className="whitespace-pre-line font-medium text-white">{msg.text}</p>
+                ) : (
+                  <FormattedChatMessage content={msg.text} />
+                )}
                 <span className={`block text-[10px] mt-2 ${msg.role === 'user' ? 'text-emerald-300 text-right' : 'text-slate-400'}`}>
                   {msg.timestamp}
                 </span>

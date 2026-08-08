@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import VideoChatCard from './VideoChatCard';
+import FormattedChatMessage from './FormattedChatMessage';
 
 interface EmbeddedSpot {
   type?: string;
@@ -310,7 +311,11 @@ export default function ChatbotWidget() {
                         : 'bg-white text-slate-800 border border-slate-200/80 rounded-tl-none'
                     }`}
                   >
-                    <p className="whitespace-pre-line">{msg.text}</p>
+                    {msg.sender === 'user' ? (
+                      <p className="whitespace-pre-line font-medium text-white">{msg.text}</p>
+                    ) : (
+                      <FormattedChatMessage content={msg.text} />
+                    )}
                     <span
                       className={`block text-[9px] mt-1 ${
                         msg.sender === 'user' ? 'text-emerald-300 text-right' : 'text-slate-400'
