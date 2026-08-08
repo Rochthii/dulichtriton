@@ -52,11 +52,13 @@ export default function ChatbotPage() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom on new message
+  // Internal container auto-scroll to bottom on new message without scrolling browser window
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   }, [messages, isLoading]);
 
   const handleSend = async (queryText?: string) => {
@@ -147,27 +149,27 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F2D24] via-[#1B4D3E] to-[#143B2F] flex flex-col">
+    <div className="h-[calc(100vh-64px)] max-h-[calc(100vh-64px)] bg-gradient-to-br from-[#0F2D24] via-[#1B4D3E] to-[#143B2F] flex flex-col overflow-hidden">
 
       {/* Hero Header */}
-      <div className="px-4 pt-8 pb-6 text-center border-b border-emerald-800/40">
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <div className="w-11 h-11 rounded-2xl bg-[#143B2F] border border-[#D99B26] flex items-center justify-center shadow-lg">
-            <Bot className="w-6 h-6 text-[#D99B26]" />
+      <div className="px-4 pt-6 pb-4 text-center border-b border-emerald-800/40 shrink-0">
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="w-10 h-10 rounded-2xl bg-[#143B2F] border border-[#D99B26] flex items-center justify-center shadow-lg">
+            <Bot className="w-5 h-5 text-[#D99B26]" />
           </div>
           <div className="text-left">
-            <h1 className="text-white font-bold text-lg leading-tight">AI Chatbot Du Lịch Tri Tôn</h1>
-            <p className="text-emerald-300 text-xs">RAG Engine — 95+ địa điểm Supabase DB Live</p>
+            <h1 className="text-white font-bold text-base leading-tight">AI Chatbot Du Lịch Tri Tôn</h1>
+            <p className="text-emerald-300 text-[11px]">RAG Engine — 95+ địa điểm Supabase DB Live</p>
           </div>
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping ml-1" />
         </div>
-        <p className="text-emerald-200 text-sm max-w-lg mx-auto">
+        <p className="text-emerald-200 text-xs max-w-lg mx-auto">
           Trò chuyện cùng trợ lý AI để khám phá địa điểm, đặc sản và lịch trình tại vùng Bảy Núi An Giang
         </p>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-3xl mx-auto w-full">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-4 py-6 space-y-6 max-w-3xl mx-auto w-full scrollbar-none">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -313,8 +315,6 @@ export default function ChatbotPage() {
             </div>
           </div>
         )}
-
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Area */}
