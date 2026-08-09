@@ -27,7 +27,6 @@ export default function Header() {
     { href: '/culture', label: 'Văn hóa Khmer', icon: Landmark, desc: 'Di sản & Lễ hội Bảy Núi' },
     { href: '/guide', label: 'Cẩm nang du lịch', icon: BookOpen, desc: 'Lộ trình xe & Hotline cứu hộ' },
     { href: '/partner', label: 'Cổng đối tác', icon: Briefcase, desc: 'Đăng ký cơ sở kinh doanh' },
-    { href: '/admin', label: 'Quản trị hệ thống', icon: ShieldAlert, desc: 'Admin Control Center' },
   ];
 
   return (
