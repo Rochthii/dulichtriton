@@ -65,9 +65,41 @@ async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   return null;
 }
 
+// ── Conversation Memory Helpers ─────────────────────────────────────────────
+interface Turn { role: 'user' | 'assistant'; content: string }
+
+async function loadHistory(sessionId: string): Promise<Turn[]> {
+  const { data } = await supabase
+    .from('chat_sessions')
+    .select('turns')
+    .eq('session_id', sessionId)
+    .single();
+  if (!data) return [];
+  const turns = data.turns as Turn[];
+  // Keep last 6 turns (3 exchanges) to avoid token bloat
+  return turns.slice(-6);
+}
+
+async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
+  // Keep max 20 turns in DB; trim oldest when exceeded
+  const trimmed = history.slice(-20);
+  await supabase
+    .from('chat_sessions')
+    .upsert({ session_id: sessionId, turns: trimmed }, { onConflict: 'session_id' });
+}
+
 // ── Parallel LLM Race: fastest winner wins, worst-case ~3s not 20s ──────────
-async function generateAIResponse(userQuery: string, ragContext: string): Promise<string> {
-  const systemMsg = SYSTEM_PROMPT;
+async function generateAIResponse(
+  userQuery: string,
+  ragContext: string,
+  history: Turn[] = []
+): Promise<string> {
+  // Build conversation history snippet injected into system prompt
+  const historySnippet = history.length > 0
+    ? '\n\nLịch sử hội thoại gần nhất:\n' +
+      history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
+    : '';
+  const systemMsg = SYSTEM_PROMPT + historySnippet;
   const userMsg   = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
   const fullPrompt = `${systemMsg}\n\n${userMsg}`;
 
@@ -159,7 +191,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const queryStr = body.query.trim();
+    const queryStr  = body.query.trim();
+    // session_id: frontend gửi kèm; fallback sang 'anonymous' cho widget
+    const sessionId = (typeof body.session_id === 'string' && body.session_id.trim())
+      ? body.session_id.trim()
+      : 'anonymous';
+
+    // Load conversation history
+    const history = await loadHistory(sessionId);
 
     // 1. Attempt proxying to FastAPI Backend if running locally
     try {
@@ -261,8 +300,15 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Generate AI response with Multi-LLM provider fallback
-    const aiTextResponse = await generateAIResponse(queryStr, ragContext);
+    // Generate AI response with Multi-LLM provider fallback + conversation history
+    const aiTextResponse = await generateAIResponse(queryStr, ragContext, history);
+
+    // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
+    saveHistory(sessionId, [
+      ...history,
+      { role: 'user',      content: queryStr },
+      { role: 'assistant', content: aiTextResponse.slice(0, 1200) }, // cap to avoid DB bloat
+    ]).catch(e => console.warn('[Memory] saveHistory failed:', e));
 
     // Fetch related videos from video_discoveries
     const { data: videos } = await supabase

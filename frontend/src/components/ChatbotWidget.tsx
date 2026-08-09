@@ -75,6 +75,20 @@ export default function ChatbotWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  // Persistent session_id: localStorage so it survives across visits for the widget
+  const sessionIdRef = useRef<string>('');
+  useEffect(() => {
+    const KEY = 'triton_widget_session_id';
+    const stored = localStorage.getItem(KEY);
+    if (stored) {
+      sessionIdRef.current = stored;
+    } else {
+      const newId = `wgt_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+      localStorage.setItem(KEY, newId);
+      sessionIdRef.current = newId;
+    }
+  }, []);
+
   // Persist messages to localStorage whenever they change
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -127,7 +141,7 @@ export default function ChatbotWidget() {
       const response = await fetch('/api/v1/chat/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: textToSend, session_id: 'widget_session' })
+        body: JSON.stringify({ query: textToSend, session_id: sessionIdRef.current || 'widget_session' })
       });
 
       const data = await response.json();

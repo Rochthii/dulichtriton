@@ -55,6 +55,21 @@ export default function ChatbotPage() {
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  // Persistent session_id per browser tab (sessionStorage so it survives re-renders)
+  const sessionIdRef = useRef<string>('');
+  useEffect(() => {
+    if (!sessionIdRef.current) {
+      const stored = sessionStorage.getItem('triton_chat_session_id');
+      if (stored) {
+        sessionIdRef.current = stored;
+      } else {
+        const newId = `cs_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+        sessionStorage.setItem('triton_chat_session_id', newId);
+        sessionIdRef.current = newId;
+      }
+    }
+  }, []);
+
   // Internal container auto-scroll to bottom on new message without scrolling browser window
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -81,7 +96,7 @@ export default function ChatbotPage() {
       const res = await fetch('/api/v1/chat/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: textToSend, session_id: 'chatbot_page' }),
+        body: JSON.stringify({ query: textToSend, session_id: sessionIdRef.current || 'chatbot_page' }),
       });
 
       const data = await res.json();
