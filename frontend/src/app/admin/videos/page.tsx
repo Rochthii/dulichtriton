@@ -31,7 +31,7 @@ interface VideoRecord {
   like_count: number;
   quality_score: number;
   matched_location: string;
-  verification_status: 'VERIFIED' | 'PENDING' | 'REJECTED';
+  verification_status: 'VERIFIED' | 'PENDING' | 'REJECTED' | 'RELEVANT';
 }
 
 export default function AdminVideosPage() {
@@ -188,7 +188,7 @@ export default function AdminVideosPage() {
 
                 {/* Status Badge */}
                 <div className="absolute top-3 left-3">
-                  {video.verification_status === 'VERIFIED' && (
+                  {(video.verification_status === 'VERIFIED' || video.verification_status === 'RELEVANT') && (
                     <span className="px-2.5 py-1 rounded-full bg-emerald-500 text-white text-[10px] font-bold shadow-md flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> Đã Duyệt
                     </span>
