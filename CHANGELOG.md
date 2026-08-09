@@ -4,7 +4,24 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [27.0.0-AI-TRAVEL-PLANNING-ENGINE] — 2026-08-09
+## [v27.1.0-DEEP-MVP-ROADMAP] - 2026-08-09
+
+### 🎯 Kế Hoạch Nâng Cấp Chuyên Sâu Các Trang Khám Phá (/places) & Ẩm Thực (/food)
+- [ ] **Màn Hình Chi Tiết Dynamic Route (`/places/[slug]` & `/food/[slug]`)**:
+  - Dựng giao diện 3 tầng chuyên sâu cho từng địa điểm/quán ăn.
+  - Tích hợp Gallery ảnh 4K Cloudinary + Feed TikTok Video Embed thực tế.
+  - Tọa độ PostGIS GPS + Bảng tính khoảng cách thực tế từ thị trấn Tri Tôn.
+  - Hiển thị Khung Giờ Vàng (Golden Hours) đẹp nhất để chụp ảnh và ăn uống.
+- [ ] **Trình Quản Lý & Tương Tác 1-Touch Real-world**:
+  - Tích hợp nút **1-Touch Call** kết nối SĐT real đặt bàn gà đốt / cháo bò / homestay.
+  - Bảng Menu món ăn & Giá thực tế (Menu Prices JSONB).
+  - Trạng thái mở/đóng cửa thời gian thực (Live Opening Status Badge: Open Now / Closing Soon).
+- [ ] **Hệ Thống Trợ Lý AI Tại Chỗ (AI Contextual Assistant)**:
+  - Nút **"Hỏi AI về địa điểm này"** tự động nạp Context của POI vào Chatbot để tư vấn chi phí nhóm, bãi đậu xe, quy định chụp ảnh.
+
+---
+
+## [v27.1.0-AI-TRAVEL-PLANNING-ENGINE] — 2026-08-09
 
 ### Added
 * **PostGIS Route & Travel Time Engine (`routeEngine.ts`)**: Tự động tính toán ma trận khoảng cách $d_i$ (km) và phút di chuyển xe máy giữa các mốc địa điểm trong lịch trình dựa trên tọa độ PostGIS `ST_Distance`.
