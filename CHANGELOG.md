@@ -14,6 +14,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 * **Smart Intent Classifier (`7c791d1`)**: Loại bỏ nhận diện Out-of-scope hardcoded. Hỗ trợ đầy đủ các câu hỏi di chuyển từ điểm xuất phát (Sài Gòn, Hà Nội, Cần Thơ) và các câu hỏi nối tiếp.
 * **Context-Aware Video Discovery (`82e6cf2`)**: Đẩy video TikTok theo khớp POI ID và khớp danh mục chủ đề (Gà Đốt, Chùa Khmer, Tà Pạ, Cô Tô, Cháo Bò, Homestay).
 * **Save & Export Itinerary (`81bcbd8`)**: Bổ sung bộ công cụ Tiện ích Lịch trình trong `FormattedChatMessage.tsx` (Lưu lịch trình vào LocalStorage, Tạo Mã QR Quét điện thoại, In / Xuất PDF Offline).
+* **Production-Real Admin Management System (`8698413`)**:
+  * Thống kê thời gian thực từ Supabase (`/admin` & `/api/v1/admin/stats`).
+  * Trang Quản lý Video TikTok chính thức (`/admin/videos`) tích hợp `ImportTikTokModal`, duyệt/từ chối/xóa video thực tế.
+  * Trang Giám sát Chatbot AI Observability (`/admin/chat-logs`) theo dõi độ trễ, LLM provider và câu hỏi Out-of-Scope.
+  * Bảng `audit_logs` bất biến ghi vết 100% thao tác quản trị.
 
 ## [22.0.0-PGVECTOR-SEMANTIC-RAG-SEARCH] — 2026-08-08
 
