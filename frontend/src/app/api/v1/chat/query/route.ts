@@ -99,6 +99,52 @@ function logChatEvent(entry: {
     .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
 }
 
+// ── Smart Intent Classifier & Out-of-Scope Guard ────────────────────────────
+function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
+  const lower = queryStr.toLowerCase();
+
+  // 1. Explicitly ALLOW if query mentions Tri Tôn or An Giang or Bảy Núi
+  if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi')) {
+    return false;
+  }
+
+  // 2. Explicitly ALLOW if query contains travel/direction intent
+  const travelKeywords = [
+    'đi từ', 'từ ', 'xe ', 'bến xe', 'vé xe', 'phương tiện', 'khoảng cách',
+    'bao xa', 'bao nhiêu km', 'mất bao lâu', 'mất mấy tiếng', 'mất mấy giờ',
+    'đường đi', 'di chuyển', 'bằng xe', 'chặng'
+  ];
+  const isTravelQuery = travelKeywords.some(kw => lower.includes(kw));
+  if (isTravelQuery) {
+    return false;
+  }
+
+  // 3. Explicitly ALLOW if session history exists and query is follow-up
+  if (history.length > 0) {
+    return false;
+  }
+
+  // 4. Check for HARD non-Tri Tôn topics
+  const hardOutOfScope = [
+    'cổ phiếu', 'chứng khoán', 'bitcoin', 'crypto', 'bóng đá',
+    'thời tiết mỹ', 'thời tiết hà nội', 'thời tiết đà nẵng',
+    'du lịch hà nội', 'du lịch đà nẵng', 'du lịch phú quốc', 'du lịch sapa', 'du lịch đà lạt',
+    'lập trình python', 'viết code java', 'toán học', 'hóa học'
+  ];
+  if (hardOutOfScope.some(topic => lower.includes(topic))) {
+    return true;
+  }
+
+  // 5. If query explicitly asks about another major region without travel intent
+  const externalPlaces = ['hà nội', 'sài gòn', 'đà nẵng', 'nha trang', 'vũng tàu', 'đà lạt', 'phú quốc', 'sapa'];
+  if (externalPlaces.some(p => lower.includes(p))) {
+    return true;
+  }
+
+  return false;
+}
+
+
 // ── Parallel LLM Race: fastest winner wins, worst-case ~3s not 20s ──────────
 async function generateAIResponse(
   userQuery: string,
@@ -235,11 +281,9 @@ export async function POST(req: NextRequest) {
 
     // 2. Direct Next.js RAG Engine Execution
     const lowerQuery = queryStr.toLowerCase();
-    const isOutScope =
-      (lowerQuery.includes('hà nội') || lowerQuery.includes('sài gòn') || lowerQuery.includes('đà nẵng') || lowerQuery.includes('thời tiết mỹ') || lowerQuery.includes('cổ phiếu')) &&
-      !lowerQuery.includes('tri tôn') && !lowerQuery.includes('an giang');
 
-    if (isOutScope) {
+    if (checkIsOutOfScope(queryStr, history)) {
+      logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true, latency_ms: Date.now() - t0 });
       return NextResponse.json({
         text_response: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.',
         ui_components: [],

@@ -93,6 +93,50 @@ function logChatEvent(entry: ChatLogEntry): void {
     .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
     .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
 }
+// ── Smart Intent Classifier & Out-of-Scope Guard ────────────────────────────
+function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
+  const lower = queryStr.toLowerCase();
+
+  // 1. Explicitly ALLOW if query mentions Tri Tôn or An Giang or Bảy Núi
+  if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi')) {
+    return false;
+  }
+
+  // 2. Explicitly ALLOW if query contains travel/direction intent
+  const travelKeywords = [
+    'đi từ', 'từ ', 'xe ', 'bến xe', 'vé xe', 'phương tiện', 'khoảng cách',
+    'bao xa', 'bao nhiêu km', 'mất bao lâu', 'mất mấy tiếng', 'mất mấy giờ',
+    'đường đi', 'di chuyển', 'bằng xe', 'chặng'
+  ];
+  const isTravelQuery = travelKeywords.some(kw => lower.includes(kw));
+  if (isTravelQuery) {
+    return false;
+  }
+
+  // 3. Explicitly ALLOW if session history exists and query is follow-up
+  if (history.length > 0) {
+    return false;
+  }
+
+  // 4. Check for HARD non-Tri Tôn topics
+  const hardOutOfScope = [
+    'cổ phiếu', 'chứng khoán', 'bitcoin', 'crypto', 'bóng đá',
+    'thời tiết mỹ', 'thời tiết hà nội', 'thời tiết đà nẵng',
+    'du lịch hà nội', 'du lịch đà nẵng', 'du lịch phú quốc', 'du lịch sapa', 'du lịch đà lạt',
+    'lập trình python', 'viết code java', 'toán học', 'hóa học'
+  ];
+  if (hardOutOfScope.some(topic => lower.includes(topic))) {
+    return true;
+  }
+
+  // 5. If query explicitly asks about another major region without travel intent
+  const externalPlaces = ['hà nội', 'sài gòn', 'đà nẵng', 'nha trang', 'vũng tàu', 'đà lạt', 'phú quốc', 'sapa'];
+  if (externalPlaces.some(p => lower.includes(p))) {
+    return true;
+  }
+
+  return false;
+}
 
 function buildSuggestions(lower: string): string[] {
   if (lower.includes('ăn') || lower.includes('gà đốt') || lower.includes('cháo bò'))
@@ -169,15 +213,17 @@ export async function POST(req: NextRequest) {
       };
 
       try {
+        const t0 = Date.now();
         const lower = queryStr.toLowerCase();
 
-        // Out-of-scope guard
-        const isOutScope =
-          (lower.includes('hà nội') || lower.includes('sài gòn') || lower.includes('đà nẵng') ||
-           lower.includes('thời tiết mỹ') || lower.includes('cổ phiếu')) &&
-          !lower.includes('tri tôn') && !lower.includes('an giang');
+        // 1. Load history & generate embedding in parallel
+        const [history, queryVector] = await Promise.all([
+          loadHistory(sessionId),
+          generateQueryEmbedding(queryStr),
+        ]);
 
-        if (isOutScope) {
+        // 2. Out-of-scope guard with history context
+        if (checkIsOutOfScope(queryStr, history)) {
           send({ type: 'text_delta', delta: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.' });
           send({ type: 'suggestions', data: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] });
           send({ type: 'done' });
@@ -185,14 +231,6 @@ export async function POST(req: NextRequest) {
           controller.close();
           return;
         }
-
-        const t0 = Date.now();
-
-        // Parallel: load history + generate embedding
-        const [history, queryVector] = await Promise.all([
-          loadHistory(sessionId),
-          generateQueryEmbedding(queryStr),
-        ]);
 
         // Vector search → ILIKE fallback
         let places: Record<string, unknown>[] = [];
