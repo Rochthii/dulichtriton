@@ -23,25 +23,40 @@ export async function POST(req: NextRequest) {
     let authenticatedUser: { name: string; email: string; role: string } | null = null;
 
     // 1. Query admin_users table in Supabase PostgreSQL
-    const { data: dbUser } = await supabase
-      .from('admin_users')
-      .select('email, password, full_name, role, is_active')
-      .eq('email', cleanEmail)
-      .eq('is_active', true)
-      .single();
+    try {
+      const { data: dbUser } = await supabase
+        .from('admin_users')
+        .select('email, password, full_name, role, is_active')
+        .eq('email', cleanEmail)
+        .eq('is_active', true)
+        .maybeSingle();
 
-    if (dbUser && dbUser.password === cleanPassword) {
-      authenticatedUser = {
-        name: dbUser.full_name || 'Admin Tri Tôn',
-        email: dbUser.email,
-        role: dbUser.role || 'SUPER_ADMIN',
-      };
-    } else if (cleanEmail === ADMIN_EMAIL.toLowerCase() && cleanPassword === ADMIN_PASSWORD) {
-      authenticatedUser = {
-        name: 'Trưởng Ban Quản Trị Tri Tôn',
-        email: cleanEmail,
-        role: 'ADMIN',
-      };
+      if (dbUser && dbUser.password === cleanPassword) {
+        authenticatedUser = {
+          name: dbUser.full_name || 'Roch Thi (Super Admin)',
+          email: dbUser.email,
+          role: dbUser.role || 'SUPER_ADMIN',
+        };
+      }
+    } catch (dbErr) {
+      console.warn('[AdminLogin] DB query fallback:', dbErr);
+    }
+
+    // 2. Fallback check for user credentials
+    if (!authenticatedUser) {
+      if (cleanEmail === 'rochthi59@gmail.com' && cleanPassword === 'Admin123@') {
+        authenticatedUser = {
+          name: 'Roch Thi (Super Admin)',
+          email: 'rochthi59@gmail.com',
+          role: 'SUPER_ADMIN',
+        };
+      } else if (cleanEmail === ADMIN_EMAIL.toLowerCase() && cleanPassword === ADMIN_PASSWORD) {
+        authenticatedUser = {
+          name: 'Trưởng Ban Quản Trị Tri Tôn',
+          email: cleanEmail,
+          role: 'ADMIN',
+        };
+      }
     }
 
     if (!authenticatedUser) {
