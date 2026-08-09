@@ -7,8 +7,8 @@ import { ShieldCheck, Lock, Mail, Eye, EyeOff, ArrowRight, AlertCircle, Sparkles
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@triton.gov.vn');
-  const [password, setPassword] = useState('TriTon2026!Admin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -64,17 +64,10 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        {/* Credentials Info Badge */}
-        <div className="bg-emerald-950/60 border border-emerald-800/60 rounded-2xl p-3.5 text-xs text-emerald-200 space-y-1">
-          <div className="font-bold text-amber-300 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Tài khoản Quản trị Mặc định:
-          </div>
-          <div className="font-mono text-[11px] text-emerald-300">
-            Email: <span className="font-bold text-white">admin@triton.gov.vn</span>
-          </div>
-          <div className="font-mono text-[11px] text-emerald-300">
-            Mật khẩu: <span className="font-bold text-white">TriTon2026!Admin</span>
-          </div>
+        {/* Security Indicator */}
+        <div className="bg-emerald-950/40 border border-emerald-800/40 rounded-2xl p-3 text-xs text-emerald-300 flex items-center gap-2 font-medium">
+          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          <span>Hệ thống Bảo mật Xác thực 2 Lớp • Quản Trị Tri Tôn</span>
         </div>
 
         {/* Error Alert */}
