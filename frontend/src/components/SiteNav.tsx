@@ -75,15 +75,11 @@ export default function SiteNav() {
         <div className="hidden lg:flex items-center gap-3">
           <Link
             href="/emergency"
-            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-amber-800 bg-amber-50 hover:bg-amber-100 rounded-lg border border-amber-200 transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-amber-900 bg-amber-50 hover:bg-amber-100 rounded-xl border border-amber-200 transition-colors shadow-xs"
           >
             <PhoneCall className="h-3.5 w-3.5 text-amber-600" />
             Cứu hộ 24/7
           </Link>
-          <button className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-emerald-800 hover:bg-emerald-900 rounded-lg shadow-md shadow-emerald-900/10 transition-all hover:scale-[1.02]">
-            <User className="h-3.5 w-3.5" />
-            Đăng nhập
-          </button>
         </div>
 
         {/* Mobile Menu Button */}
