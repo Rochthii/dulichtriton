@@ -102,8 +102,8 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      {/* Footer Return Link */}
-      <div className="p-4 border-t border-slate-800 space-y-2">
+      {/* Footer Links & Logout */}
+      <div className="p-4 border-t border-slate-800 space-y-1.5">
         <Link
           href="/"
           className="flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white px-3 py-2 rounded-xl hover:bg-slate-800 transition-all"
@@ -111,7 +111,20 @@ export default function AdminSidebar() {
           <ArrowLeft className="w-4 h-4" />
           <span>Trở về Trang Chủ Portal</span>
         </Link>
+
+        <button
+          onClick={async () => {
+            await fetch('/api/v1/admin/auth/logout', { method: 'POST' });
+            window.location.href = '/admin/login';
+          }}
+          type="button"
+          className="w-full flex items-center gap-2 text-xs font-semibold text-rose-400 hover:text-rose-300 px-3 py-2 rounded-xl hover:bg-rose-950/40 transition-all cursor-pointer"
+        >
+          <span className="w-2 h-2 rounded-full bg-rose-500" />
+          <span>Đăng Xuất Quản Trị</span>
+        </button>
       </div>
     </aside>
   );
 }
+
