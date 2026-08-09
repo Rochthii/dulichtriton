@@ -126,61 +126,92 @@ export default function ChatbotWidget() {
     const textToSend = queryText || input;
     if (!textToSend.trim()) return;
 
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     const userMsg: Message = {
       id: Date.now().toString(),
       sender: 'user',
       text: textToSend,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      timestamp: now,
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    // Placeholder bot message — fills in as stream arrives
+    const botId = (Date.now() + 1).toString();
+    const botPlaceholder: Message = {
+      id: botId,
+      sender: 'assistant',
+      text: '',
+      timestamp: now,
+      suggestions: [],
+    };
+
+    setMessages(prev => [...prev, userMsg, botPlaceholder]);
     if (!queryText) setInput('');
     setIsTyping(true);
 
     try {
-      const response = await fetch('/api/v1/chat/query', {
+      const response = await fetch('/api/v1/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: textToSend, session_id: sessionIdRef.current || 'widget_session' })
+        body: JSON.stringify({ query: textToSend, session_id: sessionIdRef.current || 'widget_session' }),
       });
 
-      const data = await response.json();
+      if (!response.ok || !response.body) throw new Error('Stream unavailable');
 
-      // Map ui_components → spots
-      const spots: EmbeddedSpot[] = (data.ui_components || []).slice(0, 3).map((c: EmbeddedSpot) => ({
-        id: c.id,
-        name: c.name,
-        commune: c.commune,
-        category: c.category,
-        imageUrl: c.imageUrl || '',
-        rating: c.rating || 4.5,
-        latitude: c.latitude,
-        longitude: c.longitude,
-      }));
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
 
-      // Map videos
-      const videos: EmbeddedVideo[] = (data.videos || []).slice(0, 2).map((v: EmbeddedVideo) => ({
-        title: v.title,
-        views: v.views,
-        imageUrl: v.imageUrl || '',
-        embedUrl: v.embedUrl,
-        creator: v.creator,
-      }));
+      const update = (patch: Partial<Message>) =>
+        setMessages(prev => prev.map(m => m.id === botId ? { ...m, ...patch } : m));
 
-      const botMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: 'assistant',
-        text: data.text_response || 'Xin lỗi, tôi chưa hiểu ý bạn.',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        spots: spots.length > 0 ? spots : undefined,
-        videos: videos.length > 0 ? videos : undefined,
-        suggestions: data.suggestions || [],
-      };
-      setMessages(prev => [...prev, botMsg]);
-      // Increment unread counter if chat widget is closed
-      if (!isOpen) {
-        setUnreadCount(prev => prev + 1);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n');
+        buf = lines.pop() || '';
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          try {
+            const evt = JSON.parse(line.slice(6));
+
+            if (evt.type === 'text_delta') {
+              setMessages(prev => prev.map(m =>
+                m.id === botId ? { ...m, text: m.text + evt.delta } : m
+              ));
+            } else if (evt.type === 'places' && Array.isArray(evt.data) && evt.data.length > 0) {
+              const spots: EmbeddedSpot[] = evt.data.slice(0, 3).map((p: Record<string, unknown>) => ({
+                id: p.id as string,
+                name: p.name as string,
+                commune: p.commune as string,
+                category: p.category as string,
+                imageUrl: (p.image_url as string) || '',
+                rating: (p.rating as number) || 4.5,
+              }));
+              update({ spots });
+            } else if (evt.type === 'videos' && Array.isArray(evt.data) && evt.data.length > 0) {
+              const videos: EmbeddedVideo[] = evt.data.slice(0, 2).map((v: Record<string, unknown>) => ({
+                title: v.title as string,
+                views: (v.view_count as string) || '0',
+                imageUrl: (v.thumbnail_url as string) || '',
+                embedUrl: (v.video_url as string) || '',
+                creator: (v.author_name as string) || '',
+              }));
+              update({ videos });
+            } else if (evt.type === 'suggestions') {
+              update({ suggestions: evt.data as string[] });
+            } else if (evt.type === 'error') {
+              update({ text: 'Tôi gặp sự cố tạm thời. Vui lòng thử lại!' });
+            }
+          } catch { /* malformed chunk */ }
+        }
       }
+
+      // Increment unread counter if widget is closed
+      if (!isOpen) setUnreadCount(prev => prev + 1);
+
+
     } catch (error) {
       console.error('Chatbot API Error:', error);
       const errorMsg: Message = {
