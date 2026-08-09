@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Link as LinkIcon, Sparkles, CheckCircle2, Hash, Layers, Video, RefreshCw } from 'lucide-react';
+import { X, Link as LinkIcon, Sparkles, CheckCircle2, Hash, Layers, Video, RefreshCw, Eye, Tag } from 'lucide-react';
 
 interface ImportTikTokModalProps {
   isOpen: boolean;
@@ -9,13 +9,21 @@ interface ImportTikTokModalProps {
   onSuccess?: () => void;
 }
 
+interface PreviewMetadata {
+  title: string;
+  author_name: string;
+  thumbnail_url: string;
+  inferredLocation: string;
+}
+
 export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: ImportTikTokModalProps) {
   const [activeTab, setActiveTab] = useState<'single' | 'batch' | 'hashtag'>('single');
   const [singleUrl, setSingleUrl] = useState('');
   const [batchUrls, setBatchUrls] = useState('');
   const [selectedHashtag, setSelectedHashtag] = useState('#gadotothum');
-  const [locationTag, setLocationTag] = useState('Ẩm Thực');
+  const [locationTag, setLocationTag] = useState('AUTO');
   const [isLoading, setIsLoading] = useState(false);
+  const [previewMeta, setPreviewMeta] = useState<PreviewMetadata | null>(null);
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   if (!isOpen) return null;
@@ -31,6 +39,31 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
     { tag: '#chaubozuctruc', name: 'Cháo Bò Lá Trúc', location: 'Ẩm Thực' },
   ];
 
+  const handleFetchPreview = async (url: string) => {
+    if (!url.trim() || !url.includes('tiktok.com')) return;
+    setIsLoading(true);
+    setStatusMsg(null);
+    try {
+      const res = await fetch(`/api/v1/videos/oembed?url=${encodeURIComponent(url.trim())}`);
+      const data = await res.json();
+      if (res.ok && data.title) {
+        setPreviewMeta({
+          title: data.title,
+          author_name: data.author_name || 'TikToker',
+          thumbnail_url: data.thumbnail_url || '/images/tiktok/ho_ta_pa.jpg',
+          inferredLocation: data.inferredLocation || 'Tri Tôn, An Giang',
+        });
+        if (locationTag === 'AUTO') {
+          setLocationTag(data.inferredLocation || 'Tà Pạ');
+        }
+      }
+    } catch (e) {
+      console.warn('oEmbed preview error:', e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSingleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!singleUrl.trim() || isLoading) return;
@@ -45,6 +78,8 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
 
       if (!oembedRes.ok) throw new Error(oembedData.error || 'Không thể lấy dữ liệu TikTok oEmbed');
 
+      const targetLocation = locationTag === 'AUTO' ? (oembedData.inferredLocation || 'Tri Tôn, An Giang') : locationTag;
+
       // 2. Insert real video record into Supabase PostgreSQL
       const saveRes = await fetch('/api/v1/admin/videos', {
         method: 'POST',
@@ -53,10 +88,10 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
           video_url: singleUrl.trim(),
           embed_url: oembedData.embed_url || `https://www.tiktok.com/embed/v2/${singleUrl.match(/video\/(\d+)/)?.[1] || ''}`,
           thumbnail_url: oembedData.thumbnail_url,
-          title: oembedData.title || `Review TikTok tại ${locationTag}`,
+          title: oembedData.title || `Review TikTok tại ${targetLocation}`,
           author_name: oembedData.author_name || 'TikToker',
           author_username: oembedData.author_name ? `@${oembedData.author_name.toLowerCase().replace(/\s+/g, '')}` : '@tiktok',
-          matched_location: locationTag,
+          matched_location: targetLocation,
           verification_status: 'VERIFIED',
           quality_score: 0.95,
           view_count: Math.floor(Math.random() * 50000) + 20000,
@@ -70,15 +105,16 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
 
       setStatusMsg({
         type: 'success',
-        text: `Đã nạp và lưu vĩnh viễn video từ @${oembedData.author_name || 'TikTok'} vào Supabase!`,
+        text: `Đã nạp và lưu vĩnh viễn: "${oembedData.title.substring(0, 45)}..." từ @${oembedData.author_name || 'TikTok'} vào Supabase!`,
       });
 
       setSingleUrl('');
+      setPreviewMeta(null);
       if (onSuccess) onSuccess();
       setTimeout(() => {
         onClose();
         setStatusMsg(null);
-      }, 1500);
+      }, 1800);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Lỗi khi nhập video';
       setStatusMsg({ type: 'error', text: msg });
@@ -111,6 +147,8 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
         const oembedRes = await fetch(`/api/v1/videos/oembed?url=${encodeURIComponent(url)}`);
         const oembedData = await oembedRes.json();
 
+        const targetLocation = oembedData.inferredLocation || 'Tri Tôn, An Giang';
+
         await fetch('/api/v1/admin/videos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -121,7 +159,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
             title: oembedData.title || `Review TikTok Tri Tôn`,
             author_name: oembedData.author_name || 'TikToker',
             author_username: oembedData.author_name ? `@${oembedData.author_name.toLowerCase().replace(/\s+/g, '')}` : '@tiktok',
-            matched_location: locationTag,
+            matched_location: targetLocation,
             verification_status: 'VERIFIED',
             quality_score: 0.90,
           }),
@@ -134,7 +172,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
 
     setStatusMsg({
       type: 'success',
-      text: `Đã nhập thành công ${count}/${urls.length} video TikTok vào Supabase!`,
+      text: `Đã nhập thành công ${count}/${urls.length} video TikTok thật vào Supabase!`,
     });
 
     setBatchUrls('');
@@ -142,7 +180,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
     setTimeout(() => {
       onClose();
       setStatusMsg(null);
-    }, 1500);
+    }, 1800);
     setIsLoading(false);
   };
 
@@ -165,7 +203,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               Quản Lý & Thêm Video TikTok Real
             </h3>
             <p className="text-xs text-slate-500">
-              Nhập URL TikTok thật để bóc tách oEmbed và lưu vào CSDL Supabase PostgreSQL
+              Dán URL TikTok thật để tự động lấy Tiêu đề, Tác giả & Tự động gắn Danh mục địa danh
             </p>
           </div>
         </div>
@@ -194,7 +232,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               activeTab === 'hashtag' ? 'bg-white text-emerald-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Hash className="w-3.5 h-3.5" /> Hashtag Target
+            <Hash className="w-3.5 h-3.5" /> AI Scan Target
           </button>
         </div>
 
@@ -214,15 +252,46 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
           <form onSubmit={handleSingleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">URL Video TikTok Thật</label>
-              <input
-                type="url"
-                required
-                placeholder="https://www.tiktok.com/@username/video/123456789"
-                value={singleUrl}
-                onChange={(e) => setSingleUrl(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  required
+                  placeholder="https://www.tiktok.com/@username/video/7420379562602695937"
+                  value={singleUrl}
+                  onChange={(e) => {
+                    setSingleUrl(e.target.value);
+                    if (e.target.value.includes('tiktok.com/')) {
+                      handleFetchPreview(e.target.value);
+                    }
+                  }}
+                  className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleFetchPreview(singleUrl)}
+                  className="px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all flex items-center gap-1 shrink-0"
+                >
+                  <Eye className="w-3.5 h-3.5 text-slate-500" /> Xem oEmbed
+                </button>
+              </div>
             </div>
+
+            {/* Auto Preview Metadata Box */}
+            {previewMeta && (
+              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2 text-xs animate-in fade-in duration-200">
+                <div className="flex items-center gap-1.5 font-bold text-emerald-800 text-[11px]">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Dữ liệu TikTok oEmbed Tự Động Bóc Tách:</span>
+                </div>
+                <div className="font-bold text-slate-900 line-clamp-2">{previewMeta.title}</div>
+                <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                  <span>Tác giả: <strong className="text-slate-800">@{previewMeta.author_name}</strong></span>
+                  <span className="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-md font-bold text-[10px] flex items-center gap-1">
+                    <Tag className="w-3 h-3 text-emerald-700" /> Auto Tag: {previewMeta.inferredLocation}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Gắn Thẻ Địa Danh / Danh Mục</label>
@@ -231,6 +300,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
                 onChange={(e) => setLocationTag(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-white"
               >
+                <option value="AUTO">🤖 Tự Động Nhận Diện Từ Tiêu Đề TikTok</option>
                 <option value="Tà Pạ">Tà Pạ (Hồ & Chùa Tà Pạ)</option>
                 <option value="Chùa Koh Kas">Chùa Koh Kas (Cổng Trời)</option>
                 <option value="Núi Cô Tô">Núi Cô Tô (Phụng Hoàng Sơn)</option>
@@ -246,7 +316,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               className="w-full py-3 rounded-xl bg-[#1B4D3E] hover:bg-[#153e32] text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isLoading ? <RefreshCw className="w-4 h-4 animate-spin text-amber-300" /> : <Sparkles className="w-4 h-4 text-amber-300" />}
-              {isLoading ? 'Đang bóc tách & lưu Supabase...' : 'Thêm Video TikTok Vào Hệ Thống'}
+              {isLoading ? 'Đang bóc tách & lưu Supabase...' : 'Nạp & Lưu Video TikTok Vào Supabase'}
             </button>
           </form>
         )}
@@ -271,7 +341,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               className="w-full py-3 rounded-xl bg-[#1B4D3E] hover:bg-[#153e32] text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isLoading ? <RefreshCw className="w-4 h-4 animate-spin text-amber-300" /> : <Layers className="w-4 h-4 text-amber-300" />}
-              {isLoading ? 'Đang xử lý nạp hàng loạt...' : 'Nhập Hàng Loạt Link TikTok'}
+              {isLoading ? 'Đang xử lý nạp hàng loạt...' : 'Nạp Hàng Loạt Link TikTok'}
             </button>
           </form>
         )}
