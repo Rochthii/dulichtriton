@@ -82,11 +82,34 @@ export async function POST(req: NextRequest) {
       view_count,
     };
 
-    const { data, error } = await supabase
+    // Resilient Insert/Update check to prevent 42P10 constraint mismatch errors
+    const { data: existing } = await supabase
       .from('video_discoveries')
-      .upsert(insertPayload, { onConflict: 'video_url' })
-      .select()
-      .single();
+      .select('id')
+      .eq('video_url', video_url)
+      .maybeSingle();
+
+    let data;
+    let error;
+
+    if (existing) {
+      const { data: updated, error: updateErr } = await supabase
+        .from('video_discoveries')
+        .update(insertPayload)
+        .eq('id', existing.id)
+        .select()
+        .single();
+      data = updated;
+      error = updateErr;
+    } else {
+      const { data: inserted, error: insertErr } = await supabase
+        .from('video_discoveries')
+        .insert(insertPayload)
+        .select()
+        .single();
+      data = inserted;
+      error = insertErr;
+    }
 
     if (error) {
       console.error('[AdminVideos POST Error]:', error);
