@@ -88,6 +88,17 @@ async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
     .upsert({ session_id: sessionId, turns: trimmed }, { onConflict: 'session_id' });
 }
 
+// ── Observability ────────────────────────────────────────────────────────────
+function logChatEvent(entry: {
+  session_id: string; query: string; response_preview?: string;
+  provider_used?: string; rag_method?: string; places_count?: number;
+  latency_ms?: number; is_out_scope?: boolean;
+}): void {
+  void Promise.resolve(supabase.from('chat_logs').insert(entry))
+    .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
+    .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
+}
+
 // ── Parallel LLM Race: fastest winner wins, worst-case ~3s not 20s ──────────
 async function generateAIResponse(
   userQuery: string,
@@ -196,6 +207,8 @@ export async function POST(req: NextRequest) {
     const sessionId = (typeof body.session_id === 'string' && body.session_id.trim())
       ? body.session_id.trim()
       : 'anonymous';
+
+    const t0 = Date.now(); // latency tracking
 
     // Load conversation history
     const history = await loadHistory(sessionId);
@@ -342,6 +355,18 @@ export async function POST(req: NextRequest) {
         'Khu cắm trại Hồ Ô Thum',
       ];
     }
+
+    // Audit log before returning
+    logChatEvent({
+      session_id: sessionId,
+      query: queryStr,
+      response_preview: aiTextResponse.slice(0, 300),
+      provider_used: 'parallel-race',
+      rag_method: places && places.length > 0 ? 'vector-or-ilike' : 'hot_fallback',
+      places_count: formattedPlaces.length,
+      latency_ms: Date.now() - t0,
+      is_out_scope: false,
+    });
 
     return NextResponse.json({
       text_response: aiTextResponse,

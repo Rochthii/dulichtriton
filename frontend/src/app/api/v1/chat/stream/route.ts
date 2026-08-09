@@ -75,6 +75,25 @@ async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   return null;
 }
 
+// ── Observability: immutable audit log ─────────────────────────────────────
+interface ChatLogEntry {
+  session_id: string;
+  query: string;
+  response_preview?: string;
+  provider_used?: string;
+  rag_method?: string;
+  places_count?: number;
+  latency_ms?: number;
+  is_out_scope?: boolean;
+}
+
+function logChatEvent(entry: ChatLogEntry): void {
+  // Fire-and-forget — wrap in Promise.resolve to get proper .catch()
+  void Promise.resolve(supabase.from('chat_logs').insert(entry))
+    .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
+    .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
+}
+
 function buildSuggestions(lower: string): string[] {
   if (lower.includes('ăn') || lower.includes('gà đốt') || lower.includes('cháo bò'))
     return ['Quán Gà Đốt Ô Thum chuẩn vị nhất', 'Địa chỉ quán Cháo Bò lá trúc', 'Bún nước lèo Khmer'];
@@ -162,9 +181,12 @@ export async function POST(req: NextRequest) {
           send({ type: 'text_delta', delta: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.' });
           send({ type: 'suggestions', data: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] });
           send({ type: 'done' });
+          logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true });
           controller.close();
           return;
         }
+
+        const t0 = Date.now();
 
         // Parallel: load history + generate embedding
         const [history, queryVector] = await Promise.all([
@@ -174,24 +196,25 @@ export async function POST(req: NextRequest) {
 
         // Vector search → ILIKE fallback
         let places: Record<string, unknown>[] = [];
+        let ragMethod = 'none';
         if (queryVector) {
           const { data: vm } = await supabase.rpc('match_places', {
             query_embedding: queryVector, match_threshold: 0.3, match_count: 5,
           });
-          if (vm && vm.length > 0) places = vm;
+          if (vm && vm.length > 0) { places = vm; ragMethod = 'vector'; }
         }
         if (places.length === 0) {
           const { data: tm } = await supabase.from('places')
             .select('id,slug,name,commune,category,rating,image_url,description,golden_time_windows')
             .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
             .limit(4);
-          if (tm) places = tm;
+          if (tm) { places = tm; ragMethod = 'ilike'; }
         }
         if (places.length === 0) {
           const { data: hot } = await supabase.from('places')
             .select('id,slug,name,commune,category,rating,image_url,golden_time_windows')
             .eq('is_hot', true).limit(3);
-          if (hot) places = hot;
+          if (hot) { places = hot; ragMethod = 'hot_fallback'; }
         }
 
         const formattedPlaces = places.map(p => ({
@@ -277,12 +300,27 @@ export async function POST(req: NextRequest) {
           send({ type: 'text_delta', delta: fullText });
         }
 
+        const latencyMs = Date.now() - t0;
+        const providerUsed = geminiStreamed ? 'streaming-gemini' : 'fallback-nonstream';
+
         // Persist to Supabase (fire-and-forget)
         saveHistory(sessionId, [
           ...history,
           { role: 'user', content: queryStr },
           { role: 'assistant', content: fullText.slice(0, 1200) },
         ]).catch(e => console.warn('[Memory] saveHistory failed:', e));
+
+        // Audit log (immutable)
+        logChatEvent({
+          session_id: sessionId,
+          query: queryStr,
+          response_preview: fullText.slice(0, 300),
+          provider_used: providerUsed,
+          rag_method: ragMethod,
+          places_count: formattedPlaces.length,
+          latency_ms: latencyMs,
+          is_out_scope: false,
+        });
 
         send({ type: 'suggestions', data: buildSuggestions(lower) });
         send({ type: 'done' });
