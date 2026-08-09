@@ -60,7 +60,10 @@ class TriTonTikTokScraper:
         results = []
 
         try:
-            from TikTokApi import TikTokApi
+            import importlib
+            tiktok_mod = importlib.import_module("TikTokApi")
+            TikTokApi = getattr(tiktok_mod, "TikTokApi")
+
             with TikTokApi() as api:
                 tag = api.hashtag(name=hashtag)
                 for video in tag.videos(count=max_count):
