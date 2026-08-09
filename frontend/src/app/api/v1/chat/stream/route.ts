@@ -138,6 +138,49 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   return false;
 }
 
+// ── Context-Aware Video Discovery Helper ────────────────────────────────────
+async function fetchContextAwareVideos(queryStr: string, matchedPlaces: Record<string, unknown>[] = []) {
+  const lower = queryStr.toLowerCase();
+  const matchedIds = matchedPlaces.map(p => p.id as string).filter(Boolean);
+
+  // 1. Try matching by matched_poi_id
+  if (matchedIds.length > 0) {
+    const { data: poiVideos } = await supabase
+      .from('video_discoveries')
+      .select('id, title, video_url, thumbnail_url, author_name, view_count')
+      .in('matched_poi_id', matchedIds)
+      .limit(2);
+    if (poiVideos && poiVideos.length > 0) return poiVideos;
+  }
+
+  // 2. Topic keyword matching in title
+  let topicKeyword = '';
+  if (lower.includes('gà đốt') || lower.includes('ô thum')) topicKeyword = 'Gà Đốt';
+  else if (lower.includes('chùa') || lower.includes('khmer')) topicKeyword = 'Chùa';
+  else if (lower.includes('hồ') || lower.includes('tà pạ')) topicKeyword = 'Tà Pạ';
+  else if (lower.includes('cô tô') || lower.includes('phụng hoàng')) topicKeyword = 'Cô Tô';
+  else if (lower.includes('cháo bò')) topicKeyword = 'Cháo Bò';
+  else if (lower.includes('ăn') || lower.includes('đặc sản')) topicKeyword = 'Ăn';
+  else if (lower.includes('homestay') || lower.includes('khách sạn')) topicKeyword = 'Homestay';
+
+  if (topicKeyword) {
+    const { data: topicVideos } = await supabase
+      .from('video_discoveries')
+      .select('id, title, video_url, thumbnail_url, author_name, view_count')
+      .ilike('title', `%${topicKeyword}%`)
+      .limit(2);
+    if (topicVideos && topicVideos.length > 0) return topicVideos;
+  }
+
+  // 3. Fallback: return default videos
+  const { data: fallbackVideos } = await supabase
+    .from('video_discoveries')
+    .select('id, title, video_url, thumbnail_url, author_name, view_count')
+    .limit(2);
+
+  return fallbackVideos || [];
+}
+
 function buildSuggestions(lower: string): string[] {
   if (lower.includes('ăn') || lower.includes('gà đốt') || lower.includes('cháo bò'))
     return ['Quán Gà Đốt Ô Thum chuẩn vị nhất', 'Địa chỉ quán Cháo Bò lá trúc', 'Bún nước lèo Khmer'];
@@ -267,13 +310,12 @@ export async function POST(req: NextRequest) {
             ).join('\n')
           : 'Không có dữ liệu địa điểm cụ thể.';
 
-        // Fetch videos
-        const { data: videos } = await supabase.from('video_discoveries')
-          .select('id,title,video_url,thumbnail_url,author_name,view_count').limit(2);
+        // Fetch context-aware videos (POI matched or Topic matched)
+        const videos = await fetchContextAwareVideos(queryStr, places);
 
         // Send structural data early — user sees cards before AI finishes typing
         send({ type: 'places', data: formattedPlaces });
-        send({ type: 'videos', data: videos || [] });
+        send({ type: 'videos', data: videos });
 
         // Build system message with history
         const historySnippet = history.length > 0
