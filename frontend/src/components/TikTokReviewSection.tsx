@@ -202,10 +202,22 @@ export default function TikTokReviewSection() {
     }
   };
 
+  const mappedPlaylist: VideoItem[] = allTikTokVideos.map(v => ({
+    id: v.id,
+    title: v.title,
+    platform: 'tiktok',
+    video_url: v.tiktokUrl,
+    embed_url: v.embedUrl || `https://www.tiktok.com/embed/v2/${v.tiktokUrl.match(/video\/(\d+)/)?.[1] || ''}`,
+    thumbnail_url: v.thumbnail,
+    author_name: v.creator,
+    location: v.location,
+    hashtags: v.hashtags,
+  }));
+
   return (
     <>
       {/* VideoModal — render khi user click vào video có embedUrl */}
-      <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
+      <VideoModal video={selectedVideo} playlist={mappedPlaylist} onClose={() => setSelectedVideo(null)} />
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       {/* Header Bar */}

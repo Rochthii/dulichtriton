@@ -57,7 +57,7 @@ export default function VideoGallery({
   return (
     <>
       {/* VideoModal */}
-      <VideoModal video={selectedVideo} onClose={() => setSelectedVideo(null)} />
+      <VideoModal video={selectedVideo} playlist={videos} onClose={() => setSelectedVideo(null)} />
 
       <div className="space-y-4">
         {/* ── Layout: Featured (lớn) + Side Shorts ── */}
