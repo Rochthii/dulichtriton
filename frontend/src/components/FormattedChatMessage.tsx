@@ -46,26 +46,128 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       window.print();
       return;
     }
+
+    // Format content for printable view
+    const formattedBody = content
+      .replace(/###?\s*(.+)/g, '<h3 class="section-title">$1</h3>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/-(.*)/g, '<li class="bullet-item">$1</li>')
+      .replace(/🗺️ Google Maps: (https:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="map-link">📍 Mở Google Maps</a>')
+      .replace(/🎵 TikTok Review: (https:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="tiktok-link">🎵 Xem TikTok Review</a>');
+
     const htmlContent = `
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Lịch Trình Du Lịch Tri Tôn AI</title>
+          <title>Lịch Trình Du Lịch Tri Tôn — PDF Export</title>
           <meta charset="utf-8" />
           <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px; color: #1e293b; line-height: 1.6; }
-            h1 { color: #1B4D3E; font-size: 20px; margin-bottom: 8px; border-bottom: 2px solid #D99B26; padding-bottom: 8px; }
-            .header { margin-bottom: 20px; font-size: 12px; color: #64748b; }
-            .content { white-space: pre-wrap; font-size: 14px; }
-            .footer { margin-top: 30px; font-size: 11px; text-align: center; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+            @page { size: A4; margin: 15mm; }
+            body {
+              font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+              color: #0F172A;
+              line-height: 1.6;
+              padding: 0;
+              margin: 0;
+              background-color: #fff;
+            }
+            .header-card {
+              background: linear-gradient(135deg, #1B4D3E 0%, #0F5132 100%);
+              color: white;
+              padding: 24px 28px;
+              border-radius: 16px;
+              margin-bottom: 24px;
+              border-bottom: 4px solid #D99B26;
+            }
+            .header-title {
+              font-size: 22px;
+              font-weight: 800;
+              margin: 0 0 6px 0;
+              letter-spacing: -0.5px;
+            }
+            .header-meta {
+              font-size: 12px;
+              color: #A7F3D0;
+              display: flex;
+              gap: 16px;
+            }
+            .badge-verified {
+              background: #D99B26;
+              color: #0F172A;
+              font-weight: 700;
+              padding: 2px 8px;
+              border-radius: 6px;
+              font-size: 11px;
+            }
+            .section-title {
+              color: #1B4D3E;
+              font-size: 16px;
+              font-weight: 800;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              padding-bottom: 4px;
+              border-bottom: 2px solid #E2E8F0;
+            }
+            .content-box {
+              font-size: 13px;
+              line-height: 1.7;
+              color: #334155;
+            }
+            .bullet-item {
+              margin-bottom: 6px;
+              list-style-type: none;
+              padding-left: 0;
+            }
+            .map-link, .tiktok-link {
+              display: inline-block;
+              color: #1B4D3E;
+              background: #F1F5F9;
+              padding: 3px 8px;
+              border-radius: 6px;
+              text-decoration: none;
+              font-weight: 700;
+              font-size: 11px;
+              margin-right: 6px;
+              margin-top: 4px;
+            }
+            .footer-bar {
+              margin-top: 40px;
+              padding-top: 16px;
+              border-top: 1px solid #E2E8F0;
+              text-align: center;
+              font-size: 11px;
+              color: #94A3B8;
+            }
           </style>
         </head>
         <body>
-          <h1>🌄 LỊCH TRÌNH DU LỊCH TRI TÔN AN GIANG</h1>
-          <div class="header">Được khởi tạo từ Trợ lý Du Lịch Tri Tôn AI • Ngày: ${new Date().toLocaleDateString('vi-VN')}</div>
-          <div class="content">${content.replace(/###/g, '■').replace(/\*\*/g, '')}</div>
-          <div class="footer">Dự án Du Lịch Tri Tôn — du-lich-tri-ton.vercel.app</div>
-          <script>window.print();</script>
+          <div class="header-card">
+            <h1 class="header-title">🗺️ LỊCH TRÌNH DU LỊCH TRI TÔN — AN GIANG</h1>
+            <div class="header-meta">
+              <span>Đơn vị phát hành: AI Assistant Du Lịch Tri Tôn</span>
+              <span>•</span>
+              <span>Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}</span>
+              <span class="badge-verified">Dữ liệu PostGIS XÁC MINH</span>
+            </div>
+          </div>
+
+          <div class="content-box">
+            ${formattedBody}
+          </div>
+
+          <div class="footer-bar">
+            <strong>Dự án Du Lịch Tri Tôn</strong> — Chuyên trang Thông tin Du lịch, Văn hóa Khmer & Ẩm thực Bảy Núi An Giang.<br/>
+            Truy cập trực tuyến: <em>du-lich-tri-ton.vercel.app</em>
+          </div>
+
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+              }, 300);
+            };
+          </script>
         </body>
       </html>
     `;
@@ -194,27 +296,39 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       {hasItinerary && (
         <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between flex-wrap gap-2 text-xs">
           <span className="text-slate-500 font-semibold flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" /> Tiện ích Lịch trình
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-spin-slow" /> Lịch trình kiểm chứng PostGIS
           </span>
 
           <div className="flex items-center gap-1.5 flex-wrap">
             <button
+              onClick={() => {
+                navigator.clipboard.writeText(content);
+                setIsSaved(true);
+                setTimeout(() => setIsSaved(false), 2000);
+              }}
+              type="button"
+              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-800 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer shadow-xs active:scale-95"
+            >
+              <Share2 className="w-3.5 h-3.5 text-emerald-700" /> Sao chép
+            </button>
+
+            <button
               onClick={handleSave}
               type="button"
-              className={`px-2.5 py-1.5 rounded-lg font-medium flex items-center gap-1 transition-all cursor-pointer ${
+              className={`px-2.5 py-1.5 rounded-lg font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95 ${
                 isSaved
                   ? 'bg-emerald-700 text-white shadow-xs'
                   : 'bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-800 border border-slate-200'
               }`}
             >
               {isSaved ? <Check className="w-3.5 h-3.5" /> : <Bookmark className="w-3.5 h-3.5 text-emerald-700" />}
-              {isSaved ? 'Đã lưu' : 'Lưu lịch trình'}
+              {isSaved ? 'Đã lưu' : 'Lưu'}
             </button>
 
             <button
               onClick={() => setShowQRModal(true)}
               type="button"
-              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer"
+              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95"
             >
               <QrCode className="w-3.5 h-3.5 text-amber-600" /> Mã QR
             </button>
@@ -222,9 +336,9 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
             <button
               onClick={handlePrint}
               type="button"
-              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer"
+              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95"
             >
-              <Printer className="w-3.5 h-3.5 text-slate-600" /> Xuất PDF
+              <Printer className="w-3.5 h-3.5 text-slate-600" /> PDF
             </button>
           </div>
         </div>

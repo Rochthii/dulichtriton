@@ -1,4 +1,4 @@
-﻿id,name,category,description,address,commune,latitude,longitude,opening_hours,ticket_price,rating,review_count,confidence_score,is_active
+id,name,category,description,address,commune,latitude,longitude,opening_hours,ticket_price,rating,review_count,confidence_score,is_active
 CF001,Ruộng Coffee & Homestay Tri Tôn,Quán Cà Phê & Homestay,,"Đường vào Hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.415,105.018,06:30 - 18:30,20k - 45k,4.6,860,95.0,True
 CF002,Windy Hill Coffee & Homestay Tri Tôn,Quán Cà Phê & Homestay,,"Khu vực Hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang",Xã Núi Tô,10.417,105.0195,06:00 - 20:00,25k - 55k,4.7,720,95.0,True
 CF003,CHẠM Coffee & Tea Tri Tôn,Quán Cà Phê,,"120 Đường Hùng Vương, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4128,105.0068,07:00 - 22:00,20k - 45k,4.6,510,95.0,True
@@ -46,8 +46,8 @@ FD005,Gà Đốt Vương Ngọc Ô Thum,Gà Đốt Ô Thum,,"Bờ Hồ Ô Thum, 
 FD006,Quán Đu Đủ Đâm RiNa Khmer,Đặc sản Khmer,,"Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang",Xã Châu Lăng,10.438,105.003,12:00 - 19:00,20k - 35k,4.8,1680,95.0,True
 FD007,Quán Đu Đủ Đâm Ly Ly,Đặc sản Khmer,,"Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang",Xã Châu Lăng,10.4385,105.0035,11:30 - 18:30,20k - 35k,4.6,720,95.0,True
 FD008,Quán Đu Đủ Đâm Ty Tri Tôn,Đặc sản Khmer,,"Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang",Xã Châu Lăng,10.4375,105.0025,12:00 - 19:00,20k - 35k,4.5,510,95.0,True
-FD009,Quán Bún Nước Lèo Sơ Nương Khmer,Bún nước lèo,,"45 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.413,105.007,06:00 - 11:00,25k - 35k,4.7,890,95.0,True
-FD010,Quán Bún Nước Lèo Dook Tri Tôn,Bún nước lèo,,"15 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4125,105.0065,06:00 - 11:00,25k - 35k,4.5,410,95.0,True
+FD009,Quán Bún Cá Sơ Nương Khmer,Bún cá Khmer,,"45 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.413,105.007,06:00 - 11:00,25k - 35k,4.7,890,95.0,True
+FD010,Quán Bún Cá Dook Tri Tôn,Bún cá Khmer,,"15 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4125,105.0065,06:00 - 11:00,25k - 35k,4.5,410,95.0,True
 FD011,Lò Bánh Bò Thốt Nốt Nướng Út Cột,Đặc sản mua quà,,"Tỉnh Lộ 941, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang",Xã Châu Lăng,10.436,105.004,07:00 - 18:00,35k - 50k,4.8,1150,95.0,True
 FD012,Lò Bánh Bò Thốt Nốt Út Dứt,Đặc sản mua quà,,"Tỉnh Lộ 941, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang",Xã Châu Lăng,10.4365,105.0045,07:00 - 18:00,35k - 50k,4.6,580,95.0,True
 FD013,Quán Bánh Canh Lò Rèn (>30 năm),Bánh canh,,"114 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang",Thị trấn Tri Tôn,10.4135,105.0072,06:00 - 17:00,30k - 45k,4.7,890,95.0,True

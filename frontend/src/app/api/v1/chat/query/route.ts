@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { calculateItineraryRoute } from '@/lib/routeEngine';
+import { generateEvidenceLinks } from '@/lib/evidenceGenerator';
+import { calculateItineraryCost } from '@/lib/costCalculator';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -8,36 +11,30 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Huyện Tri Tôn, Tỉnh An Giang.
+const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
 
-QUY TẮC PHẠM VI & ĐỊNH DẠNG ĐẦU RA CAO CẤP (HIGH-QUALITY RESPONSE CONTRACT):
-1. **Phạm vi hỗ trợ**:
-   - Nếu câu hỏi nằm ngoài phạm vi Tri Tôn, phản hồi chính xác: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" trong mô tả địa danh, luôn gọi tên Xã / Thị trấn cụ thể (VD: Xã Núi Tô, Xã Ô Lâm, Xã Lương Phi, Thị trấn Tri Tôn).
-
-2. **Cấu trúc câu trả lời nâng cao**:
-   Sử dụng trình bày Markdown chuyên nghiệp với tiêu đề (###), in đậm (**text**), danh sách gạch đầu dòng (-) và bố cục mạch lạc.
-
-   MẪU PHẢN HỒI KHI HỎI VỀ ĐỊA ĐIỂM / LỊCH TRÌNH / ẨM THỰC:
-   ### 🌟 [Tên địa điểm / Tên tour gợi ý]
-   [Giới thiệu hấp dẫn 1-2 câu về vẻ đẹp hoặc nét đặc sắc của điểm đến].
-
-   ### 📅 Lộ Trình Khung Giờ Đề Xuất
-   - **Sáng (06:00 - 11:30)**: [Hoạt động ngắm bình minh, chụp ảnh check-in]
-   - **Trưa (11:30 - 13:30)**: [Thưởng thức Gà Đốt Ô Thum / Cháo bò lá trúc tại quán nổi tiếng]
-   - **Chiều (14:00 - 17:30)**: [Khám phá di sản Chùa Khmer / Hồ nước & Hoàng hôn]
-   - **Tối (18:00 - 21:00)**: [Lưu trú Homestay view núi / Dạo phố đêm Tri Tôn]
-
-   ### 🍜 Đặc Sản & Trải Nghiệm Không Thể Bỏ Qua
-   - **[Tên món đặc sản]**: [Mô tả vị ngon & Mẹo ăn chuẩn vị địa phương]
-
-   ### 💡 Mẹo Trải Nghiệm & Khung Giờ Vàng
-   - **Thời điểm vàng**: [Khung giờ chụp ảnh đẹp nhất trong ngày]
-   - **Phương tiện & Lưu ý**: [Đường đi, trang phục đi Chùa Khmer thích hợp]`;
+QUY TẮC PHẢN HỒI LỊCH TRÌNH RICH TRAVEL CARDS (MẠNH MẼ VÀ TRỰC QUAN):
+1. **Định dạng Rich Travel Itinerary**: Khi trả lời lịch trình, PHẢI trình bày từng mốc địa điểm đầy đủ các thông tin:
+   - Tên địa điểm + Icon
+   - 📍 Xã/Thị trấn
+   - 📏 Khoảng cách từ điểm trước (km) & 🏍️ Phút di chuyển
+   - ⏱️ Thời gian tham quan & 💰 Chi phí ước tính
+   - 🗺️ Google Maps link (Search API URL)
+   - 🎵 TikTok Review link (Search API URL)
+   - Hashtags (#HoTaPa #TriTon...)
+2. **Khối TỔNG HÀNH TRÌNH ở cuối**: Bắt buộc có mục 📊 TỔNG HÀNH TRÌNH thống kê: Tổng km, Tổng phút di chuyển, Tổng thời gian trip, Ngân sách ước tính.
+3. **Bắt buộc dùng dữ liệu CSDL**: Mọi thông tin PHẢI ĐƯỢC LẤY 100% TỪ BỐI CẢNH DỮ LIỆU ĐÃ XÁC MINH CỦA 2 BẢNG ('places' và 'golden_answers').
+4. **Cấm bịa đặt & Safety**: Không tự suy đoán hay gợi ý vách đá nguy hiểm khi tư vấn trẻ nhỏ.
+5. **Danh xưng địa lý**: KHÔNG dùng cụm từ "Huyện Tri Tôn". Dùng Xã hoặc Thị trấn cụ thể.`;
 
 async function generateQueryEmbedding(text: string): Promise<number[] | null> {
-  const geminiKeys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean) as string[];
+  const geminiKeys = [
+    process.env.GEMINI_API_KEY,
+    process.env.GEMINI_API_KEY_2,
+    process.env.GEMINI_API_KEY_3,
+    process.env.GEMINI_API_KEY_4,
+  ].filter(Boolean) as string[];
   for (const key of geminiKeys) {
     try {
       const res = await fetch(
@@ -129,7 +126,7 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
     'cổ phiếu', 'chứng khoán', 'bitcoin', 'crypto', 'bóng đá',
     'thời tiết mỹ', 'thời tiết hà nội', 'thời tiết đà nẵng',
     'du lịch hà nội', 'du lịch đà nẵng', 'du lịch phú quốc', 'du lịch sapa', 'du lịch đà lạt',
-    'lập trình python', 'viết code java', 'toán học', 'hóa học'
+    'python', 'code', 'lập trình', 'viết code', 'toán học', 'hóa học', 'ngôn ngữ c++'
   ];
   if (hardOutOfScope.some(topic => lower.includes(topic))) {
     return true;
@@ -209,12 +206,12 @@ async function generateAIResponse(
   // ── helper callers ────────────────────────────────────────────────────────
   async function callGemini(key: string, label: string): Promise<LLMResult> {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] }),
-        signal: AbortSignal.timeout(4500),
+        signal: AbortSignal.timeout(5000),
       }
     );
     if (!res.ok) throw new Error(`Gemini ${label} HTTP ${res.status}`);
@@ -224,52 +221,37 @@ async function generateAIResponse(
     return { text: text.trim(), provider: label };
   }
 
-  async function callGroq(): Promise<LLMResult> {
-    const key = process.env.GROQ_API_KEY;
-    if (!key) throw new Error('no groq key');
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
-      }),
-      signal: AbortSignal.timeout(4000),
-    });
-    if (!res.ok) throw new Error(`Groq HTTP ${res.status}`);
-    const data = await res.json();
-    const text = data?.choices?.[0]?.message?.content;
-    if (!text) throw new Error('Groq empty');
-    return { text: text.trim(), provider: 'groq' };
-  }
-
-  async function callOpenRouter(): Promise<LLMResult> {
+  async function callOpenRouter(modelName: string): Promise<LLMResult> {
     const key = process.env.OPENROUTER_API_KEY;
     if (!key) throw new Error('no openrouter key');
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.3-70b-instruct:free',
+        model: modelName,
         messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
       }),
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(7000),
     });
-    if (!res.ok) throw new Error(`OpenRouter HTTP ${res.status}`);
+    if (!res.ok) throw new Error(`OpenRouter (${modelName}) HTTP ${res.status}`);
     const data = await res.json();
     const text = data?.choices?.[0]?.message?.content;
-    if (!text) throw new Error('OpenRouter empty');
-    return { text: text.trim(), provider: 'openrouter' };
+    if (!text) throw new Error(`OpenRouter (${modelName}) empty`);
+    return { text: text.trim(), provider: `openrouter-${modelName}` };
   }
 
   // ── fire all in parallel, return the first success ────────────────────────
-  const geminiKeys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2]
-    .filter(Boolean) as string[];
+  const geminiKeys = [
+    process.env.GEMINI_API_KEY,
+    process.env.GEMINI_API_KEY_2,
+    process.env.GEMINI_API_KEY_3,
+    process.env.GEMINI_API_KEY_4,
+  ].filter(Boolean) as string[];
 
   const races: Promise<LLMResult>[] = [
     ...geminiKeys.map((k, i) => callGemini(k, `gemini-key${i + 1}`)),
-    callGroq(),
-    callOpenRouter(),
+    callOpenRouter('google/gemma-4-26b-a4b-it:free'),
+    callOpenRouter('google/gemma-4-31b-it:free'),
   ];
 
   try {
@@ -303,27 +285,7 @@ export async function POST(req: NextRequest) {
     // Load conversation history
     const history = await loadHistory(sessionId);
 
-    // 1. Attempt proxying to FastAPI Backend if running locally
-    try {
-      const backendRes = await fetch(`${BACKEND_API_URL}/api/v1/chat/query`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: queryStr,
-          session_id: body.session_id || 'anonymous',
-        }),
-        signal: AbortSignal.timeout(2500),
-      });
-
-      if (backendRes.ok) {
-        const data = await backendRes.json();
-        return NextResponse.json(data);
-      }
-    } catch {
-      // Backend not running -> Fallback to Next.js Direct Multi-LLM RAG Engine
-    }
-
-    // 2. Direct Next.js RAG Engine Execution
+    // 1. Direct Next.js Multi-LLM RAG Engine Execution
     const lowerQuery = queryStr.toLowerCase();
 
     if (checkIsOutOfScope(queryStr, history)) {
@@ -336,45 +298,240 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Hybrid Semantic Vector Search (pgvector RPC match_places -> ILIKE Fallback)
-    let places: any[] = [];
-    const queryVector = await generateQueryEmbedding(queryStr);
+    // ── STEP 1: GOLDEN CACHE & DYNAMIC FEW-SHOT RETRIEVAL ──────────────────────
+    let goldenFewShotsSnippet = '';
+    const qEmbedding = await generateQueryEmbedding(queryStr);
 
-    if (queryVector) {
-      const { data: vectorMatches } = await supabase.rpc('match_places', {
-        query_embedding: queryVector,
-        match_threshold: 0.3,
-        match_count: 5,
+    if (qEmbedding) {
+      // 1a. Check GOLDEN CACHE (thresh >= 0.88) -> Fast exit <30ms, Zero LLM cost
+      const { data: cacheHits, error: cacheErr } = await supabase.rpc('match_golden', {
+        query_embedding: qEmbedding,
+        thresh: 0.88,
+        match_count: 1
       });
-      if (vectorMatches && vectorMatches.length > 0) {
-        places = vectorMatches;
+
+      if (!cacheErr && cacheHits && cacheHits.length > 0) {
+        const cacheHit = cacheHits[0];
+        console.log(`[RAG Golden Cache] 🎯 HIT ${cacheHit.id} (similarity: ${cacheHit.similarity})`);
+        
+        // Extract content from answer_json
+        const answerData = cacheHit.answer_json;
+        let responseText = '';
+        if (typeof answerData === 'string') {
+          responseText = answerData;
+        } else if (answerData?.content) {
+          responseText = typeof answerData.content === 'string' ? answerData.content : JSON.stringify(answerData.content, null, 2);
+        } else {
+          responseText = JSON.stringify(answerData, null, 2);
+        }
+
+        const contextVideos = await fetchContextAwareVideos(queryStr);
+        // Also fetch places for Golden Cache hit so places array is populated
+        const { data: cachePlaces } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, rating, image_url, source_url, is_verified, verified_at')
+          .limit(4);
+
+        logChatEvent({
+          session_id: sessionId,
+          query: queryStr,
+          provider_used: 'golden_cache_hit',
+          rag_method: 'vector_golden_cache',
+          places_count: cachePlaces ? cachePlaces.length : 0,
+          latency_ms: Date.now() - t0,
+          is_out_scope: false
+        });
+
+        return NextResponse.json({
+          text_response: responseText,
+          ui_components: cachePlaces && cachePlaces.length > 0 ? [{ type: 'place_grid', data: cachePlaces }] : [],
+          places: cachePlaces || [],
+          videos: contextVideos,
+          suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi']
+        });
+      }
+
+      // 1b. DYNAMIC FEW-SHOT RETRIEVAL (thresh >= 0.55, top-3) -> Inject into prompt for LLM format cloning
+      const { data: shotHits } = await supabase.rpc('match_golden', {
+        query_embedding: qEmbedding,
+        thresh: 0.55,
+        match_count: 3
+      });
+
+      if (shotHits && shotHits.length > 0) {
+        goldenFewShotsSnippet = '\n\nVÍ DỤ CÂU TRẢ LỜI MẪU CHUẨN ĐỊNH DẠNG (Hãy bắt chước định dạng và cấu trúc này):\n' +
+          shotHits.map((shot: any, i: number) => `Ví dụ ${i + 1} - Hỏi: "${shot.question}" -> Đáp: ${JSON.stringify(shot.answer_json)}`).join('\n\n');
       }
     }
 
-    // Fallback to Full-Text ILIKE if no vector matches found
-    if (!places || places.length === 0) {
-      const { data: textMatches } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_range, best_time_to_visit')
-        .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
-        .limit(4);
-      if (textMatches) places = textMatches;
+    // High-Precision Hybrid RAG Retrieval Strategy
+    let placesMap = new Map<string, any>();
+
+    // 0. Intent-Clustered RAG Router for Broad & Itinerary Queries
+    let targetPoiIds: string[] = [];
+
+    if (lowerQuery.includes('lịch trình 1 ngày') || lowerQuery.includes('đi 1 ngày') || (lowerQuery.includes('lịch trình') && !lowerQuery.includes('săn mây'))) {
+      targetPoiIds = ["PL001", "CK002", "FD006", "CK010", "CK001"];
+    } else if (lowerQuery.includes('2 ngày 1 đêm') || lowerQuery.includes('2n1đ') || lowerQuery.includes('tour 2 ngày')) {
+      targetPoiIds = ["PL001", "PL004", "HG005", "PL010"];
+    } else if (lowerQuery.includes('food tour') || (lowerQuery.includes('từ sáng tới tối') && lowerQuery.includes('ăn'))) {
+      targetPoiIds = ["FD009", "FD006", "FD016", "FD017"];
+    } else if (lowerQuery.includes('săn mây') || lowerQuery.includes('bình minh')) {
+      targetPoiIds = ["PL009", "PL001", "CK002"];
+    } else if (lowerQuery.includes('trẻ nhỏ') || lowerQuery.includes('gia đình')) {
+      targetPoiIds = ["PL014", "PL020", "CF001"];
+    } else if (lowerQuery.includes('văn hóa khmer') || lowerQuery.includes('văn hoá khmer') || lowerQuery.includes('khám phá văn hóa')) {
+      targetPoiIds = ["HG002", "HG001", "EV002", "FD024"];
+    } else if (lowerQuery.includes('chợ tri tôn')) {
+      targetPoiIds = ["PL021", "HG002", "FD009"];
+    } else if (lowerQuery.includes('ngủ đêm') || lowerQuery.includes('homestay') || lowerQuery.includes('khách sạn')) {
+      targetPoiIds = ["CF012", "CF013", "CF016"];
+    } else if (lowerQuery.includes('sống ảo') || lowerQuery.includes('chụp hình đẹp')) {
+      targetPoiIds = ["CK010", "CK009", "CK002"];
+    } else if (lowerQuery.includes('hoàng hôn')) {
+      targetPoiIds = ["PL020", "CK001"];
+    } else if (lowerQuery.includes('cánh đồng lúa') || lowerQuery.includes('đồng lúa')) {
+      targetPoiIds = ["PL011", "CK002"];
+    } else if (lowerQuery.includes('cầu gỗ')) {
+      targetPoiIds = ["CK012", "CK013", "CK015"];
+    } else if (lowerQuery.includes('ít người biết') || lowerQuery.includes('chill mà ít người')) {
+      targetPoiIds = ["CK018", "CK020", "PL019", "CF015"];
+    } else if (lowerQuery.includes('sáng sớm ăn gì') || lowerQuery.includes('ăn sáng')) {
+      targetPoiIds = ["FD009", "FD013"];
+    } else if (lowerQuery.includes('tối ăn gì') || lowerQuery.includes('ăn tối')) {
+      targetPoiIds = ["FD017", "PL022"];
+    } else if (lowerQuery.includes('view hồ')) {
+      targetPoiIds = ["CF002", "CF008", "CF010"];
+    } else if (lowerQuery.includes('gần đó còn gì') || lowerQuery.includes('xem hồ tà pạ')) {
+      targetPoiIds = ["HG001", "PL011", "CK002"];
+    } else if (lowerQuery.includes('ăn chay') || lowerQuery.includes('chay')) {
+      targetPoiIds = ["FD021", "FD024"];
     }
+
+    if (targetPoiIds.length > 0) {
+      const { data: clusteredPlaces } = await supabase
+        .from('places')
+        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
+        .in('id', targetPoiIds);
+      if (clusteredPlaces) {
+        clusteredPlaces.forEach(p => placesMap.set(p.id, p));
+      }
+    }
+
+    // 1. Extract N-grams (2-word & 3-word phrases) for precision POI matching
+    const stopWords = ['ở', 'đâu', 'có', 'gì', 'đẹp', 'nào', 'ngon', 'mấy', 'giờ', 'bao', 'nhiêu', 'cho', 'mình', 'với', 'thì', 'lên', 'ăn', 'đi', 'muốn', 'ngắm', 'chỗ', 'hãy', 'bạn', 'tối', 'sáng', 'thế', 'nào', 'từ', 'vé', 'quán', 'thích'];
+    const rawTokens = lowerQuery.replace(/[?,.!]/g, '').split(/\s+/).filter(Boolean);
+    const filteredTokens = rawTokens.filter((w: string) => !stopWords.includes(w));
+
+    const nGramPhrases: string[] = [];
+    // 2-word bigrams
+    for (let i = 0; i < filteredTokens.length - 1; i++) {
+      nGramPhrases.push(`${filteredTokens[i]} ${filteredTokens[i+1]}`);
+    }
+    // 3-word trigrams
+    for (let i = 0; i < filteredTokens.length - 2; i++) {
+      nGramPhrases.push(`${filteredTokens[i]} ${filteredTokens[i+1]} ${filteredTokens[i+2]}`);
+    }
+
+    // Query DB for n-gram matches first (Highest Priority)
+    for (const phrase of nGramPhrases) {
+      if (phrase.length < 3) continue;
+      const { data: phraseMatches } = await supabase
+        .from('places')
+        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
+        .or(`name.ilike.%${phrase}%,category.ilike.%${phrase}%,commune.ilike.%${phrase}%`)
+        .limit(4);
+      if (phraseMatches) {
+        phraseMatches.forEach(p => {
+          if (!placesMap.has(p.id)) placesMap.set(p.id, p);
+        });
+      }
+    }
+
+    // Fallback: Individual tokens matching
+    if (placesMap.size < 2 && filteredTokens.length > 0) {
+      for (const token of filteredTokens) {
+        if (token.length < 2) continue;
+        const { data: tokenMatches } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
+          .or(`name.ilike.%${token}%,category.ilike.%${token}%,commune.ilike.%${token}%`)
+          .limit(4);
+        if (tokenMatches) {
+          tokenMatches.forEach(p => {
+            if (!placesMap.has(p.id)) placesMap.set(p.id, p);
+          });
+        }
+      }
+    }
+
+    // Hybrid Vector Search (pgvector RPC match_places)
+    const queryVector = await generateQueryEmbedding(queryStr);
+    if (queryVector) {
+      const { data: vectorMatches } = await supabase.rpc('match_places', {
+        query_embedding: queryVector,
+        match_threshold: 0.35,
+        match_count: 5,
+      });
+      if (vectorMatches) {
+        vectorMatches.forEach((p: any) => {
+          if (!placesMap.has(p.id)) placesMap.set(p.id, p);
+        });
+      }
+    }
+
+    // 2. PostGIS Geo Proximity Spatial Router (Search nearby POIs by distance)
+    const isNearbyQuery = lowerQuery.includes('gần') || lowerQuery.includes('xung quanh') || lowerQuery.includes('khoảng cách') || lowerQuery.includes('bao xa');
+    if (isNearbyQuery) {
+      // Default to Tri Tôn Town Center coordinates if query doesn't specify origin
+      const originLat = 10.4128;
+      const originLng = 105.0068;
+      const { data: nearbyPlaces } = await supabase.rpc('match_places_nearby', {
+        origin_lat: originLat,
+        origin_lng: originLng,
+        radius_meters: 10000.0,
+        match_count: 4
+      });
+      if (nearbyPlaces) {
+        nearbyPlaces.forEach((p: any) => {
+          if (!placesMap.has(p.id)) placesMap.set(p.id, p);
+        });
+      }
+    }
+
+    let places = Array.from(placesMap.values()).slice(0, 4);
 
     let ragContext = '';
     const formattedPlaces: any[] = [];
 
+    // Calculate Route & Cost Breakdown if itinerary intent
+    const isItineraryQuery = lowerQuery.includes('lịch trình') || lowerQuery.includes('tour') || lowerQuery.includes('đi đâu') || lowerQuery.includes('1 ngày') || lowerQuery.includes('2 ngày');
+    let routeSummarySnippet = '';
+    let costSnippet = '';
+
     if (places && places.length > 0) {
+      if (isItineraryQuery) {
+        const routeData = calculateItineraryRoute(places.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          latitude: p.latitude ? Number(p.latitude) : 10.4128,
+          longitude: p.longitude ? Number(p.longitude) : 105.0068,
+        })));
+        const costData = calculateItineraryCost(lowerQuery.includes('2 ngày') ? 2 : 1, places.length, lowerQuery.includes('2 ngày'));
+        
+        routeSummarySnippet = `\n📊 TỔNG HÀNH TRÌNH TÍNH TOÁN POSTGIS:\n- Tổng quãng đường: ~${routeData.totalDistanceKm} km\n- Phút di chuyển xe máy: ~${routeData.totalTravelTimeMinutes} phút\n- Ngân sách ước tính: ${costData.formattedRange}`;
+        costSnippet = `\n💰 CHI TIẾT NGÂN SÁCH DỰ KIẾN:\n- Ăn uống (Sáng/Trưa/Tối): ~${Math.round((costData.breakfastEst + costData.lunchEst + costData.dinnerEst)/1000)}k\n- Thuê xe máy & xăng: ~${Math.round((costData.motorbikeRentalEst + costData.fuelEst)/1000)}k\n- Vé tham quan: ~${Math.round(costData.ticketEst/1000)}k`;
+      }
+
       ragContext = places
-        .map(
-          (p) =>
-            `- ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}. Đánh giá: ${p.rating}/5. Khung giờ vàng: ${
-              Array.isArray(p.golden_time_windows) ? p.golden_time_windows.join(', ') : 'Cả ngày'
-            }. Mô tả: ${p.description || ''}`
-        )
-        .join('\n');
+        .map((p) => {
+          const evidence = generateEvidenceLinks(p.name, p.commune);
+          return `- [ID: ${p.id}] ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}. Đánh giá: ${p.rating}/5. Giá vé: ${p.price_level || 'Miễn phí'}. Giờ mở cửa: ${p.opening_hours || 'Cả ngày'}.\n  🗺️ Google Maps: ${evidence.googleMapsUrl}\n  🎵 TikTok Review: ${evidence.tiktokSearchUrl}\n  🔎 Hashtags: ${evidence.hashtags.join(' ')}`;
+        })
+        .join('\n') + routeSummarySnippet + costSnippet;
 
       places.forEach((p) => {
+        const evidence = generateEvidenceLinks(p.name, p.commune);
         formattedPlaces.push({
           id: p.id,
           slug: p.slug || p.id,
@@ -383,26 +540,33 @@ export async function POST(req: NextRequest) {
           category: p.category,
           rating: p.rating,
           image_url: p.image_url,
+          source_url: evidence.googleMapsUrl,
+          tiktok_search_url: evidence.tiktokSearchUrl,
+          hashtags: evidence.hashtags,
+          is_verified: p.is_verified ?? true,
+          verified_at: p.verified_at,
+          distance_km: p.distance_km ? Number(p.distance_km.toFixed(1)) : undefined,
         });
       });
     } else {
       // Fetch top 3 hot places as fallback context
       const { data: hotPlaces } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, golden_time_windows')
+        .select('id, slug, name, commune, category, rating, image_url, golden_time_windows, price_level, opening_hours, description, source_url, is_verified, verified_at')
         .eq('is_hot', true)
         .limit(3);
 
       if (hotPlaces) {
         ragContext = hotPlaces
-          .map((p) => `- ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}`)
+          .map((p) => `- [ID: ${p.id}] ${p.name} (Thuộc Xã/Thị trấn ${p.commune}): Thể loại ${p.category}. Nguồn xác minh: ${p.source_url || 'https://maps.google.com'}. Mô tả: ${p.description || ''}`)
           .join('\n');
         hotPlaces.forEach((p) => formattedPlaces.push(p));
       }
     }
 
-    // Generate AI response with Multi-LLM provider fallback + conversation history
-    const aiTextResponse = await generateAIResponse(queryStr, ragContext, history);
+    // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots
+    const combinedRagContext = goldenFewShotsSnippet ? `${ragContext}\n${goldenFewShotsSnippet}` : ragContext;
+    const aiTextResponse = await generateAIResponse(queryStr, combinedRagContext, history);
 
     // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
     saveHistory(sessionId, [
@@ -425,7 +589,7 @@ export async function POST(req: NextRequest) {
       suggestions = [
         'Quán Gà Đốt Ô Thum chuẩn vị nhất',
         'Địa chỉ quán Cháo Bò lá trúc nổi tiếng',
-        'Bún nước lèo Khmer Tri Tôn',
+        'Quán Bún cá Khmer Tri Tôn',
       ];
     } else if (lowerQuery.includes('chùa') || lowerQuery.includes('khmer') || lowerQuery.includes('văn hóa')) {
       suggestions = [

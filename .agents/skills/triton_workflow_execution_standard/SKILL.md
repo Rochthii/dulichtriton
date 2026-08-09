@@ -24,9 +24,27 @@ Tài liệu này đóng gói trọn vẹn quy trình kỹ thuật chuẩn Enterp
   4. *Trạng thái Edge-cases (Ngoại lệ dữ liệu, Rate limit, Timeout)*.
 * **Chỉ tiến hành thi công khi đã thông nhất phương án tối ưu nhất**.
 
+### 🍜 RULE-22: Tri Ton Cultural & Culinary Accuracy Standard
+* **Thuật ngữ Ẩm thực**: Tri Tôn KHÔNG gọi là "Bún nước lèo" — tên gọi ẩm thực chuẩn bản địa phải luôn là **"Bún cá Khmer" (hoặc Bún cá An Giang mắm bò hóc)**.
+* **Địa danh hành chính**: Tuyệt đối KHÔNG dùng cụm từ "Huyện Tri Tôn" — luôn luôn dùng tên Xã hoặc Thị trấn cụ thể.
+
 ---
 
-## 🗄️ 2. Quy Trình Thi Công & Tối Ưu CSDL Supabase Cloud PostgreSQL
+## 🗺️ 2. AI Travel Planning Engine & Spatial Intelligence v27.0.0
+
+ Kiến trúc lập lịch trình du lịch hiện đại **Rich Travel Engine** bao gồm 4 khối công cụ xử lý song song:
+1. **PostGIS Route & Travel Time Engine (`@/lib/routeEngine`)**:
+   - Sử dụng công thức Haversine/PostGIS `ST_Distance` tính toán ma trận khoảng cách $d_i$ (km) thực tế giữa các mốc địa điểm.
+   - Ước tính thời gian di chuyển bằng xe máy $t_i$ (phút) dựa trên vận tốc trung bình 30km/h ở khu vực miền Tây.
+   - Tính toán chỉ số tổng hành trình: Total Distance, Motorbike Travel Time, Total Visit Time & Total Trip Time.
+2. **Deterministic 2-Link Evidence & Hashtag Generator (`@/lib/evidenceGenerator`)**:
+   - Tự động sinh link **Google Maps 1-click**: `https://www.google.com/maps/search/?api=1&query={encode(name + ' ' + commune + ' An Giang')}`.
+   - Tự động sinh link **TikTok Search Review**: `https://www.tiktok.com/search?q={encode(name + ' Tri Tôn')}`.
+   - Tự động phát sinh bộ Hashtag chuẩn địa phương: `#HoTaPa #TriTon #AnGiang #DuLichTriTon`.
+3. **Cost Engine & Multi-Category Estimator (`@/lib/costCalculator`)**:
+   - Bóc tách ngân sách chi tiết 5 hạng mục: Ăn sáng (30k), Ăn trưa Gà đốt (120k), Ăn tối Bò nướng (90k), Thuê xe máy & Xăng (200k/ngày), Vé tham quan (60k) và Homestay (350k).
+4. **Rich Travel Itinerary Cards Format**:
+   - Định dạng từng mốc thời gian gồm: Giờ $\rightarrow$ Tên điểm $\rightarrow$ Địa chỉ xã $\rightarrow$ Khoảng cách km $\rightarrow$ Phút di chuyển $\rightarrow$ 2 Links kiểm chứng $\rightarrow$ Hashtags $\rightarrow$ Khối 📊 TỔNG HÀNH TRÌNH ở cuối câu trả lời.
 
 ### 📊 DDL Schema Standards (`tourism_crawler/database/schema.sql`)
 1. **Extensions**: `"uuid-ossp"`, `"vector"`, `"postgis"`, `"unaccent"`, `"pg_trgm"`.

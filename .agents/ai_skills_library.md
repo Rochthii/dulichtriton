@@ -1,4 +1,4 @@
-﻿# AI SKILLS LIBRARY — TRIA
+# AI SKILLS LIBRARY — TRIA
 
 SKILL-01: intent_classifier (place_info|food_query|accommodation|itinerary|navigation|festival|photo_spot|khmer_culture|video_content|general)
 SKILL-02: entity_extractor (extract place, food, commune, category from Vietnamese text)
@@ -7,6 +7,9 @@ SKILL-04: route_planner (cluster spots by lat/lng proximity, balance category gr
 SKILL-05: tiktok_video_matcher (generate TikTok/YouTube search URLs via TikTokVideoService)
 SKILL-06: response_formatter (enforce 4-section output contract)
 SKILL-07: knowledge_base_updater (validate schema -> normalize NFC -> dedup -> SQL insert -> export)
-SKILL-08: cultural_context_enricher (attach Khmer heritage context & customs)
-SKILL-09: proximity_search (haversine distance query within radius_km)
+SKILL-08: cultural_context_enricher (attach Khmer heritage context & customs - e.g. Bún cá Khmer instead of Bún nước lèo)
+SKILL-09: proximity_search (haversine/PostGIS distance query within radius_km)
 SKILL-10: festival_calendar (query Đôl Ta, Ok Om Bok, Chol Chnam Thmay events)
+SKILL-11: postgis_route_engine (calculate ST_Distance km matrix & motorbike travel time minutes)
+SKILL-12: evidence_link_generator (deterministic 2-link URLs for Google Maps 1-click & TikTok Search Review)
+SKILL-13: cost_breakdown_engine (multi-category cost estimator for food, motorbike rental, fuel, ticket, homestay)

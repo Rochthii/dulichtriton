@@ -1,0 +1,50 @@
+{"id":"Q01","q":"Hồ Tà Pạ ở đâu, có gì đẹp?","intent":"place","pois":["PL001"],"facts":["Núi Tô","Tuyệt Tình Cốc"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q02","q":"Chỗ nào sống ảo đẹp nhất Tri Tôn?","intent":"place","pois":["CK010","CK009","CK002"],"facts":["Cổng Trời","trái tim"],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q03","q":"Muốn săn mây thì lên đâu?","intent":"place","pois":["PL009","CK014"],"facts":["Cô Tô","sáng sớm"],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q04","q":"Ngắm hoàng hôn ở đâu đẹp?","intent":"place","pois":["PL020","CK001"],"facts":["16:00","17:30"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q05","q":"Có cánh đồng lúa nào đẹp không?","intent":"place","pois":["PL011","CK002"],"facts":["Tà Pạ","tháng 9","tháng 11"],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q06","q":"Cổng Trời Tri Tôn thuộc xã nào?","intent":"place","pois":["CK010"],"facts":["Châu Lăng","Koh Kas"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q07","q":"Hồ ở Tri Tôn có tắm được không?","intent":"safety","pois":["PL001","PL002"],"facts":["hồ thủy lợi","không"],"forbid":["tắm được","an toàn để bơi"],"diff":"medium","type":"safety"}
+{"id":"Q08","q":"Đồi Tức Dụp có gì chơi?","intent":"place","pois":["PL010"],"facts":["60.000","hang đá","128"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q09","q":"Cầu gỗ check-in ở những đâu?","intent":"place","pois":["CK012","CK013","CK015"],"facts":["Ô Thum","Ruộng"],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q10","q":"Chỗ nào ít người biết để chụp ảnh?","intent":"hidden","pois":["CK018","CK020","PL019"],"facts":[],"forbid":["Cổng Trời"],"diff":"medium","type":"hidden_gem"}
+{"id":"Q11","q":"Gà đốt Ô Thum quán nào ngon?","intent":"food","pois":["FD001","FD018"],"facts":["lá chúc","250"],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q12","q":"Quán gà đốt nào mở khuya?","intent":"food","pois":["FD003"],"facts":["23:00"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q13","q":"Đu đủ đâm ăn ở đâu ngon?","intent":"food","pois":["FD006"],"facts":["12:00","Châu Lăng"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q14","q":"Sáng sớm ăn gì ở thị trấn?","intent":"food","pois":["FD009","FD013"],"facts":["bún nước lèo","bánh canh"],"forbid":[],"diff":"easy","type":"time_aware"}
+{"id":"Q15","q":"Mua bánh bò thốt nốt về làm quà ở đâu?","intent":"food","pois":["FD011","FD021"],"facts":[],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q16","q":"Bún cá Khmer quán nào?","intent":"food","pois":["FD009","FD010","FD019"],"facts":[],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q17","q":"Cháo bò trái trúc ăn ở đâu?","intent":"food","pois":["FD015"],"facts":["Ba Chúc","14:00"],"forbid":[],"diff":"easy","type":"time_aware"}
+{"id":"Q18","q":"Tối ăn gì ở Tri Tôn?","intent":"food","pois":["FD017","PL022"],"facts":["bò nướng","chợ đêm"],"forbid":["bún nước lèo"],"diff":"medium","type":"time_aware"}
+{"id":"Q19","q":"Mua đường thốt nốt nguyên chất ở đâu?","intent":"food","pois":["FD020"],"facts":["Châu Lăng"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q20","q":"Ăn vặt đêm ở đâu?","intent":"food","pois":["PL022"],"facts":["17:00","22:00"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q21","q":"Lên cho mình lịch trình 1 ngày đi","intent":"itinerary","pois":["PL001","CK002","FD006","CK010","CK001"],"facts":["sáng","trưa","chiều","hoàng hôn"],"forbid":[],"diff":"hard","type":"planning"}
+{"id":"Q22","q":"Tour 2 ngày 1 đêm thì đi những đâu?","intent":"itinerary","pois":["PL001","PL004","HG005","PL010"],"facts":["ngày 1","ngày 2"],"forbid":[],"diff":"hard","type":"planning"}
+{"id":"Q23","q":"Food tour 1 ngày ăn gì từ sáng tới tối?","intent":"itinerary","pois":["FD009","FD006","FD016","FD017"],"facts":["sáng","trưa","tối"],"forbid":[],"diff":"hard","type":"planning"}
+{"id":"Q24","q":"Ngủ đêm ở đâu tiện đi lại?","intent":"itinerary","pois":["CF012","CF013","CF016"],"facts":[],"forbid":[],"diff":"medium","type":"retrieval"}
+{"id":"Q25","q":"Lịch trình săn mây bình minh?","intent":"itinerary","pois":["PL009","PL001","CK002"],"facts":["05:00","bình minh"],"forbid":[],"diff":"hard","type":"planning"}
+{"id":"Q26","q":"Đi cùng gia đình có trẻ nhỏ nên đi đâu?","intent":"itinerary","pois":["PL014","PL020","CF001"],"facts":[],"forbid":["vách đá nguy hiểm","leo núi mạo hiểm"],"diff":"medium","type":"safety"}
+{"id":"Q27","q":"Nửa ngày khám phá văn hóa Khmer?","intent":"itinerary","pois":["HG002","HG001","EV002","FD024"],"facts":["Xà Tón","Tà Pạ"],"forbid":[],"diff":"medium","type":"planning"}
+{"id":"Q28","q":"Bắt đầu từ chợ Tri Tôn thì đi 1 ngày sao?","intent":"itinerary","pois":["PL021","HG002","FD009"],"facts":[],"forbid":[],"diff":"medium","type":"planning"}
+{"id":"Q29","q":"Lễ hội đua bò diễn ra khi nào?","intent":"culture","pois":["EV001"],"facts":["Sene Dolta"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q30","q":"Chùa nào cổ nhất An Giang?","intent":"culture","pois":["HG002"],"facts":["500","kinh lá buông"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q31","q":"Kinh lá buông là gì?","intent":"culture","pois":["EV002","HG002"],"facts":["lá thốt nốt","di sản"],"forbid":[],"diff":"medium","type":"fact"}
+{"id":"Q32","q":"Nhà mồ Ba Chúc gắn với sự kiện gì?","intent":"culture","pois":["HG005"],"facts":["1978","Khmer Đỏ"],"forbid":[],"diff":"medium","type":"fact"}
+{"id":"Q33","q":"Vào chùa Khmer cần lưu ý gì?","intent":"culture","pois":["HG002"],"facts":["kín đáo","giày"],"forbid":[],"diff":"medium","type":"safety"}
+{"id":"Q34","q":"Sene Dolta là lễ gì?","intent":"culture","pois":["EV001"],"facts":["Khmer","ông bà"],"forbid":[],"diff":"medium","type":"fact"}
+{"id":"Q35","q":"Vé Đồi Tức Dụp bao nhiêu?","intent":"logistics","pois":["PL010"],"facts":["60.000"],"forbid":["miễn phí"],"diff":"easy","type":"fact"}
+{"id":"Q36","q":"Hồ Tà Pạ mở cửa mấy giờ?","intent":"logistics","pois":["PL001"],"facts":["06:00","18:00"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q37","q":"Từ Sài Gòn đi Tri Tôn mất bao lâu?","intent":"logistics","pois":[],"facts":["250","5","6"],"forbid":["chỉ hỗ trợ"],"diff":"medium","type":"edge_in_scope"}
+{"id":"Q38","q":"Vườn nho Ô Thum vé vào cổng?","intent":"logistics","pois":["PL014"],"facts":["10.000"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q39","q":"Quán đu đủ đâm RiNa mở cửa lúc mấy giờ?","intent":"logistics","pois":["FD006"],"facts":["12:00","19:00"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q40","q":"Gà đốt bao nhiêu tiền một con?","intent":"logistics","pois":["FD001"],"facts":["250","320"],"forbid":[],"diff":"easy","type":"fact"}
+{"id":"Q41","q":"Chỗ nào chill mà ít người?","intent":"hidden","pois":["CF015","PL006","CK020"],"facts":[],"forbid":["Windy Hill"],"diff":"medium","type":"hidden_gem"}
+{"id":"Q42","q":"Cà phê view hồ gợi ý với?","intent":"hidden","pois":["CF002","CF008","CF010"],"facts":["Soài"],"forbid":[],"diff":"easy","type":"retrieval"}
+{"id":"Q43","q":"Mình vừa xem Hồ Tà Pạ, gần đó còn gì không?","intent":"expand","pois":["HG001","PL011","CK002"],"facts":["chùa","lúa"],"forbid":[],"diff":"medium","type":"expansion"}
+{"id":"Q44","q":"Mình ăn chay, Tri Tôn có gì không?","intent":"honesty","pois":["FD021","FD024"],"facts":["hạn chế","thốt nốt"],"forbid":[],"diff":"hard","type":"honesty"}
+{"id":"Q45","q":"Thời tiết Hà Nội hôm nay thế nào?","intent":"off","pois":[],"facts":["chỉ hỗ trợ"],"forbid":[],"diff":"easy","type":"rejection"}
+{"id":"Q46","q":"Viết cho mình đoạn code Python","intent":"off","pois":[],"facts":["chỉ hỗ trợ"],"forbid":[],"diff":"easy","type":"rejection"}
+{"id":"Q47","q":"Tri Tôn thuộc tỉnh nào?","intent":"edge","pois":[],"facts":["An Giang"],"forbid":["chỉ hỗ trợ"],"diff":"easy","type":"edge_in_scope"}
+{"id":"Q48","q":"Review Đà Lạt cho mình với","intent":"off","pois":[],"facts":["chỉ hỗ trợ"],"forbid":[],"diff":"easy","type":"rejection"}
+{"id":"Q49","q":"Gà đốt với gà nướng khác gì nhau?","intent":"edge","pois":["FD001"],"facts":["lá chúc"],"forbid":[],"diff":"medium","type":"edge_in_scope"}
+{"id":"Q50","q":"Bạn là ai, giúp được gì?","intent":"identity","pois":[],"facts":["Tri Tôn"],"forbid":[],"diff":"easy","type":"identity"}

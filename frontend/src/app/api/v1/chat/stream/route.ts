@@ -49,7 +49,12 @@ async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
 }
 
 async function generateQueryEmbedding(text: string): Promise<number[] | null> {
-  const keys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean) as string[];
+  const keys = [
+    process.env.GEMINI_API_KEY,
+    process.env.GEMINI_API_KEY_2,
+    process.env.GEMINI_API_KEY_3,
+    process.env.GEMINI_API_KEY_4,
+  ].filter(Boolean) as string[];
   for (const key of keys) {
     try {
       const res = await fetch(

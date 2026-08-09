@@ -71,7 +71,7 @@ export default function ItineraryClientPage() {
     },
     "FD009": {
       img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200&auto=format&fit=crop",
-      hashtag: "BunNuocLeoSoNuong",
+      hashtag: "BunCaKhmer",
       rating: 4.7,
       commune: "Thị trấn Tri Tôn",
       category: "Bún Mắm Khmer"
@@ -260,7 +260,7 @@ export default function ItineraryClientPage() {
       stops: [
         { stepIndex: 1, time: '05:30', id: 'PL001 + HG001', name: 'Săn bình minh Hồ Tà Pạ + Viếng Chùa Tà Pạ', distanceToNext: '📍 Di chuyển 1.5km (5 phút)', desc: 'Đón hừng đông chiếu sáng xuống lòng hồ ngọc bích Tà Pạ và vách đá nghiêng tuyệt đẹp.', cluster: 'Cụm Tà Pạ', ...getStopDetails('PL001', 'Hồ Tà Pạ') },
         { stepIndex: 2, time: '07:00', id: 'PL011 + CK002', name: 'Cánh đồng lúa & Con đường tơ lụa Tà Pạ', distanceToNext: '📍 Di chuyển 3.2km (10 phút)', desc: 'Chụp ảnh mảng màu ô ruộng lúa Tà Pạ và rặng thốt nốt soi bóng.', cluster: 'Cụm Tà Pạ', ...getStopDetails('PL011', 'Cánh đồng lúa Tà Pạ') },
-        { stepIndex: 3, time: '08:15', id: 'FD009', name: 'Ăn sáng Bún nước lèo Sơ Nương', distanceToNext: '📍 Di chuyển 1.2km (4 phút)', reminder: '⚠️ Quán đóng cửa lúc 11:00 sáng! Nên đến trước 09:30.', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún nước lèo Sơ Nương') },
+        { stepIndex: 3, time: '08:15', id: 'FD009', name: 'Ăn sáng Bún cá Khmer', distanceToNext: '📍 Di chuyển 1.2km (4 phút)', reminder: '⚠️ Quán đóng cửa lúc 11:00 sáng! Nên đến trước 09:30.', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún cá Khmer') },
         { stepIndex: 4, time: '09:15', id: 'HG002 + FD024', name: 'Chùa Xà Tón + Bánh kẹp thốt nốt Chùa Cũ', distanceToNext: '📍 Di chuyển 4.5km (12 phút)', desc: 'Chiêm bái ngôi chùa Khmer cổ nhất An Giang >500 năm và lưu giữ Kinh Lá Buông.', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('HG002', 'Chùa Xà Tón') },
         { stepIndex: 5, time: '10:15', id: 'CK010 + CK004', name: 'Cổng Trời Koh Kas + Vòm Còng Châu Lăng', distanceToNext: '📍 Di chuyển 2.1km (6 phút)', desc: 'Check-in cổng chùa cổ giữa đồng thốt nốt và con đường hàng còng rợp bóng.', cluster: 'Cụm Châu Lăng', ...getStopDetails('CK010', 'Cổng Trời Koh Kas') },
         { stepIndex: 6, time: '12:00', id: 'FD006', name: 'Ăn trưa Đu đủ đâm RiNa Chau Lăng', distanceToNext: '📍 Di chuyển 0.8km (2 phút)', reminder: '⚠️ Mở cửa đúng 12:00 trưa! (Không bán buổi sáng)', cluster: 'Cụm Châu Lăng', ...getStopDetails('FD006', 'Đu đủ đâm RiNa') },
@@ -280,7 +280,7 @@ export default function ItineraryClientPage() {
       dayTitle: '🌙 Ngày 1: Tà Pạ – Soài So – Ô Thum – Hoàng Hôn Tuyến Tránh (Ngủ Homestay)',
       stops: [
         { stepIndex: 1, time: '05:30', id: 'PL001 + HG001', name: 'Bình minh Hồ Tà Pạ & Chùa Tà Pạ', distanceToNext: '📍 Di chuyển 3.5km', cluster: 'Cụm Tà Pạ', ...getStopDetails('PL001', 'Hồ Tà Pạ') },
-        { stepIndex: 2, time: '08:00', id: 'FD009', name: 'Ăn sáng Bún nước lèo Sơ Nương', distanceToNext: '📍 Di chuyển 4.2km', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún nước lèo Sơ Nương') },
+        { stepIndex: 2, time: '08:00', id: 'FD009', name: 'Ăn sáng Bún cá Khmer', distanceToNext: '📍 Di chuyển 4.2km', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún cá Khmer') },
         { stepIndex: 3, time: '10:15', id: 'PL002 + PL016 + CK015', name: 'Cụm Soài So: Hồ Soài So + Suối Vàng + Cầu cây', distanceToNext: '📍 Di chuyển 1.5km', desc: 'Khám phá lòng hồ Soài So lộng gió dưới chân núi Cô Tô.', cluster: 'Cụm Soài So', ...getStopDetails('PL002', 'Hồ Soài So') },
         { stepIndex: 4, time: '11:30', id: 'CF010 + CF006', name: 'Cà phê Mùa Gió Lên / An Sơn view hồ', distanceToNext: '📍 Di chuyển 6.8km', cluster: 'Cụm Soài So', ...getStopDetails('CF010', 'Cà phê Mùa Gió Lên') },
         { stepIndex: 5, time: '13:00', id: 'FD001', name: 'Thưởng thức Gà đốt Ô Thum lá trúc', distanceToNext: '📍 Di chuyển 7.5km', reminder: '🔥 Nhắc AI: Gọi điện đặt trước 45 phút!', cluster: 'Cụm Ô Thum', ...getStopDetails('FD001', 'Gà đốt Ô Thum') },
@@ -327,7 +327,7 @@ export default function ItineraryClientPage() {
       stops: [
         { stepIndex: 1, time: '07:00', id: 'PL012 + HG008 + PL005', name: 'Rừng tầm vông + Căn cứ Ô Tà Sóc + Hồ Ô Tà Sóc', distanceToNext: '📍 Di chuyển 8.0km', desc: 'Hành trình sinh thái xuyên qua rừng tầm vông xanh ngát và di tích lịch sử.', cluster: 'Cụm Lương Phi', ...getStopDetails('PL012', 'Ô Tà Sóc') },
         { stepIndex: 2, time: '10:00', id: 'CK007 + PL017', name: 'Cung đường ven vách đá Núi Dài', distanceToNext: '📍 Di chuyển 12.0km', cluster: 'Cụm Tây Núi Dài', ...getStopDetails('CK001', 'Núi Dài') },
-        { stepIndex: 3, time: '12:00', id: 'FD009 / FD013', name: 'Ăn trưa thị trấn (Bún nước lèo / Bánh canh Lò Rèn)', distanceToNext: '📍 Di chuyển 6.0km', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún nước lèo Sơ Nương') },
+        { stepIndex: 3, time: '12:00', id: 'FD009 / FD013', name: 'Ăn trưa thị trấn (Bún cá Khmer / Bánh canh Lò Rèn)', distanceToNext: '📍 Di chuyển 6.0km', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('FD009', 'Bún cá Khmer') },
         { stepIndex: 4, time: '14:00', id: 'PL006 + CF015', name: 'Hồ Ô Tà Lọt hoang sơ + Cà phê suối', distanceToNext: '📍 Di chuyển 7.0km', desc: 'Option trek Vách đá Latina (PL019).', cluster: 'Cụm Ô Tà Lọt', ...getStopDetails('PL001', 'Hồ Ô Tà Lọt') },
         { stepIndex: 5, time: '16:30', id: 'CK001', name: 'Hoàng hôn chốt tour: Con đường Tuyến Tránh ĐT941', cluster: 'Thị trấn Tri Tôn', ...getStopDetails('CK001', 'Tuyến Tránh Tri Tôn') }
       ]

@@ -1,0 +1,6 @@
+{
+  "name": "Tri Tôn TikTok",
+  "description": "Nền tảng khám phá video du lịch Tri Tôn, An Giang qua TikTok",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -370,19 +370,19 @@ export default function ChatbotWidget() {
                     </span>
                   </div>
 
-                  {/* Embedded Spot Cards */}
+                  {/* Embedded Spots Cards (Horizontal Carousel) */}
                   {msg.spots && msg.spots.length > 0 && (
-                    <div className="w-full space-y-1.5">
+                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x">
                       {msg.spots.map((spot, i) => (
                         <div
                           key={`wspot-${msg.id}-${i}`}
-                          className="bg-white rounded-xl border border-slate-200 p-2.5 flex items-center gap-2.5 shadow-2xs hover:shadow-xs transition-all group"
+                          className="min-w-[200px] max-w-[220px] bg-slate-50 rounded-xl p-2 border border-slate-200 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#1B4D3E]/40 transition-all"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={spot.imageUrl}
                             alt={spot.name}
-                            className="w-11 h-11 rounded-lg object-cover bg-slate-100 shrink-0"
+                            className="w-12 h-12 rounded-lg object-cover bg-slate-200 shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-700">
@@ -395,7 +395,7 @@ export default function ChatbotWidget() {
                                 href={getGoogleMapsUrl(spot.name, spot.commune)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1 text-[9px] font-bold text-[#1B4D3E] bg-emerald-50 hover:bg-[#1B4D3E] hover:text-white px-2 py-0.5 rounded-md transition-colors"
+                                className="flex items-center gap-1 text-[9px] font-bold text-[#1B4D3E] bg-emerald-100/70 hover:bg-[#1B4D3E] hover:text-white px-2 py-0.5 rounded-md transition-colors"
                               >
                                 <Navigation className="w-2.5 h-2.5" />
                                 Maps
@@ -403,7 +403,7 @@ export default function ChatbotWidget() {
                               {spot.id && (
                                 <Link
                                   href={`/places/${spot.id}`}
-                                  className="flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-md transition-colors"
+                                  className="flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-100/70 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-md transition-colors"
                                 >
                                   Xem
                                 </Link>
@@ -415,29 +415,30 @@ export default function ChatbotWidget() {
                     </div>
                   )}
 
-                  {/* Embedded Video Cards */}
+                  {/* Embedded Video Cards (Horizontal Carousel) */}
                   {msg.videos && msg.videos.length > 0 && (
-                    <div className="w-full space-y-1.5">
+                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x">
                       {msg.videos.map((video, i) => (
-                        <VideoChatCard
-                          key={`wvid-${msg.id}-${i}`}
-                          title={video.title}
-                          views={video.views}
-                          imageUrl={video.imageUrl}
-                          embedUrl={video.embedUrl}
-                        />
+                        <div key={`wvid-${msg.id}-${i}`} className="min-w-[220px] max-w-[240px] shrink-0 snap-start">
+                          <VideoChatCard
+                            title={video.title}
+                            views={video.views}
+                            imageUrl={video.imageUrl}
+                            embedUrl={video.embedUrl}
+                          />
+                        </div>
                       ))}
                     </div>
                   )}
 
                   {/* Suggestions Chips */}
                   {msg.sender === 'assistant' && msg.suggestions && msg.suggestions.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
                       {msg.suggestions.map((sug, i) => (
                         <button
                           key={`wsug-${msg.id}-${i}`}
                           onClick={() => handleSend(sug)}
-                          className="px-2.5 py-0.5 rounded-full border border-[#D99B26]/40 text-[#1B4D3E] bg-amber-50/80 hover:bg-[#D99B26] hover:text-slate-900 text-[10px] font-medium transition-all"
+                          className="px-3 py-1 rounded-full border border-[#D99B26]/40 text-[#1B4D3E] bg-amber-50/80 hover:bg-[#D99B26] hover:text-slate-900 text-[11px] font-medium transition-all shadow-xs"
                         >
                           {sug}
                         </button>
@@ -449,9 +450,9 @@ export default function ChatbotWidget() {
             ))}
 
             {isTyping && (
-              <div className="flex items-center gap-2 text-xs text-slate-400 bg-white p-3 rounded-2xl border border-slate-200 w-max shadow-xs">
-                <Bot className="w-4 h-4 text-[#1B4D3E] animate-bounce" />
-                <span>RAG Engine đang truy vấn CSDL Supabase...</span>
+              <div className="flex items-center gap-2 text-xs text-slate-500 bg-white px-3.5 py-2.5 rounded-2xl border border-slate-200 w-max shadow-xs">
+                <Bot className="w-4 h-4 text-[#1B4D3E] animate-pulse" />
+                <span>Trợ lý AI đang tìm kiếm thông tin tốt nhất cho bạn...</span>
               </div>
             )}
           </div>
