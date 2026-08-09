@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [23.0.0-AI-CHATBOT-ARCHITECTURE-OVERHAUL] — 2026-08-09
+
+### Nâng Cấp Toàn Diện Kiến Trúc AI Chatbot (Parallel Race, Memory, SSE Stream, Observability & Export)
+* **Parallel LLM Race (`3046177`)**: Chuyển từ Sequential Fallback sang gọi song song `Promise.any` (Gemini K1, Gemini K2, Groq Llama 3.3, OpenRouter). Giảm tối đa thời gian chờ trong trường hợp xấu nhất từ 20s xuống 3s.
+* **Conversation Memory (`3e662c6`)**: Tạo bảng `chat_sessions` trên Supabase PostgreSQL. Tự động cấp `session_id` riêng biệt cho Trang Chat (`sessionStorage`) và Chat Widget (`localStorage`). Inject 6 lượt hội thoại gần nhất vào System Prompt để AI nhớ bối cảnh multi-turn.
+* **SSE Token-by-Token Streaming (`ab55fd6`)**: Xây dựng Endpoint Streaming mới `/api/v1/chat/stream`. Trả thẻ Địa điểm & Video ngay ở 0.3 giây đầu tiên, văn bản AI gõ theo thời gian thực (Server-Sent Events).
+* **Observability & Immutable Audit Log (`3c75d86`)**: Tạo bảng `chat_logs` lưu vết truy vấn không thể thay thế (Provider used, RAG method, Latency ms, Places count, Out-of-scope flags).
+* **Smart Intent Classifier (`7c791d1`)**: Loại bỏ nhận diện Out-of-scope hardcoded. Hỗ trợ đầy đủ các câu hỏi di chuyển từ điểm xuất phát (Sài Gòn, Hà Nội, Cần Thơ) và các câu hỏi nối tiếp.
+* **Context-Aware Video Discovery (`82e6cf2`)**: Đẩy video TikTok theo khớp POI ID và khớp danh mục chủ đề (Gà Đốt, Chùa Khmer, Tà Pạ, Cô Tô, Cháo Bò, Homestay).
+* **Save & Export Itinerary (`81bcbd8`)**: Bổ sung bộ công cụ Tiện ích Lịch trình trong `FormattedChatMessage.tsx` (Lưu lịch trình vào LocalStorage, Tạo Mã QR Quét điện thoại, In / Xuất PDF Offline).
+
 ## [22.0.0-PGVECTOR-SEMANTIC-RAG-SEARCH] — 2026-08-08
 
 ### Tích Hợp Tìm Kiếm Ngữ Nghĩa Siêu Chính Xác (Supabase pgvector + 768d Embeddings)
