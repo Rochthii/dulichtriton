@@ -279,14 +279,14 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
         {/* Hashtag Form */}
         {activeTab === 'hashtag' && (
           <div className="space-y-4">
-            <label className="block text-xs font-bold text-slate-700">Chọn Hashtag Target Tri Tôn</label>
+            <label className="block text-xs font-bold text-slate-700">Chọn Hashtag / Địa Danh Target Tri Tôn</label>
             <div className="grid grid-cols-2 gap-2">
               {popularHashtags.map((h) => (
                 <button
                   key={h.tag}
                   type="button"
                   onClick={() => setSelectedHashtag(h.tag)}
-                  className={`p-2.5 rounded-xl text-xs text-left font-medium border transition-all ${
+                  className={`p-2.5 rounded-xl text-xs text-left font-medium border transition-all cursor-pointer ${
                     selectedHashtag === h.tag
                       ? 'bg-amber-50 border-amber-300 text-amber-900 font-bold'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
@@ -298,13 +298,41 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               ))}
             </div>
             <button
-              onClick={() => {
-                setStatusMsg({ type: 'success', text: `Đã kích hoạt quét tự động cho ${selectedHashtag}!` });
-                setTimeout(onClose, 1200);
+              onClick={async () => {
+                if (isLoading) return;
+                setIsLoading(true);
+                setStatusMsg(null);
+                try {
+                  const targetObj = popularHashtags.find(h => h.tag === selectedHashtag);
+                  const res = await fetch('/api/v1/admin/videos/ai-scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ targetKeyword: targetObj?.location || selectedHashtag, limit: 3 }),
+                  });
+                  const data = await res.json();
+                  if (!res.ok) throw new Error(data.error || 'Lỗi khi chạy AI Scanner');
+
+                  setStatusMsg({
+                    type: 'success',
+                    text: data.message || `AI đã tự động quét và nạp ${data.count} video TikTok mới vào Supabase!`,
+                  });
+                  if (onSuccess) onSuccess();
+                  setTimeout(() => {
+                    onClose();
+                    setStatusMsg(null);
+                  }, 1800);
+                } catch (err: unknown) {
+                  const msg = err instanceof Error ? err.message : 'Lỗi khi AI tìm video';
+                  setStatusMsg({ type: 'error', text: msg });
+                } finally {
+                  setIsLoading(false);
+                }
               }}
-              className="w-full py-3 rounded-xl bg-[#D99B26] hover:bg-amber-600 text-white font-bold text-xs transition-all cursor-pointer shadow-md"
+              disabled={isLoading}
+              className="w-full py-3 rounded-xl bg-[#D99B26] hover:bg-amber-600 text-white font-bold text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              Tự Động Quét Video TikTok Theo Hashtag
+              {isLoading ? <RefreshCw className="w-4 h-4 animate-spin text-white" /> : <Sparkles className="w-4 h-4 text-white" />}
+              {isLoading ? `AI đang quét video cho ${selectedHashtag}...` : `Kích Hoạt AI Quét & Tìm Video Cho ${selectedHashtag}`}
             </button>
           </div>
         )}
