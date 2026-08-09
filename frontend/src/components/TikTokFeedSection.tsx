@@ -357,39 +357,52 @@ export default function TikTokFeedSection({
     if (propVideos && propVideos.length > 0) return propVideos;
     return FALLBACK_VIDEOS;
   });
+  const [selectedLocation, setSelectedLocation] = useState<string>('Tất cả');
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [modalVideo, setModalVideo] = useState<VideoItem | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Fetch live discovered videos from API, fallback to FALLBACK_VIDEOS if API fails or empty
-  useEffect(() => {
-    if (propVideos && propVideos.length > 0) {
+  // Fetch live discovered videos from API (/api/v1/videos) with location filter
+  const fetchVideos = useCallback(async (loc: string) => {
+    if (propVideos && propVideos.length > 0 && loc === 'Tất cả') {
       setVideos(propVideos);
       return;
     }
     setLoading(true);
-    fetch('/api/v1/videos/triton')
-      .then(r => r.json())
-      .then(data => {
-        if (data.videos && Array.isArray(data.videos) && data.videos.length > 0) {
-          const merged = data.videos.map((v: FeedVideo, i: number) => ({
-            ...v,
-            thumbnail_url:
-              v.thumbnail_url && !v.thumbnail_url.includes('unsplash')
-                ? v.thumbnail_url
-                : FALLBACK_VIDEOS[i % FALLBACK_VIDEOS.length].thumbnail_url,
-          }));
-          setVideos(merged.slice(0, maxSlides));
-        } else {
-          setVideos(FALLBACK_VIDEOS.slice(0, maxSlides));
-        }
-      })
-      .catch(() => {
+    try {
+      const url = loc && loc !== 'Tất cả'
+        ? `/api/v1/videos?location=${encodeURIComponent(loc)}&limit=${maxSlides}`
+        : `/api/v1/videos?limit=${maxSlides}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.videos && Array.isArray(data.videos) && data.videos.length > 0) {
+        const mapped = data.videos.map((v: Record<string, unknown>, i: number) => ({
+          id: (v.id as string) || `v-${i}`,
+          title: (v.description as string) || (v.title as string) || 'Video TikTok Tri Tôn',
+          platform: 'tiktok' as const,
+          video_url: (v.tiktokUrl as string) || (v.video_url as string) || '',
+          embed_url: (v.embedUrl as string) || (v.embed_url as string) || '',
+          thumbnail_url: (v.thumbnail as string) || (v.thumbnail_url as string) || FALLBACK_VIDEOS[i % FALLBACK_VIDEOS.length].thumbnail_url,
+          author_name: (v.userDisplayName as string) || (v.author_name as string) || 'TikToker Tri Tôn',
+          view_count: typeof v.view_count === 'number' ? v.view_count : 50000,
+          hashtags: (v.hashtags as string[]) || ['#TriTon', '#AnGiang'],
+        }));
+        setVideos(mapped);
+      } else {
         setVideos(FALLBACK_VIDEOS.slice(0, maxSlides));
-      })
-      .finally(() => setLoading(false));
+      }
+    } catch {
+      setVideos(FALLBACK_VIDEOS.slice(0, maxSlides));
+    } finally {
+      setLoading(false);
+    }
   }, [propVideos, maxSlides]);
+
+  useEffect(() => {
+    fetchVideos(selectedLocation);
+  }, [selectedLocation, fetchVideos]);
 
   // Track active slide via IntersectionObserver for vertical mode
   useEffect(() => {
@@ -461,6 +474,24 @@ export default function TikTokFeedSection({
             </a>
           </div>
         )}
+
+        {/* Location Filter Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {['Tất cả', 'Tà Pạ', 'Chùa Koh Kas', 'Núi Cô Tô', 'Cây Thốt Nốt', 'Ẩm Thực', 'Lễ Hội'].map((loc) => (
+            <button
+              key={loc}
+              type="button"
+              onClick={() => setSelectedLocation(loc)}
+              className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
+                selectedLocation === loc
+                  ? 'bg-[#1B4D3E] text-white shadow-xs'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+              }`}
+            >
+              {loc}
+            </button>
+          ))}
+        </div>
 
         {loading ? (
           <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
