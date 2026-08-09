@@ -5,9 +5,6 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmflj
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@triton.gov.vn';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'TriTon2026!Admin';
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -23,40 +20,34 @@ export async function POST(req: NextRequest) {
     let authenticatedUser: { name: string; email: string; role: string } | null = null;
 
     // 1. Query admin_users table in Supabase PostgreSQL
-    try {
-      const { data: dbUser } = await supabase
-        .from('admin_users')
-        .select('email, password, full_name, role, is_active')
-        .eq('email', cleanEmail)
-        .eq('is_active', true)
-        .maybeSingle();
+    const { data: dbUser, error: dbErr } = await supabase
+      .from('admin_users')
+      .select('email, password, full_name, role, is_active')
+      .eq('email', cleanEmail)
+      .eq('is_active', true)
+      .maybeSingle();
 
-      if (dbUser && dbUser.password === cleanPassword) {
-        authenticatedUser = {
-          name: dbUser.full_name || 'Roch Thi (Super Admin)',
-          email: dbUser.email,
-          role: dbUser.role || 'SUPER_ADMIN',
-        };
-      }
-    } catch (dbErr) {
-      console.warn('[AdminLogin] DB query fallback:', dbErr);
+    if (dbErr) {
+      console.error('[AdminLogin DB Error]:', dbErr);
     }
 
-    // 2. Fallback check for user credentials
-    if (!authenticatedUser) {
-      if (cleanEmail === 'rochthi59@gmail.com' && cleanPassword === 'Admin123@') {
-        authenticatedUser = {
-          name: 'Roch Thi (Super Admin)',
-          email: 'rochthi59@gmail.com',
-          role: 'SUPER_ADMIN',
-        };
-      } else if (cleanEmail === ADMIN_EMAIL.toLowerCase() && cleanPassword === ADMIN_PASSWORD) {
-        authenticatedUser = {
-          name: 'Trưởng Ban Quản Trị Tri Tôn',
-          email: cleanEmail,
-          role: 'ADMIN',
-        };
-      }
+    if (dbUser && dbUser.password === cleanPassword) {
+      authenticatedUser = {
+        name: dbUser.full_name || 'Admin Tri Tôn',
+        email: dbUser.email,
+        role: dbUser.role || 'SUPER_ADMIN',
+      };
+    } else if (
+      process.env.ADMIN_EMAIL &&
+      process.env.ADMIN_PASSWORD &&
+      cleanEmail === process.env.ADMIN_EMAIL.trim().toLowerCase() &&
+      cleanPassword === process.env.ADMIN_PASSWORD.trim()
+    ) {
+      authenticatedUser = {
+        name: 'Trưởng Ban Quản Trị Tri Tôn',
+        email: cleanEmail,
+        role: 'ADMIN',
+      };
     }
 
     if (!authenticatedUser) {
@@ -77,8 +68,8 @@ export async function POST(req: NextRequest) {
     // Record success audit log
     void Promise.resolve(
       supabase.from('audit_logs').insert({
-        user_name: 'Admin_TriTon',
-        user_role: 'ADMIN',
+        user_name: authenticatedUser.name,
+        user_role: authenticatedUser.role,
         action: 'LOGIN_SUCCESS',
         resource_type: 'admin_auth',
         details: { email: cleanEmail, timestamp: new Date().toISOString() },
@@ -98,7 +89,7 @@ export async function POST(req: NextRequest) {
     response.cookies.set({
       name: 'triton_admin_token',
       value: token,
-      httpOnly: false, // Accessible by client script for layout guard
+      httpOnly: false,
       path: '/',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       sameSite: 'lax',
