@@ -33,11 +33,71 @@ export async function GET(req: NextRequest) {
     }
 
     const { data: videos, error } = await query;
-    if (error) throw error;
+    if (error) {
+      console.error('[AdminVideos GET Error]:', error);
+      throw error;
+    }
 
     return NextResponse.json({ success: true, videos: videos || [] });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Error fetching admin videos';
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const {
+      video_url,
+      embed_url,
+      thumbnail_url,
+      title,
+      author_name,
+      author_username,
+      matched_location,
+      verification_status = 'VERIFIED',
+      quality_score = 0.95,
+      view_count = 50000,
+    } = body;
+
+    if (!video_url || !title) {
+      return NextResponse.json({ error: 'Missing required video fields (video_url, title)' }, { status: 400 });
+    }
+
+    const externalId = video_url.match(/video\/(\d+)/)?.[1] || `custom_${Date.now()}`;
+
+    const insertPayload = {
+      platform: 'tiktok',
+      external_video_id: externalId,
+      video_url,
+      embed_url: embed_url || `https://www.tiktok.com/embed/v2/${externalId}`,
+      thumbnail_url,
+      title,
+      author_name: author_name || 'TikTok Reviewer',
+      author_username: author_username || '@tiktok',
+      matched_location: matched_location || 'Tri Tôn, An Giang',
+      verification_status,
+      quality_score,
+      view_count,
+    };
+
+    const { data, error } = await supabase
+      .from('video_discoveries')
+      .upsert(insertPayload, { onConflict: 'video_url' })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[AdminVideos POST Error]:', error);
+      throw error;
+    }
+
+    logAudit('IMPORT_TIKTOK_VIDEO', data?.id || externalId, { title, matched_location });
+
+    return NextResponse.json({ success: true, video: data });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error creating video record';
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
@@ -63,7 +123,10 @@ export async function PATCH(req: NextRequest) {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('[AdminVideos PATCH Error]:', error);
+      throw error;
+    }
 
     logAudit('UPDATE_VIDEO_STATUS', id, { verification_status, matched_poi_id });
 
@@ -84,7 +147,10 @@ export async function DELETE(req: NextRequest) {
     }
 
     const { error } = await supabase.from('video_discoveries').delete().eq('id', id);
-    if (error) throw error;
+    if (error) {
+      console.error('[AdminVideos DELETE Error]:', error);
+      throw error;
+    }
 
     logAudit('DELETE_VIDEO', id, { deleted_at: new Date().toISOString() });
 
