@@ -20,8 +20,31 @@ export async function POST(req: NextRequest) {
     const cleanEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
 
-    // Validate credentials against environment secrets
-    if (cleanEmail !== ADMIN_EMAIL.toLowerCase() || cleanPassword !== ADMIN_PASSWORD) {
+    let authenticatedUser: { name: string; email: string; role: string } | null = null;
+
+    // 1. Query admin_users table in Supabase PostgreSQL
+    const { data: dbUser } = await supabase
+      .from('admin_users')
+      .select('email, password, full_name, role, is_active')
+      .eq('email', cleanEmail)
+      .eq('is_active', true)
+      .single();
+
+    if (dbUser && dbUser.password === cleanPassword) {
+      authenticatedUser = {
+        name: dbUser.full_name || 'Admin Tri Tôn',
+        email: dbUser.email,
+        role: dbUser.role || 'SUPER_ADMIN',
+      };
+    } else if (cleanEmail === ADMIN_EMAIL.toLowerCase() && cleanPassword === ADMIN_PASSWORD) {
+      authenticatedUser = {
+        name: 'Trưởng Ban Quản Trị Tri Tôn',
+        email: cleanEmail,
+        role: 'ADMIN',
+      };
+    }
+
+    if (!authenticatedUser) {
       // Record failed audit log
       void Promise.resolve(
         supabase.from('audit_logs').insert({
@@ -53,11 +76,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({
       success: true,
       message: 'Đăng nhập Quản trị thành công!',
-      user: {
-        name: 'Trưởng Ban Quản Trị Tri Tôn',
-        email: cleanEmail,
-        role: 'ADMIN',
-      },
+      user: authenticatedUser,
     });
 
     // Set secure HTTP cookie
