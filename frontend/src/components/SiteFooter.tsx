@@ -44,27 +44,27 @@ export default function SiteFooter() {
             <ul className="space-y-2 text-xs text-slate-400 font-medium">
               <li>
                 <Link href="/places" className="hover:text-amber-300 transition-colors">
-                  📍 Danh thắng & Hồ nước (Tà Pạ, Ô Thum)
+                  Danh thắng & Hồ nước (Tà Pạ, Ô Thum)
                 </Link>
               </li>
               <li>
                 <Link href="/food" className="hover:text-amber-300 transition-colors">
-                  🍗 Đặc sản Gà Đốt Ô Thum & Cháo Bò
+                  Đặc sản Gà Đốt Ô Thum & Cháo Bò
                 </Link>
               </li>
               <li>
                 <Link href="/stay" className="hover:text-amber-300 transition-colors">
-                  🏡 Homestay & Khách sạn Tri Tôn
+                  Homestay & Khách sạn Tri Tôn
                 </Link>
               </li>
               <li>
                 <Link href="/culture" className="hover:text-amber-300 transition-colors">
-                  🛕 Văn hóa & Lễ hội Đua bò Khmer
+                  Văn hóa & Lễ hội Đua bò Khmer
                 </Link>
               </li>
               <li>
                 <Link href="/guide" className="hover:text-amber-300 transition-colors">
-                  📖 Cẩm nang & Lộ trình xe khách
+                  Cẩm nang & Lộ trình xe khách
                 </Link>
               </li>
             </ul>
@@ -82,22 +82,22 @@ export default function SiteFooter() {
               </li>
               <li>
                 <Link href="/map" className="hover:text-emerald-400 transition-colors">
-                  🗺️ Bản đồ tương tác GIS Bảy Núi
+                  Bản đồ tương tác GIS Bảy Núi
                 </Link>
               </li>
               <li>
                 <Link href="/chatbot" className="hover:text-emerald-400 transition-colors">
-                  🤖 Hướng dẫn viên AI Chatbot 24/7
+                  Hướng dẫn viên AI Chatbot 24/7
                 </Link>
               </li>
               <li>
                 <Link href="/emergency" className="hover:text-rose-400 transition-colors">
-                  🚨 Cứu hộ khẩn cấp & SĐT Y Tế
+                  Cứu hộ khẩn cấp & SĐT Y Tế
                 </Link>
               </li>
               <li>
                 <Link href="/partner" className="hover:text-emerald-400 transition-colors">
-                  🤝 Cổng đăng ký đối tác kinh doanh
+                  Cổng đăng ký đối tác kinh doanh
                 </Link>
               </li>
             </ul>

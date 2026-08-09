@@ -15,6 +15,7 @@ import {
   Eye,
   Heart,
   Share2,
+  MapPin,
 } from 'lucide-react';
 import ImportTikTokModal from '@/components/admin/ImportTikTokModal';
 
@@ -225,8 +226,9 @@ export default function AdminVideosPage() {
               {/* Info Body */}
               <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="text-[11px] font-bold text-emerald-800 mb-1">
-                    📍 {video.matched_location || 'Tri Tôn, An Giang'}
+                  <div className="text-[11px] font-bold text-emerald-800 mb-1 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-emerald-600" />
+                    <span>{video.matched_location || 'Tri Tôn, An Giang'}</span>
                   </div>
                   <h4 className="font-heading font-bold text-slate-900 text-xs sm:text-sm line-clamp-2 leading-snug">
                     {video.title}
