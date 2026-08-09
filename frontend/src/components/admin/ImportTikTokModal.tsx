@@ -293,22 +293,7 @@ export default function ImportTikTokModal({ isOpen, onClose, onSuccess }: Import
               </div>
             )}
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Gắn Thẻ Địa Danh / Danh Mục</label>
-              <select
-                value={locationTag}
-                onChange={(e) => setLocationTag(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-white"
-              >
-                <option value="AUTO">🤖 Tự Động Nhận Diện Từ Tiêu Đề TikTok</option>
-                <option value="Tà Pạ">Tà Pạ (Hồ & Chùa Tà Pạ)</option>
-                <option value="Chùa Koh Kas">Chùa Koh Kas (Cổng Trời)</option>
-                <option value="Núi Cô Tô">Núi Cô Tô (Phụng Hoàng Sơn)</option>
-                <option value="Cây Thốt Nốt">Cây Thốt Nốt Trái Tim Ô Lâm</option>
-                <option value="Ẩm Thực">Ẩm Thực (Gà Đốt Ô Thum, Cháo Bò)</option>
-                <option value="Lễ Hội">Lễ Hội (Đua Bò Chùa Rô)</option>
-              </select>
-            </div>
+
 
             <button
               type="submit"
