@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.3.2-FIX-REACT-HOOKS-ORDER] - 2026-08-10
+
+### 🐛 Sửa Lỗi React Rules of Hooks — `ChatbotWidget.tsx`
+- **Nguyên nhân**: `useEffect` (auto-scroll) bị đặt **sau** lệnh `return null` (early return cho admin routes), vi phạm React Rules of Hooks → runtime error: *"Rendered fewer hooks than expected"*.
+- **Giải pháp**: Di chuyển `useEffect` auto-scroll lên **trước** early return, đảm bảo tất cả Hooks luôn được gọi theo thứ tự nhất định bất kể điều kiện render.
+- **File thay đổi**: `frontend/src/components/ChatbotWidget.tsx`
+- **Kiểm thử**: `npx tsc --noEmit` ✅ Clean (0 lỗi TypeScript).
+
+---
+
 ## [v28.3.1-FIX-VIDEO-CHAT-CARD-TYPE-ERROR] - 2026-08-10
 
 ### 🐛 Sửa Lỗi Crash Chatbot Widget (`TypeError: views.replace is not a function`)

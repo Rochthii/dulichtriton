@@ -123,7 +123,14 @@ export default function ChatbotWidget() {
     }
   }, [isOpen]);
 
-  // Don't render on admin routes
+  // Auto-scroll inside chat container without scrolling browser window
+  useEffect(() => {
+    if (isOpen && messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages, isOpen]);
+
+  // Don't render on admin routes (placed AFTER all React Hooks declarations)
   if (pathname?.startsWith('/admin')) {
     return null;
   }
@@ -134,13 +141,6 @@ export default function ChatbotWidget() {
     'Đường lên Chùa Tà Pạ',
     'Homestay view núi Cô Tô'
   ];
-
-  // Auto-scroll inside chat container without scrolling browser window
-  useEffect(() => {
-    if (isOpen && messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-    }
-  }, [messages, isOpen]);
 
   const handleSend = async (queryText?: string) => {
     const textToSend = queryText || input;
