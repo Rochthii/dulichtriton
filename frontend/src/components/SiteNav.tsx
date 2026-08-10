@@ -14,7 +14,7 @@ import {
   X,
   Sparkles,
   PhoneCall,
-  User,
+  Home,
 } from "lucide-react";
 
 export default function SiteNav() {
@@ -22,11 +22,12 @@ export default function SiteNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
+    { name: "Trang Chủ", href: "/", icon: Home },
     { name: "Khám Phá", href: "/places", icon: Compass },
     { name: "Ẩm Thực", href: "/food", icon: Utensils },
     { name: "Lưu Trú", href: "/stay", icon: Hotel },
     { name: "Lễ Hội", href: "/culture", icon: Calendar },
-    { name: "Lịch Trình AI", href: "/planner", icon: Sparkles },
+    { name: "Lịch Trình", href: "/planner", icon: Sparkles },
     { name: "Bản Đồ", href: "/map", icon: MapPin },
     { name: "Trợ Lý AI", href: "#", icon: Bot, isChatTrigger: true },
   ];
@@ -40,11 +41,11 @@ export default function SiteNav() {
             <Compass className="h-6 w-6" />
           </div>
           <div className="flex flex-col">
-            <span className="font-heading font-extrabold text-xl tracking-tight text-emerald-950 flex items-center gap-1.5">
-              Tri Tôn <span className="text-emerald-700">AI</span>
+            <span className="font-heading font-extrabold text-xl tracking-tight text-emerald-950">
+              Du Lịch <span className="text-emerald-700">Tri Tôn</span>
             </span>
             <span className="text-[11px] font-medium text-slate-500 uppercase tracking-widest -mt-1">
-              Tourism Guide
+              AI Tourism Guide
             </span>
           </div>
         </Link>
