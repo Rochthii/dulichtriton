@@ -4,7 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v28.3.4-DATA-SLUG-BACKFILL] - 2026-08-10
+## [v28.4.0-SMART-SEARCH] - 2026-08-10
+
+### 🔍 Nâng Cấp Smart Search Trang Chủ
+- **API Mới (`/api/v1/search`)**: Unified search endpoint, Edge Runtime, query bảng `places` đa danh mục (Địa Điểm, Ẩm Thực, Lưu Trú, Văn Hóa) cùng 1 request với OR filter `name + commune + category + tourism_category + description + address`.
+- **Relevance Scoring**: Kết quả khớp đầu tên → +100 điểm, khớp giữa → +60, khớp category → +30, is_hot → +10.
+- **Grouped Results**: Dropdown hiển thị kết quả theo nhóm có icon riêng (Địa Điểm/Ẩm Thực/Lưu Trú/Văn Hóa).
+- **Trending Chips**: Focus vào ô search mà chưa nhập → hiện 6 chip gợi ý phổ biến (Gà Đốt Ô Thum, Hồ Tà Pạ, Chùa Tà Pạ...).
+- **Keyboard Navigation**: Arrow Up/Down di chuyển, Enter vào trang, Escape đóng dropdown.
+- **Debounce 150ms + AbortController**: Hủy request cũ khi user nhập mới → không lag, không race condition.
+- **HOT badge**: Hiển thị tag HOT cho địa điểm `is_hot = true`.
+
+---
+
+## [v28.3.6-SITENAV-UPDATE] - 2026-08-10
 
 ### 🗄️ Data Migration — Backfill ASCII Slugs cho 95 POIs
 - **Vấn đề**: 95 records được seed từ CSV không có `slug` → link card dùng `place.id` nhưng query `getPlaceById` lỗi do gọi column `place_id` không tồn tại → tất cả trang chi tiết 404.
