@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.4.1-MOBILE-SCROLL-OPTIMIZATION] - 2026-08-10
+
+### 🚀 Tối Ưu Hóa Cảm Giác Vuốt/Lướt Mobile (Smooth 60FPS Scroll Ergonomics)
+- **Root Cause**: Khai báo `overflow-x: hidden` trên `html, body` tắt hẳn phần cứng GPU cuộn quán tính (Momentum Scroll `-webkit-overflow-scrolling`) trên iOS Safari & Mobile Chrome, khiến khi thả ngón tay trang bị "khựng/cấn/khóa đứng" ngay lập tức.
+- **Giải Pháp Bỏ Khóa Overflow**: Loại bỏ hoàn toàn `overflow-x: hidden` ở cấp độ `html, body`, chuyển sang xử lý tràn ngang an toàn qua `.mobile-scroll-wrapper` trong `layout.tsx`.
+- **Thêm Cấu Hình Momentum Touch**: Cấu hình `html { scroll-behavior: smooth; }`, `-webkit-overflow-scrolling: touch` & `overscroll-behavior-x: contain` cho tất cả container cuộn ngang (`.overflow-x-auto`).
+- **Tối Ưu GPU Composite Layer**: Đưa `.glass-nav` và sticky element lên layer riêng với `transform: translateZ(0)` và giảm backdrop-blur xuống `8px` trên mobile màn hình nhỏ, loại bỏ sụt FPS khi scroll.
+
+---
+
 ## [v28.4.0-SMART-SEARCH] - 2026-08-10
 
 ### 🔍 Nâng Cấp Smart Search Trang Chủ

@@ -19,24 +19,51 @@
     --border-color: #E2E8F0;
   }
 
-  body {
-    background-color: var(--surface-bg);
-    color: var(--text-main);
-    font-family: var(--font-body);
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-  }
-
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
   }
 }
 
+/* Smooth scrolling & touch momentum optimizations */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--surface-bg);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Allow natural touch momentum scroll without lockup */
+  overscroll-behavior-y: auto;
+}
+
+/* Fix mobile horizontal overflow without disabling iOS body momentum scroll */
+.mobile-scroll-wrapper {
+  overflow-x: clip;
+  width: 100%;
+}
+
 .glass-nav {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* Promote to GPU composite layer for 60fps scrolling */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 .hero-gradient {
@@ -57,7 +84,7 @@
   box-shadow: 0 12px 24px -8px rgba(15, 81, 50, 0.15);
 }
 
-/* Mobile Utilities & Ergonomics */
+/* Mobile Utilities & Touch Ergonomics */
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -66,14 +93,17 @@
   display: none;
 }
 
+/* Smooth Touch Scrolling for Horizontal Carousels & Lists */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+}
+
 .pb-safe {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 button, a, input, select {
   touch-action: manipulation;
-}
-
-html, body {
-  overflow-x: hidden;
 }

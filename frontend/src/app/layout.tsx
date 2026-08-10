@@ -24,7 +24,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased font-sans" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased font-sans mobile-scroll-wrapper" suppressHydrationWarning>
         <SiteNav />
         <main className="flex-grow">{children}</main>
         <SiteFooter />
