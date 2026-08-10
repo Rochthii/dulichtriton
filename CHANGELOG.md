@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.3.4-DATA-SLUG-BACKFILL] - 2026-08-10
+
+### 🗄️ Data Migration — Backfill ASCII Slugs cho 95 POIs
+- **Vấn đề**: 95 records được seed từ CSV không có `slug` → link card dùng `place.id` nhưng query `getPlaceById` lỗi do gọi column `place_id` không tồn tại → tất cả trang chi tiết 404.
+- **Migration SQL (`20260810_backfill_slugs.sql`)**: Tạo function `generate_slug()` PostgreSQL + trigger `trg_auto_generate_slug` auto-generate slug cho INSERT mới.
+- **Python Script (`scripts/rebackfill_slugs_ascii.py`)**: Re-backfill 95 slugs sang dạng pure ASCII chuẩn (ví dụ: `ruong-coffee-homestay-tri-ton-cf001`). Credentials load từ `frontend/.env.local` — không hardcode.
+- **Kết quả**: 95/95 places có slug ASCII sạch | 0 null slugs còn lại.
+- **Security**: Tất cả scripts dùng `os.environ` load từ `.env.local` — không có credentials trong source code.
+
+---
+
 ## [v28.3.3-FIX-PLACE-DETAIL-404] - 2026-08-10
 
 ### 🐛 Sửa Lỗi 404 Toàn Bộ Trang Chi Tiết Địa Điểm (`/places/[id]`)
