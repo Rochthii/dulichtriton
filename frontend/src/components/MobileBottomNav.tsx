@@ -23,10 +23,11 @@ export default function MobileBottomNav() {
     },
     {
       label: 'Trợ Lý AI',
-      href: '/chatbot',
+      href: '#',
       icon: Sparkles,
       activeColor: 'text-[#D99B26]',
       isHighlight: true,
+      isChatTrigger: true,
     },
     {
       label: 'Cứu Hộ 24/7',
@@ -42,6 +43,26 @@ export default function MobileBottomNav() {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
+
+          if (item.isChatTrigger) {
+            return (
+              <button
+                key={item.label}
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('triton:open-chat'));
+                }}
+                className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl transition-all touch-manipulation opacity-90 hover:opacity-100"
+              >
+                <div className="relative flex items-center justify-center p-1 rounded-xl bg-amber-100 border border-amber-300/80 shadow-xs">
+                  <Icon className="w-5 h-5 text-[#D99B26]" />
+                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#D99B26] animate-ping" />
+                </div>
+                <span className="text-[10px] tracking-tight leading-none text-amber-950 font-extrabold">
+                  {item.label}
+                </span>
+              </button>
+            );
+          }
 
           return (
             <Link

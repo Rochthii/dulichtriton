@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
+import ChatbotWidget from "../components/ChatbotWidget";
 
 export const metadata: Metadata = {
   title: "Tri Tôn AI Tourism - Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <SiteNav />
         <main className="flex-grow">{children}</main>
         <SiteFooter />
+        <ChatbotWidget />
       </body>
     </html>
   );

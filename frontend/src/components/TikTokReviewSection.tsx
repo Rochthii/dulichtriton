@@ -23,156 +23,49 @@ interface TikTokVideo {
 export default function TikTokReviewSection() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const [videos, setVideos] = useState<TikTokVideo[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // 10 Verified Real Video Reviews of Tri Ton An Giang
-  const allTikTokVideos: TikTokVideo[] = [
-    {
-      id: 'food-1',
-      category: 'food',
-      categoryLabel: 'Ẩm Thực',
-      title: 'Review Gà Đốt Ô Thum Kiều Tiên & Ngắm Cảnh Hồ Ô Thum Siêu Thơ Mộng',
-      creator: '@langlang_vlog',
-      views: '142.5K',
-      likes: '12.8K',
-      thumbnail: '/images/tiktok/ga_dot_o_thum.png',
-      tiktokUrl: 'https://www.tiktok.com/tag/gadotothum',
-      location: 'Hồ Ô Thum, Xã Ô Lâm',
-      locationLink: '/places?commune=X%C3%A3+%C3%94+L%C3%A2m',
-      hashtags: ['#gadotothum', '#triton', '#foodreview'],
-    },
-    {
-      id: 'spot-1',
-      category: 'spot',
-      categoryLabel: 'Danh Thắng',
-      title: 'Tuyệt Tình Cốc Hồ Tà Pạ & Cánh Đồng Thốt Nốt Trái Tim',
-      creator: '@tungnuitravel',
-      views: '98.3K',
-      likes: '9.4K',
-      thumbnail: '/images/tiktok/ho_ta_pa.jpg',
-      tiktokUrl: 'https://www.tiktok.com/@tungnuitravel/video/7420379562602695937',
-      embedUrl: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-      location: 'Hồ Tà Pạ, Xã Núi Tô',
-      locationLink: '/places?commune=X%C3%A3+N%C3%BAi+T%C3%B4',
-      hashtags: ['#hotapa', '#tungnuitravel', '#triton', '#tuyettinhcoc'],
-    },
-    {
-      id: 'food-2',
-      category: 'food',
-      categoryLabel: 'Ẩm Thực',
-      title: 'Đu Đủ Đâm Khmer Chau Lăng Cối Gỗ Cực Dính Chua Cay Nồng',
-      creator: '@anngon_mientay',
-      views: '86.7K',
-      likes: '8.1K',
-      thumbnail: '/images/tiktok/du_du_dam.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/dududam',
-      location: 'Xã Chau Lăng, Tri Tôn',
-      locationLink: '/food',
-      hashtags: ['#dududam', '#chaulang', '#khmerfood'],
-    },
-    {
-      id: 'culture-1',
-      category: 'culture',
-      categoryLabel: 'Văn Hóa',
-      title: 'Chiêm Bái Chùa Svay Ton 500 Năm Cổ Nhất An Giang & Kinh Lá Buông',
-      creator: '@vanhoakhmer_mientay',
-      views: '64.1K',
-      likes: '6.2K',
-      thumbnail: '/images/tiktok/chua_svay_ton.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/chuasvayton',
-      location: 'Thị trấn Tri Tôn',
-      locationLink: '/culture',
-      hashtags: ['#chuasvayton', '#kinhlabuong', '#disan'],
-    },
-    {
-      id: 'food-3',
-      category: 'food',
-      categoryLabel: 'Ẩm Thực',
-      title: 'Thưởng Thức Bún Cá Tri Tôn Nước Dùng Nghệ Vàng Thịt Cá Lóc Đồng',
-      creator: '@mientay_foodie',
-      views: '112.1K',
-      likes: '10.5K',
-      thumbnail: '/images/tiktok/bun_ca_tri_ton.png',
-      tiktokUrl: 'https://www.tiktok.com/tag/buncatriton',
-      location: 'Thị trấn Tri Tôn',
-      locationLink: '/food',
-      hashtags: ['#buncatriton', '#buncangiang', '#dacsan'],
-    },
-    {
-      id: 'spot-2',
-      category: 'spot',
-      categoryLabel: 'Danh Thắng',
-      title: 'Check-in Cổng Trời Koh Kas Giữa Cánh Đồng Lúa Chau Lăng',
-      creator: '@phuot_bayan',
-      views: '91.0K',
-      likes: '8.7K',
-      thumbnail: '/images/tiktok/cong_troi_koh_kas.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/congtroikohkas',
-      location: 'Chùa Koh Kas, Xã Chau Lăng',
-      locationLink: '/places?category=checkin_spots',
-      hashtags: ['#congtroikohkas', '#chaulang', '#songao'],
-    },
-    {
-      id: 'food-4',
-      category: 'food',
-      categoryLabel: 'Ẩm Thực',
-      title: 'Bánh Bò Mật Thốt Nốt Nướng Chảo Vàng Ổ Ong Nức Mũi',
-      creator: '@monngon_angiang',
-      views: '74.2K',
-      likes: '7.1K',
-      thumbnail: '/images/tiktok/banh_bo_thot_not.png',
-      tiktokUrl: 'https://www.tiktok.com/tag/banhbothotnot',
-      location: 'Chợ Tri Tôn & Chau Lăng',
-      locationLink: '/food',
-      hashtags: ['#banhbothotnot', '#thotnot', '#triton'],
-    },
-    {
-      id: 'culture-2',
-      category: 'culture',
-      categoryLabel: 'Văn Hóa',
-      title: 'Sức Nóng Lễ Hội Đua Bò Bảy Núi Di Sản Văn Hóa Quốc Gia',
-      creator: '@truyenthong_khmer',
-      views: '128.9K',
-      likes: '14.2K',
-      thumbnail: '/images/tiktok/dua_bo_bay_nui.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/duabobaynui',
-      location: 'Sân Đua Bò, Xã An Tức',
-      locationLink: '/culture',
-      hashtags: ['#duabobaynui', '#senadolta', '#disan'],
-    },
-    {
-      id: 'guide-1',
-      category: 'guide',
-      categoryLabel: 'Kinh Nghiệm',
-      title: 'Lịch Trình Phượt Tri Tôn 2 Ngày 1 Đêm Chi Phí 800K Cho Giới Trẻ',
-      creator: '@travel_with_me',
-      views: '105.4K',
-      likes: '11.3K',
-      thumbnail: '/images/tiktok/phuot_tri_ton.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/phuottriton',
-      location: 'Toàn khu vực Tri Tôn',
-      locationLink: '/itinerary',
-      hashtags: ['#phuottriton', '#lichtrinh2n1d', '#bayanui'],
-    },
-    {
-      id: 'spot-3',
-      category: 'spot',
-      categoryLabel: 'Danh Thắng',
-      title: 'Khám Phá Căn Cứ Lịch Sử Đồi Tức Dụp Ngọn Đồi 2 Triệu Đô',
-      creator: '@khampha_bayanui',
-      views: '53.4K',
-      likes: '4.8K',
-      thumbnail: '/images/tiktok/doi_tuc_dup.jpg',
-      tiktokUrl: 'https://www.tiktok.com/tag/doitucdup',
-      location: 'Đồi Tức Dụp, Xã An Tức',
-      locationLink: '/places?commune=X%C3%A3+An+T%E1%BB%A9c',
-      hashtags: ['#doitucdup', '#dichich', '#antuc'],
-    },
-  ];
+  React.useEffect(() => {
+    async function loadLiveVideos() {
+      try {
+        setLoading(true);
+        const res = await fetch('/api/v1/videos?limit=12');
+        const data = await res.json();
+        if (data.videos && Array.isArray(data.videos) && data.videos.length > 0) {
+          const mapped: TikTokVideo[] = data.videos.map((v: any, i: number) => ({
+            id: v.id || `v-${i}`,
+            category: i % 2 === 0 ? 'spot' : 'food',
+            categoryLabel: v.location || 'Tri Tôn',
+            title: v.description || v.title || 'Video Review Tri Tôn',
+            creator: v.userDisplayName || v.username || '@triton.review',
+            views: v.viewsCount || '50K',
+            likes: v.likesCount || '10K',
+            thumbnail: v.thumbnail || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+            tiktokUrl: v.tiktokUrl || 'https://www.tiktok.com',
+            embedUrl: v.embedUrl,
+            location: v.location || 'Tri Tôn, An Giang',
+            locationLink: '/map',
+            hashtags: v.hashtags || ['#TriTon', '#AnGiang'],
+          }));
+          setVideos(mapped);
+        } else {
+          setVideos([]);
+        }
+      } catch (err) {
+        console.error('[TikTokReviewSection] Fetch error:', err);
+        setVideos([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadLiveVideos();
+  }, []);
 
   // Filtered Videos based on Active Tab Category
   const filteredVideos = activeCategory === 'all' 
-    ? allTikTokVideos 
-    : allTikTokVideos.filter(v => v.category === activeCategory);
+    ? videos 
+    : videos.filter(v => v.category === activeCategory);
 
   const categories = [
     { id: 'all', label: 'Tất Cả (10)' },
@@ -202,7 +95,7 @@ export default function TikTokReviewSection() {
     }
   };
 
-  const mappedPlaylist: VideoItem[] = allTikTokVideos.map(v => ({
+  const mappedPlaylist: VideoItem[] = videos.map((v: TikTokVideo) => ({
     id: v.id,
     title: v.title,
     platform: 'tiktok',

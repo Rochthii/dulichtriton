@@ -28,7 +28,7 @@ export default function SiteNav() {
     { name: "Lễ Hội", href: "/culture", icon: Calendar },
     { name: "Lịch Trình AI", href: "/planner", icon: Sparkles },
     { name: "Bản Đồ", href: "/map", icon: MapPin },
-    { name: "Trợ Lý AI", href: "/chatbot", icon: Bot },
+    { name: "Trợ Lý AI", href: "#", icon: Bot, isChatTrigger: true },
   ];
 
   return (
@@ -54,6 +54,21 @@ export default function SiteNav() {
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href;
+            if (link.isChatTrigger) {
+              return (
+                <button
+                  key={link.name}
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('triton:open-chat'));
+                  }}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-amber-900 bg-amber-100/80 hover:bg-amber-200 transition-all shadow-xs border border-amber-300/60"
+                >
+                  <Bot className="h-4 w-4 text-amber-700 animate-pulse" />
+                  {link.name}
+                </button>
+              );
+            }
+
             return (
               <Link
                 key={link.href}
@@ -98,6 +113,22 @@ export default function SiteNav() {
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href;
+            if (link.isChatTrigger) {
+              return (
+                <button
+                  key={link.name}
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('triton:open-chat'));
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-amber-100/90 text-amber-900 border border-amber-300/70"
+                >
+                  <Bot className="h-5 w-5 text-amber-700 animate-pulse" />
+                  {link.name}
+                </button>
+              );
+            }
+
             return (
               <Link
                 key={link.href}

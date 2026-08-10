@@ -10,7 +10,17 @@ const pwa = withPWA({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  compress: true,
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: 'cdn.tgdd.vn' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+    ],
+    formats: ['image/avif', 'image/webp'],
+  },
   turbopack: {},
 };
 

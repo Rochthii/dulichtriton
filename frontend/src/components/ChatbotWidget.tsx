@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   MessageSquare, Sparkles, X, Send, Bot, User,
   MapPin, Navigation, Maximize2, Minimize2, Trash2, ChevronRight
@@ -52,6 +53,7 @@ const defaultWelcome: Message = {
 };
 
 export default function ChatbotWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [input, setInput] = useState('');
@@ -89,6 +91,19 @@ export default function ChatbotWidget() {
     }
   }, []);
 
+  // Listen to custom open events from buttons across the app
+  useEffect(() => {
+    const handleCustomOpen = (e: Event) => {
+      const customEvt = e as CustomEvent<{ query?: string }>;
+      setIsOpen(true);
+      if (customEvt.detail?.query) {
+        handleSend(customEvt.detail.query);
+      }
+    };
+    window.addEventListener('triton:open-chat', handleCustomOpen);
+    return () => window.removeEventListener('triton:open-chat', handleCustomOpen);
+  }, []);
+
   // Persist messages to localStorage whenever they change
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -107,6 +122,11 @@ export default function ChatbotWidget() {
       setUnreadCount(0);
     }
   }, [isOpen]);
+
+  // Don't render on admin routes
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   const presets = [
     'Gợi ý tour 2N1Đ Bảy Núi',
@@ -160,6 +180,7 @@ export default function ChatbotWidget() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buf = '';
+      let fullStreamText = '';
 
       const update = (patch: Partial<Message>) =>
         setMessages(prev => prev.map(m => m.id === botId ? { ...m, ...patch } : m));
@@ -177,8 +198,10 @@ export default function ChatbotWidget() {
             const evt = JSON.parse(line.slice(6));
 
             if (evt.type === 'text_delta') {
+              fullStreamText += evt.delta;
+              const currentText = fullStreamText;
               setMessages(prev => prev.map(m =>
-                m.id === botId ? { ...m, text: m.text + evt.delta } : m
+                m.id === botId ? { ...m, text: currentText } : m
               ));
             } else if (evt.type === 'places' && Array.isArray(evt.data) && evt.data.length > 0) {
               const spots: EmbeddedSpot[] = evt.data.slice(0, 3).map((p: Record<string, unknown>) => ({
@@ -202,26 +225,33 @@ export default function ChatbotWidget() {
             } else if (evt.type === 'suggestions') {
               update({ suggestions: evt.data as string[] });
             } else if (evt.type === 'error') {
-              update({ text: 'Tôi gặp sự cố tạm thời. Vui lòng thử lại!' });
+              update({ text: 'Tôi gặp sự cố kết nối tạm thời. Bạn hãy thử lại nhé!' });
             }
           } catch { /* malformed chunk */ }
         }
       }
 
+      // If stream ended without emitting any text_delta
+      if (!fullStreamText.trim()) {
+        update({
+          text: 'Tôi đã tìm thấy thông tin và gợi ý địa danh Tri Tôn cho Bạn. Vui lòng tham khảo các thẻ địa điểm bên trên!',
+        });
+      }
+
       // Increment unread counter if widget is closed
       if (!isOpen) setUnreadCount(prev => prev + 1);
 
-
     } catch (error) {
       console.error('Chatbot API Error:', error);
-      const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: 'assistant',
-        text: 'Xin lỗi, server AI hiện đang bận hoặc chưa khởi động. Vui lòng thử lại sau!',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        suggestions: ['Thử lại câu hỏi', 'Gợi ý tour 2N1Đ'],
-      };
-      setMessages(prev => [...prev, errorMsg]);
+      setMessages(prev => prev.map(m =>
+        m.id === botId
+          ? {
+              ...m,
+              text: 'Xin lỗi, server AI hiện đang bận hoặc gián đoạn kết nối. Bạn hãy thử lại câu hỏi nhé!',
+              suggestions: ['Thử lại câu hỏi', 'Gợi ý tour 2N1Đ'],
+            }
+          : m
+      ));
     } finally {
       setIsTyping(false);
     }
@@ -245,7 +275,7 @@ export default function ChatbotWidget() {
       {/* Floating Launcher Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 z-50 p-3.5 rounded-full bg-[#1B4D3E] hover:bg-[#143B2F] text-white shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group border border-[#D99B26]/30"
+        className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 p-3.5 rounded-full bg-[#1B4D3E] hover:bg-[#143B2F] text-white shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group border border-[#D99B26]/30"
         aria-label="Open AI Chatbot"
       >
         <div className="relative">
@@ -263,28 +293,44 @@ export default function ChatbotWidget() {
         </span>
       </button>
 
-      {/* Expandable Chat Modal / Drawer */}
+      {/* Backdrop overlay for mobile */}
       {isOpen && (
         <div
-          className={`fixed z-50 bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 ${
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 sm:hidden animate-fade-in"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Expandable Chat Modal / Mobile Bottom Sheet */}
+      {isOpen && (
+        <div
+          className={`fixed z-50 bg-white shadow-2xl border border-slate-200/80 flex flex-col overflow-hidden transition-all duration-300 ${
             isExpanded
-              ? 'bottom-4 right-4 left-4 top-4 sm:left-auto sm:w-[720px] sm:h-[680px]'
-              : 'bottom-24 right-4 sm:right-6 w-[calc(100vw-32px)] sm:w-[440px] h-[560px]'
+              ? 'inset-0 sm:bottom-4 sm:right-4 sm:left-auto sm:top-4 sm:w-[720px] sm:h-[680px] rounded-none sm:rounded-3xl'
+              : 'inset-x-0 bottom-0 top-14 rounded-t-3xl sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[440px] sm:h-[580px] sm:rounded-3xl'
           }`}
         >
+          {/* Mobile Swipe-Down Handle */}
+          <div
+            onClick={() => setIsOpen(false)}
+            className="sm:hidden w-full flex justify-center py-2 bg-[#1B4D3E] cursor-pointer shrink-0 active:opacity-80"
+          >
+            <div className="w-12 h-1.5 bg-emerald-200/60 rounded-full" />
+          </div>
 
           {/* Header Bar */}
-          <div className="bg-[#1B4D3E] text-white p-4 flex items-center justify-between border-b border-emerald-800 shrink-0">
+          <div className="bg-[#1B4D3E] text-white px-4 py-3 sm:py-4 flex items-center justify-between border-b border-emerald-800 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#143B2F] border border-[#D99B26] flex items-center justify-center shadow-xs">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#143B2F] border border-[#D99B26] flex items-center justify-center shadow-xs">
                 <Bot className="w-5 h-5 text-[#D99B26]" />
               </div>
               <div>
-                <h3 className="font-bold text-sm leading-none flex items-center gap-2">
-                  TRỢ LÝ AI RAG TRI TÔN
+                <h3 className="font-bold text-sm sm:text-base leading-none flex items-center gap-2">
+                  Trợ Lý AI Tri Tôn
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                 </h3>
-                <p className="text-[11px] text-emerald-200 mt-1">95+ Địa điểm Supabase DB Live</p>
+                <p className="text-[11px] sm:text-xs text-emerald-200 mt-1">Tư vấn du lịch Bảy Núi An Giang 24/7</p>
               </div>
             </div>
 
@@ -292,7 +338,7 @@ export default function ChatbotWidget() {
               <button
                 onClick={handleClearHistory}
                 title="Xóa lịch sử chat"
-                className="p-1.5 rounded-lg text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors"
+                className="p-2 sm:p-1.5 rounded-xl text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors active:scale-95"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -300,14 +346,14 @@ export default function ChatbotWidget() {
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'}
-                className="hidden sm:block p-1.5 rounded-lg text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors"
+                className="hidden sm:block p-1.5 rounded-xl text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors"
               >
                 {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
 
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors ml-1"
+                className="p-2 sm:p-1.5 rounded-xl text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors ml-1 active:scale-95"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -315,12 +361,12 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Quick Preset Chips */}
-          <div className="px-3 py-2 bg-slate-50 border-b border-slate-200 flex items-center gap-1.5 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0">
+          <div className="px-3 py-2 bg-slate-50 border-b border-slate-200/80 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">
             {presets.map((preset, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(preset)}
-                className="px-3 py-1 rounded-full bg-white border border-slate-200 hover:border-[#1B4D3E] hover:text-[#1B4D3E] text-slate-700 font-medium transition-all shadow-sm hover:scale-105"
+                className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 hover:border-[#1B4D3E] hover:text-[#1B4D3E] text-slate-700 font-semibold transition-all shadow-2xs hover:scale-105 active:scale-95 touch-manipulation"
               >
                 {preset}
               </button>
@@ -328,7 +374,7 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Messages Feed */}
-          <div ref={messagesContainerRef} className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-50/50">
+          <div ref={messagesContainerRef} className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-4 bg-slate-50/50">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -336,21 +382,21 @@ export default function ChatbotWidget() {
               >
                 {/* Avatar */}
                 <div
-                  className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 shadow-xs ${
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
                     msg.sender === 'user' ? 'bg-[#D99B26]' : 'bg-[#143B2F]'
                   }`}
                 >
                   {msg.sender === 'user' ? (
-                    <User className="w-3.5 h-3.5 text-slate-900" />
+                    <User className="w-4 h-4 text-slate-900" />
                   ) : (
-                    <Bot className="w-3.5 h-3.5 text-[#D99B26]" />
+                    <Bot className="w-4 h-4 text-[#D99B26]" />
                   )}
                 </div>
 
                 {/* Bubble & Cards */}
-                <div className={`max-w-[85%] space-y-2 flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`max-w-[88%] sm:max-w-[85%] space-y-2 flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   <div
-                    className={`rounded-2xl px-4 py-2.5 text-xs leading-relaxed shadow-xs ${
+                    className={`rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
                       msg.sender === 'user'
                         ? 'bg-[#1B4D3E] text-white rounded-tr-none'
                         : 'bg-white text-slate-800 border border-slate-200/80 rounded-tl-none'
@@ -358,11 +404,20 @@ export default function ChatbotWidget() {
                   >
                     {msg.sender === 'user' ? (
                       <p className="whitespace-pre-line font-medium text-white">{msg.text}</p>
+                    ) : msg.text.trim() === '' ? (
+                      <div className="flex items-center gap-1.5 py-1 px-1">
+                        <div className="flex items-center gap-1 text-[#1B4D3E]">
+                          <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce [animation-delay:-0.3s]"></span>
+                          <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce [animation-delay:-0.15s]"></span>
+                          <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce"></span>
+                        </div>
+                        <span className="text-[11px] font-medium text-slate-500 ml-1.5">AI đang suy nghĩ...</span>
+                      </div>
                     ) : (
                       <FormattedChatMessage content={msg.text} />
                     )}
                     <span
-                      className={`block text-[9px] mt-1 ${
+                      className={`block text-[9px] sm:text-[10px] mt-1 ${
                         msg.sender === 'user' ? 'text-emerald-300 text-right' : 'text-slate-400'
                       }`}
                     >
@@ -372,17 +427,17 @@ export default function ChatbotWidget() {
 
                   {/* Embedded Spots Cards (Horizontal Carousel) */}
                   {msg.spots && msg.spots.length > 0 && (
-                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x">
+                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x touch-pan-x">
                       {msg.spots.map((spot, i) => (
                         <div
                           key={`wspot-${msg.id}-${i}`}
-                          className="min-w-[200px] max-w-[220px] bg-slate-50 rounded-xl p-2 border border-slate-200 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#1B4D3E]/40 transition-all"
+                          className="min-w-[210px] max-w-[230px] bg-white rounded-2xl p-2.5 border border-slate-200 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#1B4D3E]/40 transition-all"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={spot.imageUrl}
                             alt={spot.name}
-                            className="w-12 h-12 rounded-lg object-cover bg-slate-200 shrink-0"
+                            className="w-13 h-13 rounded-xl object-cover bg-slate-200 shrink-0"
                           />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-700">
@@ -390,20 +445,20 @@ export default function ChatbotWidget() {
                               <span className="truncate">{spot.commune}</span>
                             </div>
                             <h4 className="font-bold text-xs text-slate-900 truncate">{spot.name}</h4>
-                            <div className="flex items-center gap-1.5 mt-1">
+                            <div className="flex items-center gap-1.5 mt-1.5">
                               <a
                                 href={getGoogleMapsUrl(spot.name, spot.commune)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1 text-[9px] font-bold text-[#1B4D3E] bg-emerald-100/70 hover:bg-[#1B4D3E] hover:text-white px-2 py-0.5 rounded-md transition-colors"
+                                className="flex items-center gap-1 text-[10px] font-bold text-[#1B4D3E] bg-emerald-100/80 hover:bg-[#1B4D3E] hover:text-white px-2.5 py-1 rounded-lg transition-colors min-h-[28px]"
                               >
-                                <Navigation className="w-2.5 h-2.5" />
+                                <Navigation className="w-3 h-3" />
                                 Maps
                               </a>
                               {spot.id && (
                                 <Link
                                   href={`/places/${spot.id}`}
-                                  className="flex items-center gap-1 text-[9px] font-bold text-amber-700 bg-amber-100/70 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-md transition-colors"
+                                  className="flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100/80 hover:bg-amber-600 hover:text-white px-2.5 py-1 rounded-lg transition-colors min-h-[28px]"
                                 >
                                   Xem
                                 </Link>
@@ -417,7 +472,7 @@ export default function ChatbotWidget() {
 
                   {/* Embedded Video Cards (Horizontal Carousel) */}
                   {msg.videos && msg.videos.length > 0 && (
-                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x">
+                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x touch-pan-x">
                       {msg.videos.map((video, i) => (
                         <div key={`wvid-${msg.id}-${i}`} className="min-w-[220px] max-w-[240px] shrink-0 snap-start">
                           <VideoChatCard
@@ -438,7 +493,7 @@ export default function ChatbotWidget() {
                         <button
                           key={`wsug-${msg.id}-${i}`}
                           onClick={() => handleSend(sug)}
-                          className="px-3 py-1 rounded-full border border-[#D99B26]/40 text-[#1B4D3E] bg-amber-50/80 hover:bg-[#D99B26] hover:text-slate-900 text-[11px] font-medium transition-all shadow-xs"
+                          className="px-3.5 py-1.5 rounded-full border border-[#D99B26]/40 text-[#1B4D3E] bg-amber-50 hover:bg-[#D99B26] hover:text-slate-900 text-xs font-semibold transition-all shadow-2xs touch-manipulation active:scale-95"
                         >
                           {sug}
                         </button>
@@ -448,29 +503,22 @@ export default function ChatbotWidget() {
                 </div>
               </div>
             ))}
-
-            {isTyping && (
-              <div className="flex items-center gap-2 text-xs text-slate-500 bg-white px-3.5 py-2.5 rounded-2xl border border-slate-200 w-max shadow-xs">
-                <Bot className="w-4 h-4 text-[#1B4D3E] animate-pulse" />
-                <span>Trợ lý AI đang tìm kiếm thông tin tốt nhất cho bạn...</span>
-              </div>
-            )}
           </div>
 
           {/* Input Form Bar */}
-          <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0">
+          <div className="p-3 sm:p-3.5 bg-white border-t border-slate-200 flex items-center gap-2 shrink-0 pb-safe">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Hỏi AI về Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer..."
-              className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#1B4D3E]"
+              className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#1B4D3E] focus:ring-2 focus:ring-[#1B4D3E]/20"
             />
             <button
               onClick={() => handleSend()}
               disabled={isTyping || !input.trim()}
-              className="p-2.5 sm:px-4 sm:py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+              className="p-3 sm:px-4 sm:py-3 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[44px] min-h-[44px]"
             >
               <Send className="w-4 h-4 text-[#D99B26]" />
               <span className="hidden sm:inline">Gửi</span>

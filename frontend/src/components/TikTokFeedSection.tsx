@@ -33,121 +33,6 @@ interface TikTokFeedSectionProps {
   variant?: 'grid' | 'vertical';
 }
 
-// ─── Verified Authentic Fallback Videos ──────────────────────────────────────
-
-const FALLBACK_VIDEOS: FeedVideo[] = [
-  {
-    id: 'v-ta-pa',
-    title: 'Tuyệt Tình Cốc Hồ Tà Pạ & Cánh Đồng Thốt Nốt Trái Tim',
-    platform: 'tiktok',
-    video_url: 'https://www.tiktok.com/@tungnuitravel/video/7420379562602695937',
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/ho_ta_pa.jpg',
-    author_name: 'tungnuitravel',
-    view_count: 98300,
-    hashtags: ['#HoTaPa', '#TriTon', '#AnGiang']
-  },
-  {
-    id: 'v-ga-dot',
-    title: 'Review Gà Đốt Ô Thum Kiều Tiên & Cảnh Hồ Ô Thum Thơ Mộng',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Gà Đốt Ô Thum', 'Xã Ô Lâm'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/ga_dot_o_thum.png',
-    author_name: 'langlang_vlog',
-    view_count: 142500,
-    hashtags: ['#GaDotOThum', '#TriTon', '#AmThucMienTay']
-  },
-  {
-    id: 'v-koh-kas',
-    title: 'Check-in Cổng Trời Koh Kas Giữa Cánh Đồng Lúa Chau Lăng',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Cổng Trời Koh Kas', 'Xã Chau Lăng'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/cong_troi_koh_kas.jpg',
-    author_name: 'phuot_bayan',
-    view_count: 91000,
-    hashtags: ['#CongTroiKohKas', '#ChauLang', '#TriTon']
-  },
-  {
-    id: 'v-svay-ton',
-    title: 'Chiêm Bái Chùa Svay Ton 500 Năm Cổ Nhất An Giang',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Chùa Svay Ton', 'Thị trấn Tri Tôn'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/chua_svay_ton.jpg',
-    author_name: 'vanhoakhmer_mientay',
-    view_count: 64100,
-    hashtags: ['#ChuaSvayTon', '#DiSanKhmer', '#TriTon']
-  },
-  {
-    id: 'v-bun-ca',
-    title: 'Thưởng Thức Bún Cá Tri Tôn Nước Dùng Nghệ Vàng Thịt Cá Lóc Đồng',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Bún Cá Tri Tôn'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/bun_ca_tri_ton.png',
-    author_name: 'mientay_foodie',
-    view_count: 112100,
-    hashtags: ['#BunCaTriTon', '#DacSanAnGiang', '#TriTon']
-  },
-  {
-    id: 'v-du-du-dam',
-    title: 'Đu Đủ Đâm Khmer Chau Lăng Cối Gỗ Cực Dính Chua Cay Nồng',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Đu Đủ Đâm Khmer', 'Xã Chau Lăng'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/du_du_dam.jpg',
-    author_name: 'anngon_mientay',
-    view_count: 86700,
-    hashtags: ['#DuDuDam', '#ChauLang', '#TriTon']
-  },
-  {
-    id: 'v-banh-bo',
-    title: 'Bánh Bò Mật Thốt Nốt Nướng Chảo Vàng Ổ Ong Nức Mũi',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Bánh Bò Thốt Nốt Tri Tôn'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/banh_bo_thot_not.png',
-    author_name: 'monngon_angiang',
-    view_count: 74200,
-    hashtags: ['#BanhBoThotNot', '#DacSanTriTon', '#TriTon']
-  },
-  {
-    id: 'v-dua-bo',
-    title: 'Sức Nóng Lễ Hội Đua Bò Bảy Núi Di Sản Văn Hóa Quốc Gia',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Lễ Hội Đua Bò Bảy Núi'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/dua_bo_bay_nui.jpg',
-    author_name: 'truyenthong_khmer',
-    view_count: 128900,
-    hashtags: ['#DuaBoBayNui', '#LeHoiKhmer', '#TriTon']
-  },
-  {
-    id: 'v-tuc-dup',
-    title: 'Khám Phá Căn Cứ Lịch Sử Đồi Tức Dụp Ngọn Đồi 2 Triệu Đô',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Đồi Tức Dụp', 'Xã An Tức'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/doi_tuc_dup.jpg',
-    author_name: 'khampha_bayanui',
-    view_count: 53400,
-    hashtags: ['#DoiTucDup', '#DiSanLichSu', '#TriTon']
-  },
-  {
-    id: 'v-phuot',
-    title: 'Lịch Trình Phượt Tri Tôn 2 Ngày 1 Đêm Chi Phí 800K Cho Giới Trẻ',
-    platform: 'tiktok',
-    video_url: getTikTokSearchUrl('Phượt Tri Tôn An Giang'),
-    embed_url: 'https://www.tiktok.com/embed/v2/7420379562602695937',
-    thumbnail_url: '/images/tiktok/phuot_tri_ton.jpg',
-    author_name: 'travel_with_me',
-    view_count: 105400,
-    hashtags: ['#PhuotTriTon', '#LichTrinh2N1D', '#TriTon']
-  }
-];
-
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function formatViews(n: number): string {
@@ -176,13 +61,7 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
     setLikeCount(c => liked ? c - 1 : c + 1);
   };
 
-  // Thumbnail fallback chain: prop -> fallback array -> default
-  const defaultFallbackImg = FALLBACK_VIDEOS[index % FALLBACK_VIDEOS.length].thumbnail_url;
-  const thumbnail =
-    video.thumbnail_url && !video.thumbnail_url.includes('unsplash')
-      ? video.thumbnail_url
-      : defaultFallbackImg || '/images/tiktok/ho_ta_pa.jpg';
-
+  const thumbnail = video.thumbnail_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop';
   const hashtags = video.hashtags || ['#TriTon', '#BayNui', '#AnGiang'];
   const searchUrl = getTikTokSearchUrl(video.title);
 
@@ -202,9 +81,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
         alt={video.title}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ filter: 'brightness(0.70)' }}
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = defaultFallbackImg || '/images/tiktok/ho_ta_pa.jpg';
-        }}
         loading={index === 0 ? 'eager' : 'lazy'}
       />
 
@@ -227,7 +103,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
           </span>
         </div>
 
-        {/* Auto Search TikTok Badge */}
         <a
           href={searchUrl}
           target="_blank"
@@ -248,7 +123,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
         aria-label={`Xem video: ${video.title}`}
       >
         <div className="relative">
-          {/* Pulse animation */}
           {isActive && (
             <>
               <span className="absolute inset-0 rounded-full bg-white/25 animate-ping scale-150" />
@@ -263,7 +137,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
 
       {/* Right Action Bar (TikTok style) */}
       <div className="absolute right-3 bottom-24 flex flex-col items-center gap-4 z-20">
-        {/* Like Button */}
         <button
           onClick={handleLike}
           className="flex flex-col items-center gap-1 text-white group"
@@ -275,7 +148,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
           <span className="text-[10px] font-bold text-shadow">{formatViews(likeCount)}</span>
         </button>
 
-        {/* View Count */}
         <div className="flex flex-col items-center gap-1 text-white">
           <div className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/20">
             <Play className="w-4 h-4 text-[#D99B26] fill-[#D99B26]" />
@@ -283,7 +155,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
           <span className="text-[10px] font-bold">{formatViews(video.view_count)}</span>
         </div>
 
-        {/* Auto Search TikTok Action Button */}
         <a
           href={searchUrl}
           target="_blank"
@@ -301,7 +172,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
 
       {/* Bottom Info Bar */}
       <div className="absolute bottom-5 left-4 right-16 z-20 space-y-2">
-        {/* Author */}
         {video.author_name && (
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-full bg-[#D99B26] flex items-center justify-center text-slate-900 font-black text-xs border border-white/60 shadow-md">
@@ -311,12 +181,10 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
           </div>
         )}
 
-        {/* Title */}
         <h3 className="text-white text-sm font-bold leading-snug line-clamp-2 drop-shadow-lg pr-2">
           {video.title}
         </h3>
 
-        {/* Hashtags & Quick Action Pill */}
         <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
           {hashtags.slice(0, 3).map((tag, i) => (
             <span key={i} className="text-[#D99B26] text-[11px] font-extrabold drop-shadow">
@@ -336,7 +204,6 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
         </div>
       </div>
 
-      {/* Slide index */}
       <div className="absolute top-4 right-4 z-10 text-white/60 text-[10px] font-mono bg-black/40 px-2 py-0.5 rounded-md border border-white/10">
         {String(index + 1).padStart(2, '0')}
       </div>
@@ -353,17 +220,13 @@ export default function TikTokFeedSection({
   showTitle = true,
   variant = 'grid',
 }: TikTokFeedSectionProps) {
-  const [videos, setVideos] = useState<FeedVideo[]>(() => {
-    if (propVideos && propVideos.length > 0) return propVideos;
-    return FALLBACK_VIDEOS;
-  });
+  const [videos, setVideos] = useState<FeedVideo[]>(propVideos || []);
   const [selectedLocation, setSelectedLocation] = useState<string>('Tất cả');
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [modalVideo, setModalVideo] = useState<VideoItem | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Fetch live discovered videos from API (/api/v1/videos) with location filter
   const fetchVideos = useCallback(async (loc: string) => {
     if (propVideos && propVideos.length > 0 && loc === 'Tất cả') {
       setVideos(propVideos);
@@ -384,17 +247,17 @@ export default function TikTokFeedSection({
           platform: 'tiktok' as const,
           video_url: (v.tiktokUrl as string) || (v.video_url as string) || '',
           embed_url: (v.embedUrl as string) || (v.embed_url as string) || '',
-          thumbnail_url: (v.thumbnail as string) || (v.thumbnail_url as string) || FALLBACK_VIDEOS[i % FALLBACK_VIDEOS.length].thumbnail_url,
+          thumbnail_url: (v.thumbnail as string) || (v.thumbnail_url as string) || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
           author_name: (v.userDisplayName as string) || (v.author_name as string) || 'TikToker Tri Tôn',
           view_count: typeof v.view_count === 'number' ? v.view_count : 50000,
           hashtags: (v.hashtags as string[]) || ['#TriTon', '#AnGiang'],
         }));
         setVideos(mapped);
       } else {
-        setVideos(FALLBACK_VIDEOS.slice(0, maxSlides));
+        setVideos([]);
       }
     } catch {
-      setVideos(FALLBACK_VIDEOS.slice(0, maxSlides));
+      setVideos([]);
     } finally {
       setLoading(false);
     }
@@ -499,6 +362,32 @@ export default function TikTokFeedSection({
               <div key={n} className="snap-start shrink-0 w-[82vw] max-w-[260px] sm:w-auto sm:max-w-none h-64 rounded-3xl bg-slate-200 animate-pulse" />
             ))}
           </div>
+        ) : displayVideos.length === 0 ? (
+          <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 text-center space-y-3">
+            <Sparkles className="w-8 h-8 text-rose-500 mx-auto animate-pulse" />
+            <h4 className="font-bold text-sm text-slate-800">
+              Chưa có video TikTok riêng cho từ khóa "{selectedLocation}" trong CSDL
+            </h4>
+            <p className="text-xs text-slate-500 max-w-md mx-auto">
+              Dữ liệu video được đồng bộ trực tiếp từ CSDL Supabase. Bạn có thể bấm xem tất cả video hoặc nhờ Trợ Lý AI gợi ý.
+            </p>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setSelectedLocation('Tất cả')}
+                className="px-4 py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold shadow-md transition-colors"
+              >
+                Xem tất cả video CSDL
+              </button>
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent('triton:open-chat', { detail: { query: `Review TikTok ${selectedLocation}` } }))}
+                className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md transition-colors"
+              >
+                Hỏi AI về {selectedLocation}
+              </button>
+            </div>
+          </div>
         ) : (
           <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
             {displayVideos.map((video, idx) => (
@@ -510,7 +399,7 @@ export default function TikTokFeedSection({
                 {/* Thumbnail Background */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={video.thumbnail_url || '/images/tiktok/ho_ta_pa.jpg'}
+                  src={video.thumbnail_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'}
                   alt={video.title}
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                 />

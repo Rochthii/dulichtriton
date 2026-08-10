@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { fetchWithCache } from "@/lib/fastCache";
 import HotPlacesSection from "@/components/HotPlacesSection";
 import GoldenTimeWidget from "@/components/GoldenTimeWidget";
 import TikTokFeedSection from "@/components/TikTokFeedSection";
+import SearchAutocomplete from "@/components/SearchAutocomplete";
+import MiniGisMapBanner from "@/components/MiniGisMapBanner";
 import {
   Search,
   Mountain,
@@ -62,6 +65,9 @@ export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState("Danh Thắng & Tâm Linh");
   const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState<Place[]>([]);
+  const [gourmetFoods, setGourmetFoods] = useState<any[]>([]);
+  const [cultureEvents, setCultureEvents] = useState<any[]>([]);
+  const [featuredStays, setFeaturedStays] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState<TikTokVideo | null>(null);
 
@@ -73,87 +79,175 @@ export default function HomePage() {
   ];
 
   useEffect(() => {
-    async function loadLivePlaces() {
+    async function loadLiveData() {
       try {
-        const { data, error } = await supabase
-          .from("places")
-          .select("id, slug, name, category, commune, rating, photos, image_url, video_url, is_hot, hot_rank, golden_time_windows")
-          .order("is_hot", { ascending: false })
-          .order("hot_rank", { ascending: true })
-          .limit(12);
+        setLoading(true);
 
-        if (!error && data && data.length > 0) {
-          const formatted = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-              img = item.image_url;
-            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-              const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-            }
-            return {
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "Du lịch Bảy Núi",
-              commune: item.commune || "Tri Tôn",
-              rating: item.rating || 4.8,
-              is_hot: item.is_hot || false,
-              hot_rank: item.hot_rank || 99,
-              golden_time_windows: item.golden_time_windows || [],
-              image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`
-            };
-          });
-          setPlaces(formatted);
+        // 1. Fetch Hot Places with fastCache
+        const formattedHotPlaces = await fetchWithCache("homepage-hot-places", async () => {
+          const { data: hotData } = await supabase
+            .from("places")
+            .select("id, slug, name, category, commune, rating, photos, image_url, video_url, is_hot, hot_rank, golden_time_windows")
+            .order("is_hot", { ascending: false })
+            .order("hot_rank", { ascending: true })
+            .limit(12);
+
+          if (hotData && hotData.length > 0) {
+            return hotData.map((item: any) => {
+              let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
+              if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+                img = item.image_url;
+              } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+                const p0 = item.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                id: item.id,
+                slug: item.slug || item.id,
+                name: item.name,
+                category: item.category || "Du lịch Bảy Núi",
+                commune: item.commune || "Tri Tôn",
+                rating: item.rating || 4.8,
+                is_hot: item.is_hot || false,
+                hot_rank: item.hot_rank || 99,
+                golden_time_windows: item.golden_time_windows || [],
+                image_url: img,
+                video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`
+              };
+            });
+          }
+          return [];
+        });
+
+        if (formattedHotPlaces && formattedHotPlaces.length > 0) {
+          setPlaces(formattedHotPlaces);
+        }
+
+        // 2. Fetch Gourmet Foods live from Supabase with fastCache
+        const formattedFoods = await fetchWithCache("homepage-gourmet-foods", async () => {
+          const { data: foodData } = await supabase
+            .from("places")
+            .select("id, slug, name, commune, rating, photos, image_url, category")
+            .ilike("category", "%Ẩm thực%")
+            .limit(4);
+
+          if (foodData && foodData.length > 0) {
+            return foodData.map((f: any) => ({
+              name: f.name,
+              location: f.commune || "Tri Tôn",
+              price: "35.000đ - 150.000đ",
+              flavorTag: f.category || "Đặc sản Bảy Núi",
+              rating: f.rating || 4.9,
+              slug: f.slug || f.id,
+              img: f.image_url || (Array.isArray(f.photos) && f.photos[0]?.url) || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
+            }));
+          }
+          return null;
+        });
+
+        if (formattedFoods && formattedFoods.length > 0) {
+          setGourmetFoods(formattedFoods);
         } else {
-          setPlaces([
+          setGourmetFoods([
             {
-              id: "ho-ta-pa",
-              slug: "ho-ta-pa",
-              name: "Hồ Tà Pạ & Cánh Đồng Tà Pạ",
-              category: "Check-in & Sinh Thái",
-              commune: "Xã Núi Tô",
-              rating: 5,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAzEBJmMN9MDBMXjMxP__-ZHcR4SsumjDwneLDOiMeMeEnxO5L4-OXzwn9OtdG-7P1gnd7zxD9cpALjSM2Ti_GScFrGSZmaSOTLBEjWyssKW2a_zyVT6uxtzDhGhlW-J1BH7WYuCSv7XEjhNSVpjWpILzIuSP4k4VBbUTyFSd5SPdfBz9jpuhRXHkXoyqd0fe8203OOVA2FouxJ4U81kV1ol1Yq--EAkhGhU5dI13wt71HUBMIGst8cSg"
-            },
-            {
-              id: "nui-co-to",
-              slug: "nui-co-to",
-              name: "Núi Cô Tô (Phụng Hoàng Sơn)",
-              category: "Danh Thắng & Tâm Linh",
-              commune: "Xã Cô Tô",
+              name: "Cháo Bò Trái Trúc",
+              location: "Thị trấn Tri Tôn & Xã Châu Lăng",
+              price: "35.000đ - 55.000đ",
+              flavorTag: "Chua dịu, béo nhẹ, thơm nồng lá trúc",
               rating: 4.9,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAIfQS126DdHB1kTyw0TkOgz99UPxHcVeRJIXdV8I69Cgzcr7E4o1aFEoT0Hs1Kpz_CzJGWkd9t1TedFnug_SXUYNtlAt44DfkzOVO64MGPv48-6IIa0ORQLhlpjgH3gX-5Ahx9CjMJ8wGmPM7u-koH2AoQB9FBHrQ8ZwCyGzrw8oEHLhhzbOxZ8Y4oxONE3NK42x8adezc_hCHwQNaMv1LA9PaqfZQM7kIvdrmQqo-WnfyZI6JH4gJWg"
+              img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g"
             },
             {
-              id: "chua-thom-mit",
-              slug: "chua-thom-mit",
-              name: "Chùa Thơm Mít & Sân Đua Bò",
-              category: "Văn Hóa Khmer",
-              commune: "Xã Vĩnh Trung",
-              rating: 5,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuA0a_ShvHqoLBzzQeBZPBVukoFsxHkKwXzcTE2T6K_xPyk67rYycDNJbkuK17L9mWsVhNHt61xA_rUHEZVNHKRhdP_2FifG80aCCtsRoh5M6AnzI1M0-Ph_03-SGI5d3LxCK8Tci5VwUmdtgQTARcov5Z1dut3OWHedU55-M9Smk9jgkYBSvoqmN9XIH3zKtZx8pZY9DYDY29mHsuXs8YFP921mu6oTsHeKkO9mBiIH2Z3DCkVCnXsbsg"
+              name: "Gà Đốt Ô Thum Lá Trúc",
+              location: "Xã Ô Lâm (Bờ hồ Ô Thum)",
+              price: "250.000đ - 320.000đ",
+              flavorTag: "Da giòn rụm, thịt ngọt lịm, dậy mùi sả trúc",
+              rating: 4.95,
+              img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
             },
             {
-              id: "chao-bo-tri-ton",
-              slug: "chao-bo-tri-ton",
-              name: "Cháo Bò Trái Trúc Đặc Sản",
-              category: "Ẩm Thực Đặc Sản",
-              commune: "Thị trấn Tri Tôn",
+              name: "Bánh Xèo Rau Rừng Thiền Viện",
+              location: "Thị trấn Tri Tôn",
+              price: "30.000đ - 50.000đ",
+              flavorTag: "Giòn rụm, kèm 20 loại rau rừng thiên nhiên Cô Tô",
               rating: 4.8,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g"
+              img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8"
+            },
+            {
+              name: "Bò Nướng Kim Tiền & Nầm Nướng Tà Pạ",
+              location: "Xã Núi Tô",
+              price: "80.000đ - 150.000đ",
+              flavorTag: "Đậm đà, béo ngậy nướng than hồng",
+              rating: 4.85,
+              img: "https://images.unsplash.com/photo-1544025162-d76694265947"
             }
           ]);
         }
+
+        // 3. Culture Events Initializer
+        setCultureEvents([
+          {
+            name: "Lễ Hội Đua Bò Bảy Núi (Sene Dolta)",
+            time: "Tháng 8 - Tháng 9 Âm Lịch",
+            location: "Chùa Thơm Mít (Xã Vĩnh Trung)",
+            status: "Sắp diễn ra",
+            desc: "Lễ hội thể thao dân gian độc nhất vô nhị miền Tây, quy tụ hàng trăm đôi bò chiến tranh tài khốc liệt.",
+            badgeColor: "bg-rose-500 text-white"
+          },
+          {
+            name: "Chùa Xvayton (Chùa Xà Tón) 500 Tuổi",
+            time: "Mở cửa quanh năm",
+            location: "Thị trấn Tri Tôn",
+            status: "Di sản Quốc gia",
+            desc: "Ngôi chùa Khmer cổ nhất An Giang mang kiến trúc tháp nhọn rực rỡ và nơi lưu giữ kinh lá buông quý hiếm.",
+            badgeColor: "bg-amber-500 text-white"
+          },
+          {
+            name: "Tết Chol Chnam Thmay Khmer",
+            time: "14/04 - 16/04 Hàng Năm",
+            location: "Toàn bộ các Xã/Thị trấn Tri Tôn",
+            status: "Tết Truyền Thống",
+            desc: "Lễ hội mừng năm mới rộn ràng nghi thức đắp núi cát, tắm Phật và múa mâm khèn Chhay-dăm.",
+            badgeColor: "bg-emerald-600 text-white"
+          }
+        ]);
+
+        // 4. Featured Stays Initializer
+        setFeaturedStays([
+          {
+            name: "Soài Chek Eco Homestay",
+            location: "Xã Núi Tô",
+            price: "350.000đ / đêm",
+            view: "View Hồ Tà Pạ & Cánh đồng lúa",
+            rating: 4.9,
+            img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCEZigADSpj84ieydADEOQHzdJZkN0zsctfaByCdnhe7Kptx1Rh3rpQPiK_hjkkL8vcmOG_-QNX9DqegPHEImIum516b2ArKqeKj_Vbp100cfGcbYNgqKDSGzFPxRW0_JVid0sV9Cn7iq3iDqYedl_zXYdczxg_yNfXTv7mVYhB7Q7iYVr0Au6Gnca0TseXgBfR-tcZ93cZSXI4kPrWVLj7_bPRI6BrolBWKhcxcdwLrQlroi3tOWw7Iw"
+          },
+          {
+            name: "Cô Tô View Farmstay",
+            location: "Xã Cô Tô",
+            price: "450.000đ / đêm",
+            view: "Sát chân núi Phụng Hoàng Sơn",
+            rating: 4.85,
+            img: "https://images.unsplash.com/photo-1510798831971-661eb04b3739"
+          },
+          {
+            name: "Khách Sạn Sang Nhân Tri Tôn",
+            location: "Thị trấn Tri Tôn",
+            price: "280.000đ / đêm",
+            view: "Trung tâm Thị trấn sầm uất",
+            rating: 4.7,
+            img: "https://images.unsplash.com/photo-1566073771259-6a8506099945"
+          }
+        ]);
+
       } catch (err) {
-        console.error("Supabase fetch error:", err);
+        console.error("Supabase live load error:", err);
       } finally {
         setLoading(false);
       }
     }
-    loadLivePlaces();
+    loadLiveData();
   }, []);
 
   const tiktokVideos: TikTokVideo[] = [
@@ -213,118 +307,27 @@ export default function HomePage() {
     }
   ];
 
-  // SECTION 1 OPTIMIZATION: ẨM THỰC BẢN ĐỒ VỊ GIÁC (TASTE SHOWCASE)
-  const gourmetFoods = [
-    {
-      name: "Cháo Bò Trái Trúc",
-      location: "Thị trấn Tri Tôn & Xã Châu Lăng",
-      price: "35.000đ - 55.000đ",
-      flavorTag: "Chua dịu, béo nhẹ, thơm nồng lá trúc",
-      rating: 4.9,
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g"
-    },
-    {
-      name: "Gà Đốt Ô Thum Lá Trúc",
-      location: "Xã Ô Lâm (Bờ hồ Ô Thum)",
-      price: "250.000đ - 320.000đ",
-      flavorTag: "Da giòn rụm, thịt ngọt lịm, dậy mùi sả trúc",
-      rating: 4.95,
-      img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
-    },
-    {
-      name: "Bánh Xèo Rau Rừng Thiền Viện",
-      location: "Thị trấn Tri Tôn",
-      price: "30.000đ - 50.000đ",
-      flavorTag: "Giòn rụm, kèm 20 loại rau rừng thiên nhiên Cô Tô",
-      rating: 4.8,
-      img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8"
-    },
-    {
-      name: "Bò Nướng Kim Tiền & Nầm Nướng Tà Pạ",
-      location: "Xã Núi Tô",
-      price: "80.000đ - 150.000đ",
-      flavorTag: "Đậm đà, béo ngậy nướng than hồng",
-      rating: 4.85,
-      img: "https://images.unsplash.com/photo-1544025162-d76694265947"
-    }
-  ];
-
-  // SECTION 2 OPTIMIZATION: TIMELINE LỄ HỘI & VĂN HÓA KHMER
-  const cultureEvents = [
-    {
-      name: "Lễ Hội Đua Bò Bảy Núi (Sene Dolta)",
-      time: "Tháng 8 - Tháng 9 Âm Lịch",
-      location: "Chùa Thơm Mít (Xã Vĩnh Trung)",
-      status: "Sắp diễn ra",
-      desc: "Lễ hội thể thao dân gian độc nhất vô nhị miền Tây, quy tụ hàng trăm đôi bò chiến tranh tài khốc liệt.",
-      badgeColor: "bg-rose-500 text-white"
-    },
-    {
-      name: "Chùa Xvayton (Chùa Xà Tón) 500 Tuổi",
-      time: "Mở cửa quanh năm",
-      location: "Thị trấn Tri Tôn",
-      status: "Di sản Quốc gia",
-      desc: "Ngôi chùa Khmer cổ nhất An Giang mang kiến trúc tháp nhọn rực rỡ và nơi lưu giữ kinh lá buông quý hiếm.",
-      badgeColor: "bg-amber-500 text-white"
-    },
-    {
-      name: "Tết Chol Chnam Thmay Khmer",
-      time: "14/04 - 16/04 Hàng Năm",
-      location: "Toàn bộ các Xã/Thị trấn Tri Tôn",
-      status: "Tết Truyền Thống",
-      desc: "Lễ hội mừng năm mới rộn ràng nghi thức đắp núi cát, tắm Phật và múa mâm khèn Chhay-dăm.",
-      badgeColor: "bg-emerald-600 text-white"
-    }
-  ];
-
-  // SECTION 4 OPTIMIZATION: LƯU TRÚ & HOMESTAY VIEW NÚI
-  const featuredStays = [
-    {
-      name: "Soài Chek Eco Homestay",
-      location: "Xã Núi Tô",
-      price: "350.000đ / đêm",
-      view: "View Hồ Tà Pạ & Cánh đồng lúa",
-      rating: 4.9,
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCEZigADSpj84ieydADEOQHzdJZkN0zsctfaByCdnhe7Kptx1Rh3rpQPiK_hjkkL8vcmOG_-QNX9DqegPHEImIum516b2ArKqeKj_Vbp100cfGcbYNgqKDSGzFPxRW0_JVid0sV9Cn7iq3iDqYedl_zXYdczxg_yNfXTv7mVYhB7Q7iYVr0Au6Gnca0TseXgBfR-tcZ93cZSXI4kPrWVLj7_bPRI6BrolBWKhcxcdwLrQlroi3tOWw7Iw"
-    },
-    {
-      name: "Cô Tô View Farmstay",
-      location: "Xã Cô Tô",
-      price: "450.000đ / đêm",
-      view: "Sát chân núi Phụng Hoàng Sơn",
-      rating: 4.85,
-      img: "https://images.unsplash.com/photo-1510798831971-661eb04b3739"
-    },
-    {
-      name: "Khách Sạn Sang Nhân Tri Tôn",
-      location: "Thị trấn Tri Tôn",
-      price: "280.000đ / đêm",
-      view: "Trung tâm Thị trấn sầm uất",
-      rating: 4.7,
-      img: "https://images.unsplash.com/photo-1566073771259-6a8506099945"
-    }
-  ];
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-body-base text-on-surface antialiased">
       <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col gap-6 sm:gap-8 md:gap-10 px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
 
         {/* Hero Section nổi bật với ảnh cảnh quan Bảy Núi */}
-        <section className="group relative h-[360px] sm:h-[450px] md:h-[520px] w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl">
+        <section className="group relative min-h-[400px] sm:h-[480px] md:h-[520px] w-full overflow-hidden rounded-3xl shadow-2xl flex items-center justify-center">
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
             style={{
               backgroundImage: `url('https://cdn.tgdd.vn/Files/2023/11/06/1554179/top-8-dia-diem-du-lich-tri-ton-an-giang-nen-trai-nghiem-202311061412586340.jpg')`
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-4 sm:space-y-6">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/50" />
+
+          <div className="relative z-10 flex flex-col items-center justify-center p-4 sm:p-8 text-center space-y-4 sm:space-y-6 w-full max-w-4xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-extrabold border border-white/30 shadow-lg">
               <Sparkles className="h-3.5 w-3.5 text-amber-300" />
               <span>Cổng Thông Tin Du Lịch Thông Minh Tri Tôn</span>
             </div>
 
-            <h1 className="font-heading font-extrabold text-2xl sm:text-4xl md:text-6xl text-white tracking-tight leading-tight drop-shadow-2xl max-w-4xl">
+            <h1 className="font-heading font-extrabold text-2xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight drop-shadow-2xl">
               Khám Phá Vẻ Đẹp <br className="hidden sm:inline" />
               <span className="text-amber-300 drop-shadow-md">
                 Huyền Bí Bảy Núi Tri Tôn
@@ -335,43 +338,18 @@ export default function HomePage() {
               Nơi miền đất của 82 thắng cảnh tuyệt đẹp, di sản tâm linh Khmer lâu đời và bản đồ ẩm thực Cháo bò lá trúc độc đáo.
             </p>
 
-            <div className="relative w-full max-w-2xl pt-1 sm:pt-2">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (searchQuery.trim()) {
-                    window.location.href = `/places?search=${encodeURIComponent(searchQuery)}`;
-                  }
-                }}
-                className="glass-panel flex items-center rounded-full p-1.5 sm:p-2 shadow-2xl transition-transform focus-within:scale-[1.02] bg-white/95 backdrop-blur-xl border border-white/60"
-              >
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Hỏi AI Du Lịch Tri Tôn..."
-                  className="w-full flex-grow rounded-l-full border-none bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-800 outline-none placeholder:text-slate-400 focus:ring-0 font-medium"
-                />
-                <button
-                  type="submit"
-                  className="flex min-w-[42px] sm:min-w-[48px] items-center justify-center rounded-full bg-secondary p-2.5 sm:p-3 text-white shadow-md transition-colors hover:bg-golden-hover md:px-6 md:py-3 shrink-0 font-bold text-xs"
-                >
-                  <Search className="h-4 w-4 sm:h-5 sm:w-5" />
-                  <span className="hidden md:inline ml-2">Tìm Kiếm AI</span>
-                </button>
-              </form>
-            </div>
+            <SearchAutocomplete />
           </div>
         </section>
 
-        {/* Dynamic Top 6 Hot Places Section */}
+        {/* Dynamic Top 3 Hot Places Section */}
         <HotPlacesSection
-          limit={6}
-          title="🔥 TOP ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT"
-          subtitle="Danh sách 6 điểm check-in, di sản & ẩm thực hot nhất Bảy Núi được du khách yêu thích nhất"
+          limit={3}
+          title="🔥 TOP 3 ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT"
+          subtitle="Top 3 điểm check-in, di sản & thắng cảnh Bảy Núi được du khách săn đón nhất"
         />
 
-        {/* SECTION 2: TIKTOK REELS SHOWCASE (POSITION 3 RIGHT AFTER HOT PLACES) */}
+        {/* SECTION 2: TIKTOK REELS SHOWCASE */}
         <section className="flex flex-col gap-4">
           <TikTokFeedSection variant="grid" maxSlides={4} showTitle={true} />
         </section>
@@ -379,78 +357,83 @@ export default function HomePage() {
         {/* Real-Time Golden Time Widget */}
         <GoldenTimeWidget />
 
-        {/* Danh mục nổi bật (Quick Filter Category) */}
-        <section className="flex flex-col gap-6">
-          <h2 className="font-headline-md text-headline-md text-on-surface font-bold">
-            Danh mục nổi bật
-          </h2>
-          <div className="flex flex-wrap gap-4">
+        {/* Danh mục nổi bật (Quick Filter Category Mobile Swipe) */}
+        <section className="flex flex-col gap-3 sm:gap-4">
+          <div className="flex items-center justify-between">
+            <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-slate-900">
+              Danh Mục Nổi Bật
+            </h2>
+            <span className="text-[11px] font-bold text-slate-400 sm:hidden">Vuốt chọn ➔</span>
+          </div>
+
+          <div className="flex overflow-x-auto gap-2.5 pb-1 pt-1 scrollbar-none snap-x sm:flex-wrap">
             {categories.map(({ label, icon: Icon }) => (
               <button
                 key={label}
                 onClick={() => setActiveCategory(label)}
                 className={
                   activeCategory === label
-                    ? "flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-label-bold text-label-bold text-on-primary shadow-sm transition-all hover:shadow-md active:scale-95"
-                    : "flex items-center gap-2 rounded-full border border-outline-variant/30 bg-surface px-5 py-2.5 font-label-bold text-label-bold text-on-surface-variant transition-all hover:bg-emerald-light hover:text-primary active:scale-95"
+                    ? "flex items-center gap-2 rounded-full bg-[#1B4D3E] px-4 sm:px-5 py-2.5 font-bold text-xs sm:text-sm text-white shadow-md transition-all shrink-0 snap-start active:scale-95 border border-[#D99B26]/40"
+                    : "flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 sm:px-5 py-2.5 font-semibold text-xs sm:text-sm text-slate-700 transition-all hover:bg-emerald-50 hover:text-[#1B4D3E] shrink-0 snap-start active:scale-95"
                 }
               >
-                <Icon className="h-4 w-4" />
-                {label}
+                <Icon className="h-4 w-4 text-[#D99B26]" />
+                <span>{label}</span>
               </button>
             ))}
           </div>
         </section>
 
         {/* TỐI ƯU SECTION 1: BẢN ĐỒ VỊ GIÁC ẨM THỰC BẢY NÚI */}
-        <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <section className="space-y-4 sm:space-y-6">
+          <div className="flex items-end justify-between border-b border-slate-200 pb-3">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 flex items-center gap-1.5">
-                <Flame className="h-4 w-4 text-amber-500" /> Bản Đồ Vị Giác Bảy Núi
+              <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 flex items-center gap-1.5">
+                <Flame className="h-3.5 w-3.5 text-amber-500" /> Bản Đồ Vị Giác Bảy Núi
               </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+              <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
                 Tinh Hoa Ẩm Thực Đặc Sản Tri Tôn
               </h2>
             </div>
             <Link
               href="/food"
-              className="flex items-center gap-1.5 text-xs font-bold text-amber-700 hover:text-amber-800 transition-colors"
+              className="flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-800 transition-colors shrink-0"
             >
-              <span>Xem tất cả quán ăn đặc sản</span>
+              <span>Tất cả</span>
               <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 scrollbar-none touch-pan-x sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
             {gourmetFoods.map((item, idx) => (
               <div
                 key={idx}
-                className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                className="snap-start shrink-0 w-[85vw] max-w-[310px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative h-48 w-full bg-slate-100">
+                  <div className="relative h-44 sm:h-48 w-full bg-slate-100">
                     <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-md badge-gold text-[11px] font-bold">
-                      <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
+                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-amber-300 text-[11px] font-bold">
+                      <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                       {item.rating}
                     </div>
                   </div>
-                  <div className="p-5 space-y-2">
+                  <div className="p-4 sm:p-5 space-y-2">
                     <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-800">
                       <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>{item.location}</span>
                     </div>
-                    <h3 className="font-heading font-extrabold text-lg text-slate-900">{item.name}</h3>
-                    <p className="text-[11px] font-medium text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 inline-block">
+                    <h3 className="font-heading font-extrabold text-base sm:text-lg text-slate-900 line-clamp-1">{item.name}</h3>
+                    <p className="text-[11px] font-medium text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 inline-block line-clamp-1">
                       {item.flavorTag}
                     </p>
                   </div>
                 </div>
-                <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="p-4 sm:p-5 pt-3 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-900">{item.price}</span>
-                  <Link href="/food" className="text-xs font-bold text-emerald-800 hover:underline">
-                    Xem địa chỉ &gt;
+                  <Link href="/food" className="text-xs font-bold text-[#1B4D3E] hover:underline flex items-center gap-0.5">
+                    <span>Địa chỉ</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -459,33 +442,33 @@ export default function HomePage() {
         </section>
 
         {/* SECTION 2: VĂN HÓA & LỄ HỘI KHMER */}
-        <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-emerald-200/80 pb-4">
+        <section className="space-y-4 sm:space-y-6">
+          <div className="flex items-end justify-between border-b border-emerald-200/80 pb-3">
             <div>
-              <span className="text-xs font-extrabold uppercase tracking-wider text-amber-600 flex items-center gap-1.5">
-                <Trophy className="h-4 w-4 text-amber-500" /> Di Sản Phi Vật Thể Độc Đáo
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-amber-600 flex items-center gap-1.5">
+                <Trophy className="h-3.5 w-3.5 text-amber-500" /> Di Sản Phi Vật Thể Độc Đáo
               </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
+              <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
                 Văn Hóa & Lễ Hội Khmer Sôi Động
               </h2>
             </div>
             <Link
               href="/culture"
-              className="flex items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-900 transition-colors"
+              className="flex items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-900 transition-colors shrink-0"
             >
-              <span>Xem chi tiết lễ hội Khmer</span>
+              <span>Tất cả</span>
               <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none md:grid md:grid-cols-3 md:overflow-visible">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 scrollbar-none touch-pan-x md:grid md:grid-cols-3 md:overflow-visible">
             {cultureEvents.map((ev, idx) => (
               <div
                 key={idx}
-                className="snap-start shrink-0 w-[82vw] max-w-[320px] md:w-auto md:max-w-none bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="snap-start shrink-0 w-[85vw] max-w-[310px] md:w-auto md:max-w-none bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+                  <div className="relative h-44 sm:h-48 w-full bg-slate-100 overflow-hidden">
                     <img
                       src={
                         idx === 0
@@ -508,22 +491,22 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-2">
-                    <h3 className="font-heading font-extrabold text-lg text-slate-900 group-hover:text-emerald-800 transition-colors">
+                  <div className="p-4 sm:p-6 space-y-2">
+                    <h3 className="font-heading font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-1">
                       {ev.name}
                     </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed font-light">
+                    <p className="text-xs text-slate-600 leading-relaxed font-light line-clamp-2">
                       {ev.desc}
                     </p>
                   </div>
                 </div>
 
-                <div className="p-6 pt-0 border-t border-slate-100 flex items-center justify-between pt-3">
-                  <span className="text-xs font-bold text-emerald-800 flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-                    {ev.location}
+                <div className="p-4 sm:p-6 pt-0 border-t border-slate-100 flex items-center justify-between pt-3">
+                  <span className="text-xs font-bold text-emerald-800 flex items-center gap-1 truncate">
+                    <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                    <span className="truncate">{ev.location}</span>
                   </span>
-                  <Link href="/culture" className="text-xs font-bold text-slate-900 hover:underline flex items-center gap-0.5">
+                  <Link href="/culture" className="text-xs font-bold text-slate-900 hover:underline flex items-center gap-0.5 shrink-0">
                     <span>Xem thêm</span>
                     <ChevronRight className="h-3.5 w-3.5" />
                   </Link>
@@ -533,96 +516,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* SECTION 3: TIKTOK REELS SHOWCASE (STREAMLINED GRID CARDS) */}
-        <section className="flex flex-col gap-4">
-          <TikTokFeedSection variant="grid" maxSlides={4} showTitle={true} />
-        </section>
-
-        {/* TỐI ƯU SECTION 4: LƯU TRÚ & HOMESTAY VIEW NÚI NỔI BẬT */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-600 flex items-center gap-1.5">
-                <Hotel className="h-4 w-4 text-blue-600" /> Nghỉ Dưỡng Thư Thái
-              </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
-                Homestay & Khách Sạn View Đẹp Tại Tri Tôn
-              </h2>
-            </div>
-            <Link href="/stay" className="text-xs font-bold text-blue-700 hover:underline">
-              Xem tất cả chỗ ở &gt;
-            </Link>
-          </div>
-
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 scrollbar-none sm:grid sm:grid-cols-3 sm:overflow-visible">
-            {featuredStays.map((stay, idx) => (
-              <div key={idx} className="snap-start shrink-0 w-[82vw] max-w-[300px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                <div>
-                  <div className="relative h-48 w-full bg-slate-100">
-                    <img src={stay.img} alt={stay.name} className="w-full h-full object-cover" />
-                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-md badge-gold text-[11px] font-bold">
-                      <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-                      {stay.rating}
-                    </div>
-                  </div>
-                  <div className="p-5 space-y-2">
-                    <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-800">
-                      <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-                      <span>{stay.location}</span>
-                    </div>
-                    <h3 className="font-heading font-extrabold text-lg text-slate-900">{stay.name}</h3>
-                    <p className="text-xs text-slate-500 font-medium">{stay.view}</p>
-                  </div>
-                </div>
-                <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-800">{stay.price}</span>
-                  <Link href="/stay" className="text-xs font-bold text-slate-900 hover:underline">
-                    Đặt phòng ngay
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* TỐI ƯU SECTION 5: BẢN ĐỒ SỐ TƯƠNG TÁC THU NHỎ (MINI LIVE GIS MAP BANNER) */}
-        <section className="rounded-3xl bg-slate-100 p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1">
-              <Navigation className="h-4 w-4 text-emerald-600" /> Định Vị Tọa Độ GPS 82 Địa Điểm
-            </span>
-            <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900">
-              Bản Đồ Số GIS Du Lịch Tri Tôn
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Trải nghiệm bản đồ tương tác hiển thị vị trí các hồ nước, chùa chiền, quán ăn cháo bò và homestay với chỉ đường GPS chính xác tuyệt đối.
-            </p>
-          </div>
-          <Link
-            href="/map"
-            className="flex items-center gap-2 px-6 py-3.5 bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs rounded-2xl shadow-lg transition-all shrink-0"
-          >
-            <Map className="h-4 w-4" />
-            <span>Mở Bản Đồ GIS Trực Tuyến</span>
-          </Link>
-        </section>
+        <MiniGisMapBanner />
 
-        {/* Hotline Emergency Support Banner */}
-        <section className="rounded-3xl bg-slate-900 text-white p-8 sm:p-10 border border-slate-800 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+        {/* Hotline Emergency Support Banner (Mobile Touch Optimized) */}
+        <section className="rounded-3xl bg-slate-900 text-white p-5 sm:p-8 border border-slate-800 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="space-y-1.5">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-amber-400">
               Hỗ Trợ Du Khách 24/7
             </span>
-            <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
+            <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-white">
               Cần Hỗ Trợ Đường Đi Hoặc Sự Cố Du Lịch?
             </h3>
             <p className="text-xs text-slate-300">
-              Đội ngũ Công an và Cấp cứu Huyện Tri Tôn luôn túc trực hỗ trợ an toàn cho du khách.
+              Đội ngũ Công an và Cấp cứu Tri Tôn túc trực 24/7 hỗ trợ an toàn cho du khách.
             </p>
           </div>
           <Link
             href="/emergency"
-            className="flex items-center gap-2 px-6 py-3.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-2xl shadow-lg transition-all shrink-0"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-2xl shadow-lg transition-all shrink-0 active:scale-95 min-h-[44px]"
           >
             <PhoneCall className="h-4 w-4" />
             <span>Gọi Cứu Hộ Khẩn Cấp</span>
@@ -686,16 +598,6 @@ export default function HomePage() {
           </div>
         </div>
       )}
-
-      {/* Floating Chatbot Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <Link
-          href="/chatbot"
-          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/20 bg-primary shadow-lg transition-all duration-300 hover:scale-105 hover:bg-emerald-hover active:scale-95"
-        >
-          <Bot className="h-7 w-7 text-on-primary" />
-        </Link>
-      </div>
     </div>
   );
 }

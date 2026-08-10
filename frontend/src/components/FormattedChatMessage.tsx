@@ -296,7 +296,7 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       {hasItinerary && (
         <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between flex-wrap gap-2 text-xs">
           <span className="text-slate-500 font-semibold flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-spin-slow" /> Lịch trình kiểm chứng PostGIS
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-spin-slow" /> Lịch trình đã được xác minh
           </span>
 
           <div className="flex items-center gap-1.5 flex-wrap">

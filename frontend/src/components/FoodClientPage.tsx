@@ -8,13 +8,39 @@ import {
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { getGoogleMapsUrl, formatPrice } from '@/lib/utils';
+import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { supabase } from '@/lib/supabase';
+import { fetchWithCache } from '@/lib/fastCache';
 
 interface FoodClientPageProps {
   restaurants: Place[];
 }
 
-export default function FoodClientPage({ restaurants }: FoodClientPageProps) {
+export default function FoodClientPage({ restaurants: initialRestaurants }: FoodClientPageProps) {
+  const [foodPlaces, setFoodPlaces] = React.useState<Place[]>(initialRestaurants || []);
+  const [loading, setLoading] = React.useState<boolean>(foodPlaces.length === 0);
+
+  React.useEffect(() => {
+    async function loadLiveFood() {
+      try {
+        setLoading(true);
+        const data = await fetchWithCache('client-food-places-12', async () => {
+          const res = await fetch('/api/v1/food?limit=12');
+          return await res.json();
+        });
+
+        if (data?.food && Array.isArray(data.food) && data.food.length > 0) {
+          setFoodPlaces(data.food);
+        }
+      } catch (err) {
+        console.error('[FoodClientPage] Fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadLiveFood();
+  }, []);
+
   // Form State
   const [formData, setFormData] = useState({
     fullName: '',
@@ -28,69 +54,6 @@ export default function FoodClientPage({ restaurants }: FoodClientPageProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<string | null>(null);
-
-  const specialties = [
-    {
-      id: 'ga-dot-o-thum',
-      name: 'Gà Đốt Lá Chúc Hồ Ô Thum',
-      desc: 'Món ăn biểu tượng trứ danh vùng Tri Tôn. Gà thả đồi thịt săn chắc, tẩm ướp lá chúc rừng (chanh rừng Tri Tôn), sả ớt & mật thốt nốt. Đốt than hồng trong niêu đất 45 phút, ăn kèm muối ớt chanh chúc.',
-      price: '280.000đ - 350.000đ / con',
-      prepTime: 'Chế biến 45 phút (Nên đặt trước)',
-      location: 'Khu vực Hồ Ô Thum, Xã Ô Lâm & Xã Chau Lăng',
-      image: '/images/food/ga_dot_o_thum.png',
-      badge: 'Đặc Sản Số 1 Tri Tôn',
-    },
-    {
-      id: 'bun-ca-tri-ton',
-      name: 'Bún Cá Tri Tôn (Bún Cá An Giang)',
-      desc: 'Nước dùng ninh từ xương cá lóc đồng ngọt thanh, thơm màu nghệ tươi vàng rực. Ăn kèm thịt cá lóc gỡ xương xào nghệ, heo quay da giòn, bông điên điển tươi & rau muống bào.',
-      price: '35.000đ - 50.000đ / tô',
-      prepTime: 'Phục vụ ngay (Sáng & Chiều)',
-      location: 'Thị trấn Tri Tôn & Xã Chau Lăng',
-      image: '/images/food/bun_nuoc_leo.png',
-      badge: 'Đặc Sản Nổi Tiếng',
-    },
-    {
-      id: 'du-du-dam-khmer',
-      name: 'Đu Đủ Đâm Khmer (Bok Lahong)',
-      desc: 'Món ăn vặt đường phố trứ danh tại Tri Tôn. Đu đủ xanh bào sợi đâm trong cối gỗ cùng ớt chim, ba khía ngâm, đậu phộng, tôm khô, lá chúc & đường thốt nốt chua ngọt cay nồng cực dính.',
-      price: '25.000đ - 40.000đ / dĩa',
-      prepTime: 'Phục vụ ngay tại chỗ',
-      location: 'Xã Chau Lăng & Xã Ô Lâm',
-      image: '/images/tiktok/du_du_dam.jpg',
-      badge: 'Ăn Vặt Chua Cay Trứ Danh',
-    },
-    {
-      id: 'banh-bo-thot-not',
-      name: 'Bánh Bò Mật Thốt Nốt Nướng/Hấp',
-      desc: 'Bánh bò làm từ bột gạo xay cối đá ngâm ủ tự nhiên, đường thốt nốt mật ngào màu vàng ổ ong & nước cốt dừa béo bùi. Mặt bánh rễ tre xốp dẻo, rắc dừa nạo sợi thơm ngạt ngào.',
-      price: '10.000đ - 25.000đ / phần',
-      prepTime: 'Bánh tươi làm trong ngày',
-      location: 'Xã Chau Lăng & Chợ Tri Tôn',
-      image: '/images/food/banh_bo_thot_not.png',
-      badge: 'Quà Tặng Thốt Nốt',
-    },
-    {
-      id: 'bo-nuong-mam-bo-hoc',
-      name: 'Thịt Bò Nướng Bảy Núi Cuốn Bánh Tráng',
-      desc: 'Thịt bò tươi Bảy Núi xắt mỏng tẩm ướp sả ớt nướng vỉ than hồng thơm phức. Cuốn bánh tráng phơi sương với các loại rau rừng Bảy Núi chấm mắm bò hóc Prahok hoặc mắm ruốc chao.',
-      price: '120.000đ - 180.000đ / phần',
-      prepTime: 'Chế biến 15 phút',
-      location: 'Thị trấn Tri Tôn & Xã Núi Tô',
-      image: '/images/food/ga_dot_o_thum.png',
-      badge: 'Đặc Sản Thịt Bò Mềm',
-    },
-    {
-      id: 'nuoc-thot-not-tuoi',
-      name: 'Nước Thốt Nốt Tươi & Chè Thốt Nốt Dừa',
-      desc: 'Nước thốt nốt lấy trực tiếp từ vòi hoa cây thốt nốt lúc sáng sớm, vị ngọt thanh tự nhiên ướp đá lạnh mát rượi. Cơm thốt nốt dẻo quánh ăn cùng nước cốt dừa béo bùi.',
-      price: '15.000đ - 30.000đ / ly',
-      prepTime: 'Phục vụ giải khát mát lạnh',
-      location: 'Xã Chau Lăng & Xã An Tức',
-      image: '/images/food/banh_bo_thot_not.png',
-      badge: 'Giải Khát Bản Địa',
-    },
-  ];
 
   const handleDishToggle = (dishName: string) => {
     setFormData(prev => {
@@ -195,51 +158,67 @@ export default function FoodClientPage({ restaurants }: FoodClientPageProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {specialties.map((item) => (
-            <div key={item.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col sm:flex-row">
-              <div className="sm:w-2/5 relative h-52 sm:h-auto bg-slate-900">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold shadow-xs">
-                  {item.badge}
-                </span>
-              </div>
+          {foodPlaces.map((item) => {
+            const detailUrl = `/places/${item.slug || item.id}`;
+            const { maps, tiktok } = resolvePlaceExternalLinks({
+              name: item.name,
+              commune: item.commune,
+              video_url: item.video_url,
+            });
+            return (
+              <div key={item.id} className="relative bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col sm:flex-row group cursor-pointer">
+                {/* 1-Touch Main Link Overlay */}
+                <Link href={detailUrl} className="absolute inset-0 z-0" aria-label={`Xem chi tiết ${item.name}`} />
 
-              <div className="sm:w-3/5 p-6 flex flex-col justify-between space-y-3">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">{item.name}</h3>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">{item.desc}</p>
+                <div className="sm:w-2/5 relative h-52 sm:h-auto bg-slate-900 pointer-events-none">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.image_url || '/images/food/ga_dot_o_thum.png'} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold shadow-xs">
+                    {item.commune}
+                  </span>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Khoảng giá:</span>
-                    <span className="font-bold text-emerald-800">{item.price}</span>
+                <div className="sm:w-3/5 p-6 flex flex-col justify-between space-y-3 pointer-events-none">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#1B4D3E] transition-colors">{item.name}</h3>
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed line-clamp-2">{item.description || `Đặc sản & quán ăn ngon tại ${item.commune}, Tri Tôn.`}</p>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Vị trí:</span>
-                    <span className="font-semibold text-slate-700">{item.location}</span>
+
+                  <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Khoảng giá:</span>
+                      <span className="font-bold text-emerald-800">{formatPrice(item.price_level || 'Tùy món')}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Đánh giá:</span>
+                      <span className="font-semibold text-slate-700">★ {item.rating || 4.8} / 5.0</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{item.prepTime}</span>
+
+                  {/* External Buttons */}
+                  <div className="flex items-center gap-2 pt-2 relative z-10 pointer-events-auto">
+                    <Link
+                      href={detailUrl}
+                      className="flex-1 py-2 px-3 rounded-xl bg-emerald-100/80 hover:bg-emerald-200 text-[#1B4D3E] text-xs font-bold transition-all text-center"
+                    >
+                      Chi Tiết
+                    </Link>
+                    <a
+                      href={maps.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="py-2 px-3 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold transition-all text-center flex items-center gap-1"
+                      title={maps.tooltip}
+                    >
+                      <Navigation className="w-3 h-3 text-[#D99B26]" />
+                      <span>Bản Đồ</span>
+                    </a>
                   </div>
                 </div>
-
-                <a
-                  href="#booking-form"
-                  onClick={() => {
-                    if (!formData.dishes.includes(item.name)) {
-                      setFormData(prev => ({ ...prev, dishes: [...prev.dishes, item.name] }));
-                    }
-                  }}
-                  className="w-full py-2.5 rounded-xl bg-emerald-50 hover:bg-[#1B4D3E] text-[#1B4D3E] hover:text-white text-xs font-bold transition-all text-center border border-emerald-100"
-                >
-                  Chọn Món Này & Đặt Bàn
-                </a>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -340,7 +319,7 @@ export default function FoodClientPage({ restaurants }: FoodClientPageProps) {
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Chọn Món Ăn Yêu Cầu Chuẩn Bị Trước:</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {specialties.map(s => {
+                  {foodPlaces.map(s => {
                     const isChecked = formData.dishes.includes(s.name);
                     return (
                       <button
@@ -405,48 +384,63 @@ export default function FoodClientPage({ restaurants }: FoodClientPageProps) {
           </div>
         </div>
 
-        {restaurants.length > 0 ? (
+        {foodPlaces.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {restaurants.map((place) => (
-              <div key={place.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between">
-                <div>
-                  <div className="h-44 bg-slate-900 relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={place.photos?.[0]?.url || '/images/food/ga_dot_o_thum.png'}
-                      alt={place.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold">
-                      {place.commune}
-                    </span>
+            {foodPlaces.map((place) => {
+              const detailUrl = `/places/${place.slug || place.id}`;
+              const { maps, tiktok } = resolvePlaceExternalLinks({
+                name: place.name,
+                commune: place.commune,
+                video_url: place.video_url,
+              });
+              return (
+                <div key={place.id} className="relative bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer">
+                  {/* 1-Touch Main Link Overlay */}
+                  <Link href={detailUrl} className="absolute inset-0 z-0" aria-label={`Xem chi tiết ${place.name}`} />
+
+                  <div className="pointer-events-none">
+                    <div className="h-44 bg-slate-900 relative">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={place.image_url || '/images/food/ga_dot_o_thum.png'}
+                        alt={place.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold">
+                        {place.commune}
+                      </span>
+                    </div>
+
+                    <div className="p-5 space-y-2">
+                      <h3 className="font-bold text-base text-slate-900 group-hover:text-[#1B4D3E] transition-colors">{place.name}</h3>
+                      <p className="text-xs text-slate-500 flex items-start gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-[#1B4D3E] shrink-0 mt-0.5" />
+                        <span>{place.address || `${place.commune}, Tri Tôn`}</span>
+                      </p>
+                      <p className="text-xs text-slate-600 line-clamp-2 mt-2">{place.description}</p>
+                    </div>
                   </div>
 
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-bold text-base text-slate-900">{place.name}</h3>
-                    <p className="text-xs text-slate-500 flex items-start gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#1B4D3E] shrink-0 mt-0.5" />
-                      <span>{place.address || `${place.commune}, Tri Tôn`}</span>
-                    </p>
-                    <p className="text-xs text-slate-600 line-clamp-2 mt-2">{place.description}</p>
+                  <div className="p-4 pt-0 flex items-center justify-between border-t border-slate-100 mt-2 text-xs relative z-10 pointer-events-auto">
+                    <span className="font-semibold text-emerald-800">{formatPrice(place.price_level || 'Bình dân')}</span>
+                    
+                    <div className="flex items-center gap-1.5">
+                      <a
+                        href={maps.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-[#1B4D3E] hover:underline"
+                        title={maps.tooltip}
+                      >
+                        <span>Chỉ đường</span>
+                        <Navigation className="w-3.5 h-3.5 text-[#D99B26]" />
+                      </a>
+                    </div>
                   </div>
                 </div>
-
-                <div className="p-5 pt-0 flex items-center justify-between border-t border-slate-100 mt-4 text-xs">
-                  <span className="font-semibold text-emerald-800">{formatPrice(place.price_level || 'Bình dân')}</span>
-                  
-                  <a
-                    href={getGoogleMapsUrl(place.name, place.commune)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-[#1B4D3E] hover:underline"
-                  >
-                    <span>Chỉ đường</span>
-                    <Navigation className="w-3.5 h-3.5 text-[#D99B26]" />
-                  </a>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div className="bg-white rounded-2xl p-8 text-center border border-slate-200">

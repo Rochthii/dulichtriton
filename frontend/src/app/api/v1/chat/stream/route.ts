@@ -1,5 +1,7 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { streamAIResponse, lookupSemanticCache, storeSemanticCache } from '@/lib/aiProvider';
+import { getDynamicSystemConfig } from '@/lib/systemConfig';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -280,6 +282,31 @@ export async function POST(req: NextRequest) {
           return;
         }
 
+        // 2.5. Check Semantic Vector Cache (< 10ms response if similarity >= 0.90)
+        if (queryVector) {
+          const cacheHit = await lookupSemanticCache(queryVector, supabase, 0.90);
+          if (cacheHit) {
+            send({ type: 'places', data: cacheHit.places_json || [] });
+            send({ type: 'videos', data: cacheHit.videos_json || [] });
+            send({ type: 'text_delta', delta: cacheHit.answer_text });
+            send({ type: 'suggestions', data: buildSuggestions(lower) });
+            send({ type: 'done' });
+
+            logChatEvent({
+              session_id: sessionId,
+              query: queryStr,
+              response_preview: cacheHit.answer_text.slice(0, 300),
+              provider_used: 'semantic-cache-hit',
+              rag_method: 'vector-cache',
+              places_count: (cacheHit.places_json || []).length,
+              latency_ms: Date.now() - t0,
+              is_out_scope: false,
+            });
+            controller.close();
+            return;
+          }
+        }
+
         // Vector search → ILIKE fallback
         let places: Record<string, unknown>[] = [];
         let ragMethod = 'none';
@@ -322,71 +349,35 @@ export async function POST(req: NextRequest) {
         send({ type: 'places', data: formattedPlaces });
         send({ type: 'videos', data: videos });
 
-        // Build system message with history
+        // Build system message with history (hot-reloaded from Supabase / SWR cache)
+        const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', SYSTEM_PROMPT);
         const historySnippet = history.length > 0
           ? '\n\nLịch sử hội thoại gần nhất:\n' +
             history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
           : '';
-        const systemMsg = SYSTEM_PROMPT + historySnippet;
+        const systemMsg = activeSystemPrompt + historySnippet;
         const userMsg = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${queryStr}`;
 
         let fullText = '';
-        const geminiKeys = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean) as string[];
+        let providerUsed = 'none';
 
-        // Try streaming Gemini (try each key)
-        let geminiStreamed = false;
-        for (const key of geminiKeys) {
-          if (geminiStreamed) break;
-          try {
-            const geminiRes = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:streamGenerateContent?key=${key}&alt=sse`,
-              {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: `${systemMsg}\n\n${userMsg}` }] }] }),
-                signal: AbortSignal.timeout(15000),
-              }
-            );
-
-            if (geminiRes.ok && geminiRes.body) {
-              const reader = geminiRes.body.getReader();
-              const decoder = new TextDecoder();
-              let buf = '';
-
-              while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                buf += decoder.decode(value, { stream: true });
-                const lines = buf.split('\n');
-                buf = lines.pop() || '';
-                for (const line of lines) {
-                  if (!line.startsWith('data: ')) continue;
-                  try {
-                    const chunk = JSON.parse(line.slice(6));
-                    const delta = chunk?.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (delta) {
-                      fullText += delta;
-                      send({ type: 'text_delta', delta });
-                    }
-                  } catch { /* malformed chunk — skip */ }
-                }
-              }
-              if (fullText) geminiStreamed = true;
-            }
-          } catch (e) {
-            console.warn(`[Stream] Gemini key failed:`, e);
+        // Delegate streaming generation to Centralized AI Provider Resilience Manager (@/lib/aiProvider)
+        for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
+          if (chunk.type === 'delta' && chunk.content) {
+            fullText += chunk.content;
+            send({ type: 'text_delta', delta: chunk.content });
+          }
+          if (chunk.type === 'done' && chunk.provider) {
+            providerUsed = chunk.provider;
           }
         }
 
-        // Non-streaming fallback if Gemini failed
-        if (!fullText) {
-          console.warn('[Stream] Gemini unavailable, falling back to non-streaming provider');
-          fullText = await callNonStreamingFallback(userMsg, systemMsg);
-          send({ type: 'text_delta', delta: fullText });
+        // Store result into Semantic Cache asynchronously for future queries
+        if (queryVector && fullText.trim().length > 25) {
+          void storeSemanticCache(queryStr, queryVector, fullText, formattedPlaces, videos, supabase);
         }
 
         const latencyMs = Date.now() - t0;
-        const providerUsed = geminiStreamed ? 'streaming-gemini' : 'fallback-nonstream';
 
         // Persist to Supabase (fire-and-forget)
         saveHistory(sessionId, [

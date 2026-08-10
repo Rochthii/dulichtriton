@@ -24,6 +24,11 @@ export default function GoldenTimeWidget() {
   const [simulatedHour, setSimulatedHour] = useState<number | null>(null);
   const [goldenPlaces, setGoldenPlaces] = useState<GoldenPlace[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Update live clock every second
   useEffect(() => {
@@ -122,7 +127,7 @@ export default function GoldenTimeWidget() {
           <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-950/80 backdrop-blur-md border border-amber-400/40 shadow-lg">
             <Clock className="h-5 w-5 text-amber-400 animate-pulse" />
             <span className="font-mono text-lg font-black text-amber-300 tracking-wider">
-              {timeFormatted}
+              {isMounted ? timeFormatted : '--:--:--'}
             </span>
             {simulatedHour !== null && (
               <button

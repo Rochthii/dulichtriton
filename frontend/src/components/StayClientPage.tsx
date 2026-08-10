@@ -9,12 +9,39 @@ import { Place } from '@/components/PlaceCard';
 import { getGoogleMapsUrl, formatPrice } from '@/lib/utils';
 import PageHeaderBanner from './PageHeaderBanner';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
+import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
+import { fetchWithCache } from '@/lib/fastCache';
 
 interface StayClientPageProps {
   homestays: Place[];
 }
 
-export default function StayClientPage({ homestays }: StayClientPageProps) {
+export default function StayClientPage({ homestays: initialHomestays }: StayClientPageProps) {
+  const [staysList, setStaysList] = useState<Place[]>(initialHomestays || []);
+  const [loading, setLoading] = useState<boolean>(staysList.length === 0);
+
+  React.useEffect(() => {
+    async function loadLiveStays() {
+      try {
+        setLoading(true);
+        const data = await fetchWithCache('client-stays-places-12', async () => {
+          const res = await fetch('/api/v1/stays?limit=12');
+          return await res.json();
+        });
+
+        if (data?.stays && Array.isArray(data.stays) && data.stays.length > 0) {
+          setStaysList(data.stays);
+        }
+      } catch (err) {
+        console.error('[StayClientPage] Fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadLiveStays();
+  }, []);
+
   const [selectedAmenity, setSelectedAmenity] = useState<string>('all');
   const [bookingHomestay, setBookingHomestay] = useState<Place | null>(null);
   
@@ -58,14 +85,12 @@ export default function StayClientPage({ homestays }: StayClientPageProps) {
           details: {
             bookingCode: code,
             homestayName: bookingHomestay.name,
-            commune: bookingHomestay.commune,
             fullName: formData.fullName,
             phone: formData.phone,
             checkIn: formData.checkIn,
             checkOut: formData.checkOut,
             guests: formData.guests,
             notes: formData.notes,
-            created_at: new Date().toISOString(),
           }
         }
       ]);
@@ -88,7 +113,7 @@ export default function StayClientPage({ homestays }: StayClientPageProps) {
         title="Danh Sách Homestay & Nhà Khách Tri Tôn"
         subtitle="Nghỉ dưỡng tuyệt vời với view núi Cô Tô, hồ Tà Pạ và cánh đồng thốt nốt. Đã xác minh bãi đỗ xe ô tô 7-16 chỗ và tiện ích tiệc BBQ ngoài trời."
         countLabel="Hiển thị homestay uy tín"
-        countValue={`${homestays.length} chỗ nghỉ`}
+        countValue={`${staysList.length} chỗ nghỉ`}
       />
 
       {/* AMENITY FILTER TABS */}
@@ -119,15 +144,23 @@ export default function StayClientPage({ homestays }: StayClientPageProps) {
       </div>
 
       {/* HOMESTAYS GRID FROM SUPABASE DATABASE */}
-      {homestays.length > 0 ? (
+      {staysList.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {homestays.map(place => {
-            const mapsUrl = getGoogleMapsUrl(place.name, place.commune);
-            const mainPhoto = place.photos?.[0]?.url || '/images/tiktok/ho_ta_pa.jpg';
+          {staysList.map(place => {
+            const detailUrl = `/places/${place.slug || place.id}`;
+            const { maps } = resolvePlaceExternalLinks({
+              name: place.name,
+              commune: place.commune,
+              video_url: place.video_url,
+            });
+            const mainPhoto = place.image_url || place.photos?.[0]?.url || '/images/tiktok/ho_ta_pa.jpg';
 
             return (
-              <div key={place.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
-                <div>
+              <div key={place.id} className="relative bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group cursor-pointer">
+                {/* 1-Touch Main Link Overlay */}
+                <Link href={detailUrl} className="absolute inset-0 z-0" aria-label={`Xem chi tiết ${place.name}`} />
+
+                <div className="pointer-events-none">
                   {/* Photo Header */}
                   <div className="h-52 bg-slate-900 relative overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -183,30 +216,32 @@ export default function StayClientPage({ homestays }: StayClientPageProps) {
                         <span>Thuê xe máy</span>
                       </span>
                     </div>
-
                   </div>
                 </div>
 
                 {/* Card Actions */}
-                <div className="p-5 pt-0 flex items-center gap-2 border-t border-slate-100 mt-4">
+                <div className="p-4 pt-0 flex items-center gap-2 border-t border-slate-100 mt-2 relative z-10 pointer-events-auto">
                   <button
-                    onClick={() => setBookingHomestay(place)}
-                    className="flex-1 py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold transition-colors text-center shadow-xs"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setBookingHomestay(place);
+                    }}
+                    className="flex-1 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold transition-colors text-center shadow-xs"
                   >
                     Gửi Yêu Cầu Đặt Phòng
                   </button>
 
                   <a
-                    href={mapsUrl}
+                    href={maps.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-[#F8F9FA] border border-slate-200 hover:border-[#1B4D3E] text-slate-700 hover:text-[#1B4D3E] transition-colors"
-                    title="Mở Google Maps"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-xl bg-[#F8F9FA] border border-slate-200 hover:border-[#1B4D3E] text-slate-700 hover:text-[#1B4D3E] transition-colors"
+                    title={maps.tooltip || "Mở Google Maps"}
                   >
                     <Navigation className="w-4 h-4 text-[#D99B26]" />
                   </a>
                 </div>
-
               </div>
             );
           })}

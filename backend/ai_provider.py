@@ -30,6 +30,8 @@ logger.setLevel(logging.INFO)
 # Load Keys dynamically from environment (NEVER hardcoded)
 GEMINI_KEY_1 = os.getenv("GEMINI_API_KEY", "")
 GEMINI_KEY_2 = os.getenv("GEMINI_API_KEY_2", "")
+GEMINI_KEY_3 = os.getenv("GEMINI_API_KEY_3", "")
+GEMINI_KEY_4 = os.getenv("GEMINI_API_KEY_4", "")
 GROQ_KEY = os.getenv("GROQ_API_KEY", "")
 OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY", "")
 
@@ -255,6 +257,8 @@ def generate_ai_response(prompt: str) -> dict:
     providers = [
         ("Gemini_Key_1", lambda: _call_gemini(prompt, GEMINI_KEY_1, "Gemini_Key_1")),
         ("Gemini_Key_2", lambda: _call_gemini(prompt, GEMINI_KEY_2, "Gemini_Key_2")),
+        ("Gemini_Key_3", lambda: _call_gemini(prompt, GEMINI_KEY_3, "Gemini_Key_3")),
+        ("Gemini_Key_4", lambda: _call_gemini(prompt, GEMINI_KEY_4, "Gemini_Key_4")),
         ("Groq_API", lambda: _call_groq(prompt, GROQ_KEY)),
         ("OpenRouter_Free", lambda: _call_openrouter(prompt, OPENROUTER_KEY))
     ]

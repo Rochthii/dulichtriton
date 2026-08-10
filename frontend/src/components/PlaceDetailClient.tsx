@@ -7,7 +7,8 @@ import {
   Video, ArrowLeft, Heart, Share2, Sparkles, Play, Globe, Info, Compass
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
-import { getGoogleMapsUrl, formatPrice, getTikTokSearchUrl } from '@/lib/utils';
+import { formatPrice } from '@/lib/utils';
+import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import VideoGallery from '@/components/VideoGallery';
 import TikTokFeedSection from '@/components/TikTokFeedSection';
 import { type VideoItem } from '@/components/VideoModal';
@@ -18,11 +19,19 @@ interface PlaceDetailClientProps {
 }
 
 export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDetailClientProps) {
+  const { maps, tiktok } = resolvePlaceExternalLinks({
+    name: place.name,
+    commune: place.commune,
+    lat: place.latitude,
+    lng: place.longitude,
+    video_url: place.video_url,
+  });
+
   const photos = place.photos && place.photos.length > 0
     ? place.photos
     : [
         {
-          url: '/images/tiktok/ho_ta_pa.jpg',
+          url: place.image_url || '/images/tiktok/ho_ta_pa.jpg',
           caption: place.name,
           source: 'Cổng thông tin Du lịch An Giang (angiangtourism.vn)',
           license: 'Public Domain Tourism Collection'
@@ -32,11 +41,10 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
-  const [activeTab, setActiveTab] = useState<'photos' | 'videos'>('photos');
+  const [activeTab, setActiveTab] = useState<'photos' | 'map' | 'videos' | 'golden_hours'>('photos');
   const [placeVideos, setPlaceVideos] = useState<VideoItem[]>([]);
   const [videosLoading, setVideosLoading] = useState(false);
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
-  const mapsUrl = getGoogleMapsUrl(place.name, place.commune);
 
   // Fetch videos khi chuyển sang Tab Video
   useEffect(() => {
@@ -94,9 +102,9 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
 
           <button
             onClick={handleShare}
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 transition-all"
           >
-            <Share2 className="w-3.5 h-3.5" />
+            <Share2 className="w-3.5 h-3.5 text-[#1B4D3E]" />
             <span>Chia sẻ</span>
           </button>
         </div>
@@ -155,43 +163,79 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-2">
+          <div className="flex items-center justify-end gap-2 shrink-0">
             <a
-              href={mapsUrl}
+              href={maps.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-semibold shadow-xs transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold shadow-xs transition-colors"
+              title={maps.tooltip}
             >
               <Navigation className="w-4 h-4 text-[#D99B26]" />
-              <span>Chỉ Đường Google Maps</span>
+              <span>Chỉ Đường Maps</span>
+            </a>
+            <a
+              href={tiktok.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-rose-600 text-white text-xs font-extrabold shadow-xs transition-colors"
+              title={tiktok.label}
+            >
+              <Play className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <span>Xem TikTok</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* ── TAB NAVIGATION: Ảnh | Video Review ── */}
-      <div className="flex items-center gap-1 mb-6 bg-slate-100 p-1 rounded-xl w-fit">
+      {/* ── ADVANCED 4-TAB NAVIGATION BAR ── */}
+      <div className="flex items-center gap-1 mb-6 bg-slate-100 p-1.5 rounded-2xl overflow-x-auto scrollbar-none border border-slate-200">
         <button
           onClick={() => setActiveTab('photos')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap ${
             activeTab === 'photos'
-              ? 'bg-white text-[#1B4D3E] shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
+              ? 'bg-[#1B4D3E] text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <Camera className="w-3.5 h-3.5" />
-          Ảnh Thực Tế
+          <Camera className="w-3.5 h-3.5 text-amber-400" />
+          <span>Ảnh Thực Tế</span>
         </button>
+
+        <button
+          onClick={() => setActiveTab('map')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap ${
+            activeTab === 'map'
+              ? 'bg-[#1B4D3E] text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Compass className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Bản Đồ GIS & GPS</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('golden_hours')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap ${
+            activeTab === 'golden_hours'
+              ? 'bg-[#1B4D3E] text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Clock className="w-3.5 h-3.5 text-amber-300" />
+          <span>Khung Giờ Vàng</span>
+        </button>
+
         <button
           onClick={() => setActiveTab('videos')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap ${
             activeTab === 'videos'
-              ? 'bg-white text-rose-600 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
+              ? 'bg-[#1B4D3E] text-white shadow-xs'
+              : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <Video className="w-3.5 h-3.5" />
-          Video Review
+          <Video className="w-3.5 h-3.5 text-rose-400" />
+          <span>TikTok Video Review</span>
         </button>
       </div>
 
@@ -255,6 +299,79 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           </div>
         )}
       </section>
+
+      {/* MAP GIS SECTION — Hiển thị khi Tab Map được chọn */}
+      {activeTab === 'map' && (
+        <section className="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white border border-slate-800 shadow-xl mb-8 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-extrabold flex items-center gap-2">
+              <Compass className="w-5 h-5 text-amber-400" />
+              <span>Bản Đồ Định Vị GIS & Tọa Độ Vệ Tinh WGS84</span>
+            </h2>
+            <span className="text-xs text-amber-300 font-bold bg-amber-950/80 px-3 py-1 rounded-full border border-amber-500/40">
+              Định vị chính xác 100%
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-slate-800/90 border border-slate-700 space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Vĩ độ (Latitude)</span>
+              <p className="font-extrabold text-lg text-emerald-400">{place.latitude || 10.4128}° N</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-800/90 border border-slate-700 space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Kinh độ (Longitude)</span>
+              <p className="font-extrabold text-lg text-emerald-400">{place.longitude || 105.0142}° E</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-800/90 border border-slate-700 space-y-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Đơn vị hành chính</span>
+              <p className="font-extrabold text-lg text-amber-300">{place.commune}</p>
+            </div>
+          </div>
+
+          <div className="pt-2 flex justify-end">
+            <a
+              href={maps.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center gap-2 shadow-lg transition-all"
+            >
+              <Navigation className="w-4 h-4 text-amber-300" />
+              <span>Mở Chỉ Đường Trực Tiếp Trên Google Maps App</span>
+            </a>
+          </div>
+        </section>
+      )}
+
+      {/* GOLDEN HOURS SECTION — Hiển thị khi Tab Khung Giờ Vàng được chọn */}
+      {activeTab === 'golden_hours' && (
+        <section className="bg-gradient-to-br from-amber-500/10 via-emerald-500/5 to-slate-900/10 rounded-3xl p-6 sm:p-8 border border-amber-500/30 shadow-lg mb-8 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+              <Clock className="w-5 h-5 text-amber-600" />
+              <span>Khung Giờ Vàng Check-in & Kinh Nghiệm Tham Quan</span>
+            </h2>
+            <span className="text-xs font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
+              Khuyên dùng từ Phượt thủ Bảy Núi
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="p-5 rounded-2xl bg-white border border-amber-200/80 shadow-xs space-y-2">
+              <span className="text-xs font-extrabold text-amber-600 uppercase tracking-wider block">🌅 Khung Giờ Sáng Đẹp Nhất</span>
+              <p className="font-bold text-base text-slate-900">06:00 – 08:30 Sáng</p>
+              <p className="text-xs text-slate-600 leading-relaxed">Thời điểm bình minh vừa mọc, không khí se lạnh nhẹ và ánh sáng mặt trời chiếu vàng óng các triền núi.</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-amber-200/80 shadow-xs space-y-2">
+              <span className="text-xs font-extrabold text-amber-600 uppercase tracking-wider block">🌇 Khung Giờ Hoàng Hôn Đẹp Nhất</span>
+              <p className="font-bold text-base text-slate-900">16:00 – 17:45 Chiều</p>
+              <p className="text-xs text-slate-600 leading-relaxed">Khung giờ ngắm hoàng hôn buông xuống cánh đồng lúa chín và phản chiếu lung linh trên mặt hồ.</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* VIDEO GALLERY SECTION — Hiển thị khi Tab Video được chọn */}
       {activeTab === 'videos' && (
@@ -337,7 +454,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             <div className="pt-2 flex items-center justify-between text-xs text-slate-500">
               <span>Chưa tìm thấy video ưng ý?</span>
               <a
-                href={getTikTokSearchUrl(place.name, place.commune)}
+                href={tiktok.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-bold text-rose-600 hover:text-rose-700 hover:underline"
@@ -375,7 +492,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </div>
 
             <a
-              href={mapsUrl}
+              href={maps.url}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 w-full py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors"
@@ -416,7 +533,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
       {/* Mobile Sticky Quick Action Bar (Floating above MobileBottomNav) */}
       <div className="md:hidden fixed bottom-16 inset-x-0 z-40 bg-white/95 backdrop-blur-md p-2.5 border-t border-slate-200 shadow-lg flex items-center gap-2">
         <a
-          href={mapsUrl}
+          href={maps.url}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 py-2.5 rounded-xl bg-[#1B4D3E] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm"

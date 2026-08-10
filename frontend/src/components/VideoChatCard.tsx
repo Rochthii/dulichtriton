@@ -6,7 +6,7 @@ import VideoModal, { VideoItem } from './VideoModal';
 
 interface VideoChatCardProps {
   title: string;
-  views: string;
+  views?: string | number;
   imageUrl: string;
   embedUrl?: string;
 }
@@ -14,8 +14,14 @@ interface VideoChatCardProps {
 export default function VideoChatCard({ title, views, imageUrl, embedUrl }: VideoChatCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Parse views string (e.g. "28.9K") to number approximately for type compliance
-  const parsedViews = parseInt(views.replace(/[^0-9]/g, '')) * 1000 || 10000;
+  // Safely parse views whether it is string, number, or undefined
+  const displayViews = typeof views === 'number' 
+    ? `${views.toLocaleString('vi-VN')} lượt xem` 
+    : String(views || '10K lượt xem');
+
+  const parsedViews = typeof views === 'number' 
+    ? views 
+    : parseInt(displayViews.replace(/[^0-9]/g, '')) * 1000 || 10000;
 
   const videoItem: VideoItem = {
     id: Date.now().toString(),
@@ -50,7 +56,7 @@ export default function VideoChatCard({ title, views, imageUrl, embedUrl }: Vide
         <div className="flex-1 min-w-0">
           <span className="text-[10px] text-rose-400 font-bold uppercase block mb-0.5">▶ Video Review</span>
           <h5 className="font-bold text-xs text-white truncate">{title}</h5>
-          <span className="text-[10px] text-slate-400 block mt-0.5">{views}</span>
+          <span className="text-[10px] text-slate-400 block mt-0.5">{displayViews}</span>
         </div>
       </div>
 
