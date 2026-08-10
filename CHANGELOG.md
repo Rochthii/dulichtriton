@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.3.3-FIX-PLACE-DETAIL-404] - 2026-08-10
+
+### 🐛 Sửa Lỗi 404 Toàn Bộ Trang Chi Tiết Địa Điểm (`/places/[id]`)
+- **Root Cause 1 — Column `place_id` không tồn tại**: Hàm `getPlaceById` query `.or('id.eq.X,place_id.eq.X')` → PostgREST throw error vì `place_id` không phải column trong bảng Supabase → hàm return `null` → `notFound()` → 404.
+- **Root Cause 2 — Slug NULL trong DB**: 95 records được seed từ CSV không có `slug` → link card = `/places/CF001` (dùng `place.id`) thay vì slug — nhưng query lại bị lỗi ở bước trước nên không bao giờ match được.
+- **Fix `getPlaceById` (`lib/places.ts`)**: Xóa query `place_id` không hợp lệ. Lookup theo thứ tự: 1) `slug`, 2) `id` (text PK như `CF001`). Dùng `.maybeSingle()` thay `.single()` để tránh crash khi không tìm thấy.
+- **Migration `20260810_backfill_slugs.sql`**: Backfill slug cho 95 records hiện có bằng công thức `{vietnamese-name-ascii}-{place-id}`. Thêm trigger `trg_auto_generate_slug` để tự động generate slug cho tất cả INSERT mới.
+- **Kiểm thử**: `npx tsc --noEmit` ✅ Clean (0 lỗi TypeScript).
+
+---
+
 ## [v28.3.2-FIX-REACT-HOOKS-ORDER] - 2026-08-10
 
 ### 🐛 Sửa Lỗi React Rules of Hooks — `ChatbotWidget.tsx`

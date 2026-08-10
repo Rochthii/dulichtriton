@@ -67,24 +67,33 @@ export async function getPlacesFiltered(commune?: string, category?: string): Pr
 }
 
 /**
- * Fetch place detail by ID dynamically from Supabase database
+ * Fetch place detail by ID or slug dynamically from Supabase database.
+ * Lookup order: 1) slug, 2) id (text PK like "CF001").
  */
-export async function getPlaceById(id: string): Promise<Place | null> {
+export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
   try {
-    const { data, error } = await supabase
+    // 1. Try matching by slug first (SEO-friendly URLs)
+    const { data: bySlug } = await supabase
       .from('places')
       .select('*')
-      .or(`id.eq.${id},place_id.eq.${id}`)
-      .single();
+      .eq('slug', idOrSlug)
+      .maybeSingle();
 
-    if (error || !data) {
-      console.error(`Error fetching place ID ${id} from Supabase:`, error);
-      return null;
-    }
+    if (bySlug) return bySlug as Place;
 
-    return data as Place;
+    // 2. Fallback: match by primary key id (e.g. "CF001", "AT002")
+    const { data: byId, error: idError } = await supabase
+      .from('places')
+      .select('*')
+      .eq('id', idOrSlug)
+      .maybeSingle();
+
+    if (byId) return byId as Place;
+
+    console.error(`[getPlaceById] No place found for slug/id: "${idOrSlug}"`, idError);
+    return null;
   } catch (err) {
-    console.error(`Failed to query Supabase place ID ${id}:`, err);
+    console.error(`[getPlaceById] Failed to query Supabase for "${idOrSlug}":`, err);
     return null;
   }
 }
