@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.6-MOBILE-FIRST-BOTTOM-NAV-STICKY-ACTIONS] - 2026-08-14
+
+### 📱 Tối Ưu Hóa Giao Diện & Trải Nghiệm Di Động Toàn Diện (Mobile-First 99%)
+- **Thanh Điều Hướng Đáy Cố Định (`components/MobileBottomNav.tsx`)**:
+  - Tích hợp thanh điều hướng 5 Tab chính (*Trang chủ, Khám phá 174 POIs, Ẩm thực, AI Chat, Bản đồ GIS*) cố định đáy màn hình trên thiết bị di động.
+  - Vùng chạm tối thiểu 48x48px, chuẩn an toàn Safe Area iOS/Android, hỗ trợ thao tác 1 tay thuận tiện trong vùng ngón tay cái (*Thumb Zone*).
+- **Thanh Hành Động Nổi Cố Định Cho Trang Chi Tiết (`components/PlaceDetailClient.tsx`)**:
+  - Bổ sung Sticky Action Bar ở đáy màn hình di động: Nút *Chỉ Đường Google Maps* (60% chiều rộng) + Nút *Gọi Quán / Xem TikTok* (40% chiều rộng).
+  - Giúp du khách đang đi trên đường có thể mở Google Maps dẫn đường hoặc gọi đặt bàn chỉ trong 1 cú chạm.
+
+---
+
 ## [v28.6.5-ENHANCE-PLACE-DETAIL-AND-1TOUCH-UX] - 2026-08-14
 
 ### 🌟 Nâng Cấp Toàn Diện Trang Chi Tiết (`/places/[id]`) & Trải Nghiệm 1-Touch Card Click

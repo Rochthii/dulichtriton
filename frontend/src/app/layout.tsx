@@ -3,6 +3,7 @@ import "./globals.css";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import ChatbotWidget from "../components/ChatbotWidget";
+import MobileBottomNav from "../components/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "Tri Tôn AI Tourism - Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi",
@@ -24,11 +25,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased font-sans mobile-scroll-wrapper" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased font-sans mobile-scroll-wrapper pb-16 sm:pb-0" suppressHydrationWarning>
         <SiteNav />
         <main className="flex-grow">{children}</main>
         <SiteFooter />
         <ChatbotWidget />
+        <MobileBottomNav />
       </body>
     </html>
   );

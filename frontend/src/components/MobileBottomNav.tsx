@@ -1,102 +1,82 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Compass, MapPin, Sparkles, PhoneCall } from 'lucide-react';
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, Compass, Utensils, Bot, Map } from "lucide-react";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
 
+  // Hide on admin routes or full-screen immersive map
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   const navItems = [
     {
-      label: 'Khám Phá',
-      href: '/',
+      label: "Trang chủ",
+      href: "/",
+      icon: Home,
+      isActive: pathname === "/"
+    },
+    {
+      label: "Khám phá",
+      href: "/places",
       icon: Compass,
-      activeColor: 'text-[#1B4D3E]',
+      isActive: pathname.startsWith("/places")
     },
     {
-      label: 'Bản Đồ GIS',
-      href: '/map',
-      icon: MapPin,
-      activeColor: 'text-[#1B4D3E]',
+      label: "Ẩm thực",
+      href: "/food",
+      icon: Utensils,
+      isActive: pathname.startsWith("/food")
     },
     {
-      label: 'Trợ Lý AI',
-      href: '#',
-      icon: Sparkles,
-      activeColor: 'text-[#D99B26]',
-      isHighlight: true,
-      isChatTrigger: true,
+      label: "AI Chat",
+      href: "/chatbot",
+      icon: Bot,
+      isActive: pathname.startsWith("/chatbot")
     },
     {
-      label: 'Cứu Hộ 24/7',
-      href: '/emergency',
-      icon: PhoneCall,
-      activeColor: 'text-rose-600',
-    },
+      label: "Bản đồ",
+      href: "/map",
+      icon: Map,
+      isActive: pathname.startsWith("/map")
+    }
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-xl border-t border-slate-200/80 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-safe">
-      <div className="grid grid-cols-4 items-center h-16 px-1 max-w-md mx-auto">
+    <nav
+      aria-label="Mobile Navigation"
+      className="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] sm:hidden transition-all duration-300"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
+      <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href;
-
-          if (item.isChatTrigger) {
-            return (
-              <button
-                key={item.label}
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('triton:open-chat'));
-                }}
-                className="flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl transition-all touch-manipulation opacity-90 hover:opacity-100"
-              >
-                <div className="relative flex items-center justify-center p-1 rounded-xl bg-amber-100 border border-amber-300/80 shadow-xs">
-                  <Icon className="w-5 h-5 text-[#D99B26]" />
-                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#D99B26] animate-ping" />
-                </div>
-                <span className="text-[10px] tracking-tight leading-none text-amber-950 font-extrabold">
-                  {item.label}
-                </span>
-              </button>
-            );
-          }
-
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center gap-1 py-1.5 px-1 rounded-xl transition-all touch-manipulation ${
-                isActive
-                  ? 'scale-105 font-bold'
-                  : 'opacity-70 hover:opacity-100 font-medium'
+              className={`flex flex-col items-center justify-center flex-1 h-full py-1 transition-all active:scale-95 select-none ${
+                item.isActive
+                  ? "text-[#1B4D3E]"
+                  : "text-slate-500 hover:text-slate-800"
               }`}
             >
               <div
-                className={`relative flex items-center justify-center p-1 rounded-xl ${
-                  item.isHighlight && isActive
-                    ? 'bg-amber-50 border border-amber-200 shadow-xs'
-                    : item.isHighlight
-                    ? 'bg-amber-50/60'
-                    : isActive
-                    ? 'bg-emerald-50'
-                    : ''
+                className={`relative flex items-center justify-center px-3.5 py-1 rounded-2xl transition-all ${
+                  item.isActive
+                    ? "bg-emerald-100/80 text-[#1B4D3E] shadow-xs scale-105"
+                    : "text-slate-500"
                 }`}
               >
-                <Icon
-                  className={`w-5 h-5 ${
-                    isActive ? item.activeColor : 'text-slate-600'
-                  }`}
-                />
-                {item.isHighlight && (
-                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#D99B26] animate-ping" />
-                )}
+                <Icon className={`w-5 h-5 ${item.isActive ? "stroke-[2.5]" : "stroke-[1.75]"}`} />
               </div>
               <span
-                className={`text-[10px] tracking-tight leading-none ${
-                  isActive ? 'text-slate-900 font-extrabold' : 'text-slate-600'
+                className={`text-[10px] tracking-tight mt-0.5 ${
+                  item.isActive ? "font-extrabold text-[#1B4D3E]" : "font-medium"
                 }`}
               >
                 {item.label}
@@ -105,6 +85,6 @@ export default function MobileBottomNav() {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }

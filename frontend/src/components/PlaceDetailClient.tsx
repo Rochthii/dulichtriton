@@ -521,6 +521,39 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
         </section>
       )}
 
+      {/* ── MOBILE STICKY FLOATING ACTION BAR ── */}
+      <div className="fixed bottom-16 inset-x-0 z-30 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 p-3 sm:hidden shadow-[0_-4px_25px_rgba(0,0,0,0.1)] flex items-center gap-2.5">
+        <a
+          href={maps.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 py-3.5 px-4 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all"
+        >
+          <Navigation className="w-4 h-4 text-amber-300" />
+          <span>Chỉ Đường Google Maps</span>
+        </a>
+
+        {place.phone ? (
+          <a
+            href={`tel:${place.phone}`}
+            className="py-3.5 px-4 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all shrink-0"
+          >
+            <Phone className="w-4 h-4 text-amber-300" />
+            <span>Gọi</span>
+          </a>
+        ) : (
+          <a
+            href={tiktok.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-3.5 px-4 rounded-2xl bg-slate-900 hover:bg-rose-600 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all shrink-0"
+          >
+            <Play className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span>TikTok</span>
+          </a>
+        )}
+      </div>
+
     </>
   );
 }
