@@ -21,66 +21,6 @@ function inferCategory(name: string, activity = ''): StopCategory {
   return 'check-in';
 }
 
-// ── Load & convert from lichtrinh.json ──────────────────────────────────────
-function loadFromJsonFile(slug: string): ItineraryData | null {
-  try {
-    const filePath = path.join(process.cwd(), '..', 'data', 'lichtrinh.json');
-    if (!fs.existsSync(filePath)) return null;
-
-    const raw = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const itin = (raw.itineraries as Record<string, unknown>[])
-      .find((i) => i.slug === slug || i.id === slug);
-    if (!itin) return null;
-
-    // Flatten days → stops
-    let order = 1;
-    const stops: ItineraryData['stops'] = [];
-    for (const day of (itin.days as Record<string, unknown>[])) {
-      const dayNum = Number(day.day) || 1;
-      for (const s of (day.stops as Record<string, unknown>[])) {
-        const transport = String(s.transport_to_next || '');
-        const travelMin = Number((/(\d+)\s*phút/.exec(transport) || [])[1] || 0);
-        const travelKm  = Number((/(\d+(?:\.\d+)?)\s*km/.exec(transport) || [])[1] || 0);
-        const notes    = String(s.notes || '');
-        const activity = String(s.activity || '');
-        stops.push({
-          order:               order++,
-          name:                String(s.name || ''),
-          commune:             'Tri Tôn, An Giang',
-          category:            inferCategory(String(s.name || ''), activity),
-          time_start:          String(s.time || '07:00'),
-          time_end:            '',
-          duration_min:        Number(s.duration_minutes || 60),
-          tip:                 notes || activity,
-          travel_to_next_min:  travelMin,
-          travel_to_next_km:   travelKm,
-          // extra raw fields exposed for UI if needed
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ...(s.cost_vnd ? { cost_vnd: s.cost_vnd } : {}),
-          ...(dayNum > 1 ? { day: dayNum } : {}),
-        } as ItineraryData['stops'][number]);
-      }
-    }
-
-    // Build tagline
-    const desc = String(itin.description || '');
-    const audiences = (itin.audiences as string[]) || [];
-
-    return {
-      slug:         String(itin.slug || slug),
-      emoji:        getEmojiFromJson(itin),
-      title:        String(itin.name || 'Lịch Trình Tri Tôn'),
-      tagline:      desc.length > 120 ? desc.slice(0, 120) + '…' : desc,
-      for_whom:     audiences.join(', '),
-      duration:     String(itin.duration || '1 ngày'),
-      budget_range: String(itin.total_cost_estimate_vnd || ''),
-      stops,
-    };
-  } catch {
-    return null;
-  }
-}
-
 function getEmojiFromJson(itin: Record<string, unknown>): string {
   const name = String(itin.name || '').toLowerCase();
   if (/sống ảo|tiktok|check-in/.test(name)) return '📸';
@@ -104,6 +44,125 @@ function getEmojiFromJson(itin: Record<string, unknown>): string {
   if (/chạy xe|xe đêm/.test(name)) return '🛵';
   if (/cafe/.test(name)) return '☕';
   return '🔥';
+}
+
+// ── Cache places map for dynamic POI enrichment ──────────────────────────────
+interface PlaceInfo {
+  id: string;
+  name: string;
+  commune: string;
+  category: string;
+  rating: number;
+  image_url: string;
+}
+
+let placesCache: PlaceInfo[] | null = null;
+let lastPlacesFetch = 0;
+
+async function getPlacesMap(): Promise<Map<string, PlaceInfo>> {
+  const now = Date.now();
+  if (!placesCache || now - lastPlacesFetch > 300000) {
+    try {
+      const { data } = await supabase
+        .from('places')
+        .select('id, name, commune, category, rating, image_url')
+        .eq('is_verified', true);
+      if (Array.isArray(data)) {
+        placesCache = data;
+        lastPlacesFetch = now;
+      }
+    } catch { /* ignore fallback */ }
+  }
+
+  const map = new Map<string, PlaceInfo>();
+  if (placesCache) {
+    for (const p of placesCache) {
+      map.set(p.name.toLowerCase(), p);
+      map.set(p.id.toLowerCase(), p);
+    }
+  }
+  return map;
+}
+
+function findMatchingPlace(stopName: string, poiId: string, placesMap: Map<string, PlaceInfo>): PlaceInfo | null {
+  if (poiId && placesMap.has(poiId.toLowerCase())) {
+    return placesMap.get(poiId.toLowerCase()) || null;
+  }
+  const low = stopName.toLowerCase();
+  for (const [key, p] of placesMap.entries()) {
+    if (low.includes(key) || key.includes(low)) return p;
+  }
+  return null;
+}
+
+// ── Load & convert from lichtrinh.json with real POI enrichment ──────────────
+async function loadFromJsonFile(slug: string): Promise<ItineraryData | null> {
+  try {
+    const filePath = path.join(process.cwd(), '..', 'data', 'lichtrinh.json');
+    if (!fs.existsSync(filePath)) return null;
+
+    const raw = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const itin = (raw.itineraries as Record<string, unknown>[])
+      .find((i) => i.slug === slug || i.id === slug);
+    if (!itin) return null;
+
+    const placesMap = await getPlacesMap();
+
+    // Flatten days → stops
+    let order = 1;
+    const stops: ItineraryData['stops'] = [];
+    for (const day of (itin.days as Record<string, unknown>[])) {
+      const dayNum = Number(day.day) || 1;
+      for (const s of (day.stops as Record<string, unknown>[])) {
+        const transport = String(s.transport_to_next || '');
+        const travelMin = Number((/(\d+)\s*phút/.exec(transport) || [])[1] || 0);
+        const travelKm  = Number((/(\d+(?:\.\d+)?)\s*km/.exec(transport) || [])[1] || 0);
+        const notes    = String(s.notes || '');
+        const activity = String(s.activity || '');
+        const stopName = String(s.name || '');
+        const poiId    = String(s.poi_id || '');
+
+        const matchedPlace = findMatchingPlace(stopName, poiId, placesMap);
+
+        stops.push({
+          order:               order++,
+          name:                stopName,
+          commune:             matchedPlace?.commune || 'Tri Tôn, An Giang',
+          category:            inferCategory(stopName, activity),
+          time_start:          String(s.time || '07:00'),
+          time_end:            '',
+          duration_min:        Number(s.duration_minutes || 60),
+          tip:                 notes || activity,
+          travel_to_next_min:  travelMin,
+          travel_to_next_km:   travelKm,
+          cost_vnd:            String(s.cost_vnd || ''),
+          day:                 dayNum,
+          transport_to_next:   transport,
+          imageUrl:            matchedPlace?.image_url || '',
+          rating:              matchedPlace?.rating || 4.8,
+        } as ItineraryData['stops'][number]);
+      }
+    }
+
+    // Build tagline
+    const desc = String(itin.description || '');
+    const audiences = (itin.audiences as string[]) || [];
+
+    return {
+      slug:         String(itin.slug || slug),
+      emoji:        getEmojiFromJson(itin),
+      title:        String(itin.name || 'Lịch Trình Tri Tôn'),
+      tagline:      desc.length > 120 ? desc.slice(0, 120) + '…' : desc,
+      for_whom:     audiences.join(', '),
+      duration:     String(itin.duration || '1 ngày'),
+      budget_range: String(itin.total_cost_estimate_vnd || ''),
+      stops,
+      tips:         Array.isArray(itin.tips) ? (itin.tips as string[]) : [],
+      best_season:  String(itin.best_season || 'Quanh năm'),
+    };
+  } catch {
+    return null;
+  }
 }
 
 // ── GET /api/v1/chat/itinerary?slug=... ─────────────────────────────────────
@@ -148,7 +207,7 @@ export async function GET(req: NextRequest) {
 
   // ── Fetch specific itinerary ─────────────────────────────────────────────
   // PRIMARY: luôn đọc thẳng từ lichtrinh.json (nguồn chân lý tuyệt đối)
-  const itineraryFromJson = loadFromJsonFile(slug);
+  const itineraryFromJson = await loadFromJsonFile(slug);
   if (itineraryFromJson) {
     return NextResponse.json({
       itinerary: itineraryFromJson,
@@ -185,4 +244,3 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ error: 'Lịch trình không tồn tại' }, { status: 404 });
 }
-

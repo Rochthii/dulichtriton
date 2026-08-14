@@ -18,6 +18,8 @@ export interface ItineraryStop {
   cost_vnd?: string;        // from lichtrinh.json
   day?: number;             // for multi-day itineraries
   transport_to_next?: string;
+  imageUrl?: string;
+  rating?: number;
 }
 
 export interface ItineraryData {
@@ -29,6 +31,8 @@ export interface ItineraryData {
   duration: string;
   budget_range: string;
   stops: ItineraryStop[];
+  tips?: string[];
+  best_season?: string;
 }
 
 interface WireDiagramItineraryProps {

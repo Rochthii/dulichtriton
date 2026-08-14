@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Calendar, Clock, MapPin, Navigation, Sparkles, QrCode, 
-  Car, Bike, Compass, Utensils, ChevronRight, Share2, Info, AlertTriangle, 
-  Sun, Moon, Play, ArrowDown, ExternalLink, Star, Filter, CheckCircle2
+  Car, Bike, Compass, Play, ArrowDown, CheckCircle2,
+  Sun, AlertCircle, Info, Tag
 } from 'lucide-react';
 import PageHeaderBanner from './PageHeaderBanner';
 import ItineraryExportModal from './ItineraryExportModal';
@@ -22,53 +22,6 @@ interface PresetSummary {
   sort_order: number;
 }
 
-// Visual image lookup dictionary based on place name keywords
-const PLACE_IMAGES: Record<string, string> = {
-  'tapa': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  'tà pạ': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  'chùa tà pạ': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'xà tón': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'svayton': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'cổng trời': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'koh kas': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'gà đốt': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
-  'ô thum': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
-  'soài so': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  'soài chék': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  'cô tô': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  'tơ lụa': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop',
-  'đồng lúa': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1200&auto=format&fit=crop',
-  'thốt nốt': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  'chợ đêm': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
-  'chợ tri tôn': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
-  'đu đủ đâm': 'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop',
-  'lẩu bò': 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop',
-  'bò nướng': 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop',
-  'ba chúc': 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  'tức dụp': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  'ô tà sóc': 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop',
-  'cà phê': 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
-  'coffee': 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
-  'thả diều': 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
-  'tuyến tránh': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  'hàng còng': 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop',
-  'vòm còng': 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1200&auto=format&fit=crop',
-  'bánh bò': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop',
-  'bún cá': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200&auto=format&fit=crop',
-  'cháo bò': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200&auto=format&fit=crop',
-  'vồ hội': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  'săn mây': 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  'suối': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=1200&auto=format&fit=crop',
-};
-
-function getPlaceImage(name: string): string {
-  const low = name.toLowerCase();
-  for (const [key, url] of Object.entries(PLACE_IMAGES)) {
-    if (low.includes(key)) return url;
-  }
-  return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop';
-}
-
 const CATEGORY_STYLE: Record<string, { bg: string; label: string }> = {
   'check-in':  { bg: 'bg-blue-50 text-blue-700 border-blue-200',     label: 'Check-in Sống Ảo' },
   'food':      { bg: 'bg-amber-50 text-amber-800 border-amber-200',   label: 'Ẩm Thực Đặc Sản' },
@@ -81,56 +34,63 @@ type DurationFilter = 'all' | '1-day' | 'evening' | '2-day' | '3-day';
 
 export default function ItineraryClientPage() {
   const [presets, setPresets] = useState<PresetSummary[]>([]);
-  const [selectedSlug, setSelectedSlug] = useState<string>('kinh-dien-1-ngay');
+  const [selectedSlug, setSelectedSlug] = useState<string>('');
   const [currentItinerary, setCurrentItinerary] = useState<ItineraryData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isListLoading, setIsListLoading] = useState(true);
   const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
   const [transport, setTransport] = useState<'bike' | 'car'>('bike');
   const [showExportModal, setShowExportModal] = useState(false);
 
   // ── Fetch presets list on mount ───────────────────────────────────────────
   useEffect(() => {
+    let isMounted = true;
     async function loadPresets() {
       try {
         const res = await fetch('/api/v1/chat/itinerary');
         if (!res.ok) throw new Error('Failed to load presets');
         const data = await res.json();
-        if (Array.isArray(data.presets)) {
+        if (isMounted && Array.isArray(data.presets) && data.presets.length > 0) {
           setPresets(data.presets);
+          setSelectedSlug(data.presets[0].slug);
         }
       } catch (err) {
         console.error('Error fetching itinerary presets:', err);
+      } finally {
+        if (isMounted) setIsListLoading(false);
       }
     }
     loadPresets();
+    return () => { isMounted = false; };
   }, []);
 
   // ── Fetch specific itinerary when slug changes ────────────────────────────
   useEffect(() => {
+    if (!selectedSlug) return;
+    let isMounted = true;
     async function loadItinerary(slug: string) {
       setIsLoading(true);
       try {
         const res = await fetch(`/api/v1/chat/itinerary?slug=${slug}`);
         if (!res.ok) throw new Error('Failed to fetch itinerary');
         const data = await res.json();
-        if (data.itinerary) {
+        if (isMounted && data.itinerary) {
           setCurrentItinerary(data.itinerary);
         }
       } catch (err) {
         console.error('Error fetching itinerary detail:', err);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     }
-    if (selectedSlug) {
-      loadItinerary(selectedSlug);
-    }
+    loadItinerary(selectedSlug);
+    return () => { isMounted = false; };
   }, [selectedSlug]);
 
   // ── Filter presets by duration ───────────────────────────────────────────
   const filteredPresets = presets.filter(p => {
     if (durationFilter === 'all') return true;
-    const d = p.duration.toLowerCase();
+    const d = (p.duration || '').toLowerCase();
     if (durationFilter === '1-day') return d.includes('1 ngày') && !d.includes('đêm') && !d.includes('tối');
     if (durationFilter === 'evening') return d.includes('tối') || d.includes('chiều-tối') || d.includes('đêm');
     if (durationFilter === '2-day') return d.includes('2 ngày');
@@ -157,7 +117,7 @@ export default function ItineraryClientPage() {
       <PageHeaderBanner
         badgeText="Dữ Liệu Thực Địa Tri Tôn Đã Xác Minh 2026"
         badgeIcon={Sparkles}
-        title="35 BỘ LỊCH TRÌNH CHUẨN DU LỊCH TRI TÔN"
+        title="BỘ LỊCH TRÌNH CHUẨN DU LỊCH TRI TÔN"
         subtitle="Hệ thống lịch trình tối ưu theo từng nhu cầu: 1 ngày, 2N1Đ, 3N2Đ, tour ẩm thực, tâm linh, trekking, săn ảnh và trải nghiệm đêm Tri Tôn."
         countLabel="Lịch trình đang xem"
         countValue={currentItinerary ? `${currentItinerary.emoji} ${currentItinerary.title}` : 'Đang tải...'}
@@ -201,38 +161,44 @@ export default function ItineraryClientPage() {
           </div>
         </div>
 
-        {/* Preset Cards Carousel / Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 pt-4 max-h-72 overflow-y-auto pr-1 scrollbar-thin">
-          {filteredPresets.map(p => {
-            const isSelected = selectedSlug === p.slug;
-            return (
-              <button
-                key={p.slug}
-                type="button"
-                onClick={() => setSelectedSlug(p.slug)}
-                className={`text-left p-3 rounded-2xl border transition-all active:scale-95 flex flex-col justify-between ${
-                  isSelected
-                    ? 'bg-emerald-50/80 border-[#1B4D3E] ring-2 ring-[#1B4D3E]/20 shadow-xs'
-                    : 'bg-[#F8F9FA] border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30'
-                }`}
-              >
-                <div>
-                  <div className="text-xl leading-none mb-1.5">{p.emoji}</div>
-                  <h4 className={`text-xs font-extrabold line-clamp-1 leading-tight ${isSelected ? 'text-[#1B4D3E]' : 'text-slate-900'}`}>
-                    {p.title}
-                  </h4>
-                  <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">
-                    {p.for_whom}
-                  </p>
-                </div>
-                <div className="mt-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[#D99B26]">{p.duration}</span>
-                  {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#1B4D3E]" />}
-                </div>
-              </button>
-            );
-          })}
-        </div>
+        {/* Preset Cards Grid */}
+        {isListLoading ? (
+          <div className="py-8 text-center text-xs font-semibold text-slate-400">
+            Đang tải danh sách lịch trình...
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 pt-4 max-h-72 overflow-y-auto pr-1 scrollbar-thin">
+            {filteredPresets.map(p => {
+              const isSelected = selectedSlug === p.slug;
+              return (
+                <button
+                  key={p.slug}
+                  type="button"
+                  onClick={() => setSelectedSlug(p.slug)}
+                  className={`text-left p-3 rounded-2xl border transition-all active:scale-95 flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-emerald-50/80 border-[#1B4D3E] ring-2 ring-[#1B4D3E]/20 shadow-xs'
+                      : 'bg-[#F8F9FA] border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30'
+                  }`}
+                >
+                  <div>
+                    <div className="text-xl leading-none mb-1.5">{p.emoji || '🔥'}</div>
+                    <h4 className={`text-xs font-extrabold line-clamp-1 leading-tight ${isSelected ? 'text-[#1B4D3E]' : 'text-slate-900'}`}>
+                      {p.title}
+                    </h4>
+                    <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">
+                      {p.for_whom}
+                    </p>
+                  </div>
+                  <div className="mt-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#D99B26]">{p.duration}</span>
+                    {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#1B4D3E]" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Transport & Controls */}
         <div className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -268,7 +234,8 @@ export default function ItineraryClientPage() {
 
           <button
             onClick={() => setShowExportModal(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#D99B26] hover:bg-[#c48b20] text-slate-950 font-extrabold transition-all shadow-xs"
+            disabled={!currentItinerary}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#D99B26] hover:bg-[#c48b20] text-slate-950 font-extrabold transition-all shadow-xs disabled:opacity-50"
           >
             <QrCode className="w-4 h-4" />
             <span>Xuất QR / PDF Lịch Trình</span>
@@ -280,7 +247,7 @@ export default function ItineraryClientPage() {
       {isLoading ? (
         <div className="bg-white rounded-3xl p-12 border border-slate-200 text-center space-y-3">
           <div className="inline-block w-8 h-8 border-4 border-[#1B4D3E] border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-bold text-slate-600">Đang nạp lịch trình thực địa...</p>
+          <p className="text-sm font-bold text-slate-600">Đang nạp dữ liệu lịch trình thực địa...</p>
         </div>
       ) : currentItinerary ? (
         <div className="space-y-8 mb-12">
@@ -297,6 +264,12 @@ export default function ItineraryClientPage() {
                 <p className="text-emerald-100 text-sm mt-1 max-w-2xl leading-relaxed">
                   {currentItinerary.tagline}
                 </p>
+                {currentItinerary.best_season && (
+                  <p className="text-xs text-amber-300 font-bold mt-2 flex items-center gap-1">
+                    <Sun className="w-3.5 h-3.5" />
+                    Mùa đẹp nhất: {currentItinerary.best_season}
+                  </p>
+                )}
               </div>
 
               {/* Metrics Badge */}
@@ -337,7 +310,6 @@ export default function ItineraryClientPage() {
                 <div className="relative space-y-6">
                   {stops.map((stop, idx) => {
                     const catStyle = CATEGORY_STYLE[stop.category] || CATEGORY_STYLE['nature'];
-                    const imgUrl = getPlaceImage(stop.name);
                     const isLast = idx === stops.length - 1;
                     const mapsUrl = getGoogleMapsUrl({ name: stop.name, commune: stop.commune });
                     const tikTokSearchUrl = `https://www.tiktok.com/search?q=${encodeURIComponent(`${stop.name} Tri Tôn An Giang`)}`;
@@ -347,34 +319,53 @@ export default function ItineraryClientPage() {
                         {/* Stop Card Node */}
                         <div className="group relative flex flex-col md:flex-row items-stretch rounded-3xl bg-[#F8F9FA] border border-slate-200 hover:border-emerald-500/50 shadow-xs hover:shadow-lg transition-all duration-300 overflow-hidden">
                           {/* Left Photo Thumbnail */}
-                          <div className="relative w-full md:w-72 h-48 md:h-auto overflow-hidden shrink-0 bg-slate-200">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={imgUrl}
-                              alt={stop.name}
-                              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                          {stop.imageUrl ? (
+                            <div className="relative w-full md:w-72 h-48 md:h-auto overflow-hidden shrink-0 bg-slate-200">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={stop.imageUrl}
+                                alt={stop.name}
+                                className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
 
-                            {/* Node Index Badge */}
-                            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-amber-300 font-extrabold text-xs shadow-xs border border-amber-300/40">
-                              <span className="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-[11px]">
-                                {stop.order || idx + 1}
-                              </span>
-                              <span>NODE #{stop.order || idx + 1}</span>
-                            </div>
+                              {/* Node Index Badge */}
+                              <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-amber-300 font-extrabold text-xs shadow-xs border border-amber-300/40">
+                                <span className="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-[11px]">
+                                  {stop.order || idx + 1}
+                                </span>
+                                <span>NODE #{stop.order || idx + 1}</span>
+                              </div>
 
-                            {/* Category Label */}
-                            <div className="absolute bottom-3 left-3 right-3 text-white">
-                              <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 px-2 py-0.5 rounded bg-slate-900/70 inline-block mb-1">
-                                {catStyle.label}
-                              </span>
-                              <h4 className="text-base font-extrabold line-clamp-1">
-                                {stop.name}
-                              </h4>
+                              {/* Category Label */}
+                              <div className="absolute bottom-3 left-3 right-3 text-white">
+                                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 px-2 py-0.5 rounded bg-slate-900/70 inline-block mb-1">
+                                  {catStyle.label}
+                                </span>
+                                <h4 className="text-base font-extrabold line-clamp-1">
+                                  {stop.name}
+                                </h4>
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div className="relative w-full md:w-48 bg-gradient-to-br from-[#1B4D3E] to-[#143B2F] p-5 flex flex-col justify-between shrink-0 text-white">
+                              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-amber-300 font-extrabold text-xs w-fit">
+                                <span className="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-[11px]">
+                                  {stop.order || idx + 1}
+                                </span>
+                                <span>NODE #{stop.order || idx + 1}</span>
+                              </div>
+                              <div>
+                                <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300 block mb-1">
+                                  {catStyle.label}
+                                </span>
+                                <h4 className="text-sm font-extrabold line-clamp-2">
+                                  {stop.name}
+                                </h4>
+                              </div>
+                            </div>
+                          )}
 
                           {/* Right Content Body */}
                           <div className="flex flex-1 flex-col justify-between p-5 space-y-3">
@@ -474,6 +465,26 @@ export default function ItineraryClientPage() {
               </div>
             );
           })}
+
+          {/* Real Tips from Itinerary Data */}
+          {Array.isArray(currentItinerary.tips) && currentItinerary.tips.length > 0 && (
+            <div className="bg-gradient-to-br from-amber-50 via-white to-amber-100/50 rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-xs space-y-4">
+              <div className="flex items-center gap-2">
+                <Sun className="w-5 h-5 text-amber-600" />
+                <h3 className="text-lg font-black text-slate-900">💡 Mẹo & Lưu Ý Cho Lịch Trình Này</h3>
+              </div>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                {currentItinerary.tips.map((tip, idx) => (
+                  <li key={idx} className="p-3.5 rounded-2xl bg-white border border-amber-200 shadow-2xs flex items-start gap-2.5">
+                    <span className="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-[10px] shrink-0 mt-0.5">
+                      {idx + 1}
+                    </span>
+                    <span className="text-slate-700 leading-relaxed font-medium">{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       ) : (
         <div className="bg-white rounded-3xl p-12 border border-slate-200 text-center">
@@ -481,51 +492,11 @@ export default function ItineraryClientPage() {
         </div>
       )}
 
-      {/* Seasonal & Emergency Guidance */}
-      <div className="my-10">
-        <div className="bg-gradient-to-br from-amber-50 via-white to-amber-100/50 rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-xs space-y-4">
-          <div className="flex items-center gap-2">
-            <Sun className="w-5 h-5 text-amber-600" />
-            <h3 className="text-lg font-black text-slate-900">🎚️ Lưu Ý & Biến Thể Mùa Du Lịch Tri Tôn</h3>
-          </div>
-          <p className="text-xs text-slate-600">Những lưu ý thực tế để chuyến đi thuận lợi nhất:</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 shadow-2xs space-y-1">
-              <span className="font-extrabold text-amber-800 block mb-1">🌾 Mùa lúa chín (T9–T11):</span>
-              <p className="text-slate-700">Cánh đồng Tà Pạ vàng rực rỡ, thích hợp chụp ảnh sáng sớm 6:00–7:30 và hoàng hôn 16:30–17:30.</p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 shadow-2xs space-y-1">
-              <span className="font-extrabold text-rose-800 block mb-1">🐂 Dịp Lễ hội Đua Bò Sene Dolta (T9–T10 Âm lịch):</span>
-              <p className="text-slate-700">Đua bò diễn ra tại sân chùa Tà Pạ hoặc chùa Thơ Mít, lượng khách rất đông, cần chuẩn bị sớm từ 6h sáng.</p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 shadow-2xs space-y-1">
-              <span className="font-extrabold text-amber-900 block mb-1">🍗 Đặt món Gà Đốt Ô Thum:</span>
-              <p className="text-slate-700">Nên gọi điện đặt trước 45–60 phút để quán ướp và đốt than kịp, tránh phải chờ lâu vào giờ trưa.</p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 shadow-2xs space-y-1">
-              <span className="font-extrabold text-indigo-900 block mb-1">🛵 Di chuyển & Trang phục:</span>
-              <p className="text-slate-700">Xe máy là phương tiện cơ động nhất. Khi viếng chùa Khmer cần mặc trang phục lịch sự, che vai và đầu gối.</p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white border border-amber-200 shadow-2xs space-y-1 md:col-span-2 lg:col-span-2">
-              <span className="font-extrabold text-emerald-900 block mb-1">💵 Tiền mặt & Điện thoại:</span>
-              <p className="text-slate-700">Chuẩn bị sẵn tiền mặt cho các quán nhỏ và hàng nước ven đường. Tải trước bản đồ offline khi đi sâu vào vùng núi.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Export Modal */}
       {showExportModal && currentItinerary && (
         <ItineraryExportModal
           onClose={() => setShowExportModal(false)}
-          tourTitle={currentItinerary.title}
-          duration={currentItinerary.duration}
-          totalSpots={totalStopsCount}
+          itinerary={currentItinerary}
         />
       )}
     </>

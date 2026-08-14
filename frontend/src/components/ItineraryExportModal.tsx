@@ -5,33 +5,27 @@ import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Download, Share2, AlertTriangle, Map, X, Check, MapPin } from 'lucide-react';
+import type { ItineraryData } from './WireDiagramItinerary';
 
 interface ItineraryExportModalProps {
   onClose: () => void;
-  tourTitle?: string;
-  duration?: string;
-  totalSpots?: number;
+  itinerary: ItineraryData;
 }
 
-export default function ItineraryExportModal({ onClose, tourTitle, duration, totalSpots }: ItineraryExportModalProps) {
+export default function ItineraryExportModal({ onClose, itinerary }: ItineraryExportModalProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
 
-  const itineraryData = {
-    title: 'Lịch Trình Bảy Núi 2N1Đ',
-    spots: [
-      'Sáng: Chùa Tà Pạ (Xã Núi Tô)',
-      'Trưa: Quán Gà Đốt Ô Thum (Xã Ô Lâm)',
-      'Chiều: Cổng Trời Koh Kas (Xã Chau Lăng)',
-      'Tối: Cô Tô Mountain Homestay'
-    ],
-    emergency: {
-      police: '0296 3874 113 (Công an Tri Tôn)',
-      hospital: '0296 3874 115 (TT Y Tế Tri Tôn)'
-    },
-    url: 'https://dulichtriton.vn/itinerary/12345'
+  const shareUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/itinerary?slug=${itinerary.slug}`
+    : `https://dulichtriton.vn/itinerary?slug=${itinerary.slug}`;
+
+  const emergencyContacts = {
+    police: '0296 3874 113 (Công an Tri Tôn)',
+    hospital: '0296 3874 115 (TT Y Tế Tri Tôn)',
+    hotline: '0296 3771 999 (UBND Tri Tôn)'
   };
 
   const handleDownloadQR = async () => {
@@ -41,7 +35,7 @@ export default function ItineraryExportModal({ onClose, tourTitle, duration, tot
       const canvas = await html2canvas(qrRef.current);
       const url = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = 'QR-Lich-Trinh-Tri-Ton.png';
+      link.download = `QR-${itinerary.slug || 'Lich-Trinh-Tri-Ton'}.png`;
       link.href = url;
       link.click();
       setExportSuccess(true);
@@ -64,7 +58,7 @@ export default function ItineraryExportModal({ onClose, tourTitle, duration, tot
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('Lich-Trinh-Tri-Ton-Offline.pdf');
+      pdf.save(`Lich-Trinh-${itinerary.slug || 'Tri-Ton'}-Offline.pdf`);
       setExportSuccess(true);
       setTimeout(() => setExportSuccess(false), 3000);
     } catch (err) {
@@ -81,7 +75,7 @@ export default function ItineraryExportModal({ onClose, tourTitle, duration, tot
         <div className="p-4 bg-[#1B4D3E] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Map className="w-5 h-5 text-[#D99B26]" />
-            <h3 className="font-bold">Xuất Lịch Trình Offline</h3>
+            <h3 className="font-bold text-sm sm:text-base">Xuất Lịch Trình Offline</h3>
           </div>
           <button onClick={onClose} className="p-1 hover:bg-white/20 rounded-lg transition-colors">
             <X className="w-5 h-5" />
@@ -91,58 +85,69 @@ export default function ItineraryExportModal({ onClose, tourTitle, duration, tot
         {/* Content */}
         <div className="p-6 overflow-y-auto space-y-6 relative">
           <div className="text-sm text-slate-600">
-            Lưu lại mã QR hoặc tải file PDF để xem lịch trình khi mất sóng 4G tại khu vực núi rừng.
+            Lưu lại mã QR hoặc tải file PDF để xem lịch trình khi mất sóng 4G tại khu vực núi rừng Bảy Núi.
           </div>
 
           {/* Hidden PDF Content to render with html2canvas */}
           <div className="absolute top-[-9999px] left-[-9999px]">
-             <div ref={pdfRef} className="w-[800px] bg-white p-12 space-y-8 font-sans">
-                <div className="border-b-4 border-[#1B4D3E] pb-4 flex justify-between items-end">
-                  <div>
-                    <h1 className="text-4xl font-black text-[#1B4D3E]">{itineraryData.title}</h1>
-                    <p className="text-xl text-slate-500 mt-2">Bản lưu Offline - Trải nghiệm Du Lịch Tri Tôn</p>
-                  </div>
-                  <div className="text-right">
-                    <QRCodeSVG value={itineraryData.url} size={100} />
-                  </div>
-                </div>
-
+            <div ref={pdfRef} className="w-[800px] bg-white p-12 space-y-8 font-sans">
+              <div className="border-b-4 border-[#1B4D3E] pb-4 flex justify-between items-end">
                 <div>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-4">Các điểm đến (Tọa độ đã ghim)</h2>
-                  <ul className="space-y-3">
-                    {itineraryData.spots.map((s, i) => (
-                      <li key={i} className="text-lg flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <MapPin className="w-5 h-5 text-[#D99B26]" />
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
+                  <h1 className="text-3xl font-black text-[#1B4D3E]">{itinerary.emoji} {itinerary.title}</h1>
+                  <p className="text-lg text-slate-600 mt-1">{itinerary.tagline}</p>
+                  <p className="text-sm text-slate-500 mt-1">⏱ Thời lượng: {itinerary.duration} • 💰 Chi phí: {itinerary.budget_range || 'Tự túc'}</p>
                 </div>
+                <div className="text-right">
+                  <QRCodeSVG value={shareUrl} size={100} />
+                </div>
+              </div>
 
-                <div className="bg-rose-50 border-2 border-rose-200 rounded-2xl p-6">
-                  <h2 className="text-xl font-bold text-rose-700 flex items-center gap-2 mb-4">
-                    <AlertTriangle className="w-6 h-6" />
-                    Thông Tin Cứu Hộ Khẩn Cấp (SOS 24/7)
-                  </h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-white p-4 rounded-xl border border-rose-100 shadow-sm">
-                      <p className="text-rose-900 font-bold">🚔 Công an Tri Tôn</p>
-                      <p className="text-2xl font-black mt-1">{itineraryData.emergency.police}</p>
-                    </div>
-                    <div className="bg-white p-4 rounded-xl border border-rose-100 shadow-sm">
-                      <p className="text-rose-900 font-bold">🚑 Y tế Tri Tôn</p>
-                      <p className="text-2xl font-black mt-1">{itineraryData.emergency.hospital}</p>
-                    </div>
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">Các điểm đến trong hành trình ({itinerary.stops.length} điểm)</h2>
+                <ul className="space-y-3">
+                  {itinerary.stops.map((s, i) => (
+                    <li key={i} className="text-base flex items-start gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                      <MapPin className="w-5 h-5 text-[#D99B26] shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-extrabold text-slate-900">
+                          {s.time_start} — {s.name} <span className="text-xs text-slate-500 font-normal">({s.commune})</span>
+                        </p>
+                        {s.tip && <p className="text-xs text-slate-600 mt-0.5">💡 {s.tip}</p>}
+                        {s.cost_vnd && <p className="text-xs text-[#B45309] font-bold mt-0.5">💰 {s.cost_vnd}</p>}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="bg-rose-50 border-2 border-rose-200 rounded-2xl p-6">
+                <h2 className="text-xl font-bold text-rose-700 flex items-center gap-2 mb-4">
+                  <AlertTriangle className="w-6 h-6" />
+                  Thông Tin Cứu Hộ Khẩn Cấp (SOS 24/7 Tri Tôn)
+                </h2>
+                <div className="grid grid-cols-3 gap-3 text-xs">
+                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                    <p className="text-rose-900 font-bold">🚔 Công an Tri Tôn</p>
+                    <p className="text-base font-black mt-1">{emergencyContacts.police}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                    <p className="text-rose-900 font-bold">🚑 Y tế Tri Tôn</p>
+                    <p className="text-base font-black mt-1">{emergencyContacts.hospital}</p>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                    <p className="text-rose-900 font-bold">🏛️ Hỗ trợ Du lịch</p>
+                    <p className="text-base font-black mt-1">{emergencyContacts.hotline}</p>
                   </div>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* QR Section */}
             <div className="flex flex-col items-center justify-center space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
-              <div ref={qrRef} className="bg-white p-4 rounded-xl shadow-xs border border-slate-200">
-                <QRCodeSVG value={itineraryData.url} size={160} level="H" />
+              <div ref={qrRef} className="bg-white p-4 rounded-xl shadow-2xs border border-slate-200">
+                <QRCodeSVG value={shareUrl} size={160} level="H" />
               </div>
               <p className="text-xs text-center text-slate-500 font-medium">
                 Quét mã để mở lịch trình trên điện thoại khác
