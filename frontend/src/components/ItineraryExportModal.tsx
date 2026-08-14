@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -9,18 +9,43 @@ import type { ItineraryData } from './WireDiagramItinerary';
 
 interface ItineraryExportModalProps {
   onClose: () => void;
-  itinerary: ItineraryData;
+  itinerary?: ItineraryData | null;
 }
 
-export default function ItineraryExportModal({ onClose, itinerary }: ItineraryExportModalProps) {
+export default function ItineraryExportModal({ onClose, itinerary: propItinerary }: ItineraryExportModalProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
+  const [activeItinerary, setActiveItinerary] = useState<ItineraryData | null>(propItinerary || null);
+
+  useEffect(() => {
+    if (propItinerary) {
+      setActiveItinerary(propItinerary);
+      return;
+    }
+    let isMounted = true;
+    async function loadDefaultItinerary() {
+      try {
+        const res = await fetch('/api/v1/chat/itinerary?slug=kinh-dien-1-ngay');
+        if (!res.ok) throw new Error('Failed to load itinerary');
+        const data = await res.json();
+        if (isMounted && data.itinerary) {
+          setActiveItinerary(data.itinerary);
+        }
+      } catch (err) {
+        console.error('Failed to load default itinerary for export:', err);
+      }
+    }
+    loadDefaultItinerary();
+    return () => { isMounted = false; };
+  }, [propItinerary]);
+
+  const itinerary = activeItinerary;
 
   const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/itinerary?slug=${itinerary.slug}`
-    : `https://dulichtriton.vn/itinerary?slug=${itinerary.slug}`;
+    ? `${window.location.origin}/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`
+    : `https://dulichtriton.vn/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`;
 
   const emergencyContacts = {
     police: '0296 3874 113 (Công an Tri Tôn)',
@@ -35,7 +60,7 @@ export default function ItineraryExportModal({ onClose, itinerary }: ItineraryEx
       const canvas = await html2canvas(qrRef.current);
       const url = canvas.toDataURL('image/png');
       const link = document.createElement('a');
-      link.download = `QR-${itinerary.slug || 'Lich-Trinh-Tri-Ton'}.png`;
+      link.download = `QR-${itinerary?.slug || 'Lich-Trinh-Tri-Ton'}.png`;
       link.href = url;
       link.click();
       setExportSuccess(true);
@@ -48,7 +73,7 @@ export default function ItineraryExportModal({ onClose, itinerary }: ItineraryEx
   };
 
   const handleDownloadPDF = async () => {
-    if (!pdfRef.current) return;
+    if (!pdfRef.current || !itinerary) return;
     try {
       setIsExporting(true);
       const canvas = await html2canvas(pdfRef.current, { scale: 2 });
@@ -88,107 +113,115 @@ export default function ItineraryExportModal({ onClose, itinerary }: ItineraryEx
             Lưu lại mã QR hoặc tải file PDF để xem lịch trình khi mất sóng 4G tại khu vực núi rừng Bảy Núi.
           </div>
 
-          {/* Hidden PDF Content to render with html2canvas */}
-          <div className="absolute top-[-9999px] left-[-9999px]">
-            <div ref={pdfRef} className="w-[800px] bg-white p-12 space-y-8 font-sans">
-              <div className="border-b-4 border-[#1B4D3E] pb-4 flex justify-between items-end">
-                <div>
-                  <h1 className="text-3xl font-black text-[#1B4D3E]">{itinerary.emoji} {itinerary.title}</h1>
-                  <p className="text-lg text-slate-600 mt-1">{itinerary.tagline}</p>
-                  <p className="text-sm text-slate-500 mt-1">⏱ Thời lượng: {itinerary.duration} • 💰 Chi phí: {itinerary.budget_range || 'Tự túc'}</p>
-                </div>
-                <div className="text-right">
-                  <QRCodeSVG value={shareUrl} size={100} />
-                </div>
-              </div>
+          {!itinerary ? (
+            <div className="py-12 text-center text-xs font-semibold text-slate-500">
+              Đang chuẩn bị dữ liệu xuất...
+            </div>
+          ) : (
+            <>
+              {/* Hidden PDF Content to render with html2canvas */}
+              <div className="absolute top-[-9999px] left-[-9999px]">
+                <div ref={pdfRef} className="w-[800px] bg-white p-12 space-y-8 font-sans">
+                  <div className="border-b-4 border-[#1B4D3E] pb-4 flex justify-between items-end">
+                    <div>
+                      <h1 className="text-3xl font-black text-[#1B4D3E]">{itinerary.emoji} {itinerary.title}</h1>
+                      <p className="text-lg text-slate-600 mt-1">{itinerary.tagline}</p>
+                      <p className="text-sm text-slate-500 mt-1">⏱ Thời lượng: {itinerary.duration} • 💰 Chi phí: {itinerary.budget_range || 'Tự túc'}</p>
+                    </div>
+                    <div className="text-right">
+                      <QRCodeSVG value={shareUrl} size={100} />
+                    </div>
+                  </div>
 
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-4">Các điểm đến trong hành trình ({itinerary.stops.length} điểm)</h2>
-                <ul className="space-y-3">
-                  {itinerary.stops.map((s, i) => (
-                    <li key={i} className="text-base flex items-start gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                      <MapPin className="w-5 h-5 text-[#D99B26] shrink-0 mt-0.5" />
-                      <div>
-                        <p className="font-extrabold text-slate-900">
-                          {s.time_start} — {s.name} <span className="text-xs text-slate-500 font-normal">({s.commune})</span>
-                        </p>
-                        {s.tip && <p className="text-xs text-slate-600 mt-0.5">💡 {s.tip}</p>}
-                        {s.cost_vnd && <p className="text-xs text-[#B45309] font-bold mt-0.5">💰 {s.cost_vnd}</p>}
+                  <div>
+                    <h2 className="text-2xl font-bold text-slate-900 mb-4">Các điểm đến trong hành trình ({itinerary.stops.length} điểm)</h2>
+                    <ul className="space-y-3">
+                      {itinerary.stops.map((s, i) => (
+                        <li key={i} className="text-base flex items-start gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                          <MapPin className="w-5 h-5 text-[#D99B26] shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-extrabold text-slate-900">
+                              {s.time_start} — {s.name} <span className="text-xs text-slate-500 font-normal">({s.commune})</span>
+                            </p>
+                            {s.tip && <p className="text-xs text-slate-600 mt-0.5">💡 {s.tip}</p>}
+                            {s.cost_vnd && <p className="text-xs text-[#B45309] font-bold mt-0.5">💰 {s.cost_vnd}</p>}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="bg-rose-50 border-2 border-rose-200 rounded-2xl p-6">
+                    <h2 className="text-xl font-bold text-rose-700 flex items-center gap-2 mb-4">
+                      <AlertTriangle className="w-6 h-6" />
+                      Thông Tin Cứu Hộ Khẩn Cấp (SOS 24/7 Tri Tôn)
+                    </h2>
+                    <div className="grid grid-cols-3 gap-3 text-xs">
+                      <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                        <p className="text-rose-900 font-bold">🚔 Công an Tri Tôn</p>
+                        <p className="text-base font-black mt-1">{emergencyContacts.police}</p>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-rose-50 border-2 border-rose-200 rounded-2xl p-6">
-                <h2 className="text-xl font-bold text-rose-700 flex items-center gap-2 mb-4">
-                  <AlertTriangle className="w-6 h-6" />
-                  Thông Tin Cứu Hộ Khẩn Cấp (SOS 24/7 Tri Tôn)
-                </h2>
-                <div className="grid grid-cols-3 gap-3 text-xs">
-                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
-                    <p className="text-rose-900 font-bold">🚔 Công an Tri Tôn</p>
-                    <p className="text-base font-black mt-1">{emergencyContacts.police}</p>
-                  </div>
-                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
-                    <p className="text-rose-900 font-bold">🚑 Y tế Tri Tôn</p>
-                    <p className="text-base font-black mt-1">{emergencyContacts.hospital}</p>
-                  </div>
-                  <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
-                    <p className="text-rose-900 font-bold">🏛️ Hỗ trợ Du lịch</p>
-                    <p className="text-base font-black mt-1">{emergencyContacts.hotline}</p>
+                      <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                        <p className="text-rose-900 font-bold">🚑 Y tế Tri Tôn</p>
+                        <p className="text-base font-black mt-1">{emergencyContacts.hospital}</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-xl border border-rose-100 shadow-2xs">
+                        <p className="text-rose-900 font-bold">🏛️ Hỗ trợ Du lịch</p>
+                        <p className="text-base font-black mt-1">{emergencyContacts.hotline}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* QR Section */}
-            <div className="flex flex-col items-center justify-center space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
-              <div ref={qrRef} className="bg-white p-4 rounded-xl shadow-2xs border border-slate-200">
-                <QRCodeSVG value={shareUrl} size={160} level="H" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* QR Section */}
+                <div className="flex flex-col items-center justify-center space-y-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                  <div ref={qrRef} className="bg-white p-4 rounded-xl shadow-2xs border border-slate-200">
+                    <QRCodeSVG value={shareUrl} size={160} level="H" />
+                  </div>
+                  <p className="text-xs text-center text-slate-500 font-medium">
+                    Quét mã để mở lịch trình trên điện thoại khác
+                  </p>
+                  <button
+                    onClick={handleDownloadQR}
+                    disabled={isExporting}
+                    className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                  >
+                    {exportSuccess ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+                    Lưu Ảnh QR
+                  </button>
+                </div>
+
+                {/* Actions Section */}
+                <div className="space-y-4 flex flex-col justify-center">
+                  <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl">
+                    <h4 className="font-bold text-rose-800 text-sm flex items-center gap-1.5 mb-2">
+                      <AlertTriangle className="w-4 h-4" /> An Toàn Bảy Núi
+                    </h4>
+                    <p className="text-xs text-rose-700/80 leading-relaxed">
+                      File PDF sẽ chứa lịch trình chi tiết và **Số điện thoại SOS Công An / Y Tế** để liên hệ trong trường hợp khẩn cấp.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={handleDownloadPDF}
+                    disabled={isExporting}
+                    className="w-full py-3.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-md disabled:opacity-50"
+                  >
+                    {isExporting ? (
+                      <span className="animate-pulse">Đang tạo PDF...</span>
+                    ) : (
+                      <>
+                        <Download className="w-5 h-5 text-[#D99B26]" />
+                        Tải File PDF Lịch Trình
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
-              <p className="text-xs text-center text-slate-500 font-medium">
-                Quét mã để mở lịch trình trên điện thoại khác
-              </p>
-              <button
-                onClick={handleDownloadQR}
-                disabled={isExporting}
-                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-              >
-                {exportSuccess ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
-                Lưu Ảnh QR
-              </button>
-            </div>
-
-            {/* Actions Section */}
-            <div className="space-y-4 flex flex-col justify-center">
-              <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl">
-                <h4 className="font-bold text-rose-800 text-sm flex items-center gap-1.5 mb-2">
-                  <AlertTriangle className="w-4 h-4" /> An Toàn Bảy Núi
-                </h4>
-                <p className="text-xs text-rose-700/80 leading-relaxed">
-                  File PDF sẽ chứa lịch trình chi tiết và **Số điện thoại SOS Công An / Y Tế** để liên hệ trong trường hợp khẩn cấp.
-                </p>
-              </div>
-
-              <button
-                onClick={handleDownloadPDF}
-                disabled={isExporting}
-                className="w-full py-3.5 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-md disabled:opacity-50"
-              >
-                {isExporting ? (
-                  <span className="animate-pulse">Đang tạo PDF...</span>
-                ) : (
-                  <>
-                    <Download className="w-5 h-5 text-[#D99B26]" />
-                    Tải File PDF Lịch Trình
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>
