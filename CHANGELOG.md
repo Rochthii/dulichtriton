@@ -4,6 +4,25 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.7.1-TIKTOK-UNIVERSAL-DEEPLINK-UPGRADE] - 2026-08-14
+
+### 🎵 Nâng Cấp Liên Kết TikTok: Tự Động Mở Ứng Dụng TikTok Trực Tiếp Trên Điện Thoại
+- **Chuẩn Hóa Universal Deep Link Cho TikTok (`frontend/src/lib/tiktok.ts`)**:
+  - Khi du khách sử dụng điện thoại thông minh (iOS / Android) bấm vào nút "TikTok Review", hệ thống sẽ kích hoạt **Universal Deep Link** mở thẳng ứng dụng TikTok cài sẵn trên máy với thanh tìm kiếm đã điền sẵn cú pháp chính xác: `{Tên Địa Điểm} {Xã/Thị Trấn} Tri Tôn`.
+  - Nếu thiết bị chưa cài app TikTok, hệ thống sẽ tự động hiển thị kết quả tìm kiếm trên nền tảng web TikTok một cách mượt mà.
+
+---
+
+## [v28.7.0-STANDARDIZE-GOOGLE-MAPS-NAME-SEARCH] - 2026-08-14
+
+### 🗺️ Chuẩn Hóa 100% Liên Kết Chỉ Đường Google Maps Bằng Tên Địa Danh Thực Tế
+- **Loại Bỏ Hoàn Toàn Việc Cắm Ghim Tọa Độ Thô & Định Vị IP Không Chính Xác**:
+  - Nâng cấp hàm lõi `getGoogleMapsUrl` tại [frontend/src/lib/maps.ts](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/lib/maps.ts).
+  - Tất cả các nút bấm "Chỉ Đường Google Maps" trên toàn hệ thống (Trang Chủ, Khám Phá, Ẩm Thực, Lưu Trú, Văn Hóa, Chi Tiết Địa Điểm, Lịch Trình) nay đều tự động tạo liên kết tìm kiếm theo cú pháp chuẩn: `https://www.google.com/maps/search/?api=1&query={Tên Địa Điểm} {Xã/Thị Trấn} Tri Tôn An Giang`.
+  - **Lợi ích**: Khi du khách bấm nút, ứng dụng Google Maps sẽ mở chính xác hồ sơ doanh nghiệp/địa danh đã xác thực (Google Business Profile) với đầy đủ cổng vào, ảnh chụp, giờ mở cửa và tuyến đường ô tô/xe máy chính xác nhất, không bao giờ bị rơi vào đường cụt giữa núi hoặc lệch vị trí do IP.
+
+---
+
 ## [v28.6.9-UNIFIED-PLACE-DETAIL-FULL-ARTICLE-STREAM] - 2026-08-14
 
 ### 🚀 Tái Cấu Trúc Toàn Bộ Trang Chi Tiết: Hiển Thị Liền Mạch 7 Khối Nội Dung & Thanh Neo Nhảy Nhanh

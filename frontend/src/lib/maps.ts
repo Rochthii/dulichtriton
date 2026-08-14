@@ -1,6 +1,9 @@
 /**
  * Centralized Production-Real Google Maps Navigation & GIS Utility
  * Du Lịch Tri Tôn AI Project
+ * 
+ * Standard: ALWAYS search by verified Place Name + Commune + Tri Tôn, An Giang
+ * Avoids raw GPS pinning or IP mislocation, guarantees Google Business Profile & Navigation routing
  */
 
 export interface GoogleMapsOptions {
@@ -20,27 +23,33 @@ export function cleanLocationName(text: string): string {
 }
 
 /**
- * Generate standard Google Maps search or directions URL
- * Prioritizes GPS coordinates if available within bounding box [10.25-10.55, 104.85-105.15]
+ * Generate standard Google Maps search URL based on place name and geographic context
+ * Uses search query format: `https://www.google.com/maps/search/?api=1&query=${name} ${commune} Tri Tôn An Giang`
  */
 export function getGoogleMapsUrl(options: GoogleMapsOptions | string, commune?: string): string {
+  let name = '';
+  let com = '';
+
   if (typeof options === 'string') {
-    const name = cleanLocationName(options);
-    const com = commune ? cleanLocationName(commune) : '';
-    const query = `${name}, ${com}, Tri Tôn, An Giang`.replace(/,\s*,/g, ',').trim();
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    name = cleanLocationName(options);
+    com = commune ? cleanLocationName(commune) : '';
+  } else {
+    name = cleanLocationName(options.name);
+    com = options.commune ? cleanLocationName(options.commune) : '';
   }
 
-  const { name, commune: com, lat, lng } = options;
-
-  // Validate coordinates inside Tri Tôn Bounding Box [10.25-10.55, 104.85-105.15]
-  if (lat && lng && lat >= 10.25 && lat <= 10.55 && lng >= 104.85 && lng <= 105.15) {
-    return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  const parts: string[] = [name];
+  if (com && !name.toLowerCase().includes(com.toLowerCase())) {
+    parts.push(com);
+  }
+  if (!name.toLowerCase().includes('tri tôn')) {
+    parts.push('Tri Tôn');
+  }
+  if (!name.toLowerCase().includes('an giang')) {
+    parts.push('An Giang');
   }
 
-  const cleanName = cleanLocationName(name);
-  const cleanCom = com ? cleanLocationName(com) : '';
-  const query = `${cleanName}, ${cleanCom}, Tri Tôn, An Giang`.replace(/,\s*,/g, ',').trim();
+  const query = parts.join(' ').replace(/\s+/g, ' ').trim();
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 

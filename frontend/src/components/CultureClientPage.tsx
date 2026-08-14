@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
+import { getGoogleMapsUrl } from '@/lib/maps';
 import PageHeaderBanner from './PageHeaderBanner';
 import { fetchWithCache } from '@/lib/fastCache';
 
@@ -169,7 +170,7 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
                   <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-700 text-slate-300">
                     <span>GPS: 10.41°N, 105.01°E</span>
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + ' Tri Tôn')}`}
+                      href={getGoogleMapsUrl({ name: c.name, commune: c.commune })}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-amber-300 hover:underline font-bold flex items-center gap-0.5"

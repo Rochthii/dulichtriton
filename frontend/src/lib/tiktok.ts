@@ -1,6 +1,10 @@
 /**
  * Centralized Production-Real TikTok Integration & Deep Link Utility
  * Du Lịch Tri Tôn AI Project
+ * 
+ * Standard: Universal Link format `https://www.tiktok.com/search?q={query}`
+ * On mobile smartphones (iOS/Android), this automatically invokes the native TikTok App
+ * searching directly for the place reviews, while providing graceful web fallback.
  */
 
 export interface TikTokLinkOptions {
@@ -20,12 +24,22 @@ export function cleanKeyword(text: string): string {
 }
 
 /**
- * Generate standard TikTok web search URL with exact Tri Tôn geographic anchor
+ * Generate standard TikTok search URL with exact Tri Tôn geographic anchor
+ * Opens directly in the TikTok app on mobile devices
  */
 export function getTikTokWebSearchUrl(placeName: string, commune?: string): string {
   const cleanName = cleanKeyword(placeName);
   const cleanCom = commune ? cleanKeyword(commune) : '';
-  const query = `${cleanName} ${cleanCom} Tri Tôn An Giang`.replace(/\s+/g, ' ').trim();
+  
+  const parts: string[] = [cleanName];
+  if (cleanCom && !cleanName.toLowerCase().includes(cleanCom.toLowerCase())) {
+    parts.push(cleanCom);
+  }
+  if (!cleanName.toLowerCase().includes('tri tôn')) {
+    parts.push('Tri Tôn');
+  }
+
+  const query = parts.join(' ').replace(/\s+/g, ' ').trim();
   return `https://www.tiktok.com/search?q=${encodeURIComponent(query)}`;
 }
 
@@ -51,7 +65,7 @@ export function resolveTikTokAction(options: TikTokLinkOptions): {
   const searchUrl = getTikTokWebSearchUrl(placeName, commune);
   return {
     url: searchUrl,
-    label: `Tìm TikTok "${cleanKeyword(placeName)}"`,
+    label: `Mở TikTok "${cleanKeyword(placeName)}"`,
     isDirect: false,
   };
 }

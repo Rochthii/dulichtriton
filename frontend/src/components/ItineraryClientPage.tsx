@@ -8,6 +8,7 @@ import {
 import PageHeaderBanner from './PageHeaderBanner';
 import ItineraryExportModal from './ItineraryExportModal';
 import { supabase } from '@/lib/supabase';
+import { getGoogleMapsUrl } from '@/lib/maps';
 
 interface TourStop {
   stepIndex: number;
@@ -599,7 +600,7 @@ export default function ItineraryClientPage() {
 
                         {/* Google Maps GPS Route */}
                         <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.name + " Tri Tôn An Giang")}`}
+                          href={getGoogleMapsUrl({ name: stop.name, commune: stop.commune })}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm transition-colors"
