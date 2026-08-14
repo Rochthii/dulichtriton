@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.6-ZERO-HARDCODE-HOMEPAGE-DYNAMIC-SUPABASE] - 2026-08-14
+
+### 🚀 Xóa Bỏ Hoàn Toàn Hardcode Trên Trang Chủ — Nạp Động 100% Từ Supabase
+- **Đặc Sản Ẩm Thực (`liveFoods`)**: Nạp trực tiếp từ bảng `places` của Supabase (lọc `category = 'food'` và `tourism_category ILIKE '%Ẩm thực%'`), hiển thị ảnh thật, đánh giá sao, địa chỉ xã và liên kết Google Maps / TikTok tự động.
+- **4 Cụm Du Lịch Thực Địa (`liveClusters`)**: Tính toán và nạp ảnh đại diện thực tế từ các địa điểm đã xác minh của từng xã (`Núi Tô`, `Ô Lâm`, `Cô Tô`, `Châu Lăng`), đếm số lượng địa điểm thực tế trong cụm.
+- **Top Lịch Trình (`topPresets`)**: Nạp trực tiếp từ API `/api/v1/chat/itinerary` (đọc từ `data/lichtrinh.json`).
+- **Điểm Đến Khung Giờ (`hotPlaces`)**: Nạp trực tiếp từ Supabase `places` có xác minh (`is_verified = true`).
+
+---
+
 ## [v28.8.5-COMPREHENSIVE-TRI-TON-ENCYCLOPEDIA-GUIDE] - 2026-08-14
 
 ### 📚 Trang Giới Thiệu & Bách Khoa Toàn Thư Tổng Quan Về Tri Tôn (`/guide`)

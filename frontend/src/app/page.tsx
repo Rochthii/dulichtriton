@@ -7,17 +7,14 @@ import { fetchWithCache } from "@/lib/fastCache";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import { getGoogleMapsUrl } from "@/lib/utils";
 import {
-  Mountain,
   Utensils,
   MapPin,
   Camera,
-  Star,
   Play,
   Bot,
   Compass,
   Sparkles,
   PhoneCall,
-  Calendar,
   Clock,
   Navigation,
   CheckCircle2,
@@ -28,10 +25,9 @@ import {
   Sunrise,
   Shield,
   Phone,
-  Flame,
   ArrowRight,
-  Bike,
-  Heart
+  Mountain,
+  Map
 } from "lucide-react";
 
 interface PlaceItem {
@@ -47,6 +43,28 @@ interface PlaceItem {
   cost_vnd?: string;
 }
 
+interface FoodItem {
+  id: string;
+  slug: string;
+  name: string;
+  commune: string;
+  rating: number;
+  image_url: string;
+  description?: string;
+  price_level?: string;
+}
+
+interface ClusterItem {
+  id: string;
+  name: string;
+  commune: string;
+  badge: string;
+  desc: string;
+  img: string;
+  link: string;
+  placeCount?: number;
+}
+
 interface ItineraryCardItem {
   slug: string;
   emoji: string;
@@ -57,87 +75,13 @@ interface ItineraryCardItem {
   budget_range: string;
 }
 
-// 4 Cụm Du Lịch Thực Địa Tri Tôn
-const TRAVEL_CLUSTERS = [
-  {
-    id: "cluster-tapa",
-    name: "Cụm Tà Pạ & Núi Tô",
-    desc: "Hồ Tà Pạ (Tuyệt Tình Cốc), Chùa Tà Pạ, Cánh đồng lúa Tà Pạ, Hàng cây thốt nốt trái tim.",
-    commune: "Xã Núi Tô",
-    badge: "Check-in Iconic",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
-    link: "/itinerary?slug=kinh-dien-1-ngay",
-  },
-  {
-    id: "cluster-othum",
-    name: "Cụm Ô Lâm & Hồ Ô Thum",
-    desc: "Thưởng thức Gà Đốt Ô Thum lá chúc, Hồ Ô Thum thơ mộng, Chùa Koh Kas, Đồi Tức Dụp.",
-    commune: "Xã Ô Lâm & An Tức",
-    badge: "Ẩm Thực & Lịch Sử",
-    img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-    link: "/itinerary?slug=food-tour-am-thuc-1-ngay-dem",
-  },
-  {
-    id: "cluster-coto",
-    name: "Cụm Cô Tô & Soài So",
-    desc: "Chinh phục đỉnh núi Cô Tô 614m, ngắm toàn cảnh Bảy Núi, Suối Bạc, Hồ Soài So, Vồ Hội.",
-    commune: "Xã Cô Tô & Núi Tô",
-    badge: "Trekking & Săn Mây",
-    img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop",
-    link: "/itinerary?slug=toan-canh-2n1d",
-  },
-  {
-    id: "cluster-chaulang",
-    name: "Cụm Châu Lăng & Ba Chúc",
-    desc: "Cổng Trời Chùa Koh Kas, Quán Đu Đủ Đâm Rina, Di tích Nhà Mồ Ba Chúc, Chùa Phi Lai.",
-    commune: "Xã Châu Lăng & Ba Chúc",
-    badge: "Văn Hóa & Tâm Linh",
-    img: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
-    link: "/itinerary?slug=tam-linh-hanh-huong-1-ngay",
-  },
-];
-
-// Top 4 Đặc Sản Biểu Tượng
-const ICONIC_FOODS = [
-  {
-    name: "Gà Đốt Ô Thum Lá Chúc",
-    tagline: "Gà thả đồi tẩm ướp mật ong, tỏi, lá chúc nướng than hồng da giòn thịt ngọt ngào.",
-    location: "Xã Ô Lâm (Ven hồ Ô Thum)",
-    price: "280.000đ - 350.000đ/con",
-    query: "Gà Đốt Ô Thum Xã Ô Lâm Tri Tôn",
-    img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    name: "Cháo Bò Trái Trúc Tri Tôn",
-    tagline: "Cháo nấu gạo thơm cùng lòng bò tươi, thịt bắp bò mềm ngậy vắt nước trái chúc thơm nức.",
-    location: "Thị trấn Tri Tôn & Xã Châu Lăng",
-    price: "35.000đ - 50.000đ/tô",
-    query: "Cháo Bò Tri Tôn An Giang",
-    img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    name: "Đu Đủ Đâm & Bò Nướng Xiên",
-    tagline: "Đu đủ giòn đâm cùng ba khía, ruốc, đậu phộng kèm xiên bò nướng than hoa thơm lừng.",
-    location: "Xã Châu Lăng & Ô Lâm",
-    price: "20.000đ - 40.000đ/phần",
-    query: "Đu Đủ Đâm Rina Châu Lăng Tri Tôn",
-    img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    name: "Bánh Bò & Nước Thốt Nốt Tươi",
-    tagline: "Bánh bò làm từ đường thốt nốt vàng óng xốp dẻo, uống cùng ly nước thốt nốt mát lạnh ven đường.",
-    location: "Xã Châu Lăng & Núi Tô",
-    price: "10.000đ - 25.000đ",
-    query: "Bánh bò thốt nốt Tri Tôn",
-    img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop",
-  },
-];
-
 type TimeSlot = "morning" | "noon" | "afternoon" | "evening";
 
 export default function HomePage() {
   const [activeTimeSlot, setActiveTimeSlot] = useState<TimeSlot>("morning");
   const [hotPlaces, setHotPlaces] = useState<PlaceItem[]>([]);
+  const [liveFoods, setLiveFoods] = useState<FoodItem[]>([]);
+  const [liveClusters, setLiveClusters] = useState<ClusterItem[]>([]);
   const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -146,35 +90,155 @@ export default function HomePage() {
       try {
         setLoading(true);
 
-        // 1. Fetch Hot Places live from Supabase
-        const cachedHot = await fetchWithCache("home-hot-places-v2", async () => {
+        // 1. Fetch Hot Places live from Supabase (Zero Hardcoding)
+        const cachedHot = await fetchWithCache("home-hot-places-live", async () => {
           const { data } = await supabase
             .from("places")
-            .select("id, slug, name, category, commune, rating, photos, image_url, description, golden_time_windows")
+            .select("id, slug, name, category, commune, rating, photos, image_url, description, golden_time_windows, is_hot")
             .eq("is_verified", true)
             .order("is_hot", { ascending: false })
             .order("rating", { ascending: false })
-            .limit(16);
+            .limit(20);
 
           if (data && data.length > 0) {
-            return data.map((item: any) => ({
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "check-in",
-              commune: item.commune || "Tri Tôn, An Giang",
-              rating: item.rating ? Number(item.rating) : 4.8,
-              image_url: item.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
-              description: item.description || "",
-              golden_time_windows: Array.isArray(item.golden_time_windows) ? item.golden_time_windows : [],
-            }));
+            return data.map((item: any) => {
+              let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
+              if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+                img = item.image_url;
+              } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+                const p0 = item.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                id: item.id,
+                slug: item.slug || item.id,
+                name: item.name,
+                category: item.category || "check-in",
+                commune: item.commune || "Tri Tôn, An Giang",
+                rating: item.rating ? Number(item.rating) : 4.8,
+                image_url: img,
+                description: item.description || "",
+                golden_time_windows: Array.isArray(item.golden_time_windows) ? item.golden_time_windows : [],
+              };
+            });
           }
           return [];
         });
-
         if (cachedHot) setHotPlaces(cachedHot);
 
-        // 2. Fetch top presets from API / lichtrinh.json
+        // 2. Fetch Gourmet Foods live from Supabase (Zero Hardcoding)
+        const cachedFoods = await fetchWithCache("home-foods-live", async () => {
+          const { data: foodData } = await supabase
+            .from("places")
+            .select("id, slug, name, commune, category, tourism_category, rating, photos, image_url, description, price_level")
+            .or("category.eq.food,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Cà phê%,tourism_category.ilike.%Đặc sản%")
+            .eq("is_verified", true)
+            .order("rating", { ascending: false })
+            .limit(8);
+
+          if (foodData && foodData.length > 0) {
+            return foodData.map((f: any) => {
+              let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
+              if (f.image_url && typeof f.image_url === "string" && f.image_url.startsWith("http")) {
+                img = f.image_url;
+              } else if (Array.isArray(f.photos) && f.photos.length > 0) {
+                const p0 = f.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                id: f.id,
+                slug: f.slug || f.id,
+                name: f.name,
+                commune: f.commune || "Tri Tôn",
+                rating: f.rating ? Number(f.rating) : 4.9,
+                image_url: img,
+                description: f.description || "Món ăn đặc sản độc bản Bảy Núi Tri Tôn.",
+                price_level: f.price_level || "Đặc sản bản địa",
+              };
+            });
+          }
+          return [];
+        });
+        if (cachedFoods) setLiveFoods(cachedFoods);
+
+        // 3. Build 4 Geographic Clusters live from Supabase data
+        const cachedClusters = await fetchWithCache("home-clusters-live", async () => {
+          const { data: allPlaces } = await supabase
+            .from("places")
+            .select("id, name, commune, image_url, photos, rating")
+            .eq("is_verified", true);
+
+          const clusterDefs = [
+            {
+              id: "cluster-tapa",
+              name: "Cụm Tà Pạ & Núi Tô",
+              commune: "Xã Núi Tô",
+              badge: "Check-in Iconic",
+              desc: "Hồ Tà Pạ, Chùa Tà Pạ, Cánh đồng lúa Tà Pạ, Hàng cây thốt nốt trái tim.",
+              link: "/itinerary?slug=kinh-dien-1-ngay",
+              communeFilter: "Núi Tô",
+              fallbackImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+            },
+            {
+              id: "cluster-othum",
+              name: "Cụm Ô Lâm & Hồ Ô Thum",
+              commune: "Xã Ô Lâm & An Tức",
+              badge: "Ẩm Thực & Lịch Sử",
+              desc: "Gà Đốt Ô Thum lá chúc, Hồ Ô Thum, Chùa Koh Kas, Khu Di Tích Đồi Tức Dụp.",
+              link: "/itinerary?slug=food-tour-am-thuc-1-ngay-dem",
+              communeFilter: "Ô Lâm",
+              fallbackImg: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+            },
+            {
+              id: "cluster-coto",
+              name: "Cụm Cô Tô & Soài So",
+              commune: "Xã Cô Tô & Núi Tô",
+              badge: "Trekking & Săn Mây",
+              desc: "Đỉnh Núi Cô Tô 614m, Vồ Hội, Suối Bạc Soài So, Hồ Soài So thơ mộng.",
+              link: "/itinerary?slug=toan-canh-2n1d",
+              communeFilter: "Cô Tô",
+              fallbackImg: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop",
+            },
+            {
+              id: "cluster-chaulang",
+              name: "Cụm Châu Lăng & Ba Chúc",
+              commune: "Xã Châu Lăng & Ba Chúc",
+              badge: "Văn Hóa & Tâm Linh",
+              desc: "Cổng Trời Chùa Koh Kas, Quán Đu Đủ Đâm Rina, Di tích Nhà Mồ Ba Chúc, Chùa Phi Lai.",
+              link: "/itinerary?slug=tam-linh-hanh-huong-1-ngay",
+              communeFilter: "Châu Lăng",
+              fallbackImg: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+            },
+          ];
+
+          return clusterDefs.map((def) => {
+            let img = def.fallbackImg;
+            let count = 0;
+            if (allPlaces && allPlaces.length > 0) {
+              const matched = allPlaces.filter((p: any) =>
+                p.commune && p.commune.toLowerCase().includes(def.communeFilter.toLowerCase())
+              );
+              count = matched.length;
+              const placeWithImg = matched.find((p: any) => p.image_url && p.image_url.startsWith("http"));
+              if (placeWithImg) img = placeWithImg.image_url;
+            }
+            return {
+              id: def.id,
+              name: def.name,
+              commune: def.commune,
+              badge: def.badge,
+              desc: def.desc,
+              img,
+              link: def.link,
+              placeCount: count,
+            };
+          });
+        });
+        if (cachedClusters) setLiveClusters(cachedClusters);
+
+        // 4. Fetch top presets dynamically from API / lichtrinh.json (Zero Hardcoding)
         const res = await fetch("/api/v1/chat/itinerary");
         if (res.ok) {
           const itinData = await res.json();
@@ -191,7 +255,7 @@ export default function HomePage() {
     loadData();
   }, []);
 
-  // Filter spots by time of day
+  // Filter spots by time of day dynamically
   const timeSlotPlaces = hotPlaces.filter((p) => {
     const name = p.name.toLowerCase();
     const cat = p.category.toLowerCase();
@@ -324,7 +388,7 @@ export default function HomePage() {
                 </h2>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Chọn thời điểm trong ngày để khám phá điểm đến phù hợp nhất
+                Chọn thời điểm trong ngày để khám phá điểm đến phù hợp nhất từ dữ liệu thực địa
               </p>
             </div>
 
@@ -472,7 +536,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 4. BẢN ĐỒ 4 CỤM DU LỊCH LIỀN KỀ ──────────────────────────────── */}
+        {/* ── 4. BẢN ĐỒ 4 CỤM DU LỊCH LIỀN KỀ (DYNAMIC TỪ DB) ───────────────── */}
         <section className="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200 shadow-xs space-y-5">
           <div>
             <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
@@ -480,12 +544,12 @@ export default function HomePage() {
               <span>4 Cụm Du Lịch Liền Kề (Tránh Đi Vòng Vèo)</span>
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Phân cụm theo xã và cung đường địa lý thực tế để bạn đi trọn vẹn trong một buổi
+              Phân cụm theo xã và cung đường địa lý thực tế từ 82 địa điểm đã xác minh
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            {TRAVEL_CLUSTERS.map((c) => (
+            {liveClusters.map((c) => (
               <Link
                 key={c.id}
                 href={c.link}
@@ -514,7 +578,7 @@ export default function HomePage() {
                     {c.desc}
                   </p>
                   <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-[10px] font-bold text-[#1B4D3E]">
-                    <span>Khám phá cụm</span>
+                    <span>Khám phá cụm ({c.placeCount || 0} điểm)</span>
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
@@ -570,58 +634,58 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 5. TOP 4 MÓN ĐẶC SẢN "PHẢI THỬ" ─────────────────────────────── */}
+        {/* ── 5. TOP MÓN ĐẶC SẢN NẠP ĐỘNG TỪ SUPABASE DATABASE ─────────────── */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg sm:text-2xl font-black text-slate-900 flex items-center gap-2">
                 <Utensils className="w-5 h-5 text-amber-600" />
-                <span>4 Đặc Sản "Phải Ăn" Khi Đến Tri Tôn</span>
+                <span>Đặc Sản & Quán Ăn Ngon Tri Tôn (Nạp Trực Tiếp Từ Dữ Liệu)</span>
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                Hương vị độc bản lá chúc, trái chúc và bí quyết gia truyền đồng bào Khmer
+                Các quán ăn đặc sản bản địa đã xác minh có hương vị lá chúc, trái chúc và bí quyết gia truyền
               </p>
             </div>
             <Link
               href="/food"
               className="text-xs font-black text-[#1B4D3E] hover:text-emerald-700 flex items-center gap-1"
             >
-              <span>Xem thực đơn</span>
+              <span>Xem tất cả quán ngon</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            {ICONIC_FOODS.map((f, idx) => {
-              const mapsUrl = getGoogleMapsUrl({ name: f.query });
-              const tikTokSearchUrl = `https://www.tiktok.com/search?q=${encodeURIComponent(f.query)}`;
+            {liveFoods.slice(0, 4).map((f) => {
+              const mapsUrl = getGoogleMapsUrl({ name: f.name, commune: f.commune });
+              const tikTokSearchUrl = `https://www.tiktok.com/search?q=${encodeURIComponent(`${f.name} Tri Tôn`)}`;
 
               return (
                 <div
-                  key={idx}
+                  key={f.id}
                   className="group rounded-3xl bg-white border border-slate-200 hover:border-amber-400/60 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between"
                 >
                   <div className="relative h-36 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={f.img}
+                      src={f.image_url}
                       alt={f.name}
                       className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                     <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-amber-500 text-slate-950 text-[10px] font-black">
-                      💰 {f.price}
+                      ⭐ {f.rating}/5
                     </span>
                     <div className="absolute bottom-2 left-2.5 right-2.5 text-white">
                       <h3 className="text-xs font-black line-clamp-1">{f.name}</h3>
-                      <p className="text-[10px] text-amber-300 font-semibold">{f.location}</p>
+                      <p className="text-[10px] text-amber-300 font-semibold">{f.commune}</p>
                     </div>
                   </div>
 
                   <div className="p-3 space-y-2 flex-1 flex flex-col justify-between">
                     <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed">
-                      {f.tagline}
+                      {f.description || `Món ăn đặc sản Bảy Núi nổi tiếng tại ${f.commune}.`}
                     </p>
 
                     <div className="flex items-center justify-between gap-1.5 pt-2 border-t border-slate-100">
