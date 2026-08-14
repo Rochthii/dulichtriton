@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.3-PERFECT-PDF-WIRE-DIAGRAM-EXPORT] - 2026-08-14
+
+### 📄 Hoàn Thiện Xuất Bản PDF Sơ Đồ Lịch Trình Nối Dây Chuẩn A4
+- **Giao diện PDF Sơ Đồ Nối Dây (Wire Diagram Layout)**:
+  - Bản xuất PDF được thiết kế chuyên nghiệp với header xanh rừng tràm (`#1B4D3E`), viền vàng (`#D99B26`), mã QR động xem online.
+  - Phân chia bố cục theo từng Ngày (`Ngày 1`, `Ngày 2`, `Ngày 3`) và từng mốc trạm (`NODE #1`, `NODE #2`, ...).
+  - Trục thời gian dọc (Timeline) hiển thị rõ: Giờ đến, Thời lượng lưu lại, Phân loại danh mục (màu sắc trực quan), Mẹo & Hoạt động, Chi phí ước tính.
+  - Mũi tên chỉ dẫn di chuyển (Transit Stepper) nối liền mạch giữa các trạm (phương tiện, thời gian, số km).
+  - Hộp thông tin Cứu hộ Khẩn cấp SOS 24/7 (Công an, Y tế, Đường dây nóng Tri Tôn) và các lưu ý thực địa.
+- **Hỗ trợ Đa Trang A4 Tự Động**:
+  - `jsPDF` tự động tính toán chiều cao và tách trang A4 liền mạch cho các lịch trình dài 2N1Đ hoặc 3N2Đ.
+
+---
+
 ## [v28.8.2-CHATBOT-LIVE-INTERNET-PRIORITY-INLINE-LINKS] - 2026-08-14
 
 ### 🚀 Ưu Tiên Live Internet Search + Nút Bấm Chỉ Đường Maps & TikTok Ngay Tại Từng Địa Điểm

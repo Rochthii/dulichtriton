@@ -231,7 +231,7 @@ export async function POST(req: NextRequest) {
 
         const ragContext = places.length > 0
           ? places.map(p =>
-              `- ${p.name} (${p.commune}): ${p.category}. Đánh giá: ${p.rating}/5. ${p.description ? p.description.slice(0, 150) : ''}`
+              `- ${p.name} (${p.commune}): ${p.category}. Đánh giá: ${p.rating}/5. ${p.description ? String(p.description).slice(0, 150) : ''}`
             ).join('\n')
           : '';
 
