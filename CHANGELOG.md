@@ -4,6 +4,26 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.8-FULL-SCHEMA-DATA-STANDARDS-UPGRADE] - 2026-08-14
+
+### 💎 Nâng Cấp Toàn Diện Database & Giao Diện Chi Tiết Chuẩn 100% Thu Thập
+- **Làm Giàu CSDL Supabase PostgreSQL Chuẩn 10 Chiều Dữ Liệu Thực Tế**:
+  - `detailed_story` (100%): Câu chuyện lịch sử, huyền tích Thất Sơn.
+  - `travel_guide` (100%): Cẩm nang di chuyển, phương tiện phù hợp, lưu ý an toàn.
+  - `checkin_spots` (100%): Danh sách góc máy sống ảo, mẹo tạo dáng.
+  - `highlights` (100%): Điểm nhấn nổi bật.
+  - `nearby_cafes_and_food` (100%): Quán ăn và cà phê ngon gần địa điểm.
+  - `google_maps_info` (100%): Điểm đánh giá Google, tổng số lượt review, khung giờ cao điểm `popular_times`.
+  - `tags_info` (100%): Phân cụm tuyến (Tà Pạ, Cô Tô, Ba Chúc), loại hình trải nghiệm, đối tượng du khách.
+  - `review_samples` (100%): Mẫu đánh giá thực tế từ Google Maps và cộng đồng du khách.
+  - `best_visit_time` (100%): Khung giờ vàng tham quan đẹp nhất trong ngày.
+  - `tiktok_videos` (100%): Danh sách video review TikTok.
+- **Nâng Cấp Giao Diện Trang Chi Tiết (`components/PlaceDetailClient.tsx`)**:
+  - Bổ sung Tab 5 *"Đánh Giá Du Khách"* hiển thị trích dẫn đánh giá thực tế từ Google Maps và cộng đồng.
+  - Bổ sung thanh hiển thị *Cụm Tuyến Du Lịch*, *Thời Điểm Đẹp Nhất*, *Khung Giờ Cao Điểm*.
+
+---
+
 ## [v28.6.7-SYNC-ALL-POIS-RICH-ARTICLES] - 2026-08-14
 
 ### 📚 Nạp Toàn Bộ Dữ Liệu Bài Viết & Cẩm Nang Cho 100% (174/174) Địa Điểm

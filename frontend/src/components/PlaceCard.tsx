@@ -27,6 +27,8 @@ export interface Place {
   google_maps_info?: any;
   tags_info?: any;
   tiktok_videos?: any;
+  review_samples?: any;
+  best_visit_time?: string;
   address: string;
   commune: string;
   latitude: number;
