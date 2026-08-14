@@ -1,64 +1,70 @@
 import os
 import json
 import urllib.request
-import urllib.error
 import sys
+from dotenv import load_dotenv
 
-if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
+if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
-def get_env():
-    env_vars = {}
-    for f in [".env", ".env.local"]:
-        if os.path.exists(f):
-            with open(f, "r", encoding="utf-8") as file:
-                for line in file:
-                    line = line.strip()
-                    if line and not line.startswith("#") and "=" in line:
-                        k, v = line.split("=", 1)
-                        env_vars[k.strip()] = v.strip()
-    return env_vars
+load_dotenv('frontend/.env.local')
 
-env = get_env()
+openrouter_key = os.environ.get('OPENROUTER_API_KEY')
+groq_key = os.environ.get('GROQ_API_KEY')
 
-# Test Gemini Key 1
-k1 = env.get("GEMINI_API_KEY")
-print("=== TESTING GEMINI KEY 1 ===")
-url1 = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={k1}"
-req1 = urllib.request.Request(url1, data=json.dumps({"contents":[{"parts":[{"text":"Say Hello in 3 words"}]}]}).encode("utf-8"), headers={"Content-Type": "application/json"})
-try:
-    with urllib.request.urlopen(req1, timeout=5) as res:
-        print("Gemini K1 Status:", res.status)
-        print("Gemini K1 Text:", json.loads(res.read().decode("utf-8"))["candidates"][0]["content"]["parts"][0]["text"])
-except Exception as e:
-    print("Gemini K1 Exception:", e)
-
-# Test Groq
-groq_key = env.get("GROQ_API_KEY")
-print("\n=== TESTING GROQ ===")
-url_groq = "https://api.groq.com/openai/v1/chat/completions"
-req_groq = urllib.request.Request(url_groq, data=json.dumps({
-    "model": "llama-3.3-70b-versatile",
-    "messages": [{"role": "user", "content": "Say Hello in 3 words"}]
-}).encode("utf-8"), headers={"Content-Type": "application/json", "Authorization": f"Bearer {groq_key}"})
-try:
-    with urllib.request.urlopen(req_groq, timeout=5) as res:
-        print("Groq Status:", res.status)
-        print("Groq Text:", json.loads(res.read().decode("utf-8"))["choices"][0]["message"]["content"])
-except Exception as e:
-    print("Groq Exception:", e)
+print(f"OpenRouter key present: {bool(openrouter_key)}")
+print(f"Groq key present: {bool(groq_key)}")
 
 # Test OpenRouter
-or_key = env.get("OPENROUTER_API_KEY")
-print("\n=== TESTING OPENROUTER ===")
-url_or = "https://openrouter.ai/api/v1/chat/completions"
-req_or = urllib.request.Request(url_or, data=json.dumps({
-    "model": "meta-llama/llama-3.3-70b-instruct:free",
-    "messages": [{"role": "user", "content": "Say Hello in 3 words"}]
-}).encode("utf-8"), headers={"Content-Type": "application/json", "Authorization": f"Bearer {or_key}"})
-try:
-    with urllib.request.urlopen(req_or, timeout=5) as res:
-        print("OpenRouter Status:", res.status)
-        print("OpenRouter Text:", json.loads(res.read().decode("utf-8"))["choices"][0]["message"]["content"])
-except Exception as e:
-    print("OpenRouter Exception:", e)
+if openrouter_key:
+    url = "https://openrouter.ai/api/v1/chat/completions"
+    payload = {
+        "model": "nvidia/nemotron-3-nano-30b-a3b:free",
+        "messages": [
+            {"role": "system", "content": "Bạn là trợ lý du lịch Tri Tôn. Trả lời phong cách Google AI Overview."},
+            {"role": "user", "content": "Tri Tôn có gì chơi?"}
+        ]
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode('utf-8'),
+        headers={
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {openrouter_key}',
+            'HTTP-Referer': 'https://dulichtriton.vn',
+            'X-Title': 'Du Lich Tri Ton AI'
+        }
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            print("\n[SUCCESS] OpenRouter Response:")
+            print(data['choices'][0]['message']['content'])
+    except Exception as e:
+        print("\n[FAIL] OpenRouter:", e)
+
+# Test Groq
+if groq_key:
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    payload = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": [
+            {"role": "system", "content": "Bạn là trợ lý du lịch Tri Tôn. Trả lời phong cách Google AI Overview."},
+            {"role": "user", "content": "Tri Tôn có gì chơi?"}
+        ]
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode('utf-8'),
+        headers={
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {groq_key}'
+        }
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            print("\n[SUCCESS] Groq Response:")
+            print(data['choices'][0]['message']['content'])
+    except Exception as e:
+        print("\n[FAIL] Groq:", e)

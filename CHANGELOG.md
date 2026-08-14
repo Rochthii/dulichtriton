@@ -4,6 +4,29 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.0-WIRE-DIAGRAM-ITINERARY-CHATBOT] - 2026-08-14
+
+### 🗺️ Chatbot Lịch Trình Sơ Đồ Nối Dây + 8 Lịch Trình Dựng Sẵn Theo Persona
+- **Bảng Dữ Liệu Mới `preset_itineraries` (Supabase PostgreSQL)**:
+  - Seed 8 lịch trình du lịch Tri Tôn được xác thực đầy đủ theo từng persona người dùng.
+  - Mỗi lịch trình có đủ: điểm dừng theo giờ, thời gian di chuyển giữa các điểm, tip thực tế, tọa độ chụp ảnh.
+- **Sơ Đồ Nối Dây Trực Quan (`WireDiagramItinerary.tsx`)**:
+  - Mỗi điểm dừng là 1 card hành động: Tên + Xã + Giờ bắt đầu/kết thúc + Tip thực tế.
+  - **2 nút cứng mỗi card**: `▶ TikTok Review` (mở app TikTok tìm kiếm ngay) + `📍 Chỉ Đường` (Google Maps name search).
+  - Connector dây giữa các điểm: hiện thời gian di chuyển (phút) + khoảng cách (km).
+  - Footer tổng kết: Tổng điểm dừng + Thời gian + Quãng đường + Chi phí ước tính.
+- **Grid Chọn Nhanh 8 Persona (`ItineraryPresetPicker.tsx`)**:
+  - 🔥 Kinh Điển 1 Ngày | 📸 Sống Ảo TikTok | 🙏 Tâm Linh Khmer | 🥾 Trekking Bảy Núi
+  - 🍗 Food Tour | 🕰️ Nửa Ngày Ghé Ngang | 📜 Lịch Sử & Tưởng Niệm | 💑 Couple Chill
+- **API Lịch Trình Mới (`/api/v1/chat/itinerary`)**:
+  - `GET ?slug=classic-1day` → trả về JSON lịch trình đầy đủ từ Supabase.
+  - `GET` (không slug) → trả về danh sách 8 preset tóm tắt cho picker.
+- **Intent Detection Thông Minh trong Chatbot**:
+  - Khi người dùng hỏi về lịch trình/tour/muốn đi → tự động hiện picker 8 persona thay vì để AI tự bịa.
+  - Bấm chọn persona → load instant từ DB → render Wire Diagram ngay trong widget.
+
+---
+
 ## [v28.7.2-GOOGLE-SEARCH-GROUNDING-AI-OVERVIEW] - 2026-08-14
 
 ### 🌐 Tích Hợp Google Search Grounding & Giao Diện Thẻ Google AI Overview Cho Chatbot
