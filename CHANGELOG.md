@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.4-ZERO-HARDCODING-LIVE-DB] - 2026-08-14
+
+### 🛡️ Chuẩn Hóa 100% Dynamic Dữ Liệu — Loại Bỏ Hoàn Toàn Hardcode & Mockup
+- **Triệt tiêu toàn bộ mảng Mockup / Placeholder trong Code**:
+  - Gỡ bỏ hoàn toàn các danh sách xã, danh mục hardcoded tĩnh (`const communes = [...]`, `const categories = [...]`, các mảng fallback giả lập).
+  - Tự động trích xuất danh sách Xã/Thị trấn và Danh mục thực tế 100% từ dữ liệu trả về của Supabase CSDL thông qua `useMemo` (`new Set(places.map(p => p.commune))`).
+- **Đồng bộ hóa Live Data cho Trang Chủ (`app/page.tsx`)**:
+  - Chuyển đổi khối Đặc sản Ẩm thực, Di sản Văn hóa và Cơ sở Lưu Trú trên Trang Chủ sang truy vấn CSDL Supabase thời gian thực, xóa bỏ các mảng mock dữ liệu mẫu.
+
+---
+
 ## [v28.6.3-FIX-LIVE-DATA-PAGES] - 2026-08-14
 
 ### 🔄 Khắc Phục & Đồng Bộ Live Data Cho Toàn Bộ Trang Con (Khám Phá, Ẩm Thực, Lưu Trú, Văn Hóa)

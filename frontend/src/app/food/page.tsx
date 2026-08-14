@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
-import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Sparkles, Coffee, Soup } from "lucide-react";
+import { Utensils, MapPin, Star, Flame, ChevronRight, Clock } from "lucide-react";
 
 interface FoodItem {
   id: string;
@@ -61,9 +61,12 @@ export default function FoodPage() {
             };
           });
           setFoods(formatted);
+        } else {
+          setFoods([]);
         }
       } catch (err) {
         console.error("Supabase fetch error:", err);
+        setFoods([]);
       } finally {
         setLoading(false);
       }
@@ -71,11 +74,19 @@ export default function FoodPage() {
     loadLiveFoodData();
   }, []);
 
-  const communes = ["Tất cả", "Thị trấn Tri Tôn", "Xã Ô Lâm", "Xã Núi Tô", "Xã Châu Lăng", "Thị trấn Ba Chúc", "Xã Lương Phi", "Xã An Tức"];
+  // Dynamic Commune List from Live Data (Zero Hardcoding)
+  const communes = useMemo(() => {
+    const set = new Set<string>();
+    foods.forEach((f) => {
+      if (f.commune && f.commune.trim()) set.add(f.commune.trim());
+    });
+    return ["Tất cả", ...Array.from(set).sort((a, b) => a.localeCompare(b, "vi"))];
+  }, [foods]);
 
-  const filteredFoods = selectedCommune === "Tất cả" 
-    ? foods 
-    : foods.filter(f => f.commune === selectedCommune);
+  const filteredFoods = useMemo(() => {
+    if (selectedCommune === "Tất cả") return foods;
+    return foods.filter(f => f.commune === selectedCommune);
+  }, [foods, selectedCommune]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
@@ -101,14 +112,14 @@ export default function FoodPage() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-bold border border-white/20 backdrop-blur-md">
               <Flame className="h-4 w-4 text-amber-300" />
-              <span>Dữ Liệu Trực Tuyến Live Database (46+ Quán Ăn & Cà Phê)</span>
+              <span>Dữ Liệu Trực Tuyến Live Database ({foods.length} Quán Ăn & Cà Phê)</span>
             </div>
             <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
               Ẩm Thực Đặc Sản <br />
               <span className="text-amber-300">Đậm Đà Bản Vị Bảy Núi</span>
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light max-w-2xl">
-              Khám phá toàn bộ 46+ quán ăn, nhà hàng gà đốt Ô Thum lá chúc, quán cháo bò trái trúc, bánh bò thốt nốt và các quán cà phê view núi đẹp nhất Tri Tôn.
+              Khám phá toàn bộ {foods.length} quán ăn, nhà hàng gà đốt Ô Thum lá chúc, quán cháo bò trái trúc, bánh bò thốt nốt và các quán cà phê view núi đẹp nhất Tri Tôn.
             </p>
           </div>
         </section>

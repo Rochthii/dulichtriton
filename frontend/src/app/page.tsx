@@ -123,122 +123,113 @@ export default function HomePage() {
           setPlaces(formattedHotPlaces);
         }
 
-        // 2. Fetch Gourmet Foods live from Supabase with fastCache
+        // 2. Fetch Gourmet Foods live from Supabase with fastCache (Zero Hardcoding)
         const formattedFoods = await fetchWithCache("homepage-gourmet-foods", async () => {
           const { data: foodData } = await supabase
             .from("places")
-            .select("id, slug, name, commune, rating, photos, image_url, category")
-            .ilike("category", "%Ẩm thực%")
+            .select("id, slug, name, commune, rating, photos, image_url, category, tourism_category, description")
+            .or("category.eq.food,tourism_category.ilike.%Ẩm Thực%,tourism_category.ilike.%Cà Phê%")
+            .eq("is_active", true)
+            .order("rating", { ascending: false })
             .limit(4);
 
           if (foodData && foodData.length > 0) {
-            return foodData.map((f: any) => ({
-              name: f.name,
-              location: f.commune || "Tri Tôn",
-              price: "35.000đ - 150.000đ",
-              flavorTag: f.category || "Đặc sản Bảy Núi",
-              rating: f.rating || 4.9,
-              slug: f.slug || f.id,
-              img: f.image_url || (Array.isArray(f.photos) && f.photos[0]?.url) || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
-            }));
+            return foodData.map((f: any) => {
+              let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
+              if (f.image_url && typeof f.image_url === "string" && f.image_url.startsWith("http")) {
+                img = f.image_url;
+              } else if (Array.isArray(f.photos) && f.photos.length > 0) {
+                const p0 = f.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                name: f.name,
+                location: f.commune || "Thị trấn Tri Tôn",
+                price: "Đặc sản bản địa",
+                flavorTag: f.tourism_category || "Đặc sản Bảy Núi",
+                rating: f.rating ? Number(f.rating) : 4.9,
+                slug: f.slug || f.id,
+                img,
+              };
+            });
           }
-          return null;
+          return [];
         });
 
         if (formattedFoods && formattedFoods.length > 0) {
           setGourmetFoods(formattedFoods);
         } else {
-          setGourmetFoods([
-            {
-              name: "Cháo Bò Trái Trúc",
-              location: "Thị trấn Tri Tôn & Xã Châu Lăng",
-              price: "35.000đ - 55.000đ",
-              flavorTag: "Chua dịu, béo nhẹ, thơm nồng lá trúc",
-              rating: 4.9,
-              img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g"
-            },
-            {
-              name: "Gà Đốt Ô Thum Lá Trúc",
-              location: "Xã Ô Lâm (Bờ hồ Ô Thum)",
-              price: "250.000đ - 320.000đ",
-              flavorTag: "Da giòn rụm, thịt ngọt lịm, dậy mùi sả trúc",
-              rating: 4.95,
-              img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
-            },
-            {
-              name: "Bánh Xèo Rau Rừng Thiền Viện",
-              location: "Thị trấn Tri Tôn",
-              price: "30.000đ - 50.000đ",
-              flavorTag: "Giòn rụm, kèm 20 loại rau rừng thiên nhiên Cô Tô",
-              rating: 4.8,
-              img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8"
-            },
-            {
-              name: "Bò Nướng Kim Tiền & Nầm Nướng Tà Pạ",
-              location: "Xã Núi Tô",
-              price: "80.000đ - 150.000đ",
-              flavorTag: "Đậm đà, béo ngậy nướng than hồng",
-              rating: 4.85,
-              img: "https://images.unsplash.com/photo-1544025162-d76694265947"
-            }
-          ]);
+          setGourmetFoods([]);
         }
 
-        // 3. Culture Events Initializer
-        setCultureEvents([
-          {
-            name: "Lễ Hội Đua Bò Bảy Núi (Sene Dolta)",
-            time: "Tháng 8 - Tháng 9 Âm Lịch",
-            location: "Chùa Thơm Mít (Xã Vĩnh Trung)",
-            status: "Sắp diễn ra",
-            desc: "Lễ hội thể thao dân gian độc nhất vô nhị miền Tây, quy tụ hàng trăm đôi bò chiến tranh tài khốc liệt.",
-            badgeColor: "bg-rose-500 text-white"
-          },
-          {
-            name: "Chùa Xvayton (Chùa Xà Tón) 500 Tuổi",
-            time: "Mở cửa quanh năm",
-            location: "Thị trấn Tri Tôn",
-            status: "Di sản Quốc gia",
-            desc: "Ngôi chùa Khmer cổ nhất An Giang mang kiến trúc tháp nhọn rực rỡ và nơi lưu giữ kinh lá buông quý hiếm.",
-            badgeColor: "bg-amber-500 text-white"
-          },
-          {
-            name: "Tết Chol Chnam Thmay Khmer",
-            time: "14/04 - 16/04 Hàng Năm",
-            location: "Toàn bộ các Xã/Thị trấn Tri Tôn",
-            status: "Tết Truyền Thống",
-            desc: "Lễ hội mừng năm mới rộn ràng nghi thức đắp núi cát, tắm Phật và múa mâm khèn Chhay-dăm.",
-            badgeColor: "bg-emerald-600 text-white"
-          }
-        ]);
+        // 3. Culture Events / Places live from Supabase (Zero Hardcoding)
+        const { data: cultData } = await supabase
+          .from("places")
+          .select("id, slug, name, commune, rating, photos, image_url, category, tourism_category, description")
+          .or("category.eq.culture,category.eq.history,tourism_category.ilike.%Văn Hóa%,tourism_category.ilike.%Tâm Linh%,tourism_category.ilike.%Chùa%")
+          .eq("is_active", true)
+          .order("rating", { ascending: false })
+          .limit(3);
 
-        // 4. Featured Stays Initializer
-        setFeaturedStays([
-          {
-            name: "Soài Chek Eco Homestay",
-            location: "Xã Núi Tô",
-            price: "350.000đ / đêm",
-            view: "View Hồ Tà Pạ & Cánh đồng lúa",
-            rating: 4.9,
-            img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCEZigADSpj84ieydADEOQHzdJZkN0zsctfaByCdnhe7Kptx1Rh3rpQPiK_hjkkL8vcmOG_-QNX9DqegPHEImIum516b2ArKqeKj_Vbp100cfGcbYNgqKDSGzFPxRW0_JVid0sV9Cn7iq3iDqYedl_zXYdczxg_yNfXTv7mVYhB7Q7iYVr0Au6Gnca0TseXgBfR-tcZ93cZSXI4kPrWVLj7_bPRI6BrolBWKhcxcdwLrQlroi3tOWw7Iw"
-          },
-          {
-            name: "Cô Tô View Farmstay",
-            location: "Xã Cô Tô",
-            price: "450.000đ / đêm",
-            view: "Sát chân núi Phụng Hoàng Sơn",
-            rating: 4.85,
-            img: "https://images.unsplash.com/photo-1510798831971-661eb04b3739"
-          },
-          {
-            name: "Khách Sạn Sang Nhân Tri Tôn",
-            location: "Thị trấn Tri Tôn",
-            price: "280.000đ / đêm",
-            view: "Trung tâm Thị trấn sầm uất",
-            rating: 4.7,
-            img: "https://images.unsplash.com/photo-1566073771259-6a8506099945"
-          }
-        ]);
+        if (cultData && cultData.length > 0) {
+          setCultureEvents(
+            cultData.map((c: any) => {
+              let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
+              if (c.image_url && typeof c.image_url === "string" && c.image_url.startsWith("http")) {
+                img = c.image_url;
+              } else if (Array.isArray(c.photos) && c.photos.length > 0) {
+                const p0 = c.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                name: c.name,
+                time: "Mở cửa tham quan tự do",
+                location: c.commune || "Thị trấn Tri Tôn",
+                status: c.tourism_category || "Di Sản Văn Hóa",
+                desc: c.description || "Di sản văn hóa tâm linh đặc sắc tại Tri Tôn.",
+                badgeColor: "bg-emerald-800 text-white"
+              };
+            })
+          );
+        } else {
+          setCultureEvents([]);
+        }
+
+        // 4. Featured Stays live from Supabase (Zero Hardcoding)
+        const { data: stayData } = await supabase
+          .from("places")
+          .select("id, slug, name, commune, rating, photos, image_url, category, tourism_category, description, price_level")
+          .or("category.eq.stay,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách Sạn%,tourism_category.ilike.%Resort%")
+          .eq("is_active", true)
+          .order("rating", { ascending: false })
+          .limit(3);
+
+        if (stayData && stayData.length > 0) {
+          setFeaturedStays(
+            stayData.map((s: any) => {
+              let img = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop";
+              if (s.image_url && typeof s.image_url === "string" && s.image_url.startsWith("http")) {
+                img = s.image_url;
+              } else if (Array.isArray(s.photos) && s.photos.length > 0) {
+                const p0 = s.photos[0];
+                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              }
+              return {
+                name: s.name,
+                location: s.commune || "Thị trấn Tri Tôn",
+                price: s.price_level ? `${s.price_level}` : "Giá tốt theo mùa",
+                view: s.tourism_category || "Nghỉ Dưỡng Tri Tôn",
+                rating: s.rating ? Number(s.rating) : 4.8,
+                img,
+              };
+            })
+          );
+        } else {
+          setFeaturedStays([]);
+        }
 
       } catch (err) {
         console.error("Supabase live load error:", err);

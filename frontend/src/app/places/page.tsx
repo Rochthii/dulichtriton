@@ -1,19 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
 import {
   MapPin,
   Clock,
-  Ticket,
   Play,
   ChevronRight,
-  ChevronDown,
-  Sparkles,
-  Flame,
-  Filter,
   Star
 } from "lucide-react";
 
@@ -38,27 +33,6 @@ export default function PlacesPage() {
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const categories = [
-    "Tất cả",
-    "Thiên nhiên & Cảnh quan",
-    "Văn hóa & Tâm linh",
-    "Ẩm thực & Đặc sản",
-    "Homestay & Lưu trú",
-    "Di tích lịch sử"
-  ];
-
-  const communes = [
-    "Tất cả",
-    "Thị trấn Tri Tôn",
-    "Xã Núi Tô",
-    "Xã Ô Lâm",
-    "Xã Châu Lăng",
-    "Thị trấn Ba Chúc",
-    "Xã Lương Phi",
-    "Xã An Tức",
-    "Xã Cô Tô"
-  ];
 
   useEffect(() => {
     async function loadLivePlaces() {
@@ -96,9 +70,12 @@ export default function PlacesPage() {
             };
           });
           setPlaces(formatted);
+        } else {
+          setPlaces([]);
         }
       } catch (err) {
         console.error("Fetch places error:", err);
+        setPlaces([]);
       } finally {
         setLoading(false);
       }
@@ -106,38 +83,45 @@ export default function PlacesPage() {
     loadLivePlaces();
   }, []);
 
+  // 100% Dynamic Commune List from Live Data (Zero Hardcoding)
+  const communes = useMemo(() => {
+    const set = new Set<string>();
+    places.forEach((p) => {
+      if (p.commune && p.commune.trim()) set.add(p.commune.trim());
+    });
+    return ["Tất cả", ...Array.from(set).sort((a, b) => a.localeCompare(b, "vi"))];
+  }, [places]);
+
+  // 100% Dynamic Categories from Live Data (Zero Hardcoding)
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    places.forEach((p) => {
+      if (p.tourism_category && p.tourism_category.trim()) set.add(p.tourism_category.trim());
+    });
+    return ["Tất cả", ...Array.from(set).sort((a, b) => a.localeCompare(b, "vi"))];
+  }, [places]);
+
   // Real-time filtering across 174 POIs
-  const filteredPlaces = places.filter((p) => {
-    // 1. TikTok Reels Filter
-    if (tiktokOnlyFilter && (!p.video_url || !p.video_url.includes("tiktok"))) {
-      return false;
-    }
+  const filteredPlaces = useMemo(() => {
+    return places.filter((p) => {
+      // 1. TikTok Reels Filter
+      if (tiktokOnlyFilter && (!p.video_url || !p.video_url.includes("tiktok"))) {
+        return false;
+      }
 
-    // 2. Commune Filter
-    if (selectedCommune !== "Tất cả" && p.commune !== selectedCommune) {
-      return false;
-    }
+      // 2. Commune Filter
+      if (selectedCommune !== "Tất cả" && p.commune !== selectedCommune) {
+        return false;
+      }
 
-    // 3. Category Filter
-    if (activeCategory === "Tất cả") return true;
-    if (activeCategory === "Thiên nhiên & Cảnh quan") {
-      return p.category === "nature" || p.tourism_category.includes("Thiên Nhiên") || p.tourism_category.includes("Cảnh Quan");
-    }
-    if (activeCategory === "Văn hóa & Tâm linh") {
-      return p.category === "culture" || p.tourism_category.includes("Văn Hóa") || p.tourism_category.includes("Tâm Linh") || p.tourism_category.includes("Chùa");
-    }
-    if (activeCategory === "Ẩm thực & Đặc sản") {
-      return p.category === "food" || p.tourism_category.includes("Ẩm Thực") || p.tourism_category.includes("Cà Phê") || p.tourism_category.includes("Quán");
-    }
-    if (activeCategory === "Homestay & Lưu trú") {
-      return p.category === "stay" || p.tourism_category.includes("Homestay") || p.tourism_category.includes("Khách Sạn") || p.tourism_category.includes("Resort");
-    }
-    if (activeCategory === "Di tích lịch sử") {
-      return p.category === "history" || p.tourism_category.includes("Di Tích") || p.tourism_category.includes("Lịch Sử");
-    }
+      // 3. Category Filter
+      if (activeCategory !== "Tất cả" && p.tourism_category !== activeCategory) {
+        return false;
+      }
 
-    return true;
-  });
+      return true;
+    });
+  }, [places, tiktokOnlyFilter, selectedCommune, activeCategory]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
