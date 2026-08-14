@@ -523,6 +523,53 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── SECTION: BÁCH KHOA TOÀN THƯ & GIỚI THIỆU TỔNG QUAN TRI TÔN ──── */}
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1B4D3E] via-[#143B2F] to-slate-900 p-6 sm:p-8 text-white shadow-lg border border-emerald-800/80">
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-[11px] font-extrabold border border-white/20">
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>Bách Khoa Toàn Thư Vùng Đất Bảy Núi</span>
+              </div>
+              <h2 className="text-xl sm:text-3xl font-black tracking-tight leading-tight">
+                Tìm Hiểu Toàn Cảnh Tri Tôn: Địa Lý, Lịch Sử & Di Sản Văn Hóa Khmer
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+                Khám phá chi tiết 15 Xã/Thị trấn, lịch sử hơn 500 năm của 37 ngôi Chùa Khmer, lễ hội Đua Bò Bảy Núi rực lửa, kinh nghiệm mùa lúa chín Tà Pạ và hướng dẫn di chuyển từ TP.HCM, Cần Thơ.
+              </p>
+
+              {/* Mini Highlights Pills */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="px-2.5 py-1 rounded-xl bg-white/10 text-emerald-200 text-[11px] font-bold">
+                  🏞️ Diện tích ~600km²
+                </span>
+                <span className="px-2.5 py-1 rounded-xl bg-white/10 text-emerald-200 text-[11px] font-bold">
+                  🏛️ 15 Xã & Thị trấn
+                </span>
+                <span className="px-2.5 py-1 rounded-xl bg-white/10 text-emerald-200 text-[11px] font-bold">
+                  🪷 &gt;34% Dân tộc Khmer
+                </span>
+                <span className="px-2.5 py-1 rounded-xl bg-white/10 text-emerald-200 text-[11px] font-bold">
+                  🐃 Lễ hội Đua Bò Quốc Gia
+                </span>
+              </div>
+            </div>
+
+            <Link
+              href="/guide"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-md active:scale-95 shrink-0 group self-start lg:self-center"
+            >
+              <span>Xem Giới Thiệu Chi Tiết</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Background Decorative Icon */}
+          <div className="absolute right-[-20px] bottom-[-20px] opacity-5 text-white pointer-events-none">
+            <Compass className="w-80 h-80" />
+          </div>
+        </section>
+
         {/* ── 5. TOP 4 MÓN ĐẶC SẢN "PHẢI THỬ" ─────────────────────────────── */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
