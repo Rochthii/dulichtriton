@@ -5,7 +5,6 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { fetchWithCache } from "@/lib/fastCache";
 import HotPlacesSection from "@/components/HotPlacesSection";
-import GoldenTimeWidget from "@/components/GoldenTimeWidget";
 import TikTokFeedSection from "@/components/TikTokFeedSection";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import MiniGisMapBanner from "@/components/MiniGisMapBanner";
@@ -353,9 +352,6 @@ export default function HomePage() {
         <section className="flex flex-col gap-4">
           <TikTokFeedSection variant="grid" maxSlides={4} showTitle={true} />
         </section>
-
-        {/* Real-Time Golden Time Widget */}
-        <GoldenTimeWidget />
 
         {/* Danh mục nổi bật (Quick Filter Category Mobile Swipe) */}
         <section className="flex flex-col gap-3 sm:gap-4">

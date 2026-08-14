@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
-import GoldenTimeWidget from "@/components/GoldenTimeWidget";
 import {
   MapPin,
   Clock,
@@ -129,9 +128,6 @@ export default function PlacesPage() {
         
         {/* Dynamic Hot Places Section */}
         <HotPlacesSection limit={6} title="🔥 CÁC ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT" />
-
-        {/* Real-time Golden Time Widget */}
-        <GoldenTimeWidget />
 
         {/* Section Title & Filter Dropdowns */}
         <section className="mb-12">

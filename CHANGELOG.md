@@ -4,6 +4,15 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.2-REMOVE-GOLDEN-TIME-WIDGET] - 2026-08-14
+
+### 🧹 Tối Giản Giao Diện — Loại Bỏ Widget Khung Giờ Vàng Real-Time
+- **Loại bỏ Widget Khung Giờ Vàng (`GoldenTimeWidget`)**:
+  - Gỡ bỏ khối hiển thị "Đang trong khung giờ vàng trải nghiệm" và "Phát hiện giờ hệ thống real-time" khỏi Trang Chủ (`app/page.tsx`) và Trang Danh Sách Địa Điểm (`app/places/page.tsx`).
+  - Giúp giao diện trang chủ và trang địa điểm trở nên gọn gàng, liền mạch, tập trung trực tiếp vào trải nghiệm tìm kiếm, video TikTok reels và danh mục địa danh.
+
+---
+
 ## [v28.6.1-OPENROUTER-FREE-MODELS-EXPANSION] - 2026-08-14
 
 ### ⚡ Ưu Tiên & Mở Rộng Pool Model `:free` Trên OpenRouter (Tối Đa Hóa Hạn Mức Tách Biệt)
