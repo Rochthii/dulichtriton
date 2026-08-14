@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.7.2-GOOGLE-SEARCH-GROUNDING-AI-OVERVIEW] - 2026-08-14
+
+### 🌐 Tích Hợp Google Search Grounding & Giao Diện Thẻ Google AI Overview Cho Chatbot
+- **Kích Hoạt Live Google Search Grounding Cho Trợ Lý AI (`api/v1/chat/query/route.ts`)**:
+  - Tích hợp công cụ `tools: [{ googleSearch: {} }]` của Google Gemini 2.0 Flash, cho phép AI tự động tra cứu Google Search thời gian thực để trả lời thông minh, sống động, chính xác và tự nhiên như kết quả tìm kiếm Google.
+  - Loại bỏ hoàn toàn cảm giác dập khuôn, cứng nhắc của hệ thống tĩnh trước đây.
+- **Tái Thiết Kế Tin Nhắn Chatbot Thành Thẻ Google AI Overview (`components/FormattedChatMessage.tsx`)**:
+  - Trang bị Huy hiệu nhận diện `✨ Thông tin tổng quan do AI tạo (Google AI Overview)`.
+  - Bổ sung nút **"Hiện thêm / Thu gọn"** thông minh với hiệu ứng gradient mờ trang nhã cho các câu trả lời dài, giữ màn hình điện thoại luôn gọn gàng và dễ đọc.
+
+---
+
 ## [v28.7.1-TIKTOK-UNIVERSAL-DEEPLINK-UPGRADE] - 2026-08-14
 
 ### 🎵 Nâng Cấp Liên Kết TikTok: Tự Động Mở Ứng Dụng TikTok Trực Tiếp Trên Điện Thoại

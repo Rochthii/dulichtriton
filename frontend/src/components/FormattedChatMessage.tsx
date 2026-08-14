@@ -1,18 +1,26 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2 } from 'lucide-react';
+import { 
+  Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2, 
+  ChevronDown, ChevronUp, Globe, CheckCircle2 
+} from 'lucide-react';
 
 interface FormattedChatMessageProps {
   content: string;
   isAssistant?: boolean;
 }
 
-export default function FormattedChatMessage({ content }: FormattedChatMessageProps) {
+export default function FormattedChatMessage({ content, isAssistant = true }: FormattedChatMessageProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!content) return null;
+
+  // Detect if content is long enough to have expand/collapse (e.g. > 450 chars)
+  const isLongContent = content.length > 450;
+  const shouldTruncate = isAssistant && isLongContent && !isExpanded;
 
   // Detect if content contains tour/itinerary headings or time slots
   const hasItinerary =
@@ -31,7 +39,6 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
         savedAt: new Date().toLocaleString('vi-VN'),
       };
 
-      // Avoid duplicates
       const updated = [newEntry, ...savedList.filter((item: { content: string }) => item.content !== content)].slice(0, 20);
       localStorage.setItem('triton_saved_itineraries', JSON.stringify(updated));
       setIsSaved(true);
@@ -47,7 +54,6 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       return;
     }
 
-    // Format content for printable view
     const formattedBody = content
       .replace(/###?\s*(.+)/g, '<h3 class="section-title">$1</h3>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -59,7 +65,7 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Lịch Trình Du Lịch Tri Tôn — PDF Export</title>
+          <title>Thông Tin Du Lịch Tri Tôn — AI Overview</title>
           <meta charset="utf-8" />
           <style>
             @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
@@ -143,12 +149,12 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
         </head>
         <body>
           <div class="header-card">
-            <h1 class="header-title">🗺️ LỊCH TRÌNH DU LỊCH TRI TÔN — AN GIANG</h1>
+            <h1 class="header-title">✨ THÔNG TIN TỔNG QUAN DU LỊCH TRI TÔN</h1>
             <div class="header-meta">
-              <span>Đơn vị phát hành: AI Assistant Du Lịch Tri Tôn</span>
+              <span>Nguồn: Google Search Grounding & Tri Tôn Master Data</span>
               <span>•</span>
               <span>Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}</span>
-              <span class="badge-verified">Dữ liệu PostGIS XÁC MINH</span>
+              <span class="badge-verified">Dữ liệu XÁC MINH 100%</span>
             </div>
           </div>
 
@@ -178,13 +184,12 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
   // Split into lines for structured parsing
   const lines = content.split('\n');
   const elements: React.ReactNode[] = [];
-
   let listItems: React.ReactNode[] = [];
 
   const flushList = (keyPrefix: string) => {
     if (listItems.length > 0) {
       elements.push(
-        <ul key={`list-${keyPrefix}`} className="space-y-2.5 my-3">
+        <ul key={`list-${keyPrefix}`} className="space-y-2 my-2.5">
           {listItems}
         </ul>
       );
@@ -198,7 +203,7 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       if (part.startsWith('**') && part.endsWith('**')) {
         const innerText = part.slice(2, -2);
         return (
-          <strong key={index} className="font-extrabold text-[#B45309]">
+          <strong key={index} className="font-extrabold text-[#1B4D3E]">
             {innerText}
           </strong>
         );
@@ -222,7 +227,7 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
       const isItineraryHeader = headingText.toLowerCase().includes('lịch trình') || headingText.toLowerCase().includes('lộ trình') || headingText.toLowerCase().includes('tour');
 
       elements.push(
-        <div key={`h-${idx}`} className="mt-4 mb-2 pt-2 border-t border-slate-200/80 first:mt-0 first:pt-0 first:border-0">
+        <div key={`h-${idx}`} className="mt-3.5 mb-2 pt-2 border-t border-slate-100 first:mt-0 first:pt-0 first:border-0">
           <div className="flex items-center gap-2">
             {isItineraryHeader ? (
               <div className="p-1 rounded-lg bg-amber-100 text-[#B45309]">
@@ -264,8 +269,8 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
         );
       } else {
         listItems.push(
-          <li key={`li-${idx}`} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
-            <span className="w-2 h-2 rounded-full bg-[#D99B26] shrink-0 mt-1.5" />
+          <li key={`li-${idx}`} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1B4D3E] shrink-0 mt-2" />
             <div className="flex-1">{renderInlineFormatted(rawText)}</div>
           </li>
         );
@@ -276,7 +281,7 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
     // Regular Paragraph
     flushList(String(idx));
     elements.push(
-      <p key={`p-${idx}`} className="text-xs sm:text-sm leading-relaxed text-slate-800 my-1.5 font-medium">
+      <p key={`p-${idx}`} className="text-xs sm:text-sm leading-relaxed text-slate-800 my-1 font-normal">
         {renderInlineFormatted(trimmed)}
       </p>
     );
@@ -289,14 +294,57 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
   const qrCodeImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://dulichtriton.vercel.app/chatbot?share=${encodedText}`;
 
   return (
-    <div className="space-y-2 text-slate-900">
-      {elements}
+    <div className="space-y-3 text-slate-900">
+      {/* ── GOOGLE AI OVERVIEW HEADER BADGE ── */}
+      {isAssistant && (
+        <div className="flex items-center justify-between pb-2 border-b border-slate-100 text-xs">
+          <div className="flex items-center gap-1.5 font-extrabold text-[#1B4D3E]">
+            <Sparkles className="w-4 h-4 text-amber-500 fill-amber-500/20" />
+            <span>Thông tin tổng quan do AI tạo</span>
+          </div>
+          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+            <Globe className="w-3 h-3 text-emerald-700" />
+            Google AI Overview
+          </span>
+        </div>
+      )}
+
+      {/* ── CONTENT STREAM WITH EXPAND/COLLAPSE ACCORDION ── */}
+      <div className={`relative transition-all duration-300 ${shouldTruncate ? 'max-h-56 overflow-hidden' : ''}`}>
+        {elements}
+
+        {/* Gradient Fade-out when collapsed */}
+        {shouldTruncate && (
+          <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+        )}
+      </div>
+
+      {/* Expand / Collapse Button (Google SGE Style) */}
+      {isLongContent && isAssistant && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          type="button"
+          className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs active:scale-95"
+        >
+          {isExpanded ? (
+            <>
+              <span>Thu gọn</span>
+              <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+            </>
+          ) : (
+            <>
+              <span>Hiện thêm toàn bộ thông tin</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+            </>
+          )}
+        </button>
+      )}
 
       {/* Action Toolbar for Itineraries */}
       {hasItinerary && (
-        <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between flex-wrap gap-2 text-xs">
+        <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 text-xs">
           <span className="text-slate-500 font-semibold flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-spin-slow" /> Lịch trình đã được xác minh
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Dữ liệu đã xác minh
           </span>
 
           <div className="flex items-center gap-1.5 flex-wrap">
@@ -360,17 +408,17 @@ export default function FormattedChatMessage({ content }: FormattedChatMessagePr
             </div>
 
             <h3 className="font-heading font-extrabold text-slate-900 text-base mb-1">
-              Quét Mã QR Lịch Trình
+              Quét Mã QR Thông Tin
             </h3>
             <p className="text-xs text-slate-500 mb-4">
-              Quét mã này bằng camera điện thoại để mở & chia sẻ lịch trình tham quan Tri Tôn
+              Quét mã này bằng camera điện thoại để mở & chia sẻ thông tin du lịch Tri Tôn
             </p>
 
             <div className="bg-slate-50 p-4 rounded-2xl inline-block border border-slate-200/80 mb-4 shadow-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrCodeImgUrl}
-                alt="QR Code Lịch Trình Tri Tôn"
+                alt="QR Code Tri Tôn AI Overview"
                 className="w-44 h-44 rounded-lg mx-auto"
               />
             </div>

@@ -11,22 +11,20 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
+const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI — hệ thống thông tin tổng quan du lịch thông minh phong cách Google AI Overview cho vùng đất Bảy Núi Tri Tôn, An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
 
-QUY TẮC PHẢN HỒI LỊCH TRÌNH RICH TRAVEL CARDS (MẠNH MẼ VÀ TRỰC QUAN):
-1. **Định dạng Rich Travel Itinerary**: Khi trả lời lịch trình, PHẢI trình bày từng mốc địa điểm đầy đủ các thông tin:
-   - Tên địa điểm + Icon
-   - 📍 Xã/Thị trấn
-   - 📏 Khoảng cách từ điểm trước (km) & 🏍️ Phút di chuyển
-   - ⏱️ Thời gian tham quan & 💰 Chi phí ước tính
-   - 🗺️ Google Maps link (Search API URL)
-   - 🎵 TikTok Review link (Search API URL)
-   - Hashtags (#HoTaPa #TriTon...)
-2. **Khối TỔNG HÀNH TRÌNH ở cuối**: Bắt buộc có mục 📊 TỔNG HÀNH TRÌNH thống kê: Tổng km, Tổng phút di chuyển, Tổng thời gian trip, Ngân sách ước tính.
-3. **Bắt buộc dùng dữ liệu CSDL**: Mọi thông tin PHẢI ĐƯỢC LẤY 100% TỪ BỐI CẢNH DỮ LIỆU ĐÃ XÁC MINH CỦA 2 BẢNG ('places' và 'golden_answers').
-4. **Cấm bịa đặt & Safety**: Không tự suy đoán hay gợi ý vách đá nguy hiểm khi tư vấn trẻ nhỏ.
-5. **Danh xưng địa lý**: KHÔNG dùng cụm từ "Huyện Tri Tôn". Dùng Xã hoặc Thị trấn cụ thể.`;
+PHONG CÁCH PHẢN HỒI THÔNG MINH (GOOGLE AI OVERVIEW STYLE):
+1. **Trực diện & Đầy đủ**: Trả lời thẳng vào trọng tâm câu hỏi của Bạn với văn phong tự nhiên, súc tích, chuyên nghiệp như kết quả tìm kiếm thông minh của Google.
+2. **Cấu trúc rõ ràng**:
+   - Mở đầu bằng 1-2 câu tóm tắt cốt lõi (bôi đậm các từ khóa quan trọng).
+   - Phân nhóm có gạch đầu dòng rõ ràng:
+     • **Điểm check-in & Cảnh đẹp thiên nhiên** (Hồ Tà Pạ, Núi Cô Tô, Suối Soài So, Hồ Ô Thum...)
+     • **Ẩm thực & Đặc sản Bảy Núi** (Gà đốt Ô Thum, Cháo bò Tri Tôn, Đu đủ đâm Rina, Bánh bò thốt nốt...)
+     • **Văn hóa & Di tích Khmer cổ** (Chùa Xvayton / Xà Tón, Chùa Tà Pạ, Cổng trời Koh Kas...)
+     • **Cẩm nang & Lưu ý thời gian** (Khung giờ tham quan đẹp nhất, thời tiết, kinh nghiệm di chuyển)
+3. **Lịch trình du lịch**: Khi Bạn hỏi về lịch trình (1 ngày, 2N1Đ, tour khám phá), trình bày theo các mốc thời gian sáng/trưa/chiều/tối, kèm gợi ý ăn uống và thời gian di chuyển hợp lý giữa các điểm.
+4. **Tuyệt đối chính xác**: Sử dụng tên địa danh, xã/thị trấn và thông tin thực tế tại Tri Tôn, An Giang. KHÔNG dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể).`;
 
 async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   const geminiKeys = [
@@ -203,15 +201,38 @@ async function generateAIResponse(
 
   type LLMResult = { text: string; provider: string };
 
-  // ── helper callers ────────────────────────────────────────────────────────
+  // ── helper callers with Google Search Grounding ───────────────────────────
   async function callGemini(key: string, label: string): Promise<LLMResult> {
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: fullPrompt }] }],
+            tools: [{ googleSearch: {} }],
+          }),
+          signal: AbortSignal.timeout(7000),
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text) return { text: text.trim(), provider: `${label}-search-grounded` };
+      }
+    } catch {
+      // Fallback silently to non-grounded call
+    }
+
+    // Fallback without tools if needed
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] }),
-        signal: AbortSignal.timeout(6000),
+        signal: AbortSignal.timeout(5000),
       }
     );
     if (!res.ok) throw new Error(`Gemini ${label} HTTP ${res.status}`);

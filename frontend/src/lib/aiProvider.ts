@@ -35,9 +35,9 @@ export const AI_CONFIG: AIProviderConfig = {
   groqKey: process.env.GROQ_API_KEY || '',
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
-    'gemini-3-flash-preview',
-    'gemini-3.5-flash',
-    'gemini-3.1-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash',
+    'gemini-2.0-flash-lite',
     'gemini-flash-latest',
   ],
   groqModels: [
