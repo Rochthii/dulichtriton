@@ -294,12 +294,16 @@ export default function ChatbotWidget() {
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
   };
 
+  if (pathname === '/chatbot') {
+    return null;
+  }
+
   return (
     <>
       {/* Floating Launcher */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 p-3.5 rounded-full bg-[#1B4D3E] hover:bg-[#143B2F] text-white shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group border border-[#D99B26]/30"
+        className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 p-3.5 rounded-full bg-[#1B4D3E] hover:bg-[#143B2F] text-white shadow-2xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group border border-[#D99B26]/30 active:scale-95"
         aria-label="Open AI Chatbot"
       >
         <div className="relative">

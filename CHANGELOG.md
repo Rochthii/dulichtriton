@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.7-MOBILE-CHATBOT-OPTIMIZATION-AND-FULLSCREEN-PAGE] - 2026-08-14
+
+### 📱 Tối Ưu Hóa Trải Nghiệm Mobile Toàn Diện — Đặc Biệt Là Trợ Lý AI Chatbot
+- **Trang Chatbot Độc Lập Toàn Màn Hình Mobile (`/chatbot`)**:
+  - Giao diện full viewport `h-[100dvh]` tối ưu khi bàn phím ảo bật lên.
+  - Header xanh `#1B4D3E` có nút quay lại trang trước, nút xóa lịch sử trò chuyện.
+  - Dải thanh cuộn ngang gợi ý các chủ đề hot (Tour 1 ngày, Gà Đốt Ô Thum, Cháo Bò, Chùa Xà Tón) chạm mượt mà.
+  - Streaming AI hiển thị tức thì từng từ, tự động cuộn xuống cuối tin nhắn mới nhất.
+  - Tích hợp trực tiếp sơ đồ nối dây `WireDiagramItinerary` và bộ chọn 35 lịch trình `ItineraryPresetPicker`.
+- **Nâng Cấp Widget Nổi (`ChatbotWidget`) Trên Mobile**:
+  - Nút bấm nổi đặt vị trí an toàn trên thanh điều hướng di động (`bottom-20`).
+  - Tự động ẩn widget nổi khi người dùng đang ở trang `/chatbot` để tránh xung đột UI.
+  - Khung mở rộng hỗ trợ thao tác vuốt trượt đóng mở mượt mà.
+
+---
+
 ## [v28.8.6-ZERO-HARDCODE-HOMEPAGE-DYNAMIC-SUPABASE] - 2026-08-14
 
 ### 🚀 Xóa Bỏ Hoàn Toàn Hardcode Trên Trang Chủ — Nạp Động 100% Từ Supabase
