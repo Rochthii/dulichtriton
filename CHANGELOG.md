@@ -4,6 +4,23 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.1-DYNAMIC-ITINERARY-PAGE-FROM-LICHTRINH-JSON] - 2026-08-14
+
+### 🗺️ Đồng Bộ Toàn Bộ Trang Lịch Trình (`/itinerary`) Với Dữ Liệu `lichtrinh.json`
+- **Tải Động 35 Lịch Trình Thực Địa**:
+  - Trang `/itinerary` ([`ItineraryClientPage.tsx`](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ItineraryClientPage.tsx)) chuyển từ dữ liệu hardcode tĩnh sang nạp động 100% từ `lichtrinh.json` thông qua API `/api/v1/chat/itinerary`.
+- **Bộ Lọc Lịch Trình & Selector Trực Quan**:
+  - Filter theo thời lượng: `Tất Cả`, `1 Ngày`, `Buổi Tối`, `2N1Đ`, `3N2Đ`.
+  - Grid chọn nhanh tất cả lịch trình theo chủ đề (Classic, Sống ảo, Food tour, Tâm linh, Trekking, Nhiếp ảnh, Lễ hội, Đêm Tri Tôn).
+- **Thẻ Node Chi Tiết Cho Từng Điểm Dừng**:
+  - Hiển thị đầy đủ: Thời gian, Thời lượng, Danh mục, Chi phí (VND), Địa chỉ xã, Mẹo & Trải nghiệm thực địa.
+  - Tích hợp 2 nút hành động trực tiếp: `▶ Xem TikTok Video Review` (tìm kiếm TikTok trực tiếp) & `📍 Chỉ Đường Google Maps` (tìm kiếm GPS theo địa danh chuẩn).
+  - Khoảng cách & thời gian di chuyển giữa các điểm dừng được hiển thị rõ ràng bằng Stepper Badge.
+- **Lưu Ý Mùa & Xuất QR / PDF**:
+  - Tích hợp modal xuất mã QR và PDF offline cho lịch trình đang xem.
+
+---
+
 ## [v28.8.0-WIRE-DIAGRAM-ITINERARY-CHATBOT] - 2026-08-14
 
 ### 🗺️ Chatbot Lịch Trình Sơ Đồ Nối Dây + 8 Lịch Trình Dựng Sẵn Theo Persona
