@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.8-FIX-VERCEL-BUILD-SUPABASE-FALLBACKS] - 2026-08-14
+
+### 🛠️ Sửa Triệt Để Lỗi Deploy Vercel Build (Supabase Key Required)
+- **Nguyên nhân**: Trong giai đoạn build tĩnh trên Vercel (`page data collection`), các route API khởi tạo client `createClient` ở cấp module với chuỗi rỗng `''`, khiến thư viện `@supabase/supabase-js` ném lỗi `supabaseKey is required`.
+- **Giải pháp xử lý triệt để**:
+  - Bổ sung fallback an toàn `placeholder` cho tất cả 17 route API và module hệ thống.
+  - Bổ sung `export const dynamic = 'force-dynamic'` cho toàn bộ các endpoint API (`/api/v1/chat/itinerary`, `/api/v1/chat/stream`, `/api/v1/chat/query`, `/api/v1/culture`, `/api/v1/food`, `/api/v1/stays`, `/api/v1/videos/...`).
+  - Đã kiểm tra build cục bộ với 43 route tĩnh và động hoàn tất thành công 100%.
+
+---
+
 ## [v28.8.7-MOBILE-CHATBOT-OPTIMIZATION-AND-FULLSCREEN-PAGE] - 2026-08-14
 
 ### 📱 Tối Ưu Hóa Trải Nghiệm Mobile Toàn Diện — Đặc Biệt Là Trợ Lý AI Chatbot
