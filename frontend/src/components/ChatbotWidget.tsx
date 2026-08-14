@@ -8,7 +8,6 @@ import {
   MapPin, Navigation, Maximize2, Minimize2, Trash2
 } from 'lucide-react';
 import { getGoogleMapsUrl } from '@/lib/utils';
-import VideoChatCard from './VideoChatCard';
 import FormattedChatMessage from './FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from './WireDiagramItinerary';
 import ItineraryPresetPicker from './ItineraryPresetPicker';
@@ -25,21 +24,12 @@ interface EmbeddedSpot {
   longitude?: number;
 }
 
-interface EmbeddedVideo {
-  title: string;
-  views: string;
-  imageUrl: string;
-  embedUrl?: string;
-  creator?: string;
-}
-
 interface Message {
   id: string;
   sender: 'user' | 'assistant';
   text: string;
   timestamp: string;
   spots?: EmbeddedSpot[];
-  videos?: EmbeddedVideo[];
   suggestions?: string[];
   itinerary?: ItineraryData;
   showPresetPicker?: boolean;
@@ -90,103 +80,101 @@ export default function ChatbotWidget() {
     if (stored) {
       sessionIdRef.current = stored;
     } else {
-      const newId = `wgt_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+      const newId = 'session_' + Math.random().toString(36).substring(2, 9);
       localStorage.setItem(KEY, newId);
       sessionIdRef.current = newId;
     }
   }, []);
 
   useEffect(() => {
-    const handleCustomOpen = (e: Event) => {
-      const customEvt = e as CustomEvent<{ query?: string }>;
-      setIsOpen(true);
-      if (customEvt.detail?.query) {
-        handleSend(customEvt.detail.query);
-      }
-    };
-    window.addEventListener('triton:open-chat', handleCustomOpen);
-    return () => window.removeEventListener('triton:open-chat', handleCustomOpen);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    try {
-      const toStore = messages.slice(-MAX_STORED_MESSAGES);
-      localStorage.setItem(SESSION_KEY, JSON.stringify(toStore));
-    } catch { /* quota exceeded */ }
+    if (messages.length > 0) {
+      try {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
+      } catch { /* ignore */ }
+    }
   }, [messages]);
 
   useEffect(() => {
     if (isOpen) setUnreadCount(0);
   }, [isOpen]);
 
-  useEffect(() => {
-    if (isOpen && messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior,
+      });
     }
-  }, [messages, isOpen]);
+  }, []);
 
-  if (pathname?.startsWith('/admin')) return null;
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => scrollToBottom('instant'), 50);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, scrollToBottom]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping, scrollToBottom]);
 
   const presets = [
-    'Gợi ý tour 1 ngày Bảy Núi',
-    'Ăn Gà Đốt Ô Thum ở đâu?',
-    'Đường lên Hồ Tà Pạ',
-    'Chùa Khmer đẹp nhất'
+    '🔥 Tour Kinh Điển 1 Ngày',
+    '🗺️ Toàn Cảnh 2N1Đ',
+    '🍗 Quán Gà Đốt Ô Thum',
+    '📸 Điểm check-in đẹp',
+    '🏛️ Chùa Khmer nổi tiếng',
   ];
 
-  // ── Handle preset itinerary selection ──────────────────────────────────────
+  // ── Handle Preset Itinerary Select ─────────────────────────────────────────
   const handlePresetSelect = async (slug: string) => {
-    const PRESET_LABELS: Record<string, string> = {
-      'classic-1day':       '🔥 Kinh Điển 1 Ngày',
-      'tiktok-viral':       '📸 Sống Ảo TikTok',
-      'spiritual-family':   '🙏 Tâm Linh Khmer',
-      'trekking-adventure': '🥾 Trekking Bảy Núi',
-      'food-tour':          '🍗 Food Tour Bảy Núi',
-      'half-day':           '🕰️ Nửa Ngày Ghé Ngang',
-      'history-memorial':   '📜 Lịch Sử & Tưởng Niệm',
-      'couple-chill':       '💑 Couple Chill & Hoàng Hôn',
-    };
-
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      sender: 'user',
-      text: `Cho tôi lịch trình: ${PRESET_LABELS[slug] || slug}`,
-      timestamp: now,
-    };
+    const botPlaceholderId = (Date.now() + 1).toString();
 
-    const botId = (Date.now() + 1).toString();
-    const botPlaceholder: Message = {
-      id: botId,
-      sender: 'assistant',
-      text: '',
-      timestamp: now,
-    };
+    setMessages(prev => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        sender: 'user',
+        text: `Xem lịch trình: ${slug}`,
+        timestamp: now,
+      },
+      {
+        id: botPlaceholderId,
+        sender: 'assistant',
+        text: 'Đang tải sơ đồ lịch trình nối dây...',
+        timestamp: now,
+      },
+    ]);
 
-    setMessages(prev => [...prev, userMsg, botPlaceholder]);
     setIsLoadingItinerary(true);
 
     try {
       const res = await fetch(`/api/v1/chat/itinerary?slug=${slug}`);
-      if (!res.ok) throw new Error('Not found');
-      const { itinerary } = await res.json() as { itinerary: ItineraryData };
+      if (!res.ok) throw new Error('Failed to fetch itinerary');
+      const data = await res.json();
 
-      setMessages(prev => prev.map(m =>
-        m.id === botId
-          ? {
-              ...m,
-              text: `Đây là lịch trình **${itinerary.emoji} ${itinerary.title}** — ${itinerary.tagline}`,
-              itinerary,
-              suggestions: ['Lịch trình khác', 'Ăn gì ở Tri Tôn?', 'Hỏi thêm về Hồ Tà Pạ'],
-            }
-          : m
-      ));
+      if (data.itinerary) {
+        setMessages(prev => prev.map(m =>
+          m.id === botPlaceholderId
+            ? {
+                ...m,
+                text: `Dưới đây là sơ đồ lịch trình **${data.itinerary.title}** (${data.itinerary.duration}) — gồm **${data.itinerary.stops?.length || 0} điểm dừng** tối ưu lộ trình:`,
+                itinerary: data.itinerary,
+                showPresetPicker: false,
+                suggestions: ['Chọn lịch trình khác', 'Quán ăn ngon gần đây', 'Cách đi Tà Pạ'],
+              }
+            : m
+        ));
+      }
     } catch {
       setMessages(prev => prev.map(m =>
-        m.id === botId
-          ? { ...m, text: 'Không tải được lịch trình. Bạn hãy thử lại nhé!' }
+        m.id === botPlaceholderId
+          ? {
+              ...m,
+              text: 'Không thể tải lịch trình lúc này. Bạn hãy thử lại sau!',
+              suggestions: ['Gợi ý tour 1 ngày', 'Gà đốt Ô Thum'],
+            }
           : m
       ));
     } finally {
@@ -194,7 +182,6 @@ export default function ChatbotWidget() {
     }
   };
 
-  // ── Main send handler ──────────────────────────────────────────────────────
   const handleSend = useCallback(async (queryText?: string) => {
     const textToSend = queryText || input;
     if (!textToSend.trim()) return;
@@ -206,7 +193,7 @@ export default function ChatbotWidget() {
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'assistant',
-        text: 'Tôi có **8 lịch trình** được thiết kế sẵn cho từng nhu cầu — bấm chọn lịch trình phù hợp với bạn:',
+        text: 'Tôi có các lịch trình thực địa được thiết kế sẵn cho từng nhu cầu — bấm chọn lịch trình phù hợp với bạn:',
         timestamp: now,
         showPresetPicker: true,
         suggestions: ['Ăn gì ở Tri Tôn?', 'Hỏi về Hồ Tà Pạ', 'Chùa Khmer nào đẹp?'],
@@ -269,15 +256,6 @@ export default function ChatbotWidget() {
                 rating: (p.rating as number) || 4.5,
               }));
               update({ spots });
-            } else if (evt.type === 'videos' && Array.isArray(evt.data) && evt.data.length > 0) {
-              const videos: EmbeddedVideo[] = evt.data.slice(0, 2).map((v: Record<string, unknown>) => ({
-                title: v.title as string,
-                views: (v.view_count as string) || '0',
-                imageUrl: (v.thumbnail_url as string) || '',
-                embedUrl: (v.video_url as string) || '',
-                creator: (v.author_name as string) || '',
-              }));
-              update({ videos });
             } else if (evt.type === 'suggestions') {
               update({ suggestions: evt.data as string[] });
             } else if (evt.type === 'error') {
@@ -434,7 +412,7 @@ export default function ChatbotWidget() {
                           <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce" />
                         </div>
                         <span className="text-[11px] font-medium text-slate-500 ml-1.5">
-                          {isLoadingItinerary ? 'Đang tải lịch trình...' : 'AI đang suy nghĩ...'}
+                          {isLoadingItinerary ? 'Đang tải lịch trình...' : 'AI đang tra cứu thực địa...'}
                         </span>
                       </div>
                     ) : (
@@ -465,7 +443,9 @@ export default function ChatbotWidget() {
                       {msg.spots.map((spot, i) => (
                         <div key={`wspot-${msg.id}-${i}`} className="min-w-[210px] max-w-[230px] bg-white rounded-2xl p-2.5 border border-slate-200 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#1B4D3E]/40 transition-all">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={spot.imageUrl} alt={spot.name} className="w-13 h-13 rounded-xl object-cover bg-slate-200 shrink-0" />
+                          {spot.imageUrl && (
+                            <img src={spot.imageUrl} alt={spot.name} className="w-12 h-12 rounded-xl object-cover bg-slate-200 shrink-0" />
+                          )}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-700">
                               <MapPin className="w-2.5 h-2.5 text-[#D99B26]" />
@@ -473,27 +453,16 @@ export default function ChatbotWidget() {
                             </div>
                             <h4 className="font-bold text-xs text-slate-900 truncate">{spot.name}</h4>
                             <div className="flex items-center gap-1.5 mt-1.5">
-                              <a href={getGoogleMapsUrl(spot.name, spot.commune)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#1B4D3E] bg-emerald-100/80 hover:bg-[#1B4D3E] hover:text-white px-2.5 py-1 rounded-lg transition-colors min-h-[28px]">
-                                <Navigation className="w-3 h-3" />Maps
+                              <a href={getGoogleMapsUrl(spot.name, spot.commune)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-[10px] font-bold text-[#1B4D3E] bg-emerald-100/80 hover:bg-[#1B4D3E] hover:text-white px-2 py-0.5 rounded-lg transition-colors min-h-[24px]">
+                                <Navigation className="w-2.5 h-2.5" />Maps
                               </a>
                               {spot.id && (
-                                <Link href={`/places/${spot.id}`} className="flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100/80 hover:bg-amber-600 hover:text-white px-2.5 py-1 rounded-lg transition-colors min-h-[28px]">
+                                <Link href={`/places/${spot.id}`} className="flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-100/80 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg transition-colors min-h-[24px]">
                                   Xem
                                 </Link>
                               )}
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* ── EMBEDDED VIDEO CARDS ──────────────────────────────── */}
-                  {msg.videos && msg.videos.length > 0 && (
-                    <div className="w-full flex gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin snap-x touch-pan-x">
-                      {msg.videos.map((video, i) => (
-                        <div key={`wvid-${msg.id}-${i}`} className="min-w-[220px] max-w-[240px] shrink-0 snap-start">
-                          <VideoChatCard title={video.title} views={video.views} imageUrl={video.imageUrl} embedUrl={video.embedUrl} />
                         </div>
                       ))}
                     </div>

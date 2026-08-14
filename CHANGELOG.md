@@ -4,6 +4,19 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.2-CHATBOT-LIVE-INTERNET-PRIORITY-INLINE-LINKS] - 2026-08-14
+
+### 🚀 Ưu Tiên Live Internet Search + Nút Bấm Chỉ Đường Maps & TikTok Ngay Tại Từng Địa Điểm
+- **Ưu tiên thông tin thực tế từ Internet**:
+  - Chatbot (`stream/route.ts` & `query/route.ts`) chuyển sang ưu tiên kết quả tìm kiếm internet mới nhất, không phụ thuộc cứng nhắc vào dữ liệu tĩnh trong database.
+- **Nút hành động đính kèm ngay dưới từng địa điểm (Inline Action Buttons)**:
+  - System Prompt yêu cầu AI đính kèm trực tiếp link Google Maps (`https://www.google.com/maps/search/?api=1&query=...`) và link TikTok (`https://www.tiktok.com/search?q=...`) ngay dưới từng địa điểm/quán ăn được gợi ý.
+  - [`FormattedChatMessage.tsx`](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/FormattedChatMessage.tsx) tự động render các link này thành nút bấm pill tương tác trực quan: `[📍 Chỉ đường Google Maps]` & `[▶ Xem TikTok Video]`.
+- **Loại bỏ gợi ý video**:
+  - Gỡ bỏ hoàn toàn carousel thẻ video discovery riêng biệt khỏi [`ChatbotWidget.tsx`](file:///e:/Projects/Project_ca_nhan/dulichtriton/frontend/src/components/ChatbotWidget.tsx), dồn toàn bộ trải nghiệm vào luồng trả lời súc tích, tiện dụng.
+
+---
+
 ## [v28.8.1-DYNAMIC-ITINERARY-PAGE-FROM-LICHTRINH-JSON] - 2026-08-14
 
 ### 🗺️ Đồng Bộ Toàn Bộ Trang Lịch Trình (`/itinerary`) Với Dữ Liệu `lichtrinh.json`

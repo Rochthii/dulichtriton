@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { 
   Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2, 
-  ChevronDown, ChevronUp, Globe, CheckCircle2 
+  ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink 
 } from 'lucide-react';
 
 interface FormattedChatMessageProps {
@@ -18,11 +18,9 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
 
   if (!content) return null;
 
-  // Detect if content is long enough to have expand/collapse (e.g. > 450 chars)
-  const isLongContent = content.length > 450;
+  const isLongContent = content.length > 550;
   const shouldTruncate = isAssistant && isLongContent && !isExpanded;
 
-  // Detect if content contains tour/itinerary headings or time slots
   const hasItinerary =
     /lịch trình|lộ trình|tour|sáng \(|trưa \(|chiều \(|tối \(/i.test(content);
 
@@ -57,9 +55,8 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
     const formattedBody = content
       .replace(/###?\s*(.+)/g, '<h3 class="section-title">$1</h3>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/-(.*)/g, '<li class="bullet-item">$1</li>')
-      .replace(/🗺️ Google Maps: (https:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="map-link">📍 Mở Google Maps</a>')
-      .replace(/🎵 TikTok Review: (https:\/\/[^\s]+)/g, '<a href="$1" target="_blank" class="tiktok-link">🎵 Xem TikTok Review</a>');
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="action-link">$1</a>')
+      .replace(/-(.*)/g, '<li class="bullet-item">$1</li>');
 
     const htmlContent = `
       <!DOCTYPE html>
@@ -125,12 +122,12 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
               list-style-type: none;
               padding-left: 0;
             }
-            .map-link, .tiktok-link {
+            .action-link {
               display: inline-block;
               color: #1B4D3E;
               background: #F1F5F9;
-              padding: 3px 8px;
-              border-radius: 6px;
+              padding: 4px 10px;
+              border-radius: 8px;
               text-decoration: none;
               font-weight: 700;
               font-size: 11px;
@@ -149,9 +146,9 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
         </head>
         <body>
           <div class="header-card">
-            <h1 class="header-title">✨ THÔNG TIN TỔNG QUAN DU LỊCH TRI TÔN</h1>
+            <h1 class="header-title">✨ THÔNG TIN DU LỊCH TRI TÔN</h1>
             <div class="header-meta">
-              <span>Nguồn: Google Search Grounding & Tri Tôn Master Data</span>
+              <span>Nguồn: Thông tin thực địa & Live Search Tri Tôn</span>
               <span>•</span>
               <span>Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}</span>
               <span class="badge-verified">Dữ liệu XÁC MINH 100%</span>
@@ -181,6 +178,85 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
     printWindow.document.close();
   };
 
+  // ── Render inline tokens (Bold + Markdown Links + Plain text) ──────────────
+  const renderInlineFormatted = (text: string) => {
+    // Match markdown link: [label](url) OR bold: **bold**
+    const tokenRegex = /(\[.*?\]\(https?:\/\/[^\s)]+\)|\*\*.*?\*\*)/g;
+    const parts = text.split(tokenRegex);
+
+    return parts.map((part, index) => {
+      if (!part) return null;
+
+      // 1. Markdown Links: [label](url)
+      const linkMatch = part.match(/^\[(.*?)\]\((https?:\/\/[^\s)]+)\)$/);
+      if (linkMatch) {
+        const label = linkMatch[1];
+        const url = linkMatch[2];
+        const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || /maps|chỉ đường/i.test(label);
+        const isTikTok = url.includes('tiktok.com') || /tiktok/i.test(label);
+
+        if (isMaps) {
+          return (
+            <a
+              key={index}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 my-1 mr-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-[11px] shadow-2xs transition-all active:scale-95 no-underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Navigation className="w-3 h-3 text-amber-300 shrink-0" />
+              <span>{label.replace(/^[📍🗺️]\s*/, '')}</span>
+            </a>
+          );
+        }
+
+        if (isTikTok) {
+          return (
+            <a
+              key={index}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 px-2.5 py-1 my-1 mr-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-[11px] shadow-2xs transition-all active:scale-95 no-underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Play className="w-3 h-3 fill-white text-white shrink-0" />
+              <span>{label.replace(/^[▶🎵]\s*/, '')}</span>
+            </a>
+          );
+        }
+
+        return (
+          <a
+            key={index}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#1B4D3E] hover:underline font-bold inline-flex items-center gap-0.5 text-xs mx-1"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span>{label}</span>
+            <ExternalLink className="w-3 h-3 inline" />
+          </a>
+        );
+      }
+
+      // 2. Bold text: **text**
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const innerText = part.slice(2, -2);
+        return (
+          <strong key={index} className="font-extrabold text-[#1B4D3E]">
+            {innerText}
+          </strong>
+        );
+      }
+
+      // 3. Regular text
+      return part;
+    });
+  };
+
   // Split into lines for structured parsing
   const lines = content.split('\n');
   const elements: React.ReactNode[] = [];
@@ -197,21 +273,6 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
     }
   };
 
-  const renderInlineFormatted = (text: string) => {
-    const parts = text.split(/(\*\*.*?\*\*)/g);
-    return parts.map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        const innerText = part.slice(2, -2);
-        return (
-          <strong key={index} className="font-extrabold text-[#1B4D3E]">
-            {innerText}
-          </strong>
-        );
-      }
-      return part;
-    });
-  };
-
   lines.forEach((line, idx) => {
     const trimmed = line.trim();
 
@@ -224,7 +285,7 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
     if (trimmed.startsWith('#')) {
       flushList(String(idx));
       const headingText = trimmed.replace(/^#+\s*/, '');
-      const isItineraryHeader = headingText.toLowerCase().includes('lịch trình') || headingText.toLowerCase().includes('lộ trình') || headingText.toLowerCase().includes('tour');
+      const isItineraryHeader = /lịch trình|lộ trình|tour/i.test(headingText);
 
       elements.push(
         <div key={`h-${idx}`} className="mt-3.5 mb-2 pt-2 border-t border-slate-100 first:mt-0 first:pt-0 first:border-0">
@@ -319,113 +380,107 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
         )}
       </div>
 
-      {/* Expand / Collapse Button (Google SGE Style) */}
-      {isLongContent && isAssistant && (
+      {/* Accordion Toggle Button for Mobile / Long Messages */}
+      {isAssistant && isLongContent && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          type="button"
-          className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-2xs active:scale-95"
+          className="w-full py-2 px-3 mt-1 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-[#1B4D3E] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60"
         >
           {isExpanded ? (
             <>
-              <span>Thu gọn</span>
-              <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+              <span>Thu gọn câu trả lời</span>
+              <ChevronUp className="w-3.5 h-3.5" />
             </>
           ) : (
             <>
-              <span>Hiện thêm toàn bộ thông tin</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+              <span>Đọc toàn bộ nội dung chi tiết</span>
+              <ChevronDown className="w-3.5 h-3.5" />
             </>
           )}
         </button>
       )}
 
-      {/* Action Toolbar for Itineraries */}
-      {hasItinerary && (
-        <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 text-xs">
-          <span className="text-slate-500 font-semibold flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Dữ liệu đã xác minh
+      {/* ── ACTION BAR (Lưu, In/Tải PDF, Chia sẻ QR) ── */}
+      {isAssistant && hasItinerary && (
+        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+          <span className="font-semibold text-emerald-800">
+            Dữ liệu xác thực Tri Tôn, An Giang
           </span>
 
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(content);
-                setIsSaved(true);
-                setTimeout(() => setIsSaved(false), 2000);
-              }}
-              type="button"
-              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-800 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer shadow-xs active:scale-95"
-            >
-              <Share2 className="w-3.5 h-3.5 text-emerald-700" /> Sao chép
-            </button>
-
+          <div className="flex items-center gap-1">
             <button
               onClick={handleSave}
-              type="button"
-              className={`px-2.5 py-1.5 rounded-lg font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95 ${
+              className={`p-1.5 rounded-lg flex items-center gap-1 font-semibold transition-all ${
                 isSaved
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-800 border border-slate-200'
+                  ? 'bg-emerald-100 text-emerald-800 font-bold'
+                  : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
               }`}
+              title="Lưu lịch trình này"
             >
-              {isSaved ? <Check className="w-3.5 h-3.5" /> : <Bookmark className="w-3.5 h-3.5 text-emerald-700" />}
-              {isSaved ? 'Đã lưu' : 'Lưu'}
-            </button>
-
-            <button
-              onClick={() => setShowQRModal(true)}
-              type="button"
-              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 hover:text-amber-900 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95"
-            >
-              <QrCode className="w-3.5 h-3.5 text-amber-600" /> Mã QR
+              {isSaved ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="hidden sm:inline">Đã lưu</span>
+                </>
+              ) : (
+                <>
+                  <Bookmark className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Lưu</span>
+                </>
+              )}
             </button>
 
             <button
               onClick={handlePrint}
-              type="button"
-              className="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium flex items-center gap-1 transition-all cursor-pointer active:scale-95"
+              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center gap-1 font-semibold transition-colors"
+              title="In / Lưu PDF"
             >
-              <Printer className="w-3.5 h-3.5 text-slate-600" /> PDF
+              <Printer className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">In/PDF</span>
+            </button>
+
+            <button
+              onClick={() => setShowQRModal(true)}
+              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center gap-1 font-semibold transition-colors"
+              title="Chia sẻ mã QR"
+            >
+              <QrCode className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Mã QR</span>
             </button>
           </div>
         </div>
       )}
 
-      {/* QR Code Share Modal */}
+      {/* QR Code Modal for sharing text overview */}
       {showQRModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center relative animate-in fade-in zoom-in duration-200">
-            <button
-              onClick={() => setShowQRModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-all"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto mb-3">
-              <QrCode className="w-6 h-6" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-200 text-center space-y-4">
+            <div className="flex items-center justify-between">
+              <h4 className="font-extrabold text-sm text-[#1B4D3E]">Chia Sẻ Thông Tin Tri Tôn</h4>
+              <button
+                onClick={() => setShowQRModal(false)}
+                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
 
-            <h3 className="font-heading font-extrabold text-slate-900 text-base mb-1">
-              Quét Mã QR Thông Tin
-            </h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Quét mã này bằng camera điện thoại để mở & chia sẻ thông tin du lịch Tri Tôn
-            </p>
-
-            <div className="bg-slate-50 p-4 rounded-2xl inline-block border border-slate-200/80 mb-4 shadow-inner">
+            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrCodeImgUrl}
-                alt="QR Code Tri Tôn AI Overview"
-                className="w-44 h-44 rounded-lg mx-auto"
+                alt="QR Code"
+                className="w-44 h-44 rounded-xl shadow-xs"
               />
             </div>
 
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Quét mã QR bằng Camera điện thoại để mở nội dung này trên thiết bị khác.
+            </p>
+
             <button
               onClick={() => setShowQRModal(false)}
-              className="w-full py-2.5 rounded-xl bg-[#1B4D3E] text-white font-medium text-xs hover:bg-[#153e32] transition-all"
+              className="w-full py-2.5 rounded-xl bg-[#1B4D3E] text-white font-bold text-xs"
             >
               Đóng
             </button>

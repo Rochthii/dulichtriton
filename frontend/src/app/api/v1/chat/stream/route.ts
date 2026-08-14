@@ -1,40 +1,36 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { streamAIResponse, lookupSemanticCache, storeSemanticCache } from '@/lib/aiProvider';
+import { streamAIResponse, lookupSemanticCache } from '@/lib/aiProvider';
 import { getDynamicSystemConfig } from '@/lib/systemConfig';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// ── Shared with query/route.ts (intentionally duplicated to keep routes isolated) ─
-const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Huyện Tri Tôn, Tỉnh An Giang.
+const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
 
-QUY TẮC PHẠM VI & ĐỊNH DẠNG ĐẦU RA CAO CẤP (HIGH-QUALITY RESPONSE CONTRACT):
-1. **Phạm vi hỗ trợ**:
-   - Nếu câu hỏi nằm ngoài phạm vi Tri Tôn, phản hồi chính xác: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" trong mô tả địa danh, luôn gọi tên Xã / Thị trấn cụ thể (VD: Xã Núi Tô, Xã Ô Lâm, Xã Lương Phi, Thị trấn Tri Tôn).
+QUY TẮC CỐT LÕI (MANDATORY RULES):
+1. **Ưu tiên thông tin thực tế & cập nhật trên Internet**:
+   - Luôn luôn ưu tiên thông tin thực tế mới nhất, khách quan, chính xác từ kết quả tìm kiếm internet về địa danh, giờ mở cửa, giá cả, món ăn, dịch vụ tại Tri Tôn, An Giang.
 
-2. **Cấu trúc câu trả lời nâng cao**:
-   Sử dụng trình bày Markdown chuyên nghiệp với tiêu đề (###), in đậm (**text**), danh sách gạch đầu dòng (-) và bố cục mạch lạc.
+2. **Quy tắc đính kèm Link Google Maps và TikTok ngay dưới TỪNG ĐỊA ĐIỂM được nhắc đến**:
+   - Mỗi khi bạn gợi ý hoặc nhắc đến bất kỳ địa điểm, quán ăn, thắng cảnh, chùa chiền nào, bạn BẮT BUỘC phải đính kèm ngay 2 đường link bên dưới địa điểm đó theo đúng định dạng Markdown sau:
+     [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=<Tên_Địa_Điểm>+<Tên_Xã_hoặc_Thị_trấn>+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=<Tên_Địa_Điểm>+Tri+Tôn)
+   
+   - QUAN TRỌNG: Không gom link về cuối bài mà phải để NGAY BÊN DƯỚI TỪNG ĐỊA ĐIỂM được gợi ý!
+   - Ví dụ:
+     ### 1. Hồ Tà Pạ
+     Hồ nước ngọt xanh màu ngọc bích nằm trên đỉnh đồi Tà Pạ, xã Núi Tô. Được mệnh danh là Tuyệt tình cốc của miền Tây.
+     [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Hồ+Tà+Pạ+Xã+Núi+Tô+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Hồ+Tà+Pạ+Tri+Tôn)
 
-   MẪU PHẢN HỒI KHI HỎI VỀ ĐỊA ĐIỂM / LỊCH TRÌNH / ẨM THỰC:
-   ### 🌟 [Tên địa điểm / Tên tour gợi ý]
-   [Giới thiệu hấp dẫn 1-2 câu về vẻ đẹp hoặc nét đặc sắc của điểm đến].
+     ### 2. Quán Gà Đốt Ô Thum
+     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm.
+     [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Gà+Đốt+Ô+Thum+Tri+Tôn)
 
-   ### 📅 Lộ Trình Khung Giờ Đề Xuất
-   - **Sáng (06:00 - 11:30)**: [Hoạt động ngắm bình minh, chụp ảnh check-in]
-   - **Trưa (11:30 - 13:30)**: [Thưởng thức Gà Đốt Ô Thum / Cháo bò lá trúc tại quán nổi tiếng]
-   - **Chiều (14:00 - 17:30)**: [Khám phá di sản Chùa Khmer / Hồ nước & Hoàng hôn]
-   - **Tối (18:00 - 21:00)**: [Lưu trú Homestay view núi / Dạo phố đêm Tri Tôn]
-
-   ### 🍜 Đặc Sản & Trải Nghiệm Không Thể Bỏ Qua
-   - **[Tên món đặc sản]**: [Mô tả vị ngon & Mẹo ăn chuẩn vị địa phương]
-
-   ### 💡 Mẹo Trải Nghiệm & Khung Giờ Vàng
-   - **Thời điểm vàng**: [Khung giờ chụp ảnh đẹp nhất trong ngày]
-   - **Phương tiện & Lưu ý**: [Đường đi, trang phục đi Chùa Khmer thích hợp]`;
+3. **Phạm vi hỗ trợ**:
+   - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
+   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
 interface Turn { role: 'user' | 'assistant'; content: string }
 
@@ -82,7 +78,7 @@ async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   return null;
 }
 
-// ── Observability: immutable audit log ─────────────────────────────────────
+// ── Observability ────────────────────────────────────────────────────────────
 interface ChatLogEntry {
   session_id: string;
   query: string;
@@ -95,37 +91,32 @@ interface ChatLogEntry {
 }
 
 function logChatEvent(entry: ChatLogEntry): void {
-  // Fire-and-forget — wrap in Promise.resolve to get proper .catch()
   void Promise.resolve(supabase.from('chat_logs').insert(entry))
     .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
     .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
 }
+
 // ── Smart Intent Classifier & Out-of-Scope Guard ────────────────────────────
 function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   const lower = queryStr.toLowerCase();
 
-  // 1. Explicitly ALLOW if query mentions Tri Tôn or An Giang or Bảy Núi
   if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi')) {
     return false;
   }
 
-  // 2. Explicitly ALLOW if query contains travel/direction intent
   const travelKeywords = [
     'đi từ', 'từ ', 'xe ', 'bến xe', 'vé xe', 'phương tiện', 'khoảng cách',
     'bao xa', 'bao nhiêu km', 'mất bao lâu', 'mất mấy tiếng', 'mất mấy giờ',
     'đường đi', 'di chuyển', 'bằng xe', 'chặng'
   ];
-  const isTravelQuery = travelKeywords.some(kw => lower.includes(kw));
-  if (isTravelQuery) {
+  if (travelKeywords.some(kw => lower.includes(kw))) {
     return false;
   }
 
-  // 3. Explicitly ALLOW if session history exists and query is follow-up
   if (history.length > 0) {
     return false;
   }
 
-  // 4. Check for HARD non-Tri Tôn topics
   const hardOutOfScope = [
     'cổ phiếu', 'chứng khoán', 'bitcoin', 'crypto', 'bóng đá',
     'thời tiết mỹ', 'thời tiết hà nội', 'thời tiết đà nẵng',
@@ -136,56 +127,12 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
     return true;
   }
 
-  // 5. If query explicitly asks about another major region without travel intent
   const externalPlaces = ['hà nội', 'sài gòn', 'đà nẵng', 'nha trang', 'vũng tàu', 'đà lạt', 'phú quốc', 'sapa'];
   if (externalPlaces.some(p => lower.includes(p))) {
     return true;
   }
 
   return false;
-}
-
-// ── Context-Aware Video Discovery Helper ────────────────────────────────────
-async function fetchContextAwareVideos(queryStr: string, matchedPlaces: Record<string, unknown>[] = []) {
-  const lower = queryStr.toLowerCase();
-  const matchedIds = matchedPlaces.map(p => p.id as string).filter(Boolean);
-
-  // 1. Try matching by matched_poi_id
-  if (matchedIds.length > 0) {
-    const { data: poiVideos } = await supabase
-      .from('video_discoveries')
-      .select('id, title, video_url, thumbnail_url, author_name, view_count')
-      .in('matched_poi_id', matchedIds)
-      .limit(2);
-    if (poiVideos && poiVideos.length > 0) return poiVideos;
-  }
-
-  // 2. Topic keyword matching in title
-  let topicKeyword = '';
-  if (lower.includes('gà đốt') || lower.includes('ô thum')) topicKeyword = 'Gà Đốt';
-  else if (lower.includes('chùa') || lower.includes('khmer')) topicKeyword = 'Chùa';
-  else if (lower.includes('hồ') || lower.includes('tà pạ')) topicKeyword = 'Tà Pạ';
-  else if (lower.includes('cô tô') || lower.includes('phụng hoàng')) topicKeyword = 'Cô Tô';
-  else if (lower.includes('cháo bò')) topicKeyword = 'Cháo Bò';
-  else if (lower.includes('ăn') || lower.includes('đặc sản')) topicKeyword = 'Ăn';
-  else if (lower.includes('homestay') || lower.includes('khách sạn')) topicKeyword = 'Homestay';
-
-  if (topicKeyword) {
-    const { data: topicVideos } = await supabase
-      .from('video_discoveries')
-      .select('id, title, video_url, thumbnail_url, author_name, view_count')
-      .ilike('title', `%${topicKeyword}%`)
-      .limit(2);
-    if (topicVideos && topicVideos.length > 0) return topicVideos;
-  }
-
-  // 3. Fallback: return default videos
-  const { data: fallbackVideos } = await supabase
-    .from('video_discoveries')
-    .select('id, title, video_url, thumbnail_url, author_name, view_count')
-    .limit(2);
-
-  return fallbackVideos || [];
 }
 
 function buildSuggestions(lower: string): string[] {
@@ -198,54 +145,7 @@ function buildSuggestions(lower: string): string[] {
   return ['Đặc sản Gà Đốt Ô Thum ở đâu?', 'Lộ trình 2 ngày 1 đêm Tri Tôn', 'Khung giờ chụp ảnh đẹp Hồ Tà Pạ'];
 }
 
-// ── Non-streaming fallback when Gemini streaming unavailable ─────────────────
-async function callNonStreamingFallback(
-  userMsg: string, systemMsg: string
-): Promise<string> {
-  // Try Groq
-  const groqKey = process.env.GROQ_API_KEY;
-  if (groqKey) {
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${groqKey}` },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
-        }),
-        signal: AbortSignal.timeout(6000),
-      });
-      if (res.ok) {
-        const d = await res.json();
-        const t = d?.choices?.[0]?.message?.content;
-        if (t) return t.trim();
-      }
-    } catch { /* try next */ }
-  }
-  // Try OpenRouter
-  const orKey = process.env.OPENROUTER_API_KEY;
-  if (orKey) {
-    try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${orKey}` },
-        body: JSON.stringify({
-          model: 'meta-llama/llama-3.3-70b-instruct:free',
-          messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (res.ok) {
-        const d = await res.json();
-        const t = d?.choices?.[0]?.message?.content;
-        if (t) return t.trim();
-      }
-    } catch { /* fallback */ }
-  }
-  return 'Tôi đã tổng hợp dữ liệu địa điểm Tri Tôn cho Bạn. Vui lòng tham khảo các gợi ý địa danh bên dưới!';
-}
-
-// ── SSE helper ───────────────────────────────────────────────────────────────
+// ── SSE Stream Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try { body = await req.json(); } catch { return new Response('Invalid JSON', { status: 400 }); }
@@ -287,7 +187,6 @@ export async function POST(req: NextRequest) {
           const cacheHit = await lookupSemanticCache(queryVector, supabase, 0.90);
           if (cacheHit) {
             send({ type: 'places', data: cacheHit.places_json || [] });
-            send({ type: 'videos', data: cacheHit.videos_json || [] });
             send({ type: 'text_delta', delta: cacheHit.answer_text });
             send({ type: 'suggestions', data: buildSuggestions(lower) });
             send({ type: 'done' });
@@ -307,12 +206,12 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // Vector search → ILIKE fallback
+        // 3. Database Places Matching (for place cards header)
         let places: Record<string, unknown>[] = [];
         let ragMethod = 'none';
         if (queryVector) {
           const { data: vm } = await supabase.rpc('match_places', {
-            query_embedding: queryVector, match_threshold: 0.3, match_count: 5,
+            query_embedding: queryVector, match_threshold: 0.3, match_count: 4,
           });
           if (vm && vm.length > 0) { places = vm; ragMethod = 'vector'; }
         }
@@ -320,14 +219,8 @@ export async function POST(req: NextRequest) {
           const { data: tm } = await supabase.from('places')
             .select('id,slug,name,commune,category,rating,image_url,description,golden_time_windows')
             .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
-            .limit(4);
+            .limit(3);
           if (tm) { places = tm; ragMethod = 'ilike'; }
-        }
-        if (places.length === 0) {
-          const { data: hot } = await supabase.from('places')
-            .select('id,slug,name,commune,category,rating,image_url,golden_time_windows')
-            .eq('is_hot', true).limit(3);
-          if (hot) { places = hot; ragMethod = 'hot_fallback'; }
         }
 
         const formattedPlaces = places.map(p => ({
@@ -338,30 +231,32 @@ export async function POST(req: NextRequest) {
 
         const ragContext = places.length > 0
           ? places.map(p =>
-              `- ${p.name} (Thuộc ${p.commune}): Thể loại ${p.category}. Đánh giá: ${p.rating}/5. Mô tả: ${p.description || ''}`
+              `- ${p.name} (${p.commune}): ${p.category}. Đánh giá: ${p.rating}/5. ${p.description ? p.description.slice(0, 150) : ''}`
             ).join('\n')
-          : 'Không có dữ liệu địa điểm cụ thể.';
+          : '';
 
-        // Fetch context-aware videos (POI matched or Topic matched)
-        const videos = await fetchContextAwareVideos(queryStr, places);
+        // Send place cards early (if any)
+        if (formattedPlaces.length > 0) {
+          send({ type: 'places', data: formattedPlaces });
+        }
 
-        // Send structural data early — user sees cards before AI finishes typing
-        send({ type: 'places', data: formattedPlaces });
-        send({ type: 'videos', data: videos });
-
-        // Build system message with history (hot-reloaded from Supabase / SWR cache)
+        // Build system message with history
         const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', SYSTEM_PROMPT);
         const historySnippet = history.length > 0
           ? '\n\nLịch sử hội thoại gần nhất:\n' +
             history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
           : '';
         const systemMsg = activeSystemPrompt + historySnippet;
-        const userMsg = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${queryStr}`;
+        
+        // Priority prompt: Always prioritize live web search/internet facts
+        const userMsg = ragContext
+          ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương nếu phù hợp:\n${ragContext}]`
+          : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy tìm kiếm và cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang trên internet]`;
 
         let fullText = '';
         let providerUsed = 'none';
 
-        // Delegate streaming generation to Centralized AI Provider Resilience Manager (@/lib/aiProvider)
+        // Delegate streaming generation to AI Provider
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
           if (chunk.type === 'delta' && chunk.content) {
             fullText += chunk.content;
@@ -372,21 +267,21 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // Store result into Semantic Cache asynchronously for future queries
-        if (queryVector && fullText.trim().length > 25) {
-          void storeSemanticCache(queryStr, queryVector, fullText, formattedPlaces, videos, supabase);
+        // Send suggestion chips
+        send({ type: 'suggestions', data: buildSuggestions(lower) });
+        send({ type: 'done' });
+
+        // Save conversation turn
+        if (fullText.trim()) {
+          const updatedHistory: Turn[] = [
+            ...history,
+            { role: 'user', content: queryStr },
+            { role: 'assistant', content: fullText },
+          ];
+          void saveHistory(sessionId, updatedHistory);
         }
 
-        const latencyMs = Date.now() - t0;
-
-        // Persist to Supabase (fire-and-forget)
-        saveHistory(sessionId, [
-          ...history,
-          { role: 'user', content: queryStr },
-          { role: 'assistant', content: fullText.slice(0, 1200) },
-        ]).catch(e => console.warn('[Memory] saveHistory failed:', e));
-
-        // Audit log (immutable)
+        // Observability logging
         logChatEvent({
           session_id: sessionId,
           query: queryStr,
@@ -394,34 +289,25 @@ export async function POST(req: NextRequest) {
           provider_used: providerUsed,
           rag_method: ragMethod,
           places_count: formattedPlaces.length,
-          latency_ms: latencyMs,
+          latency_ms: Date.now() - t0,
           is_out_scope: false,
         });
 
-        send({ type: 'suggestions', data: buildSuggestions(lower) });
-        send({ type: 'done' });
-
-      } catch (e) {
-        console.error('[Stream] Fatal error:', e);
-        send({ type: 'error', message: 'Service error' });
+      } catch (err) {
+        console.error('Chat stream error:', err);
+        send({ type: 'error', message: 'Lỗi xử lý luồng AI' });
       } finally {
-        try { controller.close(); } catch { /* already closed */ }
+        controller.close();
       }
-    },
+    }
   });
 
   return new Response(readable, {
     headers: {
-      'Content-Type': 'text/event-stream',
+      'Content-Type': 'text/event-stream; charset=utf-8',
       'Cache-Control': 'no-cache, no-transform',
       'Connection': 'keep-alive',
-      'X-Accel-Buffering': 'no', // Vercel edge: disable buffering
+      'X-Accel-Buffering': 'no',
     },
-  });
-}
-
-export async function GET() {
-  return new Response(JSON.stringify({ service: 'Tri Ton AI Stream', status: 'ready' }), {
-    headers: { 'Content-Type': 'application/json' },
   });
 }
