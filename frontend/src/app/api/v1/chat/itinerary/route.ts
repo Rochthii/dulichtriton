@@ -113,18 +113,7 @@ export async function GET(req: NextRequest) {
 
   // ── List all presets ─────────────────────────────────────────────────────
   if (!slug) {
-    // Try DB first
-    const { data: dbData, error } = await supabase
-      .from('preset_itineraries')
-      .select('slug, emoji, title, tagline, for_whom, duration, budget_range, sort_order')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true });
-
-    if (!error && dbData && dbData.length > 0) {
-      return NextResponse.json({ presets: dbData });
-    }
-
-    // Fallback: read from lichtrinh.json
+    // PRIMARY: luôn luôn đọc từ lichtrinh.json trước
     try {
       const filePath = path.join(process.cwd(), '..', 'data', 'lichtrinh.json');
       const raw = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -138,17 +127,37 @@ export async function GET(req: NextRequest) {
         budget_range: String(i.total_cost_estimate_vnd || ''),
         sort_order:   idx + 1,
       }));
-      return NextResponse.json({ presets, source: 'json' });
-    } catch {
-      return NextResponse.json({ presets: [] });
+      return NextResponse.json({ presets, source: 'lichtrinh.json' });
+    } catch (jsonErr) {
+      console.error('[itinerary] JSON read failed, falling back to DB:', jsonErr);
     }
+
+    // FALLBACK: Supabase DB nếu file bị lỗi
+    const { data: dbData, error } = await supabase
+      .from('preset_itineraries')
+      .select('slug, emoji, title, tagline, for_whom, duration, budget_range, sort_order')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true });
+
+    if (!error && dbData && dbData.length > 0) {
+      return NextResponse.json({ presets: dbData, source: 'db_fallback' });
+    }
+
+    return NextResponse.json({ presets: [] });
   }
 
   // ── Fetch specific itinerary ─────────────────────────────────────────────
-  // Strategy: DB first → JSON fallback (enforces lichtrinh.json as source of truth)
-  let itinerary: ItineraryData | null = null;
+  // PRIMARY: luôn đọc thẳng từ lichtrinh.json (nguồn chân lý tuyệt đối)
+  const itineraryFromJson = loadFromJsonFile(slug);
+  if (itineraryFromJson) {
+    return NextResponse.json({
+      itinerary: itineraryFromJson,
+      stops_count: itineraryFromJson.stops.length,
+      source: 'lichtrinh.json',
+    });
+  }
 
-  // 1. Try Supabase DB
+  // FALLBACK: Supabase DB chỉ khi JSON không tìm thấy slug (lịch trình cũ/extra)
   const { data: dbRow } = await supabase
     .from('preset_itineraries')
     .select('*')
@@ -157,7 +166,7 @@ export async function GET(req: NextRequest) {
     .single();
 
   if (dbRow) {
-    itinerary = {
+    const itinerary: ItineraryData = {
       slug:         dbRow.slug,
       emoji:        dbRow.emoji,
       title:        dbRow.title,
@@ -167,16 +176,13 @@ export async function GET(req: NextRequest) {
       budget_range: dbRow.budget_range || '',
       stops:        Array.isArray(dbRow.stops) ? dbRow.stops : JSON.parse(dbRow.stops || '[]'),
     };
+    return NextResponse.json({
+      itinerary,
+      stops_count: itinerary.stops.length,
+      source: 'db_fallback',
+    });
   }
 
-  // 2. Fallback: load directly from lichtrinh.json (source of truth)
-  if (!itinerary) {
-    itinerary = loadFromJsonFile(slug);
-  }
-
-  if (!itinerary) {
-    return NextResponse.json({ error: 'Lịch trình không tồn tại' }, { status: 404 });
-  }
-
-  return NextResponse.json({ itinerary, stops_count: itinerary.stops.length });
+  return NextResponse.json({ error: 'Lịch trình không tồn tại' }, { status: 404 });
 }
+
