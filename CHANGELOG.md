@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.5-COMPREHENSIVE-TRI-TON-ENCYCLOPEDIA-GUIDE] - 2026-08-14
+
+### 📚 Trang Giới Thiệu & Bách Khoa Toàn Thư Tổng Quan Về Tri Tôn (`/guide`)
+- **Tập Hợp 7 Chuyên Đề Thực Địa Chuyên Sâu**:
+  - **1. Tổng quan Tri Tôn**: Trái tim Thất Sơn, diện tích 600km², 82 điểm đến, 37 Chùa Khmer, >34% dân tộc Khmer.
+  - **2. Địa lý & 15 Xã/Thị trấn**: Chi tiết vai trò, đặc trưng từng xã (Núi Tô, Ô Lâm, Châu Lăng, Ba Chúc, Cô Tô, An Tức...).
+  - **3. Văn hóa & Lễ hội**: Lễ hội Đua Bò Bảy Núi (Sene Dolta), Tết Chol Chnam Thmay, Kinh Lá Buông Chùa Xà Tón, Lễ Ok Om Bok.
+  - **4. Bản đồ Ẩm thực**: Gà Đốt Ô Thum lá chúc, Cháo Bò trái chúc, Đu Đủ Đâm & Bò lụi Khmer, Bánh bò thốt nốt.
+  - **5. Khí hậu & 2 Mùa Du lịch**: Mùa khô dã ngoại/trekking (T12-T4) & Mùa mưa lúa chín Tà Pạ/nước nổi (T5-T11).
+  - **6. Tuyến đường & Xe cộ**: Hướng dẫn chi tiết xe khách TP.HCM, phượt Cần Thơ/Long Xuyên, thuê xe máy tại Tri Tôn.
+  - **7. Lưu ý Văn hóa & SOS Cứu hộ**: Quy tắc viếng Chùa Khmer, lưu ý đặt món, 3 số hotline khẩn cấp 24/7.
+
+---
+
 ## [v28.8.4-HOMEPAGE-MOBILE-FIRST-REDESIGN-AND-HOTLINES-VERIFY] - 2026-08-14
 
 ### 🌟 Tái Thiết Kế Trang Chủ Mobile-First & Xác Minh 3 Hotline SOS Cứu Hộ Tri Tôn
