@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.7-SYNC-ALL-POIS-RICH-ARTICLES] - 2026-08-14
+
+### 📚 Nạp Toàn Bộ Dữ Liệu Bài Viết & Cẩm Nang Cho 100% (174/174) Địa Điểm
+- **Đồng bộ hóa 100% Bài Viết & Schema Chuyên Sâu (`data/triton_pois_full.json` $\rightarrow$ Supabase Postgres)**:
+  - Nạp đầy đủ câu chuyện lịch sử `detailed_story` cho 174/174 địa danh, di tích, quán ăn và homestay tại Tri Tôn.
+  - Tích hợp 100% Cẩm nang di chuyển `travel_guide` (đường đi, thời điểm đẹp, phương tiện, lưu ý an toàn).
+  - Tích hợp 100% Góc check-in sống ảo `checkin_spots`, Điểm nhấn `highlights`, Quán ngon gần đó `nearby_cafes_and_food` và Video TikTok review `tiktok_videos`.
+- **Bộ Phân Giải JSON Đa Định Dạng (`components/PlaceDetailClient.tsx`)**:
+  - Xây dựng `parseJsonSafely` tự động chuyển đổi cả chuỗi stringified JSON và object/mảng JSONB trực tiếp, giúp trang chi tiết địa điểm luôn hiển thị mượt mà và không bao giờ gặp lỗi trắng trang.
+
+---
+
 ## [v28.6.6-MOBILE-FIRST-BOTTOM-NAV-STICKY-ACTIONS] - 2026-08-14
 
 ### 📱 Tối Ưu Hóa Giao Diện & Trải Nghiệm Di Động Toàn Diện (Mobile-First 99%)

@@ -47,16 +47,51 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const [videosLoading, setVideosLoading] = useState(false);
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
 
-  // Parse JSON data safely
-  const travelGuide = typeof place.travel_guide === 'object' && place.travel_guide !== null ? place.travel_guide : null;
-  const checkinSpots = Array.isArray(place.checkin_spots) ? place.checkin_spots : [];
-  const highlights = Array.isArray(place.highlights) ? place.highlights : [];
-  const nearbyFood = Array.isArray(place.nearby_cafes_and_food) ? place.nearby_cafes_and_food : [];
-  const tagsInfo = Array.isArray(place.tags_info) ? place.tags_info : [];
+  // Robust JSON parsing helper
+  const parseJsonSafely = (val: any) => {
+    if (!val) return null;
+    if (typeof val === 'object') return val;
+    if (typeof val === 'string') {
+      try {
+        return JSON.parse(val);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  };
 
-  // Fetch videos when video tab or mount
+  // Parse JSON data safely from 174 Master POIs Schema
+  const travelGuide = parseJsonSafely(place.travel_guide);
+  const checkinSpots = Array.isArray(place.checkin_spots)
+    ? place.checkin_spots
+    : (parseJsonSafely(place.checkin_spots) || []);
+  const highlights = Array.isArray(place.highlights)
+    ? place.highlights
+    : (parseJsonSafely(place.highlights) || []);
+  const nearbyFood = Array.isArray(place.nearby_cafes_and_food)
+    ? place.nearby_cafes_and_food
+    : (parseJsonSafely(place.nearby_cafes_and_food) || []);
+  const tagsInfo = Array.isArray(place.tags_info)
+    ? place.tags_info
+    : (parseJsonSafely(place.tags_info) || []);
+
+  // Preload videos from POI if available
   useEffect(() => {
-    if (activeTab === 'videos' && placeVideos.length === 0) {
+    if (Array.isArray(place.tiktok_videos) && place.tiktok_videos.length > 0) {
+      const vids: VideoItem[] = place.tiktok_videos.map((v: any, idx: number) => ({
+        id: v.id || `poi-vid-${idx}`,
+        title: v.title || `${place.name} Tri Tôn Review`,
+        platform: 'tiktok',
+        video_url: v.video_url || '',
+        embed_url: v.embed_url || v.video_url || '',
+        thumbnail_url: v.thumbnail_url || place.image_url || '/images/tiktok/ho_ta_pa.jpg',
+        author_name: v.author || 'du_lich_tri_ton',
+        view_count: v.views || 18000,
+        place_id: place.id,
+      }));
+      setPlaceVideos(vids);
+    } else if (activeTab === 'videos' && placeVideos.length === 0) {
       setVideosLoading(true);
       fetch(`/api/v1/places/${place.id}/videos`)
         .then((r) => r.json())
@@ -66,7 +101,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
         .catch(() => setPlaceVideos([]))
         .finally(() => setVideosLoading(false));
     }
-  }, [activeTab, place.id, placeVideos.length]);
+  }, [activeTab, place.id, place.name, place.image_url, place.tiktok_videos, placeVideos.length]);
 
   const handleShare = () => {
     if (typeof window !== 'undefined' && navigator.clipboard) {
