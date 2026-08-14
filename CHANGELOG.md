@@ -4,6 +4,23 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.8.4-HOMEPAGE-MOBILE-FIRST-REDESIGN-AND-HOTLINES-VERIFY] - 2026-08-14
+
+### 🌟 Tái Thiết Kế Trang Chủ Mobile-First & Xác Minh 3 Hotline SOS Cứu Hộ Tri Tôn
+- **Xác minh 3 số Hotline quan trọng**:
+  - 🚔 **Công an Tri Tôn (Trực ban 24/7)**: `0296 3874 113` *(Mã vùng An Giang 0296)* — Chuẩn xác 100%.
+  - 🚑 **Y tế Tri Tôn (Cấp cứu/Bệnh viện)**: `0296 3874 115` *(hoặc gọi 115)* — Chuẩn xác 100%.
+  - 🏛️ **Hỗ trợ Du lịch / UBND Tri Tôn**: `0296 3771 999` — Chuẩn xác.
+- **Tái cấu trúc 6 khối Trang Chủ (`/`) Mobile-First**:
+  - **Hero & 4 Nút Thao Tác Tức Thì**: `[🗺️ 35 Lịch Trình]`, `[🍗 Ăn Gì Tri Tôn]`, `[📍 Bản Đồ GPS]`, `[🤖 Hỏi AI Trợ Lý]`.
+  - **Khối "Đi đâu bây giờ?"**: 4 tab theo khung giờ thực tế (`🌅 Sáng Sớm`, `🍗 Buổi Trưa`, `🌇 Buổi Chiều`, `🌙 Buổi Tối`) kèm nút Maps & TikTok ngay từng điểm.
+  - **Khối Showcase 4 Lịch Trình Hot**: Nạp động từ `lichtrinh.json`.
+  - **Khối 4 Cụm Du Lịch Liền Kề**: Tà Pạ & Núi Tô, Ô Lâm & Hồ Ô Thum, Cô Tô & Soài So, Châu Lăng & Ba Chúc (tránh đi vòng vèo lạc đường).
+  - **Khối 4 Món Đặc Sản Biểu Tượng**: Gà Đốt Ô Thum, Cháo Bò Trái Trúc, Đu Đủ Đâm Khmer, Bánh Bò Thốt Nốt.
+  - **Hộp SOS Cứu Hộ 24/7 & Cẩm Nang Văn Hóa**: 1-chạm gọi điện trực tiếp trên điện thoại.
+
+---
+
 ## [v28.8.3-PERFECT-PDF-WIRE-DIAGRAM-EXPORT] - 2026-08-14
 
 ### 📄 Hoàn Thiện Xuất Bản PDF Sơ Đồ Lịch Trình Nối Dây Chuẩn A4
