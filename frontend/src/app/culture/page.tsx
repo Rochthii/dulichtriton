@@ -1,52 +1,70 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Landmark, MapPin, Calendar, Compass, Clock, Star, Sparkles, ChevronRight, Award, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
 
+interface CulturePlace {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  tourism_category: string;
+  commune: string;
+  rating?: number;
+  image_url: string;
+  description?: string;
+}
+
 export default function CulturePage() {
-  const cultures = [
-    {
-      name: "Chùa Xvayton (Chùa Xà Tón) 500 Tuổi",
-      category: "Kiến Trúc Nam Tông",
-      desc: "Ngôi chùa Khmer cổ nhất An Giang mang nghệ thuật kiến trúc tháp nhọn rực rỡ và nơi lưu giữ bộ kinh lá buông độc bản quý hiếm.",
-      location: "Thị trấn Tri Tôn",
-      time: "Mở cửa 06:00 - 18:00 hàng ngày",
-      badge: "Di sản Quốc gia",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCIkt4mKcSMtN9qwWrnCavUNbd04V9-GYHPHeebFZyKXuiRnw6MUL1Qw2bsIsFB9nvNb4nwM87r5AbatwHdBlVeQ6ENzVwUmrHSBEYkmJ-cjCHYFjZRl6fz6VwL9RqMKrXt9pUigCmz71KjXxWSbsdcL3WCIX30VH8iXFopWhWSndEEy2G6dEqkpAdYMEoHcl-n0bTUj6Z7O50iAwa7xx_6bYi5N00srNzVSwgRc_6FXYAO_50JqasE4w",
-      alt: "Ancient 500 year Chua Xvayton Pagoda"
-    },
-    {
-      name: "Lễ Hội Đua Bò Bảy Núi (Dolta Khmer)",
-      category: "Di Sản Phi Vật Thể",
-      desc: "Lễ hội thể thao dân gian độc nhất vô nhị miền Tây, quy tụ hàng trăm đôi bò chiến tranh tài gay cấn dịp lễ Sene Dolta.",
-      location: "Chùa Thơm Mít (Xã Vĩnh Trung)",
-      time: "Tháng 8 - Tháng 9 Âm lịch",
-      badge: "Sắp diễn ra",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA0a_ShvHqoLBzzQeBZPBVukoFsxHkKwXzcTE2T6K_xPyk67rYycDNJbkuK17L9mWsVhNHt61xA_rUHEZVNHKRhdP_2FifG80aCCtsRoh5M6AnzI1M0-Ph_03-SGI5d3LxCK8Tci5VwUmdtgQTARcov5Z1dut3OWHedU55-M9Smk9jgkYBSvoqmN9XIH3zKtZx8pZY9PYDY29mHsuXs8YFP921mu6oTsHeKkO9mBiIH2Z3DCkVCnXsbsg",
-      alt: "Hội đua bò Bảy Núi"
-    },
-    {
-      name: "Tết Chol Chnam Thmay Khmer",
-      category: "Lễ Hội Cổ Truyền",
-      desc: "Tết cổ truyền rộn ràng của đồng bào Khmer với các nghi thức tắm Phật, đắp núi cát cầu may và múa mâm khèn Chhay-dăm.",
-      location: "Toàn bộ Xã / Thị trấn Tri Tôn",
-      time: "14/04 - 16/04 Hàng năm",
-      badge: "Tết Truyền Thống",
-      img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
-      alt: "Tet Chol Chnam Thmay Khmer"
-    },
-    {
-      name: "Chùa Tà Pạ & Cổng Trời Tri Tôn",
-      category: "Tâm Linh Thắng Cảnh",
-      desc: "Ngôi chùa nổi trên đỉnh núi Tà Pạ sở hữu tầm nhìn 360 độ ngắm trọn vẹn cánh đồng lúa chín vàng óng và hồ nước xanh ngọc.",
-      location: "Xã Núi Tô",
-      time: "Mở cửa quanh năm",
-      badge: "Must Visit",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAzEBJmMN9MDBMXjMxP__-ZHcR4SsumjDwneLDOiMeMeEnxO5L4-OXzwn9OtdG-7P1gnd7zxD9cpALjSM2Ti_GScFrGSZmaSOTLBEjWyssKW2a_zyVT6uxtzDhGhlW-J1BH7WYuCSv7XEjhNSVpjWpILzIuSP4k4VBbUTyFSd5SPdfBz9jpuhRXHkXoyqd0fe8203OOVA2FouxJ4U81kV1ol1Yq--EAkhGhU5dI13wt71HUBMIGst8cSg",
-      alt: "Chua Ta Pa"
+  const [cultures, setCultures] = useState<CulturePlace[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLiveCultureData() {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("places")
+          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, description")
+          .or("category.eq.culture,category.eq.history,tourism_category.ilike.%Văn Hóa%,tourism_category.ilike.%Tâm Linh%,tourism_category.ilike.%Di Tích%,tourism_category.ilike.%Chùa%")
+          .eq("is_active", true)
+          .order("rating", { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          const formatted = data.map((item: any) => {
+            let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
+            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              img = item.image_url;
+            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+              const p0 = item.photos[0];
+              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+            }
+            return {
+              id: item.id,
+              slug: item.slug || item.id,
+              name: item.name,
+              category: item.category || "culture",
+              tourism_category: item.tourism_category || "Văn Hóa & Tâm Linh",
+              commune: item.commune || "Thị trấn Tri Tôn",
+              rating: item.rating ? Number(item.rating) : 4.8,
+              image_url: img,
+              description: item.description || ""
+            };
+          });
+          setCultures(formatted);
+        }
+      } catch (err) {
+        console.error("Culture fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+    loadLiveCultureData();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
@@ -72,84 +90,89 @@ export default function CulturePage() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-bold border border-white/20 backdrop-blur-md">
               <Landmark className="h-4 w-4 text-amber-300" />
-              <span>Bảo Tồn Di Sản Phi Vật Thể Bảy Núi</span>
+              <span>Bảo Tồn Di Sản & Văn Hóa Bản Địa Bảy Núi</span>
             </div>
             <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
               Văn Hóa & Lễ Hội <br />
               <span className="text-amber-300">Khmer Độc Đáo Tri Tôn</span>
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light">
-              Khám phá không khí rộn ràng của Lễ hội Đua Bò Bảy Núi, chiêm bái những ngôi chùa Khmer Nam Tông 500 năm tuổi và hòa mình vào phong tục tập quán bản địa sắc màu.
+              Khám phá toàn bộ 58+ ngôi chùa Khmer Nam Tông cổ kính, di sản kinh lá buông, căn cứ lịch sử Ô Tà Sóc, Đồi Tức Dụp và Lễ hội Đua Bò Bảy Núi trứ danh.
             </p>
           </div>
         </section>
 
-        {/* Culture & Festival Cards Grid */}
+        {/* Culture Cards Grid */}
         <section className="space-y-6">
           <div className="flex items-center justify-between border-b border-emerald-200/80 pb-4">
             <h2 className="font-heading text-2xl font-extrabold text-slate-900 flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-amber-500" />
-              <span>Danh Sách Di Sản & Lễ Hội Nổi Bật</span>
+              <span>Danh Sách Di Sản & Chùa Chiền Đã Xác Minh</span>
             </h2>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-              4 Di Sản Đặc Sắc
+              {cultures.length} Địa Điểm Văn Hóa
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {cultures.map((item, idx) => (
-              <article
-                key={idx}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
-              >
-                <div>
-                  <div className="relative h-64 overflow-hidden bg-slate-100">
-                    <img
-                      src={item.img}
-                      alt={item.alt}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-4 left-4 px-3 py-1 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs shadow-md">
-                      {item.badge}
+          {loading ? (
+            <div className="py-16 text-center text-slate-400 font-bold text-sm">
+              Đang tải danh sách di sản văn hóa...
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cultures.map((item) => (
+                <article
+                  key={item.id}
+                  className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
+                >
+                  <div>
+                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 text-white font-bold text-xs backdrop-blur-md">
+                        {item.tourism_category}
+                      </div>
+                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
+                        <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                        {item.rating}
+                      </div>
                     </div>
-                    <div className="absolute top-4 right-4 px-3 py-1 rounded-xl bg-slate-900/80 text-white font-bold text-xs backdrop-blur-md">
-                      {item.category}
+
+                    <div className="p-6 space-y-3">
+                      <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+                        <span className="flex items-center gap-1 text-emerald-800">
+                          <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                          {item.commune}
+                        </span>
+                      </div>
+
+                      <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                        {item.name}
+                      </h3>
+                      {item.description && (
+                        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed font-light">
+                          {item.description}
+                        </p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-                      <span className="flex items-center gap-1 text-emerald-800">
-                        <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                        {item.location}
-                      </span>
-                      <span className="flex items-center gap-1 text-amber-600">
-                        <Calendar className="h-4 w-4 text-amber-500 shrink-0" />
-                        {item.time}
-                      </span>
-                    </div>
-
-                    <h2 className="font-heading text-2xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                      {item.name}
-                    </h2>
-                    <p className="text-xs text-slate-600 leading-relaxed font-light">
-                      {item.desc}
-                    </p>
+                  <div className="p-6 pt-0">
+                    <Link
+                      href={`/places/${item.slug || item.id}`}
+                      className="w-full py-3 bg-slate-900 hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
+                    >
+                      <span>Xem chi tiết di tích & Chỉ đường</span>
+                      <ChevronRight className="h-4 w-4 text-amber-300" />
+                    </Link>
                   </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <Link
-                    href="/planner"
-                    className="w-full py-3.5 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    <span>Lên lịch trình tham quan</span>
-                    <ChevronRight className="h-4 w-4 text-amber-300" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
 
       </main>

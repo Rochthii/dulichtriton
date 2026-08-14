@@ -4,15 +4,21 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
-import { Hotel, MapPin, Star, ChevronRight, Wifi, Car, ShieldCheck } from "lucide-react";
+import { Hotel, MapPin, Star, ChevronRight, Wifi, Car, ShieldCheck, Phone } from "lucide-react";
 
 interface StayItem {
   id: string;
+  slug: string;
   name: string;
   category: string;
+  tourism_category: string;
   commune: string;
   rating?: number;
   image_url: string;
+  video_url?: string;
+  address?: string;
+  phone?: string;
+  description?: string;
 }
 
 export default function StayPage() {
@@ -21,11 +27,14 @@ export default function StayPage() {
 
   useEffect(() => {
     async function loadLiveStayData() {
+      setLoading(true);
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, commune, rating, photos, image_url, video_url")
-          .or("category.ilike.%lưu trú%,category.ilike.%homestay%,category.ilike.%khách sạn%,category.ilike.%nhà nghỉ%");
+          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, video_url, address, phone, description")
+          .or("category.eq.stay,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách Sạn%,tourism_category.ilike.%Resort%,tourism_category.ilike.%Lưu Trú%")
+          .eq("is_active", true)
+          .order("rating", { ascending: false });
 
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
@@ -39,43 +48,20 @@ export default function StayPage() {
             }
             return {
               id: item.id,
+              slug: item.slug || item.id,
               name: item.name,
-              category: item.category || "Lưu Trú Tri Tôn",
-              commune: item.commune || "Tri Tôn",
-              rating: item.rating || 4.8,
+              category: item.category || "stay",
+              tourism_category: item.tourism_category || "Homestay & Lưu Trú",
+              commune: item.commune || "Thị trấn Tri Tôn",
+              rating: item.rating ? Number(item.rating) : 4.8,
               image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
+              address: item.address || "",
+              phone: item.phone || "",
+              description: item.description || ""
             };
           });
           setStays(formatted);
-        } else {
-          // Fallback master stays
-          setStays([
-            {
-              id: "soai-chek-homestay",
-              name: "Soài Chek Eco Homestay View Hồ",
-              category: "Homestay Sinh Thái",
-              commune: "Xã Núi Tô",
-              rating: 4.9,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCEZigADSpj84ieydADEOQHzdJZkN0zsctfaByCdnhe7Kptx1Rh3rpQPiK_hjkkL8vcmOG_-QNX9DqegPHEImIum516b2ArKqeKj_Vbp100cfGcbYNgqKDSGzFPxRW0_JVid0sV9Cn7iq3iDqYedl_zXYdczxg_yNfXTv7mVYhB7Q7iYVr0Au6Gnca0TseXgBfR-tcZ93cZSXI4kPrWVLj7_bPRI6BrolBWKhcxcdwLrQlroi3tOWw7Iw"
-            },
-            {
-              id: "co-to-farmstay",
-              name: "Cô Tô View Farmstay Chân Núi",
-              category: "Farmstay View Núi",
-              commune: "Xã Cô Tô",
-              rating: 4.85,
-              image_url: "https://images.unsplash.com/photo-1510798831971-661eb04b3739"
-            },
-            {
-              id: "sang-nhan-hotel",
-              name: "Khách Sạn Sang Nhân Tri Tôn",
-              category: "Khách Sạn Trung Tâm",
-              commune: "Thị trấn Tri Tôn",
-              rating: 4.7,
-              image_url: "https://images.unsplash.com/photo-1566073771259-6a8506099945"
-            }
-          ]);
         }
       } catch (err) {
         console.error("Supabase fetch error:", err);
@@ -99,9 +85,10 @@ export default function StayPage() {
         
         {/* Dynamic Stay Hot Section */}
         <HotPlacesSection
+          categoryFilter="lưu trú"
           limit={3}
-          title="🔥 TOP ĐIỂM DỪNG CHÂN & LƯU TRÚ HOT"
-          subtitle="Các Homestay & Khách sạn view đồi núi thơ mộng được du khách yêu thích nhất Tri Tôn"
+          title="🔥 TOP HOMESTAY & NGHỈ DƯỠNG HOT TRI TÔN"
+          subtitle="Top các điểm nghỉ dưỡng view núi Cô Tô, hồ Soài Chek được yêu thích nhất"
         />
         
         {/* Header Hero Section */}
@@ -109,76 +96,96 @@ export default function StayPage() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-bold border border-white/20 backdrop-blur-md">
               <Hotel className="h-4 w-4 text-amber-300" />
-              <span>Dữ Liệu Trực Tuyến Supabase (Live DB)</span>
+              <span>Nghỉ Dưỡng & Chữa Lành Bảy Núi</span>
             </div>
             <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
-              Lưu Trú & Homestay <br />
-              <span className="text-amber-300">View Đẹp Bảy Núi</span>
+              Homestay & Khách Sạn <br />
+              <span className="text-amber-300">View Núi Tri Tôn An Giang</span>
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light max-w-2xl">
-              Khám phá các điểm nghỉ dưỡng Homestay, Farmstay view đồng lúa Tà Pạ và khách sạn trung tâm Thị trấn Tri Tôn được kết nối cơ sở dữ liệu Supabase thực tế.
+              Danh sách các homestay sinh thái, resort và khách sạn tiện nghi giữa không gian thiên nhiên trong lành, ngắm trọn vẹn cảnh bình minh và hoàng hôn Thất Sơn.
             </p>
           </div>
         </section>
 
-        {/* Live Supabase Stay Cards Grid */}
+        {/* Live Stays Grid */}
         <section className="space-y-6">
           <div className="flex items-center justify-between border-b border-emerald-200/80 pb-4">
             <h2 className="font-heading text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-              <Hotel className="h-5 w-5 text-emerald-700" />
-              <span>Chỗ Ở Live Database</span>
+              <Hotel className="h-5 w-5 text-amber-500" />
+              <span>Danh Sách Cơ Sở Lưu Trú Đã Xác Minh</span>
             </h2>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
               {stays.length} Điểm Lưu Trú
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stays.map((stay) => (
-              <article
-                key={stay.id}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
-              >
-                <div>
-                  <div className="relative h-56 overflow-hidden bg-slate-100">
-                    <img
-                      src={stay.image_url}
-                      alt={stay.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
-                      {stay.category}
+          {loading ? (
+            <div className="py-16 text-center text-slate-400 font-bold text-sm">
+              Đang tải danh sách lưu trú...
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {stays.map((stay) => (
+                <article
+                  key={stay.id}
+                  className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
+                >
+                  <div>
+                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                      <img
+                        src={stay.image_url}
+                        alt={stay.name}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
+                        {stay.tourism_category}
+                      </div>
+                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
+                        <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                        {stay.rating}
+                      </div>
                     </div>
-                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
-                      <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                      {stay.rating}
+
+                    <div className="p-6 space-y-3">
+                      <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+                        <span className="flex items-center gap-1 text-emerald-800">
+                          <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                          {stay.commune}
+                        </span>
+                        {stay.phone && (
+                          <span className="flex items-center gap-1 text-slate-600">
+                            <Phone className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                            {stay.phone}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                        {stay.name}
+                      </h3>
+
+                      {stay.description && (
+                        <p className="text-xs text-slate-600 line-clamp-2 font-light leading-relaxed">
+                          {stay.description}
+                        </p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center gap-1 text-xs font-bold text-emerald-800">
-                      <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                      <span>{stay.commune}</span>
-                    </div>
-
-                    <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                      {stay.name}
-                    </h3>
+                  <div className="p-6 pt-0">
+                    <Link
+                      href={`/places/${stay.slug || stay.id}`}
+                      className="w-full py-3 bg-slate-900 hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
+                    >
+                      <span>Xem chi tiết phòng & Chỉ đường</span>
+                      <ChevronRight className="h-4 w-4 text-amber-300" />
+                    </Link>
                   </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <Link
-                    href={`/places`}
-                    className="w-full py-3 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    <span>Xem thông tin & Đặt phòng</span>
-                    <ChevronRight className="h-4 w-4 text-amber-300" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
 
       </main>

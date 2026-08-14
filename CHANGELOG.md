@@ -4,6 +4,21 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.3-FIX-LIVE-DATA-PAGES] - 2026-08-14
+
+### 🔄 Khắc Phục & Đồng Bộ Live Data Cho Toàn Bộ Trang Con (Khám Phá, Ẩm Thực, Lưu Trú, Văn Hóa)
+- **Trang Ẩm Thực (`app/food/page.tsx`)**:
+  - Nguyên nhân: Query cũ lọc `category.ilike.%ẩm thực%` không khớp với schema Postgres (`category = 'food'`).
+  - Sửa đổi: Mở rộng điều kiện query `category.eq.food,tourism_category.ilike.%Ẩm Thực%,tourism_category.ilike.%Cà Phê%`, tải thành công toàn bộ **46+ quán ăn & quán cà phê đặc sản**.
+  - Bổ sung bộ lọc nhanh theo Xã / Thị trấn và dẫn link chuẩn SEO `/places/[slug]`.
+- **Trang Khám Phá Địa Điểm (`app/places/page.tsx`)**:
+  - Tối ưu bộ lọc tương tác thời gian thực: Danh mục (Thiên nhiên, Văn hóa, Ẩm thực, Lưu trú, Di tích) + Bộ lọc theo Xã/Thị trấn kết nối trực tiếp với 174 POIs master.
+  - Sửa lỗi các dropdown chọn xã bị phân mảnh, tích hợp link card chuẩn SEO.
+- **Trang Lưu Trú (`app/stay/page.tsx`) & Văn Hóa (`app/culture/page.tsx`)**:
+  - Chuyển đổi toàn bộ sang kết nối Supabase Live (`is_active = true`), hiển thị đầy đủ các cơ sở Homestay/Resort và 58+ ngôi chùa Khmer, di tích lịch sử.
+
+---
+
 ## [v28.6.2-REMOVE-GOLDEN-TIME-WIDGET] - 2026-08-14
 
 ### 🧹 Tối Giản Giao Diện — Loại Bỏ Widget Khung Giờ Vàng Real-Time

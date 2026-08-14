@@ -4,30 +4,37 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
-import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Sparkles } from "lucide-react";
+import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Sparkles, Coffee, Soup } from "lucide-react";
 
 interface FoodItem {
   id: string;
+  slug: string;
   name: string;
   category: string;
+  tourism_category: string;
   commune: string;
-  rating?: number;
+  rating: number;
   image_url: string;
-  price?: string;
-  hours?: string;
+  video_url?: string;
+  hours: string;
+  description?: string;
 }
 
 export default function FoodPage() {
   const [foods, setFoods] = useState<FoodItem[]>([]);
+  const [selectedCommune, setSelectedCommune] = useState("Tất cả");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadLiveFoodData() {
+      setLoading(true);
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, commune, rating, photos, image_url, video_url, opening_hours")
-          .or("category.ilike.%ẩm thực%,category.ilike.%quán%,category.ilike.%bún%,category.ilike.%cháo%,category.ilike.%bánh%,category.ilike.%gà%");
+          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, video_url, opening_hours, description")
+          .or("category.eq.food,category.eq.Bún nước lèo,tourism_category.ilike.%Ẩm Thực%,tourism_category.ilike.%Cà Phê%,tourism_category.ilike.%Quán%")
+          .eq("is_active", true)
+          .order("rating", { ascending: false });
 
         if (!error && data && data.length > 0) {
           const formatted = data.map((item: any) => {
@@ -41,47 +48,19 @@ export default function FoodPage() {
             }
             return {
               id: item.id,
+              slug: item.slug || item.id,
               name: item.name,
-              category: item.category || "Ẩm Thực Bảy Núi",
-              commune: item.commune || "Tri Tôn",
-              rating: item.rating || 4.8,
+              category: item.category || "food",
+              tourism_category: item.tourism_category || "Ẩm Thực Đặc Sản",
+              commune: item.commune || "Thị trấn Tri Tôn",
+              rating: item.rating ? Number(item.rating) : 4.8,
               image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name)}`,
-              hours: item.opening_hours || "06:00 - 20:00"
+              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
+              hours: item.opening_hours || "06:00 - 21:00",
+              description: item.description || ""
             };
           });
           setFoods(formatted);
-        } else {
-          // Fallback master verified food places
-          setFoods([
-            {
-              id: "chao-bo-tri-ton",
-              name: "Cháo Bò Trái Trúc Rô 31",
-              category: "Ẩm Thực Bảy Núi",
-              commune: "Thị trấn Tri Tôn",
-              rating: 4.9,
-              image_url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBkHUDKiIJE4KJWt-00IzsRQDsKl5vybNI3P9LIGOjuRMdjrJdhiUH5dOucUHcg-zW-umlBu-mSWAsGVjE0n8H8jYDsKtcmyQQvogwqey9foKt3C1bb7nNGvC7-Kirf-csJPIMgIVc8gUAYmaT0QDsKy7v4VH7QbOofMDn8b4viEqW3cWXy5bawuYPjdKiMTRamLLDtFXWVhAQ653wbJsFgvYCxz3Kb3tHvnCyUagVBrZ27cZrEvz-I8g",
-              hours: "06:00 - 11:00"
-            },
-            {
-              id: "ga-dot-o-thum",
-              name: "Gà Đốt Ô Thum Lá Trúc Siêu Giòn",
-              category: "Đặc Sản Hồ Ô Thum",
-              commune: "Xã Ô Lâm",
-              rating: 4.95,
-              image_url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
-              hours: "09:00 - 18:00"
-            },
-            {
-              id: "banh-xeo-rau-rung",
-              name: "Bánh Xèo Rau Rừng 20 Loại Cô Tô",
-              category: "Bánh Xèo Đặc Sản",
-              commune: "Thị trấn Tri Tôn",
-              rating: 4.8,
-              image_url: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8",
-              hours: "10:00 - 21:00"
-            }
-          ]);
         }
       } catch (err) {
         console.error("Supabase fetch error:", err);
@@ -91,6 +70,12 @@ export default function FoodPage() {
     }
     loadLiveFoodData();
   }, []);
+
+  const communes = ["Tất cả", "Thị trấn Tri Tôn", "Xã Ô Lâm", "Xã Núi Tô", "Xã Châu Lăng", "Thị trấn Ba Chúc", "Xã Lương Phi", "Xã An Tức"];
+
+  const filteredFoods = selectedCommune === "Tất cả" 
+    ? foods 
+    : foods.filter(f => f.commune === selectedCommune);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
@@ -116,82 +101,118 @@ export default function FoodPage() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-bold border border-white/20 backdrop-blur-md">
               <Flame className="h-4 w-4 text-amber-300" />
-              <span>Dữ Liệu Trực Tuyến Supabase (Live DB)</span>
+              <span>Dữ Liệu Trực Tuyến Live Database (46+ Quán Ăn & Cà Phê)</span>
             </div>
             <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
               Ẩm Thực Đặc Sản <br />
               <span className="text-amber-300">Đậm Đà Bản Vị Bảy Núi</span>
             </h1>
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light max-w-2xl">
-              Danh sách các quán ăn đặc sản trứ danh Tri Tôn được xác thực dữ liệu thực tế từ Supabase PostgreSQL. Từ Cháo bò trái trúc, Gà đốt Ô Thum đến Bánh xèo 20 loại rau rừng.
+              Khám phá toàn bộ 46+ quán ăn, nhà hàng gà đốt Ô Thum lá chúc, quán cháo bò trái trúc, bánh bò thốt nốt và các quán cà phê view núi đẹp nhất Tri Tôn.
             </p>
           </div>
         </section>
 
-        {/* Live Supabase Food Cards Grid */}
+        {/* Filter Pills */}
         <section className="space-y-6">
-          <div className="flex items-center justify-between border-b border-emerald-200/80 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-200/80 pb-4">
             <h2 className="font-heading text-2xl font-extrabold text-slate-900 flex items-center gap-2">
               <Utensils className="h-5 w-5 text-amber-500" />
-              <span>Quán Ăn Đặc Sản Live Database</span>
+              <span>Danh Sách Ẩm Thực & Quán Cà Phê</span>
             </h2>
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-              {foods.length} Địa Điểm Ẩm Thực
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-full">
+                {filteredFoods.length} / {foods.length} Địa Điểm
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {foods.map((food) => (
-              <article
-                key={food.id}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
+          {/* Commune Filter Buttons */}
+          <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none">
+            {communes.map((c) => (
+              <button
+                key={c}
+                onClick={() => setSelectedCommune(c)}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm ${
+                  selectedCommune === c
+                    ? "bg-emerald-900 text-white shadow-emerald-900/20"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-emerald-500"
+                }`}
               >
-                <div>
-                  <div className="relative h-56 overflow-hidden bg-slate-100">
-                    <img
-                      src={food.image_url}
-                      alt={food.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
-                      {food.category}
-                    </div>
-                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
-                      <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                      {food.rating}
-                    </div>
-                  </div>
-
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-                      <span className="flex items-center gap-1 text-emerald-800">
-                        <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                        {food.commune}
-                      </span>
-                      <span className="flex items-center gap-1 text-amber-700">
-                        <Clock className="h-3.5 w-3.5 text-amber-500 shrink-0" />
-                        {food.hours}
-                      </span>
-                    </div>
-
-                    <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                      {food.name}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <Link
-                    href={`/places`}
-                    className="w-full py-3 bg-slate-900 hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    <span>Xem vị trí & Chỉ đường GPS</span>
-                    <ChevronRight className="h-4 w-4 text-amber-300" />
-                  </Link>
-                </div>
-              </article>
+                {c}
+              </button>
             ))}
           </div>
+
+          {/* Food Cards Grid */}
+          {loading ? (
+            <div className="py-16 text-center text-slate-400 font-bold text-sm">
+              Đang tải danh sách ẩm thực Tri Tôn...
+            </div>
+          ) : filteredFoods.length === 0 ? (
+            <div className="py-16 text-center text-slate-500 font-bold text-sm bg-white rounded-3xl p-8 border border-slate-200">
+              Không có quán ăn nào thuộc khu vực {selectedCommune}.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredFoods.map((food) => (
+                <article
+                  key={food.id}
+                  className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
+                >
+                  <div>
+                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                      <img
+                        src={food.image_url}
+                        alt={food.name}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
+                        {food.tourism_category}
+                      </div>
+                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
+                        <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                        {food.rating}
+                      </div>
+                    </div>
+
+                    <div className="p-6 space-y-3">
+                      <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+                        <span className="flex items-center gap-1 text-emerald-800">
+                          <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
+                          {food.commune}
+                        </span>
+                        <span className="flex items-center gap-1 text-amber-700">
+                          <Clock className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                          {food.hours}
+                        </span>
+                      </div>
+
+                      <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                        {food.name}
+                      </h3>
+
+                      {food.description && (
+                        <p className="text-xs text-slate-600 line-clamp-2 font-light leading-relaxed">
+                          {food.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="p-6 pt-0">
+                    <Link
+                      href={`/places/${food.slug || food.id}`}
+                      className="w-full py-3 bg-slate-900 hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
+                    >
+                      <span>Xem chi tiết & Chỉ đường GPS</span>
+                      <ChevronRight className="h-4 w-4 text-amber-300" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
 
       </main>
