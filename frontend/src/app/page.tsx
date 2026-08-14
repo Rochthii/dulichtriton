@@ -393,13 +393,14 @@ export default function HomePage() {
 
           <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 scrollbar-none touch-pan-x sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
             {gourmetFoods.map((item, idx) => (
-              <div
+              <Link
                 key={idx}
-                className="snap-start shrink-0 w-[85vw] max-w-[310px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                href={`/places/${item.slug || 'chao-bo-tri-ton'}`}
+                className="snap-start shrink-0 w-[85vw] max-w-[310px] sm:w-auto sm:max-w-none bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group cursor-pointer"
               >
                 <div>
-                  <div className="relative h-44 sm:h-48 w-full bg-slate-100">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="relative h-44 sm:h-48 w-full bg-slate-100 overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-amber-300 text-[11px] font-bold">
                       <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                       {item.rating}
@@ -410,7 +411,7 @@ export default function HomePage() {
                       <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                       <span>{item.location}</span>
                     </div>
-                    <h3 className="font-heading font-extrabold text-base sm:text-lg text-slate-900 line-clamp-1">{item.name}</h3>
+                    <h3 className="font-heading font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-emerald-800 transition-colors line-clamp-1">{item.name}</h3>
                     <p className="text-[11px] font-medium text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 inline-block line-clamp-1">
                       {item.flavorTag}
                     </p>
@@ -418,12 +419,12 @@ export default function HomePage() {
                 </div>
                 <div className="p-4 sm:p-5 pt-3 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-900">{item.price}</span>
-                  <Link href="/food" className="text-xs font-bold text-[#1B4D3E] hover:underline flex items-center gap-0.5">
-                    <span>Địa chỉ</span>
+                  <div className="text-xs font-bold text-[#1B4D3E] flex items-center gap-0.5 group-hover:translate-x-0.5 transition-transform">
+                    <span>Xem chi tiết</span>
                     <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
@@ -450,9 +451,10 @@ export default function HomePage() {
 
           <div className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 pb-2 scrollbar-none touch-pan-x md:grid md:grid-cols-3 md:overflow-visible">
             {cultureEvents.map((ev, idx) => (
-              <div
+              <Link
                 key={idx}
-                className="snap-start shrink-0 w-[85vw] max-w-[310px] md:w-auto md:max-w-none bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                href="/culture"
+                className="snap-start shrink-0 w-[85vw] max-w-[310px] md:w-auto md:max-w-none bg-white rounded-3xl border border-emerald-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer"
               >
                 <div>
                   <div className="relative h-44 sm:h-48 w-full bg-slate-100 overflow-hidden">
@@ -493,12 +495,12 @@ export default function HomePage() {
                     <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                     <span className="truncate">{ev.location}</span>
                   </span>
-                  <Link href="/culture" className="text-xs font-bold text-slate-900 hover:underline flex items-center gap-0.5 shrink-0">
+                  <div className="text-xs font-bold text-slate-900 flex items-center gap-0.5 shrink-0 group-hover:translate-x-0.5 transition-transform">
                     <span>Xem thêm</span>
                     <ChevronRight className="h-3.5 w-3.5" />
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>

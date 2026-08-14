@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.5-ENHANCE-PLACE-DETAIL-AND-1TOUCH-UX] - 2026-08-14
+
+### 🌟 Nâng Cấp Toàn Diện Trang Chi Tiết (`/places/[id]`) & Trải Nghiệm 1-Touch Card Click
+- **Nâng Cấp Trang Chi Tiết Địa Điểm (`components/PlaceDetailClient.tsx`)**:
+  - Tích hợp 6 Tab chuyên sâu khai thác trọn vẹn dữ liệu Rich Schema mới:
+    - **Tổng quan & Điểm nhấn**: Hiển thị mô tả, danh sách điểm nhấn `highlights` và quán ăn/cà phê ngon lân cận `nearby_cafes_and_food`.
+    - **Câu chuyện & Lịch sử (`detailed_story`)**: Khám phá nguồn gốc, giai thoại và lịch sử bản địa Thất Sơn.
+    - **Cẩm nang di chuyển (`travel_guide`)**: Hướng dẫn đường đi, phương tiện phù hợp, thời điểm đẹp nhất và các lưu ý an toàn.
+    - **Góc check-in sống ảo (`checkin_spots`)**: Danh sách các góc chụp ảnh triệu view, góc máy đẹp và mẹo tạo dáng.
+    - **Bộ ảnh thực tế & Video TikTok review (`tiktok_videos`)**: Tích hợp video khám phá thực tế.
+- **Tối Ưu Trải Nghiệm 1-Touch Card Click (Bấm Bất Kỳ Đâu Trên Thẻ Đều Mở Chi Tiết)**:
+  - Áp dụng trên toàn bộ hệ thống: **Trang Chủ (`app/page.tsx`)**, **Khám Phá (`app/places/page.tsx`)**, **Ẩm Thực (`app/food/page.tsx`)**, **Lưu Trú (`app/stay/page.tsx`)**, **Văn Hóa (`app/culture/page.tsx`)**, và component **HotPlacesSection**.
+  - Người dùng có thể click vào bất kỳ vị trí nào trên thẻ (hình ảnh, tiêu đề, mô tả, nhãn) để mở ngay trang chi tiết địa điểm, nâng cao vượt bậc trải nghiệm di động.
+
+---
+
 ## [v28.6.4-ZERO-HARDCODING-LIVE-DB] - 2026-08-14
 
 ### 🛡️ Chuẩn Hóa 100% Dynamic Dữ Liệu — Loại Bỏ Hoàn Toàn Hardcode & Mockup

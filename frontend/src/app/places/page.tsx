@@ -226,9 +226,10 @@ export default function PlacesPage() {
         ) : (
           <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPlaces.map((place) => (
-              <article
+              <Link
                 key={place.id}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between"
+                href={`/places/${place.slug || place.id}`}
+                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between cursor-pointer"
               >
                 <div>
                   <div className="relative h-56 overflow-hidden bg-slate-100">
@@ -271,15 +272,12 @@ export default function PlacesPage() {
                 </div>
 
                 <div className="p-6 pt-0">
-                  <Link
-                    href={`/places/${place.slug || place.id}`}
-                    className="w-full py-3 bg-slate-900 hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
+                  <div className="w-full py-3 bg-slate-900 group-hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all">
                     <span>Xem chi tiết & Chỉ đường GPS</span>
-                    <ChevronRight className="h-4 w-4 text-amber-300" />
-                  </Link>
+                    <ChevronRight className="h-4 w-4 text-amber-300 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </section>
         )}

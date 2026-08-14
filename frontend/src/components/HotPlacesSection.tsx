@@ -178,22 +178,29 @@ export default function HotPlacesSection({
         {hotPlaces.map((place) => (
           <div
             key={place.id}
-            className="snap-start shrink-0 w-[85vw] max-w-[310px] sm:w-auto sm:max-w-none group relative flex flex-col overflow-hidden rounded-3xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+            className="snap-start shrink-0 w-[85vw] max-w-[310px] sm:w-auto sm:max-w-none group relative flex flex-col overflow-hidden rounded-3xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
           >
+            {/* Full Card 1-Click Navigation Link */}
+            <Link
+              href={`/places/${place.slug || place.id}`}
+              className="absolute inset-0 z-0"
+              aria-label={`Xem chi tiết địa điểm ${place.name}`}
+            />
+
             {/* Top Rank Badge */}
-            <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-400 font-extrabold text-[11px] shadow-md border border-amber-400/40">
+            <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-900/85 backdrop-blur-md text-amber-400 font-extrabold text-[11px] shadow-md border border-amber-400/40 pointer-events-none">
               <Flame className="h-3 w-3 fill-amber-400 text-amber-400" />
               <span>TOP #{place.hot_rank}</span>
             </div>
 
             {/* Rating Badge */}
-            <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-700/90 text-white font-bold text-[11px] shadow-md">
+            <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-700/90 text-white font-bold text-[11px] shadow-md pointer-events-none">
               <Star className="h-3 w-3 fill-amber-300 text-amber-300" />
               <span>{place.rating}</span>
             </div>
 
             {/* Thumbnail Image */}
-            <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-slate-100">
+            <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-slate-100 pointer-events-none">
               <img
                 src={place.image_url}
                 alt={place.name}
@@ -213,7 +220,7 @@ export default function HotPlacesSection({
             </div>
 
             {/* Content Body */}
-            <div className="flex flex-1 flex-col justify-between p-3.5 space-y-2.5">
+            <div className="flex flex-1 flex-col justify-between p-3.5 space-y-2.5 pointer-events-none">
               <div className="space-y-1.5 text-xs text-slate-600">
                 <div className="flex items-center gap-1 text-slate-700 text-[11px]">
                   <MapPin className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
@@ -229,9 +236,9 @@ export default function HotPlacesSection({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2 pt-1.5 border-t border-slate-100">
+              <div className="flex items-center gap-2 pt-1.5 border-t border-slate-100 pointer-events-auto relative z-10">
                 <Link
-                  href={`/places/${place.slug}`}
+                  href={`/places/${place.slug || place.id}`}
                   className="flex-1 text-center py-2 px-3 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold text-xs transition-colors shadow-xs active:scale-95"
                 >
                   Xem chi tiết
@@ -252,7 +259,7 @@ export default function HotPlacesSection({
                       title={`Mở ứng dụng TikTok tìm kiếm video review: ${place.name}`}
                     >
                       <Play className="h-3 w-3 fill-amber-400 text-amber-400 shrink-0" />
-                      <span>Xem TikTok</span>
+                      <span>TikTok</span>
                     </a>
                   );
                 })()}

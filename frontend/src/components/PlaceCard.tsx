@@ -19,6 +19,14 @@ export interface Place {
   category: string;
   tourism_category?: string;
   description?: string;
+  detailed_story?: string;
+  travel_guide?: any;
+  checkin_spots?: any;
+  highlights?: any;
+  nearby_cafes_and_food?: any;
+  google_maps_info?: any;
+  tags_info?: any;
+  tiktok_videos?: any;
   address: string;
   commune: string;
   latitude: number;
@@ -31,6 +39,8 @@ export interface Place {
   photos?: PlacePhoto[];
   image_url?: string;
   video_url?: string;
+  phone?: string;
+  ticket_required?: boolean;
   is_hot?: boolean;
   hot_rank?: number;
   is_active?: boolean;
