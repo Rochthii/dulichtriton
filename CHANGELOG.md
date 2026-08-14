@@ -4,6 +4,23 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.9-UNIFIED-PLACE-DETAIL-FULL-ARTICLE-STREAM] - 2026-08-14
+
+### 🚀 Tái Cấu Trúc Toàn Bộ Trang Chi Tiết: Hiển Thị Liền Mạch 7 Khối Nội Dung & Thanh Neo Nhảy Nhanh
+- **Trình Bày Liền Mạch Một Luồng Đọc Duy Nhất (Single Seamless Full-Article Stream)**:
+  - Bỏ cơ chế ẩn giấu thông tin sau từng Tab rời rạc; hiển thị tuần tự toàn bộ 7 phần nội dung theo đúng logic du khách cần:
+    1. **Tổng Quan & Điểm Nhấn**: Giới thiệu địa danh, ma trận điểm nhấn nổi bật và quán ăn/cà phê ngon gần đó.
+    2. **Câu Chuyện & Lịch Sử Bản Địa**: Định dạng Typography chuyên nghiệp với tiêu đề in đậm, vạch kẻ phân đoạn trang nhã, dễ đọc trên điện thoại.
+    3. **Cẩm Nang Di Chuyển & Kinh Nghiệm**: 4 ô thẻ màu sắc trực quan (Cách di chuyển, Phương tiện phù hợp, Thời điểm đẹp nhất, Lưu ý an toàn).
+    4. **Góc Check-in Sống Ảo Triệu View**: Danh sách các góc chụp ảnh, góc máy đẹp và mẹo tạo dáng.
+    5. **Đánh Giá Thực Tế Từ Du Khách**: Trích dẫn review Google Maps kèm số sao vàng thực tế.
+    6. **Kho Thư Mục Ảnh Thực Tế**: Bộ sưu tập ảnh chất lượng cao kèm trích dẫn nguồn ảnh.
+    7. **Video Review TikTok Thực Tế**: Player khám phá video TikTok trực tiếp.
+- **Thanh Neo Nhảy Nhanh Dính Đầu Trang (Sticky Quick Jump Anchor Bar)**:
+  - Cho phép người dùng chạm nhanh vào bất kỳ mục nào để cuộn trang mượt mà (*Smooth Scroll*) đến đúng phần mong muốn mà không phải cuộn tay tìm kiếm.
+
+---
+
 ## [v28.6.8-FULL-SCHEMA-DATA-STANDARDS-UPGRADE] - 2026-08-14
 
 ### 💎 Nâng Cấp Toàn Diện Database & Giao Diện Chi Tiết Chuẩn 100% Thu Thập
