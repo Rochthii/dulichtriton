@@ -35,19 +35,26 @@ export const AI_CONFIG: AIProviderConfig = {
   groqKey: process.env.GROQ_API_KEY || '',
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
+    'gemini-3-flash-preview',
+    'gemini-3.5-flash',
+    'gemini-3.1-flash-lite',
     'gemini-flash-latest',
-    'gemini-2.5-flash',
-    'gemini-flash-lite-latest',
-    'gemini-2.0-flash',
   ],
   groqModels: [
     'llama-3.3-70b-versatile',
     'llama-3.1-8b-instant',
   ],
   openRouterModels: [
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'google/gemini-2.0-flash-exp:free',
-    'deepseek/deepseek-r1:free',
+    'nvidia/nemotron-3-nano-30b-a3b:free',
+    'nvidia/nemotron-3.5-lightning:free',
+    'nvidia/nemotron-nano-9b-v2:free',
+    'nvidia/nemotron-3-ultra-550b-a55b:free',
+    'openai/gpt-oss-20b:free',
+    'cohere/north-mini-code:free',
+    'google/gemma-4-31b-it:free',
+    'google/gemma-4-26b-a4b-it:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
+    'liquid/lfm-2.5-2.6b:free',
   ],
   timeoutMs: 10000, // 10 seconds safe timeout to prevent TIMEOUT_ERR code 23
   cooldownMs: 300000, // 5 minutes
@@ -289,15 +296,20 @@ export async function* streamAIResponse(
     }
   }
 
-  // Tier 3: OpenRouter Free Models Fallback
-  if (AI_CONFIG.openRouterKey && !isKeyInCooldown('openrouter')) {
+  // Tier 3: OpenRouter Free Models Fallback (Each model has separate rate limits)
+  if (AI_CONFIG.openRouterKey) {
     for (const model of AI_CONFIG.openRouterModels) {
+      const modelKeyId = `openrouter_${model}`;
+      if (isKeyInCooldown(modelKeyId)) continue;
+
       try {
         const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
+            'HTTP-Referer': 'https://dulichtriton.vn',
+            'X-Title': 'Du Lich Tri Ton AI',
           },
           body: JSON.stringify({
             model,
@@ -310,8 +322,9 @@ export async function* streamAIResponse(
         });
 
         if (res.status === 429) {
-          setKeyCooldown('openrouter');
-          break;
+          // Set cooldown for THIS specific free model only, allowing other free models to proceed
+          setKeyCooldown(modelKeyId, 60000);
+          continue;
         }
 
         if (res.ok) {

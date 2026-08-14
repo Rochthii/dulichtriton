@@ -206,12 +206,12 @@ async function generateAIResponse(
   // ── helper callers ────────────────────────────────────────────────────────
   async function callGemini(key: string, label: string): Promise<LLMResult> {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] }),
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(6000),
       }
     );
     if (!res.ok) throw new Error(`Gemini ${label} HTTP ${res.status}`);
@@ -226,12 +226,17 @@ async function generateAIResponse(
     if (!key) throw new Error('no openrouter key');
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${key}`,
+        'HTTP-Referer': 'https://dulichtriton.vn',
+        'X-Title': 'Du Lich Tri Ton AI',
+      },
       body: JSON.stringify({
         model: modelName,
         messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
       }),
-      signal: AbortSignal.timeout(7000),
+      signal: AbortSignal.timeout(6000),
     });
     if (!res.ok) throw new Error(`OpenRouter (${modelName}) HTTP ${res.status}`);
     const data = await res.json();
@@ -248,10 +253,20 @@ async function generateAIResponse(
     process.env.GEMINI_API_KEY_4,
   ].filter(Boolean) as string[];
 
+  const openRouterFreeModels = [
+    'nvidia/nemotron-3-nano-30b-a3b:free',
+    'nvidia/nemotron-3.5-lightning:free',
+    'nvidia/nemotron-nano-9b-v2:free',
+    'nvidia/nemotron-3-ultra-550b-a55b:free',
+    'openai/gpt-oss-20b:free',
+    'cohere/north-mini-code:free',
+    'google/gemma-4-31b-it:free',
+    'google/gemma-4-26b-a4b-it:free',
+  ];
+
   const races: Promise<LLMResult>[] = [
     ...geminiKeys.map((k, i) => callGemini(k, `gemini-key${i + 1}`)),
-    callOpenRouter('google/gemma-4-26b-a4b-it:free'),
-    callOpenRouter('google/gemma-4-31b-it:free'),
+    ...openRouterFreeModels.map(m => callOpenRouter(m)),
   ];
 
   try {
@@ -465,7 +480,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Hybrid Vector Search (pgvector RPC match_places)
+    let kbSnippet = '';
+    // Hybrid Vector Search (pgvector RPC match_places & match_kb)
     const queryVector = await generateQueryEmbedding(queryStr);
     if (queryVector) {
       const { data: vectorMatches } = await supabase.rpc('match_places', {
@@ -477,6 +493,17 @@ export async function POST(req: NextRequest) {
         vectorMatches.forEach((p: any) => {
           if (!placesMap.has(p.id)) placesMap.set(p.id, p);
         });
+      }
+
+      // Knowledge Base Retrieval (RPC match_kb) cho bài viết tri thức tổng quan & văn hóa
+      const { data: kbMatches } = await supabase.rpc('match_kb', {
+        query_embedding: queryVector,
+        match_threshold: 0.40,
+        match_count: 2,
+      });
+      if (kbMatches && kbMatches.length > 0) {
+        kbSnippet = '\n\nTRI THỨC TỔNG QUAN & VĂN HÓA TRI TÔN BỔ SUNG (Từ CSDL Knowledge Base):\n' +
+          kbMatches.map((kb: any) => `- [Bài viết: ${kb.title}] (Category: ${kb.category})\n  Tóm tắt: ${kb.summary}\n  Nội dung: ${kb.content}`).join('\n\n');
       }
     }
 
@@ -564,9 +591,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots
-    const combinedRagContext = goldenFewShotsSnippet ? `${ragContext}\n${goldenFewShotsSnippet}` : ragContext;
+    // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots + knowledge base
+    const combinedRagContext = [ragContext, kbSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
     const aiTextResponse = await generateAIResponse(queryStr, combinedRagContext, history);
+
 
     // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
     saveHistory(sessionId, [

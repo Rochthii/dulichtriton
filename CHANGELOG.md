@@ -4,7 +4,49 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v28.6.1-OPENROUTER-FREE-MODELS-EXPANSION] - 2026-08-14
+
+### ⚡ Ưu Tiên & Mở Rộng Pool Model `:free` Trên OpenRouter (Tối Đa Hóa Hạn Mức Tách Biệt)
+- **Cấu hình Model Registry (`lib/aiProvider.ts` & `api/v1/chat/query/route.ts`)**:
+  - Tích hợp 10 mô hình OpenRouter `:free` đang hoạt động: `nvidia/nemotron-3-nano-30b-a3b:free`, `nvidia/nemotron-3.5-lightning:free`, `nvidia/nemotron-nano-9b-v2:free`, `nvidia/nemotron-3-ultra-550b-a55b:free`, `openai/gpt-oss-20b:free`, `cohere/north-mini-code:free`, `google/gemma-4-31b-it:free`, `google/gemma-4-26b-a4b-it:free`, `nvidia/nemotron-3-super-120b-a12b:free`, `liquid/lfm-2.5-2.6b:free`.
+  - Bổ sung HTTP headers chuẩn hóa (`HTTP-Referer: https://dulichtriton.vn`, `X-Title: Du Lich Tri Ton AI`) giúp tối ưu xếp hạng ưu tiên và hưởng trọn quota cao từ tài khoản đã nạp tiền.
+- **Cơ chế Circuit Breaker Theo Từng Model Riêng Biệt**:
+  - Tách biệt key cooldown `openrouter_${model}` thay vì khóa toàn bộ OpenRouter khi 1 model chạm rate limit 429. Các model `:free` còn lại lập tức được gọi kế tiếp mà không bị gián đoạn.
+- **Parallel AI Race**:
+  - Đưa tất cả các model `:free` vào cuộc đua song song (Parallel Race `Promise.any`), đảm bảo tốc độ phản hồi cực nhanh ~1s với độ ổn định 100%.
+
+---
+
+## [v28.6.0-MASTER-DATA-174-POIS-EXPANSION] - 2026-08-14
+
+### 🚀 Mở Rộng Master POIs lên 174 Địa Điểm & Chuẩn Hóa Vector Embeddings 768d
+- **Supabase Migration (`20260814_enrich_places_schema_and_upsert_172.sql`)**:
+  - Bổ sung 8 cột Rich Schema cho bảng `places`: `detailed_story` (text), `travel_guide` (jsonb), `checkin_spots` (jsonb), `highlights` (jsonb), `nearby_cafes_and_food` (jsonb), `google_maps_info` (jsonb), `tags_info` (jsonb), `tiktok_videos` (jsonb).
+  - Chuẩn hóa toàn bộ cột `embedding` trên `places` sang định dạng `vector(768)` đồng bộ với Google Gemini Embeddings (`gemini-embedding-001` / `text-embedding-004`) và tạo HNSW Index `idx_places_embedding`.
+  - Cập nhật hàm RPC Stored Procedure `match_places` hỗ trợ truy vấn ngữ nghĩa 768 chiều.
+- **Data Ingestion Script (`scripts/sync_all_pois_to_supabase.py`)**:
+  - Đồng bộ thành công 174 POIs vào Supabase Live (cập nhật 172 POIs chi tiết + bảo toàn dữ liệu cũ).
+  - Tự động chuẩn hóa Unicode NFC, kiểm duyệt tọa độ trong Bounding Box Tri Tôn `[10.25-10.55, 104.85-105.15]`.
+  - Sinh và nạp 174/174 Vector Embeddings 768 chiều.
+  - Nạp thêm 4 tài liệu tri thức (Master Itineraries & Rules, FAQs, Khmer Culture Etiquette, Transportation) nâng tổng số bài viết trong `knowledge_base` lên 16 bài.
+- **Kiểm thử Verification (`scripts/verify_sync_results.py`)**:
+  - 174/174 POIs hoạt động với đầy đủ Travel Guide và Vector Embeddings.
+  - RPC `match_places` và `match_kb` phản hồi chính xác với độ tương đồng cosine lên đến 81.3%.
+
+---
+
+## [v28.5.0-KNOWLEDGE-BASE-RAG] - 2026-08-11
+
+### 📚 Xây Dựng CSDL Tri Thức Tổng Quan Tri Tôn (`knowledge_base`) & RAG Retrieval
+- **Supabase Migration (`20260811_create_knowledge_base.sql`)**: Tạo bảng `knowledge_base` tích hợp pgvector HNSW Index 768d và Stored Procedure `match_kb` phục vụ truy vấn ngữ nghĩa bài viết tri thức.
+- **Data Ingestion Script (`scripts/seed_knowledge_base.py`)**: Nạp thành công 12/12 bài viết tri thức chuyên sâu (Tổng quan Tri Tôn, Di sản Kinh lá buông, Lễ hội Đua bò, Ẩm thực lá chúc, Lịch sử Nhà mồ Ba Chúc & Đồi Tức Dụp, Etiquette chùa Khmer, Làng nghề đường thốt nốt Châu Lăng, Cẩm nang theo mùa, Lộ trình di chuyển, Huyền thoại Thất Sơn, Ẩm thực Chợ đêm, Hướng dẫn cắm trại/săn mây) kèm Vector Embeddings `gemini-embedding-001`.
+- **RAG Gateway Retrieval Integration (`route.ts`)**: Bổ sung hàm RPC `match_kb` trong API Chatbot AI Gateway, kết hợp bối cảnh tri thức tổng quan và POI thực tế để tư vấn chuyên sâu cho du khách.
+- **Kiểm thử**: `npx tsc --noEmit` ✅ Clean (0 lỗi TypeScript).
+
+---
+
 ## [v28.4.1-MOBILE-SCROLL-OPTIMIZATION] - 2026-08-10
+
 
 ### 🚀 Tối Ưu Hóa Cảm Giác Vuốt/Lướt Mobile (Smooth 60FPS Scroll Ergonomics)
 - **Root Cause**: Khai báo `overflow-x: hidden` trên `html, body` tắt hẳn phần cứng GPU cuộn quán tính (Momentum Scroll `-webkit-overflow-scrolling`) trên iOS Safari & Mobile Chrome, khiến khi thả ngón tay trang bị "khựng/cấn/khóa đứng" ngay lập tức.

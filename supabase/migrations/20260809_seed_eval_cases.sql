@@ -30,5 +30,9 @@ CREATE TABLE IF NOT EXISTS public.eval_runs (
 ALTER TABLE public.eval_cases ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.eval_runs ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Public read for eval_cases" ON public.eval_cases;
 CREATE POLICY "Public read for eval_cases" ON public.eval_cases FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public read for eval_runs" ON public.eval_runs;
 CREATE POLICY "Public read for eval_runs" ON public.eval_runs FOR SELECT USING (true);
+
