@@ -30,11 +30,13 @@ interface ItineraryPayload {
   for_whom?: string;
   budget_estimate?: string;
   budget?: string;
+  budget_range?: string;
   description?: string;
   tagline?: string;
   stops?: StopItem[];
   is_active?: boolean;
   display_order?: number;
+  sort_order?: number;
 }
 
 // GET: Fetch all itineraries directly from Supabase PostgreSQL
@@ -43,7 +45,7 @@ export async function GET() {
     const { data: rows, error } = await supabase
       .from('preset_itineraries')
       .select('*')
-      .order('display_order', { ascending: true, nullsFirst: false });
+      .order('sort_order', { ascending: true, nullsFirst: false });
 
     if (error) {
       console.error('[AdminItineraries GET Error]:', error);
@@ -60,15 +62,17 @@ export async function GET() {
       duration: row.duration || '1 ngày',
       total_distance_km: row.total_distance_km || 25,
       recommended_vehicle: row.recommended_vehicle || 'Xe máy / Ô tô',
-      suitable_for: row.for_whom || row.suitable_for || 'Tất cả du khách',
-      for_whom: row.for_whom || row.suitable_for || 'Tất cả du khách',
-      budget_estimate: row.budget || row.budget_estimate || '200k - 500k/người',
-      budget: row.budget || row.budget_estimate || '200k - 500k/người',
-      description: row.tagline || row.description || '',
-      tagline: row.tagline || row.description || '',
+      suitable_for: row.for_whom || 'Tất cả du khách',
+      for_whom: row.for_whom || 'Tất cả du khách',
+      budget_estimate: row.budget_range || row.budget || '200k - 500k/người',
+      budget: row.budget_range || row.budget || '200k - 500k/người',
+      budget_range: row.budget_range || row.budget || '200k - 500k/người',
+      description: row.tagline || '',
+      tagline: row.tagline || '',
       stops: Array.isArray(row.stops) ? row.stops : [],
       is_active: row.is_active ?? true,
-      display_order: row.display_order ?? 1,
+      display_order: row.sort_order ?? 1,
+      sort_order: row.sort_order ?? 1,
       created_at: row.created_at,
     }));
 
@@ -90,8 +94,6 @@ export async function POST(req: NextRequest) {
     const {
       title,
       duration,
-      total_distance_km,
-      recommended_vehicle,
       stops,
       description,
       tagline,
@@ -99,6 +101,7 @@ export async function POST(req: NextRequest) {
       for_whom,
       budget_estimate,
       budget,
+      budget_range,
       emoji,
     } = body;
 
@@ -121,10 +124,10 @@ export async function POST(req: NextRequest) {
       tagline: (tagline || description || '').trim(),
       for_whom: (for_whom || suitable_for || 'Tất cả du khách').trim(),
       duration: duration.trim(),
-      budget: (budget || budget_estimate || '300.000đ - 600.000đ/người').trim(),
+      budget_range: (budget_range || budget || budget_estimate || '300.000đ - 600.000đ/người').trim(),
       stops: Array.isArray(stops) ? stops : [],
       is_active: true,
-      display_order: 99,
+      sort_order: 99,
     };
 
     const { data, error } = await supabase
@@ -153,7 +156,7 @@ export async function POST(req: NextRequest) {
       itinerary_id: data.id,
       ...data,
       suitable_for: data.for_whom,
-      budget_estimate: data.budget,
+      budget_estimate: data.budget_range,
       description: data.tagline,
     };
 
@@ -173,8 +176,6 @@ export async function PATCH(req: NextRequest) {
       itinerary_id,
       title,
       duration,
-      total_distance_km,
-      recommended_vehicle,
       stops,
       description,
       tagline,
@@ -182,9 +183,11 @@ export async function PATCH(req: NextRequest) {
       for_whom,
       budget_estimate,
       budget,
+      budget_range,
       emoji,
       is_active,
       display_order,
+      sort_order,
     } = body;
 
     const targetId = id || itinerary_id;
@@ -197,11 +200,15 @@ export async function PATCH(req: NextRequest) {
     if (duration !== undefined) updatePayload.duration = duration.trim();
     if (tagline !== undefined || description !== undefined) updatePayload.tagline = (tagline || description || '').trim();
     if (for_whom !== undefined || suitable_for !== undefined) updatePayload.for_whom = (for_whom || suitable_for || '').trim();
-    if (budget !== undefined || budget_estimate !== undefined) updatePayload.budget = (budget || budget_estimate || '').trim();
+    if (budget_range !== undefined || budget !== undefined || budget_estimate !== undefined) {
+      updatePayload.budget_range = (budget_range || budget || budget_estimate || '').trim();
+    }
     if (emoji !== undefined) updatePayload.emoji = emoji.trim();
     if (stops !== undefined) updatePayload.stops = Array.isArray(stops) ? stops : [];
     if (is_active !== undefined) updatePayload.is_active = Boolean(is_active);
-    if (display_order !== undefined) updatePayload.display_order = Number(display_order);
+    if (sort_order !== undefined || display_order !== undefined) {
+      updatePayload.sort_order = Number(sort_order ?? display_order);
+    }
 
     const { data, error } = await supabase
       .from('preset_itineraries')
@@ -230,7 +237,7 @@ export async function PATCH(req: NextRequest) {
       itinerary_id: data.id,
       ...data,
       suitable_for: data.for_whom,
-      budget_estimate: data.budget,
+      budget_estimate: data.budget_range,
       description: data.tagline,
     };
 
@@ -241,7 +248,7 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-// DELETE: Remove or deactivate itinerary in Supabase
+// DELETE: Remove itinerary in Supabase
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

@@ -86,14 +86,14 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
 ### 🗺️ Nâng Cấp Quản Lý Lịch Trình Đồng Bộ Supabase PostgreSQL (/admin/itineraries)
-- **Chuyển Đổi Sang Supabase Database Real-time (`public.preset_itineraries`)**:
-  - Khắc phục triệt để lỗi không nạp được dữ liệu lịch trình do trước đây API đọc/ghi tệp JSON cục bộ (`tri_ton_master_itineraries_and_rules.json`) vốn bị chặn trên môi trường Vercel Serverless Read-only.
-  - Chuyển toàn bộ luồng dữ liệu của `/api/v1/admin/itineraries` sang đọc/ghi trực tiếp vào bảng `public.preset_itineraries` trong Supabase PostgreSQL.
-- **Hỗ Trợ Đầy Đủ Thao Tác CRUD Lịch Trình**:
-  - `GET`: Nạp danh sách tour mẫu Bảy Núi trực tiếp từ database theo thứ tự ưu tiên `display_order`.
-  - `POST`: Tạo tour mới và ghi nhận audit log an toàn.
-  - `PATCH`: Cập nhật các điểm dừng (stops), thời lượng, ngân sách dự kiến, phương tiện đề xuất.
-  - `DELETE`: Xóa tour và ghi vết thao tác vào `audit_logs`.
+- **Nạp Toàn Bộ Bộ 27-35 Lịch Trình Thực Địa Từ `lichtrinh.json` Vào Supabase (`public.preset_itineraries`)**:
+  - Chuyển đổi và nạp đầy đủ toàn bộ bộ lịch trình mẫu chuyên sâu Thất Sơn: Từ *Kinh điển 1 ngày, Toàn cảnh 2N1Đ, Khám phá sâu 3N2Đ, Check-in sống ảo, Tâm linh hành hương, Lịch sử về nguồn, Food Tour ngày & đêm, Cafe Hopping, Chạy xe đêm, Săn hoàng hôn & BBQ Ô Thum, Mùa Lễ hội Đua Bò Bảy Núi, Trekking Vồ Hội Núi Cô Tô, Family Weekend, Backpacker Tour, Luxury Chill, Mùa lúa chín photography*...
+  - Mỗi lịch trình được cấu trúc hóa chi tiết: Thời lượng, Ngân sách dự kiến, Đối tượng phù hợp, Phương tiện di chuyển, Toàn bộ các điểm dừng (stops) có tọa độ, thời gian bắt đầu/kết thúc, thời lượng lưu trú và mẹo du lịch (tips).
+- **Hỗ Trợ Đầy Đủ Thao Tác CRUD Quản Trị Trực Tuyến**:
+  - `GET`: Nạp danh sách 27-35 tour mẫu trực tiếp từ database theo thứ tự `sort_order`.
+  - `POST`: Thêm tour mới, tùy chỉnh các điểm dừng tương tác trực quan.
+  - `PATCH`: Chỉnh sửa trực tiếp tên, lịch trình chi tiết, ngân sách, phân bổ giờ giấc.
+  - `DELETE`: Xóa tour và ghi vết thao tác an toàn vào `audit_logs`.
 
 ---
 
