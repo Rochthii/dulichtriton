@@ -110,11 +110,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
   - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
   - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
-- **Thanh Lọc Triệt Để 2 Địa Điểm Không Có Thật Theo Thực Tế Bản Địa: `Gà Đốt Siêu Đẳng` & `Bún Cá Sơ Nương` (RULE-02 & RULE-03)**:
-  - Tiếp thu phản hồi thực tế từ người dùng, tiến hành quét sạch 100% hai địa điểm ảo không tồn tại ngoài đời thực khỏi toàn bộ hệ thống:
-    • *Xóa Bỏ Địa Điểm Không Tồn Tại*: Loại bỏ hoàn toàn `Quán Gà Đốt Siêu Đẳng Hồ Ô Thum` và `Quán Bún Cá Sơ Nương Khmer` khỏi `data/triton_pois_full.json`, `tri_ton_master_cleaned.csv` (chuẩn hóa về 149 records), `tri_ton_itineraries.json`, `lichtrinh.json` và cơ sở dữ liệu Supabase `places`.
-    • *Thay Thế Bằng Quán Thực Tế Xác Minh 100%*: Thay thế các liên kết gợi ý sang các quán thực tế lâu năm nổi tiếng như `Gà Đốt Thảo Nguyên Hồ Ô Thum`, `Gà Đốt Tuấn Tới Ô Thum`, `Quán Bún Cá Củ Ngải Chị Tư` (Đường Trần Hưng Đạo) và `Quán Bún Cá Dook Tri Tôn`.
-    • *Quét Sạch Rác Dữ Liệu Crawler*: Làm sạch toàn bộ mô tả sai lệch, rác văn bản tiếng Pháp/LinkedIn trên các POIs nhà vườn.
+- **Thanh Lọc Triệt Để Các Quán Không Có Thật: `Gà Đốt Tuấn Tới`, `Gà Đốt Siêu Đẳng` & `Bún Cá Sơ Nương` (RULE-02 & RULE-03)**:
+  - Tiếp thu phản hồi thực tế từ người dùng, tiến hành quét sạch 100% các địa điểm ảo không tồn tại ngoài đời thực khỏi toàn bộ hệ thống:
+    • *Xóa Bỏ Địa Điểm Không Tồn Tại*: Loại bỏ hoàn toàn `Quán Gà Đốt Tuấn Tới Ô Thum`, `Quán Gà Đốt Siêu Đẳng Hồ Ô Thum` và `Quán Bún Cá Sơ Nương Khmer` khỏi `data/triton_pois_full.json`, `tri_ton_master_cleaned.csv`, `tri_ton_itineraries.json`, `lichtrinh.json` và cơ sở dữ liệu Supabase `places`.
+    • *Thay Thế Bằng Quán Thực Tế Xác Minh 100%*: Chuyển toàn bộ các liên kết gợi ý sang các quán gà đốt và bún cá củ ngải thực tế nổi tiếng nhất: **Quán Kiều Tiên Gà Đốt Ô Thum**, **Gà Đốt Thảo Nguyên Hồ Ô Thum**, **Quán Siêu Gà Đốt Ô Thum (Chau Siêu)**, **Gà Đốt Ốc Đảo Quán**, **Quán Bún Cá Củ Ngải Chị Tư** và **Quán Bún Cá Dook Tri Tôn**.
+    • *Quét Sạch Rác Dữ Liệu Crawler*: Làm sạch toàn bộ mô tả sai lệch, rác văn bản tiếng Pháp/LinkedIn trên các POIs nhà vườn (Nấc Thang Thiên Đường, Gà Đốt Kim Suổl, Cầu Gỗ Ô Thum).
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
