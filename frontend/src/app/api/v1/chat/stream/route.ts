@@ -184,6 +184,9 @@ function buildSuggestions(lower: string): string[] {
   return ['Thời tiết Tri Tôn hôm nay thế nào?', 'Gà Đốt Ô Thum có cần đặt trước?', 'Lịch trình 1 ngày tối ưu'];
 }
 
+// In-Memory Hot Question Cache (0ms latency, zero quota usage)
+const HOT_QUERY_CACHE = new Map<string, { answer: string; places: any[]; suggestions: string[]; timestamp: number }>();
+
 // ── SSE Stream Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
@@ -204,6 +207,34 @@ export async function POST(req: NextRequest) {
       try {
         const t0 = Date.now();
         const lower = queryStr.toLowerCase();
+        const cleanQ = lower.replace(/[?!.,]/g, '').trim();
+
+        // 0. Check In-Memory Instant Hot Cache (0ms, 0 API calls, 0 DB queries)
+        const hotHit = HOT_QUERY_CACHE.get(cleanQ);
+        if (hotHit && Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000) {
+          if (hotHit.places && hotHit.places.length > 0) {
+            send({ type: 'places', data: hotHit.places });
+          }
+          const words = hotHit.answer.split(' ');
+          for (let i = 0; i < words.length; i += 3) {
+            const chunk = words.slice(i, i + 3).join(' ') + ' ';
+            send({ type: 'text_delta', delta: chunk });
+            await new Promise(r => setTimeout(r, 12));
+          }
+          send({ type: 'suggestions', data: hotHit.suggestions || buildSuggestions(lower) });
+          send({ type: 'done' });
+          logChatEvent({
+            session_id: sessionId,
+            query: queryStr,
+            response_preview: hotHit.answer.slice(0, 200),
+            provider_used: 'in-memory-hot-cache',
+            rag_method: 'ram-cache',
+            latency_ms: Date.now() - t0,
+            is_out_scope: false,
+          });
+          controller.close();
+          return;
+        }
 
         // 1. Load history, embedding & weather telemetry in parallel
         const [history, queryVector, weatherContext] = await Promise.all([
@@ -319,6 +350,14 @@ export async function POST(req: NextRequest) {
             { role: 'assistant', content: fullText },
           ];
           void saveHistory(sessionId, updatedHistory);
+
+          // Cache in memory for subsequent identical queries
+          HOT_QUERY_CACHE.set(cleanQ, {
+            answer: fullText,
+            places: formattedPlaces,
+            suggestions: buildSuggestions(lower),
+            timestamp: Date.now(),
+          });
         }
 
         // Observability logging
