@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import PlaceCard, { Place } from "@/components/PlaceCard";
 import localMasterPois from "@/data/triton_pois_full.json";
@@ -25,14 +26,38 @@ import {
 
 type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
 
-export default function PlacesPage() {
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
-  const [selectedCommune, setSelectedCommune] = useState("Tất cả");
+function PlacesPageContent() {
+  const searchParams = useSearchParams();
+  const initialCommune = searchParams.get("commune") || "Tất cả";
+  const initialCategory = searchParams.get("category") || "Tất cả";
+
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [selectedCommune, setSelectedCommune] = useState(initialCommune);
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [places, setPlaces] = useState<Place[]>(() => {
+    const list: Place[] = (localMasterPois as any[]).map((p) => ({
+      ...p,
+      is_hot: Boolean(p.is_hot) || Boolean(p.rating && Number(p.rating) >= 4.8),
+      open_late: Boolean(p.open_late),
+    }));
+    return list.sort((a, b) => {
+      const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+      const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+      if (aHasStory && !bHasStory) return -1;
+      if (!aHasStory && bHasStory) return 1;
+      return (b.rating || 0) - (a.rating || 0);
+    });
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const cParam = searchParams.get("commune");
+    const catParam = searchParams.get("category");
+    if (cParam) setSelectedCommune(cParam);
+    if (catParam) setActiveCategory(catParam);
+  }, [searchParams]);
 
   useEffect(() => {
     function processPlacesData(rawData: any[]) {
@@ -401,5 +426,22 @@ export default function PlacesPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function PlacesPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#FAF3E7] flex items-center justify-center">
+          <div className="text-center">
+            <Sparkles className="w-8 h-8 text-[#0E8C7F] animate-spin mx-auto mb-2" />
+            <span className="text-xs font-bold text-[#6B6355]">Đang tải danh sách địa điểm...</span>
+          </div>
+        </div>
+      }
+    >
+      <PlacesPageContent />
+    </Suspense>
   );
 }

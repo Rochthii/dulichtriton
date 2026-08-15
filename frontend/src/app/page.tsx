@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { fetchWithCache } from "@/lib/fastCache";
@@ -84,15 +84,84 @@ interface ItineraryCardItem {
   budget_range: string;
 }
 
+const CLUSTER_DEFS = [
+  {
+    id: "cluster-tapa",
+    name: "Cụm Tà Pạ & Núi Tô",
+    commune: "Xã Núi Tô & Xã Châu Lăng",
+    badge: "Check-in Biểu Tượng",
+    desc: "Hồ Tà Pạ, Chùa Tà Pạ, Cánh đồng lúa Tà Pạ, Hàng thốt nốt trái tim, Cổng trời Koh Kas.",
+    link: "/places?commune=Xã Núi Tô",
+    communeFilters: ["Núi Tô", "Châu Lăng"],
+    nameKeywords: ["Tà Pạ", "Thốt Nốt", "Koh Kas", "Trái Tim", "Soài Chek", "Sân Cu"],
+    fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+  },
+  {
+    id: "cluster-othum",
+    name: "Cụm Ô Lâm & Hồ Ô Thum",
+    commune: "Xã Ô Lâm & Xã An Tức",
+    badge: "Ẩm Thực & Lịch Sử",
+    desc: "Gà Đốt Ô Thum lá chúc, Hồ Ô Thum, Chùa Kirivong Ô Lâm, Khu Di Tích Đồi Tức Dụp.",
+    link: "/places?commune=Xã Ô Lâm",
+    communeFilters: ["Ô Lâm", "An Tức"],
+    nameKeywords: ["Ô Thum", "Tức Dụp", "Gà Đốt", "Kirivong", "Đồi Tức Dụp"],
+    fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+  },
+  {
+    id: "cluster-coto",
+    name: "Cụm Cô Tô & Soài So",
+    commune: "Xã Cô Tô, Xã Núi Tô & TT Tri Tôn",
+    badge: "Trekking & Săn Mây",
+    desc: "Đỉnh Núi Cô Tô 614m, Đá Vồ Hội, Suối Vàng Soài So, Hồ Soài So, Chùa Sà Lôn.",
+    link: "/places?commune=Xã Cô Tô",
+    communeFilters: ["Cô Tô", "Thị trấn Tri Tôn"],
+    nameKeywords: ["Cô Tô", "Soài So", "Suối Vàng", "Vồ Hội", "Sân Tiên", "Phụng Hoàng Sơn", "Chùa Sà Lôn", "Xà Tón"],
+    fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+  },
+  {
+    id: "cluster-bachuc",
+    name: "Cụm Ba Chúc & Lương Phi",
+    commune: "Thị trấn Ba Chúc & Xã Lương Phi",
+    badge: "Văn Hóa & Tâm Linh",
+    desc: "Khu Di Tích Nhà Mồ Ba Chúc, Chùa Phi Lai, Chùa Tam Bửu, Căn cứ Ô Tà Sóc Núi Dài.",
+    link: "/places?commune=Thị trấn Ba Chúc",
+    communeFilters: ["Ba Chúc", "Lương Phi", "Lê Trì", "Lạc Quới", "Vĩnh Gia"],
+    nameKeywords: ["Ba Chúc", "Nhà Mồ", "Phi Lai", "Tam Bửu", "Núi Tượng", "Núi Dài", "Ô Tà Sóc"],
+    fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+  },
+];
+
 type TimeSlot = "morning" | "noon" | "afternoon" | "evening";
 type AudienceFilter = "all" | "youth" | "family" | "trekking" | "spiritual";
 
 export default function HomePage() {
   const [activeTimeSlot, setActiveTimeSlot] = useState<TimeSlot>("morning");
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
+  const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null);
+  const [allMasterPlaces, setAllMasterPlaces] = useState<any[]>(() => localMasterPois as any[]);
   const [hotPlaces, setHotPlaces] = useState<PlaceItem[]>([]);
   const [liveFoods, setLiveFoods] = useState<FoodItem[]>([]);
-  const [liveClusters, setLiveClusters] = useState<ClusterItem[]>([]);
+  const [liveClusters, setLiveClusters] = useState<ClusterItem[]>(() => {
+    return CLUSTER_DEFS.map((def) => {
+      const matched = (localMasterPois as any[]).filter((p: any) => {
+        const com = (p.commune || "").toLowerCase();
+        const name = (p.name || "").toLowerCase();
+        const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
+        const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
+        return matchCom || matchKey;
+      });
+      return {
+        id: def.id,
+        name: def.name,
+        commune: def.commune,
+        badge: def.badge,
+        desc: def.desc,
+        img: def.fallbackImg,
+        link: def.link,
+        placeCount: matched.length > 0 ? matched.length : 12,
+      };
+    });
+  });
   const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
@@ -211,74 +280,28 @@ export default function HomePage() {
         if (cachedFoods) setLiveFoods(cachedFoods);
 
         // 3. Build 4 Geographic Clusters with accurate multi-commune matching
-        const cachedClusters = await fetchWithCache("home-clusters-live-v2", async () => {
+        const cachedClusters = await fetchWithCache("home-clusters-live-v3", async () => {
           const { data: allPlaces } = await supabase
             .from("places")
-            .select("id, name, commune, image_url, photos, rating")
+            .select("id, slug, name, commune, category, image_url, photos, rating, description, golden_time_windows")
             .eq("is_verified", true);
 
-          const clusterDefs = [
-            {
-              id: "cluster-tapa",
-              name: "Cụm Tà Pạ & Núi Tô",
-              commune: "Xã Núi Tô & Xã Châu Lăng",
-              badge: "Check-in Biểu Tượng",
-              desc: "Hồ Tà Pạ, Chùa Tà Pạ, Cánh đồng lúa Tà Pạ, Hàng thốt nốt trái tim, Cổng trời Koh Kas.",
-              link: "/places?commune=Xã Núi Tô",
-              communeFilters: ["Núi Tô", "Châu Lăng"],
-              nameKeywords: ["Tà Pạ", "Thốt Nốt", "Koh Kas", "Trái Tim"],
-              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-            },
-            {
-              id: "cluster-othum",
-              name: "Cụm Ô Lâm & Hồ Ô Thum",
-              commune: "Xã Ô Lâm & Xã An Tức",
-              badge: "Ẩm Thực & Lịch Sử",
-              desc: "Gà Đốt Ô Thum lá chúc, Hồ Ô Thum, Chùa Kirivong Ô Lâm, Khu Di Tích Đồi Tức Dụp.",
-              link: "/places?commune=Xã Ô Lâm",
-              communeFilters: ["Ô Lâm", "An Tức"],
-              nameKeywords: ["Ô Thum", "Tức Dụp", "Gà Đốt", "Kirivong", "Đồi Tức Dụp"],
-              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-            },
-            {
-              id: "cluster-coto",
-              name: "Cụm Cô Tô & Soài So",
-              commune: "Xã Cô Tô, Xã Núi Tô & TT Tri Tôn",
-              badge: "Trekking & Săn Mây",
-              desc: "Đỉnh Núi Cô Tô 614m, Đá Vồ Hội, Suối Vàng Soài So, Hồ Soài So, Chùa Sà Lôn.",
-              link: "/places?commune=Xã Cô Tô",
-              communeFilters: ["Cô Tô", "Núi Tô", "Thị trấn Tri Tôn", "Tri Tôn"],
-              nameKeywords: ["Cô Tô", "Soài So", "Suối Vàng", "Vồ Hội", "Sân Tiên", "Phụng Hoàng Sơn", "Chùa Sà Lôn"],
-              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
-            },
-            {
-              id: "cluster-bachuc",
-              name: "Cụm Ba Chúc & Lương Phi",
-              commune: "Thị trấn Ba Chúc & Xã Lương Phi",
-              badge: "Văn Hóa & Tâm Linh",
-              desc: "Khu Di Tích Nhà Mồ Ba Chúc, Chùa Phi Lai, Chùa Tam Bửu, Căn cứ Ô Tà Sóc Núi Dài.",
-              link: "/places?commune=Thị trấn Ba Chúc",
-              communeFilters: ["Ba Chúc", "Lương Phi", "Lê Trì"],
-              nameKeywords: ["Ba Chúc", "Nhà Mồ", "Phi Lai", "Tam Bửu", "Núi Tượng", "Núi Dài", "Ô Tà Sóc"],
-              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
-            },
-          ];
+          const placesPool = (allPlaces && allPlaces.length > 0) ? allPlaces : (localMasterPois as any[]);
+          setAllMasterPlaces(placesPool);
 
-          return clusterDefs.map((def) => {
+          return CLUSTER_DEFS.map((def) => {
+            const matched = placesPool.filter((p: any) => {
+              const com = (p.commune || "").toLowerCase();
+              const name = (p.name || "").toLowerCase();
+              const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
+              const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
+              return matchCom || matchKey;
+            });
+
             let img = def.fallbackImg;
-            let count = 0;
-            if (allPlaces && allPlaces.length > 0) {
-              const matched = allPlaces.filter((p: any) => {
-                const com = (p.commune || "").toLowerCase();
-                const name = (p.name || "").toLowerCase();
-                const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
-                const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
-                return matchCom || matchKey;
-              });
-              count = matched.length;
-              const placeWithImg = matched.find((p: any) => p.image_url && !p.image_url.includes("unsplash.com"));
-              if (placeWithImg) img = placeWithImg.image_url;
-            }
+            const placeWithImg = matched.find((p: any) => p.image_url && !p.image_url.includes("unsplash.com"));
+            if (placeWithImg) img = placeWithImg.image_url;
+
             return {
               id: def.id,
               name: def.name,
@@ -287,7 +310,7 @@ export default function HomePage() {
               desc: def.desc,
               img,
               link: def.link,
-              placeCount: count > 0 ? count : 6,
+              placeCount: matched.length > 0 ? matched.length : 12,
             };
           });
         });
@@ -309,6 +332,49 @@ export default function HomePage() {
     }
     loadData();
   }, []);
+
+  const activeCluster = useMemo(() => {
+    if (!selectedClusterId) return null;
+    return liveClusters.find((c) => c.id === selectedClusterId) || CLUSTER_DEFS.find((c) => c.id === selectedClusterId) || null;
+  }, [selectedClusterId, liveClusters]);
+
+  const activeClusterSpots = useMemo(() => {
+    if (!selectedClusterId) return [];
+    const def = CLUSTER_DEFS.find((c) => c.id === selectedClusterId);
+    if (!def) return [];
+    const placesPool = allMasterPlaces.length > 0 ? allMasterPlaces : (localMasterPois as any[]);
+    const matched = placesPool.filter((p: any) => {
+      const com = (p.commune || "").toLowerCase();
+      const name = (p.name || "").toLowerCase();
+      const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
+      const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
+      return matchCom || matchKey;
+    });
+
+    return matched.map((item: any) => {
+      let img = getCategoryFallbackImage(item.category, item.name);
+      if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
+        img = item.image_url;
+      } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+        const p0 = item.photos[0];
+        const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+        if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
+      }
+
+      return {
+        id: item.id,
+        slug: item.slug || item.id,
+        name: item.name,
+        category: item.category || "check-in",
+        commune: item.commune || "Tri Tôn, An Giang",
+        rating: item.rating ? Number(item.rating) : 4.8,
+        image_url: img,
+        description: sanitizeDescription(item.description, item.name, item.commune, item.category),
+        golden_time_windows: Array.isArray(item.golden_time_windows) ? item.golden_time_windows : ["06:00–08:30", "16:00–17:30"],
+        cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+      };
+    }).slice(0, 8);
+  }, [selectedClusterId, allMasterPlaces]);
 
   // Filter spots by time of day & audience persona
   const filteredSpots = hotPlaces.filter((p) => {
@@ -671,64 +737,164 @@ export default function HomePage() {
             </div>
             <Link
               href="/places"
+              prefetch={true}
               className="text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] flex items-center gap-1 transition-colors font-display"
             >
-              <span>Xem tất cả 82 điểm</span>
+              <span>Xem tất cả 149 điểm</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
-            {liveClusters.map((cluster) => (
-              <Link
-                key={cluster.id}
-                href={cluster.link}
-                className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border border-[#26221B]/8 shadow-[0_2px_8px_rgba(38,34,27,0.06)] hover:shadow-[0_8px_24px_rgba(38,34,27,0.12)] transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
-              >
-                {/* Image */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-                  <img
-                    src={cluster.img}
-                    alt={cluster.name}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-[#26221B]/15 to-transparent" />
-                  
-                  <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between">
-                    <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[11px] font-bold bg-[#F0A32F] text-[#26221B] shadow-xs font-display">
-                      {cluster.badge}
-                    </span>
-                    <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[11px] font-bold bg-[#151B34]/90 text-[#FFD37A] border border-[#FFD37A]/30 font-display">
-                      {cluster.placeCount} điểm
-                    </span>
+            {liveClusters.map((cluster) => {
+              const isSelected = selectedClusterId === cluster.id;
+              return (
+                <button
+                  key={cluster.id}
+                  type="button"
+                  onClick={() => setSelectedClusterId(isSelected ? null : cluster.id)}
+                  className={`group relative text-left bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden transition-all duration-300 flex flex-col justify-between cursor-pointer tap-bounce ${
+                    isSelected
+                      ? "border-2 border-[#0E8C7F] ring-4 ring-[#0E8C7F]/25 shadow-xl -translate-y-1.5"
+                      : "border border-[#26221B]/8 shadow-[0_2px_8px_rgba(38,34,27,0.06)] hover:shadow-[0_8px_24px_rgba(38,34,27,0.12)] hover:-translate-y-1"
+                  }`}
+                >
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                    <img
+                      src={cluster.img}
+                      alt={cluster.name}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-[#26221B]/15 to-transparent" />
+                    
+                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[11px] font-bold bg-[#F0A32F] text-[#26221B] shadow-xs font-display">
+                        {cluster.badge}
+                      </span>
+                      <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[11px] font-bold bg-[#151B34]/90 text-[#FFD37A] border border-[#FFD37A]/30 font-display">
+                        {cluster.placeCount} điểm
+                      </span>
+                    </div>
+
+                    <div className="absolute bottom-2 left-2 sm:left-3 right-2 sm:right-3 text-white">
+                      <h3 className="font-display text-xs sm:text-base font-bold drop-shadow-sm text-[#FFFDF7] line-clamp-1">
+                        {cluster.name}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] text-[#FAF3E7]/80 flex items-center gap-1 mt-0.5 font-body truncate">
+                        <MapPin className="w-3 h-3 text-[#0E8C7F] shrink-0" />
+                        <span className="truncate">{cluster.commune}</span>
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="absolute bottom-2 left-2 sm:left-3 right-2 sm:right-3 text-white">
-                    <h3 className="font-display text-xs sm:text-base font-bold drop-shadow-sm text-[#FFFDF7] line-clamp-1">
-                      {cluster.name}
-                    </h3>
-                    <p className="text-[10px] sm:text-[11px] text-[#FAF3E7]/80 flex items-center gap-1 mt-0.5 font-body truncate">
-                      <MapPin className="w-3 h-3 text-[#0E8C7F] shrink-0" />
-                      <span className="truncate">{cluster.commune}</span>
+                  {/* Desc */}
+                  <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 font-body">
+                    <p className="text-[10px] sm:text-xs text-[#6B6355] leading-relaxed line-clamp-2">
+                      {cluster.desc}
                     </p>
-                  </div>
-                </div>
 
-                {/* Desc */}
-                <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 font-body">
-                  <p className="text-[10px] sm:text-xs text-[#6B6355] leading-relaxed line-clamp-2">
-                    {cluster.desc}
-                  </p>
-
-                  <div className="pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[10px] sm:text-xs font-bold text-[#0E8C7F] font-display">
-                    <span>Khám phá ({cluster.placeCount} điểm)</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <div className="pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[10px] sm:text-xs font-bold text-[#0E8C7F] font-display">
+                      <span>{isSelected ? "⚡ Đang lọc xem danh sách" : `Lọc xem (${cluster.placeCount} điểm)`}</span>
+                      <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? "rotate-90 text-[#0E8C7F]" : "group-hover:translate-x-1"}`} />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </button>
+              );
+            })}
           </div>
+
+          {/* Instant In-Memory Cluster Spotlight Panel */}
+          {selectedClusterId && activeCluster && (
+            <div className="mt-4 p-4 sm:p-6 rounded-3xl bg-[#FFFDF7] border-2 border-[#0E8C7F]/30 shadow-md space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#26221B]/8 font-display">
+                <div className="flex items-center gap-2.5">
+                  <span className="p-2 rounded-2xl bg-[#0E8C7F]/10 text-[#0E8C7F]">
+                    <MapPin className="w-5 h-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-display font-extrabold text-base sm:text-lg text-[#26221B]">
+                      Điểm Đến Thuộc: {activeCluster.name}
+                    </h3>
+                    <p className="text-xs text-[#6B6355] font-body">{activeCluster.commune} • {activeClusterSpots.length} địa điểm tiêu biểu</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={activeCluster.link}
+                    prefetch={true}
+                    className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-[#0E8C7F] text-white text-xs font-bold hover:bg-[#0B6B60] transition-colors shadow-xs"
+                  >
+                    <span>Xem tất cả điểm cụm này</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                  <button
+                    onClick={() => setSelectedClusterId(null)}
+                    className="px-3 py-2 rounded-full bg-[#FAF3E7] hover:bg-[#26221B]/10 text-[#6B6355] hover:text-[#26221B] text-xs font-bold cursor-pointer"
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+
+              {/* POI Cards Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
+                {activeClusterSpots.map((spot: any) => {
+                  const { maps } = resolvePlaceExternalLinks({
+                    name: spot.name,
+                    commune: spot.commune,
+                  });
+                  return (
+                    <div
+                      key={spot.id}
+                      className="bg-[#FAF3E7] rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+                    >
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-200">
+                        <img
+                          src={spot.image_url}
+                          alt={spot.name}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-transparent to-transparent" />
+                        <div className="absolute bottom-2 left-2 right-2 text-white">
+                          <h4 className="font-display text-xs sm:text-sm font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7]">
+                            {spot.name}
+                          </h4>
+                          <p className="text-[10px] text-[#FAF3E7]/80 truncate">{spot.commune}</p>
+                        </div>
+                      </div>
+
+                      <div className="p-2.5 sm:p-3 space-y-2 flex-1 flex flex-col justify-between font-body">
+                        <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed">
+                          {spot.description}
+                        </p>
+                        <div className="flex items-center gap-1 pt-1 font-display">
+                          <Link
+                            href={`/places/${spot.slug}`}
+                            className="flex-1 text-center py-1.5 rounded-xl bg-white hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] text-[10px] sm:text-xs font-bold transition-all border border-[#0E8C7F]/20"
+                          >
+                            Chi Tiết
+                          </Link>
+                          <a
+                            href={maps.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 rounded-xl bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white text-[10px] sm:text-xs font-bold transition-all"
+                          >
+                            <Navigation className="w-3 h-3" />
+                            <span>Chỉ Đường</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ── 5. TOP ITINERARY TICKET-STUBS ──────────────────────────────── */}
