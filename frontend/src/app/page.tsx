@@ -8,6 +8,7 @@ import SearchAutocomplete from "@/components/SearchAutocomplete";
 import TriTonWeatherWidget from "@/components/TriTonWeatherWidget";
 import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
 import { sanitizeDescription } from "@/lib/dataSanitizer";
+import heroImagesData from "@/data/hero_images.json";
 import {
   Utensils,
   MapPin,
@@ -93,6 +94,14 @@ export default function HomePage() {
   const [liveClusters, setLiveClusters] = useState<ClusterItem[]>([]);
   const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroIdx((prev) => (prev + 1) % heroImagesData.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     async function loadData() {
@@ -348,15 +357,46 @@ export default function HomePage() {
       <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col gap-6 sm:gap-10 px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         
         {/* ── 1. HERO SECTION & QUICK PAIN-POINT CHIPS ───────────────────── */}
-        <section className="relative w-full rounded-[28px] overflow-hidden shadow-[0_10px_30px_rgba(38,34,27,0.14)] min-h-[460px] sm:min-h-[520px] flex items-center justify-center bg-[#151B34] border border-[#26221B]/10">
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out hover:scale-105"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop')`,
-            }}
-          />
+        <section className="relative w-full rounded-[28px] overflow-hidden shadow-[0_10px_30px_rgba(38,34,27,0.14)] min-h-[480px] sm:min-h-[540px] flex items-center justify-center bg-[#151B34] border border-[#26221B]/10 group">
+          {/* Rotating Hero Background Slideshow */}
+          {heroImagesData.map((img, idx) => (
+            <div
+              key={img.id}
+              className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out ${
+                idx === currentHeroIdx
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-105 pointer-events-none"
+              }`}
+              style={{
+                backgroundImage: `url('${img.image_url}')`,
+              }}
+            />
+          ))}
+
           {/* Folk-Modern Dark Scrim */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#151B34] via-[#151B34]/60 to-[#0E8C7F]/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#151B34] via-[#151B34]/60 to-[#0E8C7F]/35 backdrop-blur-[0.5px]" />
+
+          {/* Location Indicator Tag (Bottom Right) */}
+          <div className="absolute bottom-4 right-4 z-20 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md text-white text-[11px] font-medium border border-white/20 shadow-sm">
+            <MapPin className="w-3.5 h-3.5 text-[#FFD37A]" />
+            <span>{heroImagesData[currentHeroIdx]?.title} ({heroImagesData[currentHeroIdx]?.location})</span>
+          </div>
+
+          {/* Hero Carousel Navigation Dots (Bottom Left) */}
+          <div className="absolute bottom-4 left-4 z-20 flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm">
+            {heroImagesData.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                onClick={() => setCurrentHeroIdx(dotIdx)}
+                aria-label={`Slide ${dotIdx + 1}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  dotIdx === currentHeroIdx
+                    ? "w-6 bg-[#FFD37A]"
+                    : "w-2 bg-white/40 hover:bg-white/70"
+                }`}
+              />
+            ))}
+          </div>
 
           <div className="relative z-10 w-full max-w-4xl p-4 sm:p-8 text-center space-y-4 sm:space-y-6">
             {/* Verified Stamp Badge */}

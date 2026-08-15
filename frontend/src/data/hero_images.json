@@ -1,0 +1,37 @@
+[
+  {
+    "id": "hero-1",
+    "title": "Hàng Còng Cổ Thụ & Cánh Đồng Lúa Tà Pạ",
+    "location": "Xã Núi Tô, Tri Tôn",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "fallback_url": "/images/hero/hero_hang_cong_ta_pa.jpg"
+  },
+  {
+    "id": "hero-2",
+    "title": "Hồ Tà Pạ - Tuyệt Tình Cốc Bảy Núi",
+    "location": "Đồi Tà Pạ, Xã Núi Tô",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758532/tri_ton_hero/hero_ho_ta_pa.webp",
+    "fallback_url": "/images/hero/hero_ho_ta_pa.jpg"
+  },
+  {
+    "id": "hero-3",
+    "title": "Cổng Trời Tri Tôn - Chùa Koh Kas",
+    "location": "Xã Châu Lăng, Tri Tôn",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+    "fallback_url": "/images/hero/hero_cong_troi_koh_kas.jpg"
+  },
+  {
+    "id": "hero-4",
+    "title": "Chùa Khmer Chikaeng Krom Cổ Kính",
+    "location": "Thị trấn Tri Tôn",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758534/tri_ton_hero/hero_chua_khmer_chikaeng.jpg",
+    "fallback_url": "/images/hero/hero_chua_khmer_chikaeng.jpg"
+  },
+  {
+    "id": "hero-5",
+    "title": "Hoàng Hôn Cánh Đồng Thốt Nốt Bảy Núi",
+    "location": "Xã An Tức, Tri Tôn",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "fallback_url": "/images/hero/hero_dong_thot_not.jpg"
+  }
+]
