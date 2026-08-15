@@ -34,8 +34,25 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   7. *Sân Tiên & Dấu Chân Tiên Đỉnh Núi Cô Tô*: Phiến đá hoa cương phẳng rộng cao hơn 500m lưu dấu tích thần thoại, điểm săn biển mây bình minh và ngắm ngàn sao.
   8. *Con Đường Thốt Nốt Ô Lâm - Cô Tô*: Hàng trăm cây thốt nốt cổ thụ cao vút mọc thẳng tắp hai bên đường làng, bối cảnh chụp ảnh triệu view.
   9. *Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)*: Dòng kênh lịch sử do danh tướng Thoại Ngọc Hầu chỉ huy đào đắp năm 1819, ngắm cánh đồng sen mùa nước nổi.
-  10. *Vườn Mãng Cầu Triền Đá Núi Tô*: Vườn cây ăn trái bám rễ sâu vào kẽ đá hoa cương, quả mãng cầu dai ngọt lịm hấp thụ khoáng chất đá núi.
-- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 126 bài viết chi tiết vào bảng `places` trên Supabase Cloud.
+### 🍗 Chuẩn Hóa & Bổ Sung Toàn Bộ 15 Quán Gà Đốt Hồ Ô Thum (Xã Ô Lâm)
+- **15 Bài Viết Chuyên Sâu Về Thủ Phủ Gà Đốt Ô Thum (2,500 – 3,500 ký tự mỗi bài)**:
+  1. *Quán Siêu Gà Đốt (Chau Siêu / Siêu Bó)*: Quán gốc tiên phong khai sinh thương hiệu gà đốt Ô Thum từ đầu những năm 2000.
+  2. *Gà Đốt Ô Thum Kim Suổl*: Nổi tiếng da giòn, ướp đậm vị sả ớt mật ong rừng và lá chúc tươi vườn nhà.
+  3. *Gà Đốt Ô Thum Vương Ngọc*: Quán lâu đời tại Ấp Phước An/Phước Thọ với nước chấm mắm ớt lá chúc độc quyền.
+  4. *Gà Đốt Kiều Tiên Ô Thum*: Chòi lá ven hồ, check-in Nấc thang thiên đường và cầu gỗ ngắm hoàng hôn.
+  5. *Gà Đốt Thảo Nguyên Ô Thum*: Không gian sinh thái vườn cây rợp bóng mát, chòi võng nghỉ trưa thư giãn.
+  6. *Gà Đốt Trí Hải Ô Thum*: Ẩn mình sâu bên bờ hồ tĩnh lặng, gà thả đồi săn chắc và muối ớt giã tay.
+  7. *Gà Đốt Ốc Đảo Quán Hồ Ô Thum*: Mỏm đất nhô ra giữa hồ với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc.
+  8. *Gà Đốt Ô Thum Mây Mây*: Không gian trẻ trung kết hợp món xôi thốt nốt chiên phồng giòn tan.
+  9. *Gà Đốt Tuấn Tới Ô Thum*: Gà đốt than hồng ướp sả ớt mật ong rừng, thịt mọng nước bên hồ.
+  10. *Gà Đốt Sáu Búp Ô Thum*: Gà đốt than hồng kèm đu đủ đâm Khmer giòn cay tê tái bắt vị.
+  11. *Quán Gà Đốt Rô THUM Khmer*: Gia vị thảo mộc Khmer cổ truyền lưu truyền nhiều thế hệ.
+  12. *Gà Đốt 7 Núi Ô Thum*: Gà thả đồi Bảy Núi đốt nồi đất rơm than hồng rực.
+  13. *Gà Đốt Thành Đạt Ô Thum*: Phục vụ chu đáo, chòi lá rộng rãi cho khách gia đình và đoàn phượt.
+  14. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc, muối ớt giã cối đá thơm lừng.
+  15. *Quán Gà Đốt Vườn Nho Ô Thum*: Mô hình sinh thái hái nho 2ha kết hợp thưởng thức gà đốt chòi lá ven hồ.
+- **Tuyệt Đối Tuân Thủ Thuật Ngữ Văn Hóa**: 100% sử dụng thuật ngữ **"Gà Đốt"**, loại bỏ hoàn toàn từ "gà nướng".
+- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 140 địa điểm có bài viết chi tiết và 161 POIs lên Supabase Cloud.
 
 ---
 
