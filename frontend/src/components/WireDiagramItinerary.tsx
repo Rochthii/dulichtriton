@@ -54,6 +54,7 @@ export interface ItineraryData {
 
 interface WireDiagramItineraryProps {
   itinerary: ItineraryData;
+  transport?: 'bike' | 'car' | string;
 }
 
 const CATEGORY_CONFIG: Record<string, { bg: string; text: string; border: string; label: string; icon: React.ElementType }> = {

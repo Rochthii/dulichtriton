@@ -93,7 +93,7 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
     // 3. Fallback: local cleaned master JSON
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const masterPois = require('../../../../data/triton_pois_full.json');
+      const masterPois = require('@/data/triton_pois_full.json');
       if (Array.isArray(masterPois)) {
         const found = masterPois.find((p: any) => p.id === idOrSlug || p.slug === idOrSlug || p.name?.toLowerCase().includes(idOrSlug.toLowerCase()));
         if (found) return found as Place;
@@ -108,7 +108,7 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
     console.error(`[getPlaceById] Failed to query Supabase for "${idOrSlug}":`, err);
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const masterPois = require('../../../../data/triton_pois_full.json');
+      const masterPois = require('@/data/triton_pois_full.json');
       if (Array.isArray(masterPois)) {
         const found = masterPois.find((p: any) => p.id === idOrSlug || p.slug === idOrSlug || p.name?.toLowerCase().includes(idOrSlug.toLowerCase()));
         if (found) return found as Place;

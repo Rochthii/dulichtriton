@@ -1,0 +1,267 @@
+{
+  "metadata": {
+    "system_name": "Du Lịch Tri Tôn AI - Master Itineraries & Recommendation Rules Engine",
+    "version": "10.80.0",
+    "last_updated": "2026-08-07",
+    "author": "Tri Ton Tourism Data Engineering & Knowledge Base"
+  },
+  "hot_top_12_homepage": [
+    {
+      "rank": 1,
+      "id": "PL001",
+      "name": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+      "rating": 4.7,
+      "review_count": 4700,
+      "hot_score": 22090,
+      "golden_time_windows": ["05:30–07:00", "16:00–17:30"],
+      "recommended_activities": "Săn sương bình minh, ngắm hồ ngọc bích, chụp ảnh vách đá nghiêng"
+    },
+    {
+      "rank": 2,
+      "id": "PL010",
+      "name": "Khu Du Lịch Đồi Tức Dụp",
+      "rating": 4.6,
+      "review_count": 5200,
+      "hot_score": 23920,
+      "golden_time_windows": ["07:00–16:00"],
+      "recommended_activities": "Tham quan căn cứ 128 ngày đêm, khám phá hang đá huyền bí, viếng tượng đài"
+    },
+    {
+      "rank": 3,
+      "id": "CK010",
+      "name": "Cổng Trời Tri Tôn Vòm Khmer (Koh Kas)",
+      "rating": 4.8,
+      "review_count": 3770,
+      "hot_score": 18096,
+      "golden_time_windows": ["06:00–08:00", "16:00–17:30"],
+      "recommended_activities": "Săn khung hình cổng chùa cổ giữa đồng lúa, góc chụp sáng sớm tránh nắng"
+    },
+    {
+      "rank": 4,
+      "id": "EV001",
+      "name": "Lễ Hội Đua Bò Bảy Núi",
+      "rating": 4.9,
+      "review_count": 2500,
+      "hot_score": 12250,
+      "golden_time_windows": ["14:00–17:00 (Mùa Sene Dolta T9–T10)"],
+      "recommended_activities": "Hội đua bò truyền thống Khmer tại sân đua bò Chùa Thơm Mít / Quảng trường Quảng Tế",
+      "is_seasonal_auto_pin": true
+    },
+    {
+      "rank": 5,
+      "id": "CK001",
+      "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+      "rating": 4.9,
+      "review_count": 2100,
+      "hot_score": 10290,
+      "golden_time_windows": ["16:00–17:30"],
+      "recommended_activities": "Chụp ảnh con đường uốn lượn hướng núi Cô Tô lúc hoàng hôn xiên qua hàng thốt nốt"
+    },
+    {
+      "rank": 6,
+      "id": "CK009",
+      "name": "Hàng Thốt Nốt Trái Tim An Tức",
+      "rating": 4.7,
+      "review_count": 3450,
+      "hot_score": 16215,
+      "golden_time_windows": ["06:00–08:00"],
+      "recommended_activities": "Chụp hình cụm 3 cây thốt nốt hình trái tim giữa đồng lúa An Tức, uống thốt nốt tươi"
+    },
+    {
+      "rank": 7,
+      "id": "PL004",
+      "name": "Hồ Ô Thum (+Thủ phủ Gà Đốt Lá Chúc)",
+      "rating": 4.6,
+      "review_count": 1890,
+      "hot_score": 8694,
+      "golden_time_windows": ["11:00–14:00"],
+      "recommended_activities": "Thưởng thức Gà đốt lá chúc niêu đất tại bờ hồ, dạo cầu gỗ ngắm hồ"
+    },
+    {
+      "rank": 8,
+      "id": "HG002",
+      "name": "Chùa Xà Tón (Wat Xvayton)",
+      "rating": 4.8,
+      "review_count": 2140,
+      "hot_score": 10272,
+      "golden_time_windows": ["08:00–10:00"],
+      "recommended_activities": "Chiêm bái chùa Khmer cổ nhất An Giang >500 năm, chiêm ngưỡng di sản Kinh Lá Buông"
+    },
+    {
+      "rank": 9,
+      "id": "PL011",
+      "name": "Cánh Đồng Lúa Tà Pạ (Mùa Vàng)",
+      "rating": 4.8,
+      "review_count": 1500,
+      "hot_score": 7200,
+      "golden_time_windows": ["06:30–09:00 (Mùa vàng T9–T11)"],
+      "recommended_activities": "Ngắm mảng màu ô ruộng lúa chín như tấm thảm Bảy Núi"
+    },
+    {
+      "rank": 10,
+      "id": "FD006",
+      "name": "Đu Đủ Đâm RiNa Chau Lăng",
+      "rating": 4.8,
+      "review_count": 1680,
+      "hot_score": 8064,
+      "golden_time_windows": ["12:00–19:00 (Chỉ mở từ 12h trưa)"],
+      "recommended_activities": "Thưởng thức đu đủ đâm mắm bò hóc ớt tươi ăn kèm cánh gà nướng rô"
+    },
+    {
+      "rank": 11,
+      "id": "FD011",
+      "name": "Bánh Bò Thốt Nốt Út Cột",
+      "rating": 4.8,
+      "review_count": 1150,
+      "hot_score": 5520,
+      "golden_time_windows": ["07:00–18:00"],
+      "recommended_activities": "Thưởng thức bánh bò thốt nốt nướng cốt dừa béo ngậy mua về làm quà"
+    },
+    {
+      "rank": 12,
+      "id": "PL020",
+      "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+      "rating": 4.8,
+      "review_count": 1150,
+      "hot_score": 5520,
+      "golden_time_windows": ["16:00–18:30"],
+      "recommended_activities": "Ngắm hàng trăm cánh diều rực rỡ dưới ánh hoàng hôn núi Cô Tô"
+    }
+  ],
+  "food_time_matrix": {
+    "breakfast_06_10h": [
+      { "id": "FD009", "name": "Bún nước lèo Sơ Nương", "rating": 4.7, "price": "25k–35k", "note": "Đóng cửa lúc 11:00 sáng" },
+      { "id": "FD019", "name": "Bún nước lèo Chị Tư", "rating": 4.8, "price": "25k–35k", "note": "Chuyên bún nước lèo Khmer" },
+      { "id": "FD013", "name": "Bánh canh Lò Rèn (>30 năm gia truyền)", "rating": 4.7, "price": "30k–45k", "note": "Mở từ 06:00 sáng" },
+      { "id": "FD015", "name": "Cháo bò trái trúc Ba Chúc", "rating": 4.6, "price": "30k–50k", "note": "Mở từ 06:00–14:00" }
+    ],
+    "lunch_11_14h": [
+      { "id": "FD001", "name": "Gà đốt Ô Thum Siêu (Chính gốc)", "rating": 4.6, "price": "250k–350k/con", "note": "Phải gọi đặt trước 45–60 phút" },
+      { "id": "FD018", "name": "Gà đốt Ô Thum Siêu Bó", "rating": 4.6, "price": "250k–350k/con", "note": "View bờ hồ Ô Thum" },
+      { "id": "FD002", "name": "Gà đốt Ô Thum Kiều Tiên", "rating": 4.6, "price": "250k–350k/con", "note": "Chuyên gà đốt niêu đất" },
+      { "id": "FD006", "name": "Đu đủ đâm Khmer RiNa", "rating": 4.8, "price": "20k–35k", "note": "MỞ CỬA TỪ 12:00 TRƯA (Không bán sáng)" },
+      { "id": "FD014", "name": "Quán Bò 7 Món Ba Chúc", "rating": 4.6, "price": "80k–200k", "note": "Nướng bơ tỏi và lẩu bò trái trúc" }
+    ],
+    "afternoon_14_16h": [
+      { "id": "FD016", "name": "Bánh xèo tép bông điên điển Bảy Núi", "rating": 4.7, "price": "30k–50k", "note": "Mở bán từ 14:00 chiều" }
+    ],
+    "evening_16_22h": [
+      { "id": "FD017", "name": "Bò nướng trái trúc Tri Tôn", "rating": 4.7, "price": "90k–180k", "note": "Phục vụ chiều tối từ 16:00" },
+      { "id": "PL022", "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn", "rating": 4.6, "price": "Tùy món", "note": "17:00–22:00: Xiên nướng, cháo bò, chè thốt nốt" }
+    ],
+    "late_night_22_23h": [
+      { "id": "FD003", "name": "Gà đốt Kim Suổl", "rating": 4.5, "price": "260k–350k/con", "note": "Phục vụ đoàn đến muộn tới 23:00" }
+    ],
+    "souvenirs_gifts": [
+      { "id": "FD011", "name": "Bánh bò thốt nốt Út Cột", "price": "35k–50k", "type": "Bánh nướng cốt dừa" },
+      { "id": "FD020", "name": "Lò đường thốt nốt nguyên chất Út Huệ", "price": "40k–80k/kg", "type": "Đường mật ngào thủ công" },
+      { "id": "FD024", "name": "Bánh kẹp thốt nốt Chùa Cũ (Wat Xvayton)", "price": "20k–35k", "type": "Bánh kẹp giòn thơm" }
+    ]
+  },
+  "cafes_by_view": [
+    { "id": "CF001", "name": "Ruộng Coffee & Homestay", "view_type": "Cầu gỗ giữa đồng lúa Tà Pạ", "rating": 4.6, "hours": "06:30–18:30" },
+    { "id": "CF002", "name": "Windy Hill Coffee & Homestay", "view_type": "Panorama Hồ Soài Chék & View Núi", "rating": 4.7, "hours": "06:00–20:00" },
+    { "id": "CF005", "name": "Tiệm Cà Phê Nhà Quê", "view_type": "Căn nhà gỗ vintage phong cách Đà Lạt", "rating": 4.5, "hours": "06:30–21:00" },
+    { "id": "CF014", "name": "Cà Phê Suối Tri Tôn", "view_type": "Suối tự nhiên chân núi Cô Tô", "rating": 4.6, "hours": "08:00–20:00" },
+    { "id": "CF010", "name": "Quán Cà Phê Mùa Gió Lên", "view_type": "Bờ hồ Soài So lộng gió chiều", "rating": 4.5, "hours": "07:00–18:00" },
+    { "id": "CF015", "name": "Quán Cà Phê Bờ Hồ Ô Tà Lọt", "view_type": "Hồ Ô Tà Lọt hoang sơ tĩnh lặng", "rating": 4.5, "hours": "08:00–20:00" }
+  ],
+  "master_itineraries": [
+    {
+      "itinerary_id": "tour-1-day-classic",
+      "title": "Tour 1 Ngày Classic: Tà Pạ - Ô Thum - Hoàng Hôn Tuyến Tránh",
+      "duration": "1 ngày (05:30 - 21:00)",
+      "total_distance_km": 35,
+      "recommended_vehicle": "Xe máy / Ô tô 4-7 chỗ",
+      "stops": [
+        { "time": "05:30", "id": "PL001", "name": "Hồ Tà Pạ (Săn bình minh)", "cluster": "Tà Pạ" },
+        { "time": "06:30", "id": "HG001", "name": "Chùa Tà Pạ (Chùa Núi)", "cluster": "Tà Pạ" },
+        { "time": "07:00", "id": "PL011", "name": "Cánh đồng lúa & Con đường tơ lụa Tà Pạ", "cluster": "Tà Pạ" },
+        { "time": "08:15", "id": "FD009", "name": "Ăn sáng Bún nước lèo Sơ Nương (Chỉ mở sáng)", "cluster": "Thị trấn Tri Tôn" },
+        { "time": "09:15", "id": "HG002", "name": "Chùa Xà Tón + Mua bánh kẹp Chùa Cũ FD024", "cluster": "Thị trấn Tri Tôn" },
+        { "time": "10:15", "id": "CK010", "name": "Cổng Trời Koh Kas + Vòm Còng Châu Lăng", "cluster": "Châu Lăng" },
+        { "time": "12:00", "id": "FD006", "name": "Ăn trưa Đu đủ đâm RiNa (Mở đúng 12:00)", "cluster": "Châu Lăng" },
+        { "time": "12:45", "id": "FD011", "name": "Mua quà Bánh bò Út Cột + Đường Út Huệ FD020", "cluster": "Châu Lăng" },
+        { "time": "13:30", "id": "FD001", "name": "Gà đốt Ô Thum + Cầu gỗ ngắm hồ (Nghỉ trưa)", "cluster": "Ô Thum", "reminder": "Gọi điện đặt gà trước 45 phút!" },
+        { "time": "15:30", "id": "CF001", "name": "Cà phê Ruộng (View cầu gỗ đồng lúa)", "cluster": "Tà Pạ" },
+        { "time": "16:30", "id": "CK001", "name": "Tuyến tránh ĐT941-948 + Bãi thả diều PL020", "cluster": "Thị trấn Tri Tôn" },
+        { "time": "18:30", "id": "FD017", "name": "Ăn tối Bò nướng trái trúc + Dạo Chợ đêm PL022", "cluster": "Thị trấn Tri Tôn" }
+      ]
+    },
+    {
+      "itinerary_id": "tour-2-days-1-night",
+      "title": "Tour 2 Ngày 1 Đêm: Khám Phá Trọn Vẹn Thất Sơn Bảy Núi",
+      "duration": "2 ngày 1 đêm",
+      "total_distance_km": 80,
+      "overnight_stay": ["CF012 (Tuyết Anh Homestay)", "CF013 (Rồng Vàng Resort)", "CF016 (Soài Chek Homestay)"],
+      "day_1": [
+        { "time": "05:30", "id": "PL001", "name": "Bình minh Hồ Tà Pạ & Chùa Tà Pạ HG001" },
+        { "time": "08:00", "id": "FD009", "name": "Ăn sáng Bún nước lèo Sơ Nương" },
+        { "time": "10:15", "id": "PL002", "name": "Cụm Soài So: Hồ Soài So + Suối Vàng PL016" },
+        { "time": "11:30", "id": "CF010", "name": "Cà phê Mùa Gió Lên view hồ Soài So" },
+        { "time": "13:00", "id": "FD001", "name": "Thưởng thức Gà đốt Ô Thum" },
+        { "time": "16:00", "id": "CK001", "name": "Hoàng hôn Tuyến Tránh & Thả diều PL020" },
+        { "time": "18:30", "id": "PL022", "name": "Ẩm thực Chợ đêm Tri Tôn & Bò nướng FD017" }
+      ],
+      "day_2": [
+        { "time": "06:30", "id": "FD013", "name": "Ăn sáng Bánh canh Lò Rèn gia truyền" },
+        { "time": "08:00", "id": "HG005", "name": "Cụm Ba Chúc: Nhà Mồ Ba Chúc + Chùa Phi Lai HG006 + Chùa Tam Bửu HG007" },
+        { "time": "09:45", "id": "FD015", "name": "Thưởng thức Cháo bò trái trúc Ba Chúc" },
+        { "time": "10:30", "id": "CK008", "name": "Cung đường biên giới Kênh Vĩnh Tế & Lúa Ba Chúc" },
+        { "time": "12:00", "id": "PL010", "name": "Khám phá Khu di tích Đồi Tức Dụp (Hang đá 128 ngày đêm)" },
+        { "time": "15:00", "id": "CK009", "name": "Check-in Thốt nốt trái tim An Tức & Cầu khỉ CK018" },
+        { "time": "16:30", "id": "CK001", "name": "Hoàng hôn chốt tour Tuyến tránh ĐT941" }
+      ]
+    },
+    {
+      "itinerary_id": "tour-3-days-2-nights",
+      "title": "Tour 3 Ngày 2 Đêm: Trải Nghiệm Chuyên Sâu Sinh Thái & Di Sản",
+      "duration": "3 ngày 2 đêm",
+      "total_distance_km": 120,
+      "day_1": "Tà Pạ – Soài So – Ô Thum (Như Ngày 1 tour 2N1Đ)",
+      "day_2": [
+        { "time": "06:00", "id": "CK010", "name": "Săn ảnh Cổng Trời Koh Kas sáng sớm & Thốt nốt cô độc" },
+        { "time": "08:00", "id": "CK004", "name": "Vòm Còng Châu Lăng & Chùa Hàng Còng HG003" },
+        { "time": "12:00", "id": "FD006", "name": "Đu đủ đâm RiNa → Gà đốt Ô Thum FD001 + Vườn nho PL014" },
+        { "time": "15:00", "id": "CK009", "name": "Thốt nốt trái tim An Tức + Đồi Tức Dụp PL010" },
+        { "time": "18:30", "id": "FD017", "name": "Bò nướng trái trúc + Khám phá Chợ đêm PL022" }
+      ],
+      "day_3": [
+        { "time": "07:00", "id": "PL012", "name": "Cụm Ô Tà Sóc: Rừng tầm vông + Căn cứ kháng chiến HG008 + Hồ Ô Tà Sóc PL005" },
+        { "time": "10:00", "id": "CK007", "name": "Cung đường ven vách đá Núi Dài PL017" },
+        { "time": "12:00", "id": "FD009", "name": "Ăn trưa bún nước lèo / bánh canh thị trấn" },
+        { "time": "14:00", "id": "PL006", "name": "Hồ Ô Tà Lọt hoang sơ + Cà phê suối CF015 (Option trek vách đá Latina PL019)" },
+        { "time": "16:30", "id": "CK001", "name": "Hoàng hôn chốt tour: Tuyến tránh ĐT941" }
+      ]
+    }
+  ],
+  "seasonal_and_event_variants": [
+    {
+      "condition": "T9–T11 (Mùa lúa chín & Mùa nước nổi Bảy Núi)",
+      "swap_rule": "Ưu tiên đưa Cánh đồng lúa Tà Pạ (PL011) và Con đường tơ lụa (CK002) vào slot 07:00; thêm Con đường tơ lụa Soài Chék (CK003)."
+    },
+    {
+      "condition": "Dịp Lễ Hội Đua Bò Sene Dolta (Tháng 9 - Tháng 10 Âm lịch)",
+      "swap_rule": "Chèn sự kiện EV001 Lễ hội Đua bò vào slot 14:00–17:00; chuyển bãi thả diều PL020 thành khu vực khán đài đua bò."
+    },
+    {
+      "condition": "Mùa khô cao điểm (Tháng 3 - Tháng 5)",
+      "swap_rule": "Giảm bớt thời lượng tại các hồ (nước cạn hơn); tăng trải nghiệm Suối Soài So (PL016) và Đồi Tức Dụp (PL010)."
+    },
+    {
+      "condition": "Đoàn du khách tới Tri Tôn sau 20:00 đêm",
+      "swap_rule": "Đổi địa điểm ăn tối sang Quán Gà đốt Kim Suổl (FD003) phục vụ tới 23:00 khuya."
+    },
+    {
+      "condition": "Gia đình đi cùng trẻ em nhỏ",
+      "swap_rule": "Loại bỏ các đoạn trekking dốc Núi Dài; chèn Vườn nho sinh thái PL014 (vé 10k) và Vườn mãng cầu PL015."
+    }
+  ],
+  "ai_scheduling_hard_rules": [
+    "1. QUY TẮC GIỜ MỞ CỬA QUÁN ĂN: FD009, FD010, FD019 chỉ xếp slot SÁNG (<11:00). FD006, FD007, FD008 mở từ 12:00 trưa. FD016 chỉ từ 14:00 chiều. FD017 phục vụ từ 16:00 chiều tối.",
+    "2. QUY TẮC KHÔNG QUAY ĐẦU CHẠY VÒNG: Mỗi buổi chỉ di chuyển tối đa trong 1 cụm địa lý (Đông: Tà Pạ - Soài So | Bắc: Châu Lăng | Nam: Ô Thum - An Tức | Tây: Lương Phi | Tây-Bắc: Ba Chúc).",
+    "3. QUY TẮC HOÀNG HÔN VÀNG: Slot 16:00 - 18:30 luôn bắt buộc chốt bằng Tuyến Tránh ĐT941 (CK001) hoặc Bãi Thả Diều (PL020).",
+    "4. CẢNH BÁO ĐẶT GÀ ĐỐT TRƯỚC: Mọi lịch trình có món Gà đốt Ô Thum (FD001/FD002/FD018) phải chèn reminder AI tự động nhắc du khách gọi điện đặt trước 45-60 phút.",
+    "5. TÍCH HỢP MÃ QR OFFLINE: Xuất kèm mã QR offline truy cập bản đồ GIS và lịch trình không cần sóng di động."
+  ]
+}
