@@ -6,6 +6,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
+import { fetchWithCache } from "@/lib/fastCache";
 
 interface CulturePlace {
   id: string;
@@ -26,16 +27,14 @@ export default function CulturePage() {
 
   useEffect(() => {
     async function loadLiveCultureData() {
-      setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from("places")
-          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, description, is_hot")
-          .or("category.eq.culture,category.eq.spiritual,category.eq.history,tourism_category.ilike.%Văn Hóa%,tourism_category.ilike.%Tâm Linh%,tourism_category.ilike.%Di Tích%,tourism_category.ilike.%Chùa%,id.ilike.CH%,id.ilike.DT%")
-          .eq("is_active", true)
-          .order("rating", { ascending: false });
+        const json = await fetchWithCache("client-culture-catalog-v1", async () => {
+          const res = await fetch("/api/v1/culture?limit=100");
+          return await res.json();
+        });
 
-        if (!error && data && data.length > 0) {
+        const data = json?.culture || [];
+        if (data && data.length > 0) {
           const formatted = data.map((item: any) => {
             let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
             if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {

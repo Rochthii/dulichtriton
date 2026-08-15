@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
+import { fetchWithCache } from "@/lib/fastCache";
 import { Hotel, MapPin, Star, ChevronRight, Wifi, Car, ShieldCheck, Phone, Flame, Award, Navigation, Play } from "lucide-react";
 
 interface StayItem {
@@ -29,16 +30,14 @@ export default function StayPage() {
 
   useEffect(() => {
     async function loadLiveStayData() {
-      setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from("places")
-          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, video_url, address, phone, description, is_hot")
-          .or("category.eq.stay,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách Sạn%,tourism_category.ilike.%Resort%,tourism_category.ilike.%Lưu Trú%,id.ilike.KS%,id.ilike.HS%,id.ilike.NT%")
-          .eq("is_active", true)
-          .order("rating", { ascending: false });
+        const json = await fetchWithCache("client-stays-catalog-v1", async () => {
+          const res = await fetch("/api/v1/stays?limit=100");
+          return await res.json();
+        });
 
-        if (!error && data && data.length > 0) {
+        const data = json?.stays || [];
+        if (data && data.length > 0) {
           const formatted = data.map((item: any) => {
             let img = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop";
             if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {

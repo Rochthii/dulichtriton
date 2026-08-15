@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import PlaceCard, { Place } from "@/components/PlaceCard";
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
+import { fetchWithCache } from "@/lib/fastCache";
 import {
   MapPin,
   Clock,
@@ -35,22 +36,24 @@ export default function PlacesPage() {
 
   useEffect(() => {
     async function loadLivePlaces() {
-      setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from("places")
-          .select("*")
-          .eq("is_active", true)
-          .order("rating", { ascending: false });
+        const rawData = await fetchWithCache("client-all-places-catalog-v1", async () => {
+          const { data, error } = await supabase
+            .from("places")
+            .select("*")
+            .eq("is_active", true)
+            .order("rating", { ascending: false });
+          if (!error && data && data.length > 0) return data;
+          return localMasterPois as any[];
+        });
 
-        if (!error && data && data.length > 0) {
-          const list: Place[] = (data as any[]).map((p) => ({
+        if (rawData && rawData.length > 0) {
+          const list: Place[] = (rawData as any[]).map((p) => ({
             ...p,
             is_hot: Boolean(p.is_hot) || Boolean(p.rating && Number(p.rating) >= 4.8),
             open_late: Boolean(p.open_late),
           }));
 
-          // Prioritize Hot POIs first!
           list.sort((a, b) => {
             if (a.is_hot && !b.is_hot) return -1;
             if (!a.is_hot && b.is_hot) return 1;

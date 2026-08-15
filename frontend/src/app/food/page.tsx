@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Search, Moon, Phone, Navigation, Play, Sparkles, Award } from "lucide-react";
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
+import { fetchWithCache } from "@/lib/fastCache";
 
 interface FoodItem {
   id: string;
@@ -35,10 +36,11 @@ export default function FoodPage() {
 
   useEffect(() => {
     async function loadLiveFoodData() {
-      setLoading(true);
       try {
-        const res = await fetch("/api/v1/food?limit=100");
-        const json = await res.json();
+        const json = await fetchWithCache("client-food-places-catalog-v1", async () => {
+          const res = await fetch("/api/v1/food?limit=100");
+          return await res.json();
+        });
 
         if (json.food && json.food.length > 0) {
           const formatted = json.food.map((item: any) => {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
 import { clearServerCache } from '@/lib/serverCache';
+import { invalidateAllPlacesCache } from '@/lib/dataCache';
 
 export const dynamic = 'force-dynamic';
 
@@ -151,15 +151,9 @@ export async function POST(req: NextRequest) {
 
     logAudit('CREATE_POI', data.id, newRecord);
 
-    // On-Demand Cache Invalidation
+    // On-Demand Global Cache Invalidation
     clearServerCache();
-    try {
-      revalidatePath('/', 'layout');
-      revalidatePath('/places');
-      revalidatePath('/food');
-      revalidatePath('/stay');
-      revalidatePath('/culture');
-    } catch { /* ignore in non-request contexts */ }
+    invalidateAllPlacesCache();
 
     return NextResponse.json({ success: true, place: data });
   } catch (err: unknown) {
@@ -226,15 +220,9 @@ export async function PATCH(req: NextRequest) {
 
     logAudit('UPDATE_POI', id, updatePayload);
 
-    // On-Demand Cache Invalidation
+    // On-Demand Global Cache Invalidation
     clearServerCache();
-    try {
-      revalidatePath('/', 'layout');
-      revalidatePath('/places');
-      revalidatePath('/food');
-      revalidatePath('/stay');
-      revalidatePath('/culture');
-    } catch { /* ignore in non-request contexts */ }
+    invalidateAllPlacesCache();
 
     return NextResponse.json({ success: true, place: data });
   } catch (err: unknown) {
@@ -261,15 +249,9 @@ export async function DELETE(req: NextRequest) {
 
     logAudit('DEACTIVATE_POI', id, { deactivated_at: new Date().toISOString() });
 
-    // On-Demand Cache Invalidation
+    // On-Demand Global Cache Invalidation
     clearServerCache();
-    try {
-      revalidatePath('/', 'layout');
-      revalidatePath('/places');
-      revalidatePath('/food');
-      revalidatePath('/stay');
-      revalidatePath('/culture');
-    } catch { /* ignore in non-request contexts */ }
+    invalidateAllPlacesCache();
 
     return NextResponse.json({ success: true, id });
   } catch (err: unknown) {
