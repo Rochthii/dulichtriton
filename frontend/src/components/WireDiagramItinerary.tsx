@@ -23,6 +23,7 @@ import {
   Info
 } from 'lucide-react';
 import ItineraryExportModal from './ItineraryExportModal';
+import { getTikTokHashtagUrl } from '@/lib/tiktok';
 import localMasterPois from '@/data/triton_pois_full.json';
 
 export interface ItineraryStop {
@@ -72,9 +73,8 @@ const CATEGORY_CONFIG: Record<string, { bg: string; text: string; border: string
   'history':   { bg: 'bg-[#A6503A]/10', text: 'text-[#A6503A]', border: 'border-[#A6503A]/30', label: 'Di Tích', icon: Scroll },
 };
 
-function getTikTokUrl(name: string, commune: string): string {
-  const q = encodeURIComponent(`${name} ${commune} Tri Tôn`);
-  return `https://www.tiktok.com/search/video?q=${q}`;
+function getTikTokUrl(name: string, commune?: string): string {
+  return getTikTokHashtagUrl(name);
 }
 
 function getMapsUrl(name: string, commune: string): string {

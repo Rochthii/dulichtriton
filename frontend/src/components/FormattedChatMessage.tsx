@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import type { ItineraryData } from './WireDiagramItinerary';
 import ItineraryExportModal from './ItineraryExportModal';
+import { resolveTikTokHashtag } from '@/lib/tiktok';
 
 interface FormattedChatMessageProps {
   content: string;
@@ -405,6 +406,16 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
         }
 
         const isTikTok = url.includes('tiktok.com');
+        if (isTikTok && url.includes('/search')) {
+          try {
+            const parsed = new URL(url);
+            const q = parsed.searchParams.get('q') || label;
+            const tag = resolveTikTokHashtag(q);
+            url = `https://www.tiktok.com/tag/${tag}`;
+          } catch {
+            url = 'https://www.tiktok.com/tag/dulichtriton';
+          }
+        }
         const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || url.includes('goo.gl');
 
         return (

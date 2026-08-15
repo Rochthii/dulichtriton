@@ -4,13 +4,15 @@
  */
 
 import { getGoogleMapsUrl, resolveGoogleMapsAction, type GoogleMapsOptions } from './maps';
-import { getTikTokWebSearchUrl, resolveTikTokAction, type TikTokLinkOptions } from './tiktok';
+import { getTikTokHashtagUrl, getTikTokWebSearchUrl, resolveTikTokAction, resolveTikTokHashtag, type TikTokLinkOptions } from './tiktok';
 
 export {
   getGoogleMapsUrl,
   resolveGoogleMapsAction,
+  getTikTokHashtagUrl,
   getTikTokWebSearchUrl,
   resolveTikTokAction,
+  resolveTikTokHashtag,
 };
 
 export type { GoogleMapsOptions, TikTokLinkOptions };
@@ -21,6 +23,7 @@ export type { GoogleMapsOptions, TikTokLinkOptions };
 export function resolvePlaceExternalLinks(place: {
   name: string;
   commune?: string;
+  category?: string;
   lat?: number;
   lng?: number;
   video_url?: string;
@@ -35,6 +38,7 @@ export function resolvePlaceExternalLinks(place: {
   const tiktok = resolveTikTokAction({
     placeName: place.name,
     commune: place.commune,
+    category: place.category,
     directVideoUrl: place.video_url,
   });
 

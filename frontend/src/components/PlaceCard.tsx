@@ -107,6 +107,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
   const { maps, tiktok } = resolvePlaceExternalLinks({
     name: place.name,
     commune: place.commune,
+    category: place.category,
     lat: place.latitude,
     lng: place.longitude,
     video_url: place.video_url,
