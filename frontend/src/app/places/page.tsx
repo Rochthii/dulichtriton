@@ -194,13 +194,13 @@ export default function PlacesPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
               {topSpotlightPlaces.map((hotPlace, pidx) => (
                 <div
                   key={hotPlace.id}
-                  className="group relative bg-[#FFFDF7] rounded-3xl overflow-hidden border-2 border-emerald-400/40 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-emerald-400/40 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
                 >
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-200">
+                  <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={getOptimizedImageUrl(hotPlace.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb", { width: 900, dpr: 2, quality: 'best' })}
@@ -369,7 +369,7 @@ export default function PlacesPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
               {filteredPlaces.map((place) => (
                 <PlaceCard key={place.id} place={place} />
               ))}
