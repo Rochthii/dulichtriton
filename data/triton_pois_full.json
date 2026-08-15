@@ -17,7 +17,7 @@
     "best_time": "Sáng sớm 6:00 - 8:30 hoặc chiều mát 15:30 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Cô Tô\", \"Trung tâm Thị trấn\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Tìm hiểu Lịch sử\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -84,7 +84,11 @@
     "is_verified": true,
     "tiktok_search_query": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi) Tri Tôn An Giang",
     "opening_hours": "05:00–18:30",
-    "field_tips": "nước xanh ngọc, vách đá; mở 05:00–18:30"
+    "field_tips": "nước xanh ngọc, vách đá; mở 05:00–18:30",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "chua-ta-pa",
@@ -234,7 +238,7 @@
     "best_time": "Tháng 9 đến tháng 11 (mùa lúa chín)",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -307,7 +311,11 @@
     "tiktok_search_query": "Cánh đồng lúa Tà Pạ Tri Tôn An Giang",
     "commune": "Xã Núi Tô",
     "field_tips": "mùa lúa chín T9–11",
-    "slug": "canh-dong-lua-ta-pa"
+    "slug": "canh-dong-lua-ta-pa",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "nui-co-to",
@@ -327,7 +335,7 @@
     "best_time": "Quanh năm, đặc biệt sáng sớm săn mây",
     "tags_json": "{\"clusters\": [\"Cụm Cô Tô\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\"], \"audiences\": [\"Phượt thủ\"], \"best_times\": [\"Hoàng hôn / Bình minh\", \"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -422,7 +430,11 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Cô Tô (Phụng Hoàng Sơn) Tri Tôn An Giang",
     "ticket_price": "100k/lượt",
-    "field_tips": "săn mây Sân Tiên, Vồ Hội; xe ôm 50–100k/lượt"
+    "field_tips": "săn mây Sân Tiên, Vồ Hội; xe ôm 50–100k/lượt",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ho-soai-chek",
@@ -442,7 +454,7 @@
     "best_time": "Chiều muộn",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -522,7 +534,11 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Hồ Soài Chek Tri Tôn An Giang",
-    "field_tips": "vắng, chill"
+    "field_tips": "vắng, chill",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "ho-o-thum",
@@ -542,7 +558,7 @@
     "best_time": "Buổi trưa - chiều để thưởng thức Gà đốt",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Gia đình\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -626,7 +642,11 @@
     "ticket_price": "250.000đ - 320.000đ / con",
     "is_hot": true,
     "tourism_category": "Cảnh quan thiên nhiên",
-    "slug": "ho-o-thum"
+    "slug": "ho-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "chua-xa-ton-chua-svayton",
@@ -646,7 +666,7 @@
     "best_time": "Sáng sớm",
     "tags_json": "{\"clusters\": [\"Trung tâm Thị trấn\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "facebook",
@@ -719,7 +739,11 @@
     "tiktok_search_query": "Chùa Xà Tón (Chùa Svayton) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "chùa Khmer cổ nhất An Giang, kinh lá buông",
-    "slug": "chua-xa-ton-chua-svayton"
+    "slug": "chua-xa-ton-chua-svayton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "nha-mo-ba-chuc",
@@ -739,7 +763,7 @@
     "best_time": "8:00 - 16:30 hằng ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ba Chúc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -834,7 +858,11 @@
     "is_verified": true,
     "tiktok_search_query": "Khu Chứng Tích Lịch Sử Nhà Mồ Ba Chúc Tri Tôn An Giang",
     "opening_hours": "07:30–17:00",
-    "field_tips": "07:30–17:00"
+    "field_tips": "07:30–17:00",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "doi-tuc-dup",
@@ -854,7 +882,7 @@
     "best_time": "Cả ngày",
     "tags_json": "{\"clusters\": [\"Cụm Cô Tô\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -948,7 +976,11 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Khu Di Tích Lịch Sử Đồi Tức Dụp Tri Tôn An Giang",
-    "field_tips": "review: đóng cửa từ lâu, tranh cãi vé 20k→260k → gọi điện trước khi đi"
+    "field_tips": "review: đóng cửa từ lâu, tranh cãi vé 20k→260k → gọi điện trước khi đi",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "cay-thot-not-trai-tim",
@@ -968,7 +1000,7 @@
     "best_time": "Chiều 16:00 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -1061,7 +1093,11 @@
     "commune": "Xã Ô Lâm",
     "open_late": false,
     "is_verified": true,
-    "tiktok_search_query": "Hàng Thốt Nốt Trái Tim Ô Lâm Tri Tôn An Giang"
+    "tiktok_search_query": "Hàng Thốt Nốt Trái Tim Ô Lâm Tri Tôn An Giang",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+    ]
   },
   {
     "id": "cong-troi-chua-koh-kas",
@@ -1197,7 +1233,7 @@
     "best_time": "Mùa khô (Tháng 12 - tháng 4)",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1269,7 +1305,11 @@
     "is_verified": true,
     "tiktok_search_query": "Khu di tích Ô Tà Sóc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "khu-di-tich-o-ta-soc"
+    "slug": "khu-di-tich-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "lau-bo-thit-bo-bay-nui-tri-ton",
@@ -1289,7 +1329,7 @@
     "best_time": "Chiều tối",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -1361,7 +1401,11 @@
     "is_verified": true,
     "tiktok_search_query": "Lẩu bò & Thịt bò Bảy Núi Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "lau-bo-thit-bo-bay-nui-tri-ton"
+    "slug": "lau-bo-thit-bo-bay-nui-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "le-hoi-dua-bo-bay-nui-tri-ton",
@@ -1381,7 +1425,7 @@
     "best_time": "Tháng 8 - tháng 9 Âm lịch hàng năm",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\", \"Mùa Lễ hội (Tháng 4, Tháng 9)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"festival\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1453,7 +1497,11 @@
     "is_verified": true,
     "tiktok_search_query": "Lễ hội Đua bò Bảy Núi Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "le-hoi-dua-bo-bay-nui-tri-ton"
+    "slug": "le-hoi-dua-bo-bay-nui-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ca-phe-thot-not-ta-pa-view",
@@ -1473,7 +1521,7 @@
     "best_time": "Sáng 07:00 - 10:00 hoặc chiều mát 15:30 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1549,7 +1597,11 @@
     "price_level": "15.000đ - 30.000đ / ly",
     "ticket_price": "15.000đ - 30.000đ / ly",
     "is_hot": true,
-    "slug": "ca-phe-thot-not-ta-pa-view"
+    "slug": "ca-phe-thot-not-ta-pa-view",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ca-phe-suoi-da-o-ta-soc",
@@ -1569,7 +1621,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "facebook",
@@ -1645,7 +1697,11 @@
     "price_level": "20.000đ - 40.000đ / ly",
     "ticket_price": "20.000đ - 40.000đ / ly",
     "is_hot": true,
-    "slug": "ca-phe-suoi-da-o-ta-soc"
+    "slug": "ca-phe-suoi-da-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "quan-ga-dot-sieu-dang-ho-o-thum",
@@ -1665,7 +1721,7 @@
     "best_time": "Ăn trưa 11:00 - 14:00",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "facebook",
@@ -1737,7 +1793,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Siêu Đẳng Hồ Ô Thum Tri Tôn An Giang",
     "commune": "Xã Ô Lâm",
-    "slug": "quan-ga-dot-sieu-dang-ho-o-thum"
+    "slug": "quan-ga-dot-sieu-dang-ho-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "quan-ga-dot-tuan-toi-o-thum",
@@ -1757,7 +1817,7 @@
     "best_time": "Trưa và chiều",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1832,7 +1892,11 @@
     "opening_hours": "08:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
     "is_hot": true,
-    "slug": "quan-ga-dot-tuan-toi-o-thum"
+    "slug": "quan-ga-dot-tuan-toi-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "quan-ga-dot-sau-bup-o-thum",
@@ -1852,7 +1916,7 @@
     "best_time": "Ăn trưa & tối",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1927,7 +1991,11 @@
     "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "230.000đ - 290.000đ / con",
     "is_hot": true,
-    "slug": "quan-ga-dot-sau-bup-o-thum"
+    "slug": "quan-ga-dot-sau-bup-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "quan-ga-dot-ro-thum-khmer",
@@ -1947,7 +2015,7 @@
     "best_time": "Cả ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -2022,7 +2090,11 @@
     "opening_hours": "08:30 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
     "is_hot": true,
-    "slug": "quan-ga-dot-ro-thum-khmer"
+    "slug": "quan-ga-dot-ro-thum-khmer",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-ta-phot",
@@ -2042,7 +2114,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "facebook",
@@ -2114,7 +2186,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Tà Phôt Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-ta-phot"
+    "slug": "chua-ta-phot",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "tritoni",
@@ -2134,7 +2210,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2207,7 +2283,11 @@
     "tiktok_search_query": "Tritoni Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "hoành tráng hơn cả thành phố",
-    "slug": "tritoni"
+    "slug": "tritoni",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ho-latina",
@@ -2227,7 +2307,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2299,7 +2379,11 @@
     "is_verified": true,
     "tiktok_search_query": "hồ latina Tri Tôn An Giang",
     "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)",
-    "slug": "ho-latina"
+    "slug": "ho-latina",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "chua-ba-xoai",
@@ -2319,7 +2403,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2392,7 +2476,11 @@
     "tiktok_search_query": "Chua Ba Xoai Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "chánh điện xuống cấp",
-    "slug": "chua-ba-xoai"
+    "slug": "chua-ba-xoai",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-krang-kroch",
@@ -2412,7 +2500,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2484,7 +2572,11 @@
     "is_verified": true,
     "tiktok_search_query": "chùa Krăng Krốch Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-krang-kroch"
+    "slug": "chua-krang-kroch",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "ga-dot-thao-nguyen-ho-o-thum",
@@ -2504,7 +2596,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2577,7 +2669,11 @@
     "tiktok_search_query": "Gà đốt Thảo Nguyên Hồ Ô Thum Tri Tôn An Giang",
     "commune": "Xã Ô Lâm",
     "field_tips": "review chê gà khô cứng, phục vụ lâu",
-    "slug": "ga-dot-thao-nguyen-ho-o-thum"
+    "slug": "ga-dot-thao-nguyen-ho-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "quan-bo-leo-nui",
@@ -2597,7 +2693,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2655,7 +2751,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bò leo núi Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-bo-leo-nui"
+    "slug": "quan-bo-leo-nui",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "dong-nhin-len-chu-tri-ton",
@@ -2675,7 +2775,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2747,7 +2847,11 @@
     "is_verified": true,
     "tiktok_search_query": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "dong-nhin-len-chu-tri-ton"
+    "slug": "dong-nhin-len-chu-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "dua-bo-bay-nui",
@@ -2767,7 +2871,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Mùa Lễ hội (Tháng 4, Tháng 9)\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2825,7 +2929,11 @@
     "is_verified": true,
     "tiktok_search_query": "Đua Bò Bảy Núi Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "dua-bo-bay-nui"
+    "slug": "dua-bo-bay-nui",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "diem-dung-chan-duoi-nui-quan-an",
@@ -2845,7 +2953,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2903,7 +3011,11 @@
     "is_verified": true,
     "tiktok_search_query": "ĐIỂM DỪNG CHÂN DƯỚI NÚI, QUÁN ĂN Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "diem-dung-chan-duoi-nui-quan-an"
+    "slug": "diem-dung-chan-duoi-nui-quan-an",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "an-tra",
@@ -2923,7 +3035,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [], \"best_times\": [\"Quanh năm\"], \"durations\": [], \"categories\": [\"general\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2981,7 +3093,11 @@
     "is_verified": true,
     "tiktok_search_query": "An trà Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "an-tra"
+    "slug": "an-tra",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-phi-lai",
@@ -3001,7 +3117,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3077,7 +3193,11 @@
     "opening_hours": "06:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
     "is_hot": true,
-    "slug": "chua-phi-lai"
+    "slug": "chua-phi-lai",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "tho-mo-muc-cave-hang-tho-mo-muc",
@@ -3097,7 +3217,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3170,7 +3290,11 @@
     "tiktok_search_query": "Tho Mo Muc Cave (Hang Tho Mo Muc) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "hoang sơ, ít người",
-    "slug": "tho-mo-muc-cave-hang-tho-mo-muc"
+    "slug": "tho-mo-muc-cave-hang-tho-mo-muc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "dinh-than-cau-dai",
@@ -3190,7 +3314,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3262,7 +3386,11 @@
     "is_verified": true,
     "tiktok_search_query": "Đình thần Cầu Dài Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "dinh-than-cau-dai"
+    "slug": "dinh-than-cau-dai",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot",
@@ -3282,7 +3410,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3340,7 +3468,11 @@
     "is_verified": true,
     "tiktok_search_query": "Khu Trưng bày Tội ác Chiến tranh của Poltpot Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot"
+    "slug": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "tuong-dai-chien-thang-vinh-thong",
@@ -3360,7 +3492,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3418,7 +3550,11 @@
     "is_verified": true,
     "tiktok_search_query": "Tượng đài Chiến thắng Vĩnh Thông Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "tuong-dai-chien-thang-vinh-thong"
+    "slug": "tuong-dai-chien-thang-vinh-thong",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "tuong-dai-vo-van-kiet",
@@ -3438,7 +3574,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -3510,7 +3646,11 @@
     "is_verified": true,
     "tiktok_search_query": "Tượng đài Võ Văn Kiệt Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "tuong-dai-vo-van-kiet"
+    "slug": "tuong-dai-vo-van-kiet",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "nui-sa-lon",
@@ -3530,7 +3670,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -3602,7 +3742,11 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Sà Lôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "nui-sa-lon"
+    "slug": "nui-sa-lon",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "nui-dai",
@@ -3622,7 +3766,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3716,7 +3860,11 @@
     "tiktok_search_query": "Núi Dài Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "đường hiểm trở",
-    "slug": "nui-dai"
+    "slug": "nui-dai",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-thanh-luong",
@@ -3736,7 +3884,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3830,7 +3978,11 @@
     "tiktok_search_query": "Chùa Thanh Lương Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "buổi tối lên đèn cực đẹp",
-    "slug": "chua-thanh-luong"
+    "slug": "chua-thanh-luong",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "nui-nam-quy",
@@ -3850,7 +4002,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -3943,7 +4095,11 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Nam Quy Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "nui-nam-quy"
+    "slug": "nui-nam-quy",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "dien-gieng-nuoc",
@@ -3963,7 +4119,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "facebook",
@@ -4035,7 +4191,11 @@
     "is_verified": true,
     "tiktok_search_query": "Điện Giếng Nước Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "dien-gieng-nuoc"
+    "slug": "dien-gieng-nuoc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "son-lap",
@@ -4055,7 +4215,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [], \"best_times\": [\"Quanh năm\"], \"durations\": [], \"categories\": [\"general\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -4127,7 +4287,11 @@
     "is_verified": true,
     "tiktok_search_query": "Sơn Lập Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "son-lap"
+    "slug": "son-lap",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "nui-ta-pa",
@@ -4147,7 +4311,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4240,7 +4404,11 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Tà Pạ Tri Tôn An Giang",
     "commune": "Xã Núi Tô",
-    "slug": "nui-ta-pa"
+    "slug": "nui-ta-pa",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "drink-hammock-chill",
@@ -4260,7 +4428,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4319,7 +4487,11 @@
     "tiktok_search_query": "Drink & Hammock Chill Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "kinh độ 105.12 bất thường → kiểm tra tọa độ",
-    "slug": "drink-hammock-chill"
+    "slug": "drink-hammock-chill",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "du-du-dam-khanh-thy",
@@ -4339,7 +4511,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4411,7 +4583,11 @@
     "is_verified": true,
     "tiktok_search_query": "Đu Đủ Đâm Khánh Thy Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "du-du-dam-khanh-thy"
+    "slug": "du-du-dam-khanh-thy",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "kenh-tam-ngan",
@@ -4431,7 +4607,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4503,7 +4679,11 @@
     "is_verified": true,
     "tiktok_search_query": "Kênh Tám Ngàn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "kenh-tam-ngan"
+    "slug": "kenh-tam-ngan",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "kenh-t6",
@@ -4523,7 +4703,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4581,7 +4761,11 @@
     "is_verified": true,
     "tiktok_search_query": "Kênh T6 Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "kenh-t6"
+    "slug": "kenh-t6",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "cho-tri-ton",
@@ -4601,7 +4785,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [], \"best_times\": [\"Quanh năm\"], \"durations\": [], \"categories\": [\"general\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4673,7 +4857,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chợ Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "cho-tri-ton"
+    "slug": "cho-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-tro-poang-trao",
@@ -4693,7 +4881,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4751,7 +4939,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Tro Poáng Trao Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-tro-poang-trao"
+    "slug": "chua-tro-poang-trao",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "chua-xoc-tuc",
@@ -4771,7 +4963,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4829,7 +5021,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chua Xoc Tuc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-xoc-tuc"
+    "slug": "chua-xoc-tuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-bach-co",
@@ -4849,7 +5045,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4907,7 +5103,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chua Bach Co Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-bach-co"
+    "slug": "chua-bach-co",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-coc",
@@ -4927,7 +5127,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4985,7 +5185,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chua Coc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-coc"
+    "slug": "chua-coc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "chua-tam-buu",
@@ -5005,7 +5209,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5081,7 +5285,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên kết hợp viếng Chùa Tam Bửu cùng Chùa Phi Lai và Nhà Mồ Ba Chúc. Mặc trang phục lịch sự, kín đáo khi vào chánh điện.",
     "is_hot": true,
-    "slug": "chua-tam-buu"
+    "slug": "chua-tam-buu",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "ho-o-ta-soc",
@@ -5101,7 +5309,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5174,7 +5382,11 @@
     "tiktok_search_query": "Hồ Ô Tà Sóc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "rừng trúc, giống Đà Lạt",
-    "slug": "ho-o-ta-soc"
+    "slug": "ho-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "nui-nuoc",
@@ -5194,7 +5406,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ba Chúc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [], \"best_times\": [\"Quanh năm\"], \"durations\": [], \"categories\": [\"general\"]}",
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5252,7 +5464,11 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Nước Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "nui-nuoc"
+    "slug": "nui-nuoc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "78da5b5f-ruộng-coffee-&-homes",
@@ -5272,7 +5488,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5336,9 +5552,8 @@
     "ticket_price": "20.000đ - 45.000đ / ly",
     "is_hot": true,
     "photos": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1600&auto=format&fit=crop"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
     ],
     "slug": "ruong-coffee-tea-tri-ton"
   },
@@ -5360,7 +5575,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5423,7 +5638,11 @@
     "price_level": "25.000đ - 50.000đ / ly",
     "ticket_price": "25.000đ - 50.000đ / ly",
     "is_hot": true,
-    "slug": "windy-hill-coffee-homestay-tri-ton"
+    "slug": "windy-hill-coffee-homestay-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "b6a52dfa-chạm-coffee-&-tea-tr",
@@ -5443,7 +5662,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5506,7 +5725,11 @@
     "price_level": "22.000đ - 45.000đ / ly",
     "ticket_price": "22.000đ - 45.000đ / ly",
     "is_hot": true,
-    "slug": "cham-coffee-tea-tri-ton"
+    "slug": "cham-coffee-tea-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "9fd79384-anpalm-cafe-tri-tôn",
@@ -5526,7 +5749,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5588,7 +5811,11 @@
     "price_level": "25.000đ - 45.000đ / ly",
     "ticket_price": "25.000đ - 45.000đ / ly",
     "is_hot": true,
-    "slug": "anpalm-cafe-tri-ton-thot-not-tri-ton"
+    "slug": "anpalm-cafe-tri-ton-thot-not-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
@@ -5608,7 +5835,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5671,7 +5898,11 @@
     "price_level": "18.000đ - 35.000đ / ly",
     "ticket_price": "18.000đ - 35.000đ / ly",
     "is_hot": true,
-    "slug": "tiem-ca-phe-nha-que-tri-ton"
+    "slug": "tiem-ca-phe-nha-que-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "442b77de-an-sơn-trà-quán",
@@ -5691,7 +5922,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5753,7 +5984,11 @@
     "price_level": "25.000đ - 60.000đ / ấm trà",
     "ticket_price": "25.000đ - 60.000đ / ấm trà",
     "is_hot": true,
-    "slug": "an-son-tra-quan"
+    "slug": "an-son-tra-quan",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "d2759ee4-ny-coffee-&-tea-tri-",
@@ -5773,7 +6008,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5832,7 +6067,11 @@
     "tiktok_search_query": "NY Coffee & Tea Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "night_hours": "07:00 - 22:00",
-    "slug": "ny-coffee-tea-tri-ton"
+    "slug": "ny-coffee-tea-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "b56c95ef-mây-coffee-&-tea-hồ-",
@@ -5852,7 +6091,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5915,7 +6154,11 @@
     "price_level": "20.000đ - 40.000đ / ly",
     "ticket_price": "20.000đ - 40.000đ / ly",
     "is_hot": true,
-    "slug": "may-coffee-tea-ho-soai-chek-may-son-garden"
+    "slug": "may-coffee-tea-ho-soai-chek-may-son-garden",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "d1bd3ece-quy-coffee-house-tri",
@@ -5935,7 +6178,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5998,7 +6241,11 @@
     "price_level": "18.000đ - 35.000đ / ly",
     "ticket_price": "18.000đ - 35.000đ / ly",
     "is_hot": true,
-    "slug": "quy-coffee-house-tri-ton-quys-coffee"
+    "slug": "quy-coffee-house-tri-ton-quys-coffee",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "cee4075f-lang-lang-coffee-&-t",
@@ -6018,7 +6265,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6081,7 +6328,11 @@
     "price_level": "22.000đ - 45.000đ / món",
     "ticket_price": "22.000đ - 45.000đ / món",
     "is_hot": true,
-    "slug": "lang-lang-coffee-tea"
+    "slug": "lang-lang-coffee-tea",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "7440fc2d-tuyết-anh-homestay-&",
@@ -6101,7 +6352,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6163,7 +6414,11 @@
     "price_level": "20.000đ - 45.000đ / ly",
     "ticket_price": "20.000đ - 45.000đ / ly",
     "is_hot": true,
-    "slug": "tuyet-anh-homestay-coffee"
+    "slug": "tuyet-anh-homestay-coffee",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "c7d6fabf-rồng-vàng-resort-tri",
@@ -6183,7 +6438,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6241,7 +6496,11 @@
     "is_verified": true,
     "tiktok_search_query": "Rồng Vàng Resort Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "rong-vang-resort-tri-ton"
+    "slug": "rong-vang-resort-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "3ef4f129-quán-cà-phê-&-điểm-c",
@@ -6261,7 +6520,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6319,7 +6578,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-ca-phe-diem-check-in-bo-ho-o-ta-lot"
+    "slug": "quan-ca-phe-diem-check-in-bo-ho-o-ta-lot",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "ac550583-soài-chek-homestay-&",
@@ -6339,7 +6602,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6397,7 +6660,11 @@
     "is_verified": true,
     "tiktok_search_query": "Soài Chek Homestay & Coffee Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "soai-chek-homestay-coffee"
+    "slug": "soai-chek-homestay-coffee",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "b62d0291-nhà-nghi-&-khách-sạn",
@@ -6417,7 +6684,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6475,7 +6742,11 @@
     "is_verified": true,
     "tiktok_search_query": "Nhà Nghỉ & Khách Sạn Triệu Gia Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "nha-nghi-khach-san-trieu-gia-tri-ton"
+    "slug": "nha-nghi-khach-san-trieu-gia-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "c24278f3-con-đường-tuyến-trán",
@@ -6495,7 +6766,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.9,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6553,7 +6824,11 @@
     "is_verified": true,
     "tiktok_search_query": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "con-duong-tuyen-tranh-tri-ton-dt941-dt948"
+    "slug": "con-duong-tuyen-tranh-tri-ton-dt941-dt948",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "9616e5e5-con-đường-tơ-lụa-tà-",
@@ -6573,7 +6848,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6635,7 +6910,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Đẹp nhất lúc bình minh 06:00–07:30 hoặc chiều hoàng hôn 16:30–17:30. Đi xe máy chậm rãi, dựng xe gọn vào lề khi chụp ảnh.",
     "is_hot": true,
-    "slug": "con-duong-to-lua-ta-pa"
+    "slug": "con-duong-to-lua-ta-pa",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "97e67ffb-con-đường-tơ-lụa-soà",
@@ -6655,7 +6934,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6717,7 +6996,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Đẹp nhất lúc bình minh 06:00–07:30 hoặc chiều hoàng hôn 16:30–17:30. Đi xe máy chậm rãi, dựng xe gọn vào lề khi chụp ảnh.",
     "is_hot": true,
-    "slug": "con-duong-to-lua-soai-chek"
+    "slug": "con-duong-to-lua-soai-chek",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "3383c54e-con-đường-vòm-còng-c",
@@ -6737,7 +7020,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6795,7 +7078,11 @@
     "is_verified": true,
     "tiktok_search_query": "Con Đường Vòm Còng Châu Lăng Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "con-duong-vom-cong-chau-lang"
+    "slug": "con-duong-vom-cong-chau-lang",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "2ac3fb9a-con-đường-thốt-nốt-ô",
@@ -6815,7 +7102,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6877,7 +7164,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Góc chụp hoàng hôn ngược sáng 16:30–17:30 đẹp ngỡ ngàng. Nhớ dừng chân thưởng thức ly nước thốt nốt tươi mát lạnh của bà con ven đường.",
     "is_hot": true,
-    "slug": "con-duong-thot-not-o-lam-co-to"
+    "slug": "con-duong-thot-not-o-lam-co-to",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "e4772f7e-con-đường-tre-tầm-vô",
@@ -6897,7 +7188,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6959,7 +7250,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào buổi sáng 07:00–09:00 để chụp ảnh luồng sáng qua tán tre tuyệt đẹp. Tuyệt đối không xả rác và không đốt lửa trong rừng tre.",
     "is_hot": true,
-    "slug": "con-duong-tre-tam-vong-o-ta-soc"
+    "slug": "con-duong-tre-tam-vong-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "f424d6ea-cung-đường-ven-vách-",
@@ -6979,7 +7274,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7041,7 +7336,11 @@
     "ticket_price": "Miễn phí lưu thông",
     "field_tips": "Chạy xe máy tốc độ vừa phải dưới 40km/h để ngắm trọn vách đá granite hùng vĩ và thung lũng lúa Lương Phi lúc hoàng hôn.",
     "is_hot": true,
-    "slug": "cung-duong-ven-vach-da-nui-dai-luong-phi"
+    "slug": "cung-duong-ven-vach-da-nui-dai-luong-phi",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "4425a57d-cung-đường-biên-giới",
@@ -7061,7 +7360,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7123,7 +7422,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào mùa nước nổi (tháng 9–11) để ngắm trọn vẹn cảnh sắc đầm sen và dòng kênh lịch sử Thoại Ngọc Hầu. Mang theo CCCD khi đi dọc tuyến biên giới.",
     "is_hot": true,
-    "slug": "cung-duong-bien-gioi-kenh-vinh-te-ba-chuc"
+    "slug": "cung-duong-bien-gioi-kenh-vinh-te-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "a810d441-cây-thốt-nốt-cô-độc-",
@@ -7143,7 +7446,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7201,7 +7504,11 @@
     "is_verified": true,
     "tiktok_search_query": "Cây Thốt Nốt Cô Độc Châu Lăng Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "cay-thot-not-co-doc-chau-lang"
+    "slug": "cay-thot-not-co-doc-chau-lang",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "6ffa8a7b-cầu-gỗ-mộc-mạc-hồ-ô-",
@@ -7221,7 +7528,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7283,7 +7590,11 @@
     "ticket_price": "Miễn phí khi dùng ẩm thực (10.000đ / khách vãng lai)",
     "field_tips": "Đẹp nhất vào lúc hoàng hôn 16:30–17:30. Kết hợp chụp ảnh tại cầu gỗ và thưởng thức món gà đốt Ô Thum nóng hổi ven hồ.",
     "is_hot": true,
-    "slug": "cau-go-moc-mac-ho-o-thum"
+    "slug": "cau-go-moc-mac-ho-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "4fc712e3-cầu-gỗ-giữa-đồng-lúa",
@@ -7303,7 +7614,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7365,7 +7676,11 @@
     "ticket_price": "Miễn phí khi dùng ẩm thực (10.000đ / khách vãng lai)",
     "field_tips": "Đẹp nhất vào lúc hoàng hôn 16:30–17:30. Kết hợp chụp ảnh tại cầu gỗ và thưởng thức món gà đốt Ô Thum nóng hổi ven hồ.",
     "is_hot": true,
-    "slug": "cau-go-giua-dong-lua-ruong-coffee"
+    "slug": "cau-go-giua-dong-lua-ruong-coffee",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "5169fbf9-đá-vồ-hội-đổ-(mỏm-đá",
@@ -7385,7 +7700,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7443,7 +7758,11 @@
     "is_verified": true,
     "tiktok_search_query": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "da-vo-hoi-do-mom-da-song-ao"
+    "slug": "da-vo-hoi-do-mom-da-song-ao",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "833d6714-nấc-thang-thiên-đườn",
@@ -7463,7 +7782,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7521,7 +7840,11 @@
     "is_verified": true,
     "tiktok_search_query": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum Tri Tôn An Giang",
     "commune": "Xã Ô Lâm",
-    "slug": "nac-thang-thien-duong-kieu-tien-o-thum"
+    "slug": "nac-thang-thien-duong-kieu-tien-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "1c3216be-căn-nhà-gỗ-vintage-n",
@@ -7541,7 +7864,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7599,7 +7922,11 @@
     "is_verified": true,
     "tiktok_search_query": "Căn Nhà Gỗ Vintage Nhà Quê Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "can-nha-go-vintage-nha-que"
+    "slug": "can-nha-go-vintage-nha-que",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "d8731ae3-cầu-khỉ-giữa-cánh-đồ",
@@ -7619,7 +7946,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7677,7 +8004,11 @@
     "is_verified": true,
     "tiktok_search_query": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "cau-khi-giua-canh-dong-thot-not"
+    "slug": "cau-khi-giua-canh-dong-thot-not",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "89d12327-quầy-thốt-nốt-tươi-c",
@@ -7697,7 +8028,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7755,7 +8086,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quầy Thốt Nốt Tươi Cụm Trái Tim Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quay-thot-not-tuoi-cum-trai-tim"
+    "slug": "quay-thot-not-tuoi-cum-trai-tim",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "9eaf1e8f-biển-hiệu-ở-đây-khôn",
@@ -7775,7 +8110,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7833,7 +8168,11 @@
     "is_verified": true,
     "tiktok_search_query": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "bien-hieu-o-day-khong-co-gi-ngoai-ky-uc"
+    "slug": "bien-hieu-o-day-khong-co-gi-ngoai-ky-uc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "c4fb60f7-nghệ-thuật-viết-kinh",
@@ -7853,7 +8192,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7912,7 +8251,11 @@
     "tiktok_search_query": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "di sản quốc gia",
-    "slug": "nghe-thuat-viet-kinh-la-buong-chua-xa-ton"
+    "slug": "nghe-thuat-viet-kinh-la-buong-chua-xa-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "118f63fc-quán-siêu-gà-đốt-ô-t",
@@ -7932,7 +8275,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?q=80&w=1600&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7994,10 +8337,8 @@
     "ticket_price": "250.000đ - 320.000đ / con",
     "is_hot": true,
     "photos": [
-      "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
     ],
     "slug": "quan-sieu-ga-dot-o-thum-chau-sieu"
   },
@@ -8019,7 +8360,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8080,7 +8421,11 @@
     "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 320.000đ / con",
     "is_hot": true,
-    "slug": "quan-kieu-tien-ga-dot-o-thum"
+    "slug": "quan-kieu-tien-ga-dot-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "dec77a0e-gà-đốt-ô-thum-kim-su",
@@ -8100,7 +8445,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8161,7 +8506,11 @@
     "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 300.000đ / con",
     "is_hot": true,
-    "slug": "ga-dot-o-thum-kim-suol"
+    "slug": "ga-dot-o-thum-kim-suol",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ec52a58c-gà-đốt-ô-thum-thảo-n",
@@ -8181,7 +8530,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8242,7 +8591,11 @@
     "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
     "is_hot": true,
-    "slug": "ga-dot-o-thum-thao-nguyen"
+    "slug": "ga-dot-o-thum-thao-nguyen",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "24a1fc67-gà-đốt-vương-ngọc-ô-",
@@ -8262,7 +8615,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8323,7 +8676,11 @@
     "opening_hours": "08:30 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
     "is_hot": true,
-    "slug": "ga-dot-vuong-ngoc-o-thum"
+    "slug": "ga-dot-vuong-ngoc-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "159c4012-quán-đu-đủ-đâm-rina-",
@@ -8343,7 +8700,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8402,7 +8759,11 @@
     "tiktok_search_query": "Quán Đu Đủ Đâm RiNa Khmer Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "hot nhất",
-    "slug": "quan-du-du-dam-rina-khmer"
+    "slug": "quan-du-du-dam-rina-khmer",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "6739ba72-quán-đu-đủ-đâm-ly-ly",
@@ -8422,7 +8783,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8480,7 +8841,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm Ly Ly Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-du-du-dam-ly-ly"
+    "slug": "quan-du-du-dam-ly-ly",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "a6ed9173-quán-đu-đủ-đâm-ty-tr",
@@ -8500,7 +8865,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8558,7 +8923,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm Ty Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-du-du-dam-ty-tri-ton"
+    "slug": "quan-du-du-dam-ty-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "75671726-quán-bún-cá-sơ-nương",
@@ -8578,7 +8947,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8640,7 +9009,11 @@
     "ticket_price": "20.000đ - 35.000đ / tô",
     "field_tips": "Nên ăn vào buổi sáng sớm tại khu chợ Tri Tôn. Món ăn thanh đạm, ít dầu mỡ, rất thơm mùi củ ngải bún thảo mộc.",
     "is_hot": true,
-    "slug": "quan-bun-ca-so-nuong-khmer"
+    "slug": "quan-bun-ca-so-nuong-khmer",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "64fcb54d-quán-bún-cá-dook-tri",
@@ -8660,7 +9033,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8718,7 +9091,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bún Cá Dook Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-bun-ca-dook-tri-ton"
+    "slug": "quan-bun-ca-dook-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "30e73939-lò-bánh-bò-thốt-nốt-",
@@ -8738,7 +9115,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8800,7 +9177,11 @@
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
     "is_hot": true,
-    "slug": "lo-banh-bo-thot-not-nuong-ut-cot"
+    "slug": "lo-banh-bo-thot-not-nuong-ut-cot",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "ea5a3976-lò-bánh-bò-thốt-nốt-",
@@ -8820,7 +9201,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8882,7 +9263,11 @@
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
     "is_hot": true,
-    "slug": "lo-banh-bo-thot-not-ut-dut"
+    "slug": "lo-banh-bo-thot-not-ut-dut",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "c2a08fb2-quán-bánh-canh-lò-rè",
@@ -8902,7 +9287,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8964,7 +9349,11 @@
     "ticket_price": "25.000đ - 40.000đ / tô",
     "field_tips": "Nên ghé quán vào buổi sáng 07:00 - 08:30 để thưởng thức mẻ sợi bánh canh và cá lóc đồng mới ra lò tươi ngon nhất.",
     "is_hot": true,
-    "slug": "quan-banh-canh-lo-ren-30-nam"
+    "slug": "quan-banh-canh-lo-ren-30-nam",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "436c0b0d-quán-bò-7-món-ba-chú",
@@ -8984,7 +9373,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9042,7 +9431,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bò 7 Món Ba Chúc Tri Tôn An Giang",
     "commune": "Thị trấn Ba Chúc",
-    "slug": "quan-bo-7-mon-ba-chuc"
+    "slug": "quan-bo-7-mon-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "6c77d0e8-quán-cháo-bò-trái-tr",
@@ -9062,7 +9455,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9124,7 +9517,11 @@
     "ticket_price": "30.000đ - 50.000đ / tô",
     "field_tips": "Nên ăn vào buổi sáng sớm từ 06:30 đến 08:30. Đừng quên vắt thêm nước cốt trái chúc tươi và rắc lá chúc thái nhuyễn để cảm nhận trọn vẹn hương vị đặc sản.",
     "is_hot": true,
-    "slug": "quan-chao-bo-trai-truc-ba-chuc"
+    "slug": "quan-chao-bo-trai-truc-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "8b5a9b10-quán-bánh-xèo-tép-bô",
@@ -9144,7 +9541,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9202,7 +9599,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10 Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-banh-xeo-tep-bong-dien-dien-cau-so-10"
+    "slug": "quan-banh-xeo-tep-bong-dien-dien-cau-so-10",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "f229bec5-quán-bò-nướng-trái-t",
@@ -9222,7 +9623,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9280,7 +9681,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bò Nướng Trái Trúc Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-bo-nuong-trai-truc-tri-ton"
+    "slug": "quan-bo-nuong-trai-truc-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "2f0b8880-quán-bún-nước-lèo-tr",
@@ -9300,7 +9705,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9358,7 +9763,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bún Nước Lèo Tri Tôn Chị Tư Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-bun-nuoc-leo-tri-ton-chi-tu"
+    "slug": "quan-bun-nuoc-leo-tri-ton-chi-tu",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "fefbce27-lò-đường-thốt-nốt-ng",
@@ -9378,7 +9787,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.9,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9436,7 +9845,11 @@
     "is_verified": true,
     "tiktok_search_query": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "lo-duong-thot-not-nguyen-chat-chau-lang-ut-hue"
+    "slug": "lo-duong-thot-not-nguyen-chat-chau-lang-ut-hue",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "3dadd505-tiệm-bánh-bò-thốt-nố",
@@ -9456,7 +9869,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9518,7 +9931,11 @@
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
     "is_hot": true,
-    "slug": "tiem-banh-bo-thot-not-nuong-cho-tri-ton"
+    "slug": "tiem-banh-bo-thot-not-nuong-cho-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "e13b2eab-quán-đu-đủ-đâm-&-cán",
@@ -9538,7 +9955,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9596,7 +10013,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-du-du-dam-canh-ga-nuong-ro"
+    "slug": "quan-du-du-dam-canh-ga-nuong-ro",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "683d2086-quán-bò-nướng-bánh-t",
@@ -9616,7 +10037,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9674,7 +10095,11 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Bò Nướng Bánh Tráng Tư Liêm Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "quan-bo-nuong-banh-trang-tu-liem"
+    "slug": "quan-bo-nuong-banh-trang-tu-liem",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "3c55a285-tiệm-bánh-kẹp-thốt-n",
@@ -9694,7 +10119,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9752,7 +10177,11 @@
     "is_verified": true,
     "tiktok_search_query": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "tiem-banh-kep-thot-not-banh-cot-dua-chua-cu"
+    "slug": "tiem-banh-kep-thot-not-banh-cot-dua-chua-cu",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "df20bed8-chùa-hàng-còng-(krăn",
@@ -9772,7 +10201,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9831,7 +10260,11 @@
     "tiktok_search_query": "Chùa Hàng Còng (Krăng Krốch) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "field_tips": "400 năm, gần Cổng Trời",
-    "slug": "chua-hang-cong-krang-kroch"
+    "slug": "chua-hang-cong-krang-kroch",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "b49161b0-chùa-phi-lai-ba-chúc",
@@ -9851,7 +10284,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9909,7 +10342,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Phi Lai Ba Chúc Tri Tôn An Giang",
     "commune": "Thị trấn Ba Chúc",
-    "slug": "chua-phi-lai-ba-chuc"
+    "slug": "chua-phi-lai-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "e563b663-chùa-tam-bửu-ba-chúc",
@@ -9929,7 +10366,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9987,7 +10424,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Tam Bửu Ba Chúc Tri Tôn An Giang",
     "commune": "Thị trấn Ba Chúc",
-    "slug": "chua-tam-buu-ba-chuc"
+    "slug": "chua-tam-buu-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "28310684-khu-di-tích-căn-cứ-ô",
@@ -10007,7 +10448,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10065,7 +10506,11 @@
     "is_verified": true,
     "tiktok_search_query": "Khu Di Tích Căn Cứ Ô Tà Sóc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "khu-di-tich-can-cu-o-ta-soc"
+    "slug": "khu-di-tich-can-cu-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "814684e1-chùa-soài-so-khmer",
@@ -10085,7 +10530,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10147,7 +10592,11 @@
     "ticket_price": "20.000đ / người (Vé vào cổng)",
     "field_tips": "Nên ghé suối vào mùa nước từ tháng 6 đến tháng 11. Cẩn thận đá trơn trượt và luôn dọn dẹp sạch rác sau khi picnic ven suối.",
     "is_hot": true,
-    "slug": "chua-soai-so-khmer"
+    "slug": "chua-soai-so-khmer",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "5c6c0c5c-chùa-mới-ô-lâm",
@@ -10167,7 +10616,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10225,7 +10674,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Mới Ô Lâm Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "chua-moi-o-lam"
+    "slug": "chua-moi-o-lam",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "b4e743c8-hồ-ô-tà-lọt",
@@ -10245,7 +10698,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10307,7 +10760,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Địa điểm hoang sơ tĩnh lặng tuyệt đẹp. Bắt buộc mặc áo phao khi chèo SUP hoặc lội nước, và luôn gom sạch rác thải mang về.",
     "is_hot": true,
-    "slug": "ho-o-ta-lot"
+    "slug": "ho-o-ta-lot",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "831ebb34-hồ-đá-latina",
@@ -10327,7 +10784,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10386,7 +10843,11 @@
     "tiktok_search_query": "Hồ Đá Latina Tri Tôn An Giang",
     "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)",
     "field_tips": "data ghi Xã An Hảo → nghi thuộc Tịnh Biên, kiểm tra ranh giới",
-    "slug": "ho-da-latina"
+    "slug": "ho-da-latina",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "3adb5c32-đá-vồ-hội-mẹ-cô-tô",
@@ -10406,7 +10867,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10468,7 +10929,11 @@
     "ticket_price": "Miễn phí (Xe ôm lên đỉnh: 70k - 100k/lượt)",
     "field_tips": "Cẩn trọng khi đứng trên mép đá chụp ảnh vì gió rất to và vực sâu. Nên lên đỉnh lúc 16:00 để vừa ngắm toàn cảnh đồng lúa vừa săn hoàng hôn.",
     "is_hot": true,
-    "slug": "da-vo-hoi-me-co-to"
+    "slug": "da-vo-hoi-me-co-to",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "39c60a82-rừng-tầm-vông-ô-tà-s",
@@ -10488,7 +10953,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10550,7 +11015,11 @@
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào buổi sáng 07:00–09:00 để chụp ảnh luồng sáng qua tán tre tuyệt đẹp. Tuyệt đối không xả rác và không đốt lửa trong rừng tre.",
     "is_hot": true,
-    "slug": "rung-tam-vong-o-ta-soc"
+    "slug": "rung-tam-vong-o-ta-soc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "a8b28369-cánh-đồng-lúa-ba-chú",
@@ -10570,7 +11039,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10628,7 +11097,11 @@
     "is_verified": true,
     "tiktok_search_query": "Cánh Đồng Lúa Ba Chúc Tri Tôn An Giang",
     "commune": "Thị trấn Ba Chúc",
-    "slug": "canh-dong-lua-ba-chuc"
+    "slug": "canh-dong-lua-ba-chuc",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "9764c175-vườn-nho-nông-trại-ô",
@@ -10648,7 +11121,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10710,7 +11183,11 @@
     "ticket_price": "250.000đ - 320.000đ / con",
     "field_tips": "Nên liên hệ kiểm tra mùa nho chín rộ trước khi đến. Trải nghiệm hái nho tại vườn và thưởng thức gà đốt lá chúc bên chòi lá mát rượi.",
     "is_hot": true,
-    "slug": "quan-ga-dot-vuon-nho-o-thum"
+    "slug": "quan-ga-dot-vuon-nho-o-thum",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "30ac578e-vườn-mãng-cầu-núi-tô",
@@ -10730,7 +11207,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10792,7 +11269,11 @@
     "ticket_price": "Miễn phí tham quan (Giá mua trái cây theo thời giá)",
     "field_tips": "Mùa thu hoạch rộ từ tháng 6 đến tháng 9. Nên mang giày thể thao để đi dạo vườn dốc đá dễ dàng và thưởng thức mãng cầu ngọt lịm hái tại cây.",
     "is_hot": true,
-    "slug": "vuon-mang-cau-nui-to"
+    "slug": "vuon-mang-cau-nui-to",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "6669ffb7-suối-vàng-soài-so",
@@ -10812,7 +11293,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10874,7 +11355,11 @@
     "ticket_price": "20.000đ / người (Vé vào cổng)",
     "field_tips": "Nên ghé suối vào mùa nước từ tháng 6 đến tháng 11. Cẩn thận đá trơn trượt và luôn dọn dẹp sạch rác sau khi picnic ven suối.",
     "is_hot": true,
-    "slug": "suoi-vang-soai-so"
+    "slug": "suoi-vang-soai-so",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "d3e73741-cánh-đồng-thốt-nốt-c",
@@ -10894,7 +11379,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10952,7 +11437,11 @@
     "is_verified": true,
     "tiktok_search_query": "Cánh Đồng Thốt Nốt Châu Lăng Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "canh-dong-thot-not-chau-lang"
+    "slug": "canh-dong-thot-not-chau-lang",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "749e2a14-vách-đá-đứng-latina",
@@ -10972,7 +11461,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11034,7 +11523,11 @@
     "ticket_price": "Miễn phí lưu thông",
     "field_tips": "Chạy xe máy tốc độ vừa phải dưới 40km/h để ngắm trọn vách đá granite hùng vĩ và thung lũng lúa Lương Phi lúc hoàng hôn.",
     "is_hot": true,
-    "slug": "vach-da-dung-latina"
+    "slug": "vach-da-dung-latina",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "f0d6fe60-bãi-thả-diều-hoàng-h",
@@ -11054,7 +11547,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11112,7 +11605,11 @@
     "is_verified": true,
     "tiktok_search_query": "Bãi Thả Diều Hoàng Hôn Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "bai-tha-dieu-hoang-hon-tri-ton"
+    "slug": "bai-tha-dieu-hoang-hon-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "6fd80811-chợ-trung-tâm-tri-tô",
@@ -11132,7 +11629,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11190,7 +11687,11 @@
     "is_verified": true,
     "tiktok_search_query": "Chợ Trung Tâm Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "slug": "cho-trung-tam-tri-ton"
+    "slug": "cho-trung-tam-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
@@ -11210,7 +11711,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11273,7 +11774,11 @@
     "ticket_price": "10.000đ - 35.000đ / món ăn vặt",
     "field_tips": "Nên ghé chợ đêm vào khoảng 18:30–21:00. Thử ngay ly thốt nốt sữa tươi mát lạnh và bánh kẹp nướng nóng hổi bên vỉa hè quảng trường.",
     "is_hot": true,
-    "slug": "khu-am-thuc-cho-dem-tri-ton"
+    "slug": "khu-am-thuc-cho-dem-tri-ton",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+    ]
   },
   {
     "id": "quang-truong-va-pho-di-bo-tri-ton",
@@ -11288,9 +11793,13 @@
     "detailed_story": "Quảng Trường Trung Tâm Tri Tôn là trái tim sinh hoạt cộng đồng của người dân địa phương. Buổi tối, không khí mát mẻ đón gió núi, các gia đình và bạn trẻ tập trung dạo mát, trượt patin, thưởng thức trà thốt nốt và các món ăn đường phố.",
     "open_late": true,
     "night_hours": "17:00 - 23:00",
-    "image_url": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
     "is_verified": true,
-    "tiktok_search_query": "Quảng trường Tri Tôn An Giang"
+    "tiktok_search_query": "Quảng trường Tri Tôn An Giang",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+    ]
   },
   {
     "id": "ho-soai-so",
@@ -11300,14 +11809,18 @@
     "category": "cảnh quan",
     "rating": 4.8,
     "reviews_count": 50,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=85",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "description": "Khám Phá Hồ Soài So – Viên Ngọc Bích Thanh Bình Dưới Chân Núi Cô Tô",
     "detailed_story": "Khám Phá Hồ Soài So – Viên Ngọc Bích Thanh Bình Dưới Chân Núi Cô Tô\nNằm e ấp bên sườn phía Đông của ngọn Phụng Hoàng Sơn (Núi Cô Tô), Hồ Soài So là hồ nước nhân tạo lớn và nổi tiếng hàng đầu của vùng Thất Sơn – An Giang. Với cảnh sắc sơn thủy hữu tình, không khí trong lành và không gian tĩnh lặng, nơi đây là điểm dừng chân lý tưởng để dã ngoại, cắm trại và tìm lại sự thư thái cho tâm hồn.\n\n###\n\n### 1. Vị trí,\n\n- **Quy mô & Nguồn gốc\n\n- **Vị trí:**** Thuộc xã Núi Tô, huyện Tri Tôn, tỉnh An Giang (cách trung tâm TP. Châu Đốc khoảng gần 50 km).\n\n- **Quy mô:** Hồ có diện tích mặt nước khoảng 5 ha với dung tích chứa lên tới hơn 400.000 m³, là một trong những hồ chứa nước ngọt nhân tạo lớn nhất vùng Bảy Núi.\n\n- **Nguồn gốc:** Hồ được xây dựng nhằm chặn dòng chảy tự nhiên của suối Vàng và suối Bạc từ trên đỉnh núi Cô Tô đổ xuống, phục vụ cung cấp nước tưới tiêu nông nghiệp và sinh hoạt cho người dân trong vùng.\n\n###\n\n### 2. Cảnh quan thiên nhiên nổi bật\n\n- **Bức tranh sơn thủy hữu tình:** Nước hồ trong veo, phẳng lặng như một tấm gương khổng lồ soi bóng đỉnh núi Cô Tô sừng sững. Tiếng suối Bạc róc rách hòa cùng tiếng gió xào xạc qua các rặng cây tạo nên thanh âm bình yên của chốn rừng núi.\n\n- **Cây cầu ngắm cảnh ven hồ:** Chạy men theo mép hồ có chiếc cầu nhỏ – vị trí hoàn hảo để thu trọn toàn cảnh núi non bao la, những khóm hoa dại ven đường và cảm nhận từng làn gió núi mát rượi.\n\n- **Vườn cây ăn trái quanh hồ:** Dạo sâu vào khuôn viên quanh hồ, bạn sẽ bắt gặp những vườn xoài cổ thụ, vườn điều và vườn rau xanh mướt của bà con địa phương. Vào mùa thu hoạch, bạn có thể xin phép tham quan và mua trái cây tươi hái tại vườn.\n\n###\n\n### 3. Thời điểm lý tưởng để ghé thăm\n\n- **Mùa nước nổi (Tháng 9 – Tháng 11):** Đây là thời điểm hồ đẹp nhất trong năm. Mực nước dâng cao, lòng hồ mở rộng mênh mông, trong xanh biếc và thi thoảng xuất hiện những chiếc thuyền con của người dân đánh cá, tạo nên nét đẹp đồng quê đậm chất Tây Nam Bộ.\n\n- **Thời gian trong ngày:**\n- **Sáng sớm:** Đón ánh nắng ban mai tinh khôi khi sương sớm còn vương trên mặt hồ.\n\n- **Chiều tà (16h30 – 18h00):** Chiêm ngưỡng hoàng hôn nhuộm sắc vàng hồng rực rỡ trên mặt nước lấp lánh.\n\n###\n\n### 4. Hoạt động trải nghiệm &\n\n- **Dã ngoại\n\nPicnic thư giãn cuối tuần:** Địa hình bằng phẳng rợp bóng mát dưới chân núi rất thích hợp để trải thảm dã ngoại cùng gia đình và bạn bè.\n\n- **Cắm trại qua đêm:** Tận hưởng đêm rừng thanh vắng, nghe tiếng côn trùng rả rích, ngắm bầu trời sao và đón bình minh thức giấc trên mặt hồ.\n\n- **Kết hợp tham quan:** Dễ dàng kết hợp viếng các ngôi chùa, miếu thanh tịnh quanh núi Cô Tô hoặc ghé thăm Khu du lịch Suối Vàng Soài So ngay cạnh.\n\n###\n\n### 5. Lưu\n\n- **ý quan trọng cho chuyến đi\n\n- **An toàn:**** Lòng hồ sâu và nước khá lạnh, du khách tuyệt đối không tự ý tắm hồ nếu không có trang bị bảo hộ an toàn.\n\n- **Chuẩn bị cắm trại:** Nếu ở lại qua đêm, cần chuẩn bị đầy đủ lều trại, đèn chiếu sáng, thuốc chống muỗi/côn trùng và áo ấm (ban đêm nhiệt độ ven chân núi hạ khá thấp).\n\n- **Ý thức bảo vệ môi trường:** Sau khi vui chơi hoặc ăn uống, hãy gom sạch toàn bộ rác thải để giữ gìn cảnh quan tự nhiên trong lành, sạch đẹp.",
     "opening_hours": "Tự do tham quan",
     "ticket_price": "Miễn phí",
     "field_tips": "",
     "maps_url": "https://www.google.com/maps/search/?api=1&query=H%E1%BB%93%20So%C3%A0i%20So%20Tri%20T%C3%B4n%20An%20Giang",
-    "is_verified": true
+    "is_verified": true,
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+    ]
   },
   {
     "id": "quan-ga-dot-tri-hai-o-thum",
@@ -11347,7 +11860,8 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt Trí Hải Ô Thum – Quán Ẩn Mình Bên Bờ Hồ Tĩnh Lặng & Gà Thả Đồi Săn Chắc\n\nNằm sâu trong khu vực bờ hồ Ô Thum thuộc Xã Ô Lâm, Gà Đốt Trí Hải là một trong những \"viên ngọc ẩn\" được người dân địa phương và các phượt thủ sành sỏi rỉ tai nhau tìm đến. Tránh xa sự ồn ào xô bồ, quán mang lại một không gian ẩm thực tĩnh lặng, mộc mạc và chất lượng gà đồi nguyên bản cực kỳ xuất sắc.\n\n### 1. Vị Trí & Không Gian Tĩnh Lặng\n\n- **Vị trí hành chính:** Bờ trong Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian thanh bình:** Nằm ở vị trí khuất gió và yên tĩnh bên bờ hồ, quán có những chòi lá mộc mạc nhìn thẳng ra mặt nước trong xanh phẳng lặng.\n\n### 2. Chất Lượng Gà Thả Đồi Xuất Sắc\n\n- **Gà tuyển chọn kỹ càng:** Trí Hải nổi tiếng với nguồn gà thả đồi chính gốc từ các hộ dân nuôi quanh chân Núi Dài và Núi Cô Tô. Gà có độ dai vừa phải, thớ thịt ngọt lịm và da vàng tự nhiên.\n- **Ướp gia vị truyền thống:** Sả ớt đâm tay, lá chúc vườn nhà và mật ong rừng nguyên chất tạo nên hương vị đặc trưng không lẫn vào đâu được.\n\n### 3. Nước Chấm Muối Ớt Cay Nồng\n\n- **Muối ớt hột giã tay:** Muối hột rang vàng giã cùng ớt hiểm rừng và lá chúc tươi, vắt thêm nước cốt trái chúc tạo nên độ sánh mịn và hương vị chua cay mặn ngọt bùng nổ.\n\n### 4. Thời Điểm & Trải Nghiệm\n\n- **Thời gian phục vụ:** 08:30 – 18:00 hàng ngày.\n- **Giá tham khảo:** 230.000đ – 290.000đ / con."
+    "detailed_story": "Gà Đốt Trí Hải Ô Thum – Quán Ẩn Mình Bên Bờ Hồ Tĩnh Lặng & Gà Thả Đồi Săn Chắc\n\nNằm sâu trong khu vực bờ hồ Ô Thum thuộc Xã Ô Lâm, Gà Đốt Trí Hải là một trong những \"viên ngọc ẩn\" được người dân địa phương và các phượt thủ sành sỏi rỉ tai nhau tìm đến. Tránh xa sự ồn ào xô bồ, quán mang lại một không gian ẩm thực tĩnh lặng, mộc mạc và chất lượng gà đồi nguyên bản cực kỳ xuất sắc.\n\n### 1. Vị Trí & Không Gian Tĩnh Lặng\n\n- **Vị trí hành chính:** Bờ trong Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian thanh bình:** Nằm ở vị trí khuất gió và yên tĩnh bên bờ hồ, quán có những chòi lá mộc mạc nhìn thẳng ra mặt nước trong xanh phẳng lặng.\n\n### 2. Chất Lượng Gà Thả Đồi Xuất Sắc\n\n- **Gà tuyển chọn kỹ càng:** Trí Hải nổi tiếng với nguồn gà thả đồi chính gốc từ các hộ dân nuôi quanh chân Núi Dài và Núi Cô Tô. Gà có độ dai vừa phải, thớ thịt ngọt lịm và da vàng tự nhiên.\n- **Ướp gia vị truyền thống:** Sả ớt đâm tay, lá chúc vườn nhà và mật ong rừng nguyên chất tạo nên hương vị đặc trưng không lẫn vào đâu được.\n\n### 3. Nước Chấm Muối Ớt Cay Nồng\n\n- **Muối ớt hột giã tay:** Muối hột rang vàng giã cùng ớt hiểm rừng và lá chúc tươi, vắt thêm nước cốt trái chúc tạo nên độ sánh mịn và hương vị chua cay mặn ngọt bùng nổ.\n\n### 4. Thời Điểm & Trải Nghiệm\n\n- **Thời gian phục vụ:** 08:30 – 18:00 hàng ngày.\n- **Giá tham khảo:** 230.000đ – 290.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
     "id": "quan-ga-dot-may-may-o-thum",
@@ -11387,7 +11901,8 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt Ô Thum Mây Mây – Phong Cách Trẻ Trung, Nhiều Góc Check-in & Xôi Thốt Nốt Chiên Phồng\n\nLà một trong những quán gà đốt mới nổi thu hút đông đảo bạn trẻ tại khu vực Hồ Ô Thum, Gà Đốt Mây Mây ghi điểm bởi phong cách bài trí trẻ trung, hiện đại kết hợp nhiều góc tiểu cảnh chụp ảnh xinh xắn và món xôi thốt nốt chiên phồng vàng rộm giòn tan ăn kèm gà đốt lá chúc.\n\n### 1. Vị Trí & Không Gian Trẻ Trung\n\n- **Vị trí:** Khu ẩm thực Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Thiết kế chòi gỗ sáng màu, trang trí đèn lồng và các góc sống ảo view hồ thoáng đãng.\n\n### 2. Điểm Nhấn Ẩm Thực\n\n- **Gà đốt lá chúc đậm đà:** Gà ướp sốt mật ong cay dịu, nướng giòn da trên than hồng.\n- **Xôi thốt nốt chiên phồng:** Vỏ ngoài giòn rụm, ruột dẻo thơm ngậy mùi thốt nốt tự nhiên, ăn cùng gà đốt cực kỳ bắt vị.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 19:00 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con."
+    "detailed_story": "Gà Đốt Ô Thum Mây Mây – Phong Cách Trẻ Trung, Nhiều Góc Check-in & Xôi Thốt Nốt Chiên Phồng\n\nLà một trong những quán gà đốt mới nổi thu hút đông đảo bạn trẻ tại khu vực Hồ Ô Thum, Gà Đốt Mây Mây ghi điểm bởi phong cách bài trí trẻ trung, hiện đại kết hợp nhiều góc tiểu cảnh chụp ảnh xinh xắn và món xôi thốt nốt chiên phồng vàng rộm giòn tan ăn kèm gà đốt lá chúc.\n\n### 1. Vị Trí & Không Gian Trẻ Trung\n\n- **Vị trí:** Khu ẩm thực Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Thiết kế chòi gỗ sáng màu, trang trí đèn lồng và các góc sống ảo view hồ thoáng đãng.\n\n### 2. Điểm Nhấn Ẩm Thực\n\n- **Gà đốt lá chúc đậm đà:** Gà ướp sốt mật ong cay dịu, nướng giòn da trên than hồng.\n- **Xôi thốt nốt chiên phồng:** Vỏ ngoài giòn rụm, ruột dẻo thơm ngậy mùi thốt nốt tự nhiên, ăn cùng gà đốt cực kỳ bắt vị.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 19:00 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
     "id": "quan-ga-dot-7-nui-o-thum",
@@ -11427,7 +11942,8 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt 7 Núi Ô Thum – Gà Thả Đồi Bảy Núi Đốt Nồi Đất Rơm Than Hồng Rực\n\nNằm ven hồ Ô Thum, Gà Đốt 7 Núi là địa chỉ quen thuộc chuyên phục vụ các món gà thả đồi Bảy Núi đốt nồi đất truyền thống với rơm khô và than hồng, giữ nguyên độ ngọt tự nhiên và mùi thơm quyến rũ của núi rừng Thất Sơn.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi lá ven hồ thoáng đãng, lộng gió mát mẻ.\n\n### 2. Đặc Trưng Ẩm Thực\n\n- **Gà đồi thả vườn:** Thịt săn chắc, da mỏng giòn, ướp lá chúc vườn thơm nức mũi.\n- **Nước chấm:** Muối ớt chúc chua cay mặn ngọt chuẩn vị Bảy Núi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 18:30 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con."
+    "detailed_story": "Gà Đốt 7 Núi Ô Thum – Gà Thả Đồi Bảy Núi Đốt Nồi Đất Rơm Than Hồng Rực\n\nNằm ven hồ Ô Thum, Gà Đốt 7 Núi là địa chỉ quen thuộc chuyên phục vụ các món gà thả đồi Bảy Núi đốt nồi đất truyền thống với rơm khô và than hồng, giữ nguyên độ ngọt tự nhiên và mùi thơm quyến rũ của núi rừng Thất Sơn.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi lá ven hồ thoáng đãng, lộng gió mát mẻ.\n\n### 2. Đặc Trưng Ẩm Thực\n\n- **Gà đồi thả vườn:** Thịt săn chắc, da mỏng giòn, ướp lá chúc vườn thơm nức mũi.\n- **Nước chấm:** Muối ớt chúc chua cay mặn ngọt chuẩn vị Bảy Núi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 18:30 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
     "id": "quan-ga-dot-thanh-dat-o-thum",
@@ -11467,7 +11983,8 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt Thành Đạt Ô Thum – Phục Vụ Chu Đáo Cho Khách Gia Đình & Đoàn Phượt Bên Bờ Hồ\n\nTọa lạc tại khu vực bờ hồ Ô Thum thuộc Xã Ô Lâm, Gà Đốt Thành Đạt được nhiều đoàn du lịch và gia đình lựa chọn nhờ không gian rộng rãi, phong cách phục vụ nhanh nhẹn, chu đáo và món gà đốt lá chúc luôn đảm bảo độ tươi nóng khi dọn lên bàn.\n\n### 1. Vị Trí & Tiện Ích Phục Vụ\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Tiện ích:** Chòi lá mát mẻ, bãi giữ xe rộng rãi, phục vụ chu đáo cho đoàn đông người.\n\n### 2. Gà Đốt Nóng Hổi Chuẩn Vị\n\n- **Gà đốt tươi theo yêu cầu:** Gà đốt chín vàng giòn rụm, thịt ngọt mềm, ăn kèm xôi thốt nốt dẻo bùi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 19:00 mỗi ngày.\n- **Mức giá:** 240.000đ – 300.000đ / con."
+    "detailed_story": "Gà Đốt Thành Đạt Ô Thum – Phục Vụ Chu Đáo Cho Khách Gia Đình & Đoàn Phượt Bên Bờ Hồ\n\nTọa lạc tại khu vực bờ hồ Ô Thum thuộc Xã Ô Lâm, Gà Đốt Thành Đạt được nhiều đoàn du lịch và gia đình lựa chọn nhờ không gian rộng rãi, phong cách phục vụ nhanh nhẹn, chu đáo và món gà đốt lá chúc luôn đảm bảo độ tươi nóng khi dọn lên bàn.\n\n### 1. Vị Trí & Tiện Ích Phục Vụ\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Tiện ích:** Chòi lá mát mẻ, bãi giữ xe rộng rãi, phục vụ chu đáo cho đoàn đông người.\n\n### 2. Gà Đốt Nóng Hổi Chuẩn Vị\n\n- **Gà đốt tươi theo yêu cầu:** Gà đốt chín vàng giòn rụm, thịt ngọt mềm, ăn kèm xôi thốt nốt dẻo bùi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 19:00 mỗi ngày.\n- **Mức giá:** 240.000đ – 300.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
     "id": "quan-ga-dot-danh-hay-o-thum",
@@ -11507,7 +12024,8 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt Danh Hây Ô Thum – Quán Mộc Mạc Bản Địa & Muối Ớt Lá Chúc Giã Tay Truyền Thống\n\nMang đậm phong cách ẩm thực chân chất, mộc mạc của gia đình người Khmer bản địa tại Xã Ô Lâm, Quán Gà Đốt Danh Hây đem đến cho thực khách trải nghiệm thưởng thức gà đốt lá chúc nguyên bản với giá cả bình dân và chén muối ớt giã tay thơm nồng.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Ven Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi tre đơn sơ dưới tán cây râm mát, gần gũi thiên nhiên.\n\n### 2. Hương Vị Gà Đốt Dân Dã\n\n- **Gà thả vườn ngọt thịt:** Gà chạy đồi thịt thơm ngon, ướp lá chúc vườn nhà đâm nhuyễn.\n- **Muối ớt giã cối đá:** Vị cay nồng của ớt hiểm và chua thanh của trái chúc tươi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 18:00 hàng ngày.\n- **Mức giá:** 230.000đ – 290.000đ / con."
+    "detailed_story": "Gà Đốt Danh Hây Ô Thum – Quán Mộc Mạc Bản Địa & Muối Ớt Lá Chúc Giã Tay Truyền Thống\n\nMang đậm phong cách ẩm thực chân chất, mộc mạc của gia đình người Khmer bản địa tại Xã Ô Lâm, Quán Gà Đốt Danh Hây đem đến cho thực khách trải nghiệm thưởng thức gà đốt lá chúc nguyên bản với giá cả bình dân và chén muối ớt giã tay thơm nồng.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Ven Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi tre đơn sơ dưới tán cây râm mát, gần gũi thiên nhiên.\n\n### 2. Hương Vị Gà Đốt Dân Dã\n\n- **Gà thả vườn ngọt thịt:** Gà chạy đồi thịt thơm ngon, ướp lá chúc vườn nhà đâm nhuyễn.\n- **Muối ớt giã cối đá:** Vị cay nồng của ớt hiểm và chua thanh của trái chúc tươi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 18:00 hàng ngày.\n- **Mức giá:** 230.000đ – 290.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
     "id": "quan-ga-dot-oc-dao-ho-o-thum",
@@ -11546,6 +12064,7 @@
     ],
     "is_hot": true,
     "is_verified": true,
-    "detailed_story": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum – Mỏm Đất Nhô Giữa Lòng Hồ Với View Nước 360 Độ Tuyệt Mỹ\n\nTọa lạc trên một mỏm đất tự nhiên nhô hẳn ra giữa lòng hồ Ô Thum tựa như một ốc đảo xanh thu nhỏ, Quán Gà Đốt Ốc Đảo mang lại trải nghiệm ẩm thực độc nhất vô nhị với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc và dãy đồi núi Ô Lâm trập trùng bao quanh.\n\n### 1. Vị Trí \"Ốc Đảo\" Độc Nhất Vô Nhị\n\n- **Vị trí hành chính:** Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, tỉnh An Giang.\n- **Địa thế ốc đảo xanh:** Quán được bao bọc ba mặt bởi làn nước hồ trong vắt, gió thổi lồng lộng quanh năm mang lại không khí mát lạnh tự nhiên không cần quạt máy.\n\n### 2. Món Gà Đốt Nồi Đất Vàng Giòn\n\n- **Kỹ thuật đốt gà đỉnh cao:** Gà được đốt trong nồi gang đất dày trên than hồng, da gà xém vàng giòn rụm thơm nức mũi mùi lá chúc, thịt bên trong mềm ngọt mọng nước.\n- **Phục vụ đa dạng:** Ngoài gà đốt còn có các món cá lóc nướng trui, lẩu cá lăng nấu măng chua, xôi bắp thốt nốt.\n\n### 3. Trải Nghiệm Ngắm Hoàng Hôn 360 Độ\n\n- **Khung giờ vàng:** 16:30 – 17:45 là khoảnh khắc đẹp nhất khi ánh hoàng hôn nhuộm đỏ cả mặt hồ bao quanh quán.\n\n### 4. Thông Tin Đặt Chỗ\n\n- **Giờ mở cửa:** 08:00 – 19:00 hàng ngày.\n- **Giá bán:** 250.000đ – 320.000đ / con."
+    "detailed_story": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum – Mỏm Đất Nhô Giữa Lòng Hồ Với View Nước 360 Độ Tuyệt Mỹ\n\nTọa lạc trên một mỏm đất tự nhiên nhô hẳn ra giữa lòng hồ Ô Thum tựa như một ốc đảo xanh thu nhỏ, Quán Gà Đốt Ốc Đảo mang lại trải nghiệm ẩm thực độc nhất vô nhị với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc và dãy đồi núi Ô Lâm trập trùng bao quanh.\n\n### 1. Vị Trí \"Ốc Đảo\" Độc Nhất Vô Nhị\n\n- **Vị trí hành chính:** Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, tỉnh An Giang.\n- **Địa thế ốc đảo xanh:** Quán được bao bọc ba mặt bởi làn nước hồ trong vắt, gió thổi lồng lộng quanh năm mang lại không khí mát lạnh tự nhiên không cần quạt máy.\n\n### 2. Món Gà Đốt Nồi Đất Vàng Giòn\n\n- **Kỹ thuật đốt gà đỉnh cao:** Gà được đốt trong nồi gang đất dày trên than hồng, da gà xém vàng giòn rụm thơm nức mũi mùi lá chúc, thịt bên trong mềm ngọt mọng nước.\n- **Phục vụ đa dạng:** Ngoài gà đốt còn có các món cá lóc nướng trui, lẩu cá lăng nấu măng chua, xôi bắp thốt nốt.\n\n### 3. Trải Nghiệm Ngắm Hoàng Hôn 360 Độ\n\n- **Khung giờ vàng:** 16:30 – 17:45 là khoảnh khắc đẹp nhất khi ánh hoàng hôn nhuộm đỏ cả mặt hồ bao quanh quán.\n\n### 4. Thông Tin Đặt Chỗ\n\n- **Giờ mở cửa:** 08:00 – 19:00 hàng ngày.\n- **Giá bán:** 250.000đ – 320.000đ / con.",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif"
   }
 ]

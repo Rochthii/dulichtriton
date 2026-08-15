@@ -15,7 +15,7 @@ export function getOptimizedImageUrl(
   } = {}
 ): string {
   if (!url || typeof url !== 'string') {
-    return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=1200&auto=format&fit=crop';
+    return 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg';
   }
 
   const {

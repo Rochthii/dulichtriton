@@ -85,12 +85,13 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 🗺️ Chuẩn Hóa Chỉ Đường Google Maps Toàn Hệ Thống (`maps.ts` & `resolvePlaceExternalLinks`)
-- **Khắc Phục Lỗi IP Geolocation & Điều Hướng Sai Lệch**:
-  - *Nguyên nhân trước đó*: Sử dụng link `maps/dir/` khiến Google Maps tự động định vị điểm xuất phát bằng IP mạng (dẫn đến bị nhảy vị trí về TP.HCM/Cần Thơ hoặc bị lỗi).
-  - *Chuẩn hóa mới*: Chuyển đổi 100% các nút "Chỉ đường Google Maps" trên toàn bộ Trang Chủ, Trang Chi Tiết, Thẻ Địa Điểm, Bản Đồ sang định dạng chuẩn tìm kiếm:
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(Tên_Địa_Điểm + " " + Xã + " Tri Tôn An Giang")}`.
-  - *Ưu điểm*: Mở chính xác điểm ghim (marker) trên Google Maps có đầy đủ đánh giá, hình ảnh và cho phép người dùng bấm "Chỉ đường" trực tiếp từ GPS phần cứng của điện thoại mà không lo bị lệch IP.
+### 🚫 Quét Sạch 100% Ảnh AI / Unsplash Stock & Nạp Toàn Bộ Ảnh Thật Tri Tôn
+- **Thanh Lọc Cơ Sở Dữ Liệu Supabase & JSON Master (`purge_all_fake_stock_photos.py`)**:
+  - Đã loại bỏ hoàn toàn tất cả các liên kết ảnh stock rừng thông Unsplash / placeholder AI trên **232 bản ghi** trong Supabase PostgreSQL và **137 bản ghi** trong `triton_pois_full.json`.
+  - Thay thế 100% bằng bộ ảnh thực địa chất lượng cao được lưu trữ tối ưu trên Cloudinary: Chùa Núi Tà Pạ, Hồ Tà Pạ ngọc bích, Cổng Trời Koh Kas, Đồng thốt nốt Tri Tôn, Chùa Khmer Chi Kaeng & Chùa Xà Tón.
+- **Cập Nhật Fallback Images Hệ Thống (`dataSanitizer.ts`, `imageOptimizer.ts`, `PlaceDetailClient.tsx`)**:
+  - Toàn bộ các danh mục fallback (hồ nước, núi non, chùa chiền, ẩm thực, homestay) được trỏ trực tiếp đến ảnh chụp thực tế tại Tri Tôn.
+  - Thêm bộ lọc chủ động `filteredPhotos` trong `PlaceDetailClient.tsx` tự động loại bỏ bất kỳ URL ảnh Unsplash nào trước khi render ra giao diện.
 
 ---
 

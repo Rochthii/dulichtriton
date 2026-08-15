@@ -41,28 +41,40 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   });
 
   const defaultImg = getCategoryFallbackImage(place.category, place.name);
-  const rawPhotos = Array.isArray(place.photos) && place.photos.length > 0
-    ? place.photos
-    : [place.image_url || defaultImg];
+  const filteredPhotos = (Array.isArray(place.photos) ? place.photos : [])
+    .filter((p: any) => {
+      const url = typeof p === 'string' ? p : p?.url;
+      return url && typeof url === 'string' && !url.includes('unsplash.com');
+    });
+
+  const validImageUrl = place.image_url && !place.image_url.includes('unsplash.com')
+    ? place.image_url
+    : null;
+
+  const rawPhotos = filteredPhotos.length > 0
+    ? filteredPhotos
+    : [validImageUrl || defaultImg];
 
   const photos = useMemo(() => {
     return rawPhotos.map((p: any, idx: number) => {
       if (typeof p === 'string') {
+        const photoUrl = p && !p.includes('unsplash.com') ? p : defaultImg;
         return {
-          url: p,
+          url: photoUrl,
           caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
           source: 'Cổng thông tin Du lịch Tri Tôn',
           license: 'Verified Field Data'
         };
       }
+      const itemUrl = p.url && !p.url.includes('unsplash.com') ? p.url : (validImageUrl || defaultImg);
       return {
-        url: p.url || place.image_url || defaultImg,
+        url: itemUrl,
         caption: p.caption || place.name,
         source: p.source || 'Cổng thông tin Du lịch Tri Tôn',
         license: p.license || 'Verified Field Data'
       };
     });
-  }, [rawPhotos, place.image_url, place.name, defaultImg]);
+  }, [rawPhotos, validImageUrl, place.name, defaultImg]);
 
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);

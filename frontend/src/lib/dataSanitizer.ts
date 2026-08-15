@@ -36,14 +36,14 @@ const AUTHENTIC_DESCRIPTIONS: Record<string, string> = {
   'vườn nho nông trại': 'Nông trại sinh thái trồng các giống nho bản địa và dâu tằm, du khách có thể tự tay hái trái chín ngọt, thưởng thức mật nho và nước ép thốt nốt tươi nguyên chất.',
 };
 
-// High-fidelity local category fallback images
+// Authentic 100% Tri Ton Photography fallback images (Zero Unsplash / AI stock)
 const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
-  nature_lake: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-  nature_mountain: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop',
-  culture_temple: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
-  food_restaurant: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop',
-  stay_homestay: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
-  checkin_general: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
+  nature_lake: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif',
+  nature_mountain: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg',
+  culture_temple: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif',
+  food_restaurant: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg',
+  stay_homestay: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg',
+  checkin_general: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg',
 };
 
 /**
