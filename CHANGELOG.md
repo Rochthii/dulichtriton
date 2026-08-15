@@ -96,11 +96,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của 149 địa điểm Tri Tôn trong cơ sở dữ liệu.
   - Sử dụng công thức Haversine kết hợp hệ số uốn lượn đường đèo Bảy Núi ($1.25\times$) để tính toán chính xác quãng đường (km) và thời gian di chuyển (phút) giữa từng chặng dừng.
   - Nút bấm **"⚡ Tự Động Đo GPS & Quãng Đường"** tự động tính tổng quãng đường tour `total_distance_km` và hiển thị chi tiết thẻ kết nối chặng `➔ ~X km (Y phút di chuyển)`.
-- **Hỗ Trợ Đầy Đủ Thao Tác CRUD Quản Trị Trực Tuyến**:
-  - `GET`: Nạp danh sách 27-35 tour mẫu trực tiếp từ database theo thứ tự `sort_order`.
-  - `POST`: Thêm tour mới, tùy chỉnh các điểm dừng tương tác trực quan.
-  - `PATCH`: Chỉnh sửa trực tiếp tên, lịch trình chi tiết, ngân sách, phân bổ giờ giấc.
-  - `DELETE`: Xóa tour và ghi vết thao tác an toàn vào `audit_logs`.
+### 🧠 Đồng Bộ 100% Vector Embeddings (768d) Cho Toàn Bộ Địa Điểm Tri Tôn Trong Supabase
+- **Nạp Toàn Diện 234/234 Địa Điểm Sang Vector Embeddings 768 Chiều**:
+  - Quét và phát hiện 68 địa điểm mới cập nhật còn thiếu vector; tự động sinh toàn bộ Embeddings ngữ nghĩa đa chiều (`models/text-embedding-004` & `models/gemini-embedding-001`) qua 4 Gemini API Keys xoay vòng.
+  - Ngữ cảnh Vector hóa bao gồm: *Tên địa điểm, Xã/Thị trấn, Danh mục du lịch, Giới thiệu thực địa, Câu chuyện lịch sử/huyền tích, Kinh nghiệm tham quan (tips), và Từ khóa tìm kiếm*.
+  - Đạt tỷ lệ phủ **100% (234/234 địa điểm trong `public.places` & 16/16 khối tri thức `public.knowledge_base`)** sẵn sàng cho công cụ tìm kiếm ngữ nghĩa RAG (Retrieval-Augmented Generation) của Chatbot AI.
 
 ---
 
