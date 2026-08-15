@@ -110,11 +110,14 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
   - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
   - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
-- **Khắc Phục Lỗi Hiển Thị Văn Bản Dồn Cục & Bảng Markdown Trên Trang Chi Tiết Địa Điểm (`PlaceDetailClient.tsx` & `RichTextRenderer.tsx`)**:
-  - Khắc phục triệt để lỗi văn bản bị nén thành một khối chữ thô ráp không xuống dòng (do hàm `sanitizeDescription` cũ nén tất cả ký tự xuống dòng `\n` thành khoảng trắng):
-    • *Bảo toàn trọn vẹn định dạng Markdown*: Truyền trực tiếp `detailed_story` vào `RichTextRenderer` thay vì chạy qua bộ lọc tóm tắt ngắn.
-    • *Nâng cấp Engine RichTextRenderer với Table Parser & Highlight Cards*: Tự động nhận diện và chuyển đổi bảng Markdown (`| col1 | col2 |`) thành bảng thẻ Folk-Modern bọc viền ngà `#EBE1D0`, bo góc `rounded-[20px]`, xen kẽ màu nền `even:bg-[#FAF3E7]/30`, làm nổi bật tiêu đề phân mục `#`, `##`, `###`, danh sách gạch đầu dòng và khối thông tin nổi bật `**Label:**`.
-    • *Chuẩn hóa toàn diện bài viết Quán Đu Đủ Đâm RiNa Khmer*: Biên soạn lại câu chuyện ẩm thực Phnôm Pi theo chuẩn 5 phần sắc nét, đồng bộ cả trong `data/triton_pois_full.json` và cơ sở dữ liệu Supabase `places`.
+- **Khắc Phục Lỗi Hiển Thị Văn Bản Dồn Cục, Dính Số Mục 1, 2, 3 & Bảng Markdown Trên Toàn Bộ 139+ Trang Chi Tiết (`PlaceDetailClient.tsx`, `storyFormatter.ts` & `RichTextRenderer.tsx`)**:
+  - Khắc phục triệt để lỗi văn bản bị dính liền các mục `1. `, `2. `, `3. ` trên cùng một hàng hoặc bị nén thành một khối chữ thô ráp không xuống dòng:
+    • *Engine StoryFormatter Tự Động Tách Phân Mục 1, 2, 3*: Bổ sung quy tắc regex thông minh tách mọi đề mục số (`chữ. 1. Tiêu đề` $\rightarrow$ `\n\n### 1. Tiêu đề\n\n`), loại bỏ hoàn toàn tình trạng dính số mục trên cùng một hàng.
+    • *Tự Động Bóc Tách Chữ Dính Liền (TitleCase & Dot-Numbers)*: Tách các từ dính nối tiếp như `Thất SơnNằm dưới`, `Địa LýVị trí`, `núi.2.` thành các đoạn văn riêng biệt.
+    • *Lọc Sạch Boilerplate AI & Ký Tự LaTeX*: Tự động loại bỏ các đoạn mở đầu thừa (`Dưới đây là bản biên tập...`, `Thông Tin Thực Tế Về...`) và chuyển đổi mã LaTeX `$$\text{...}$$` thành văn bản thuần.
+    • *Bảo Toàn Trọn Vẹn Định Dạng Markdown Trong PlaceDetailClient*: Truyền trực tiếp `detailed_story` vào `RichTextRenderer` thay vì chạy qua bộ lọc tóm tắt ngắn `sanitizeDescription` (vốn nén `\n` thành khoảng trắng).
+    • *Nâng Cấp Engine RichTextRenderer với Table Parser & Highlight Cards*: Tự động nhận diện và chuyển đổi bảng Markdown (`| col1 | col2 |`) thành bảng thẻ Folk-Modern bọc viền ngà `#EBE1D0`, bo góc `rounded-[20px]`, xen kẽ màu nền `even:bg-[#FAF3E7]/30`, làm nổi bật tiêu đề phân mục `#`, `##`, `###`, danh sách gạch đầu dòng và khối thông tin nổi bật `**Label:**`.
+    • *Quét Sạch & Đồng Bộ Toàn Bộ 139 POIs Vào Supabase Database*: Đã thực hiện batch clean toàn bộ bài viết trong `data/triton_pois_full.json` và đồng bộ 100% lên cơ sở dữ liệu Supabase `places`.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:

@@ -9,18 +9,27 @@ export function formatDetailedStory(text?: string | null): string {
 
   let formatted = text.trim();
 
-  // 1. Cultural & Geographical rules
+  // 1. Remove AI prompt boilerplate prefixes
+  formatted = formatted
+    .replace(/^(?:Dưới đây là|Sau đây là)[\s\S]*?(?:giới thiệu|thông tin|chi tiết|bố cục)[^:\n]*?:\s*/gim, '')
+    .replace(/^Dưới đây là bản biên tập[\s\S]*?:\s*/gim, '')
+    .replace(/^Thông Tin Thực Tế Về[\s\S]*?:\s*/gim, '')
+    .replace(/^Khám phá[\s\S]*?–\s*/gim, '');
+
+  // 2. Clean LaTeX artifacts like $$\text{...}$$ or $$
+  formatted = formatted
+    .replace(/\$\$\\text\{([^}]+)\}\$\$/g, '$1')
+    .replace(/\$\$/g, '')
+    .replace(/\\text\{([^}]+)\}/g, '$1');
+
+  // 3. Cultural & Geographical rules
   formatted = formatted
     .replace(/gà nướng đất/gi, 'gà đốt đất')
     .replace(/gà nướng Ô Thum/gi, 'gà đốt Ô Thum')
     .replace(/gà nướng/gi, 'gà đốt')
     .replace(/Huyện Tri Tôn/gi, 'Tri Tôn');
 
-  // 2. Fix dot-numbers (e.g. "miền biên viễn.4. Hướng Dẫn" -> "miền biên viễn.\n\n4. Hướng Dẫn")
-  formatted = formatted.replace(/(\.)([1-9]\.)/g, '$1\n\n$2');
-  formatted = formatted.replace(/([a-zà-ỹ])([1-9]\.\s*)/g, '$1\n\n$2');
-
-  // 3. Fix glued known phrases
+  // 4. Fix glued known phrases & TitleCase gluing
   const gluedPairs: [string, string][] = [
     ['Địa LýVị trí hành chính', 'Địa Lý\n\n- **Vị trí hành chính:** '],
     ['Sơn DânRừng tầm vông', 'Sơn Dân\n\n- **Rừng tầm vông & Vườn cây ăn trái:** '],
@@ -36,12 +45,20 @@ export function formatDetailedStory(text?: string | null): string {
     formatted = formatted.split(oldStr).join(newStr);
   }
 
-  // 4. Insert section headings for numbered items (### 1. Title)
-  formatted = formatted.replace(/(?<!\n\n)(?:\s+|^)([1-9]\.\s+[^\n:\.]{3,45}?)(?=\n|$|\.\s)/g, '\n\n### $1\n\n');
+  // 5. Fix glued title-to-sentence (e.g. "Thất SơnNằm dưới" -> "Thất Sơn\n\nNằm dưới")
+  formatted = formatted.replace(
+    /(Sơn|Tôn|Pạ|Chék|Thum|Chúc|Dụp|Sóc|Trì|Tô|Phi|Gia|Quới|Đảnh|Tuyến|Phước|Trà|Vinh|Nam|Việt|Khmer|Đá|Hồ|Núi)([A-ZÀ-Ỹ][a-zà-ỹ]{2,})/g,
+    '$1\n\n$2'
+  );
 
-  // 5. Format known labels with bullet tags: - **Label:**
+  // 6. Guarantee separation of numbered sections (1. 2. 3. 4. 5. 6. 7. 8. 9.)
+  // Matches "chữ. 1. Tiêu đề" or "chữ 1. Tiêu đề" or "\n1. Tiêu đề"
+  formatted = formatted.replace(/([^\n])\s*(?:###\s*)?([1-9]\.\s+[A-ZÀ-Ỹ0-9][^\n:\.\?]{2,50}?)(?=\n|:\s*|\.\s+[A-ZÀ-Ỹ]|\s+[1-9]\.|$)/g, '$1\n\n### $2\n\n');
+  formatted = formatted.replace(/^([1-9]\.\s+[A-ZÀ-Ỹ0-9][^\n:\.\?]{2,50}?)(?=\n|:\s*|\.\s+[A-ZÀ-Ỹ]|$)/gm, '### $1\n\n');
+
+  // 7. Format known labels with bullet tags: - **Label:**
   const labels = [
-    'Vị trí hành chính', 'Vị trí & Điểm check-in', 'Vị trí', 'Quy mô', 'Lưu ý phân biệt',
+    'Vị trí hành chính', 'Vị trí & Điểm check-in', 'Vị trí & Đường đi', 'Vị trí', 'Quy mô', 'Lưu ý phân biệt',
     'Núi Dài Lớn (Ngọa Long Sơn)', 'Núi Dài Nhỏ (Ngũ Hồ Sơn / Núi Dài Năm Giếng)',
     'Rừng tầm vông & Vườn cây ăn trái', 'Hệ thống suối & Điểm tập kết nông sản',
     'Khu Căn cứ Cách mạng Ô Tà Sóc', 'Đồi Ma Thiên Lãnh & Hang Quân Y, Điện Trời Gầm',
@@ -57,14 +74,15 @@ export function formatDetailedStory(text?: string | null): string {
     formatted = formatted.replace(regex, `\n- **${lbl}:**`);
   }
 
-  // 6. Clean duplicate colons or accidental duplicates
+  // 8. Clean duplicate hashes, spaces & excessive newlines
   formatted = formatted
+    .replace(/###\s*###\s*/g, '### ')
     .replace(/:\*\*:/g, ':**')
     .replace(/- \*\*([^*]+):\*\*\s*& Vườn cây ăn trái:/g, '- **$1:**')
     .replace(/- \*\*([^*]+):\*\*\s*ẩm thực:/g, '- **$1:**')
     .replace(/- \*\*([^*]+):\*\*\s*:\s*/g, '- **$1:** ')
     .replace(/\n{3,}/g, '\n\n')
-    .replace(/[ \t]+/g, ' ');
+    .trim();
 
-  return formatted.trim();
+  return formatted;
 }
