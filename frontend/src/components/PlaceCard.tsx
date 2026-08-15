@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MapPin, Star, Clock, Tag, Navigation, Play, Camera, Heart, Ticket, Utensils, Sun, Sunset } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { MapPin, Star, Clock, Navigation, Play, Heart, ChevronRight, Award, Flame } from 'lucide-react';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { parseTravelGuide, sanitizeDescription, getCategoryFallbackImage } from '@/lib/dataSanitizer';
 import { getOptimizedImageUrl } from '@/lib/imageOptimizer';
@@ -61,14 +60,15 @@ interface PlaceCardProps {
   place: Place;
 }
 
-const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string; label: string }> = {
-  nature: { bg: 'bg-[#0E8C7F]/90', text: 'text-white', border: 'border-[#0E8C7F]/30', label: 'Thiên Nhiên' },
-  culture: { bg: 'bg-[#D9822B]/90', text: 'text-white', border: 'border-[#D9822B]/30', label: 'Di Sản & Chùa' },
-  history: { bg: 'bg-[#A6503A]/90', text: 'text-white', border: 'border-[#A6503A]/30', label: 'Lịch Sử' },
-  food: { bg: 'bg-[#F26B3A]/90', text: 'text-white', border: 'border-[#F26B3A]/30', label: 'Ẩm Thực' },
-  gastronomy: { bg: 'bg-[#F26B3A]/90', text: 'text-white', border: 'border-[#F26B3A]/30', label: 'Ẩm Thực' },
-  stay: { bg: 'bg-[#0E8C7F]/90', text: 'text-white', border: 'border-[#0E8C7F]/30', label: 'Lưu Trú' },
-  'check-in': { bg: 'bg-[#F0A32F]/90', text: 'text-[#26221B]', border: 'border-[#F0A32F]/30', label: 'Check-in' },
+const CATEGORY_LABELS: Record<string, string> = {
+  nature: 'Thiên Nhiên',
+  culture: 'Chùa & Di Sản',
+  spiritual: 'Chùa Khmer',
+  history: 'Di Tích Lịch Sử',
+  food: 'Đặc Sản Ẩm Thực',
+  gastronomy: 'Ẩm Thực',
+  stay: 'Lưu Trú',
+  'check-in': 'Check-in Hot',
 };
 
 export default function PlaceCard({ place }: PlaceCardProps) {
@@ -113,23 +113,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     video_url: place.video_url,
   });
 
-  const guide = parseTravelGuide(place.travel_guide_json || place.travel_guide);
   const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);
-
-  const isGaDotOThum =
-    place.name.toLowerCase().includes('gà đốt') ||
-    place.name.toLowerCase().includes('ô thum') ||
-    (place.address && place.address.toLowerCase().includes('ô thum') && place.category.includes('food'));
-
-  const bestTimeStr = (place.best_time || place.best_visit_time || '').toLowerCase();
-  let bestTimeBadge = null;
-  if (bestTimeStr.includes('sáng') || bestTimeStr.includes('6:00') || bestTimeStr.includes('7:00')) {
-    bestTimeBadge = { icon: Sun, label: '06:00 - 08:30 (Sáng)' };
-  } else if (bestTimeStr.includes('hoàng hôn') || bestTimeStr.includes('chiều') || bestTimeStr.includes('16:00') || bestTimeStr.includes('17:00')) {
-    bestTimeBadge = { icon: Sunset, label: '16:00 - 17:30 (Chiều)' };
-  } else if (place.category.includes('food')) {
-    bestTimeBadge = { icon: Utensils, label: '11:00 - 13:30 (Trưa)' };
-  }
 
   const fallbackImg = getCategoryFallbackImage(place.category, place.name);
   let resolvedCoverUrl = fallbackImg;
@@ -144,145 +128,113 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     }
   }
 
-  const coverPhoto = {
-    url: resolvedCoverUrl,
-    caption: place.name,
-    source: 'Cổng thông tin Du lịch Tri Tôn',
-  };
-
-  const catStyle = CATEGORY_COLORS[place.category] || {
-    bg: 'bg-[#0E8C7F]/90',
-    text: 'text-white',
-    border: 'border-[#0E8C7F]/30',
-    label: place.tourism_category || 'Địa Điểm',
-  };
-
+  const categoryLabel = place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến';
   const detailUrl = `/places/${place.slug || place.id}`;
 
   return (
-    <div className="relative bg-[#FFFDF7] rounded-2xl sm:rounded-[26px] border border-[#26221B]/8 shadow-[0_2px_8px_rgba(38,34,27,0.06)] hover:shadow-[0_8px_24px_rgba(38,34,27,0.12)] transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1 cursor-pointer font-body">
-      {/* 1-Touch Card Main Navigation Overlay */}
-      <Link href={detailUrl} className="absolute inset-0 z-0" aria-label={`Xem chi tiết địa điểm ${place.name}`} />
+    <div className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between font-body">
+      <div>
+        {/* Image Header with Scrim */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={getOptimizedImageUrl(resolvedCoverUrl, { width: 800, dpr: 2, quality: 'best' })}
+            alt={place.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
-      {/* Image Cover Container (4:3 aspect ratio) */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#FAF3E7] pointer-events-none">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={getOptimizedImageUrl(coverPhoto.url, { width: 800, dpr: 2, quality: 'best' })}
-          alt={coverPhoto.caption || place.name}
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="lazy"
-          decoding="async"
-        />
-
-        {/* Bottom Gradient Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/75 via-[#26221B]/15 to-transparent pointer-events-none" />
-
-        {/* Top Floating Badges */}
-        <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center justify-between pointer-events-none">
-          <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 max-w-[70%] sm:max-w-none">
-            <span className={`inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[11px] font-bold ${catStyle.bg} ${catStyle.text} backdrop-blur-md shadow-xs border ${catStyle.border} font-display truncate`}>
-              {place.commune}
-            </span>
-            {isGaDotOThum && (
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-[#F26B3A] text-white shadow-xs font-display">
-                🔥 Đặt trước
+          {/* Top Badges */}
+          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5">
+            {place.is_hot ? (
+              <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
+                <Flame className="w-3 h-3 text-[#26221B] fill-[#26221B]" />
+                <span>HOT #{place.hot_rank || 1}</span>
+              </span>
+            ) : (
+              <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
+                <Award className="w-3 h-3 text-[#26221B]" />
+                <span>{categoryLabel}</span>
               </span>
             )}
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-1.5">
-            <div className="flex items-center gap-0.5 sm:gap-1 bg-[#FFFDF7]/95 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-[#F0A32F]/40 backdrop-blur-md shadow-xs font-display">
-              <Star className="w-3 h-3 fill-[#F0A32F] text-[#F0A32F]" />
-              <span className="text-[10px] sm:text-xs font-bold text-[#26221B]">{place.rating || 4.5}</span>
-            </div>
+          {/* Rating & Favorite Badges */}
+          <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 flex items-center gap-1.5">
+            <span className="px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
+              <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
+              <span>{place.rating || 4.8}</span>
+            </span>
 
-            {/* Like Heart Button */}
             <button
               type="button"
               onClick={handleToggleLike}
-              className={`p-1 sm:p-1.5 rounded-full backdrop-blur-md transition-all pointer-events-auto tap-bounce ${
+              className={`p-1.5 rounded-xl backdrop-blur-md transition-all ${
                 isLiked
-                  ? 'bg-[#F26B3A] text-white animate-heart-pop shadow-xs'
-                  : 'bg-[#FFFDF7]/90 text-[#6B6355] hover:text-[#F26B3A] border border-[#26221B]/8'
+                  ? 'bg-[#F26B3A] text-white shadow-xs'
+                  : 'bg-white/80 text-[#26221B] hover:text-[#F26B3A]'
               }`}
               title="Lưu địa điểm yêu thích"
             >
-              <Heart className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${isLiked ? 'fill-white' : ''}`} />
+              <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-white' : ''}`} />
             </button>
           </div>
-        </div>
 
-        {/* Best Time Window Floating Pill (Bottom-left of image) */}
-        {bestTimeBadge && (
-          <div className="absolute bottom-2 left-2 sm:left-3 z-10 hidden sm:flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#151B34]/85 text-[#FFD37A] text-[9px] sm:text-[10px] font-bold backdrop-blur-md border border-[#FFD37A]/30 shadow-xs pointer-events-none font-display">
-            <bestTimeBadge.icon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#F0A32F]" />
-            <span>{bestTimeBadge.label}</span>
-          </div>
-        )}
-      </div>
-
-      {/* Place Content Body */}
-      <div className="p-2.5 sm:p-4 pb-2 flex-1 flex flex-col justify-between pointer-events-none font-body">
-        <div>
-          {/* Place Title in Bricolage Grotesque */}
-          <h3 className="font-display text-xs sm:text-base font-bold text-[#26221B] tracking-tight leading-snug line-clamp-1 group-hover:text-[#0E8C7F] transition-colors">
-            {place.name}
-          </h3>
-
-          {/* Sanitized Clean Description */}
-          <p className="mt-1 text-[10px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
-            {cleanDescription}
-          </p>
-
-          {/* Address */}
-          <div className="flex items-start gap-1 mt-1.5 text-[10px] sm:text-xs text-[#6B6355]">
-            <MapPin className="w-3 h-3 text-[#0E8C7F] shrink-0 mt-0.5" />
-            <span className="line-clamp-1 leading-relaxed">{place.address}</span>
+          {/* Bottom Text on Photo */}
+          <div className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
+            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
+              {place.commune}
+            </span>
+            <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+              {place.name}
+            </h3>
           </div>
         </div>
 
-        {/* Travel Guide Key Metrics Bar */}
-        <div className="mt-2 pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[9px] sm:text-[11px] text-[#6B6355]">
-          <div className="flex items-center gap-1 truncate" title={guide.openingHours}>
-            <Clock className="w-3 h-3 text-[#0E8C7F] shrink-0" />
-            <span className="truncate font-medium">{guide.openingHours.split('(')[0].trim()}</span>
-          </div>
-          <div className="font-semibold text-[#D9822B] truncate font-display" title={guide.ticketPrice}>
-            {guide.ticketPrice.split('.')[0]}
-          </div>
+        {/* Content Details */}
+        <div className="p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355]">
+          {cleanDescription && (
+            <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+              {cleanDescription}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Action Buttons: Chi Tiết + Chỉ Đường + TikTok */}
-      <div className="p-2 sm:p-3 bg-[#FAF3E7]/60 border-t border-[#26221B]/6 flex items-center gap-1 sm:gap-1.5 relative z-10 font-display">
+      {/* Card Footer Actions */}
+      <div className="p-3.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-2">
         <Link
           href={detailUrl}
-          className="flex-1 text-center py-1.5 sm:py-2 px-1 sm:px-2 rounded-xl sm:rounded-full text-[10px] sm:text-xs font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 hover:bg-[#0E8C7F]/20 transition-colors tap-bounce"
+          className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
         >
-          Chi Tiết
+          <span>Xem chi tiết</span>
+          <ChevronRight className="w-3.5 h-3.5" />
         </Link>
-        <a
-          href={maps.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="flex-1 inline-flex items-center justify-center gap-0.5 sm:gap-1 py-1.5 sm:py-2 px-1 sm:px-2 rounded-xl sm:rounded-full text-[10px] sm:text-xs font-bold text-[#26221B] bg-[#F0A32F] hover:bg-[#C97F1B] hover:text-white shadow-xs transition-all shrink-0 tap-bounce"
-          title={maps.tooltip}
-        >
-          <Navigation className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-          <span>Chỉ Đường</span>
-        </a>
-        <a
-          href={tiktok.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center justify-center py-1.5 sm:py-2 px-2 sm:px-2.5 rounded-xl sm:rounded-full text-[10px] sm:text-xs font-bold text-[#26221B] bg-white border border-[#26221B]/15 hover:border-[#F26B3A] hover:text-[#F26B3A] transition-all shrink-0 tap-bounce"
-          title={tiktok.label}
-        >
-          <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current text-rose-500" />
-        </a>
+
+        <div className="flex items-center gap-1.5">
+          {tiktok?.url && (
+            <a
+              href={tiktok.url}
+              target="_blank"
+              rel="noreferrer"
+              title="Xem Video TikTok"
+              className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+            >
+              <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
+            </a>
+          )}
+          <a
+            href={maps.url}
+            target="_blank"
+            rel="noreferrer"
+            className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
+          >
+            <Navigation className="w-3 h-3 text-emerald-600" />
+            <span>Chỉ đường</span>
+          </a>
+        </div>
       </div>
     </div>
   );

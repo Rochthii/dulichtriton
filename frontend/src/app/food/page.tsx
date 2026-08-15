@@ -372,63 +372,61 @@ export default function FoodPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
-              {filteredFoods.map((food) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {filteredFoods.map((food, idx) => (
                 <div
                   key={food.id}
-                  className="group bg-[#FFFDF7] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#26221B]/8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                  className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
-                    {/* Image Header */}
-                    <div className="relative h-32 sm:h-48 w-full overflow-hidden bg-slate-200">
+                    {/* Image Header with Scrim */}
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' })}
                         alt={food.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         loading="lazy"
                         decoding="async"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
-                      {food.open_late && (
-                        <span className="absolute top-2 sm:top-3 left-2 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-purple-900/90 text-purple-100 font-extrabold text-[9px] sm:text-[10px] backdrop-blur-xs flex items-center gap-1 border border-purple-400/30">
-                          <Moon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-300 fill-amber-300" />
-                          <span className="hidden sm:inline">Mở Muộn</span>
-                        </span>
-                      )}
+                      {/* Top Badges */}
+                      <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5">
+                        {food.open_late ? (
+                          <span className="px-2.5 py-1 rounded-xl bg-purple-900/95 text-amber-300 font-black text-[10px] sm:text-xs uppercase tracking-wider backdrop-blur-md flex items-center gap-1 shadow-sm border border-purple-400/40 font-display">
+                            <Moon className="w-3 h-3 text-amber-300 fill-amber-300" />
+                            <span>Mở Muộn</span>
+                          </span>
+                        ) : (
+                          <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
+                            <Award className="w-3 h-3 text-[#26221B]" />
+                            <span>TOP #{idx + 1}</span>
+                          </span>
+                        )}
+                      </div>
 
-                      <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-xs">
-                        <Star className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-500" />
+                      {/* Rating Badge */}
+                      <span className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
                         <span>{food.rating}</span>
                       </span>
 
-                      <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 text-white">
-                        <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-amber-300 truncate block font-mono">
+                      {/* Bottom Text on Photo */}
+                      <div className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
+                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
                           {food.commune}
                         </span>
-                        <h3 className="font-display font-bold text-xs sm:text-sm leading-snug line-clamp-1">
+                        <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
                           {food.name}
                         </h3>
                       </div>
                     </div>
 
                     {/* Content Details */}
-                    <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2.5 text-[10px] sm:text-xs text-[#6B6355]">
-                      <div className="flex items-center gap-1 sm:gap-1.5 text-[#26221B]">
-                        <Clock className="w-3 h-3 text-[#0E8C7F] shrink-0" />
-                        <span className="font-semibold truncate">{food.hours}</span>
-                      </div>
-
-                      {food.address && (
-                        <div className="flex items-start gap-1 sm:gap-1.5 line-clamp-1">
-                          <MapPin className="w-3 h-3 text-[#F26B3A] shrink-0 mt-0.5" />
-                          <span className="truncate">{food.address}</span>
-                        </div>
-                      )}
-
+                    <div className="p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355]">
                       {food.description && (
-                        <p className="text-[10px] sm:text-[11px] text-[#6B6355] line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
                           {food.description}
                         </p>
                       )}
@@ -436,35 +434,37 @@ export default function FoodPage() {
                   </div>
 
                   {/* Card Footer Actions */}
-                  <div className="p-2.5 sm:p-4 pt-0 border-t border-[#26221B]/5 mt-1 sm:mt-2 flex items-center justify-between gap-1.5 sm:gap-2">
+                  <div className="p-3.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-2">
                     <Link
                       href={`/places/${food.slug || food.id}`}
-                      className="flex-1 py-1.5 sm:py-2 rounded-xl bg-[#0E8C7F] hover:bg-[#085A52] text-white text-center font-bold text-[10px] sm:text-xs transition-colors shadow-2xs"
+                      className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
                     >
-                      Chi Tiết
+                      <span>Xem quán</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
 
-                    {food.video_url && (
+                    <div className="flex items-center gap-1.5">
+                      {food.video_url && (
+                        <a
+                          href={food.video_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          title="Xem Video TikTok"
+                          className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+                        >
+                          <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
+                        </a>
+                      )}
                       <a
-                        href={food.video_url}
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.name + " " + food.commune + " Tri Tôn")}`}
                         target="_blank"
                         rel="noreferrer"
-                        title="Xem Video TikTok Thực Địa"
-                        className="p-1.5 sm:p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 transition-colors shrink-0"
+                        className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
                       >
-                        <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-rose-600 text-rose-600" />
+                        <Navigation className="w-3 h-3 text-emerald-600" />
+                        <span>Chỉ đường</span>
                       </a>
-                    )}
-
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.name + " " + food.commune + " Tri Tôn")}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      title="Mở Google Maps Chỉ Đường"
-                      className="p-1.5 sm:p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition-colors shrink-0"
-                    >
-                      <Navigation className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </a>
+                    </div>
                   </div>
                 </div>
               ))}

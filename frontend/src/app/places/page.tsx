@@ -242,66 +242,69 @@ function PlacesPageContent() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
               {topSpotlightPlaces.map((hotPlace, pidx) => (
                 <div
                   key={hotPlace.id}
-                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-emerald-400/40 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+                  className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={getOptimizedImageUrl(hotPlace.image_url && !hotPlace.image_url.includes('unsplash.com') ? hotPlace.image_url : "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif", { width: 900, dpr: 2, quality: 'best' })}
-                      alt={hotPlace.name}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div>
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getOptimizedImageUrl(hotPlace.image_url && !hotPlace.image_url.includes('unsplash.com') ? hotPlace.image_url : "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif", { width: 900, dpr: 2, quality: 'best' })}
+                        alt={hotPlace.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
-                    <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-black text-[10px] uppercase shadow-xs flex items-center gap-1 font-display">
-                        <Award className="w-3 h-3 text-amber-300" /> TOP #{pidx + 1}
+                      <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1">
+                        <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
+                          <Award className="w-3 h-3 text-[#26221B]" /> TOP #{pidx + 1}
+                        </span>
+                      </div>
+
+                      <span className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
+                        <span>{hotPlace.rating || 4.9}</span>
                       </span>
+
+                      <div className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
+                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
+                          {hotPlace.commune}
+                        </span>
+                        <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                          {hotPlace.name}
+                        </h3>
+                      </div>
                     </div>
 
-                    <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-[11px] flex items-center gap-1 shadow-xs">
-                      <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
-                      <span>{hotPlace.rating || 4.9}</span>
-                    </span>
-
-                    <div className="absolute bottom-2.5 left-3 right-3 text-white">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-amber-300 font-mono">
-                        {hotPlace.commune}
-                      </span>
-                      <h3 className="font-display font-black text-sm leading-tight text-white line-clamp-1">
-                        {hotPlace.name}
-                      </h3>
+                    <div className="p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355]">
+                      <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                        {hotPlace.description || "Tọa độ danh thắng tiêu biểu tại Tri Tôn với khung cảnh thiên nhiên tuyệt đẹp."}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="p-3.5 space-y-2 text-xs">
-                    <p className="text-[11px] text-[#6B6355] line-clamp-2 leading-relaxed">
-                      {hotPlace.description || "Tọa độ danh thắng tiêu biểu tại Tri Tôn với khung cảnh thiên nhiên tuyệt đẹp."}
-                    </p>
-                    <div className="flex items-center justify-between pt-2 border-t border-[#26221B]/6">
-                      <Link
-                        href={`/places/${hotPlace.slug || hotPlace.id}`}
-                        className="text-xs font-bold text-[#0E8C7F] hover:underline flex items-center gap-1 font-display"
-                      >
-                        <span>Chi tiết</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </Link>
-                      <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotPlace.name + " " + hotPlace.commune + " Tri Tôn")}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="px-2.5 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] flex items-center gap-1 transition-colors"
-                      >
-                        <Navigation className="w-3 h-3" />
-                        <span>Chỉ đường</span>
-                      </a>
-                    </div>
+                  <div className="p-3.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-2">
+                    <Link
+                      href={`/places/${hotPlace.slug || hotPlace.id}`}
+                      className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
+                    >
+                      <span>Xem chi tiết</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotPlace.name + " " + hotPlace.commune + " Tri Tôn")}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
+                    >
+                      <Navigation className="w-3 h-3 text-emerald-600" />
+                      <span>Chỉ đường</span>
+                    </a>
                   </div>
                 </div>
               ))}

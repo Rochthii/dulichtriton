@@ -110,10 +110,12 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
   - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
   - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
-- **Khắc Phục Lỗi TypeScript Build Vercel (TS2345/TS7006) Trong `culture/page.tsx` & `chat/page.tsx`**:
-  - Sửa chữ ký hàm `fetchWithCache` trong `culture/page.tsx` khớp hoàn toàn với định nghĩa generic SWR cache (`key, async fetcher, ttlMs, onRevalidated`).
-  - Chuẩn hóa type props `searchParams` trong `chat/page.tsx` tương thích 100% với Next.js 14, 15 và 16.3 Turbopack.
-  - Dọn sạch các import không sử dụng từ `lucide-react` để đảm bảo 0 cảnh báo linter.
+- **Đồng Bộ Thống Nhất Phong Cách Thẻ 'Folk-Modern Gold Border' Sang Trọng & Đậm Bản Sắc Trên Toàn Bộ Hệ Thống (/places, /food, /stay, /culture, PlaceCard)**:
+  - Nâng cấp toàn diện thiết kế card trên tất cả các trang danh mục theo đúng chuẩn thẻ nổi bật:
+    • *Viền Vàng Thốt Nốt & Hổ Phách Sang Trọng*: Bo viền kép `border-2 border-amber-400/80` nổi bật trên nền giấy ngà bưu thiếp `#FFFDF7`, bo góc `rounded-[24px]` đến `rounded-[28px]`, đổ bóng ấm `--shadow-2` và hiệu ứng lướt mượt `hover:-translate-y-1`.
+    • *Header Ảnh Thực Địa 4:3 Kèm Scrim Gradient Tối Màu*: Tỉ lệ vàng 4:3, huy hiệu `TOP #1..` / Danh mục vàng óng góc trên bên trái, huy hiệu đánh giá sao vàng `★ 4.9` kính mờ góc trên bên phải.
+    • *Tên Xã Màu Vàng Chanh (#FFD37A) & Tiêu Đề Nổi Bật Nằm Trên Ảnh*: Giúp người dùng quét mắt trong 1 giây nhận diện ngay địa bàn (Xã Ô Lâm, TT. Tri Tôn, Xã Châu Lăng...) và tên địa danh sắc nét `Bricolage Grotesque`.
+    • *Cụm Nút Hành Động Kép Chuẩn UX*: Nút liên kết `Xem quán / Xem chi tiết >` màu ngọc Tà Pạ `#0E8C7F` + Nút `Chỉ đường` Google Maps hình viên thuốc bo tròn màu xanh lá mạ + Nút xem Video TikTok thực địa.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
