@@ -621,7 +621,7 @@ export default function HomePage() {
                   {/* Body Content */}
                   <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 font-body">
                     <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed">
-                      {place.description}
+                      {sanitizeDescription(place.description, place.name, place.commune, place.category)}
                     </p>
 
                     <div className="pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[9px] sm:text-xs font-display">

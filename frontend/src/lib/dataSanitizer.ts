@@ -80,7 +80,39 @@ export function isSpamText(text?: string | null): boolean {
 }
 
 /**
- * Sanitize POI Description with authentic fallback and XSS stripping
+ * Clean markdown symbols, AI prompt boilerplate, and format to clean plain text
+ */
+export function cleanMarkdownFormatting(text?: string | null): string {
+  if (!text || typeof text !== 'string') return '';
+  return text
+    // Remove AI prompt boilerplate prefixes
+    .replace(/^Dưới đây là bản biên tập[\s\S]*?:\s*/gim, '')
+    .replace(/^Thông Tin Thực Tế Về[\s\S]*?:\s*/gim, '')
+    .replace(/^Khám phá[\s\S]*?–\s*/gim, '')
+    // Remove Markdown headings: ###, ##, #, ====, ----
+    .replace(/#{1,6}\s*/g, '')
+    // Remove Markdown bold / italic / strike: ***, **, *, __, _, ~~
+    .replace(/(\*\*\*|\*\*|\*|___|__|_|~~)/g, '')
+    // Remove bullet points / dashes at line starts
+    .replace(/^\s*[-*+•]\s+/gm, '')
+    // Remove blockquotes >
+    .replace(/^\s*>\s*/gm, '')
+    // Remove excessive exclamation marks / punctuation spam: !!!, ???
+    .replace(/!{2,}/g, '.')
+    .replace(/\?{2,}/g, '?')
+    // Remove raw HTML tags
+    .replace(/<[^>]*>?/gm, '')
+    // Clean redundant geographic repetitions
+    .replace(/Thị trấn Tri Tôn,\s*Tri Tôn,\s*An Giang/gi, 'Thị trấn Tri Tôn, An Giang')
+    .replace(/Xã ([^,]+),\s*Tri Tôn,\s*An Giang/gi, 'Xã $1, An Giang')
+    .replace(/huyện Tri Tôn,\s*Tri Tôn/gi, 'Tri Tôn')
+    // Normalize whitespace & double spaces
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Sanitize POI Description with authentic fallback, XSS stripping, and markdown cleanup
  */
 export function sanitizeDescription(
   desc?: string | null,
@@ -88,7 +120,9 @@ export function sanitizeDescription(
   commune: string = 'Tri Tôn',
   category: string = 'Điểm đến'
 ): string {
-  if (!desc || isSpamText(desc) || desc.trim().length < 15) {
+  const cleaned = cleanMarkdownFormatting(desc);
+
+  if (!cleaned || isSpamText(cleaned) || cleaned.length < 15) {
     const nameLower = name.toLowerCase();
     for (const [key, authenticDesc] of Object.entries(AUTHENTIC_DESCRIPTIONS)) {
       if (nameLower.includes(key)) {
@@ -97,12 +131,8 @@ export function sanitizeDescription(
     }
     return `${name} — Thắng cảnh thiên nhiên và di sản văn hóa đặc sắc tại ${commune}, mang đậm bản sắc vùng đất Bảy Núi An Giang.`;
   }
-  // Strip any raw script tags and clean redundant geographic naming
-  return desc
-    .replace(/<[^>]*>?/gm, '')
-    .replace(/Thị trấn Tri Tôn,\s*Tri Tôn,\s*An Giang/gi, 'Thị trấn Tri Tôn, An Giang')
-    .replace(/Xã ([^,]+),\s*Tri Tôn,\s*An Giang/gi, 'Xã $1, An Giang')
-    .trim();
+
+  return cleaned;
 }
 
 /**

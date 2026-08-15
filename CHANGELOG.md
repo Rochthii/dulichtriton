@@ -85,10 +85,12 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 🖼️ Đồng Bộ 100% Ảnh Hero Thật Cho Toàn Bộ Thẻ Card Bên Ngoài
-- **Chuẩn Hóa Bộ Phân Giải Ảnh Thẻ (`PlaceCard.tsx`, `page.tsx`, `HotPlacesSection.tsx`, `GoldenTimeWidget.tsx`, `places/page.tsx`, `TikTokFeedSection.tsx`)**:
-  - Toàn bộ các thẻ Card trên Trang Chủ (Top Hot, Ẩm thực, Cụm xã, Khung giờ vàng), Trang Khám Phá, Ẩm Thực, Lưu Trú và Video Reels giờ đây đồng bộ 100% với ảnh Hero thực tế của trang chi tiết.
-  - Loại bỏ hoàn toàn mọi URL dự phòng Unsplash / ảnh ngoại lai, thay thế bằng hàm `getCategoryFallbackImage()` trả về ảnh Cloudinary Tri Tôn sắc nét và chuẩn xác theo từng cụm danh lam thắng cảnh.
+### 🧹 Thanh Lọc Toàn Diện Ký Tự Đặc Biệt & Markdown Artifacts (`##`, `**`, `***`, `!!!`)
+- **Bộ Lọc Chuẩn Hóa Văn Bản Tự Động (`cleanMarkdownFormatting` trong `dataSanitizer.ts`)**:
+  - Tự động bóc tách và loại bỏ hoàn toàn các ký tự Markdown (`###`, `##`, `#`, `**`, `***`, `__`, `_`), các tiền tố câu lệnh AI (`Dưới đây là bản biên tập...`, `Thông Tin Thực Tế Về...`), gạch đầu dòng và dấu chấm than lặp lại (`!!!`).
+  - Đảm bảo 100% các đoạn mô tả ngắn trên toàn bộ thẻ Card (Khung giờ vàng, Cụm xã, Top Hot, Ẩm thực) hiển thị dưới dạng văn bản tự nhiên, trong sáng và không còn bất kỳ ký tự lập trình lạ nào.
+- **Thanh Lọc Trực Tiếp Vào Cơ Sở Dữ Liệu (`clean_database_markdown_artifacts.py`)**:
+  - Quét sạch và chuẩn hóa lại trường `description` của toàn bộ các địa điểm trong Supabase PostgreSQL và tệp Master JSON `triton_pois_full.json`.
 
 ---
 
