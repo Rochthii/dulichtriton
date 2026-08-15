@@ -22,25 +22,31 @@ export default function AdminSidebar() {
       href: '/admin',
       label: 'Tổng Quan Hệ Thống',
       icon: LayoutDashboard,
-      badge: 'Real-time',
+      badge: 'Live',
+    },
+    {
+      href: '/admin/places',
+      label: 'Quản Lý 149 Địa Điểm',
+      icon: MapPin,
+      badge: '149 Master',
+    },
+    {
+      href: '/admin/itineraries',
+      label: 'Quản Lý 35 Lịch Trình',
+      icon: FileCheck,
+      badge: '35 Tours',
     },
     {
       href: '/admin/videos',
       label: 'Quản Lý Video TikTok',
       icon: Video,
-      badge: 'Live',
+      badge: 'Media',
     },
     {
-      href: '/admin/chat-logs',
-      label: 'AI Chat Logs & RAG',
+      href: '/admin/feedback',
+      label: 'Hộp Thư Báo Lỗi Thực Địa',
       icon: MessageSquareCode,
-      badge: 'Observability',
-    },
-    {
-      href: '/admin/places',
-      label: 'Master Data 95 POI',
-      icon: MapPin,
-      badge: 'Master',
+      badge: 'Feedback',
     },
   ];
 

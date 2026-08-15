@@ -20,6 +20,28 @@ function logAudit(action: string, resourceId: string, details: Record<string, un
   ).catch(e => console.warn('[AuditLog] Error:', e));
 }
 
+// Helper to generate Gemini Vector Embedding (768d)
+async function generateEmbedding(text: string): Promise<number[] | null> {
+  const geminiKey = process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY_2;
+  if (!geminiKey) return null;
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${geminiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'models/gemini-embedding-001',
+        content: { parts: [{ text: text.slice(0, 2000) }] },
+        outputDimensionality: 768,
+      }),
+    });
+    const data = await res.json();
+    return data?.embedding?.values || null;
+  } catch (err) {
+    console.warn('[VectorEmbedding] Warning:', err);
+    return null;
+  }
+}
+
 // GET: Fetch places with commune, category & keyword search
 export async function GET(req: NextRequest) {
   try {
@@ -30,7 +52,7 @@ export async function GET(req: NextRequest) {
 
     let query = supabase
       .from('places')
-      .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, is_hot, video_url, latitude, longitude, opening_hours, created_at')
+      .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours, created_at, updated_at')
       .order('name', { ascending: true });
 
     if (commune && commune !== 'ALL') {
@@ -38,7 +60,7 @@ export async function GET(req: NextRequest) {
     }
 
     if (category && category !== 'ALL') {
-      query = query.ilike('category', `%${category}%`);
+      query = query.or(`category.ilike.%${category}%,tourism_category.ilike.%${category}%`);
     }
 
     if (search && search.trim()) {
@@ -62,7 +84,11 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, commune, category, rating, image_url, description, golden_time_windows, video_url, is_hot } = body;
+    const { 
+      name, commune, category, tourism_category, rating, image_url, 
+      description, detailed_story, phone, open_late, night_hours,
+      golden_time_windows, price_level, video_url, is_hot, latitude, longitude, address 
+    } = body;
 
     if (!name || !commune) {
       return NextResponse.json({ error: 'Tên địa điểm và Xã/Thị trấn là bắt buộc' }, { status: 400 });
@@ -76,18 +102,39 @@ export async function POST(req: NextRequest) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
-    const newRecord = {
+    const newRecord: Record<string, unknown> = {
+      id: `${slug}-${Date.now().toString(36)}`,
       slug: `${slug}-${Date.now().toString(36)}`,
       name: name.trim(),
       commune: commune.trim(),
-      category: category || 'Địa điểm nổi bật',
+      district: 'Tri Tôn',
+      province: 'An Giang',
+      category: category || 'general',
+      tourism_category: tourism_category || 'Địa Điểm Tham Quan',
       rating: Number(rating) || 4.8,
       image_url: image_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
       description: description || 'Thông tin địa điểm du lịch mới tại Tri Tôn',
+      detailed_story: detailed_story || description || '',
+      phone: phone || null,
+      open_late: Boolean(open_late),
+      night_hours: night_hours || null,
       golden_time_windows: golden_time_windows || '06:00-08:00 • 16:00-17:30',
+      price_level: price_level || 'Bình dân',
       video_url: video_url || '',
+      latitude: Number(latitude) || 10.42,
+      longitude: Number(longitude) || 105.01,
+      address: address || `${commune.trim()}, Tri Tôn, An Giang`,
       is_hot: Boolean(is_hot),
+      is_active: true,
+      is_verified: true,
     };
+
+    // Generate Vector Embedding automatically
+    const textToEmbed = `${newRecord.name} - ${newRecord.commune} - ${newRecord.tourism_category}. ${newRecord.description}\n${newRecord.detailed_story}`;
+    const embedding = await generateEmbedding(textToEmbed);
+    if (embedding) {
+      newRecord.embedding = embedding;
+    }
 
     const { data, error } = await supabase
       .from('places')
@@ -113,22 +160,45 @@ export async function POST(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json();
-    const { id, is_hot, name, commune, category, rating, image_url, description, golden_time_windows, video_url } = body;
+    const { 
+      id, is_hot, is_active, name, commune, category, tourism_category, rating, 
+      image_url, description, detailed_story, phone, open_late, night_hours,
+      golden_time_windows, price_level, video_url, latitude, longitude, address 
+    } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'Missing POI ID' }, { status: 400 });
     }
 
-    const updatePayload: Record<string, unknown> = {};
+    const updatePayload: Record<string, unknown> = { updated_at: new Date().toISOString() };
     if (is_hot !== undefined) updatePayload.is_hot = is_hot;
+    if (is_active !== undefined) updatePayload.is_active = is_active;
     if (name !== undefined) updatePayload.name = name;
     if (commune !== undefined) updatePayload.commune = commune;
     if (category !== undefined) updatePayload.category = category;
+    if (tourism_category !== undefined) updatePayload.tourism_category = tourism_category;
     if (rating !== undefined) updatePayload.rating = rating;
     if (image_url !== undefined) updatePayload.image_url = image_url;
     if (description !== undefined) updatePayload.description = description;
+    if (detailed_story !== undefined) updatePayload.detailed_story = detailed_story;
+    if (phone !== undefined) updatePayload.phone = phone;
+    if (open_late !== undefined) updatePayload.open_late = open_late;
+    if (night_hours !== undefined) updatePayload.night_hours = night_hours;
     if (golden_time_windows !== undefined) updatePayload.golden_time_windows = golden_time_windows;
+    if (price_level !== undefined) updatePayload.price_level = price_level;
     if (video_url !== undefined) updatePayload.video_url = video_url;
+    if (latitude !== undefined) updatePayload.latitude = Number(latitude);
+    if (longitude !== undefined) updatePayload.longitude = Number(longitude);
+    if (address !== undefined) updatePayload.address = address;
+
+    // Regenerate Vector Embedding if text changed
+    if (name || description || detailed_story || commune) {
+      const textToEmbed = `${name || ''} - ${commune || ''} - ${tourism_category || category || ''}. ${description || ''}\n${detailed_story || ''}`;
+      const embedding = await generateEmbedding(textToEmbed);
+      if (embedding) {
+        updatePayload.embedding = embedding;
+      }
+    }
 
     const { data, error } = await supabase
       .from('places')
@@ -161,13 +231,13 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Missing POI ID' }, { status: 400 });
     }
 
-    const { error } = await supabase.from('places').delete().eq('id', id);
+    const { error } = await supabase.from('places').update({ is_active: false }).eq('id', id);
     if (error) {
       console.error('[AdminPlaces DELETE Error]:', error);
       throw error;
     }
 
-    logAudit('DELETE_POI', id, { deleted_at: new Date().toISOString() });
+    logAudit('DEACTIVATE_POI', id, { deactivated_at: new Date().toISOString() });
 
     return NextResponse.json({ success: true, id });
   } catch (err: unknown) {

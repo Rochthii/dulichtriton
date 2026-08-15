@@ -16,6 +16,13 @@ import {
   Plus,
   Trash2,
   Image as ImageIcon,
+  Moon,
+  Phone,
+  Compass,
+  FileText,
+  DollarSign,
+  AlertCircle,
+  Database,
 } from 'lucide-react';
 
 interface PlaceRecord {
@@ -24,41 +31,124 @@ interface PlaceRecord {
   name: string;
   commune: string;
   category: string;
+  tourism_category?: string;
   rating: number;
   image_url: string;
   description: string;
-  golden_time_windows: string;
+  detailed_story?: string;
+  phone?: string;
+  open_late?: boolean;
+  night_hours?: string;
+  golden_time_windows?: string;
+  price_level?: string;
   video_url?: string;
-  is_hot: boolean;
+  is_hot?: boolean;
+  is_active?: boolean;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  created_at?: string;
+  updated_at?: string;
 }
+
+const communes = [
+  'ALL',
+  'Thị trấn Tri Tôn',
+  'Thị trấn Ba Chúc',
+  'Xã Núi Tô',
+  'Xã Cô Tô',
+  'Xã Ô Lâm',
+  'Xã An Tức',
+  'Xã Châu Lăng',
+  'Xã Lương Phi',
+  'Xã Lương An Trà',
+  'Xã Tà Đảnh',
+  'Xã Tân Tuyến',
+  'Xã Vĩnh Phước',
+  'Xã Vĩnh Gia',
+  'Xã Lạc Quới',
+  'Xã Lê Trì',
+];
+
+const categories = [
+  'ALL',
+  'Danh thắng check-in',
+  'Văn hóa & Tâm linh',
+  'Ẩm thực & Đặc sản',
+  'Quán Cà Phê',
+  'Homestay & Lưu Trú',
+  'Di tích Lịch sử',
+];
 
 export default function AdminPlacesPage() {
   const [places, setPlaces] = useState<PlaceRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [communeFilter, setCommuneFilter] = useState('ALL');
-  
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [nightFilter, setNightFilter] = useState(false);
+
   // Modals state
   const [editingPlace, setEditingPlace] = useState<PlaceRecord | null>(null);
+  const [activeEditTab, setActiveEditTab] = useState<'basic' | 'story' | 'service' | 'media'>('basic');
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [showAuditLogsModal, setShowAuditLogsModal] = useState(false);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [loadingAuditLogs, setLoadingAuditLogs] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
+  const [syncingVector, setSyncingVector] = useState(false);
 
-  const [newPlace, setNewPlace] = useState({
+  const [newPlace, setNewPlace] = useState<Partial<PlaceRecord>>({
     name: '',
     commune: 'Thị trấn Tri Tôn',
     category: 'Danh thắng check-in',
+    tourism_category: 'Địa Điểm Tham Quan',
     rating: 4.8,
     image_url: '',
     description: '',
+    detailed_story: '',
+    phone: '',
+    open_late: false,
+    night_hours: '17:00 - 22:00',
     golden_time_windows: '06:00-08:00 • 16:00-17:30',
+    price_level: 'Bình dân',
     video_url: '',
+    latitude: 10.42,
+    longitude: 105.01,
     is_hot: false,
+    is_active: true,
   });
 
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
+
+  const fetchPlaces = async () => {
+    setLoading(true);
+    try {
+      let url = '/api/v1/admin/places?';
+      if (communeFilter !== 'ALL') url += `commune=${encodeURIComponent(communeFilter)}&`;
+      if (categoryFilter !== 'ALL') url += `category=${encodeURIComponent(categoryFilter)}&`;
+      if (searchQuery.trim()) url += `search=${encodeURIComponent(searchQuery.trim())}&`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data.places) {
+        setPlaces(data.places);
+      }
+    } catch (err) {
+      console.warn('Failed to load places:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaces();
+  }, [communeFilter, categoryFilter]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchPlaces();
+  };
 
   const fetchAuditLogs = async () => {
     setLoadingAuditLogs(true);
@@ -109,7 +199,7 @@ export default function AdminPlacesPage() {
           setNewPlace({ ...newPlace, image_url: firstUrl });
         }
         setStatusMsg(`Đã tải lên thành công ${data.urls.length} hình ảnh Cloudinary!`);
-        setTimeout(() => setStatusMsg(null), 2000);
+        setTimeout(() => setStatusMsg(null), 3000);
       }
     } catch (err) {
       console.warn('Cloudinary upload error:', err);
@@ -118,40 +208,39 @@ export default function AdminPlacesPage() {
     }
   };
 
-  const fetchPlaces = async () => {
-    setLoading(true);
-    try {
-      let url = '/api/v1/admin/places';
-      const params = new URLSearchParams();
-      if (communeFilter !== 'ALL') params.append('commune', communeFilter);
-      if (searchQuery.trim()) params.append('search', searchQuery.trim());
-
-      const res = await fetch(`${url}?${params.toString()}`);
-      const data = await res.json();
-      if (data.places) setPlaces(data.places);
-    } catch (e) {
-      console.warn('Failed to fetch admin places:', e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPlaces();
-  }, [communeFilter]);
-
-  const handleToggleHot = async (id: string, currentStatus: boolean) => {
+  const handleToggleHot = async (place: PlaceRecord) => {
+    const newHotStatus = !place.is_hot;
     try {
       const res = await fetch('/api/v1/admin/places', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, is_hot: !currentStatus }),
+        body: JSON.stringify({ id: place.id, is_hot: newHotStatus }),
       });
       if (res.ok) {
-        setPlaces(prev => prev.map(p => p.id === id ? { ...p, is_hot: !currentStatus } : p));
+        setPlaces(places.map((p) => (p.id === place.id ? { ...p, is_hot: newHotStatus } : p)));
+        setStatusMsg(`Đã ${newHotStatus ? 'gắn' : 'bỏ'} huy hiệu HOT cho "${place.name}"`);
+        setTimeout(() => setStatusMsg(null), 2500);
       }
-    } catch (e) {
-      console.warn('Error toggling hot status:', e);
+    } catch (err) {
+      console.warn('Failed to toggle HOT status:', err);
+    }
+  };
+
+  const handleToggleNight = async (place: PlaceRecord) => {
+    const newNightStatus = !place.open_late;
+    try {
+      const res = await fetch('/api/v1/admin/places', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: place.id, open_late: newNightStatus }),
+      });
+      if (res.ok) {
+        setPlaces(places.map((p) => (p.id === place.id ? { ...p, open_late: newNightStatus } : p)));
+        setStatusMsg(`Đã ${newNightStatus ? 'bật' : 'tắt'} chế độ Mở Muộn Về Đêm cho "${place.name}"`);
+        setTimeout(() => setStatusMsg(null), 2500);
+      }
+    } catch (err) {
+      console.warn('Failed to toggle Night status:', err);
     }
   };
 
@@ -159,38 +248,31 @@ export default function AdminPlacesPage() {
     e.preventDefault();
     if (!editingPlace) return;
 
+    setSyncingVector(true);
     try {
       const res = await fetch('/api/v1/admin/places', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: editingPlace.id,
-          name: editingPlace.name,
-          commune: editingPlace.commune,
-          category: editingPlace.category,
-          rating: editingPlace.rating,
-          image_url: editingPlace.image_url,
-          description: editingPlace.description,
-          golden_time_windows: editingPlace.golden_time_windows,
-          video_url: editingPlace.video_url,
-        }),
+        body: JSON.stringify(editingPlace),
       });
 
       if (res.ok) {
-        setStatusMsg('Đã cập nhật thông tin POI thành công vào CSDL Supabase!');
-        setPlaces(prev => prev.map(p => p.id === editingPlace.id ? editingPlace : p));
-        setTimeout(() => {
-          setEditingPlace(null);
-          setStatusMsg(null);
-        }, 1200);
+        const data = await res.json();
+        setPlaces(places.map((p) => (p.id === editingPlace.id ? { ...p, ...data.place } : p)));
+        setEditingPlace(null);
+        setStatusMsg(`Đã cập nhật dữ liệu & Vector Embeddings 768d cho "${editingPlace.name}"!`);
+        setTimeout(() => setStatusMsg(null), 3500);
       }
-    } catch (e) {
-      console.warn('Error saving POI edit:', e);
+    } catch (err) {
+      console.warn('Failed to save place edit:', err);
+    } finally {
+      setSyncingVector(false);
     }
   };
 
   const handleCreateNew = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSyncingVector(true);
     try {
       const res = await fetch('/api/v1/admin/places', {
         method: 'POST',
@@ -200,553 +282,709 @@ export default function AdminPlacesPage() {
 
       if (res.ok) {
         const data = await res.json();
-        setStatusMsg('Đã tạo thành công địa điểm mới vào CSDL Supabase!');
-        if (data.place) {
-          setPlaces(prev => [data.place, ...prev]);
-        }
-        setTimeout(() => {
-          setIsAddingNew(false);
-          setStatusMsg(null);
-          setNewPlace({
-            name: '',
-            commune: 'Thị trấn Tri Tôn',
-            category: 'Danh thắng check-in',
-            rating: 4.8,
-            image_url: '',
-            description: '',
-            golden_time_windows: '06:00-08:00 • 16:00-17:30',
-            video_url: '',
-            is_hot: false,
-          });
-        }, 1200);
+        setPlaces([data.place, ...places]);
+        setIsAddingNew(false);
+        setNewPlace({
+          name: '',
+          commune: 'Thị trấn Tri Tôn',
+          category: 'Danh thắng check-in',
+          tourism_category: 'Địa Điểm Tham Quan',
+          rating: 4.8,
+          image_url: '',
+          description: '',
+          detailed_story: '',
+          phone: '',
+          open_late: false,
+          night_hours: '17:00 - 22:00',
+          golden_time_windows: '06:00-08:00 • 16:00-17:30',
+          price_level: 'Bình dân',
+          video_url: '',
+          latitude: 10.42,
+          longitude: 105.01,
+          is_hot: false,
+          is_active: true,
+        });
+        setStatusMsg(`Đã thêm địa điểm mới & sinh Vector Embeddings thành công!`);
+        setTimeout(() => setStatusMsg(null), 3500);
       }
-    } catch (e) {
-      console.warn('Error creating place:', e);
+    } catch (err) {
+      console.warn('Failed to create new place:', err);
+    } finally {
+      setSyncingVector(false);
     }
   };
 
-  const handleDeletePlace = async (id: string, name: string) => {
-    if (!confirm(`Bạn có chắc chắn muốn xóa địa điểm "${name}" khỏi CSDL Supabase không?`)) return;
-    try {
-      const res = await fetch(`/api/v1/admin/places?id=${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        setPlaces(prev => prev.filter(p => p.id !== id));
-      }
-    } catch (e) {
-      console.warn('Error deleting place:', e);
-    }
-  };
-
-  const filteredPlaces = places.filter(p => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
-    return p.name.toLowerCase().includes(q) || p.commune.toLowerCase().includes(q);
+  const filteredPlaces = places.filter((p) => {
+    if (nightFilter && !p.open_late) return false;
+    return true;
   });
 
-  const communes = [
-    'ALL',
-    'Thị trấn Tri Tôn',
-    'Thị trấn Ba Chúc',
-    'Xã Châu Lăng',
-    'Xã Núi Tô',
-    'Xã Ô Lâm',
-    'Xã An Tức',
-    'Xã Cô Tô',
-    'Xã Lương Phi',
-  ];
-
   return (
-    <div className="space-y-6 p-4 sm:p-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 text-white p-6 rounded-3xl shadow-xl">
+    <div className="space-y-6">
+      {/* Top Banner Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>CMS Admin Portal · Live Supabase DB</span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
+              CMS Quản Trị Địa Điểm
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-bold text-xs border border-amber-200">
+              149 Master POIs Live
+            </span>
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Quản Lý 149 Địa Điểm Du Lịch Tri Tôn</h1>
-          <p className="text-xs text-slate-300 mt-1">Cập nhật ảnh đại diện, thông tin chi tiết, khung giờ vàng & bật tắt HOT thực tế.</p>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+            Quản Lý 149 Địa Điểm & Rich Content
+          </h1>
+          <p className="text-xs text-slate-500 mt-1">
+            Chỉnh sửa câu chuyện thực địa, gắn hotline đặt bàn, bật chuyên đề Tri Tôn Về Đêm và tự động cập nhật Vector Embeddings 768d cho AI Chatbot.
+          </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={handleOpenAuditLogs}
-            className="px-4 py-2 rounded-xl bg-amber-600/90 hover:bg-amber-600 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-md text-white border border-amber-500/40"
+            type="button"
+            className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
           >
-            <Clock className="w-4 h-4" />
-            <span>Audit Log Viewer</span>
+            <Clock className="w-4 h-4 text-slate-500" />
+            <span>Xem Nhật Ký Audit Log</span>
           </button>
-          <button
-            onClick={fetchPlaces}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors border border-slate-700"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-            <span>Tải Lại CSDL</span>
-          </button>
+
           <button
             onClick={() => setIsAddingNew(true)}
-            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-md text-white"
+            type="button"
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold text-xs shadow-md shadow-emerald-900/10 transition-all cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 text-amber-300" />
             <span>Thêm Địa Điểm Mới</span>
           </button>
         </div>
       </div>
 
-      {/* Filter Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
-        {/* Search */}
-        <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Tìm kiếm địa điểm, xã..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-[#1B4D3E]"
-          />
+      {/* Status Toast */}
+      {statusMsg && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-xs flex items-center justify-between shadow-xs animate-in fade-in duration-300">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>{statusMsg}</span>
+          </div>
+          <button onClick={() => setStatusMsg(null)} className="text-emerald-600 hover:text-emerald-900">
+            <X className="w-4 h-4" />
+          </button>
         </div>
+      )}
 
-        {/* Commune Chips */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none text-xs">
-          {communes.map((com) => (
+      {/* Filter Bar */}
+      <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+        <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Tìm kiếm theo tên địa điểm, xã/thị trấn, mô tả..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B4D3E]/20 focus:border-[#1B4D3E]"
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <select
+              value={communeFilter}
+              onChange={(e) => setCommuneFilter(e.target.value)}
+              aria-label="Lọc theo Xã / Thị trấn"
+              className="px-3 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none"
+            >
+              {communes.map((c) => (
+                <option key={c} value={c}>
+                  {c === 'ALL' ? 'Tất cả Xã / Thị trấn' : c}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              aria-label="Lọc theo Thể loại"
+              className="px-3 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none"
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === 'ALL' ? 'Tất cả Thể loại' : cat}
+                </option>
+              ))}
+            </select>
+
             <button
-              key={com}
-              onClick={() => setCommuneFilter(com)}
-              className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors ${
-                communeFilter === com
-                  ? 'bg-[#1B4D3E] text-white shadow-xs'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              type="button"
+              onClick={() => setNightFilter(!nightFilter)}
+              className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                nightFilter
+                  ? 'bg-purple-900 text-amber-300 border border-purple-700 shadow-xs'
+                  : 'bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100'
               }`}
             >
-              {com === 'ALL' ? 'Tất cả Xã/Thị trấn' : com}
+              <Moon className="w-3.5 h-3.5" />
+              <span>Chỉ Tri Tôn Về Đêm</span>
             </button>
-          ))}
-        </div>
+
+            <button
+              type="submit"
+              className="px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all cursor-pointer"
+            >
+              Lọc Dữ Liệu
+            </button>
+          </div>
+        </form>
       </div>
 
-      {/* Places Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-        {loading ? (
-          <div className="p-12 text-center text-slate-500 space-y-3">
-            <RefreshCw className="w-8 h-8 text-[#1B4D3E] animate-spin mx-auto" />
-            <p className="text-xs font-bold">Đang tải dữ liệu địa điểm từ Supabase CSDL...</p>
+      {/* Table */}
+      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div className="text-xs font-bold text-slate-600">
+            Hiển thị <span className="text-slate-900 font-extrabold">{filteredPlaces.length}</span> địa điểm phù hợp
           </div>
-        ) : filteredPlaces.length === 0 ? (
-          <div className="p-12 text-center text-slate-500 space-y-3">
-            <MapPin className="w-8 h-8 text-slate-300 mx-auto" />
-            <p className="text-xs font-bold">Không tìm thấy địa điểm nào phù hợp.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-700">
-              <thead className="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <button
+            onClick={fetchPlaces}
+            className="flex items-center gap-1 text-xs font-bold text-[#1B4D3E] hover:underline cursor-pointer"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+            <span>Làm mới bảng</span>
+          </button>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
+                <th className="p-4">Địa Điểm & Ảnh</th>
+                <th className="p-4">Khu Vực (Xã/Thị Trấn)</th>
+                <th className="p-4">Chuyên Đề & Đêm</th>
+                <th className="p-4">Hotline Đặt Bàn</th>
+                <th className="p-4 text-center">Trạng Thái HOT</th>
+                <th className="p-4 text-right">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading ? (
                 <tr>
-                  <th className="p-4">Hình ảnh & Tên địa điểm</th>
-                  <th className="p-4">Đơn vị hành chính</th>
-                  <th className="p-4">Thể loại</th>
-                  <th className="p-4">Khung Giờ Vàng</th>
-                  <th className="p-4 text-center">Nổi Bật (HOT)</th>
-                  <th className="p-4 text-right">Thao tác CMS</th>
+                  <td colSpan={6} className="p-12 text-center text-slate-400 font-bold">
+                    <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-emerald-600" />
+                    Đang tải danh sách địa điểm Master từ Supabase...
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {filteredPlaces.map((place) => (
+              ) : filteredPlaces.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="p-12 text-center text-slate-400 font-bold">
+                    Không tìm thấy địa điểm nào phù hợp với bộ lọc.
+                  </td>
+                </tr>
+              ) : (
+                filteredPlaces.map((place) => (
                   <tr key={place.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={place.image_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'}
-                          alt={place.name}
-                          className="w-12 h-12 rounded-xl object-cover border border-slate-200 shrink-0"
-                        />
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
+                          {place.image_url ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={place.image_url} alt={place.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-300">
+                              <ImageIcon className="w-5 h-5" />
+                            </div>
+                          )}
+                        </div>
                         <div>
-                          <h4 className="font-extrabold text-slate-900 text-sm line-clamp-1">{place.name}</h4>
-                          <span className="text-[10px] text-slate-400 font-mono">ID: {place.id.slice(0, 8)}...</span>
+                          <div className="font-extrabold text-slate-900 text-sm flex items-center gap-1.5">
+                            <span>{place.name}</span>
+                            {place.is_hot && (
+                              <span className="px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-black">
+                                HOT
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-slate-500 text-[11px] line-clamp-1 mt-0.5 max-w-xs">
+                            {place.description || 'Chưa có mô tả ngắn.'}
+                          </div>
                         </div>
                       </div>
                     </td>
-                    <td className="p-4 font-semibold text-slate-800">
+
+                    <td className="p-4 font-bold text-slate-700">
                       <div className="flex items-center gap-1">
                         <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                         <span>{place.commune}</span>
                       </div>
                     </td>
+
                     <td className="p-4">
-                      <span className="px-2.5 py-1 rounded-md bg-amber-50 text-amber-800 border border-amber-200 font-medium text-[11px]">
-                        {place.category}
-                      </span>
-                    </td>
-                    <td className="p-4 text-slate-600">
-                      <div className="flex items-center gap-1 text-[11px]">
-                        <Clock className="w-3 h-3 text-slate-400 shrink-0" />
-                        <span className="truncate max-w-[140px]">
-                          {Array.isArray(place.golden_time_windows)
-                            ? place.golden_time_windows.join(' • ')
-                            : (place.golden_time_windows || 'N/A')}
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-bold text-[11px]">
+                          {place.tourism_category || place.category}
                         </span>
+                        {place.open_late && (
+                          <span className="px-2 py-0.5 rounded-md bg-purple-100 text-purple-800 font-extrabold text-[11px] flex items-center gap-1">
+                            <Moon className="w-3 h-3" />
+                            <span>Mở Muộn ({place.night_hours || 'Tối'})</span>
+                          </span>
+                        )}
                       </div>
                     </td>
+
+                    <td className="p-4">
+                      {place.phone ? (
+                        <a
+                          href={`tel:${place.phone}`}
+                          className="inline-flex items-center gap-1 font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-200 text-[11px]"
+                        >
+                          <Phone className="w-3 h-3" />
+                          <span>{place.phone}</span>
+                        </a>
+                      ) : (
+                        <span className="text-slate-400 italic text-[11px]">Chưa gắn</span>
+                      )}
+                    </td>
+
                     <td className="p-4 text-center">
                       <button
-                        onClick={() => handleToggleHot(place.id, place.is_hot)}
-                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full font-bold text-[11px] transition-all cursor-pointer ${
+                        onClick={() => handleToggleHot(place)}
+                        type="button"
+                        className={`p-2 rounded-xl border transition-all cursor-pointer ${
                           place.is_hot
-                            ? 'bg-rose-500 text-white shadow-xs hover:bg-rose-600'
-                            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                            ? 'bg-amber-500 text-white border-amber-600 shadow-xs'
+                            : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'
                         }`}
+                        title={place.is_hot ? 'Bấm để bỏ HOT' : 'Bấm để bật HOT'}
                       >
-                        <Flame className={`w-3 h-3 ${place.is_hot ? 'fill-white' : ''}`} />
-                        <span>{place.is_hot ? 'HOT #1' : 'Bình thường'}</span>
+                        <Flame className="w-4 h-4 fill-current" />
                       </button>
                     </td>
+
                     <td className="p-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-1.5">
                         <button
-                          onClick={() => setEditingPlace(place)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-emerald-700 text-white font-bold text-[11px] flex items-center gap-1 transition-colors shadow-xs"
+                          onClick={() => handleToggleNight(place)}
+                          type="button"
+                          className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                            place.open_late
+                              ? 'bg-purple-900 text-amber-300 border-purple-700'
+                              : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'
+                          }`}
+                          title="Bật/Tắt chế độ Mở Muộn Về Đêm"
                         >
-                          <Edit className="w-3 h-3" />
-                          <span>Chỉnh Sửa</span>
+                          <Moon className="w-4 h-4" />
                         </button>
+
                         <button
-                          onClick={() => handleDeletePlace(place.id, place.name)}
-                          className="p-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors"
-                          title="Xóa khỏi CSDL"
+                          onClick={() => {
+                            setEditingPlace(place);
+                            setActiveEditTab('basic');
+                          }}
+                          type="button"
+                          className="p-2 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-600 border border-slate-200 transition-all cursor-pointer"
+                          title="Chỉnh sửa chi tiết"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          <Edit className="w-4 h-4" />
                         </button>
+
+                        <a
+                          href={`/places/${place.id || place.slug}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition-all"
+                          title="Xem trang du khách"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
                       </div>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* Edit POI Modal */}
+      {/* Edit Place Modal */}
       {editingPlace && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden space-y-4 p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-              <h3 className="font-extrabold text-lg text-slate-900 flex items-center gap-2">
-                <Edit className="w-5 h-5 text-emerald-600" />
-                <span>Chỉnh Sửa Chi Tiết Địa Điểm (CMS)</span>
-              </h3>
-              <button onClick={() => setEditingPlace(null)} className="p-1 text-slate-400 hover:text-slate-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {statusMsg && (
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>{statusMsg}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSaveEdit} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tên Địa Điểm:</label>
-                  <input
-                    type="text"
-                    value={editingPlace.name}
-                    onChange={(e) => setEditingPlace({ ...editingPlace, name: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Xã / Thị Trấn:</label>
-                  <select
-                    value={editingPlace.commune}
-                    onChange={(e) => setEditingPlace({ ...editingPlace, commune: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
-                  >
-                    {communes.filter(c => c !== 'ALL').map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
+          <div className="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
-                <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện (Cloudinary / Unsplash):</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={editingPlace.image_url || ''}
-                    onChange={(e) => setEditingPlace({ ...editingPlace, image_url: e.target.value })}
-                    className="flex-1 p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                    placeholder="https://..."
-                  />
-                  {editingPlace.image_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={editingPlace.image_url} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-slate-300" />
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Thể Loại:</label>
-                  <input
-                    type="text"
-                    value={editingPlace.category}
-                    onChange={(e) => setEditingPlace({ ...editingPlace, category: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                  />
-                </div>
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Khung Giờ Vàng (Golden Time):</label>
-                  <input
-                    type="text"
-                    value={editingPlace.golden_time_windows || ''}
-                    onChange={(e) => setEditingPlace({ ...editingPlace, golden_time_windows: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="font-bold text-slate-700 block mb-1">Mô Tả Chi Tiết:</label>
-                <textarea
-                  rows={3}
-                  value={editingPlace.description || ''}
-                  onChange={(e) => setEditingPlace({ ...editingPlace, description: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setEditingPlace(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
-                >
-                  Hủy bỏ
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold shadow-md"
-                >
-                  Lưu Vào CSDL Supabase
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Add New POI Modal */}
-      {isAddingNew && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden space-y-4 p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-              <h3 className="font-extrabold text-lg text-slate-900 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-emerald-600" />
-                <span>Thêm Địa Điểm Mới Vào CSDL (CMS)</span>
-              </h3>
-              <button onClick={() => setIsAddingNew(false)} className="p-1 text-slate-400 hover:text-slate-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {statusMsg && (
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>{statusMsg}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleCreateNew} className="space-y-4 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Tên Địa Điểm Mới (*):</label>
-                  <input
-                    type="text"
-                    value={newPlace.name}
-                    onChange={(e) => setNewPlace({ ...newPlace, name: e.target.value })}
-                    placeholder="Ví dụ: Chùa Tà Pạ..."
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Xã / Thị Trấn (*):</label>
-                  <select
-                    value={newPlace.commune}
-                    onChange={(e) => setNewPlace({ ...newPlace, commune: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
-                  >
-                    {communes.filter(c => c !== 'ALL').map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện (Cloudinary / Unsplash):</label>
                 <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={newPlace.image_url}
-                    onChange={(e) => setNewPlace({ ...newPlace, image_url: e.target.value })}
-                    placeholder="https://images.unsplash.com/..."
-                    className="flex-1 p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                  />
-                  <label className="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs cursor-pointer flex items-center gap-1.5 shrink-0 border border-slate-700">
-                    <ImageIcon className="w-4 h-4 text-amber-400" />
-                    <span>{uploadingImages ? 'Đang tải...' : 'Upload Cloudinary'}</span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 font-bold text-[10px]">
+                    ID: {editingPlace.id}
+                  </span>
+                  <span className="text-xs text-slate-500 font-bold">Chỉnh sửa địa điểm Master</span>
+                </div>
+                <h3 className="font-black text-lg text-slate-900 mt-0.5">{editingPlace.name}</h3>
+              </div>
+              <button
+                onClick={() => setEditingPlace(null)}
+                className="p-2 rounded-full hover:bg-slate-200 text-slate-500 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Tabs */}
+            <div className="flex border-b border-slate-200 bg-slate-100 px-5 gap-2 text-xs font-bold">
+              <button
+                onClick={() => setActiveEditTab('basic')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeEditTab === 'basic'
+                    ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white'
+                    : 'border-transparent text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                1. Thông Tin Cơ Bản
+              </button>
+              <button
+                onClick={() => setActiveEditTab('story')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeEditTab === 'story'
+                    ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white'
+                    : 'border-transparent text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                2. Câu Chuyện & Lịch Sử (Rich Story)
+              </button>
+              <button
+                onClick={() => setActiveEditTab('service')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeEditTab === 'service'
+                    ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white'
+                    : 'border-transparent text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                3. Đêm & Hotline Đặt Chỗ
+              </button>
+              <button
+                onClick={() => setActiveEditTab('media')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeEditTab === 'media'
+                    ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white'
+                    : 'border-transparent text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                4. Ảnh Cloudinary & Video
+              </button>
+            </div>
+
+            {/* Modal Form Content */}
+            <form onSubmit={handleSaveEdit} className="p-6 overflow-y-auto flex-1 space-y-4 text-xs">
+              {activeEditTab === 'basic' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Tên Địa Điểm:</label>
+                      <input
+                        type="text"
+                        value={editingPlace.name}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, name: e.target.value })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Xã / Thị Trấn:</label>
+                      <select
+                        value={editingPlace.commune}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, commune: e.target.value })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      >
+                        {communes.filter((c) => c !== 'ALL').map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Phân Nhóm Du Lịch:</label>
+                      <select
+                        value={editingPlace.tourism_category || editingPlace.category}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, tourism_category: e.target.value })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      >
+                        <option value="Danh thắng check-in">Danh thắng check-in</option>
+                        <option value="Văn hóa & Tâm linh">Văn hóa & Tâm linh</option>
+                        <option value="Ẩm thực & Đặc sản">Ẩm thực & Đặc sản</option>
+                        <option value="Quán Cà Phê">Quán Cà Phê</option>
+                        <option value="Homestay & Lưu Trú">Homestay & Lưu Trú</option>
+                        <option value="Di tích Lịch sử">Di tích Lịch sử</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Đánh Giá (Rating / 5.0):</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="1"
+                        max="5"
+                        value={editingPlace.rating}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, rating: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Vĩ độ (Latitude):</label>
+                      <input
+                        type="number"
+                        step="0.000001"
+                        value={editingPlace.latitude || 10.42}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, latitude: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Kinh độ (Longitude):</label>
+                      <input
+                        type="number"
+                        step="0.000001"
+                        value={editingPlace.longitude || 105.01}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, longitude: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Mô Tả Ngắn:</label>
+                    <textarea
+                      rows={2}
+                      value={editingPlace.description || ''}
+                      onChange={(e) => setEditingPlace({ ...editingPlace, description: e.target.value })}
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeEditTab === 'story' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">
+                      Câu Chuyện Chi Tiết & Sự Tích Bảy Núi (Detailed Story):
+                    </label>
+                    <textarea
+                      rows={8}
+                      value={editingPlace.detailed_story || ''}
+                      onChange={(e) => setEditingPlace({ ...editingPlace, detailed_story: e.target.value })}
+                      placeholder="Nhập câu chuyện lịch sử, sự tích hồ/chùa, nguồn gốc tên gọi..."
+                      className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs leading-relaxed"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Khung Giờ Vàng Check-in:</label>
+                    <input
+                      type="text"
+                      value={editingPlace.golden_time_windows || ''}
+                      onChange={(e) => setEditingPlace({ ...editingPlace, golden_time_windows: e.target.value })}
+                      placeholder="05:30–07:00 • 16:00–17:30"
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeEditTab === 'service' && (
+                <div className="space-y-4">
+                  <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Moon className="w-5 h-5 text-purple-700" />
+                        <div>
+                          <div className="font-bold text-purple-900">Chuyên Đề "Tri Tôn Về Đêm"</div>
+                          <div className="text-[11px] text-purple-600">Bật nếu địa điểm mở cửa phục vụ sau 17:30</div>
+                        </div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(editingPlace.open_late)}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, open_late: e.target.checked })}
+                        className="w-5 h-5 rounded text-purple-700 focus:ring-purple-500"
+                      />
+                    </div>
+
+                    {editingPlace.open_late && (
+                      <div>
+                        <label className="font-bold text-purple-900 block mb-1">Khung Giờ Mở Cửa Buổi Tối:</label>
+                        <input
+                          type="text"
+                          value={editingPlace.night_hours || ''}
+                          onChange={(e) => setEditingPlace({ ...editingPlace, night_hours: e.target.value })}
+                          placeholder="17:00 - 22:30"
+                          className="w-full p-2 rounded-xl bg-white border border-purple-200 font-bold text-xs"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Hotline Đặt Bàn / Liên Hệ:</label>
+                      <input
+                        type="text"
+                        value={editingPlace.phone || ''}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, phone: e.target.value })}
+                        placeholder="0296 3874 113 / 09xx..."
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Mức Giá / Vé Tham Quan:</label>
+                      <input
+                        type="text"
+                        value={editingPlace.price_level || ''}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, price_level: e.target.value })}
+                        placeholder="Miễn phí / 20k - 50k / 250k - 350k/con"
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeEditTab === 'media' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Tải Ảnh Lên Cloudinary:</label>
                     <input
                       type="file"
                       accept="image/*"
-                      multiple
-                      className="hidden"
-                      onChange={(e) => handleCloudinaryUpload(e, false)}
+                      onChange={(e) => handleCloudinaryUpload(e, true)}
+                      disabled={uploadingImages}
+                      className="w-full p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white"
                     />
-                  </label>
-                </div>
-              </div>
+                    {uploadingImages && (
+                      <div className="text-emerald-700 font-bold text-[11px] mt-1 flex items-center gap-1">
+                        <RefreshCw className="w-3 h-3 animate-spin" /> Đang tải ảnh lên Cloudinary...
+                      </div>
+                    )}
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Thể Loại:</label>
-                  <input
-                    type="text"
-                    value={newPlace.category}
-                    onChange={(e) => setNewPlace({ ...newPlace, category: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                  />
-                </div>
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Khung Giờ Vàng:</label>
-                  <input
-                    type="text"
-                    value={newPlace.golden_time_windows}
-                    onChange={(e) => setNewPlace({ ...newPlace, golden_time_windows: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                  />
-                </div>
-              </div>
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện:</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={editingPlace.image_url || ''}
+                        onChange={(e) => setEditingPlace({ ...editingPlace, image_url: e.target.value })}
+                        className="flex-1 p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                      {editingPlace.image_url && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={editingPlace.image_url}
+                          alt="Preview"
+                          className="w-12 h-12 rounded-xl object-cover border border-slate-300"
+                        />
+                      )}
+                    </div>
+                  </div>
 
-              <div>
-                <label className="font-bold text-slate-700 block mb-1">Mô Tả Địa Điểm:</label>
-                <textarea
-                  rows={3}
-                  value={newPlace.description}
-                  onChange={(e) => setNewPlace({ ...newPlace, description: e.target.value })}
-                  placeholder="Nhập giới thiệu địa điểm..."
-                  className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                />
-              </div>
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Link Video TikTok Trực Tiếp:</label>
+                    <input
+                      type="text"
+                      value={editingPlace.video_url || ''}
+                      onChange={(e) => setEditingPlace({ ...editingPlace, video_url: e.target.value })}
+                      placeholder="https://www.tiktok.com/@user/video/..."
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                    />
+                  </div>
+                </div>
+              )}
 
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsAddingNew(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
-                >
-                  Hủy bỏ
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md"
-                >
-                  Tạo Địa Điểm CSDL
-                </button>
+              {/* Modal Action Buttons */}
+              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-[11px]">
+                  <Database className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Tự động sinh Vector Embeddings 768d khi bấm Lưu</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditingPlace(null)}
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
+                  >
+                    Hủy bỏ
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={syncingVector}
+                    className="px-5 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    {syncingVector ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Đang Cập Nhật Vector...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-300" />
+                        <span>Lưu & Đồng Bộ Vector</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Audit Log Viewer Modal */}
+      {/* Audit Logs Modal */}
       {showAuditLogsModal && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
-            
-            {/* Modal Header */}
-            <div className="p-6 bg-slate-900 text-white flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">
-                  <Clock className="w-4 h-4 text-amber-400" />
-                  <span>Immutable System Audit Trail</span>
-                </div>
-                <h3 className="font-extrabold text-xl text-white">Nhật Ký Thao Tác Hệ Thống (Audit Log Viewer)</h3>
-              </div>
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-2xl max-h-[85vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <h3 className="font-extrabold text-base text-slate-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-emerald-600" />
+                <span>Nhật Ký Quản Trị Bất Biến (Audit Logs)</span>
+              </h3>
               <button
                 onClick={() => setShowAuditLogsModal(false)}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                className="p-1.5 rounded-full hover:bg-slate-200 text-slate-500 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal Body / Table */}
-            <div className="p-6 overflow-y-auto space-y-4 flex-1">
+            <div className="p-4 overflow-y-auto flex-1 space-y-2 text-xs">
               {loadingAuditLogs ? (
-                <div className="py-12 text-center text-slate-500 font-bold flex flex-col items-center gap-2">
-                  <RefreshCw className="w-6 h-6 animate-spin text-amber-500" />
-                  <span>Đang truy vấn nhật ký thao tác từ CSDL...</span>
-                </div>
+                <div className="text-center py-8 text-slate-400">Đang tải lịch sử audit logs...</div>
               ) : auditLogs.length === 0 ? (
-                <div className="py-12 text-center text-slate-400 font-bold">Chưa có bản ghi nhật ký thao tác nào.</div>
+                <div className="text-center py-8 text-slate-400">Chưa có bản ghi audit log nào.</div>
               ) : (
-                <div className="space-y-3">
-                  {auditLogs.map((log) => {
-                    const isCreate = log.action.includes('CREATE');
-                    const isDelete = log.action.includes('DELETE');
-                    return (
-                      <div
-                        key={log.id}
-                        className="p-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
-                      >
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`px-2.5 py-0.5 rounded-full font-extrabold text-[10px] ${
-                                isCreate
-                                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                                  : isDelete
-                                  ? 'bg-rose-100 text-rose-800 border border-rose-300'
-                                  : 'bg-amber-100 text-amber-900 border border-amber-300'
-                              }`}
-                            >
-                              {log.action}
-                            </span>
-                            <span className="font-extrabold text-slate-900">{log.user_name || 'Admin'}</span>
-                            <span className="text-slate-400">({log.user_role || 'ADMIN'})</span>
-                          </div>
-                          <p className="text-slate-700 font-mono text-[11px] truncate max-w-lg">
-                            Resource ID: <span className="font-bold text-slate-900">{log.resource_id}</span> • Details:{' '}
-                            {JSON.stringify(log.details)}
-                          </p>
-                        </div>
-                        <div className="text-[11px] font-semibold text-slate-500 shrink-0">
-                          {new Date(log.created_at).toLocaleString('vi-VN')}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                auditLogs.map((log, idx) => (
+                  <div key={idx} className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center justify-between text-[11px] mb-1">
+                      <span className="font-extrabold text-emerald-800">{log.action}</span>
+                      <span className="text-slate-400 font-mono">
+                        {log.created_at ? new Date(log.created_at).toLocaleString('vi-VN') : ''}
+                      </span>
+                    </div>
+                    <div className="text-slate-600 font-mono text-[10px] truncate">
+                      {JSON.stringify(log.changes || log.details || {})}
+                    </div>
+                  </div>
+                ))
               )}
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-4 bg-slate-100 border-t border-slate-200 flex items-center justify-between text-xs font-bold text-slate-600">
-              <span>Tổng số bản ghi: {auditLogs.length}</span>
-              <button
-                onClick={() => setShowAuditLogsModal(false)}
-                className="px-4 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors"
-              >
-                Đóng Viewer
-              </button>
             </div>
           </div>
         </div>
