@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ShieldCheck, Lock, Mail, Eye, EyeOff, ArrowRight, AlertCircle, Sparkles } from 'lucide-react';
+import AppLogo from '@/components/AppLogo';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -53,8 +54,8 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md bg-slate-900/90 backdrop-blur-md rounded-3xl p-8 border border-slate-800 shadow-2xl relative z-10 space-y-6">
         {/* Header Branding */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-[#1B4D3E] text-amber-300 flex items-center justify-center mx-auto border border-emerald-500/30 shadow-lg">
-            <ShieldCheck className="w-7 h-7" />
+          <div className="flex justify-center">
+            <AppLogo size="xl" variant="emblem" />
           </div>
           <h1 className="font-heading font-extrabold text-2xl text-white tracking-tight">
             Đăng Nhập Quản Trị Hệ Thống

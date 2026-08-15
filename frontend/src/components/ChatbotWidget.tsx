@@ -11,6 +11,7 @@ import { getGoogleMapsUrl } from '@/lib/utils';
 import FormattedChatMessage from './FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from './WireDiagramItinerary';
 import ItineraryPresetPicker from './ItineraryPresetPicker';
+import AppLogo from './AppLogo';
 
 interface EmbeddedSpot {
   type?: string;
@@ -427,9 +428,7 @@ export default function ChatbotWidget() {
           {/* Header */}
           <div className="bg-[#0E8C7F] text-white px-4 py-3 sm:py-3.5 flex items-center justify-between border-b border-[#0B6B60] shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-[#0B6B60] border border-[#FFD37A]/40 flex items-center justify-center shadow-xs">
-                <Bot className="w-5 h-5 text-[#FFD37A]" />
-              </div>
+              <AppLogo size="sm" variant="emblem" />
               <div>
                 <h3 className="font-display font-bold text-sm sm:text-base leading-none flex items-center gap-2 text-[#FFFDF7]">
                   Trợ Lý AI Tri Tôn

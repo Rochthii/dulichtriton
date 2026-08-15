@@ -9,6 +9,7 @@ import {
 import FormattedChatMessage from '@/components/FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from '@/components/WireDiagramItinerary';
 import ItineraryPresetPicker from '@/components/ItineraryPresetPicker';
+import AppLogo from '@/components/AppLogo';
 import { getGoogleMapsUrl } from '@/lib/utils';
 
 interface EmbeddedSpot {
@@ -370,9 +371,7 @@ export default function ChatbotPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
 
-          <div className="w-9 h-9 rounded-2xl bg-[#0B6B60] border border-[#FFD37A]/50 flex items-center justify-center shadow-xs shrink-0">
-            <Bot className="w-5 h-5 text-[#FFD37A]" />
-          </div>
+          <AppLogo size="sm" variant="emblem" />
 
           <div>
             <h1 className="font-display font-extrabold text-sm sm:text-base flex items-center gap-2 leading-none text-[#FFFDF7]">
