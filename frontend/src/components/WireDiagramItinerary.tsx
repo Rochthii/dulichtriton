@@ -19,9 +19,11 @@ import {
   BarChart3,
   CheckCircle2,
   Printer,
-  QrCode
+  QrCode,
+  Info
 } from 'lucide-react';
 import ItineraryExportModal from './ItineraryExportModal';
+import localMasterPois from '@/data/triton_pois_full.json';
 
 export interface ItineraryStop {
   order: number;
@@ -32,6 +34,8 @@ export interface ItineraryStop {
   time_end: string;
   duration_min: number;
   tip: string;
+  description?: string;
+  intro?: string;
   travel_to_next_min: number;
   travel_to_next_km: number;
   photo_coords?: [number, number];
@@ -70,12 +74,69 @@ const CATEGORY_CONFIG: Record<string, { bg: string; text: string; border: string
 
 function getTikTokUrl(name: string, commune: string): string {
   const q = encodeURIComponent(`${name} ${commune} Tri Tôn`);
-  return `https://www.tiktok.com/search?q=${q}`;
+  return `https://www.tiktok.com/search/video?q=${q}`;
 }
 
 function getMapsUrl(name: string, commune: string): string {
   const q = encodeURIComponent(`${name} ${commune} Tri Tôn An Giang`);
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+
+function getPlaceSummary(stopName: string, stopDesc?: string): string {
+  if (stopDesc && stopDesc.trim().length > 15) return stopDesc;
+
+  const normalized = stopName.toLowerCase().replace(/[()]/g, '').trim();
+
+  // 1. Search directly in master 149 POIs
+  const found = (localMasterPois as any[]).find((p) => {
+    const pName = p.name.toLowerCase();
+    const pId = p.id.toLowerCase();
+    const pSlug = (p.slug || '').toLowerCase();
+    return (
+      pName.includes(normalized) ||
+      normalized.includes(pName) ||
+      normalized.includes(pId) ||
+      (pSlug && normalized.includes(pSlug))
+    );
+  });
+
+  if (found && found.description) {
+    return found.description;
+  }
+
+  // 2. Curated descriptive summaries for common tour stops
+  if (normalized.includes('tuyến tránh') || normalized.includes('đt941') || normalized.includes('đt948')) {
+    return 'Cung đường nhựa phẳng phiu uốn lượn tuyệt đẹp giữa cánh đồng lúa và dãy núi Thất Sơn, là điểm hóng gió, ngắm hoàng hôn đỏ rực và chụp ảnh thốt nốt lý tưởng.';
+  }
+  if (normalized.includes('chợ đêm') || normalized.includes('phố đi bộ')) {
+    return 'Khu ẩm thực đêm sôi động nhất trung tâm Tri Tôn với hàng chục quầy xiên que nướng khói thơm nức, chè thốt nốt cốt dừa, lẩu bò và các món ăn vặt đường phố Khmer.';
+  }
+  if (normalized.includes('gà đốt') || normalized.includes('ô thum')) {
+    return 'Thưởng thức món đặc sản gà đồi ướp lá chúc nướng than giòn da thơm nức bên lòng hồ Ô Thum trong lành mát rượi.';
+  }
+  if (normalized.includes('tà pạ') || normalized.includes('tuyệt tình cốc')) {
+    return 'Hồ nước ngọt xanh ngọc bích nằm trên đỉnh đồi Tà Pạ, bao quanh bởi vách đá dựng đứng và rặng thốt nốt cổ thụ nhìn ra cánh đồng lúa Bảy Núi.';
+  }
+  if (normalized.includes('chùa xà tón') || normalized.includes('xatón')) {
+    return 'Ngôi chùa Khmer cổ kính nhất An Giang (trên 300 năm tuổi), di tích kiến trúc nghệ thuật quốc gia lưu giữ bộ kinh lá buông quý giá.';
+  }
+  if (normalized.includes('hàng còng') || normalized.includes('kraing ta pốch')) {
+    return 'Con đường làng rợp bóng hai hàng cây còng cổ thụ đan vòm xanh mướt, tạo nên khung cảnh thanh bình như trong truyện cổ tích.';
+  }
+  if (normalized.includes('vồ hội') || normalized.includes('cô tô')) {
+    return 'Mỏm đá thần kỳ vươn ra không trung trên đỉnh núi Cô Tô, điểm săn mây bình minh và ngắm trọn vẹn toàn cảnh đồng lúa Tri Tôn.';
+  }
+  if (normalized.includes('tức dụp') || normalized.includes('2 triệu đô')) {
+    return 'Di tích lịch sử hào hùng với hệ thống hang đá tự nhiên kiên cố gắn liền với truyền thuyết kháng chiến oanh liệt của quân dân Bảy Núi.';
+  }
+  if (normalized.includes('thốt nốt trái tim') || normalized.includes('cụm trái tim')) {
+    return 'Cụm cây thốt nốt mọc tự nhiên kết thành hình trái tim độc đáo giữa cánh đồng lúa bát ngát, tọa độ sống ảo triệu view của giới trẻ.';
+  }
+  if (normalized.includes('soài so') || normalized.includes('suối vàng')) {
+    return 'Hồ nước nhân tạo lớn nhất vùng Bảy Núi nép mình dưới chân núi Cô Tô, không khí mát lành với dòng suối Bạc róc rách quanh năm.';
+  }
+
+  return 'Điểm dừng chân trải nghiệm đặc sắc trong hành trình khám phá cảnh sắc và văn hóa bản địa Tri Tôn.';
 }
 
 export default function WireDiagramItinerary({ itinerary }: WireDiagramItineraryProps) {
@@ -173,6 +234,7 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
           const thisDay = stop.day || 1;
           const isNewDay = isMultiDay && thisDay > prevDay;
           const isVisible = visibleStops[idx] || idx === 0;
+          const placeSummary = getPlaceSummary(stop.name, stop.description || stop.intro);
 
           return (
             <div
@@ -240,6 +302,15 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
                         : `${stop.duration_min} phút`}
                     </span>
                   </div>
+
+                  {/* ── GIỚI THIỆU TÓM TẮT ĐỊA ĐIỂM (PLACE SUMMARY / INTRO) ── */}
+                  {placeSummary && (
+                    <div className="text-xs text-slate-700 leading-relaxed font-body mb-2.5 bg-white/80 p-2.5 rounded-xl border border-slate-100 shadow-2xs">
+                      <p className="line-clamp-2">
+                        {placeSummary}
+                      </p>
+                    </div>
+                  )}
 
                   {/* Field Tip (Patrick Hand Handwritten Feel) */}
                   <div className="bg-[#FAF3E7] rounded-xl px-3 py-2 mb-3 border border-[#26221B]/5">
