@@ -35,56 +35,66 @@ export default function FoodPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadLiveFoodData() {
-      try {
-        const json = await fetchWithCache("client-food-places-catalog-v1", async () => {
-          const res = await fetch("/api/v1/food?limit=100");
-          return await res.json();
+    function processFoodData(json: any) {
+      if (json?.food && json.food.length > 0) {
+        const formatted = json.food.map((item: any) => {
+          let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
+          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+            img = item.image_url;
+          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+            const p0 = item.photos[0];
+            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+          }
+
+          return {
+            id: item.id,
+            slug: item.slug || item.id,
+            name: item.name,
+            category: item.category || "gastronomy",
+            tourism_category: item.tourism_category || "Ẩm Thực Đặc Sản",
+            commune: item.commune || "Thị trấn Tri Tôn",
+            rating: item.rating ? Number(item.rating) : 4.8,
+            image_url: img,
+            video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
+            hours: item.night_hours || item.opening_hours || (item.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+            description: item.description || "",
+            open_late: !!item.open_late,
+            night_hours: item.night_hours,
+            phone: item.phone,
+            price_level: item.price_level || "35k - 150k",
+            address: item.address || "",
+            is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
+          };
         });
 
-        if (json.food && json.food.length > 0) {
-          const formatted = json.food.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-              img = item.image_url;
-            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-              const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-            }
+        // Sort Hot & Top rated dishes to the very top!
+        formatted.sort((a: FoodItem, b: FoodItem) => {
+          if (a.is_hot && !b.is_hot) return -1;
+          if (!a.is_hot && b.is_hot) return 1;
+          return (b.rating || 0) - (a.rating || 0);
+        });
 
-            return {
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "gastronomy",
-              tourism_category: item.tourism_category || "Ẩm Thực Đặc Sản",
-              commune: item.commune || "Thị trấn Tri Tôn",
-              rating: item.rating ? Number(item.rating) : 4.8,
-              image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
-              hours: item.night_hours || item.opening_hours || (item.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
-              description: item.description || "",
-              open_late: !!item.open_late,
-              night_hours: item.night_hours,
-              phone: item.phone,
-              price_level: item.price_level || "35k - 150k",
-              address: item.address || "",
-              is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
-            };
-          });
+        setFoods(formatted);
+      }
+    }
 
-          // Sort Hot & Top rated dishes to the very top!
-          formatted.sort((a: FoodItem, b: FoodItem) => {
-            if (a.is_hot && !b.is_hot) return -1;
-            if (!a.is_hot && b.is_hot) return 1;
-            return (b.rating || 0) - (a.rating || 0);
-          });
+    async function loadLiveFoodData() {
+      try {
+        const json = await fetchWithCache(
+          "client-food-places-catalog-v1",
+          async () => {
+            const res = await fetch("/api/v1/food?limit=100");
+            return await res.json();
+          },
+          60 * 60 * 1000,
+          (freshJson) => {
+            // Reactive SWR: Updates UI in real-time when fresh data arrives!
+            processFoodData(freshJson);
+          }
+        );
 
-          setFoods(formatted);
-        } else {
-          fallbackToLocalMaster();
-        }
+        processFoodData(json);
       } catch (err) {
         console.warn("API fetch failed, using local master:", err);
         fallbackToLocalMaster();

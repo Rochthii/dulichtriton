@@ -26,50 +26,60 @@ export default function CulturePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadLiveCultureData() {
-      try {
-        const json = await fetchWithCache("client-culture-catalog-v1", async () => {
-          const res = await fetch("/api/v1/culture?limit=100");
-          return await res.json();
+    function processCultureData(json: any) {
+      const data = json?.culture || [];
+      if (data && data.length > 0) {
+        const formatted = data.map((item: any) => {
+          let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
+          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+            img = item.image_url;
+          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+            const p0 = item.photos[0];
+            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+          }
+          return {
+            id: item.id,
+            slug: item.slug || item.id,
+            name: item.name,
+            category: item.category || "culture",
+            tourism_category: item.tourism_category || "Văn Hóa & Di Tích",
+            commune: item.commune || "Thị trấn Tri Tôn",
+            rating: item.rating ? Number(item.rating) : 4.9,
+            image_url: img,
+            description: item.description || "",
+            is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
+          };
         });
 
-        const data = json?.culture || [];
-        if (data && data.length > 0) {
-          const formatted = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-              img = item.image_url;
-            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-              const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-            }
-            return {
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "culture",
-              tourism_category: item.tourism_category || "Văn Hóa & Di Tích",
-              commune: item.commune || "Thị trấn Tri Tôn",
-              rating: item.rating ? Number(item.rating) : 4.9,
-              image_url: img,
-              description: item.description || "",
-              is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
-            };
-          });
+        formatted.sort((a: CulturePlace, b: CulturePlace) => {
+          if (a.is_hot && !b.is_hot) return -1;
+          if (!a.is_hot && b.is_hot) return 1;
+          return (b.rating || 0) - (a.rating || 0);
+        });
 
-          formatted.sort((a: CulturePlace, b: CulturePlace) => {
-            if (a.is_hot && !b.is_hot) return -1;
-            if (!a.is_hot && b.is_hot) return 1;
-            return (b.rating || 0) - (a.rating || 0);
-          });
+        setCultures(formatted);
+      }
+    }
 
-          setCultures(formatted);
-        } else {
-          fallbackToLocalMaster();
-        }
+    async function loadLiveCultureData() {
+      try {
+        const json = await fetchWithCache(
+          "client-culture-catalog-v1",
+          async () => {
+            const res = await fetch("/api/v1/culture?limit=100");
+            return await res.json();
+          },
+          60 * 60 * 1000,
+          (freshJson) => {
+            // Reactive SWR: Updates UI in real-time when fresh data arrives!
+            processCultureData(freshJson);
+          }
+        );
+
+        processCultureData(json);
       } catch (err) {
-        console.warn("Culture fetch error, fallback:", err);
+        console.warn("API fetch failed, using local master:", err);
         fallbackToLocalMaster();
       } finally {
         setLoading(false);

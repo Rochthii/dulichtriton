@@ -11,6 +11,7 @@
 import { unstable_cache, revalidateTag, revalidatePath } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
 import localMasterPois from '@/data/triton_pois_full.json';
+import { bumpDataVersion } from '@/lib/serverCache';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
@@ -256,6 +257,7 @@ export const getCachedVideos = unstable_cache(
  */
 export function invalidateAllPlacesCache(): void {
   try {
+    bumpDataVersion();
     (revalidateTag as any)('places', { expire: 0 });
     (revalidateTag as any)('food', { expire: 0 });
     (revalidateTag as any)('stays', { expire: 0 });

@@ -35,35 +35,47 @@ export default function PlacesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadLivePlaces() {
-      try {
-        const rawData = await fetchWithCache("client-all-places-catalog-v1", async () => {
-          const { data, error } = await supabase
-            .from("places")
-            .select("*")
-            .eq("is_active", true)
-            .order("rating", { ascending: false });
-          if (!error && data && data.length > 0) return data;
-          return localMasterPois as any[];
+    function processPlacesData(rawData: any[]) {
+      if (rawData && rawData.length > 0) {
+        const list: Place[] = rawData.map((p) => ({
+          ...p,
+          is_hot: Boolean(p.is_hot) || Boolean(p.rating && Number(p.rating) >= 4.8),
+          open_late: Boolean(p.open_late),
+        }));
+
+        list.sort((a, b) => {
+          if (a.is_hot && !b.is_hot) return -1;
+          if (!a.is_hot && b.is_hot) return 1;
+          return (b.rating || 0) - (a.rating || 0);
         });
 
-        if (rawData && rawData.length > 0) {
-          const list: Place[] = (rawData as any[]).map((p) => ({
-            ...p,
-            is_hot: Boolean(p.is_hot) || Boolean(p.rating && Number(p.rating) >= 4.8),
-            open_late: Boolean(p.open_late),
-          }));
+        setPlaces(list);
+      } else {
+        fallbackToLocalMaster();
+      }
+    }
 
-          list.sort((a, b) => {
-            if (a.is_hot && !b.is_hot) return -1;
-            if (!a.is_hot && b.is_hot) return 1;
-            return (b.rating || 0) - (a.rating || 0);
-          });
+    async function loadLivePlaces() {
+      try {
+        const rawData = await fetchWithCache(
+          "client-all-places-catalog-v1",
+          async () => {
+            const { data, error } = await supabase
+              .from("places")
+              .select("*")
+              .eq("is_active", true)
+              .order("rating", { ascending: false });
+            if (!error && data && data.length > 0) return data;
+            return localMasterPois as any[];
+          },
+          60 * 60 * 1000,
+          (freshData) => {
+            // Reactive SWR: Updates UI in real-time when fresh data arrives!
+            processPlacesData(freshData);
+          }
+        );
 
-          setPlaces(list);
-        } else {
-          fallbackToLocalMaster();
-        }
+        processPlacesData(rawData);
       } catch (err) {
         console.warn("Fetch places error, fallback:", err);
         fallbackToLocalMaster();

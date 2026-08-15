@@ -29,54 +29,63 @@ export default function StayPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadLiveStayData() {
-      try {
-        const json = await fetchWithCache("client-stays-catalog-v1", async () => {
-          const res = await fetch("/api/v1/stays?limit=100");
-          return await res.json();
+    function processStayData(json: any) {
+      const data = json?.stays || [];
+      if (data && data.length > 0) {
+        const formatted = data.map((item: any) => {
+          let img = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop";
+          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+            img = item.image_url;
+          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+            const p0 = item.photos[0];
+            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+          }
+          return {
+            id: item.id,
+            slug: item.slug || item.id,
+            name: item.name,
+            category: item.category || "stay",
+            tourism_category: item.tourism_category || "Homestay & Lưu Trú",
+            commune: item.commune || "Thị trấn Tri Tôn",
+            rating: item.rating ? Number(item.rating) : 4.8,
+            image_url: img,
+            video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
+            address: item.address || "",
+            phone: item.phone || "",
+            description: item.description || "",
+            is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
+          };
         });
 
-        const data = json?.stays || [];
-        if (data && data.length > 0) {
-          const formatted = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-              img = item.image_url;
-            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-              const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-            }
-            return {
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "stay",
-              tourism_category: item.tourism_category || "Homestay & Lưu Trú",
-              commune: item.commune || "Thị trấn Tri Tôn",
-              rating: item.rating ? Number(item.rating) : 4.8,
-              image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
-              address: item.address || "",
-              phone: item.phone || "",
-              description: item.description || "",
-              is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
-            };
-          });
+        formatted.sort((a: StayItem, b: StayItem) => {
+          if (a.is_hot && !b.is_hot) return -1;
+          if (!a.is_hot && b.is_hot) return 1;
+          return (b.rating || 0) - (a.rating || 0);
+        });
 
-          // Sort Hot stays to top!
-          formatted.sort((a: StayItem, b: StayItem) => {
-            if (a.is_hot && !b.is_hot) return -1;
-            if (!a.is_hot && b.is_hot) return 1;
-            return (b.rating || 0) - (a.rating || 0);
-          });
+        setStays(formatted);
+      }
+    }
 
-          setStays(formatted);
-        } else {
-          fallbackToLocalMaster();
-        }
+    async function loadLiveStayData() {
+      try {
+        const json = await fetchWithCache(
+          "client-stays-catalog-v1",
+          async () => {
+            const res = await fetch("/api/v1/stays?limit=100");
+            return await res.json();
+          },
+          60 * 60 * 1000,
+          (freshJson) => {
+            // Reactive SWR: Updates UI in real-time when fresh data arrives!
+            processStayData(freshJson);
+          }
+        );
+
+        processStayData(json);
       } catch (err) {
-        console.warn("Supabase fetch error, fallback:", err);
+        console.warn("API fetch failed, using local master:", err);
         fallbackToLocalMaster();
       } finally {
         setLoading(false);

@@ -1,12 +1,13 @@
 /**
- * Advanced Multi-Tier Client Cache for Tri Ton Tourism
+ * Advanced Multi-Tier Client Cache & Reactive SWR Sync
  * Du Lịch Tri Tôn AI Project
  * 
  * Features:
  * 1. Tier 1: In-Memory Fast Map (0ms access within same page/session)
  * 2. Tier 2: Persistent LocalStorage (survives page refreshes, browser reopens, and offline)
- * 3. Stale-While-Revalidate (SWR): Returns cached data instantly while refreshing in background
- * 4. Versioned Namespace: Prevents stale schema issues
+ * 3. Reactive SWR: Returns cached data in 0ms, then silently validates against server.
+ *    If server data is newer, it triggers `onRevalidated` callback to automatically update the React UI in real-time!
+ * 4. Version Heartbeat Sync: Automatically wipes stale data when server version updates.
  */
 
 interface CacheEnvelope<T> {
@@ -15,7 +16,7 @@ interface CacheEnvelope<T> {
   version: string;
 }
 
-const CACHE_VERSION = 'v2.4.0';
+const CACHE_VERSION = 'v2.5.0';
 const MEMORY_CACHE = new Map<string, CacheEnvelope<unknown>>();
 const PREFIX = 'triton_cache_';
 
@@ -86,28 +87,46 @@ export function setCachedItem<T>(key: string, data: T): void {
 }
 
 /**
- * Fetch data with Stale-While-Revalidate (SWR) & Multi-Tier Caching.
- * @param key Unique key for the query (e.g. 'client-food-places-12')
+ * Fetch data with Reactive Stale-While-Revalidate (SWR).
+ * 
+ * @param key Unique key for the query (e.g. 'client-food-places-catalog-v1')
  * @param fetcher Async function that performs the network fetch
- * @param ttlMs Time-to-live in milliseconds (default: 1 hour, stale allowed up to 7 days)
+ * @param ttlMs Time-to-live in milliseconds (default: 1 hour)
+ * @param onRevalidated Optional callback called when background fetch returns fresh data to re-render the UI immediately!
  */
 export async function fetchWithCache<T>(
   key: string,
   fetcher: () => Promise<T>,
-  ttlMs: number = 60 * 60 * 1000 // 1 hour
+  ttlMs: number = 60 * 60 * 1000,
+  onRevalidated?: (freshData: T) => void
 ): Promise<T> {
   const cached = getCachedItem<T>(key, ttlMs);
 
   if (cached !== null) {
-    // Stale-While-Revalidate: Return cached immediately, trigger background refresh if near expiration (> 50% TTL)
-    const mem = MEMORY_CACHE.get(key);
-    const age = mem ? Date.now() - mem.timestamp : ttlMs;
-    if (age > ttlMs / 2) {
-      // Background non-blocking refresh
-      void fetcher().then((fresh) => {
-        if (fresh) setCachedItem(key, fresh);
-      }).catch(() => { /* silent fail for background refresh */ });
-    }
+    // Return cached immediately (0ms UI render)
+    // Non-blocking background revalidation to guarantee freshness
+    void (async () => {
+      try {
+        const freshData = await fetcher();
+        if (freshData !== undefined && freshData !== null) {
+          // Compare with current cached data
+          const currentStr = JSON.stringify(cached);
+          const freshStr = JSON.stringify(freshData);
+          if (currentStr !== freshStr) {
+            setCachedItem(key, freshData);
+            if (onRevalidated) {
+              onRevalidated(freshData);
+            }
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new CustomEvent('triton_data_synced', { detail: { key } }));
+            }
+          }
+        }
+      } catch {
+        // Background refresh failed silently, cached remains active
+      }
+    })();
+
     return cached;
   }
 
@@ -118,8 +137,7 @@ export async function fetchWithCache<T>(
     }
     return freshData;
   } catch (error) {
-    // If fetch fails and we have stale cached data of any age, return stale data
-    const staleData = getCachedItem<T>(key, 30 * 24 * 60 * 60 * 1000); // 30 days stale grace
+    const staleData = getCachedItem<T>(key, 30 * 24 * 60 * 60 * 1000);
     if (staleData !== null) {
       console.warn(`[FastCache] Fetch failed for '${key}', returning stale cache fallback.`);
       return staleData;
