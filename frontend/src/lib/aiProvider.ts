@@ -143,7 +143,112 @@ export async function* streamAIResponse(
   let fullText = '';
   let providerUsed = 'none';
 
-  // Tier 1: Groq Llama 3.3 70B (Fastest 700ms engine)
+  // Tier 1: Gemini Multi-Key Round-Robin with Google Search Grounding (Live Internet Search)
+  const totalGeminiKeys = AI_CONFIG.geminiKeys.length;
+
+  if (totalGeminiKeys > 0) {
+    const startIdx = geminiRoundRobinPointer;
+    geminiRoundRobinPointer = (geminiRoundRobinPointer + 1) % totalGeminiKeys;
+
+    const keyOrderIndices: number[] = [];
+    for (let i = 0; i < totalGeminiKeys; i++) {
+      keyOrderIndices.push((startIdx + i) % totalGeminiKeys);
+    }
+
+    const activeKeys = keyOrderIndices.filter(idx => !isKeyInCooldown(`gemini_key_${idx + 1}`));
+    const candidateIndices = activeKeys.length > 0 ? activeKeys : keyOrderIndices;
+
+    for (const keyIdx of candidateIndices) {
+      const key = AI_CONFIG.geminiKeys[keyIdx];
+      const keyId = `gemini_key_${keyIdx + 1}`;
+
+      for (const model of AI_CONFIG.geminiModels) {
+        try {
+          // Attempt with Google Search Grounding enabled for live web facts
+          let res = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${key}&alt=sse`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                system_instruction: { parts: [{ text: systemPrompt }] },
+                contents: [{ parts: [{ text: userPrompt }] }],
+                tools: [{ google_search: {} }],
+              }),
+              signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
+            }
+          );
+
+          // If tools is unsupported on a specific model tier, fallback to standard call
+          if (!res.ok && res.status === 400) {
+            res = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${key}&alt=sse`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  system_instruction: { parts: [{ text: systemPrompt }] },
+                  contents: [{ parts: [{ text: userPrompt }] }],
+                }),
+                signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
+              }
+            );
+          }
+
+          if (!res.ok) {
+            if (res.status === 400 || res.status === 403) {
+              setKeyCooldown(keyId, 86400000);
+              break;
+            }
+            if (res.status === 429) {
+              setKeyCooldown(keyId, AI_CONFIG.cooldownMs);
+              break;
+            }
+            continue;
+          }
+
+          if (res.ok && res.body) {
+            recordKeyUsage(keyId);
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let buf = '';
+
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              buf += decoder.decode(value, { stream: true });
+              const lines = buf.split('\n');
+              buf = lines.pop() || '';
+
+              for (const line of lines) {
+                if (!line.startsWith('data: ')) continue;
+                try {
+                  const chunk = JSON.parse(line.slice(6));
+                  const delta = chunk?.candidates?.[0]?.content?.parts?.[0]?.text;
+                  if (delta) {
+                    fullText += delta;
+                    yield { type: 'delta', content: delta };
+                  }
+                } catch {
+                  /* skip malformed SSE line */
+                }
+              }
+            }
+
+            if (fullText.trim()) {
+              providerUsed = `gemini:${keyId}:${model} (Google Search Grounding)`;
+              yield { type: 'done', provider: providerUsed };
+              return;
+            }
+          }
+        } catch (err: unknown) {
+          console.warn(`[AI Provider] Gemini ${keyId} (${model}) failed:`, err);
+        }
+      }
+    }
+  }
+
+  // Tier 2: Groq Llama 3.3 70B (High-Speed Fallback)
   if (AI_CONFIG.groqKey && !isKeyInCooldown('groq')) {
     for (const model of AI_CONFIG.groqModels) {
       try {
@@ -205,93 +310,6 @@ export async function* streamAIResponse(
         }
       } catch (err: unknown) {
         console.warn(`[AI Provider] Groq (${model}) failed:`, err);
-      }
-    }
-  }
-
-  // Tier 2: Gemini Multi-Key Round-Robin & Multi-Model Rotation
-  const totalGeminiKeys = AI_CONFIG.geminiKeys.length;
-
-  if (totalGeminiKeys > 0) {
-    const startIdx = geminiRoundRobinPointer;
-    geminiRoundRobinPointer = (geminiRoundRobinPointer + 1) % totalGeminiKeys;
-
-    const keyOrderIndices: number[] = [];
-    for (let i = 0; i < totalGeminiKeys; i++) {
-      keyOrderIndices.push((startIdx + i) % totalGeminiKeys);
-    }
-
-    const activeKeys = keyOrderIndices.filter(idx => !isKeyInCooldown(`gemini_key_${idx + 1}`));
-    const candidateIndices = activeKeys.length > 0 ? activeKeys : keyOrderIndices;
-
-    for (const keyIdx of candidateIndices) {
-      const key = AI_CONFIG.geminiKeys[keyIdx];
-      const keyId = `gemini_key_${keyIdx + 1}`;
-
-      for (const model of AI_CONFIG.geminiModels) {
-        try {
-          const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${key}&alt=sse`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                system_instruction: { parts: [{ text: systemPrompt }] },
-                contents: [{ parts: [{ text: userPrompt }] }],
-              }),
-              signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
-            }
-          );
-
-          if (!res.ok) {
-            if (res.status === 400 || res.status === 403) {
-              setKeyCooldown(keyId, 86400000);
-              break;
-            }
-            if (res.status === 429) {
-              setKeyCooldown(keyId, AI_CONFIG.cooldownMs);
-              break;
-            }
-            continue;
-          }
-
-          if (res.ok && res.body) {
-            recordKeyUsage(keyId);
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder();
-            let buf = '';
-
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-              buf += decoder.decode(value, { stream: true });
-              const lines = buf.split('\n');
-              buf = lines.pop() || '';
-
-              for (const line of lines) {
-                if (!line.startsWith('data: ')) continue;
-                try {
-                  const chunk = JSON.parse(line.slice(6));
-                  const delta = chunk?.candidates?.[0]?.content?.parts?.[0]?.text;
-                  if (delta) {
-                    fullText += delta;
-                    yield { type: 'delta', content: delta };
-                  }
-                } catch {
-                  /* skip malformed SSE line */
-                }
-              }
-            }
-
-            if (fullText.trim()) {
-              providerUsed = `gemini:${keyId}:${model}`;
-              yield { type: 'done', provider: providerUsed };
-              return;
-            }
-          }
-        } catch (err: unknown) {
-          console.warn(`[AI Provider] Gemini ${keyId} (${model}) failed:`, err);
-        }
       }
     }
   }
