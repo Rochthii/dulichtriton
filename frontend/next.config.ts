@@ -13,6 +13,15 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   turbopack: {},
+  async redirects() {
+    return [
+      {
+        source: '/chat',
+        destination: '/chatbot',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 let exportedConfig = nextConfig;

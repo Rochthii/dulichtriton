@@ -436,7 +436,7 @@ export default function CulturePage() {
                   {/* Card Bottom CTA */}
                   <div className="pt-4 border-t border-[#EBE1D0]">
                     <Link
-                      href={`/chat?q=${encodeURIComponent(`Hãy kể chi tiết về ${fest.name} ở Tri Tôn: thời gian, địa điểm, nghi thức và kinh nghiệm đi xem thực tế`)}`}
+                      href={`/chatbot?q=${encodeURIComponent(`Hãy kể chi tiết về ${fest.name} ở Tri Tôn: thời gian, địa điểm, nghi thức và kinh nghiệm đi xem thực tế`)}`}
                       className="w-full py-2.5 px-4 rounded-xl bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm group-hover:shadow-md"
                     >
                       <MessageSquareText className="w-4 h-4 text-[#26221B]" />

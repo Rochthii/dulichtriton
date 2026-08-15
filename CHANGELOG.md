@@ -106,6 +106,10 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
     • *Sub-Query Decomposition*: Bóc tách câu hỏi phức hợp thành các câu hỏi con độc lập (`extractSubQueries`) để truy xuất đồng thời cả danh sách Chùa, Quán ăn và Cà phê đêm vào bối cảnh RAG (nâng giới hạn lên 6 POIs đa dạng).
     • *Accumulative Intent Routing*: Thay thế chuỗi `if...else if` độc quyền bằng cơ chế gom tụ lũy tích (`targetPoiIds.push(...)`), giúp tập hợp đầy đủ POIs cho mọi vế câu hỏi.
     • *Structured Multi-Clause Persona*: Bổ sung Quy tắc 5 & 6 trong `SYSTEM_PROMPT` bắt buộc AI trình bày phân mục rõ ràng từng vế (`### 1. Về Chùa...`, `### 2. Về Ẩm thực...`, `### 3. Về Cafe đêm...`) kèm link Google Maps + TikTok và mục '💡 Gợi ý sắp xếp thời gian hợp lý'.
+- **Khắc Phục Lỗi 404 Nút Bấm 'Hỏi AI Về Lễ Hội Này' & Tự Động Trả Lời Theo URL Params (`/chatbot?q=...`)**:
+  - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
+  - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
+  - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
