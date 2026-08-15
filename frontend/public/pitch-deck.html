@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pitch Deck — Du Lịch Tri Tôn AI (10 Slides)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-warm: #FAF3E7;
+      --bg-card: #FFFFFF;
+      --color-primary: #0E8C7F;
+      --color-primary-dark: #0A6B61;
+      --color-secondary: #D9822B;
+      --color-text-main: #26221B;
+      --color-text-muted: #6B655B;
+      --color-border: #E8DCC8;
+      --radius-lg: 20px;
+      --shadow-card: 0 12px 36px rgba(38, 34, 27, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: var(--bg-warm);
+      color: var(--color-text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: rgba(250, 243, 231, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--color-primary);
+    }
+
+    .brand-badge {
+      background: var(--color-secondary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .slide-counter {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+
+    /* Deck Viewport */
+    .deck-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 92%;
+      max-width: 1080px;
+      height: 84%;
+      max-height: 640px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: scale(0.96) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Slide Header */
+    .slide-tag {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .slide-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-text-main);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .slide-title span {
+      color: var(--color-primary);
+    }
+
+    .slide-subtitle {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    /* Content Layouts */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      flex: 1;
+      align-content: center;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+      align-content: center;
+    }
+
+    .card {
+      background: #FDFBF7;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card.highlight {
+      background: rgba(14, 140, 127, 0.05);
+      border-color: var(--color-primary);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-text-main);
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .stat-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    /* Slide Footer & Controls */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--color-border);
+      padding-top: 16px;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .bottom-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 32px;
+      background: rgba(250, 243, 231, 0.95);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: #fff;
+      color: var(--color-text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #F4E8D4;
+      border-color: var(--color-secondary);
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      max-width: 300px;
+      height: 6px;
+      background: #E8DCC8;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--color-primary);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .slide {
+        padding: 24px;
+        height: 90%;
+      }
+      .slide-title {
+        font-size: 22px;
+      }
+      .grid-3, .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .stat-number {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="brand">
+      <span>DU LỊCH TRI TÔN AI</span>
+      <span class="brand-badge">PITCH DECK 2026</span>
+    </div>
+    <div class="slide-counter" id="slideIndicator">Trang 1 / 10</div>
+  </header>
+
+  <!-- Deck Viewport -->
+  <main class="deck-container">
+
+    <!-- SLIDE 1: COVER / HOOK -->
+    <section class="slide active" data-slide="1">
+      <div>
+        <div class="slide-tag">ĐỀ ÁN KHỞI NGHIỆP CÔNG NGHỆ DU LỊCH BẢN ĐỊA</div>
+        <h1 class="slide-title">Số Hóa Du Lịch Tri Tôn — Đưa <span>Di Sản Bảy Núi</span> Cất Cánh</h1>
+        <p class="slide-subtitle">Trợ lý du lịch AI thực chiến đầu tiên tại An Giang: Kết nối 149 điểm di tích, ẩm thực Gà Đốt Ô Thum và cộng đồng kinh doanh bản địa.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card highlight">
+          <div class="stat-number">149</div>
+          <div class="stat-label">Địa điểm xác minh thực tế 100%</div>
+        </div>
+        <div class="card highlight">
+          <div class="stat-number">&lt; 900ms</div>
+          <div class="stat-label">Tốc độ Trợ lý AI phản hồi du khách</div>
+        </div>
+        <div class="card highlight">
+          <div class="stat-number">35+</div>
+          <div class="stat-label">Lịch trình phượt thực tế độc quyền</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Người trình bày: Solo Founder / Trưởng nhóm Dự án</span>
+        <span>Website: dulichtriton.vercel.app</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: THE 3 PAIN POINTS -->
+    <section class="slide" data-slide="2">
+      <div>
+        <div class="slide-tag">NỖI ĐAU THỰC TẾ</div>
+        <h1 class="slide-title">Tại Sao Tri Tôn Có Cảnh Đẹp Nhưng <span>Du Khách & Chủ Quán Vẫn Khổ?</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🧭</div>
+          <h3 class="card-title">1. Du Khách & Phượt Thủ</h3>
+          <p class="card-desc">• Thông tin trên mạng bị sai lệch (nhầm bún cá với bún nước lèo).<br>• Không biết đường vào chùa sâu trong núi.<br>• Đến quán Gà Đốt phải chờ 45 phút.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🍗</div>
+          <h3 class="card-title">2. Quán Ăn & Homestay</h3>
+          <p class="card-desc">• 90% là hộ kinh doanh gia đình, không biết tự làm marketing số.<br>• Khách dồn vào giờ cao điểm gây quá tải, ngày thường vắng vẻ.<br>• Bị đối thủ giả mạo số điện thoại.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <h3 class="card-title">3. Chính Quyền & Di Tích</h3>
+          <p class="card-desc">• Chưa có cổng thông tin số hóa văn hóa Khmer đồng bộ.<br>• Thiếu kênh hỗ trợ cứu hộ khẩn cấp 24/7 cho du khách đi rừng, leo núi.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Vấn đề cốt lõi: Thông tin thực địa bị đứt gãy</span>
+        <span>Mục tiêu: Xóa bỏ 100% điểm nghẽn</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: THE SOLUTION -->
+    <section class="slide" data-slide="3">
+      <div>
+        <div class="slide-tag">GIẢI PHÁP ĐỘT PHÁ</div>
+        <h1 class="slide-title">Nền Tảng Thông Minh <span>Giải Quyết Trọn Vẹn 3 Chiều</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card highlight">
+          <div class="card-icon">📱</div>
+          <h3 class="card-title">Cho Du Khách</h3>
+          <p class="card-desc">Trợ lý AI bỏ túi 24/7: Hỏi là có lịch trình, nút gọi đặt trước món ăn chỉ 1 chạm, link Google Maps và video TikTok cho từng điểm.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">🏪</div>
+          <h3 class="card-title">Cho Hộ Kinh Doanh</h3>
+          <p class="card-desc">Gói "Xác Thực Bản Địa" + Bảng mã QR đặt bàn tại quán: Giúp quán nhận đơn đặt trước 45 phút, tăng 30% doanh thu mùa cao điểm.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">🚨</div>
+          <h3 class="card-title">Cho Địa Phương</h3>
+          <p class="card-desc">Bản đồ số hóa 149 di tích chuẩn xác + Danh bạ cứu hộ 24/7 (Công an, Y tế, Cứu hộ xe máy) bảo đảm du lịch văn minh, an toàn.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Giá trị: Tiết kiệm thời gian, tăng doanh thu, an toàn tuyệt đối</span>
+        <span>Triết lý: Folk-Modern Bảy Núi</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: MARKET SIZE & WHY NOW -->
+    <section class="slide" data-slide="4">
+      <div>
+        <div class="slide-tag">DUNG LƯỢNG THỊ TRƯỜNG & THỜI ĐIỂM VÀNG</div>
+        <h1 class="slide-title">Tại Sao Phải Là <span>Bảy Núi — An Giang Ngay Bây Giờ?</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="stat-number">2.5M+</div>
+          <div class="stat-label">Lượt du khách đổ về An Giang mỗi năm (Châu Đốc - Tri Tôn - Tịnh Biên)</div>
+        </div>
+        <div class="card">
+          <div class="stat-number">40,000+</div>
+          <div class="stat-label">Du khách xem Hội Đua Bò Bảy Núi chỉ trong 3 ngày lễ hội</div>
+        </div>
+        <div class="card">
+          <div class="stat-number">NQ 82</div>
+          <div class="stat-label">Chính phủ thúc đẩy Chuyển đổi số du lịch địa phương & kinh tế đêm</div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Xu hướng: Du lịch chữa lành, phượt sinh thái, khám phá ẩm thực Khmer</span>
+        <span>Cơ hội: Thị trường chưa có đối thủ chuyên sâu</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: TRACTION / LIVE PRODUCT -->
+    <section class="slide" data-slide="5">
+      <div>
+        <div class="slide-tag">SẢN PHẨM ĐÃ CHẠY THỰC TẾ</div>
+        <h1 class="slide-title">Không Phải Ý Tưởng Trên Giấy — <span>Sản Phẩm Đã Hoàn Thiện 100%</span></h1>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="card-title">⚡ Năng Lực Kỹ Thuật Đã Vận Hành</h3>
+          <p class="card-desc">• Next.js 14 SSG + PostgreSQL Vector pgvector HNSW.<br>• Tốc độ tải trang: <strong>&lt; 200ms</strong>, Build hoàn tất <strong>8.6s</strong>.<br>• 7 tầng bảo vệ chống DDoS, chống cào bot, bảo mật OWASP.<br>• Tích hợp PWA chạy mượt như ứng dụng điện thoại.</p>
+        </div>
+        <div class="card highlight">
+          <h3 class="card-title">📍 Dữ Liệu Thực Địa Độc Quyền</h3>
+          <p class="card-desc">• <strong>149 địa điểm</strong> phân bổ khắp các xã/thị trấn Tri Tôn.<br>• <strong>40+ quán đặc sản</strong> Gà Đốt Ô Thum, Cháo bò, Bún cá củ ngải.<br>• <strong>5 Đại lễ hội Khmer</strong> và Bảo vật kinh lá buông chùa Xvayton.<br>• Danh bạ cứu hộ khẩn cấp 24/7 trực tiếp.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Trải nghiệm trực tiếp tại: dulichtriton.vercel.app</span>
+        <span>Trạng thái: Sẵn sàng thương mại hóa</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: BUSINESS MODEL -->
+    <section class="slide" data-slide="6">
+      <div>
+        <div class="slide-tag">MÔ HÌNH DÒNG TIỀN DOANH THU</div>
+        <h1 class="slide-title">Kiếm Tiền Như Thế Nào Để <span>Bền Vững & Khả Thi?</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⭐</div>
+          <h3 class="card-title">1. Gói Đối Tác Xác Thực</h3>
+          <p class="card-desc">Thu phí thường niên <strong>2.500.000đ/năm</strong> cho quán Gà Đốt, Homestay, Quán cafe để được gắn nhãn Uy Tín & ưu tiên gợi ý AI.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">🍗</div>
+          <h3 class="card-title">2. Hoa Hồng Đặt Bàn / Phòng</h3>
+          <p class="card-desc">Thu <strong>10.000đ - 20.000đ/đơn đặt gà trước 45p</strong> và 5-8% trên mỗi lượt đặt phòng Homestay thành công.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🥥</div>
+          <h3 class="card-title">3. Affiliate Đặc Sản OCOP</h3>
+          <p class="card-desc">Chiết khấu <strong>10% - 15%</strong> khi du khách bấm mua Đường thốt nốt, Tinh dầu chúc, Mắm cá rô đồng gửi về tận nhà.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Mô hình kết hợp: B2B Thuê bao + Phí Lead + Tiếp thị liên kết OCOP</span>
+        <span>Chi phí vận hành: Gần như 0đ nhờ tối ưu Cache RAM</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: GO-TO-MARKET STRATEGY -->
+    <section class="slide" data-slide="7">
+      <div>
+        <div class="slide-tag">CHIẾN LƯỢC TIẾP CẬN & VIRAL</div>
+        <h1 class="slide-title">Đòn Bẩy <span>"Chiếc Bảng QR Tại Bàn Ăn Hồ Ô Thum"</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card highlight">
+          <div class="card-icon">🪧</div>
+          <h3 class="card-title">1. Bảng QR Thực Địa (O2O)</h3>
+          <p class="card-desc">Đặt mica QR tại 50 bàn ăn Gà Đốt: Tận dụng 45 phút du khách ngồi chờ nướng gà để quét QR hỏi AI $\rightarrow$ Chuyển đổi 100% người dùng thật.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎬</div>
+          <h3 class="card-title">2. Video Ngắn TikTok & Reels</h3>
+          <p class="card-desc">Series "Bản đồ bí mật của dân phượt né bị chặt chém khi đi Bảy Núi" kéo hàng trăm nghìn lượt xem và tải cẩm nang du lịch.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🐂</div>
+          <h3 class="card-title">3. Mùa Lễ Hội Đua Bò</h3>
+          <p class="card-desc">Độc quyền "Cổng Hỗ Trợ Lễ Hội Đua Bò": Tìm bãi gửi xe, tránh kẹt xe, số cứu hộ xe máy phượt lưu động.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Chi phí Marketing: &lt; 2 triệu đồng</span>
+        <span>Hiệu quả chuyển đổi: Tiếp cận đúng lúc - đúng nhu cầu</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: COMPETITIVE ADVANTAGE / MOAT -->
+    <section class="slide" data-slide="8">
+      <div>
+        <div class="slide-tag">LỢI THẾ CẠNH TRANH ĐỘC QUYỀN</div>
+        <h1 class="slide-title">Tại Sao <span>Google Maps & Traveloka Không Thể Thắng?</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3 class="card-title">🌐 Nền Tảng Lớn (Google / Agoda)</h3>
+          <p class="card-desc">• Thông tin vùng sâu bị bỏ hoang, sai tên xã.<br>• Không phân biệt được Gà đốt vs Gà nướng.<br>• Không có số cứu hộ xe máy phượt.<br>• Không có hướng dẫn viên AI trò chuyện tiếng Việt.</p>
+        </div>
+        <div class="card highlight">
+          <h3 class="card-title">🏆 Du Lịch Tri Tôn AI (Dự Án)</h3>
+          <p class="card-desc">• <strong>100% dữ liệu thực địa bản địa</strong> chính xác tuyệt đối.<br>• Hiểu sâu văn hóa Phật giáo Nam tông Khmer.<br>• Nhận đơn đặt trước gà đốt tiết kiệm thời gian.<br>• Có mặt trực tiếp trên bàn ăn và homestay.</p>
+        </div>
+        <div class="card">
+          <h3 class="card-title">🛡️ Hào Bảo Vệ (Moat)</h3>
+          <p class="card-desc">• Dữ liệu 149 POIs làm thủ công bằng chân đi thực địa không thể cào tự động.<br>• Mối quan hệ gắn kết trực tiếp với chủ quán bản địa và chính quyền.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Định vị: Nền tảng số 1 không thể thay thế tại Vùng Bảy Núi</span>
+        <span>Rào cản gia nhập: Rất cao đối với người ngoài</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: ROADMAP / MILESTONES -->
+    <section class="slide" data-slide="9">
+      <div>
+        <div class="slide-tag">LỘ TRÌNH 12 THÁNG</div>
+        <h1 class="slide-title">Các Cột Mốc <span>Tăng Trưởng Thực Tế</span></h1>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3 class="card-title">Quý 1: Phủ Sóng Thực Địa</h3>
+          <p class="card-desc">• Triển khai 50 bảng QR tại Hồ Ô Thum & Núi Cô Tô.<br>• Ký hợp tác với 10 quán Gà Đốt đầu tiên.<br>• Đạt 10.000 lượt truy cập/tháng.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">🏛️</div>
+          <h3 class="card-title">Quý 2: Bắt Tay Chính Quyền</h3>
+          <p class="card-desc">• Trình đề án số hóa với Phòng VHTT Huyện Tri Tôn.<br>• Đưa nền tảng phục vụ chính thức Mùa Lễ Hội Đua Bò.<br>• Doanh thu đạt điểm hòa vốn (Break-even).</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗺️</div>
+          <h3 class="card-title">Quý 3 - 4: Nhân Rộng Toàn Vùng</h3>
+          <p class="card-desc">• Mở rộng sang Cụm Du Lịch Châu Đốc - Tịnh Biên - Thoại Sơn.<br>• Ra mắt Kiosk Du Lịch Thông Minh tại di tích.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Tầm nhìn dài hạn: Siêu ứng dụng du lịch bản địa Tây Nam Bộ</span>
+        <span>Chiến lược: Đánh chắc - Thắng chắc từng cụm</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: THE ASK / PARTNERSHIP -->
+    <section class="slide" data-slide="10">
+      <div>
+        <div class="slide-tag">CƠ HỘI ĐỒNG HÀNH</div>
+        <h1 class="slide-title">Hãy Cùng Chúng Tôi <span>Kiến Tạo Du Lịch Tri Tôn 2026!</span></h1>
+        <p class="slide-subtitle">Chúng tôi tìm kiếm Đối tác địa phương, Nhà đầu tư hạt giống & Cơ quan quản lý cùng đồng hành.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card highlight">
+          <div class="card-icon">🤝</div>
+          <h3 class="card-title">Đối Tác & Chủ Cơ Sở</h3>
+          <p class="card-desc">Đăng ký tham gia Mạng lưới Xác thực Du lịch để đón dòng khách phượt chất lượng cao.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">💼</div>
+          <h3 class="card-title">Nhà Đầu Tư Hạt Giống</h3>
+          <p class="card-desc">Đồng hành cùng dự án công nghệ bản địa có dòng tiền thực và rào cản phòng thủ vững chắc.</p>
+        </div>
+        <div class="card highlight">
+          <div class="card-icon">🏛️</div>
+          <h3 class="card-title">Cơ Quan Quản Lý</h3>
+          <p class="card-desc">Phối hợp thí điểm đề án chuyển đổi số du lịch an toàn, văn minh cho địa phương.</p>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Hotline liên hệ: 09xx.xxx.xxx</span>
+        <span>Email: contact@dulichtriton.vn • Website: dulichtriton.vercel.app</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation & Controls -->
+  <footer class="bottom-controls">
+    <button class="btn" id="prevBtn" onclick="prevSlide()">◀ Trang trước</button>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <button class="btn btn-primary" id="nextBtn" onclick="nextSlide()">Trang sau ▶</button>
+    <button class="btn" onclick="toggleFullScreen()">⛶ Toàn màn hình</button>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach(slide => {
+        slide.classList.remove('active');
+        if (parseInt(slide.getAttribute('data-slide')) === currentSlide) {
+          slide.classList.add('active');
+        }
+      });
+
+      document.getElementById('slideIndicator').textContent = `Trang ${currentSlide} / ${totalSlides}`;
+      document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').textContent = currentSlide === totalSlides ? 'Kết thúc 🏁' : 'Trang sau ▶';
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    }
+
+    // Keyboard navigation (Arrow keys & Spacebar)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    updateSlide();
+  </script>
+</body>
+</html>
