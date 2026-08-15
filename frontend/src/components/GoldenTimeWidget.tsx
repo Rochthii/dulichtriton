@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { checkIsGoldenTime, GoldenTimeResult } from "@/lib/goldenTime";
 import { Sparkles, Clock, MapPin, Play, Sun, Sunset, Coffee, Moon } from "lucide-react";
+import { getCategoryFallbackImage } from "@/lib/dataSanitizer";
 
 interface GoldenPlace {
   id: string;
@@ -56,13 +57,13 @@ export default function GoldenTimeWidget() {
             : currentTime;
 
           const evaluated = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+            let img = getCategoryFallbackImage(item.category, item.name);
+            if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
               img = item.image_url;
             } else if (Array.isArray(item.photos) && item.photos.length > 0) {
               const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+              const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+              if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
             }
 
             const windows = item.golden_time_windows || [];

@@ -226,7 +226,7 @@ export default function PlacesPage() {
                   <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={getOptimizedImageUrl(hotPlace.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb", { width: 900, dpr: 2, quality: 'best' })}
+                      src={getOptimizedImageUrl(hotPlace.image_url && !hotPlace.image_url.includes('unsplash.com') ? hotPlace.image_url : "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif", { width: 900, dpr: 2, quality: 'best' })}
                       alt={hotPlace.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                       loading="lazy"

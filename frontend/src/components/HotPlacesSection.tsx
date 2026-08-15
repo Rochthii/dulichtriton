@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { Flame, Star, Clock, MapPin, Sparkles, Play, ChevronRight, Navigation } from "lucide-react";
 import { resolveTikTokAction } from "@/lib/tiktok";
 import { fetchWithCache } from "@/lib/fastCache";
+import { getCategoryFallbackImage } from "@/lib/dataSanitizer";
 
 interface HotPlace {
   id: string;
@@ -58,13 +59,13 @@ export default function HotPlacesSection({
 
           if (!error && data && data.length > 0) {
             return data.map((item: any) => {
-              let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
-              if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              let img = getCategoryFallbackImage(item.category, item.name);
+              if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
                 img = item.image_url;
               } else if (Array.isArray(item.photos) && item.photos.length > 0) {
                 const p0 = item.photos[0];
-                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+                const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+                if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
               }
 
               return {
@@ -97,7 +98,7 @@ export default function HotPlacesSection({
               rating: 4.9,
               hot_rank: 1,
               golden_time_windows: ["06:30–08:30", "15:30–17:30"],
-              image_url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+              image_url: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
               video_url: "https://www.tiktok.com/search?q=ho%20ta%20pa%20tri%20ton"
             },
             {
@@ -109,7 +110,7 @@ export default function HotPlacesSection({
               rating: 4.9,
               hot_rank: 2,
               golden_time_windows: ["11:00–13:30", "17:00–19:30"],
-              image_url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+              image_url: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
               video_url: "https://www.tiktok.com/search?q=ga%20dot%20o%20thum"
             },
             {
@@ -121,7 +122,7 @@ export default function HotPlacesSection({
               rating: 4.8,
               hot_rank: 3,
               golden_time_windows: ["06:00–08:00", "16:00–17:30"],
-              image_url: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+              image_url: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
               video_url: "https://www.tiktok.com/search?q=cong%20troi%20koh%20kas"
             }
           ]);

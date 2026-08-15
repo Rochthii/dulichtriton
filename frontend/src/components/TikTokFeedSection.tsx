@@ -61,7 +61,7 @@ function VideoSlide({ video, index, isActive, slideHeight, onPlay }: SlideProps)
     setLikeCount(c => liked ? c - 1 : c + 1);
   };
 
-  const thumbnail = video.thumbnail_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop';
+  const thumbnail = video.thumbnail_url || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_800,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg';
   const hashtags = video.hashtags || ['#TriTon', '#BayNui', '#AnGiang'];
   const searchUrl = getTikTokSearchUrl(video.title);
 
@@ -247,7 +247,7 @@ export default function TikTokFeedSection({
           platform: 'tiktok' as const,
           video_url: (v.tiktokUrl as string) || (v.video_url as string) || '',
           embed_url: (v.embedUrl as string) || (v.embed_url as string) || '',
-          thumbnail_url: (v.thumbnail as string) || (v.thumbnail_url as string) || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+          thumbnail_url: (v.thumbnail as string) || (v.thumbnail_url as string) || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_800,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg',
           author_name: (v.userDisplayName as string) || (v.author_name as string) || 'TikToker Tri Tôn',
           view_count: typeof v.view_count === 'number' ? v.view_count : 50000,
           hashtags: (v.hashtags as string[]) || ['#TriTon', '#AnGiang'],
@@ -399,7 +399,7 @@ export default function TikTokFeedSection({
                 {/* Thumbnail Background */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={video.thumbnail_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'}
+                  src={video.thumbnail_url || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_800,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg'}
                   alt={video.title}
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                 />

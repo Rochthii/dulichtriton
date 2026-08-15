@@ -85,13 +85,10 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 🚫 Quét Sạch 100% Ảnh AI / Unsplash Stock & Nạp Toàn Bộ Ảnh Thật Tri Tôn
-- **Thanh Lọc Cơ Sở Dữ Liệu Supabase & JSON Master (`purge_all_fake_stock_photos.py`)**:
-  - Đã loại bỏ hoàn toàn tất cả các liên kết ảnh stock rừng thông Unsplash / placeholder AI trên **232 bản ghi** trong Supabase PostgreSQL và **137 bản ghi** trong `triton_pois_full.json`.
-  - Thay thế 100% bằng bộ ảnh thực địa chất lượng cao được lưu trữ tối ưu trên Cloudinary: Chùa Núi Tà Pạ, Hồ Tà Pạ ngọc bích, Cổng Trời Koh Kas, Đồng thốt nốt Tri Tôn, Chùa Khmer Chi Kaeng & Chùa Xà Tón.
-- **Cập Nhật Fallback Images Hệ Thống (`dataSanitizer.ts`, `imageOptimizer.ts`, `PlaceDetailClient.tsx`)**:
-  - Toàn bộ các danh mục fallback (hồ nước, núi non, chùa chiền, ẩm thực, homestay) được trỏ trực tiếp đến ảnh chụp thực tế tại Tri Tôn.
-  - Thêm bộ lọc chủ động `filteredPhotos` trong `PlaceDetailClient.tsx` tự động loại bỏ bất kỳ URL ảnh Unsplash nào trước khi render ra giao diện.
+### 🖼️ Đồng Bộ 100% Ảnh Hero Thật Cho Toàn Bộ Thẻ Card Bên Ngoài
+- **Chuẩn Hóa Bộ Phân Giải Ảnh Thẻ (`PlaceCard.tsx`, `page.tsx`, `HotPlacesSection.tsx`, `GoldenTimeWidget.tsx`, `places/page.tsx`, `TikTokFeedSection.tsx`)**:
+  - Toàn bộ các thẻ Card trên Trang Chủ (Top Hot, Ẩm thực, Cụm xã, Khung giờ vàng), Trang Khám Phá, Ẩm Thực, Lưu Trú và Video Reels giờ đây đồng bộ 100% với ảnh Hero thực tế của trang chi tiết.
+  - Loại bỏ hoàn toàn mọi URL dự phòng Unsplash / ảnh ngoại lai, thay thế bằng hàm `getCategoryFallbackImage()` trả về ảnh Cloudinary Tri Tôn sắc nét và chuẩn xác theo từng cụm danh lam thắng cảnh.
 
 ---
 

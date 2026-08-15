@@ -8,7 +8,7 @@ import localMasterPois from "@/data/triton_pois_full.json";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import TriTonWeatherWidget from "@/components/TriTonWeatherWidget";
 import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
-import { sanitizeDescription } from "@/lib/dataSanitizer";
+import { sanitizeDescription, getCategoryFallbackImage } from "@/lib/dataSanitizer";
 import heroImagesData from "@/data/hero_images.json";
 import {
   Utensils,
@@ -121,13 +121,13 @@ export default function HomePage() {
 
           if (data && data.length > 0) {
             const mapped = data.map((item: any) => {
-              let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
-              if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
+              let img = getCategoryFallbackImage(item.category, item.name);
+              if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
                 img = item.image_url;
               } else if (Array.isArray(item.photos) && item.photos.length > 0) {
                 const p0 = item.photos[0];
-                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+                const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+                if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
               }
 
               const localMatch = (localMasterPois as any[]).find(lp => lp.id === item.id || lp.slug === item.slug || lp.name === item.name);
@@ -174,13 +174,13 @@ export default function HomePage() {
 
           if (foodsData && foodsData.length > 0) {
             const mappedFoods = foodsData.map((f: any) => {
-              let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
-              if (f.image_url && typeof f.image_url === "string" && f.image_url.startsWith("http")) {
+              let img = getCategoryFallbackImage("food", f.name);
+              if (f.image_url && typeof f.image_url === "string" && !f.image_url.includes("unsplash.com")) {
                 img = f.image_url;
               } else if (Array.isArray(f.photos) && f.photos.length > 0) {
                 const p0 = f.photos[0];
-                if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-                else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+                const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+                if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
               }
 
               const localMatch = (localMasterPois as any[]).find(lp => lp.id === f.id || lp.slug === f.slug || lp.name === f.name);
@@ -227,7 +227,7 @@ export default function HomePage() {
               link: "/places?commune=Xã Núi Tô",
               communeFilters: ["Núi Tô", "Châu Lăng"],
               nameKeywords: ["Tà Pạ", "Thốt Nốt", "Koh Kas", "Trái Tim"],
-              fallbackImg: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
             },
             {
               id: "cluster-othum",
@@ -238,7 +238,7 @@ export default function HomePage() {
               link: "/places?commune=Xã Ô Lâm",
               communeFilters: ["Ô Lâm", "An Tức"],
               nameKeywords: ["Ô Thum", "Tức Dụp", "Gà Đốt", "Kirivong", "Đồi Tức Dụp"],
-              fallbackImg: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
             },
             {
               id: "cluster-coto",
@@ -249,7 +249,7 @@ export default function HomePage() {
               link: "/places?commune=Xã Cô Tô",
               communeFilters: ["Cô Tô", "Núi Tô", "Thị trấn Tri Tôn", "Tri Tôn"],
               nameKeywords: ["Cô Tô", "Soài So", "Suối Vàng", "Vồ Hội", "Sân Tiên", "Phụng Hoàng Sơn", "Chùa Sà Lôn"],
-              fallbackImg: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1200&auto=format&fit=crop",
+              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
             },
             {
               id: "cluster-bachuc",
@@ -260,7 +260,7 @@ export default function HomePage() {
               link: "/places?commune=Thị trấn Ba Chúc",
               communeFilters: ["Ba Chúc", "Lương Phi", "Lê Trì"],
               nameKeywords: ["Ba Chúc", "Nhà Mồ", "Phi Lai", "Tam Bửu", "Núi Tượng", "Núi Dài", "Ô Tà Sóc"],
-              fallbackImg: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+              fallbackImg: "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
             },
           ];
 
@@ -276,7 +276,7 @@ export default function HomePage() {
                 return matchCom || matchKey;
               });
               count = matched.length;
-              const placeWithImg = matched.find((p: any) => p.image_url && p.image_url.startsWith("http"));
+              const placeWithImg = matched.find((p: any) => p.image_url && !p.image_url.includes("unsplash.com"));
               if (placeWithImg) img = placeWithImg.image_url;
             }
             return {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MapPin, Star, Clock, Tag, Navigation, Play, Camera, Heart, Ticket, Utensils, Sun, Sunset } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
-import { parseTravelGuide, sanitizeDescription } from '@/lib/dataSanitizer';
+import { parseTravelGuide, sanitizeDescription, getCategoryFallbackImage } from '@/lib/dataSanitizer';
 import { getOptimizedImageUrl } from '@/lib/imageOptimizer';
 
 export interface PlacePhoto {
@@ -131,14 +131,24 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     bestTimeBadge = { icon: Utensils, label: '11:00 - 13:30 (Trưa)' };
   }
 
-  const coverPhoto =
-    place.photos && place.photos.length > 0
-      ? place.photos[0]
-      : {
-          url: place.image_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
-          caption: place.name,
-          source: 'Cổng thông tin Du lịch An Giang',
-        };
+  const fallbackImg = getCategoryFallbackImage(place.category, place.name);
+  let resolvedCoverUrl = fallbackImg;
+
+  if (place.image_url && typeof place.image_url === 'string' && !place.image_url.includes('unsplash.com')) {
+    resolvedCoverUrl = place.image_url;
+  } else if (Array.isArray(place.photos) && place.photos.length > 0) {
+    const p0 = place.photos[0];
+    const pUrl = typeof p0 === 'string' ? p0 : p0?.url;
+    if (pUrl && typeof pUrl === 'string' && !pUrl.includes('unsplash.com')) {
+      resolvedCoverUrl = pUrl;
+    }
+  }
+
+  const coverPhoto = {
+    url: resolvedCoverUrl,
+    caption: place.name,
+    source: 'Cổng thông tin Du lịch Tri Tôn',
+  };
 
   const catStyle = CATEGORY_COLORS[place.category] || {
     bg: 'bg-[#0E8C7F]/90',
