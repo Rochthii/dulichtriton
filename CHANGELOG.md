@@ -101,7 +101,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Khắc phục lỗi khi người dùng gõ tin nhắn tự do yêu cầu *"lịch trình 3 ngày"*, *"tour 3 ngày 2 đêm"*, *"lịch trình 2 ngày"* hệ thống chỉ trả về văn bản thường do điều kiện lọc cũ bỏ sót `3 ngày` và `3n2đ`.
   - Chuẩn hóa bộ từ khóa nhận diện ý định (`isItinIntent`): Nhận diện trọn vẹn `1 ngày`, `2 ngày`, `3 ngày`, `2N1Đ`, `3N2Đ`, `nửa ngày`, `ẩm thực / food tour`, `tâm linh`, `lịch sử`, `sống ảo`, `chạy xe đêm`, `đua bò`...
   - Ánh xạ chính xác tới toàn bộ 27 tour mẫu trong Supabase (`kham-pha-sau-3n2d`, `toan-canh-2n1d`, `kinh-dien-1-ngay`, `song-ao-checkin-1-ngay`, `tam-linh-hanh-huong-1-ngay`...).
-  - Bổ sung `SLUG_ALIASES` trong `/api/v1/chat/itinerary` đảm bảo tương thích ngược 100% giữa các mã slug cũ và mới.
+- **Tự Động Bóc Tách & Trả Lời Toàn Diện Câu Hỏi Đa Vế / Nhiều Ý Cùng Lúc (Multi-Intent / Compound Query Sub-Decomposition)**:
+  - Khắc phục triệt để điểm yếu khi người dùng hỏi cùng lúc 2-3 vế (Ví dụ: *"Tri Tôn có những chùa nào đẹp, ăn gà đốt ở đâu ngon và tối nên đi cafe nào?"*):
+    • *Sub-Query Decomposition*: Bóc tách câu hỏi phức hợp thành các câu hỏi con độc lập (`extractSubQueries`) để truy xuất đồng thời cả danh sách Chùa, Quán ăn và Cà phê đêm vào bối cảnh RAG (nâng giới hạn lên 6 POIs đa dạng).
+    • *Accumulative Intent Routing*: Thay thế chuỗi `if...else if` độc quyền bằng cơ chế gom tụ lũy tích (`targetPoiIds.push(...)`), giúp tập hợp đầy đủ POIs cho mọi vế câu hỏi.
+    • *Structured Multi-Clause Persona*: Bổ sung Quy tắc 5 & 6 trong `SYSTEM_PROMPT` bắt buộc AI trình bày phân mục rõ ràng từng vế (`### 1. Về Chùa...`, `### 2. Về Ẩm thực...`, `### 3. Về Cafe đêm...`) kèm link Google Maps + TikTok và mục '💡 Gợi ý sắp xếp thời gian hợp lý'.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:

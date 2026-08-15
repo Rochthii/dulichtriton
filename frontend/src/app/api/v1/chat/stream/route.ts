@@ -49,6 +49,23 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
 
 4. **Tôn trọng văn hóa Chùa Tháp Khmer**:
    - Khi vào chánh điện: Mặc trang phục lịch sự, cởi giày dép, không chỉ ngón tay trực tiếp vào tượng Phật.
+
+5. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
+   - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
+   - Lang Lang Coffee & Tea (Đường Trần Hưng Đạo, Thị trấn Tri Tôn): Không gian check-in hiện đại, trà thốt nốt tươi, mở đến 21:30.
+   - Quy Coffee House (Đường Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn): Phong cách mộc ấm cúng, acoustic cuối tuần, mở đến 22:00.
+   - NY Coffee & Tea (Đường Nguyễn Trãi, Thị trấn Tri Tôn): Trà sữa & kem thốt nốt máy lạnh, mở đến 22:00.
+   - Khu Ẩm Thực Chợ Đêm Tri Tôn & Quảng Trường: Dạo mát, ăn vặt, mở đến 22:30.
+
+6. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
+   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: vừa hỏi cảnh đẹp/chùa, vừa hỏi quán ăn/gà đốt, vừa hỏi cafe tối hoặc homestay/lộ trình):
+     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi, tuyệt đối không bỏ sót bất kỳ vế nào.
+     2. Trình bày bài trả lời rõ ràng, tách bạch theo từng đề mục cụ thể:
+        • ### 1. [Vế 1: Tên chủ đề/địa điểm] (Gợi ý chi tiết + Link Maps + Link TikTok)
+        • ### 2. [Vế 2: Tên chủ đề/quán ăn] (Gợi ý chi tiết + Link Maps + Link TikTok)
+        • ### 3. [Vế 3: Tên chủ đề/cafe/homestay] (Gợi ý chi tiết + Link Maps + Link TikTok)
+     3. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm trong từng vế.
+     4. Thêm mục '💡 Gợi ý sắp xếp thời gian di chuyển hợp lý' ở cuối để kết nối các điểm đến thành một hành trình thuận tiện (Sáng -> Trưa -> Chiều -> Tối).
 `;
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -343,27 +360,51 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // 3. Database Places Matching (Local In-Memory Master Index + Supabase)
+function extractSubQueries(query: string): string[] {
+  const separators = [/ và /i, / rồi /i, / sau đó /i, / còn /i, / thế còn /i, / mà /i, /,/, /;/, /\?/, /\./];
+  let segments = [query];
+  for (const sep of separators) {
+    segments = segments.flatMap(s => s.split(sep));
+  }
+  const cleanSegments = segments
+    .map(s => s.trim())
+    .filter(s => s.length >= 2);
+  return cleanSegments.length > 0 ? cleanSegments : [query];
+}
+
+        // 3. Database Places Matching with Sub-Query Decomposition for Multi-Clause Queries
         let places: Record<string, unknown>[] = [];
         let ragMethod = 'none';
 
-        // 3a. Search in verified local master POIs first (0ms, full rich detailed_story & field_tips)
-        const localMatches = (masterPois as any[]).filter(p => {
-          const pName = (p.name || '').toLowerCase();
-          const pCommune = (p.commune || '').toLowerCase();
-          const pCategory = (p.category || '').toLowerCase();
-          return pName.includes(cleanQ) || 
-                 cleanQ.includes(pName) ||
-                 (pCategory && cleanQ.includes(pCategory)) ||
-                 (pCommune && cleanQ.includes(pCommune));
-        }).slice(0, 3);
+        const subQueries = extractSubQueries(queryStr);
+        const matchedPlacesMap = new Map<string, any>();
 
-        if (localMatches.length > 0) {
-          places = localMatches;
-          ragMethod = 'local-master-verified';
+        // 3a. Search in verified local master POIs for each subquery
+        for (const sq of subQueries) {
+          const cleanSq = sq.toLowerCase().replace(/[?!.,]/g, '').trim();
+          if (cleanSq.length < 2) continue;
+
+          const localMatches = (masterPois as any[]).filter(p => {
+            const pName = (p.name || '').toLowerCase();
+            const pCommune = (p.commune || '').toLowerCase();
+            const pCategory = (p.category || '').toLowerCase();
+            return pName.includes(cleanSq) || 
+                   cleanSq.includes(pName) ||
+                   (pCategory && cleanSq.includes(pCategory)) ||
+                   (pCommune && cleanSq.includes(pCommune));
+          }).slice(0, 2);
+
+          localMatches.forEach(p => {
+            if (!matchedPlacesMap.has(p.id)) matchedPlacesMap.set(p.id, p);
+          });
+        }
+
+        if (matchedPlacesMap.size > 0) {
+          places = Array.from(matchedPlacesMap.values()).slice(0, 6);
+          ragMethod = 'local-master-multiclause';
         } else if (queryVector) {
           const { data: vm } = await supabase.rpc('match_places', {
-            query_embedding: queryVector, match_threshold: 0.3, match_count: 4,
+            query_embedding: queryVector, match_threshold: 0.3, match_count: 5,
           });
           if (vm && vm.length > 0) { places = vm; ragMethod = 'vector'; }
         }
@@ -371,7 +412,7 @@ export async function POST(req: NextRequest) {
           const { data: tm } = await supabase.from('places')
             .select('id,slug,name,commune,category,rating,image_url,description,detailed_story,golden_time_windows')
             .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
-            .limit(3);
+            .limit(5);
           if (tm) { places = tm; ragMethod = 'ilike'; }
         }
 

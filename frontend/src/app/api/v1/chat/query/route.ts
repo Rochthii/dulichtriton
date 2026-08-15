@@ -49,7 +49,17 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
    - Khu Ẩm Thực Chợ Đêm Tri Tôn: Ăn vặt đêm, cháo bò trái chúc, bánh xèo tép đồng, mở đến 22:30.
    - Quảng Trường & Phố Đi Bộ Trung Tâm: Dạo mát đón gió đồi, thả diều, trà chanh vỉa hè sôi động từ 17:00 - 23:00.
 
-5. **Phạm vi hỗ trợ**:
+5. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
+   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: vừa hỏi cảnh đẹp/chùa, vừa hỏi quán ăn/gà đốt, vừa hỏi cafe tối hoặc homestay/lộ trình):
+     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi, tuyệt đối không bỏ sót bất kỳ vế nào.
+     2. Trình bày bài trả lời rõ ràng, tách bạch theo từng đề mục cụ thể:
+        • ### 1. [Vế 1: Tên chủ đề/địa điểm] (Gợi ý chi tiết + Link Maps + Link TikTok)
+        • ### 2. [Vế 2: Tên chủ đề/quán ăn] (Gợi ý chi tiết + Link Maps + Link TikTok)
+        • ### 3. [Vế 3: Tên chủ đề/cafe/homestay] (Gợi ý chi tiết + Link Maps + Link TikTok)
+     3. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm trong từng vế.
+     4. Thêm mục '💡 Gợi ý sắp xếp thời gian di chuyển hợp lý' ở cuối để kết nối các điểm đến thành một hành trình thuận tiện (Sáng -> Trưa -> Chiều -> Tối).
+
+6. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
    - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
@@ -434,43 +444,57 @@ export async function POST(req: NextRequest) {
     let targetPoiIds: string[] = [];
 
     if (lowerQuery.includes('3 ngày') || lowerQuery.includes('3n2đ') || lowerQuery.includes('3d2n') || lowerQuery.includes('tour 3 ngày')) {
-      targetPoiIds = ["PL001", "PL004", "HG005", "PL010", "CK002", "FD006", "CF002"];
+      targetPoiIds.push("PL001", "PL004", "HG005", "PL010", "CK002", "FD006", "CF002");
     } else if (lowerQuery.includes('2 ngày 1 đêm') || lowerQuery.includes('2n1đ') || lowerQuery.includes('tour 2 ngày') || lowerQuery.includes('2 ngày')) {
-      targetPoiIds = ["PL001", "PL004", "HG005", "PL010"];
+      targetPoiIds.push("PL001", "PL004", "HG005", "PL010");
     } else if (lowerQuery.includes('lịch trình 1 ngày') || lowerQuery.includes('đi 1 ngày') || (lowerQuery.includes('lịch trình') && !lowerQuery.includes('săn mây'))) {
-      targetPoiIds = ["PL001", "CK002", "FD006", "CK010", "CK001"];
-    } else if (lowerQuery.includes('food tour') || (lowerQuery.includes('từ sáng tới tối') && lowerQuery.includes('ăn'))) {
-      targetPoiIds = ["FD009", "FD006", "FD016", "FD017"];
-    } else if (lowerQuery.includes('săn mây') || lowerQuery.includes('bình minh')) {
-      targetPoiIds = ["PL009", "PL001", "CK002"];
-    } else if (lowerQuery.includes('trẻ nhỏ') || lowerQuery.includes('gia đình')) {
-      targetPoiIds = ["PL014", "PL020", "CF001"];
-    } else if (lowerQuery.includes('văn hóa khmer') || lowerQuery.includes('văn hoá khmer') || lowerQuery.includes('khám phá văn hóa')) {
-      targetPoiIds = ["HG002", "HG001", "EV002", "FD024"];
-    } else if (lowerQuery.includes('chợ tri tôn')) {
-      targetPoiIds = ["PL021", "HG002", "FD009"];
-    } else if (lowerQuery.includes('ngủ đêm') || lowerQuery.includes('homestay') || lowerQuery.includes('khách sạn')) {
-      targetPoiIds = ["CF012", "CF013", "CF016"];
-    } else if (lowerQuery.includes('sống ảo') || lowerQuery.includes('chụp hình đẹp')) {
-      targetPoiIds = ["CK010", "CK009", "CK002"];
-    } else if (lowerQuery.includes('hoàng hôn')) {
-      targetPoiIds = ["PL020", "CK001"];
-    } else if (lowerQuery.includes('cánh đồng lúa') || lowerQuery.includes('đồng lúa')) {
-      targetPoiIds = ["PL011", "CK002"];
-    } else if (lowerQuery.includes('cầu gỗ')) {
-      targetPoiIds = ["CK012", "CK013", "CK015"];
-    } else if (lowerQuery.includes('ít người biết') || lowerQuery.includes('chill mà ít người')) {
-      targetPoiIds = ["CK018", "CK020", "PL019", "CF015"];
-    } else if (lowerQuery.includes('sáng sớm ăn gì') || lowerQuery.includes('ăn sáng')) {
-      targetPoiIds = ["FD009", "FD013"];
-    } else if (lowerQuery.includes('tối ăn gì') || lowerQuery.includes('ăn tối')) {
-      targetPoiIds = ["FD017", "PL022"];
-    } else if (lowerQuery.includes('view hồ')) {
-      targetPoiIds = ["CF002", "CF008", "CF010"];
-    } else if (lowerQuery.includes('gần đó còn gì') || lowerQuery.includes('xem hồ tà pạ')) {
-      targetPoiIds = ["HG001", "PL011", "CK002"];
-    } else if (lowerQuery.includes('ăn chay') || lowerQuery.includes('chay')) {
-      targetPoiIds = ["FD021", "FD024"];
+      targetPoiIds.push("PL001", "CK002", "FD006", "CK010", "CK001");
+    }
+
+    if (lowerQuery.includes('gà đốt') || lowerQuery.includes('ô thum')) {
+      targetPoiIds.push("FD006", "PL002");
+    }
+    if (lowerQuery.includes('cháo bò') || lowerQuery.includes('bún cá') || lowerQuery.includes('đu đủ đâm')) {
+      targetPoiIds.push("FD009", "FD013", "FD016");
+    }
+    if (lowerQuery.includes('food tour') || (lowerQuery.includes('ăn') && !lowerQuery.includes('ăn chay'))) {
+      targetPoiIds.push("FD009", "FD006", "FD016", "FD017");
+    }
+    if (lowerQuery.includes('săn mây') || lowerQuery.includes('bình minh')) {
+      targetPoiIds.push("PL009", "PL001", "CK002");
+    }
+    if (lowerQuery.includes('trẻ nhỏ') || lowerQuery.includes('gia đình')) {
+      targetPoiIds.push("PL014", "PL020", "CF001");
+    }
+    if (lowerQuery.includes('chùa') || lowerQuery.includes('văn hóa khmer') || lowerQuery.includes('văn hoá khmer') || lowerQuery.includes('tâm linh')) {
+      targetPoiIds.push("HG002", "HG001", "EV002", "FD024");
+    }
+    if (lowerQuery.includes('chợ tri tôn') || lowerQuery.includes('chợ đêm')) {
+      targetPoiIds.push("PL021", "HG002", "FD009");
+    }
+    if (lowerQuery.includes('ngủ đêm') || lowerQuery.includes('homestay') || lowerQuery.includes('khách sạn')) {
+      targetPoiIds.push("CF012", "CF013", "CF016");
+    }
+    if (lowerQuery.includes('sống ảo') || lowerQuery.includes('chụp hình đẹp') || lowerQuery.includes('checkin') || lowerQuery.includes('cổng trời')) {
+      targetPoiIds.push("CK010", "CK009", "CK002");
+    }
+    if (lowerQuery.includes('hoàng hôn')) {
+      targetPoiIds.push("PL020", "CK001");
+    }
+    if (lowerQuery.includes('cánh đồng lúa') || lowerQuery.includes('đồng lúa') || lowerQuery.includes('thốt nốt trái tim')) {
+      targetPoiIds.push("PL011", "CK002");
+    }
+    if (lowerQuery.includes('cầu gỗ')) {
+      targetPoiIds.push("CK012", "CK013", "CK015");
+    }
+    if (lowerQuery.includes('ít người biết') || lowerQuery.includes('chill mà ít người')) {
+      targetPoiIds.push("CK018", "CK020", "PL019", "CF015");
+    }
+    if (lowerQuery.includes('tối') || lowerQuery.includes('đêm') || lowerQuery.includes('cafe') || lowerQuery.includes('cà phê')) {
+      targetPoiIds.push("CF001", "CF002", "CF008", "CF010", "FD017");
+    }
+    if (lowerQuery.includes('ăn chay') || lowerQuery.includes('chay')) {
+      targetPoiIds.push("FD021", "FD024");
     }
 
     if (targetPoiIds.length > 0) {
@@ -576,7 +600,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    let places = Array.from(placesMap.values()).slice(0, 4);
+    let places = Array.from(placesMap.values()).slice(0, 6);
 
     let ragContext = '';
     const formattedPlaces: any[] = [];
