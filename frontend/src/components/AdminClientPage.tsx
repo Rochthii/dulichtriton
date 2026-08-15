@@ -71,7 +71,7 @@ export default function AdminClientPage({ initialPlaces }: AdminClientPageProps)
             </h1>
             
             <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
-              Nhật ký hành động bất biến mã hóa mã hóa an toàn `{'{WHO, WHAT, WHEN, FROM_WHERE}'}` và quản lý CSDL Supabase 106 địa điểm.
+              Nhật ký hành động bất biến mã hóa an toàn `{'{WHO, WHAT, WHEN, FROM_WHERE}'}` và quản lý CSDL Supabase 149 địa điểm.
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export default function AdminClientPage({ initialPlaces }: AdminClientPageProps)
           <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
             <span className="text-slate-400 text-[10px] uppercase font-bold block">Tổng Địa Điểm Master</span>
             <span className="text-2xl font-extrabold text-white mt-1 block">{initialPlaces.length}</span>
-            <span className="text-[10px] text-emerald-400 mt-0.5 block">100% WGS84 Verified</span>
+            <span className="text-[10px] text-emerald-400 mt-0.5 block">100% Verified</span>
           </div>
 
           <div className="bg-slate-800/80 p-4 rounded-2xl border border-slate-700">
@@ -211,7 +211,7 @@ export default function AdminClientPage({ initialPlaces }: AdminClientPageProps)
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Database className="w-5 h-5 text-[#D99B26]" />
-              <span>Quản Lý 106 Bản Ghi Địa Điểm Supabase Database</span>
+              <span>Quản Lý 149 Bản Ghi Địa Điểm Supabase Database</span>
             </h2>
             <span className="text-xs text-emerald-400 font-bold bg-emerald-950 px-3 py-1 rounded-lg border border-emerald-800">
               100% Active Live
@@ -225,7 +225,7 @@ export default function AdminClientPage({ initialPlaces }: AdminClientPageProps)
                   <th className="py-3 px-4">Tên Địa Điểm</th>
                   <th className="py-3 px-4">Đơn Vị Hành Chính</th>
                   <th className="py-3 px-4">Danh Mục</th>
-                  <th className="py-3 px-4">WGS84 Lat/Lng</th>
+                  <th className="py-3 px-4">Tọa Độ Lat/Lng</th>
                   <th className="py-3 px-4">Rating</th>
                   <th className="py-3 px-4">Trạng Thái</th>
                 </tr>

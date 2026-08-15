@@ -5,7 +5,7 @@
 
 ## Project
 Chatbot du lịch AI chuyên về Tri Tôn, An Giang, Việt Nam.
-82 địa điểm đã xác minh | 6 nhóm danh mục | 8 module hệ thống
+149 địa điểm đã xác minh thực tế | 6 nhóm danh mục | 8 module hệ thống
 
 ## Non-Negotiable Rules
 1. NEVER use "Huyện Tri Tôn" — use Xã/Thị trấn only
@@ -26,7 +26,7 @@ Chatbot du lịch AI chuyên về Tri Tôn, An Giang, Việt Nam.
 Intent → NER → RAG DB Query → LLM → Structured JSON → UI (Next.js/React + Supabase)
 
 ## Master Data
-data/tri_ton_master_cleaned.csv (82 records, version 10.0.0)
+data/tri_ton_master_cleaned.csv (149 records, version 11.0.0)
 
 ## Changelog & Progress Track
 → [CHANGELOG.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/CHANGELOG.md)
@@ -41,7 +41,7 @@ Next.js / React | Vercel | Supabase (PostgreSQL+pgvector) | Python 3.11 FastAPI 
 
 ## Dynamic Domain Boundary Directive & System Role Contract
 * **Role**: Du Lịch Tri Tôn AI Assistant — Sole purpose is supporting information directly relevant to Tri Tôn tourism and the project.
-* **Strict Domain Scope**: Tri Tôn (An Giang), Tourism in Tri Tôn, 95 Verified POIs Master Data, Khmer Culture, Food, Accommodation, Attractions, TikTok/Video Discovery anchored to Tri Tôn.
+* **Strict Domain Scope**: Tri Tôn (An Giang), Tourism in Tri Tôn, 149 Verified POIs Master Data, Khmer Culture, Food, Accommodation, Attractions, TikTok/Video Discovery anchored to Tri Tôn.
 * **Out-of-Scope Policy**: Refuse non-Tri Tôn queries with: `"Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."`
 * **Search Policy**: Every search MUST contain Tri Tôn geographic signals (`site:tiktok.com "<POI>" "Tri Tôn"`).
 * **Data Integrity**: Never fabricate data. If unverified: `"Con không có đủ dữ liệu để xác minh chính xác thông tin này."`

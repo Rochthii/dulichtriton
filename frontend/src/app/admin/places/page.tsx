@@ -264,7 +264,7 @@ export default function AdminPlacesPage() {
             <Sparkles className="w-4 h-4 text-amber-400" />
             <span>CMS Admin Portal · Live Supabase DB</span>
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Quản Lý 95 Địa Điểm Du Lịch Tri Tôn</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">Quản Lý 149 Địa Điểm Du Lịch Tri Tôn</h1>
           <p className="text-xs text-slate-300 mt-1">Cập nhật ảnh đại diện, thông tin chi tiết, khung giờ vàng & bật tắt HOT thực tế.</p>
         </div>
 

@@ -84,11 +84,16 @@ Mỗi địa điểm lưu trữ mảng JSONB `photos` trên PostgreSQL với đ�
 
 ## 🎨 4. Chuẩn Mực Phát Triển Frontend Web Portal Next.js 14
 
-### 📐 Design Tokens & Palette
-* **Primary Emerald Green**: `#1B4D3E` / `#0F5132` (Xanh đại ngàn Bảy Núi — dùng cho Header, Button chính, CTA).
-* **Secondary Golden Palm**: `#D99B26` / `#E5A93C` (Vàng thốt nốt & Khmer — dùng cho Badges, Rating Stars, Highlight).
-* **Neutral Dark Slate**: `#0F172A` (Text chính & High contrast text trên nền sáng).
-* **Surface Background**: `#F4F9F5` / `#F8F9FA` (Nền sáng ngà ấm áp).
+### 📐 Design Tokens & Palette ("Folk-Modern Bảy Núi")
+* **Background Warm Sand (`--bg`)**: `#FAF3E7` (Nắng đồng lúa & cát sương — tránh trắng tinh).
+* **Surface Card (`--surface`)**: `#FFFDF7` (Bề mặt thẻ bưu thiếp).
+* **Primary Ink Text (`--ink`)**: `#26221B` (Đất đá núi — độ tương phản cao).
+* **Primary Jade (`--jade`)**: `#0E8C7F` (Nước hồ Tà Pạ — màu chủ đạo, link, active, nature).
+* **Primary CTA Palm (`--palm`)**: `#F0A32F` (Vàng thốt nốt chín — nút CTA chính: Chỉ đường, Xem lịch trình).
+* **Sunset Accent (`--sunset`)**: `#F26B3A` (Cam hoàng hôn — badge hot, culinary).
+* **Commune / Category Colors**: Terracotta `#A6503A` (Lịch sử), Saffron `#D9822B` (Chùa Khmer), Festival Purple `#7C5CBF`, Homestay `#8A5A33`.
+* **Dark Mode "Đêm Tri Tôn"**: Background `#151B34`, Surface `#1E2647`, Firefly `#FFD37A`.
+* **Typography Trio**: `Bricolage Grotesque` (Heading/Logo), `Be Vietnam Pro` (Body/UI), `Patrick Hand` (Ghi chú mẹo phượt/Stamp).
 
 ### 📺 TikTok Media & Hashtag Redirect Protocol
 * **Pop-up Modal TikTok Reels**: Hiển thị Pop-up xem trực tiếp thông tin review video TikTok trên Trang chủ.

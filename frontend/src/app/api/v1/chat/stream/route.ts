@@ -9,7 +9,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmflj
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
+const BASE_SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
 
 QUY TẮC CỐT LÕI (MANDATORY RULES):
@@ -27,10 +27,25 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Hồ+Tà+Pạ+Xã+Núi+Tô+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Hồ+Tà+Pạ+Tri+Tôn)
 
      ### 2. Quán Gà Đốt Ô Thum
-     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm.
+     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Gà+Đốt+Ô+Thum+Tri+Tôn)
 
-3. **Phạm vi hỗ trợ**:
+3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
+   - Gà Đốt Ô Thum: Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
+   - Cháo Bò Tri Tôn: Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
+   - Bún Nước Lèo Khmer: Nấu từ cá lóc đồng nướng rỉa thịt, ngải bún và sả ớt ăn kèm rau muống bào.
+   - Đu Đủ Đâm Rina (Xã Châu Lăng): Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
+   - Bánh Bò Thốt Nốt Nướng Tân Lợi: Thơm béo nước cốt dừa và đường thốt nốt.
+
+4. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
+   - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
+   - Lang Lang Coffee & Tea (Đường Trần Hưng Đạo, Thị trấn Tri Tôn): Không gian check-in hiện đại, trà thốt nốt tươi, mở đến 21:30.
+   - Quy Coffee House (Đường Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn): Phong cách mộc ấm cúng, acoustic cuối tuần, mở đến 22:00.
+   - NY Coffee & Tea (Đường Nguyễn Trãi, Thị trấn Tri Tôn): Trà sữa & kem thốt nốt máy lạnh, mở đến 22:00.
+   - Khu Ẩm Thực Chợ Đêm Tri Tôn: Ăn vặt đêm, cháo bò trái chúc, bánh xèo tép đồng, mở đến 22:30.
+   - Quảng Trường & Phố Đi Bộ Trung Tâm: Dạo mát đón gió đồi, thả diều, trà chanh vỉa hè sôi động từ 17:00 - 23:00.
+
+5. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
    - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
@@ -98,6 +113,27 @@ function logChatEvent(entry: ChatLogEntry): void {
     .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
 }
 
+// ── Live Weather Telemetry Fetcher ──────────────────────────────────────────
+async function fetchLiveWeatherContext(): Promise<string> {
+  try {
+    const res = await fetch(
+      'https://api.open-meteo.com/v1/forecast?latitude=10.4215&longitude=105.0125&current=temperature_2m,relative_humidity_2m,precipitation,weather_code&timezone=Asia%2FBangkok',
+      { signal: AbortSignal.timeout(2500) }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      const cur = data?.current;
+      const temp = Math.round(cur?.temperature_2m || 29);
+      const hum = cur?.relative_humidity_2m || 75;
+      const rain = (cur?.precipitation || 0) > 0;
+      return `\n[THÔNG TIN THỜI TIẾT THỜI GIAN THỰC TẠI TRI TÔN]\nNhiệt độ hiện tại: ${temp}°C, Độ ẩm: ${hum}%, Tình trạng: ${rain ? 'Có mưa rào Bảy Núi' : 'Nắng ấm trong lành'}.\nMùa hiện tại: Mùa lúa chín vàng Tà Pạ (tháng 8 - 11), rất đẹp để ngắm cảnh.\n`;
+    }
+  } catch {
+    // silent fallback
+  }
+  return `\n[THÔNG TIN THỜI TIẾT TRI TÔN]\nNhiệt độ: ~29-32°C, Khí hậu nắng ấm thuận lợi du lịch Bảy Núi. Mùa lúa chín Tà Pạ tháng 8-11.\n`;
+}
+
 // ── Smart Intent Classifier & Out-of-Scope Guard ────────────────────────────
 function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   const lower = queryStr.toLowerCase();
@@ -109,7 +145,8 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   const travelKeywords = [
     'đi từ', 'từ ', 'xe ', 'bến xe', 'vé xe', 'phương tiện', 'khoảng cách',
     'bao xa', 'bao nhiêu km', 'mất bao lâu', 'mất mấy tiếng', 'mất mấy giờ',
-    'đường đi', 'di chuyển', 'bằng xe', 'chặng'
+    'đường đi', 'di chuyển', 'bằng xe', 'chặng', 'thời tiết', 'gà đốt', 'hồ tà pạ',
+    'chùa', 'ăn gì', 'quán nào', 'ở đâu'
   ];
   if (travelKeywords.some(kw => lower.includes(kw))) {
     return false;
@@ -144,7 +181,7 @@ function buildSuggestions(lower: string): string[] {
     return ['Đường lên Chùa Tà Pạ', 'Cổng trời Chùa Koh Kas', 'Lễ hội Đua bò Khmer'];
   if (lower.includes('ở') || lower.includes('homestay') || lower.includes('khách sạn'))
     return ['Homestay view núi Cô Tô đẹp nhất', 'Khách sạn trung tâm Thị trấn Tri Tôn', 'Khu cắm trại Hồ Ô Thum'];
-  return ['Đặc sản Gà Đốt Ô Thum ở đâu?', 'Lộ trình 2 ngày 1 đêm Tri Tôn', 'Khung giờ chụp ảnh đẹp Hồ Tà Pạ'];
+  return ['Thời tiết Tri Tôn hôm nay thế nào?', 'Gà Đốt Ô Thum có cần đặt trước?', 'Lịch trình 1 ngày tối ưu'];
 }
 
 // ── SSE Stream Handler ───────────────────────────────────────────────────────
@@ -168,10 +205,11 @@ export async function POST(req: NextRequest) {
         const t0 = Date.now();
         const lower = queryStr.toLowerCase();
 
-        // 1. Load history & generate embedding in parallel
-        const [history, queryVector] = await Promise.all([
+        // 1. Load history, embedding & weather telemetry in parallel
+        const [history, queryVector, weatherContext] = await Promise.all([
           loadHistory(sessionId),
           generateQueryEmbedding(queryStr),
+          fetchLiveWeatherContext(),
         ]);
 
         // 2. Out-of-scope guard with history context
@@ -242,13 +280,13 @@ export async function POST(req: NextRequest) {
           send({ type: 'places', data: formattedPlaces });
         }
 
-        // Build system message with history
-        const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', SYSTEM_PROMPT);
+        // Build system message with history & live weather context
+        const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
         const historySnippet = history.length > 0
           ? '\n\nLịch sử hội thoại gần nhất:\n' +
             history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
           : '';
-        const systemMsg = activeSystemPrompt + historySnippet;
+        const systemMsg = activeSystemPrompt + weatherContext + historySnippet;
         
         // Priority prompt: Always prioritize live web search/internet facts
         const userMsg = ragContext

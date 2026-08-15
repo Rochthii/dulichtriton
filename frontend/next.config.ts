@@ -1,13 +1,4 @@
 import type { NextConfig } from "next";
-// @ts-expect-error next-pwa lacks typescript definitions
-import withPWA from "next-pwa";
-
-const pwa = withPWA({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
-});
 
 const nextConfig: NextConfig = {
   compress: true,
@@ -24,4 +15,23 @@ const nextConfig: NextConfig = {
   turbopack: {},
 };
 
-export default pwa(nextConfig);
+let exportedConfig = nextConfig;
+
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const withPWA = require("next-pwa");
+  if (typeof withPWA === "function") {
+    const pwa = withPWA({
+      dest: "public",
+      register: true,
+      skipWaiting: true,
+      disable: process.env.NODE_ENV === "development",
+    });
+    exportedConfig = pwa(nextConfig);
+  }
+} catch {
+  // next-pwa optional fallback
+}
+
+export default exportedConfig;
+

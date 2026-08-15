@@ -31,10 +31,25 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Hồ+Tà+Pạ+Xã+Núi+Tô+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Hồ+Tà+Pạ+Tri+Tôn)
 
      ### 2. Quán Gà Đốt Ô Thum
-     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm.
+     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/search?q=Gà+Đốt+Ô+Thum+Tri+Tôn)
 
-3. **Phạm vi hỗ trợ**:
+3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
+   - Gà Đốt Ô Thum (Xã Ô Lâm): Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
+   - Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng): Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
+   - Bún Nước Lèo Khmer: Nấu từ cá lóc đồng nướng rỉa thịt, ngải bún và sả ớt ăn kèm rau muống bào.
+   - Đu Đủ Đâm Rina (Xã Châu Lăng): Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
+   - Bánh Bò Thốt Nốt Nướng Tân Lợi: Thơm béo nước cốt dừa và đường thốt nốt.
+
+4. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
+   - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
+   - Lang Lang Coffee & Tea (Đường Trần Hưng Đạo, Thị trấn Tri Tôn): Không gian check-in hiện đại, trà thốt nốt tươi, mở đến 21:30.
+   - Quy Coffee House (Đường Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn): Phong cách mộc ấm cúng, acoustic cuối tuần, mở đến 22:00.
+   - NY Coffee & Tea (Đường Nguyễn Trãi, Thị trấn Tri Tôn): Trà sữa & kem thốt nốt máy lạnh, mở đến 22:00.
+   - Khu Ẩm Thực Chợ Đêm Tri Tôn: Ăn vặt đêm, cháo bò trái chúc, bánh xèo tép đồng, mở đến 22:30.
+   - Quảng Trường & Phố Đi Bộ Trung Tâm: Dạo mát đón gió đồi, thả diều, trà chanh vỉa hè sôi động từ 17:00 - 23:00.
+
+5. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
    - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 

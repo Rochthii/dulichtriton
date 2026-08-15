@@ -6,7 +6,7 @@
 3. FRONTEND: Next.js / React deployed on Vercel.
 4. ICONS: Standard SVG icons ONLY (Lucide Icons / Heroicons).
 5. UI/UX: User-Centric (Pain points, Personas, User blind spots, Long-term retention).
-6. DESIGN SYSTEM: Primary Emerald (#1B4D3E), Golden Palm (#D99B26), Slate Dark (#0F172A), Background (#F8F9FA).
+6. DESIGN SYSTEM: "Folk-Modern Bảy Núi" — Sand Bg (#FAF3E7), Surface (#FFFDF7), Ink (#26221B), Jade (#0E8C7F), Palm CTA (#F0A32F), Sunset (#F26B3A), Night Mode (#151B34). Fonts: Bricolage Grotesque / Be Vietnam Pro / Patrick Hand.
 7. SCHEMAS: Pydantic v2 with unicodedata.normalize("NFC", text) validators.
 7. LOGGING: loguru with file rotation and contextual tags.
 8. EXPORTS: Always utf-8-sig for CSV, utf-8 for JSON, WGS84 for GeoJSON.

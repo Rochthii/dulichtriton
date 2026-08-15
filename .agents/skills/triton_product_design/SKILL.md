@@ -1,57 +1,130 @@
 ---
 name: triton-product-design-and-stack
-description: Full Design System Tokens (Color, Typography, Lucide SVG Icons, 16-Screen System, Component Specs), Tech Stack rules (Next.js/React on Vercel, Supabase DB), and User-Centric UI/UX design philosophy for Tri Ton Tourism project.
+description: Full Design System Tokens (Folk-Modern Bảy Núi, 10-Color Palette, 3-Font Typography, Lucide SVG Icons, Signature Elements, 16-Screen System, Component Specs), Tech Stack rules (Next.js/React on Vercel, Supabase DB), and User-Centric UI/UX design philosophy for Tri Ton Tourism project.
 ---
 
 # DU LỊCH TRI TÔN — DESIGN SYSTEM, PRODUCT DESIGN & TECH STACK SKILL
+## Triết lý Thiết kế: "Folk-Modern Bảy Núi"
+*Chất liệu dân dã miền núi Khmer (thốt nốt, lúa, chùa, nắng) kết hợp ngôn ngữ ứng dụng du lịch hiện đại (card, chip, metro-line, motion). Tuyệt đối không dùng gradient neon tím/hồng kiểu city-app, không thuần "blog báo chí" cũ kỹ.*
 
-## 1. Design System Tokens (Bảng màu & Đồng bộ 100%)
-* **Primary Emerald**: `#1B4D3E` / `#0F5132` (Xanh đại ngàn Bảy Núi — dùng cho Header, Primary CTA, Accent).
-* **Secondary Golden Palm**: `#D99B26` / `#E5A93C` (Vàng thốt nốt & Khmer — dùng cho Badges, Ratings, Action Buttons).
-* **Theme 1 (Deep Emerald & Warm Gold)**: Tone màu chuẩn dùng làm thiết kế gốc đồng bộ 100% giữa Trang chủ và các trang con.
-* **Neutral Dark Slate**: `#0F172A` (Slate 900 — dùng cho Văn bản tiêu đề & High contrast text trên nền sáng).
-* **Background Light**: `#F4F9F5` / `#F8F9FA` (Warm Off-White — nền trang sáng ngà thanh lịch).
-* **Text Contrast Standard**: Tiêu đề và mô tả trên nền thẻ trắng `bg-white` bắt buộc dùng `text-slate-900` và `text-slate-600` tương phản cao 100% (không dùng text mờ).
+---
 
-## 2. UI Icon Standard (NO EMOJI POLICY & SVG Mapping)
-* **STRICT RULE**: ABSOLUTELY NO EMOJIS anywhere in the UI, text buttons, headings, or components.
-* **SVG ONLY**: Use clean, standard SVG icons ONLY (`Lucide Icons` / `Heroicons`).
-* **Lucide Icon Mappings**:
-  * Search AI: `<Search />` | MapPin / Navigation: `<MapPin />` | Interactive Map: `<Map />`
-  * Time / Hours: `<Clock />` | Rating: `<Star />` | Call / Booking: `<Phone />`
-  * Video Play: `<Play />` | Vehicle / Parking: `<Car />` | Date / Tour: `<Calendar />`
-  * Share / QR: `<Share2 />` / `<QrCode />` | Download PDF: `<Download />`
-  * Heritage / Pagoda: `<Landmark />` | Food: `<Utensils />` | Homestay: `<Home />` | AI Chat: `<Bot />`
+## 1. Bảng Màu Thống Nhất 1:1 (Lấy Cảm Hứng Thực Địa)
 
-## 3. TikTok Media Redirect & Pop-up Modal Standard
-* **Interactive TikTok Pop-up Modal**: Click 6 video TikTok Reels trên Trang chủ hiển thị Pop-up review chi tiết, tác giả, lượt xem và nút xem tiếp.
-* **Dynamic Hashtag Redirect**: Nút "Xem TikTok" ở Trang Khám phá (`/places`) tự động sinh URL tìm kiếm chuẩn `https://www.tiktok.com/search?q=...` mở tab mới chính xác từng địa điểm.
+| Token CSS | Hex Code | Nguồn cảm hứng thực địa | Vai trò sử dụng |
+|---|---|---|---|
+| `--bg` | `#FAF3E7` | Nắng đồng lúa & cát sương | **Nền chính** (sáng ấm, tránh trắng tinh `#FFF`) |
+| `--surface` | `#FFFDF7` | Màu ngà giấy bưu thiếp | Mặt card, container, bề mặt nổi |
+| `--ink` | `#26221B` | Đất đá núi Thất Sơn | **Màu chữ chính**, heading, độ tương phản cao |
+| `--ink-soft` | `#6B6355` | Đất phù sa khô | Chữ phụ, địa chỉ, subtitle, metadata |
+| `--jade` | `#0E8C7F` | Nước xanh hồ Tà Pạ | **Màu chủ đạo**: link, active, category nature |
+| `--jade-deep` | `#0B6B60` | Đáy hồ Tà Pạ | Hover state của jade, viền nhấn |
+| `--palm` | `#F0A32F` | Mật trái thốt nốt chín | **Nút CTA chính** (Chỉ đường, Xem lịch trình, Đặt bàn) |
+| `--palm-deep` | `#C97F1B` | Đường thốt nốt cô đặc | Hover state của CTA palm |
+| `--sunset` | `#F26B3A` | Hoàng hôn tuyến tránh Tri Tôn | Accent, badge "hot", category food & culinary |
+| `--terracotta` | `#A6503A` | Gạch chùa cổ & đất nung | Category history / di tích lịch sử |
+| `--saffron` | `#D9822B` | Áo cà sa sư Khmer | Category culture / chùa Khmer & di sản |
+| `--festival` | `#7C5CBF` | Khăn lụa Lễ hội Dolta / Đua bò | Category festival / sự kiện văn hóa |
+| `--cat-stay` | `#8A5A33` | Vách gỗ nhà sàn homestay | Category homestay & nghỉ dưỡng |
+| `--night-bg` | `#151B34` | Bầu trời đêm Bảy Núi | **Dark mode "Đêm Tri Tôn"** |
+| `--night-surface` | `#1E2647` | Màn đêm sương núi | Bề mặt card trong Dark Mode |
+| `--firefly` | `#FFD37A` | Đom đóm & đèn chợ đêm | Accent, điểm sáng trên Dark Mode |
 
-## 4. Tech Stack & Deployment Rules
-* **Database**: Supabase (PostgreSQL + pgvector + Supabase Auth / Client).
-* **Frontend**: Next.js 16 / React 19 (App Router, TailwindCSS, SSR/SSG/ISR).
-* **Deployment**: Vercel (Auto CI/CD, Edge Functions, Preview Deployments).
+### Nguyên tắc màu danh mục (Category Color Rule)
+* **1 Category = 1 Màu riêng biệt**: Giúp du khách quét mắt nhận diện ngay loại điểm đến trong vòng 1 giây.
+* Radius Tokens: `--r-s: 12px; --r-m: 18px; --r-l: 26px;`
+* Shadow Tokens: `--shadow-1: 0 2px 10px rgba(38,34,27,.08); --shadow-2: 0 10px 30px rgba(38,34,27,.14);`
 
-## 5. Full 16-Screen System Coverage
-1. `01_homepage`: Trang chủ Web Portal & Storytelling Landing Page 7 Section.
-2. `02_places_discovery`: Trang Khám phá 106 Địa điểm Supabase DB & Nút TikTok Search.
-3. `03_place_detail`: Trang Chi tiết Hồ Tà Pạ & Kho ảnh HD trích nguồn.
-4. `04_food_gastronomy`: Trang Đặc sản Ẩm thực Live DB (Cháo bò, Gà đốt Ô Thum).
-5. `05_ai_chatbot`: Khung Chatbot AI RAG nhúng Thẻ Địa điểm & Video Stream.
-6. `06_ai_trip_planner`: Trợ lý Lập Lịch trình AI Tour 1-Tap & Phượt 2N1Đ.
-7. `07_stay_homestay`: Trang Lưu trú Homestay Live DB (Soài Chek, Cô Tô View).
-8. `08_culture_events`: Trang Văn hóa Khmer 1:1, Lễ hội Đua bò & Chùa Xvayton.
-9. `09_interactive_gis_map`: Trang Bản đồ GIS Tương tác Bounding Box Tri Tôn.
-10. `10_travel_info_guide`: Trang Cẩm nang Di chuyển & Hotline Cứu hộ 24/7.
-11. `11_itinerary_export_modal`: Modal Xuất QR Code & Tải PDF Offline.
-12. `12_partner_portal`: Trang Cổng Đăng ký Dịch vụ Đối tác địa phương.
-13. `13_admin_dashboard`: Admin Control Center, Duyệt Video & Audit Logs.
-14. `14_empty_state_404`: Trạng thái Trống & Lỗi 404 với gợi ý điểm hot.
-15. `15_dark_mode_visual_spec`: Giao diện Chế độ Tối toàn hệ thống.
-16. `16_auth_login_modal`: Modal Đăng nhập & Phân quyền Supabase Auth.
+---
 
-## 6. Strict Mandatory Prototype Alignment
-* **MANDATORY SPECIFICATION**: All Frontend developments MUST strictly align with the prototype layouts specified in [docs/ui_prototype_showcase.md](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/ui_prototype_showcase.md).
-* **DIRECTORY SCAFFOLDING**: The frontend MUST maintain complete directory scaffolding for all 13 core screens (`places`, `food`, `itinerary`, `stay`, `culture`, `map`, `guide`, `partner`, `admin`) before building full UI components.
+## 2. Hệ Thống Typography — Bộ 3 Font Chuẩn Tiếng Việt
 
+```html
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+```
 
+| Vai trò | Font Family | Trọng số (Weight) | Lý do & Mục đích sử dụng |
+|---|---|---|---|
+| **Display / Heading / Logo** | `Bricolage Grotesque` | 700–800 | Hiện đại, sắc nét, có cá tính riêng, không mang cảm giác template có sẵn. |
+| **Body / UI Components** | `Be Vietnam Pro` | 400–700 | Tối ưu hóa hoàn hảo cho dấu tiếng Việt, đọc êm mắt, thanh lịch. |
+| **Ghi chú "Mẹo thực địa" / Stamp** | `Patrick Hand` | Regular | Nét viết tay mang cảm giác **sổ tay phượt**, dùng cho tip, chú thích, con dấu xác minh. |
+
+### Quy tắc Typography (Typography Rules)
+1. Tuyệt đối tối đa 3 font trong toàn bộ hệ thống.
+2. **Không dùng font viết tay** cho Heading hoặc Body. Font viết tay chỉ xuất hiện ở *ghi chú nhỏ / mẹo thực địa* để giữ trọn giá trị "đắt giá".
+
+---
+
+## 3. 5 Phần Tử Nhận Diện Đặc Trưng (Signature Elements)
+
+1. **Metro-line (Sơ đồ nối dây du lịch)**:
+   * Tuyến line bo tròn 4px màu ngọc `--jade`, mỗi điểm là "trạm" chấm tròn viền cát sương `--bg`.
+   * Badge thời gian di chuyển là viên thuốc nhỏ (pill) nằm chính giữa dây nối.
+   * Khi người dùng cuộn tới, line **tự vẽ mượt mà** (`stroke-dashoffset` animation).
+2. **Ticket-stub (Thẻ lịch trình dạng Vé xe/Vé máy bay)**:
+   * Card lịch trình thiết kế dạng vé perforated với cạnh răng cưa/đường cắt đứt đoạn.
+   * Thể hiện mã tuyến (vd: `TTN→TPA→OTU`), mã tour (vd: `TT-2N1Đ`).
+3. **Stamp "ĐÃ XÁC MINH THỰC ĐỊA"**:
+   * Con dấu tròn xoay nhẹ 12° (dùng Bricolage / Patrick Hand), đóng dấu lên card có dữ liệu thực địa sạch và review thật, giải quyết triệt để nỗi đau "like ảo / ảnh mạng".
+4. **Texture hoa văn nền bản địa**:
+   * Họa tiết Kbach Khmer hoặc silhouette hàng thốt nốt mờ với opacity 3–5% tại các section divider.
+5. **Logo & Nút Lưu Trái Tim Thốt Nốt**:
+   * Biểu tượng trái tim thốt nốt (lấy cảm hứng từ *Hàng thốt nốt trái tim*) ghép silhouette 2 ngọn núi Cô Tô & Tà Pạ → đồng thời là icon nút "Lưu điểm đến" (thay cho trái tim thông thường).
+
+---
+
+## 4. Quy Chuẩn Linh Kiện UI Chính (Component Specifications)
+
+### 4.1. Thẻ POI Card (Chuẩn 1 Giây Quét Mắt)
+* Bo góc `--r-l` (26px), tỷ lệ ảnh 4:3, scrim gradient đen 40% phía dưới ảnh.
+* Góc trên bên trái: Chip category mang màu chuyên biệt của danh mục đó.
+* Góc trên bên phải: Chip rating ⭐ nền sáng ấm.
+* Tên điểm: `Bricolage Grotesque` 700; Địa chỉ: `Be Vietnam Pro` 13px `--ink-soft`.
+* Hàng nút hành động:
+  * `[🎵 TikTok]`: Nút viền outline (`border-slate-300`).
+  * `[🗺️ Chỉ đường]`: Nút solid màu vàng thốt nốt `--palm` chữ `--ink` (chỉ duy nhất 1 nút solid chính để hướng mắt người dùng).
+* Hiệu ứng hover: Nâng bóng `--shadow-2` + ảnh phóng to chậm `scale-105` (zoom êm).
+
+### 4.2. Nút Bấm & Chip Lọc
+* Tất cả nút và chip sử dụng kiểu dáng **Pill** (bo tròn toàn phần `rounded-full`).
+* **CTA chính**: Solid `--palm` (`#F0A32F`) chữ `--ink` (`#26221B`).
+* **Secondary / Filter active**: Outline viền `--jade` (`#0E8C7F`) hoặc solid ngọc Tà Pạ.
+
+### 4.3. Hero Section
+* Ảnh nền full-bleed Hồ Tà Pạ hoặc hoàng hôn tuyến tránh Tri Tôn với hiệu ứng zoom chậm.
+* Tiêu đề `Bricolage Grotesque` cỡ lớn.
+* Ô tìm kiếm giải quyết nỗi đau dạng chip bấm nhanh: *"Sợ hết giờ"*, *"Đi với người già"*, *"Muốn ăn gà đốt"*.
+
+### 4.4. Section "Đêm Tri Tôn"
+* Tự động chuyển tông nền dark mode `--night-bg` (`#151B34`).
+* Hiệu ứng đom đóm lơ lửng `--firefly` (`#FFD37A`), viền card chợ đêm/cafe đêm màu hổ phách amber.
+
+---
+
+## 5. Chuyển Động & Vi Tương Tác (Motion & Micro-interactions)
+* Metro-line tự động vẽ khi cuộn vào viewport.
+* Stamp "Đã xác minh" đóng hiệu ứng nảy nhẹ (*bụp*) khi xuất hiện.
+* Nút Lưu: Icon trái tim thốt nốt hiệu ứng nở (bloom) khi kích hoạt.
+* Carousel cụm điểm: Hỗ trợ chạm vuốt scroll-snap ngang, thẻ nghiêng nhẹ 2° kiểu bưu thiếp lưu niệm.
+* Luôn hỗ trợ `prefers-reduced-motion` cho người dùng nhạy cảm chuyển động.
+
+---
+
+## 6. Bảng Quy Tắc DO / DON'T
+
+| ✅ DO (BẮT BUỘC THỰC HIỆN) | ❌ DON'T (TUYỆT ĐỐI KHÔNG LÀM) |
+|---|---|
+| Sử dụng ảnh **thật** của Tri Tôn (Tà Pạ, Ô Thum, Chùa Xà Tón, Soài So). | Không dùng ảnh stock chung chung, ảnh biển, ảnh Sa Pa. |
+| Dùng nền cát sương ấm `#FAF3E7`, tránh dùng nền trắng tinh `#FFFFFF` hoặc đen thuần `#000000`. | Không dùng gradient neon tím-hồng kiểu city-app. |
+| Đồng bộ 1 hệ corner radius (`--r-s: 12px`, `--r-m: 18px`, `--r-l: 26px`) và spacing 8pt. | Không lạm dụng Glassmorphism và hiệu ứng blur đục ngầu tràn lan. |
+| Màu sắc danh mục nhất quán 100% giữa card, map pin, filter và timeline. | Không đổi màu danh mục tùy tiện giữa các trang. |
+| Font viết tay `Patrick Hand` chỉ dùng cho ghi chú ngắn, mẹo phượt, con dấu. | Không dùng font viết tay cho Heading hoặc nội dung Body. |
+| 100% SVG Icons (Lucide Icons). | Tuyệt đối không dùng Emoji trên UI. |
+
+---
+
+## 7. Tech Stack & Deployment Rules
+* **Database**: Supabase (PostgreSQL + pgvector + Supabase Auth).
+* **Frontend**: Next.js 14 / React 19 (App Router, TailwindCSS Custom Tokens, Mobile-First).
+* **Deployment**: Vercel (Edge Config, Auto CI/CD).
+* **Mapping**: WGS84 Bounding Box Tri Tôn `[10.25-10.55 Lat, 104.85-105.15 Lng]`.

@@ -3,24 +3,61 @@
 
 @layer base {
   :root {
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    /* Folk-Modern Bảy Núi Color Palette Tokens */
+    --bg: #FAF3E7;
+    --surface: #FFFDF7;
+    --ink: #26221B;
+    --ink-soft: #6B6355;
+    --jade: #0E8C7F;
+    --jade-deep: #0B6B60;
+    --palm: #F0A32F;
+    --palm-deep: #C97F1B;
+    --sunset: #F26B3A;
+    --terracotta: #A6503A;
+    --saffron: #D9822B;
+    --festival: #7C5CBF;
+    --cat-nature: #0E8C7F;
+    --cat-culture: #D9822B;
+    --cat-history: #A6503A;
+    --cat-food: #F26B3A;
+    --cat-festival: #7C5CBF;
+    --cat-stay: #8A5A33;
+    --night-bg: #151B34;
+    --night-surface: #1E2647;
+    --firefly: #FFD37A;
 
-    --primary: #0F5132;
-    --primary-hover: #0A3622;
-    --primary-light: #E8F5E9;
-    --secondary: #D97706;
-    --secondary-hover: #B45309;
-    --secondary-light: #FEF3C7;
-    --surface-bg: #F8FAFC;
-    --surface-card: #FFFFFF;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
-    --border-color: #E2E8F0;
+    /* Spacing & Radii */
+    --r-s: 12px;
+    --r-m: 18px;
+    --r-l: 26px;
+
+    /* Shadows */
+    --shadow-1: 0 2px 10px rgba(38, 34, 27, 0.08);
+    --shadow-2: 0 10px 30px rgba(38, 34, 27, 0.14);
+
+    /* Typography System */
+    --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-note: 'Patrick Hand', cursive, sans-serif;
+
+    /* Backward compatibility mapping */
+    --primary: #0E8C7F;
+    --primary-hover: #0B6B60;
+    --primary-light: #E6F5F3;
+    --secondary: #F0A32F;
+    --secondary-hover: #C97F1B;
+    --secondary-light: #FEF6E9;
+    --surface-bg: #FAF3E7;
+    --surface-card: #FFFDF7;
+    --text-main: #26221B;
+    --text-muted: #6B6355;
+    --border-color: rgba(38, 34, 27, 0.12);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-display);
+    color: var(--ink);
+    letter-spacing: -0.02em;
   }
 }
 
@@ -32,59 +69,220 @@ html {
 }
 
 body {
-  background-color: var(--surface-bg);
-  color: var(--text-main);
+  background-color: var(--bg);
+  color: var(--ink);
   font-family: var(--font-body);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Allow natural touch momentum scroll without lockup */
   overscroll-behavior-y: auto;
 }
 
-/* Fix mobile horizontal overflow without disabling iOS body momentum scroll */
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-note {
+  font-family: var(--font-note);
+}
+
+/* Folk-Modern Button Styles */
+.btn-palm {
+  background-color: var(--palm);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-1);
+}
+.btn-palm:hover {
+  background-color: var(--palm-deep);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+.btn-palm:active {
+  transform: scale(0.96);
+}
+
+.btn-jade {
+  background-color: transparent;
+  color: var(--jade);
+  border: 1.5px solid var(--jade);
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+.btn-jade:hover {
+  background-color: var(--jade);
+  color: #FFFFFF;
+}
+.btn-jade:active {
+  transform: scale(0.96);
+}
+
+/* POI Card Styling with Micro-interactions */
+.card-poi {
+  background-color: var(--surface);
+  border-radius: var(--r-l);
+  box-shadow: var(--shadow-1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(38, 34, 27, 0.08);
+  will-change: transform, box-shadow;
+}
+.card-poi:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+.card-poi:active {
+  transform: scale(0.985);
+}
+
+/* Tactile Micro-interaction Classes */
+.tap-bounce {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tap-bounce:active {
+  transform: scale(0.95);
+}
+
+/* Signature Stamp "ĐÃ XÁC MINH THỰC ĐỊA" */
+.stamp-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 2px dashed var(--jade);
+  color: var(--jade);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform: rotate(-3deg);
+  background: rgba(14, 140, 127, 0.06);
+  transition: transform 0.3s ease;
+}
+.stamp-verified:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* Signature Ticket-Stub (Perforated Card) */
+.ticket-stub {
+  background-color: var(--surface);
+  border-radius: var(--r-m);
+  position: relative;
+  box-shadow: var(--shadow-1);
+  border: 1px dashed rgba(38, 34, 27, 0.18);
+  transition: all 0.3s ease;
+}
+.ticket-stub:hover {
+  border-color: var(--jade);
+  box-shadow: var(--shadow-2);
+}
+
+/* Metro-Line Drawing Animation */
+.metro-line-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawMetroLine 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drawMetroLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Vertical Metro Line Growth Animation */
+.metro-line-grow {
+  transform-origin: top center;
+  animation: growVertical 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes growVertical {
+  from {
+    transform: scaleY(0);
+    opacity: 0.3;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Station Circle Glow & Pulse */
+.station-node {
+  position: relative;
+}
+.station-node::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 2px solid var(--jade);
+  opacity: 0;
+  animation: pulseStationRing 2.4s infinite;
+}
+
+@keyframes pulseStationRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Heart Pop Micro-interaction */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.35) rotate(-8deg); }
+  65% { transform: scale(0.9) rotate(4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.animate-heart-pop {
+  animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Section "Đêm Tri Tôn" */
+.night-tri-ton {
+  background-color: var(--night-bg);
+  color: #F8FAFC;
+}
+.night-tri-ton .night-surface {
+  background-color: var(--night-surface);
+  border: 1px solid rgba(255, 211, 122, 0.15);
+}
+
+/* Navigation & Glass bar */
+.glass-nav {
+  background: rgba(250, 243, 231, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(38, 34, 27, 0.08);
+  transform: translateZ(0);
+}
+
+/* Fix mobile horizontal overflow */
 .mobile-scroll-wrapper {
   overflow-x: clip;
   width: 100%;
 }
 
-.glass-nav {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  /* Promote to GPU composite layer for 60fps scrolling */
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-@media (max-width: 768px) {
-  .glass-nav {
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #0F5132 0%, #166534 50%, #15803D 100%);
-}
-
-.badge-gold {
-  background-color: #FEF3C7;
-  color: #B45309;
-  border: 1px solid #FDE68A;
-}
-
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(15, 81, 50, 0.15);
-}
-
-/* Mobile Utilities & Touch Ergonomics */
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -93,7 +291,6 @@ body {
   display: none;
 }
 
-/* Smooth Touch Scrolling for Horizontal Carousels & Lists */
 .overflow-x-auto {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
@@ -106,4 +303,13 @@ body {
 
 button, a, input, select {
   touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

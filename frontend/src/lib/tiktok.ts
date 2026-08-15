@@ -20,12 +20,12 @@ export interface TikTokLinkOptions {
  */
 export function cleanKeyword(text: string): string {
   if (!text) return 'Tri Tôn An Giang';
-  return text.replace(/[#@]/g, '').trim();
+  return text.replace(/[#@()\[\]]/g, '').trim();
 }
 
 /**
  * Generate standard TikTok search URL with exact Tri Tôn geographic anchor
- * Opens directly in the TikTok app on mobile devices
+ * Uses /search/video?q=... to ensure mobile web & apps navigate directly to video results
  */
 export function getTikTokWebSearchUrl(placeName: string, commune?: string): string {
   const cleanName = cleanKeyword(placeName);
@@ -40,7 +40,8 @@ export function getTikTokWebSearchUrl(placeName: string, commune?: string): stri
   }
 
   const query = parts.join(' ').replace(/\s+/g, ' ').trim();
-  return `https://www.tiktok.com/search?q=${encodeURIComponent(query)}`;
+  // Using /search/video?q= ensures mobile web automatically displays the video grid
+  return `https://www.tiktok.com/search/video?q=${encodeURIComponent(query)}`;
 }
 
 /**
@@ -54,10 +55,10 @@ export function resolveTikTokAction(options: TikTokLinkOptions): {
 } {
   const { placeName, commune, directVideoUrl } = options;
 
-  if (directVideoUrl && directVideoUrl.startsWith('http') && directVideoUrl.includes('tiktok.com')) {
+  if (directVideoUrl && typeof directVideoUrl === 'string' && directVideoUrl.startsWith('http') && directVideoUrl.includes('tiktok.com')) {
     return {
-      url: directVideoUrl,
-      label: 'Xem TikTok Video',
+      url: directVideoUrl.trim(),
+      label: 'Xem Video Thực Tế',
       isDirect: true,
     };
   }
@@ -65,7 +66,7 @@ export function resolveTikTokAction(options: TikTokLinkOptions): {
   const searchUrl = getTikTokWebSearchUrl(placeName, commune);
   return {
     url: searchUrl,
-    label: `Mở TikTok "${cleanKeyword(placeName)}"`,
+    label: `Xem Video ${cleanKeyword(placeName)}`,
     isDirect: false,
   };
 }

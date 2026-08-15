@@ -97,7 +97,7 @@ export default function AdminDashboardPage() {
           <div>
             <div className="text-xs text-slate-500 font-semibold">Master Data POIs</div>
             <div className="text-2xl font-black text-slate-900 mt-0.5">
-              {loading ? '...' : stats?.totalPlaces || 82} Địa điểm
+              {loading ? '...' : stats?.totalPlaces || 149} Địa điểm
             </div>
           </div>
         </div>
@@ -194,10 +194,10 @@ export default function AdminDashboardPage() {
             <MapPin className="w-5 h-5" />
           </div>
           <h3 className="font-heading font-extrabold text-slate-900 text-base mb-1">
-            Quản Lý 95 POI Master Data
+            Quản Lý 149 POI Master Data
           </h3>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Kiểm tra 95 địa danh đã xác minh, bật/tắt địa điểm Hot, cập nhật khung giờ vàng và tạo Vector Embeddings.
+            Kiểm tra 149 địa danh đã xác minh, bật/tắt địa điểm Hot, cập nhật khung giờ vàng và tạo Vector Embeddings.
           </p>
         </Link>
       </div>

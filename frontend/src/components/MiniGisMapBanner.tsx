@@ -56,11 +56,11 @@ export default function MiniGisMapBanner() {
         <div className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 text-xs font-bold shadow-sm">
             <Navigation className="h-3.5 w-3.5 text-[#D99B26]" />
-            <span>Hệ Thống Tọa Độ GPS 82 Địa Điểm Đã Xác Minh</span>
+            <span>Hệ Thống Tọa Độ 149 Địa Điểm Đã Xác Minh</span>
           </div>
 
           <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
-            Bản Đồ Số GIS Du Lịch Tri Tôn
+            Bản Đồ Số Du Lịch Tri Tôn
           </h3>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
@@ -89,7 +89,7 @@ export default function MiniGisMapBanner() {
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold text-xs rounded-2xl shadow-lg transition-all border border-[#D99B26]/30 active:scale-95"
             >
               <Map className="h-4 w-4 text-[#D99B26]" />
-              <span>Mở Bản Đồ GIS Trực Tuyến 82 Địa Điểm</span>
+              <span>Mở Bản Đồ Khám Phá 149 Địa Điểm</span>
             </Link>
           </div>
         </div>

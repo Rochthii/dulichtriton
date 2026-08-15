@@ -3,18 +3,22 @@
 
 ---
 
-## 1. Hệ thống Thiết kế Đồng bộ (Design System Tokens)
+## 1. Hệ thống Thiết kế Đồng bộ ("Folk-Modern Bảy Núi")
 
-Tất cả 13 màn hình trong hệ thống Web Portal & AI Chatbot Du Lịch Tri Tôn tuân thủ nghiêm ngặt bộ nhận diện đồng bộ:
+Tất cả 13 màn hình trong hệ thống Web Portal & AI Chatbot Du Lịch Tri Tôn tuân thủ nghiêm ngặt bộ nhận diện đồng bộ "Folk-Modern Bảy Núi":
 
 | Phần tử thiết kế | Mã màu / Chuẩn | Ý nghĩa & Ứng dụng |
 | :--- | :--- | :--- |
-| **Primary Emerald Green** | `#1B4D3E` | Màu xanh đại ngàn Bảy Núi (Núi Cô Tô, Đồi Tức Dụp, cánh đồng thốt nốt). Dùng cho Header, Button chính, Accent. |
-| **Secondary Golden Palm** | `#D99B26` / `#E5A93C` | Màu vàng nhang trầm & mật thốt nốt Khmer. Dùng cho Badges, Rating Stars, Highlight Cards. |
-| **Neutral Dark Slate** | `#1E293B` | Màu than đá dùng cho Văn bản tiêu đề, Sub-header, Chế độ xem tối. |
-| **Background Light** | `#F8F9FA` | Nền trắng ngà ấm áp, sạch sẽ, tôn lên hình ảnh du lịch thực tế. |
-| **Biểu tượng UI Icons** | **100% SVG Icons (Lucide / Heroicons)** | **TUYỆT ĐỐI KHÔNG DÙNG EMOJI**. Đảm bảo giao diện hiện đại, phẳng, load cực nhanh. |
-| **Kiểu chữ (Typography)** | `Inter` / `Outfit` (Sans-Serif) | Font chữ đọc rõ ràng trên mọi thiết bị di động & màn hình máy tính. |
+| **Nền Cát Sương (`--bg`)** | `#FAF3E7` | Nắng đồng lúa & cát sương — Nền chính sáng ấm, tránh trắng tinh. |
+| **Mặt Thẻ (`--surface`)** | `#FFFDF7` | Màu ngà bưu thiếp, bề mặt thẻ card, pop-up. |
+| **Chữ Đất Núi (`--ink`)** | `#26221B` | Đất đá núi Thất Sơn — Chữ tiêu đề và nội dung chính tương phản cao. |
+| **Ngọc Tà Pạ (`--jade`)** | `#0E8C7F` | Nước hồ Tà Pạ — Màu chủ đạo: link, active, metro-line, category nature. |
+| **Vàng Thốt Nốt (`--palm`)** | `#F0A32F` | Mật trái thốt nốt chín — **Nút CTA chính** (Chỉ đường, Xem lịch trình). |
+| **Cam Hoàng Hôn (`--sunset`)** | `#F26B3A` | Hoàng hôn tuyến tránh — Accent, badge hot, ẩm thực gà đốt. |
+| **Màu Danh Mục** | `#D9822B` (Khmer), `#A6503A` (Lịch sử), `#7C5CBF` (Lễ hội), `#8A5A33` (Stay) | 1 Category = 1 Màu riêng biệt, nhận diện trong 1 giây. |
+| **Đêm Tri Tôn** | `#151B34` (Bg), `#1E2647` (Surface), `#FFD37A` (Đom đóm) | Chế độ Dark Mode tự chuyển theo khung giờ đêm Bảy Núi. |
+| **Biểu tượng UI Icons** | **100% SVG Icons (Lucide Icons)** | **TUYỆT ĐỐI KHÔNG DÙNG EMOJI**. |
+| **Kiểu chữ (Typography)** | `Bricolage Grotesque` (Heading) / `Be Vietnam Pro` (Body) / `Patrick Hand` (Tip/Stamp) | Bộ 3 font chuẩn tiếng Việt, cá tính và trải nghiệm đọc tối ưu. |
 
 ---
 

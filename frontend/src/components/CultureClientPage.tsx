@@ -20,7 +20,6 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
   const [cultureList, setCultureList] = useState<Place[]>(initialPagodas || []);
   const [loading, setLoading] = useState<boolean>(cultureList.length === 0);
   const [viewMode, setViewMode] = useState<'grid' | 'calendar' | 'map'>('grid');
-  const [activeCategory, setActiveCategory] = useState<string>('ALL');
 
   useEffect(() => {
     async function loadLiveCulture() {
@@ -57,126 +56,168 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
       id: 'sene-dolta',
       title: 'Lễ Sene Dolta (Cúng Ông Bà Tổ Tiên)',
       date: 'Từ 29/8 đến 01/9 Âm lịch hàng năm',
-      location: 'Toàn bộ 11 Xã/Thị trấn Tri Tôn',
-      description: 'Dịp lễ báo hiếu tổ tiên lớn nhất trong năm của đồng bào Khmer. Gia đình sum họp, chuẩn bị mâm cỗ cúng truyền thống và dâng cơm lên các chư Tăng tại Chùa.',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
-      badge: 'Lễ Hội Báo Hiếu',
+      location: 'Toàn bộ các Xã/Thị trấn Tri Tôn',
+      description: 'Dịp lễ tri ân tổ tiên trang trọng nhất của người Khmer, bà con làm bánh tét, cúng cơm tại các chùa và dâng lễ vật lên các vị chư tăng.',
+      image: 'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop',
+      badge: 'Lễ Hội Cổ Truyền',
     },
     {
       id: 'chol-chnam-thmay',
-      title: 'Lễ Chôl Chnăm Thmây (Mừng Năm Mới Khmer)',
-      date: 'Giữa tháng 4 Dương lịch (14 - 16/04)',
-      location: 'Các Chùa Nam Tông Khmer Tri Tôn',
-      description: 'Tết cổ truyền mừng năm mới của người Khmer. Diễn ra các nghi thức tắm Phật, đắp núi cát cầu may mắn và biểu diễn múa Chăm-riêng độc đáo.',
-      image: 'https://images.unsplash.com/photo-1509024644553-a78625332450?q=80&w=800&auto=format&fit=crop',
-      badge: 'Tết Cổ Truyền',
+      title: 'Tết Cổ Truyền Chol Chnam Thmay',
+      date: 'Khoảng 13 - 16 tháng 4 Dương lịch',
+      location: 'Các chùa Nam Tông Khmer Tri Tôn',
+      description: 'Mừng năm mới rực rỡ với nghi thức đắp núi cát, tắm Phật, té nước cầu may và múa lâm thôn truyền thống trong khuôn viên chùa.',
+      image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200&auto=format&fit=crop',
+      badge: 'Tết Khmer',
     },
-    {
-      id: 'ok-om-bok',
-      title: 'Lễ Ok Om Bok (Cúng Trăng & Thả Đèn Gió)',
-      date: 'Rằm tháng 10 Âm lịch (15/10 Âm lịch)',
-      location: 'Khu vực Hồ Tà Pạ & Chùa Svay Ton',
-      description: 'Lễ tạ ơn Thần Mặt Trăng đã ban cho mưa thuận gió hòa, mùa màng bội thu. Đêm hội lung linh với tục đút cốm dẹp và thả đèn gió lên bầu trời đêm Bảy Núi.',
-      image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=800&auto=format&fit=crop',
-      badge: 'Đêm Hội Thả Đèn',
-    },
-  ];
-
-  const rules = [
-    { title: 'Trang phục trang nhã', desc: 'Mặc áo có tay, quần hoặc váy dài qua gối khi vào chánh điện Chùa.' },
-    { title: 'Cởi giày dép', desc: 'Tháo nón bảo hiểm, cởi giày dép và để gọn gàng bên ngoài chánh điện.' },
-    { title: 'Tôn kính chư Tăng', desc: 'Chào hỏi bằng cách chắp hai tay trước ngực (Sampeah) kính cẩn.' },
-    { title: 'Giữ yên tĩnh', desc: 'Tránh nói chuyện quá to hoặc chạy nhảy làm ảnh hưởng chốn thanh tịnh.' },
   ];
 
   return (
-    <>
+    <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen">
+      {/* Page Header Banner */}
       <PageHeaderBanner
-        title="Văn Hóa Khmer & Di Sản Tâm Linh Tri Tôn"
-        subtitle="Khám phá 37+ ngôi Chùa Nam Tông cổ kính, Di sản Quốc gia Lễ Hội Đua Bò Bảy Núi & Nghệ Thuật Viết Kinh Lá Buông độc đáo."
-        countLabel="Chùa cổ & Di tích"
-        countValue={`${cultureList.length} địa điểm`}
+        badgeText="Di Sản & Tín Ngưỡng Dân Tộc Khmer"
+        badgeIcon={Landmark}
+        title="Văn Hóa Khmer & Lễ Hội Bảy Núi Tri Tôn"
+        subtitle="Khám phá 37 ngôi chùa Nam Tông cổ kính, nghệ thuật Kinh lá buông di sản quốc gia và ngày hội Đua Bò Bảy Núi rực lửa truyền thống."
+        countLabel="Địa điểm tâm linh đã xác minh"
+        countValue={`${cultureList.length} ngôi chùa`}
       />
+
+      {/* FESTIVALS SECTION */}
+      <section className="mb-16">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#D9822B] uppercase tracking-wider mb-1 font-display">
+              <Calendar className="w-4 h-4 text-[#D9822B]" />
+              <span>Sự Kiện Lễ Hội Bản Địa</span>
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#26221B]">Lễ Hội Văn Hóa Đặc Sắc Nhất Tri Tôn</h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {festivals.map(fest => (
+            <div key={fest.id} className="bg-[#FFFDF7] rounded-[26px] border border-[#26221B]/8 overflow-hidden shadow-[0_2px_10px_rgba(38,34,27,0.08)] hover:shadow-[0_10px_30px_rgba(38,34,27,0.14)] transition-all flex flex-col justify-between group hover:-translate-y-1">
+              <div>
+                <div className="h-48 relative overflow-hidden bg-slate-900">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={fest.image}
+                    alt={fest.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/70 via-transparent to-transparent" />
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#7C5CBF] text-white text-[10px] font-bold shadow-xs font-display">
+                    {fest.badge}
+                  </span>
+                </div>
+
+                <div className="p-5 space-y-3">
+                  <h3 className="font-display font-bold text-base text-[#26221B] group-hover:text-[#0E8C7F] transition-colors">{fest.title}</h3>
+                  <div className="space-y-1.5 text-xs text-[#6B6355] font-body">
+                    <p className="flex items-start gap-1.5 text-[#D9822B] font-semibold">
+                      <Clock className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                      <span>{fest.date}</span>
+                    </p>
+                    <p className="flex items-start gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#0E8C7F] shrink-0 mt-0.5" />
+                      <span>{fest.location}</span>
+                    </p>
+                  </div>
+                  <p className="font-body text-xs text-[#6B6355] line-clamp-3 leading-relaxed">{fest.description}</p>
+                </div>
+              </div>
+
+              <div className="p-4 pt-0 border-t border-[#26221B]/6 mt-2 font-display">
+                <Link
+                  href={`/places?search=${encodeURIComponent(fest.title)}`}
+                  className="w-full py-2.5 px-4 rounded-full bg-[#0E8C7F]/10 hover:bg-[#0E8C7F] text-[#0E8C7F] hover:text-white text-xs font-bold transition-all text-center block"
+                >
+                  Khám Phá Địa Điểm Tổ Chức
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* PAGODAS SHOWCASE FROM SUPABASE DATABASE */}
       <section className="mb-16">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#1B4D3E] uppercase tracking-wider mb-1">
-              <Landmark className="w-4 h-4 text-[#D99B26]" />
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#D9822B] uppercase tracking-wider mb-1 font-display">
+              <Landmark className="w-4 h-4 text-[#D9822B]" />
               <span>Chốn Thanh Tịnh Bảy Núi</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Các Ngôi Chùa Khmer Cổ Kính & Di Sản Tri Tôn</h2>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#26221B]">Các Ngôi Chùa Khmer Cổ Kính & Di Sản Tri Tôn</h2>
           </div>
 
-          {/* Advanced View Switcher & Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            {/* View Mode Selector Tabs */}
-            <div className="bg-slate-100 p-1 rounded-2xl flex items-center gap-1 border border-slate-200">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all ${
-                  viewMode === 'grid'
-                    ? 'bg-[#1B4D3E] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Landmark className="w-3.5 h-3.5" />
-                <span>Lưới Di Sản</span>
-              </button>
-              <button
-                onClick={() => setViewMode('calendar')}
-                className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all ${
-                  viewMode === 'calendar'
-                    ? 'bg-[#1B4D3E] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span>Lịch Lễ Hội</span>
-              </button>
-              <button
-                onClick={() => setViewMode('map')}
-                className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all ${
-                  viewMode === 'map'
-                    ? 'bg-[#1B4D3E] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                <span>Bản Đồ GIS</span>
-              </button>
-            </div>
+          {/* View Mode Selector Tabs */}
+          <div className="flex items-center gap-1 bg-[#FFFDF7] p-1.5 rounded-full border border-[#26221B]/8 shadow-xs font-display">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`px-4 py-2 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-[#0E8C7F] text-white shadow-xs'
+                  : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              <Landmark className="w-3.5 h-3.5" />
+              <span>Lưới Di Sản</span>
+            </button>
+            <button
+              onClick={() => setViewMode('calendar')}
+              className={`px-4 py-2 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all ${
+                viewMode === 'calendar'
+                  ? 'bg-[#0E8C7F] text-white shadow-xs'
+                  : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Lịch Lễ Hội</span>
+            </button>
+            <button
+              onClick={() => setViewMode('map')}
+              className={`px-4 py-2 rounded-full font-bold text-xs flex items-center gap-1.5 transition-all ${
+                viewMode === 'map'
+                  ? 'bg-[#0E8C7F] text-white shadow-xs'
+                  : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              <MapPin className="w-3.5 h-3.5" />
+              <span>Bản Đồ GIS</span>
+            </button>
           </div>
         </div>
 
         {/* Dynamic Render based on viewMode */}
         {viewMode === 'map' ? (
-          <div className="bg-slate-900 rounded-3xl p-6 text-white border border-slate-800 shadow-xl space-y-4">
+          <div className="bg-[#151B34] rounded-[28px] p-6 text-white border border-[#1E2647] shadow-xl space-y-4 font-body">
             <div className="flex items-center justify-between">
-              <h3 className="font-extrabold text-lg flex items-center gap-2">
-                <Compass className="w-5 h-5 text-[#D99B26]" />
-                <span>Bản Đồ GIS Di Sản Khmer Tri Tôn (Real GPS Coordinates)</span>
+              <h3 className="font-display font-extrabold text-lg flex items-center gap-2 text-[#FFFDF7]">
+                <Compass className="w-5 h-5 text-[#F0A32F]" />
+                <span>Bản Đồ Di Sản & Văn Hóa Khmer Tri Tôn</span>
               </h3>
-              <span className="text-xs text-amber-300 font-bold bg-amber-950/60 px-3 py-1 rounded-full border border-amber-500/30">
-                {cultureList.length} Tọa Độ Đã Xác Minh
+              <span className="text-xs text-[#FFD37A] font-bold bg-white/10 px-3.5 py-1 rounded-full border border-[#FFD37A]/30 font-display">
+                {cultureList.length} Địa Điểm Đã Xác Minh
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
               {cultureList.map((c) => (
-                <div key={c.id} className="p-4 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">{c.commune}</span>
-                  <h4 className="font-bold text-sm text-white">{c.name}</h4>
-                  <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-700 text-slate-300">
+                <div key={c.id} className="p-4 rounded-[22px] bg-[#1E2647] border border-white/10 space-y-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD37A] font-display">{c.commune}</span>
+                  <h4 className="font-display font-bold text-sm text-[#FFFDF7]">{c.name}</h4>
+                  <div className="flex items-center justify-between text-xs pt-1.5 border-t border-white/10 text-white/80">
                     <span>GPS: 10.41°N, 105.01°E</span>
                     <a
                       href={getGoogleMapsUrl({ name: c.name, commune: c.commune })}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-amber-300 hover:underline font-bold flex items-center gap-0.5"
+                      className="text-[#F0A32F] hover:underline font-bold flex items-center gap-1 font-display"
                     >
                       <span>Chỉ đường</span>
-                      <Navigation className="w-3 h-3 text-amber-300" />
+                      <Navigation className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
@@ -195,43 +236,44 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
               const mainPhoto = place.image_url || place.photos?.[0]?.url || 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200&auto=format&fit=crop';
 
               return (
-                <div key={place.id} className="relative bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group cursor-pointer">
+                <div key={place.id} className="relative bg-[#FFFDF7] rounded-[26px] border border-[#26221B]/8 overflow-hidden shadow-[0_2px_10px_rgba(38,34,27,0.08)] hover:shadow-[0_10px_30px_rgba(38,34,27,0.14)] transition-all flex flex-col justify-between group cursor-pointer hover:-translate-y-1">
                   {/* 1-Touch Main Link Overlay */}
                   <Link href={detailUrl} className="absolute inset-0 z-0" aria-label={`Xem chi tiết ${place.name}`} />
 
                   <div className="pointer-events-none">
-                    <div className="h-48 bg-slate-900 relative overflow-hidden">
+                    <div className="aspect-[4/3] bg-slate-900 relative overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={mainPhoto}
                         alt={place.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold shadow-xs">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/70 via-transparent to-transparent" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#D9822B] text-white text-[10px] font-bold shadow-xs font-display">
                         {place.commune}
                       </span>
                     </div>
 
                     <div className="p-5 space-y-2">
                       <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-base text-slate-900 group-hover:text-[#1B4D3E] transition-colors">{place.name}</h3>
-                        <div className="flex items-center gap-1 text-xs font-bold text-slate-800">
-                          <Star className="w-3.5 h-3.5 fill-[#D99B26] text-[#D99B26]" />
+                        <h3 className="font-display font-bold text-base text-[#26221B] group-hover:text-[#0E8C7F] transition-colors">{place.name}</h3>
+                        <div className="flex items-center gap-1 text-xs font-bold text-[#26221B]">
+                          <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
                           <span>{place.rating || 4.8}</span>
                         </div>
                       </div>
-                      <p className="text-xs text-slate-500 flex items-start gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#1B4D3E] shrink-0 mt-0.5" />
+                      <p className="font-body text-xs text-[#6B6355] flex items-start gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-[#0E8C7F] shrink-0 mt-0.5" />
                         <span>{place.address || `${place.commune}, Tri Tôn`}</span>
                       </p>
-                      <p className="text-xs text-slate-600 line-clamp-2 mt-2">{place.description || `Ngôi chùa Nam Tông Khmer cổ kính tại ${place.commune}, Tri Tôn.`}</p>
+                      <p className="font-body text-xs text-[#6B6355] line-clamp-2 mt-2">{place.description || `Ngôi chùa Nam Tông Khmer cổ kính tại ${place.commune}, Tri Tôn.`}</p>
                     </div>
                   </div>
 
-                  <div className="p-4 pt-0 flex items-center gap-2 border-t border-slate-100 mt-2 relative z-10 pointer-events-auto">
+                  <div className="p-4 pt-0 flex items-center gap-2 border-t border-[#26221B]/6 mt-2 relative z-10 pointer-events-auto font-display">
                     <Link
                       href={detailUrl}
-                      className="flex-1 py-2 px-3 rounded-xl bg-emerald-100/80 hover:bg-emerald-200 text-[#1B4D3E] text-xs font-bold transition-all text-center"
+                      className="flex-1 py-2.5 px-3 rounded-full bg-[#0E8C7F]/10 hover:bg-[#0E8C7F] text-[#0E8C7F] hover:text-white text-xs font-bold transition-all text-center"
                     >
                       Chi Tiết
                     </Link>
@@ -240,10 +282,10 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="py-2 px-3 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs font-bold transition-all text-center flex items-center gap-1"
+                      className="py-2.5 px-4 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white text-xs font-bold transition-all text-center flex items-center justify-center gap-1 shadow-xs"
                       title={maps.tooltip}
                     >
-                      <Navigation className="w-3.5 h-3.5 text-[#D99B26]" />
+                      <Navigation className="w-3 h-3 text-[#26221B]" />
                       <span>Bản Đồ</span>
                     </a>
                   </div>
@@ -252,70 +294,25 @@ export default function CultureClientPage({ pagodas: initialPagodas }: CultureCl
             })}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl p-8 text-center border border-slate-200">
-            <Landmark className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-            <p className="text-xs text-slate-500">Đang nạp dữ liệu di sản chùa Khmer từ Supabase database...</p>
+          <div className="bg-[#FFFDF7] rounded-[26px] p-8 text-center border border-[#26221B]/8">
+            <Landmark className="w-8 h-8 text-[#6B6355]/40 mx-auto mb-2" />
+            <p className="text-xs text-[#6B6355]">Đang cập nhật danh sách chùa Khmer từ Supabase database...</p>
           </div>
         )}
       </section>
 
-      {/* TRADITIONAL FESTIVALS SECTION */}
-      <section className="mb-16">
-        <div className="mb-8">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#1B4D3E] uppercase tracking-wider mb-1">
-            <Calendar className="w-4 h-4 text-[#D99B26]" />
-            <span>Lễ Hội Bản Địa Đặc Sắc</span>
+      {/* CULTURAL ETIQUETTE ADVISORY (Field Notebook Card) */}
+      <section className="bg-[#FFFDF7] border-l-4 border-[#D9822B] rounded-[22px] p-6 shadow-[0_2px_10px_rgba(38,34,27,0.08)] mb-12">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-[#D9822B] shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-display font-bold text-sm text-[#26221B]">Quy Tắc Văn Hóa & Tâm Linh Khi Viếng Chùa Khmer</h4>
+            <p className="font-body text-xs text-[#6B6355] leading-relaxed">
+              Khi vào chính điện, du khách vui lòng bỏ giày dép bên ngoài, mặc trang phục lịch sự che kín vai và đầu gối. Không chỉ tay trực tiếp vào tượng Phật và giữ trật tự tôn nghiêm.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Các Kỳ Lễ Hội Lớn Hàng Năm Tại Tri Tôn</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {festivals.map((fest) => (
-            <div key={fest.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col sm:flex-row">
-              <div className="sm:w-2/5 relative h-48 sm:h-auto bg-slate-900">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={fest.image} alt={fest.title} className="w-full h-full object-cover" />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-[#1B4D3E] text-white text-[10px] font-bold shadow-xs">
-                  {fest.badge}
-                </span>
-              </div>
-              <div className="sm:w-3/5 p-6 flex flex-col justify-between space-y-3">
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">{fest.title}</h3>
-                  <p className="text-xs text-[#1B4D3E] font-semibold mt-1 flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-[#D99B26]" />
-                    <span>{fest.date}</span>
-                  </p>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">{fest.description}</p>
-                </div>
-                <div className="pt-2 border-t border-slate-100 text-xs text-slate-500 flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                  <span className="truncate">{fest.location}</span>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
-
-      {/* ETIQUETTE & RULES */}
-      <section className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs mb-12">
-        <div className="flex items-center gap-2 mb-6">
-          <ShieldCheck className="w-5 h-5 text-[#1B4D3E]" />
-          <h2 className="text-lg font-bold text-slate-900">Quy Tắc Văn Hóa Khi Thăm Chùa Khmer</h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {rules.map((rule, idx) => (
-            <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
-              <span className="w-6 h-6 rounded-full bg-[#1B4D3E] text-white text-xs font-bold flex items-center justify-center mb-2">
-                {idx + 1}
-              </span>
-              <h4 className="font-bold text-xs text-slate-900">{rule.title}</h4>
-              <p className="text-[11px] text-slate-600 leading-normal">{rule.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

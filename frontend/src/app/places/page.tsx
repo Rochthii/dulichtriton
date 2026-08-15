@@ -4,32 +4,28 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import HotPlacesSection from "@/components/HotPlacesSection";
+import PlaceCard, { Place } from "@/components/PlaceCard";
 import {
   MapPin,
   Clock,
   Play,
   ChevronRight,
-  Star
+  Star,
+  Sparkles,
+  Navigation,
+  Compass,
+  Users,
+  Search,
+  Filter
 } from "lucide-react";
 
-interface Place {
-  id: string;
-  slug: string;
-  name: string;
-  category: string;
-  tourism_category: string;
-  commune: string;
-  rating: number;
-  image_url: string;
-  video_url?: string;
-  opening_hours?: string;
-  ticket_required?: boolean;
-  description?: string;
-}
+type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
 
 export default function PlacesPage() {
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [selectedCommune, setSelectedCommune] = useState("Tất cả");
+  const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,36 +36,12 @@ export default function PlacesPage() {
       try {
         const { data, error } = await supabase
           .from("places")
-          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, video_url, opening_hours, ticket_required, description")
+          .select("*")
           .eq("is_active", true)
           .order("rating", { ascending: false });
 
         if (!error && data && data.length > 0) {
-          const formatted: Place[] = data.map((item: any) => {
-            let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
-            if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-              img = item.image_url;
-            } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-              const p0 = item.photos[0];
-              if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-              else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-            }
-            return {
-              id: item.id,
-              slug: item.slug || item.id,
-              name: item.name,
-              category: item.category || "general",
-              tourism_category: item.tourism_category || "Địa Điểm Tham Quan",
-              commune: item.commune || "Thị trấn Tri Tôn",
-              rating: item.rating ? Number(item.rating) : 4.8,
-              image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
-              opening_hours: item.opening_hours || "06:00 - 18:00",
-              ticket_required: item.ticket_required || false,
-              description: item.description || ""
-            };
-          });
-          setPlaces(formatted);
+          setPlaces(data as Place[]);
         } else {
           setPlaces([]);
         }
@@ -83,7 +55,7 @@ export default function PlacesPage() {
     loadLivePlaces();
   }, []);
 
-  // 100% Dynamic Commune List from Live Data (Zero Hardcoding)
+  // 100% Dynamic Commune List from Live Data
   const communes = useMemo(() => {
     const set = new Set<string>();
     places.forEach((p) => {
@@ -92,194 +64,217 @@ export default function PlacesPage() {
     return ["Tất cả", ...Array.from(set).sort((a, b) => a.localeCompare(b, "vi"))];
   }, [places]);
 
-  // 100% Dynamic Categories from Live Data (Zero Hardcoding)
+  // 100% Dynamic Categories from Live Data
   const categories = useMemo(() => {
     const set = new Set<string>();
     places.forEach((p) => {
-      if (p.tourism_category && p.tourism_category.trim()) set.add(p.tourism_category.trim());
+      const cat = p.tourism_category || p.category;
+      if (cat && cat.trim()) set.add(cat.trim());
     });
     return ["Tất cả", ...Array.from(set).sort((a, b) => a.localeCompare(b, "vi"))];
   }, [places]);
 
-  // Real-time filtering across 174 POIs
+  // Real-time filtering across POIs
   const filteredPlaces = useMemo(() => {
     return places.filter((p) => {
-      // 1. TikTok Reels Filter
+      const name = (p.name || "").toLowerCase();
+      const desc = (p.description || "").toLowerCase();
+      const q = searchQuery.toLowerCase().trim();
+
+      // Search keyword filter
+      if (q && !name.includes(q) && !desc.includes(q) && !(p.commune || "").toLowerCase().includes(q)) {
+        return false;
+      }
+
+      // TikTok video filter
       if (tiktokOnlyFilter && (!p.video_url || !p.video_url.includes("tiktok"))) {
         return false;
       }
 
-      // 2. Commune Filter
+      // Commune filter
       if (selectedCommune !== "Tất cả" && p.commune !== selectedCommune) {
         return false;
       }
 
-      // 3. Category Filter
-      if (activeCategory !== "Tất cả" && p.tourism_category !== activeCategory) {
-        return false;
+      // Category filter
+      if (activeCategory !== "Tất cả") {
+        const cat = p.tourism_category || p.category;
+        if (cat !== activeCategory) return false;
+      }
+
+      // Audience persona filter
+      if (activeAudience === "night") {
+        const isNight = p.open_late || (p as any).open_late === true || name.includes("coffee") || name.includes("cà phê") || name.includes("chợ đêm") || name.includes("chạm") || name.includes("lang lang") || name.includes("quy") || name.includes("ny") || name.includes("quảng trường") || name.includes("phố đi bộ") || name.includes("trà sữa");
+        if (!isNight) return false;
+      } else if (activeAudience === "youth") {
+        const matchYouth = name.includes("tà pạ") || name.includes("cổng trời") || name.includes("vồ hội") || name.includes("thốt nốt") || (p.category || "").includes("check-in");
+        if (!matchYouth) return false;
+      } else if (activeAudience === "family") {
+        const matchFamily = name.includes("chùa") || name.includes("gà đốt") || name.includes("tức dụp") || name.includes("hồ ô thum") || name.includes("nhà mồ");
+        if (!matchFamily) return false;
+      } else if (activeAudience === "trekking") {
+        const matchTrek = name.includes("cô tô") || name.includes("núi") || name.includes("suối vàng") || name.includes("vồ hội") || name.includes("săn mây");
+        if (!matchTrek) return false;
+      } else if (activeAudience === "spiritual") {
+        const matchSpiritual = name.includes("chùa") || name.includes("nhà mồ") || name.includes("phi lai") || (p.category || "").includes("spiritual") || (p.category || "").includes("culture");
+        if (!matchSpiritual) return false;
       }
 
       return true;
     });
-  }, [places, tiktokOnlyFilter, selectedCommune, activeCategory]);
+  }, [places, searchQuery, tiktokOnlyFilter, selectedCommune, activeCategory, activeAudience]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
-      
-      {/* Background Graphic Accents */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-emerald-300/20 blur-3xl" />
-        <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-amber-300/15 blur-3xl" />
-      </div>
-
-      <main className="relative z-10 mx-auto w-full max-w-container-max flex-grow px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+    <div className="flex min-h-screen flex-col bg-[#FAF3E7] font-body text-[#26221B] antialiased">
+      <main className="mx-auto w-full max-w-7xl flex-grow px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         
         {/* Dynamic Hot Places Section */}
-        <HotPlacesSection limit={6} title="🔥 CÁC ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT" />
+        <HotPlacesSection limit={6} title="CÁC ĐỊA ĐIỂM HOT NỔI TIẾNG NHẤT" />
 
         {/* Section Title & Filter Controls */}
-        <section className="mb-10 space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-emerald-200/80 pb-4">
+        <section className="mb-8 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#26221B]/8 pb-4">
             <div>
-              <h1 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-[#26221B] tracking-tight">
                 Khám Phá Địa Điểm Tri Tôn
               </h1>
-              <p className="text-xs text-slate-500 mt-1 font-medium">
-                Dữ liệu trực tiếp từ CSDL Master ({places.length} điểm đến đã xác minh)
+              <p className="font-body text-xs text-[#6B6355] mt-1 font-medium">
+                Dữ liệu trực tiếp từ CSDL Master ({places.length} điểm đến đã xác minh thực địa)
               </p>
             </div>
 
-            {/* TikTok Reels Filter Toggle Button */}
-            <button
-              onClick={() => setTiktokOnlyFilter(!tiktokOnlyFilter)}
-              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-xs shadow-md transition-all ${
-                tiktokOnlyFilter
-                  ? "bg-slate-900 text-amber-400 border border-amber-400/50 shadow-amber-500/20"
-                  : "bg-white border border-slate-200 text-slate-700 hover:border-emerald-500"
-              }`}
-            >
-              <Play className={`h-4 w-4 ${tiktokOnlyFilter ? "fill-amber-400 text-amber-400" : "text-emerald-700"}`} />
-              <span>BỘ LỌC TIKTOK REELS</span>
-              {tiktokOnlyFilter && (
-                <span className="ml-1 px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black">
-                  BẬT
-                </span>
-              )}
-            </button>
+            {/* Quick Search */}
+            <div className="relative w-full sm:w-72">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Tìm theo tên địa điểm..."
+                className="w-full pl-9 pr-4 py-2 rounded-full border border-[#26221B]/15 bg-[#FFFDF7] text-xs text-[#26221B] focus:outline-none focus:border-[#0E8C7F]"
+              />
+              <Search className="w-4 h-4 text-[#6B6355] absolute left-3 top-2.5" />
+            </div>
           </div>
 
-          {/* Commune Filter Pills */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Khu vực Xã / Thị trấn:</span>
-              <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">
-                Hiển thị {filteredPlaces.length} / {places.length} địa điểm
-              </span>
+          {/* AUDIENCE PERSONA FILTER BAR */}
+          <div className="bg-[#FFFDF7] p-4 rounded-[24px] border border-[#26221B]/8 shadow-xs space-y-3 font-display">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#0E8C7F] uppercase tracking-wider">
+              <Users className="w-4 h-4" />
+              <span>Chuyên Đề & Đối Tượng Du Khách:</span>
             </div>
-            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none">
-              {communes.map((c) => (
+            <div className="flex flex-wrap items-center gap-2">
+              {[
+                { key: "all", label: "Tất Cả" },
+                { key: "night", label: "🌙 Tri Tôn Về Đêm (Quán Mở Muộn & Dạo Phố)" },
+                { key: "youth", label: "📸 Săn Ảnh Sống Ảo" },
+                { key: "family", label: "👨‍👩‍👧‍👦 Gia Đình & Người Lớn Tuổi" },
+                { key: "trekking", label: "🥾 Phượt Thủ & Săn Mây" },
+                { key: "spiritual", label: "🙏 Chiêm Bái Tâm Linh" },
+              ].map((aud) => (
                 <button
-                  key={c}
-                  onClick={() => setSelectedCommune(c)}
-                  className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm ${
-                    selectedCommune === c
-                      ? "bg-emerald-900 text-white shadow-emerald-900/20"
-                      : "bg-white text-slate-700 border border-slate-200 hover:border-emerald-500"
+                  key={aud.key}
+                  onClick={() => setActiveAudience(aud.key as AudienceFilter)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all tap-bounce ${
+                    activeAudience === aud.key
+                      ? "bg-[#0E8C7F] text-white shadow-xs"
+                      : "bg-[#FAF3E7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#0E8C7F]/30"
                   }`}
                 >
-                  {c}
+                  {aud.label}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Danh mục trải nghiệm:</span>
-            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm ${
-                    activeCategory === cat
-                      ? "bg-amber-500 text-slate-950 font-black shadow-amber-500/20"
-                      : "bg-white text-slate-700 border border-slate-200 hover:border-amber-400"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+          {/* COMMUNE & CATEGORY PILLS */}
+          <div className="bg-[#FFFDF7] p-4 sm:p-5 rounded-[24px] border border-[#26221B]/8 shadow-xs space-y-4 font-display">
+            {/* Commune Filter */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#6B6355] uppercase tracking-wider">
+                <MapPin className="w-3.5 h-3.5 text-[#F0A32F]" />
+                <span>Khu vực Xã / Thị trấn:</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                {communes.map((com) => (
+                  <button
+                    key={com}
+                    onClick={() => setSelectedCommune(com)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all tap-bounce ${
+                      selectedCommune === com
+                        ? "bg-[#F0A32F] text-[#26221B] font-bold shadow-xs"
+                        : "bg-[#FAF3E7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#F0A32F]/40"
+                    }`}
+                  >
+                    {com}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category Filter & TikTok Toggle */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-[#26221B]/6">
+              <div className="flex flex-wrap items-center gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all tap-bounce ${
+                      activeCategory === cat
+                        ? "bg-[#151B34] text-[#FFD37A] shadow-xs border border-[#FFD37A]/30"
+                        : "bg-[#FAF3E7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#151B34]/30"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* TikTok Toggle Button */}
+              <button
+                onClick={() => setTiktokOnlyFilter(!tiktokOnlyFilter)}
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all tap-bounce shrink-0 ${
+                  tiktokOnlyFilter
+                    ? "bg-[#F26B3A] text-white shadow-xs"
+                    : "bg-[#FAF3E7] border border-[#26221B]/15 text-[#26221B] hover:border-[#F26B3A]"
+                }`}
+              >
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>Chỉ hiện có TikTok Review</span>
+              </button>
             </div>
           </div>
         </section>
 
-        {/* Places Grid */}
+        {/* POI Cards Grid (Enhanced PlaceCard with rich metrics) */}
         {loading ? (
-          <div className="py-20 text-center text-slate-400 font-bold text-sm">
-            Đang tải dữ liệu 174 địa điểm Tri Tôn...
+          <div className="py-20 text-center text-[#6B6355] font-body">
+            <Sparkles className="w-8 h-8 text-[#F0A32F] animate-spin mx-auto mb-3" />
+            <p className="font-bold text-sm">Đang tải danh sách địa điểm đã xác minh...</p>
           </div>
-        ) : filteredPlaces.length === 0 ? (
-          <div className="py-20 text-center text-slate-500 font-bold text-sm bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-            Không tìm thấy địa điểm nào phù hợp với bộ lọc hiện tại.
+        ) : filteredPlaces.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPlaces.map((place) => (
+              <PlaceCard key={place.id} place={place} />
+            ))}
           </div>
         ) : (
-          <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredPlaces.map((place) => (
-              <Link
-                key={place.id}
-                href={`/places/${place.slug || place.id}`}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between cursor-pointer"
-              >
-                <div>
-                  <div className="relative h-56 overflow-hidden bg-slate-100">
-                    <img
-                      src={place.image_url}
-                      alt={place.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
-                      {place.tourism_category}
-                    </div>
-                    <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
-                      <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                      {place.rating}
-                    </div>
-                  </div>
-
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-                      <span className="flex items-center gap-1 text-emerald-800">
-                        <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                        {place.commune}
-                      </span>
-                      <span className="flex items-center gap-1 text-slate-500">
-                        <Clock className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-                        {place.opening_hours}
-                      </span>
-                    </div>
-
-                    <h2 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                      {place.name}
-                    </h2>
-
-                    {place.description && (
-                      <p className="text-xs text-slate-600 line-clamp-2 font-light leading-relaxed">
-                        {place.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <div className="w-full py-3 bg-slate-900 group-hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all">
-                    <span>Xem chi tiết & Chỉ đường GPS</span>
-                    <ChevronRight className="h-4 w-4 text-amber-300 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </section>
+          <div className="bg-[#FFFDF7] rounded-[28px] p-12 text-center border border-[#26221B]/8 space-y-3 font-body">
+            <Compass className="w-10 h-10 text-[#6B6355]/40 mx-auto" />
+            <p className="font-display font-bold text-base text-[#26221B]">Không tìm thấy địa điểm nào phù hợp.</p>
+            <p className="text-xs text-[#6B6355]">Hãy thử xóa bớt bộ lọc hoặc tìm kiếm từ khóa khác.</p>
+            <button
+              onClick={() => {
+                setSelectedCommune("Tất cả");
+                setActiveCategory("Tất cả");
+                setActiveAudience("all");
+                setSearchQuery("");
+                setTiktokOnlyFilter(false);
+              }}
+              className="px-5 py-2 rounded-full bg-[#0E8C7F] text-white text-xs font-bold font-display tap-bounce"
+            >
+              Xem Tất Cả Địa Điểm
+            </button>
+          </div>
         )}
 
       </main>

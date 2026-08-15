@@ -14,7 +14,7 @@
 - Bánh tráng nướng Tri Tôn, Thốt nốt (bánh bò, kem), Mắm bồ hóc, Bún mắm, Cơm nị
 
 [SYSTEM DATA]
-- Master dataset: data/tri_ton_master_cleaned.csv (82 records v10.0.0)
+- Master dataset: data/tri_ton_master_cleaned.csv (149 records v11.0.0)
 - Categories: attractions_nature (20), checkin_spots (20), khmer_pagodas_heritage (10), food_and_restaurants (17), cafes_and_homestays (13), events_and_culture (2)
 - Videos table: Supabase public.videos (18 real video records verified)
 

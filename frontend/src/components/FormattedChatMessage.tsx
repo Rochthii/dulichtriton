@@ -58,64 +58,97 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
       .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="action-link">$1</a>')
       .replace(/-(.*)/g, '<li class="bullet-item">$1</li>');
 
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent('https://dulichtriton.vn/planner')}`;
+
     const htmlContent = `
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Thông Tin Du Lịch Tri Tôn — AI Overview</title>
+          <title>Lịch Trình & Cẩm Nang Du Lịch Tri Tôn — AI Assistant</title>
           <meta charset="utf-8" />
           <style>
-            @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-            @page { size: A4; margin: 15mm; }
+            @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bricolage+Grotesque:wght@700;800&display=swap');
+            @page { size: A4; margin: 12mm; }
             body {
-              font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-              color: #0F172A;
+              font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+              color: #26221B;
               line-height: 1.6;
               padding: 0;
               margin: 0;
-              background-color: #fff;
+              background-color: #FAF3E7;
+            }
+            .page-container {
+              background: #FFFDF7;
+              border-radius: 20px;
+              padding: 24px;
+              border: 1px solid rgba(38,34,27,0.1);
             }
             .header-card {
-              background: linear-gradient(135deg, #1B4D3E 0%, #0F5132 100%);
+              background: linear-gradient(135deg, #0E8C7F 0%, #085A52 100%);
               color: white;
-              padding: 24px 28px;
+              padding: 22px 26px;
               border-radius: 16px;
-              margin-bottom: 24px;
-              border-bottom: 4px solid #D99B26;
+              margin-bottom: 20px;
+              border-bottom: 4px solid #F0A32F;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
             }
             .header-title {
-              font-size: 22px;
+              font-family: 'Bricolage Grotesque', sans-serif;
+              font-size: 20px;
               font-weight: 800;
               margin: 0 0 6px 0;
               letter-spacing: -0.5px;
             }
             .header-meta {
-              font-size: 12px;
-              color: #A7F3D0;
+              font-size: 11px;
+              color: #E6FAF6;
               display: flex;
-              gap: 16px;
+              gap: 12px;
+              align-items: center;
             }
             .badge-verified {
-              background: #D99B26;
-              color: #0F172A;
-              font-weight: 700;
+              background: #F0A32F;
+              color: #26221B;
+              font-weight: 800;
               padding: 2px 8px;
               border-radius: 6px;
-              font-size: 11px;
+              font-size: 10px;
+              text-transform: uppercase;
+            }
+            .qr-side {
+              background: white;
+              padding: 6px;
+              border-radius: 12px;
+              border: 2px solid #F0A32F;
+              text-align: center;
+            }
+            .qr-side img {
+              width: 75px;
+              height: 75px;
+              display: block;
+            }
+            .qr-label {
+              font-size: 8px;
+              font-weight: 800;
+              color: #26221B;
+              margin-top: 2px;
             }
             .section-title {
-              color: #1B4D3E;
-              font-size: 16px;
+              color: #0E8C7F;
+              font-family: 'Bricolage Grotesque', sans-serif;
+              font-size: 15px;
               font-weight: 800;
-              margin-top: 20px;
-              margin-bottom: 10px;
+              margin-top: 18px;
+              margin-bottom: 8px;
               padding-bottom: 4px;
-              border-bottom: 2px solid #E2E8F0;
+              border-bottom: 2px solid #EAE0D0;
             }
             .content-box {
-              font-size: 13px;
+              font-size: 12px;
               line-height: 1.7;
-              color: #334155;
+              color: #3B342A;
             }
             .bullet-item {
               margin-bottom: 6px;
@@ -124,44 +157,73 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
             }
             .action-link {
               display: inline-block;
-              color: #1B4D3E;
-              background: #F1F5F9;
-              padding: 4px 10px;
-              border-radius: 8px;
+              color: #0E8C7F;
+              background: #FAF3E7;
+              padding: 3px 8px;
+              border-radius: 6px;
               text-decoration: none;
               font-weight: 700;
-              font-size: 11px;
+              font-size: 10px;
               margin-right: 6px;
-              margin-top: 4px;
+              margin-top: 3px;
+              border: 1px solid rgba(14,140,127,0.2);
+            }
+            .emergency-box {
+              margin-top: 20px;
+              padding: 12px 16px;
+              background: #FAF3E7;
+              border: 1px solid rgba(240,163,47,0.4);
+              border-radius: 12px;
+              font-size: 11px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
             }
             .footer-bar {
-              margin-top: 40px;
-              padding-top: 16px;
-              border-top: 1px solid #E2E8F0;
+              margin-top: 20px;
+              padding-top: 12px;
+              border-top: 1px solid #EAE0D0;
               text-align: center;
-              font-size: 11px;
-              color: #94A3B8;
+              font-size: 10px;
+              color: #6B6355;
             }
           </style>
         </head>
         <body>
-          <div class="header-card">
-            <h1 class="header-title">✨ THÔNG TIN DU LỊCH TRI TÔN</h1>
-            <div class="header-meta">
-              <span>Nguồn: Thông tin thực địa & Live Search Tri Tôn</span>
-              <span>•</span>
-              <span>Ngày tạo: ${new Date().toLocaleDateString('vi-VN')}</span>
-              <span class="badge-verified">Dữ liệu XÁC MINH 100%</span>
+          <div class="page-container">
+            <div class="header-card">
+              <div>
+                <h1 class="header-title">🌾 LỊCH TRÌNH & CẨM NANG DU LỊCH TRI TÔN</h1>
+                <div class="header-meta">
+                  <span>Trợ Lý AI Du Lịch Bảy Núi</span>
+                  <span>•</span>
+                  <span>Ngày in: ${new Date().toLocaleDateString('vi-VN')}</span>
+                  <span class="badge-verified">Dữ Liệu Thực Địa 100%</span>
+                </div>
+              </div>
+              <div class="qr-side">
+                <img src="${qrCodeUrl}" alt="QR Lộ Trình" />
+                <div class="qr-label">QUÉT MỞ MAPS</div>
+              </div>
             </div>
-          </div>
 
-          <div class="content-box">
-            ${formattedBody}
-          </div>
+            <div class="content-box">
+              ${formattedBody}
+            </div>
 
-          <div class="footer-bar">
-            <strong>Dự án Du Lịch Tri Tôn</strong> — Chuyên trang Thông tin Du lịch, Văn hóa Khmer & Ẩm thực Bảy Núi An Giang.<br/>
-            Truy cập trực tuyến: <em>du-lich-tri-ton.vercel.app</em>
+            <div class="emergency-box">
+              <div>
+                <strong>🚨 Hotline Hỗ Trợ Khẩn Cấp Bảy Núi:</strong> Công An: 0296.3874.113 • Y Tế / Cấp Cứu: 0296.3874.115 • Du Lịch: 0296.3771.999
+              </div>
+              <div>
+                <em>(Dùng khi mất sóng 4G leo núi Cô Tô / Tức Dụp)</em>
+              </div>
+            </div>
+
+            <div class="footer-bar">
+              <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin 149 địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>
+              Truy cập trực tuyến: <em>dulichtriton.vn</em>
+            </div>
           </div>
 
           <script>
@@ -180,18 +242,29 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
 
   // ── Render inline tokens (Bold + Markdown Links + Plain text) ──────────────
   const renderInlineFormatted = (text: string) => {
-    // Match markdown link: [label](url) OR bold: **bold**
-    const tokenRegex = /(\[.*?\]\(https?:\/\/[^\s)]+\)|\*\*.*?\*\*)/g;
+    // Match markdown link: [label](url) OR bold: **bold** (support URLs with query parameters & spaces)
+    const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
     const parts = text.split(tokenRegex);
 
     return parts.map((part, index) => {
       if (!part) return null;
 
       // 1. Markdown Links: [label](url)
-      const linkMatch = part.match(/^\[(.*?)\]\((https?:\/\/[^\s)]+)\)$/);
+      const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
       if (linkMatch) {
-        const label = linkMatch[1];
-        const url = linkMatch[2];
+        const label = linkMatch[1].trim();
+        const rawUrl = linkMatch[2].trim();
+
+        // Ensure safe valid URL encoding (fixes spaces or unicode query strings)
+        let url = rawUrl;
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          url = `https://${url}`;
+        }
+        // If url has raw unencoded spaces, encode them
+        if (url.includes(' ')) {
+          url = encodeURI(url);
+        }
+
         const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || /maps|chỉ đường/i.test(label);
         const isTikTok = url.includes('tiktok.com') || /tiktok/i.test(label);
 
@@ -400,52 +473,52 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
         </button>
       )}
 
-      {/* ── ACTION BAR (Lưu, In/Tải PDF, Chia sẻ QR) ── */}
+      {/* ── ACTION BAR (Lưu, Xuất PDF & QR Lịch Trình) ── */}
       {isAssistant && hasItinerary && (
-        <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
-          <span className="font-semibold text-emerald-800">
-            Dữ liệu xác thực Tri Tôn, An Giang
+        <div className="pt-2.5 border-t border-[#26221B]/8 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#6B6355] font-display">
+          <span className="font-bold text-[#0E8C7F] flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Lịch trình & gợi ý Bảy Núi</span>
           </span>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handlePrint}
+              className="px-3 py-1.5 rounded-full bg-[#FAF3E7] hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] border border-[#0E8C7F]/30 flex items-center gap-1.5 font-bold transition-all tap-bounce shadow-2xs"
+              title="Xuất File PDF Lịch Trình Màu Sắc & Mã QR Dẫn Đường"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Xuất PDF & Mã QR</span>
+            </button>
+
             <button
               onClick={handleSave}
-              className={`p-1.5 rounded-lg flex items-center gap-1 font-semibold transition-all ${
+              className={`px-2.5 py-1.5 rounded-full flex items-center gap-1 font-bold transition-all tap-bounce ${
                 isSaved
-                  ? 'bg-emerald-100 text-emerald-800 font-bold'
-                  : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0E8C7F]/15 text-[#0E8C7F] border border-[#0E8C7F]/30'
+                  : 'bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/10'
               }`}
               title="Lưu lịch trình này"
             >
               {isSaved ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="hidden sm:inline">Đã lưu</span>
+                  <Check className="w-3.5 h-3.5 text-[#0E8C7F]" />
+                  <span>Đã lưu</span>
                 </>
               ) : (
                 <>
                   <Bookmark className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Lưu</span>
+                  <span>Lưu</span>
                 </>
               )}
             </button>
 
             <button
-              onClick={handlePrint}
-              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center gap-1 font-semibold transition-colors"
-              title="In / Lưu PDF"
-            >
-              <Printer className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">In/PDF</span>
-            </button>
-
-            <button
               onClick={() => setShowQRModal(true)}
-              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-slate-900 flex items-center gap-1 font-semibold transition-colors"
+              className="p-1.5 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/10 flex items-center transition-colors"
               title="Chia sẻ mã QR"
             >
               <QrCode className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Mã QR</span>
             </button>
           </div>
         </div>

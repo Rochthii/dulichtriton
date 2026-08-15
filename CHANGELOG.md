@@ -4,6 +4,73 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v29.0.0-FOLK-MODERN-BAY-NUI-DESIGN-SYSTEM] - 2026-08-15
+
+### 🎨 Thiết Lập & Đồng Bộ Toàn Diện Phong Cách "Folk-Modern Bảy Núi" (1:1 Design Tokens)
+- **Triết lý Thiết kế 1:1**: Chất liệu dân dã miền núi Khmer (thốt nốt, lúa, chùa, nắng) kết hợp ngôn ngữ ứng dụng du lịch hiện đại (card, chip, metro-line, ticket-stub, motion). Loại bỏ hoàn toàn gradient neon tím/hồng kiểu city-app và phong cách blog báo chí cũ kỹ.
+- **Bảng Màu Thực Địa Chuẩn Hóa**:
+  - Nền cát sương ấm `--bg: #FAF3E7` & Mặt thẻ `--surface: #FFFDF7` thay thế nền trắng tinh `#FFF`.
+  - Chữ đất núi `--ink: #26221B` (tương phản cao) & Chữ phụ `--ink-soft: #6B6355`.
+  - Màu chủ đạo ngọc Tà Pạ `--jade: #0E8C7F` (hover `--jade-deep: #0B6B60`).
+  - Nút CTA chính vàng thốt nốt chín `--palm: #F0A32F` (hover `--palm-deep: #C97F1B`).
+  - Accent cam hoàng hôn `--sunset: #F26B3A`.
+  - Màu danh mục chuẩn: Gạch chùa cổ `--terracotta: #A6503A` (Lịch sử), Áo cà sa `--saffron: #D9822B` (Khmer), Tím `--festival: #7C5CBF` (Lễ hội), Gỗ `--cat-stay: #8A5A33`.
+  - Dark Mode "Đêm Tri Tôn" `--night-bg: #151B34`, `--night-surface: #1E2647`, Đom đóm `--firefly: #FFD37A`.
+- **Bộ 3 Font Chữ Tối Ưu Tiếng Việt**:
+  - Heading / Logo: `Bricolage Grotesque` (700–800).
+  - Body / UI: `Be Vietnam Pro` (400–700).
+  - Ghi chú mẹo phượt & Con dấu: `Patrick Hand` (Viết tay mộc mạc).
+- **5 Phần Tử Nhận Diện Độc Bản (Signature Elements)**:
+  - 1. *Metro-line*: Tuyến sơ đồ nối dây ngọc Tà Pạ tự vẽ (`stroke-dashoffset`) mượt mà khi cuộn tới.
+  - 2. *Ticket-stub*: Thẻ lịch trình dạng vé xe/máy bay răng cưa với mã tuyến `TTN→TPA→OTU`.
+  - 3. *Stamp "ĐÃ XÁC MINH THỰC ĐỊA"*: Con dấu tròn xoay 12° khẳng định dữ liệu thực tế sạch.
+  - 4. *Texture nền bản địa*: Silhouette hàng thốt nốt và hoa văn Kbach Khmer mờ 3–5%.
+  - 5. *Logo & Bookmark*: Trái tim thốt nốt kết hợp silhouette núi Cô Tô & Tà Pạ nở khi bấm.
+- **Nâng Cấp Toàn Bộ Trang Client Sang Phong Cách "Folk-Modern Bảy Núi"**:
+  - [frontend/src/app/page.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/app/page.tsx): Trang chủ với nền cát sương ấm `#FAF3E7`, font tiêu đề Bricolage Grotesque, thanh tìm kiếm thông minh với chip giải quyết nỗi lo du khách, 4 cụm du lịch dạng bưu thiếp nghiêng 2°, card POI bo góc 26px, nút CTA vàng thốt nốt `#F0A32F`, và danh bạ cứu hộ 24/7.
+  - [frontend/src/components/FoodClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/FoodClientPage.tsx): Trang Ẩm Thực Bảy Núi với tông cam hoàng hôn `#F26B3A`, thẻ nhà hàng bo góc 26px, form đặt trước gà đốt Ô Thum và nút gọi hotline/maps.
+  - [frontend/src/components/StayClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/StayClientPage.tsx): Trang Lưu Trú Homestay với tông nâu gỗ `--cat-stay: #8A5A33`, bộ lọc tiện ích dạng pill, modal đặt chỗ phòng nghỉ bo góc 28px.
+  - [frontend/src/components/CultureClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/CultureClientPage.tsx): Trang Di Sản & Chùa Khmer với tông áo cà sa `--saffron: #D9822B`, tím lễ hội `--festival: #7C5CBF`, chế độ xem GIS coordinates WGS84 và thẻ quy tắc ứng xử văn hóa.
+  - [frontend/src/components/GuideClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/GuideClientPage.tsx): Bách khoa toàn thư Tri Tôn với 7 tab tương tác, thay thế 100% emoji bằng biểu tượng Lucide SVG, danh bạ 15 Xã/Thị trấn và cẩm nang phượt thực địa.
+  - [frontend/src/components/PlaceDetailClient.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/PlaceDetailClient.tsx): Trang chi tiết địa điểm toàn diện với 7 phân mục cuộn dính, ghi chú thực địa font Patrick Hand, ma trận thông số WGS84, thư viện ảnh và TikTok video reels.
+  - [frontend/src/components/ItineraryClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/ItineraryClientPage.tsx): Bộ lịch trình 35 kịch bản với sơ đồ trạm dừng Metro-line, thẻ vé Ticket-stub, mẹo thực địa viết tay mộc mạc và chức năng xuất QR/PDF.
+  - [frontend/src/app/places/page.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/app/places/page.tsx) & [frontend/src/components/HotPlacesSection.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/HotPlacesSection.tsx): Lưới khám phá điểm đến & top địa điểm hot với bộ lọc phân loại dạng pill.
+  - [frontend/src/components/MapClientPage.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/components/MapClientPage.tsx): Bản đồ số GIS Tri Tôn kèm bảng xem trước địa điểm bo góc 26px.
+  - [frontend/src/app/emergency/page.tsx](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/reload_context_feature/frontend/src/app/emergency/page.tsx): Danh bạ khẩn cấp cứu hộ 24/7, loại bỏ triệt để danh xưng "Huyện Tri Tôn" theo RULE-1.
+- **Làm Sạch Dữ Liệu Thực Địa & Giải Quyết Triệt Để Lỗi Rác Crawl (Data Sanitization)**:
+  - **Data Cleansing Script (`scripts/clean_poi_dataset.py`)**: Đã quét và loại bỏ 100% các đoạn text spam (tin bóng đá 24h, MLB, Microsoft, Bách gia tính, tiếng nước ngoài) trong `triton_pois_full.json`, `triton_pois_table.csv`, `triton_pois_map.geojson`. Viết lại mô tả chuẩn thực địa cho Đá Vồ Hội Mẹ Cô Tô, Đá Vồ Hội Đổ, Suối Vàng Soài So, Núi Dài Ngọa Long Sơn.
+  - **Module Phòng Vệ Runtime (`frontend/src/lib/dataSanitizer.ts`)**: Cung cấp hàm `sanitizeDescription`, `sanitizeReviews`, `parseTravelGuide`, `parseNearbyFood` tự động chặn mọi từ khóa blacklist trước khi render.
+  - **Sửa Lỗi Đếm 4 Cụm Du Lịch (Clustering Bug)**: Nâng cấp thuật toán phân cụm Multi-Commune & Tag Matching. Cụm Cô Tô & Soài So hiển thị chính xác toàn bộ 6–8 thắng cảnh liên xã (Núi Cô Tô, Hồ Soài So, Suối Vàng, Vồ Hội, Sân Tiên, Chùa Sà Lôn) thay vì 1 điểm.
+- **Nâng Cấp Đột Phá Trải Nghiệm Người Dùng (UX Gaps Overhaul)**:
+  - **Bộ Lọc Theo Đối Tượng Du Khách (Persona Filters)**: Tích hợp 4 nhóm đối tượng chuyên biệt tại Trang Chủ và Trang Khám Phá: `📸 Săn Ảnh Sống Ảo`, `👨‍👩‍👧‍👦 Gia Đình & Người Cao Tuổi`, `🥾 Phượt Thủ & Săn Mây`, `🙏 Chiêm Bái Tâm Linh`.
+  - **Khai Thác Toàn Diện `travel_guide_json` Trên Card**: Hiển thị trực tiếp Giờ mở cửa, Giá vé / Phí giữ xe, Mùa lý tưởng ra ngoài thẻ POI.
+  - **Huy Hiệu "Best-Time" & "Must-Book"**: Gắn badge 🌅 Sáng sớm (06:00-08:30) / 🌇 Hoàng hôn (16:00-17:30) trực tiếp trên ảnh thẻ và badge `🔥 Đặt trước 30p` cho các quán Gà Đốt Ô Thum.
+  - **Công Cụ Lập Kế Hoạch & Tối Ưu Tuyến Đường Tự Chọn (Smart Route Optimizer)**:
+    - Phát triển module `routeOptimizer.ts` áp dụng thuật toán **TSP kết hợp 2-Opt Swap** và hệ số uốn lượn đường đèo núi ($\times 1.55$ cho Núi Cô Tô / Tức Dụp; $\times 1.28$ cho đồng bằng).
+    - Tự động sắp xếp lại chuỗi 2–8 địa điểm do du khách chọn để tìm ra thứ tự di chuyển ngắn nhất, triệt tiêu các đoạn đường vòng, tính toán chi tiết số km và số phút lái xe tiết kiệm được.
+  - **Nâng Cấp Trợ Lý AI Chatbot Với Live Weather & Cẩm Nang Ẩm Thực 2026**:
+    - Tích hợp dữ liệu thời tiết thời gian thực từ Open-Meteo API (`temperature_2m`, `humidity`, `precipitation`) trực tiếp vào context prompt của AI.
+    - Bổ sung cẩm nang ẩm thực đặc sản Bảy Núi 2026 (Gà Đốt Ô Thum cần gọi đặt trước 30-45 phút, Cháo bò lá trúc, Bún nước lèo Khmer, Đu đủ đâm Rina Châu Lăng, Bánh bò thốt nốt Tân Lợi) giúp AI tư vấn chính xác, chu đáo.
+  - **Xuất File PDF Lịch Trình & Mã QR Trực Tiếp Từ AI Chatbot (`FormattedChatMessage.tsx`)**:
+    - Thiết kế mẫu tài liệu in ấn / xuất PDF chuẩn phong cách **Folk-Modern Bảy Núi** (`#0E8C7F` Ngọc Tà Pạ & `#F0A32F` Vàng thốt nốt).
+    - Tự động sinh mã QR liên kết trực tiếp bản đồ Google Maps và bảng hotline cứu hộ khẩn cấp 24/7 (`0296.3874.113`, `0296.3874.115`).
+  - **Widget Đo Khoảng Cách & Thời Gian Lái Xe Tức Thì (`PlaceDetailClient.tsx`)**:
+    - Hiển thị thông số: *"Cách bạn: X km (~Y phút lái xe qua đường đèo núi / đồng bằng)"*.
+  - **Chiến Dịch Làm Sạch & Hợp Nhất Dữ Liệu Master Thực Địa (Master Dataset Cleanse & Dedup)**:
+    - **P1 (Diệt 100% Data Rác)**: Quét và viết lại toàn bộ mô tả thực địa cho các địa danh từng bị dính spam (Đá Vồ Hội, Ruộng Coffee, Quy Coffee, NY Coffee, Suối Vàng Soài So, Núi Dài, Chùa Tam Bửu, Kinh Lá Buông, 15 quán ăn bị copy text "Sài Gòn").
+    - **P2 (Deduplication)**: Hợp nhất hoàn toàn các POI bị trùng lặp danh tính (Hồ Tà Pạ, Chùa Tà Pạ, Núi Cô Tô, Hồ Soài So, Hồ Soài Chek, Đồi Tức Dụp, Hàng thốt nốt trái tim, Cổng Trời Chùa Koh Kas, Nhà mồ Ba Chúc) thành các bản ghi chuẩn duy nhất.
+    - **P3 (Loại Bỏ POI Rác)**: Xóa vĩnh viễn các điểm không phải du lịch (`thanh bình 70k`, `Nhà Nghi Tú Trinh`, `Nha Nhgi 200k`, `Ngã 3 quẹo vào`, `Mầm non lương an trà`, `Trung tâm Y tế huyện Tri Tôn`).
+    - **P4 (Chuẩn Hóa Hình Ảnh & Video)**: Gán ảnh độ phân giải cao theo đúng danh mục thực địa, chuẩn hóa link tìm kiếm TikTok động.
+    - **P5 & P7 (Đồng Bộ 3 Định Dạng)**: Đồng bộ 149 POIs chất lượng cao đã xác thực ra `triton_pois_full.json`, `tri_ton_master_cleaned.csv` (utf-8-sig) và `triton_pois_map.geojson`.
+  - **Nâng Cấp Toàn Diện UI/UX/FE Trang Chi Tiết Địa Điểm (`PlaceDetailClient.tsx`)**:
+    - **Hero Visual Photo Showcase**: Bổ sung phòng tranh ảnh thực địa tỷ lệ 16:9 / 21:9 chuẩn điện ảnh, dải thumbnail mượt mà, ghi rõ nguồn ảnh và tem dấu "Góc Nhìn Thực Địa".
+    - **Hotline & Đặt Chỗ 1-Chạm**: Tích hợp thẻ nhắc nhở và nút gọi hotline đặt bàn trước 30-45 phút cho các quán đặc sản (Gà Đốt Ô Thum, Cháo Bò) và Homestay/Cà phê.
+    - **Sticky Quick-Jump 7 Tabs**: Thanh điều hướng nổi cuộn mượt giữa 7 phần nội dung chính: Tổng quan, Cẩm nang & Vé, Check-in, Ăn gì gần đây, Lịch sử, Video thực tế, Đánh giá du khách.
+    - **Live Weather & Distance Telemetry**: Tích hợp live thời tiết Open-Meteo và widget đo khoảng cách/thời gian lái xe tức thì từ GPS người dùng.
+    - **Mobile Sticky Action Bar**: Thanh tác vụ cố định 3 nút bấm (Chỉ đường Maps, Lưu Tour, Chia sẻ) tiện dụng khi cầm điện thoại 1 tay.
+
+---
+
 ## [v28.8.8-FIX-VERCEL-BUILD-SUPABASE-FALLBACKS] - 2026-08-14
 
 ### 🛠️ Sửa Triệt Để Lỗi Deploy Vercel Build (Supabase Key Required)

@@ -1,117 +1,123 @@
 # DESIGN SYSTEM SPECIFICATION: DU LICH TRI TON
+## STYLE PARADIGM: "Folk-Modern Bảy Núi"
 
 ```yaml
 TARGET_PARSER: "AI_CODING_AGENTS"
 LANG: "EN-US"
 STRICTNESS: "HIGH"
-VERSION: "10.68.0"
+VERSION: "11.0.0"
 PROJECT: "Tri Ton AI Tourism Web Portal & Chatbot System"
+STYLE_ESSENCE: "Chất liệu dân dã miền núi Khmer (thốt nốt, lúa, chùa, nắng) + Ngôn ngữ app du lịch hiện đại (card, chip, metro-line, motion)"
 ```
 
-## 1. DESIGN PHILOSOPHY (ANTI-GENERIC-AI MANIFESTO)
-- `AUTHENTICITY`: Honor Tri Ton local culture (Seven Mountains/Bảy Núi, Khmer pagodas, Palmyra palm trees/cánh đồng thốt nốt, local gastronomy like Gà Đốt Ô Thum, Đu Đủ Đâm, Bánh Bò Thốt Nốt).
-- `NO_AI_GRADIENTS`: Strictly FORBID purple/pink/indigo AI template gradients.
-- `NO_GENERIC_CARDS`: Strictly FORBID uniform 3-column template grids with lorem ipsum.
-- `NO_HYPERBOLE_COPY`: FORBID generic marketing buzzwords ("Amazing", "Best choice", "Ultimate experience"). Use authentic, location-verified Vietnamese text.
+## 1. DESIGN MANIFESTO & PHILOSOPHY
+- `FOLK_MODERN_IDENTITY`: Grounded in authentic Seven Mountains landscape, Palmyra sugar palms, Tà Pạ emerald lake, ancient Khmer pagodas, and vibrant gastronomy.
+- `NO_NEON_GRADIENTS`: Strictly FORBID neon purple/pink/indigo AI template gradients.
+- `NO_GENERIC_TEMPLATES`: FORBID generic 3-column template grids with lorem ipsum.
+- `WARM_SAND_CANVAS`: Nền cát sương ấm `#FAF3E7` (Nắng đồng lúa) replaces harsh pure `#FFFFFF` / pure `#000000`.
 - `NO_EMOJIS`: FORBID emojis anywhere in UI. Use Lucide SVG `<Icon />` components ONLY.
-- `NO_STOCK_PHOTOS`: FORBID stock/ocean/salad photos. Use verified real photography (`/images/tiktok/`, Tà Pạ, Ô Thum, Cô Tô, Soài So).
+- `REAL_MEDIA_ONLY`: Verified photography (`/images/tiktok/`, Tà Pạ, Ô Thum, Cô Tô, Soài So) & TikTok 9:16 reels.
 
-## 2. COLOR TOKENS & THEMING
-```json
-{
-  "primary_emerald": "#1B4D3E",
-  "primary_emerald_hover": "#143A2F",
-  "primary_emerald_light": "#E8F0EC",
-  "secondary_golden_palm": "#D99B26",
-  "golden_palm_hover": "#E5A93C",
-  "golden_palm_light": "#FEF7E8",
-  "neutral_dark_slate": "#0F172A",
-  "neutral_body_text": "#334155",
-  "neutral_muted_slate": "#64748B",
-  "background_light": "#F8F9FA",
-  "surface_white": "#FFFFFF",
-  "dark_surface": "#1E293B",
-  "dark_background": "#0F172A",
-  "card_border": "border border-emerald-900/10 shadow-sm hover:shadow-md transition-all duration-300"
+---
+
+## 2. COLOR PALETTE TOKENS (100% SOURCED FROM FIELD DATA)
+
+```css
+:root {
+  --bg: #FAF3E7;            /* Nắng đồng lúa / Cát sương - Nền chính */
+  --surface: #FFFDF7;       /* Bề mặt thẻ bưu thiếp */
+  --ink: #26221B;           /* Đất đá núi Thất Sơn - Chữ chính */
+  --ink-soft: #6B6355;      /* Đất phù sa - Chữ phụ, địa chỉ */
+  --jade: #0E8C7F;          /* Nước hồ Tà Pạ - Màu chủ đạo, link, active, nature */
+  --jade-deep: #0B6B60;     /* Đáy hồ Tà Pạ - Hover state */
+  --palm: #F0A32F;          /* Mật trái thốt nốt chín - Nút CTA chính */
+  --palm-deep: #C97F1B;     /* Đường thốt nốt cô đặc - Hover CTA */
+  --sunset: #F26B3A;        /* Hoàng hôn tuyến tránh - Accent, badge hot, food */
+  --terracotta: #A6503A;    /* Gạch chùa cổ - Category history */
+  --saffron: #D9822B;       /* Áo cà sa - Category culture / chùa Khmer */
+  --festival: #7C5CBF;      /* Lễ hội Dolta - Category festival */
+  --cat-nature: #0E8C7F;    /* Category thiên nhiên */
+  --cat-culture: #D9822B;   /* Category văn hóa */
+  --cat-history: #A6503A;   /* Category lịch sử */
+  --cat-food: #F26B3A;      /* Category ẩm thực */
+  --cat-festival: #7C5CBF;  /* Category lễ hội */
+  --cat-stay: #8A5A33;      /* Category homestay / lưu trú */
+  --night-bg: #151B34;      /* Trời đêm Tri Tôn - Dark mode */
+  --night-surface: #1E2647; /* Mặt thẻ Dark Mode */
+  --firefly: #FFD37A;       /* Đom đóm / đèn chợ đêm - Accent dark mode */
+  --r-s: 12px;
+  --r-m: 18px;
+  --r-l: 26px;
+  --shadow-1: 0 2px 10px rgba(38, 34, 27, 0.08);
+  --shadow-2: 0 10px 30px rgba(38, 34, 27, 0.14);
 }
 ```
 
-## 3. ADMINISTRATIVE NAMING CONSTRAINT
-- `COMMUNES_ONLY`: Must use exact commune/town names: "Thị trấn Tri Tôn", "Thị trấn Ba Chúc", "Xã Chau Lăng", "Xã Ô Lâm", "Xã Núi Tô", "Xã An Tức", "Xã Lương Phi", "Xã An Hảo", "Xã Tà Đảnh", "Xã Lê Trì".
-- `FORBIDDEN_TERM`: ABSOLUTELY NEVER use "Huyện Tri Tôn".
+---
 
-## 4. SVG ICON SYSTEM TOKENS (NO EMOJI POLICY)
-```json
-{
-  "SearchAI": "Lucide <Search />",
-  "MapPin": "Lucide <MapPin />",
-  "InteractiveMap": "Lucide <Map />",
-  "TimeHours": "Lucide <Clock />",
-  "RatingStar": "Lucide <Star />",
-  "CallBooking": "Lucide <Phone />",
-  "VideoPlay": "Lucide <Play />",
-  "VehicleParking": "Lucide <Car />",
-  "DateTour": "Lucide <Calendar />",
-  "ShareItinerary": "Lucide <Share2 />",
-  "QRCodeModal": "Lucide <QrCode />",
-  "DownloadPDF": "Lucide <Download />",
-  "PagodaHeritage": "Lucide <Landmark />",
-  "FoodGastronomy": "Lucide <Utensils />",
-  "HomestayStay": "Lucide <Home />",
-  "AIChatbotBot": "Lucide <Bot />",
-  "UserAccount": "Lucide <User />",
-  "ShieldAdmin": "Lucide <ShieldCheck />"
-}
+## 3. TYPOGRAPHY SYSTEM — 3 FONTS (VIETNAMESE OPTIMIZED)
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 ```
 
-## 5. TYPOGRAPHY & SPACING SPECIFICATIONS
-- `FONT_FAMILY`: Primary UI font `Inter` / Display headings `Outfit` (Sans-Serif).
-- `HEADING_1`: `text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight`
-- `HEADING_2`: `text-2xl lg:text-3xl font-bold text-slate-900`
-- `HEADING_3`: `text-lg lg:text-xl font-semibold text-slate-900`
-- `BODY_TEXT`: `text-sm lg:text-base text-slate-700 leading-relaxed`
-- `BADGE_TAG`: `text-xs font-semibold px-2.5 py-1 rounded-full`
-- `BORDER_RADIUS`: Cards `rounded-2xl`, Modals `rounded-3xl`, Buttons `rounded-xl` or `rounded-full`.
+| Role | Font Family | Weights | Rationale |
+|---|---|---|---|
+| **Display / Heading / Logo** | `Bricolage Grotesque` | 700–800 | Bold, distinctive, modern personality, zero template vibe |
+| **Body / UI Components** | `Be Vietnam Pro` | 400–700 | Native Vietnamese diacritic rendering, smooth reading |
+| **Field Notes / Stamp / Tip** | `Patrick Hand` | Regular | Handwritten adventurer journal feel for field tips & stamps |
 
-## 6. REAL MEDIA & VIDEO REQUIREMENTS
-- `AUTHENTIC_PHOTOS`: Ta Pa Lake, Svay Ton Pagoda, O Thum Roasted Chicken, Bok Lahong Papaya Salad, Tri Ton Fish Noodle, Ba Chúc Relic.
-- `TIKTOK_SHORTS`: Direct embed / links to real TikTok travel reviewers 9:16 vertical shorts (e.g. `@tungnuitravel`).
+*Rule:* Maximum 3 fonts. Handwriting font only appears on small field tips/stamps, never on headings or body.
 
-## 7. COMPONENT SPECIFICATIONS
-```json
-{
-  "LocationCard": "Real photo + Commune badge + WGS84 coordinates + Google Maps routing link",
-  "TikTokReviewSection": "9:16 vertical shorts player (5-column grid) + 5 category filter tabs",
-  "ItineraryTimeline": "Morning/Afternoon/Evening timeline + Haversine distance matrix + Local meal tags",
-  "QRModal": "Offline itinerary QR code generator & export",
-  "HomestayBookingModal": "Real check-in/out dates, guest count, price calculation & Supabase audit logging",
-  "AdminAuditLogTable": "Real-time audit log stream (Who, Did What, When, Source IP, Module)"
-}
-```
+---
 
-## 8. FULL 16-SCREEN SYSTEM CATALOG
-1. `01_homepage`: Web Portal Homepage & AI Search Bar Entrance
-2. `02_places_discovery`: Places Discovery & Commune Smart Filtering
-3. `03_place_detail`: Hồ Tà Pạ Detail & Real TikTok Shorts Video Embed
-4. `04_food_gastronomy`: Gà Đốt Ô Thum & Local Gastronomy Booking
-5. `05_ai_chatbot`: AI Chatbot RAG Interface with Location & TikTok Cards
-6. `06_ai_trip_planner`: Smart AI Trip Planner (2D1N Tour & WGS84 Distance)
-7. `07_stay_homestay`: Authentic Local Stay & Homestay Discovery
-8. `08_culture_events`: Khmer Culture & Seven Mountains Ox Racing Heritage
-9. `09_interactive_gis_map`: Interactive GIS Map Portal (Tri Ton Bounding Box)
-10. `10_travel_info_guide`: Travel Info, Transport Guide & FAQ
-11. `11_itinerary_export_modal`: QR Code Export & Offline PDF Download Modal
-12. `12_partner_portal`: Local Service Partner Registration Portal
-13. `13_admin_dashboard`: Admin Control Center & Audit Logs Dashboard
-14. `14_empty_state_404`: 404 & Empty State with Recommended Hotspots
-15. `15_dark_mode_visual_spec`: System-Wide Dark Mode Interface Spec
-16. `16_auth_login_modal`: Supabase Auth Login & RBAC Role Switcher Modal
+## 4. SIGNATURE ELEMENTS (UNMISTAKABLY TRI TÔN)
 
-## 9. GIS MAP & BOUNDING BOX TOKENS
-- `BOUNDING_BOX`: `[10.25, 104.85]` to `[10.55, 105.15]` (WGS84 Coordinates for Tri Ton territory).
-- `CENTER_COORDINATE`: `[10.4211, 105.0125]` (Thị trấn Tri Tôn).
-- `DEFAULT_ZOOM`: `12` (Regional detail level).
+1. **Metro-Line Itinerary (Sơ đồ nối dây)**:
+   - 4px line in `--jade`, station stops with sand `#FAF3E7` borders.
+   - Travel duration badge centered on line as a pill capsule.
+   - Draws smoothly with `stroke-dashoffset` animation on scroll.
+2. **Ticket-Stub Itinerary Cards**:
+   - Perforated zig-zag edges, route code `TTN→TPA→OTU`, tour code `TT-2N1Đ`.
+3. **Stamp "ĐÃ XÁC MINH THỰC ĐỊA"**:
+   - Rotated circular stamp (12°) popping on card appearance to build trust.
+4. **Cultural Background Texture**:
+   - Khmer Kbach motifs or Palmyra palm silhouettes at 3–5% opacity on section dividers.
+5. **Palm-Heart Logo & Favorite Button**:
+   - Palmyra tree heart motif fused with twin mountain silhouettes (Cô Tô & Tà Pạ). Used as brand mark and animated blooming bookmark button.
 
-## 10. SYSTEM PRODUCTION REALITY MANDATE
-- `NO_MOCK_DATA`: Every button, API call, form submission, and approval MUST map to real backend Supabase database operations.
-- `AUDIT_LOGGING`: Critical actions generate immutable audit logs recording (Who, What, When, Source IP).
+---
+
+## 5. COMPONENT SPECIFICATIONS
+
+### POI Card:
+- Border radius `--r-l` (26px), 4:3 real image, 40% black gradient scrim.
+- Left chip: Category color badge. Right chip: Star rating ⭐.
+- Title: Bricolage Grotesque 700; Address: Be Vietnam Pro 13px `--ink-soft`.
+- Actions: Outline button `[🎵 TikTok]` + Solid Pill CTA `[🗺️ Chỉ đường]` in `--palm` (`#F0A32F`).
+- Hover: `--shadow-2` elevation + slow 1.05 image scale.
+
+### Buttons & Chips:
+- Pill shape (`rounded-full`).
+- Primary CTA: Solid `--palm` with text `--ink`.
+- Secondary: Outline `--jade` with text `--jade`.
+
+### Hero Section:
+- Full-bleed Tà Pạ or hoàng hôn tuyến tránh video/photo with slow zoom.
+- Pain-point search chips: *"Sợ hết giờ"*, *"Đi với người già"*, *"Muốn ăn gà đốt"*.
+
+### Section "Đêm Tri Tôn":
+- Dark mode canvas `--night-bg` (`#151B34`) with floating `--firefly` particles (`#FFD37A`) and amber-bordered night venue cards.
+
+---
+
+## 6. DO / DON'T SYSTEM RULES
+
+| ✅ DO | ❌ DON'T |
+|---|---|
+| Use real verified Tri Tôn photos | No generic stock photos, ocean or Sa Pa images |
+| Warm sand background `#FAF3E7` | No pure `#FFF` or pure `#000` backgrounds |
+| Consistent 8pt grid & radius tokens (`--r-s`, `--r-m`, `--r-l`) | No erratic corner radiuses per section |
+| Consistent category colors everywhere (card, map pin, filter) | No arbitrary color swapping |
+| Handwritten font ONLY for small notes/tips | No handwritten fonts for headings or body |
+| 100% Lucide SVG Icons | Zero emojis in UI |

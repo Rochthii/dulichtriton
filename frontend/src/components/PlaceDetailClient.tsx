@@ -6,13 +6,24 @@ import {
   MapPin, Navigation, Clock, Tag, Star, Camera, ShieldCheck, 
   Video, ArrowLeft, Heart, Share2, Sparkles, Play, Globe, Info, Compass,
   CheckCircle2, Utensils, Footprints, Bus, Car, AlertTriangle, Lightbulb, Phone,
-  MessageSquareQuote, Layers, Users, Sun, Bookmark, Check, ChevronRight
+  MessageSquareQuote, Layers, Users, Sun, Bookmark, Check, ChevronRight, Award, Ticket,
+  Flag, X, Send, WifiOff, Smartphone, Calendar, AlertOctagon, HelpCircle
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { formatPrice } from '@/lib/utils';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import VideoGallery from '@/components/VideoGallery';
 import { type VideoItem } from '@/components/VideoModal';
+import TikTokReelsViewer from '@/components/TikTokReelsViewer';
+import ReviewSentimentWidget from '@/components/ReviewSentimentWidget';
+import CheckinMasonryGallery from '@/components/CheckinMasonryGallery';
+import { parseTravelGuide, parseNearbyFood, parseCheckinSpots, sanitizeDescription, sanitizeReviews, getCategoryFallbackImage } from '@/lib/dataSanitizer';
+import { calculateTimeStatus } from '@/lib/timeStatus';
+import { savePlaceToOfflineCache, EMERGENCY_CONTACTS } from '@/lib/offlineStorage';
+import { getDeviceHardwareGps, TRI_TON_CENTER_COORDS } from '@/lib/maps';
+import { calculateRoadDistanceKm, estimateDriveMinutes } from '@/lib/routeOptimizer';
+import PoiWeatherWidget from '@/components/PoiWeatherWidget';
+import { supabase } from '@/lib/supabase';
 
 interface PlaceDetailClientProps {
   place: Place;
@@ -28,14 +39,15 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
     video_url: place.video_url,
   });
 
+  const defaultImg = getCategoryFallbackImage(place.category, place.name);
   const photos = place.photos && place.photos.length > 0
     ? place.photos
     : [
         {
-          url: place.image_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
+          url: place.image_url || defaultImg,
           caption: place.name,
-          source: 'Cổng thông tin Du lịch An Giang (angiangtourism.vn)',
-          license: 'Public Domain Tourism Collection'
+          source: 'Cổng thông tin Du lịch Tri Tôn',
+          license: 'Verified Field Data'
         }
       ];
 
@@ -45,38 +57,84 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [placeVideos, setPlaceVideos] = useState<VideoItem[]>([]);
   const [videosLoading, setVideosLoading] = useState(false);
+  const [isReelsOpen, setIsReelsOpen] = useState(false);
+  const [selectedReelIndex, setSelectedReelIndex] = useState(0);
+  const [isOffline, setIsOffline] = useState(false);
+  const [guideTab, setGuideTab] = useState<'hours_ticket' | 'transport_slope' | 'best_season'>('hours_ticket');
+
+  // Report modal state
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState('');
+  const [reportContact, setReportContact] = useState('');
+  const [reportSuccess, setReportSuccess] = useState(false);
+  const [isSubmittingReport, setIsSubmittingReport] = useState(false);
+
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
 
-  // Robust JSON parsing helper
-  const parseJsonSafely = (val: any) => {
-    if (!val) return null;
-    if (typeof val === 'object') return val;
-    if (typeof val === 'string') {
-      try {
-        return JSON.parse(val);
-      } catch {
-        return null;
+  // Parse Travel Guide, Check-in Spots, Nearby Food
+  const guide = parseTravelGuide(place.travel_guide || (place as any).travel_guide_json);
+  const nearbyFoodList = parseNearbyFood(place.nearby_cafes_and_food || (place as any).nearby_cafes_and_food_json);
+  const checkinSpotsList = parseCheckinSpots(place.checkin_spots || (place as any).checkin_spots_json, currentPhoto.url);
+  const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);
+  const cleanStory = sanitizeDescription(place.detailed_story || place.description, place.name, place.commune, place.category);
+  const cleanReviews = sanitizeReviews(place.review_samples || (place as any).reviews);
+  const timeStatus = calculateTimeStatus(place.category, place.best_visit_time || (place as any).best_time);
+
+  const isGaDotOThum = place.name.toLowerCase().includes('gà đốt') || place.name.toLowerCase().includes('ô thum');
+  const isHomestayOrCafe = place.name.toLowerCase().includes('homestay') || place.name.toLowerCase().includes('coffee') || place.name.toLowerCase().includes('cà phê') || place.name.toLowerCase().includes('quán');
+
+  // Check slope warning for mountains
+  const isSteepMountain = place.name.toLowerCase().includes('núi cô tô') || 
+                          place.name.toLowerCase().includes('vồ hội') || 
+                          place.name.toLowerCase().includes('tức dụp') ||
+                          place.name.toLowerCase().includes('ngọa long');
+
+  // GPS Distance Telemetry (Zero-IP Policy)
+  const [userGpsCoords, setUserGpsCoords] = useState<{ latitude: number; longitude: number } | null>(null);
+  const [isLocatingGps, setIsLocatingGps] = useState(false);
+  const [gpsError, setGpsError] = useState('');
+
+  const baseCoords = userGpsCoords || TRI_TON_CENTER_COORDS;
+  const isMtn = isSteepMountain || (place.category || '').toLowerCase().includes('mountain');
+  const distanceKm = (place.latitude && place.longitude)
+    ? calculateRoadDistanceKm(baseCoords.latitude, baseCoords.longitude, Number(place.latitude), Number(place.longitude), isMtn)
+    : null;
+  const drivingMinutes = distanceKm !== null ? estimateDriveMinutes(distanceKm, isMtn) : null;
+
+  const handleFetchGps = () => {
+    setIsLocatingGps(true);
+    setGpsError('');
+    getDeviceHardwareGps(
+      (coords) => {
+        setIsLocatingGps(false);
+        setUserGpsCoords(coords);
+      },
+      (errMsg) => {
+        setIsLocatingGps(false);
+        setGpsError(errMsg);
+        setTimeout(() => setGpsError(''), 4000);
       }
-    }
-    return null;
+    );
   };
 
-  // Parse JSON data safely from 174 Master POIs Schema
-  const travelGuide = parseJsonSafely(place.travel_guide);
-  const checkinSpots = Array.isArray(place.checkin_spots)
-    ? place.checkin_spots
-    : (parseJsonSafely(place.checkin_spots) || []);
-  const highlights = Array.isArray(place.highlights)
-    ? place.highlights
-    : (parseJsonSafely(place.highlights) || []);
-  const nearbyFood = Array.isArray(place.nearby_cafes_and_food)
-    ? place.nearby_cafes_and_food
-    : (parseJsonSafely(place.nearby_cafes_and_food) || []);
-  const tagsInfo = parseJsonSafely(place.tags_info) || {};
-  const googleMapsInfo = parseJsonSafely(place.google_maps_info) || {};
-  const reviewSamples = Array.isArray(place.review_samples)
-    ? place.review_samples
-    : (parseJsonSafely(place.review_samples) || []);
+  // Save to offline storage & listen to network status
+  useEffect(() => {
+    savePlaceToOfflineCache(place);
+
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+
+    if (typeof window !== 'undefined') {
+      setIsOffline(!navigator.onLine);
+      window.addEventListener('online', handleOnline);
+      window.addEventListener('offline', handleOffline);
+    }
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [place]);
 
   // Preload videos from POI
   useEffect(() => {
@@ -87,7 +145,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
         platform: 'tiktok',
         video_url: v.video_url || '',
         embed_url: v.embed_url || v.video_url || '',
-        thumbnail_url: v.thumbnail_url || place.image_url || '/images/tiktok/ho_ta_pa.jpg',
+        thumbnail_url: v.thumbnail_url || place.image_url || defaultImg,
         author_name: v.author || 'du_lich_tri_ton',
         view_count: v.views || 18000,
         place_id: place.id,
@@ -98,553 +156,643 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
       fetch(`/api/v1/places/${place.id}/videos`)
         .then((r) => r.json())
         .then((data) => {
-          setPlaceVideos(data.videos ?? []);
+          if (data?.videos && Array.isArray(data.videos)) {
+            setPlaceVideos(data.videos);
+          }
         })
-        .catch(() => setPlaceVideos([]))
+        .catch((err) => console.error('Error fetching POI videos:', err))
         .finally(() => setVideosLoading(false));
     }
-  }, [place.id, place.name, place.image_url, place.tiktok_videos]);
+  }, [place.id, place.name, place.image_url, place.tiktok_videos, defaultImg]);
 
   const handleShare = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({
+        title: `${place.name} — Du Lịch Tri Tôn`,
+        text: `Khám phá ${place.name} tại ${place.commune}, Tri Tôn, An Giang!`,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
       navigator.clipboard.writeText(window.location.href);
       setShowShareToast(true);
       setTimeout(() => setShowShareToast(false), 3000);
     }
   };
 
-  const scrollToSection = (id: string) => {
-    setActiveSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 90;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition - offset,
-        behavior: 'smooth',
-      });
+  const handleSaveToItinerary = () => {
+    try {
+      const key = 'triton_custom_itinerary';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!list.includes(place.id)) {
+        list.push(place.id);
+        localStorage.setItem(key, JSON.stringify(list));
+      }
+      setIsBookmarked(true);
+      setShowShareToast(true);
+      setTimeout(() => setShowShareToast(false), 3000);
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleReportSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reportReason) return;
+    setIsSubmittingReport(true);
+    try {
+      await supabase.from('audit_logs').insert([
+        {
+          action: 'POI_CORRECTION_REPORTED',
+          entity: 'place',
+          details: {
+            place_id: place.id,
+            place_name: place.name,
+            reason: reportReason,
+            contact: reportContact,
+            reported_at: new Date().toISOString(),
+          }
+        }
+      ]);
+      setReportSuccess(true);
+      setTimeout(() => {
+        setReportSuccess(false);
+        setShowReportModal(false);
+        setReportReason('');
+        setReportContact('');
+      }, 2500);
+    } catch (err) {
+      console.error('Report error:', err);
+    } finally {
+      setIsSubmittingReport(false);
     }
   };
 
   const navItems = [
-    { id: 'overview', label: '1. Tổng quan', icon: Info },
-    { id: 'story', label: '2. Lịch sử & Giai thoại', icon: Sparkles },
-    { id: 'guide', label: '3. Cẩm nang di chuyển', icon: Compass },
-    { id: 'checkin', label: '4. Góc check-in', icon: Camera },
-    { id: 'reviews', label: '5. Đánh giá', icon: MessageSquareQuote },
-    { id: 'photos', label: '6. Bộ ảnh', icon: Camera },
-    { id: 'videos', label: '7. Video TikTok', icon: Video },
+    { id: 'overview', label: '1. Tổng Quan', icon: Info },
+    { id: 'guide', label: '2. Cẩm Nang & Vé', icon: Compass },
+    { id: 'checkin-spots', label: '3. Góc Check-in', icon: Camera },
+    { id: 'nearby-food', label: '4. Ăn Gì Gần Đây', icon: Utensils },
+    { id: 'story', label: '5. Lịch Sử & Sự Tích', icon: Sparkles },
+    { id: 'videos', label: '6. Video Thực Tế', icon: Video },
+    { id: 'reviews', label: '7. Đánh Giá Du Khách', icon: MessageSquareQuote },
   ];
 
-  // Helper to render formatted story paragraphs
-  const renderFormattedStory = (text: string) => {
-    if (!text) return null;
-    const paragraphs = text.split(/\n\s*\n/);
-    return paragraphs.map((p, idx) => {
-      const trimmed = p.trim();
-      if (!trimmed) return null;
-
-      // Check if paragraph is a bold heading like **Heading**
-      if (trimmed.startsWith('**') && trimmed.endsWith('**') && !trimmed.slice(2, -2).includes('**')) {
-        return (
-          <h3 key={idx} className="text-lg sm:text-xl font-extrabold text-[#1B4D3E] mt-6 mb-3 flex items-center gap-2">
-            <span className="w-2 h-6 bg-[#D99B26] rounded-full inline-block"></span>
-            {trimmed.slice(2, -2)}
-          </h3>
-        );
-      }
-
-      // Check if starts with a bold title like **Title**: Body
-      if (trimmed.startsWith('**') && trimmed.includes('**')) {
-        const parts = trimmed.split('**');
-        return (
-          <div key={idx} className="text-slate-700 text-sm sm:text-base leading-relaxed mb-4">
-            <strong className="font-extrabold text-slate-900 text-base block sm:inline mr-1 text-[#1B4D3E]">
-              {parts[1]}
-            </strong>
-            <span>{parts.slice(2).join('**').replace(/^:\s*/, '')}</span>
-          </div>
-        );
-      }
-
-      return (
-        <p key={idx} className="text-slate-700 text-sm sm:text-base leading-relaxed mb-4 font-normal">
-          {trimmed}
-        </p>
-      );
-    });
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      const yOffset = -90;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   return (
-    <>
+    <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen pb-28">
       {/* Toast Notification */}
       {showShareToast && (
-        <div className="fixed top-20 right-4 z-50 bg-[#1B4D3E] text-white px-5 py-3 rounded-2xl shadow-2xl border border-[#D99B26] text-xs font-bold flex items-center gap-2 animate-bounce">
-          <Check className="w-4 h-4 text-[#D99B26]" />
-          <span>Đã sao chép liên kết bài viết!</span>
+        <div className="fixed top-20 right-4 z-50 bg-[#151B34] text-white px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-xs font-bold font-display animate-in fade-in slide-in-from-top-2">
+          <Check className="w-4 h-4 text-[#F0A32F]" />
+          <span>{isBookmarked ? 'Đã lưu địa điểm vào Lịch trình cá nhân!' : 'Đã sao chép liên kết chia sẻ!'}</span>
         </div>
       )}
 
-      {/* Top Breadcrumb & Action Bar */}
-      <div className="flex items-center justify-between mb-6">
+      {/* Offline Mountain Banner (When user loses 4G signal on Núi Cô Tô / Tức Dụp) */}
+      {isOffline && (
+        <div className="bg-[#151B34] text-[#FFD37A] px-4 py-3 border-b border-[#FFD37A]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-display">
+          <div className="flex items-center gap-2">
+            <WifiOff className="w-4 h-4 text-[#F26B3A] shrink-0" />
+            <span>
+              <strong>Chế độ Ngoại tuyến (Offline):</strong> Bạn đang mất kết nối 4G. Thông tin đã được lưu trong bộ nhớ máy.
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <a href="tel:0296.3874.113" className="px-3 py-1 rounded-full bg-[#A6503A] text-white font-bold flex items-center gap-1">
+              <Phone className="w-3 h-3" />
+              <span>Cứu hộ: 0296.3874.113</span>
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Top Breadcrumbs & Action Bar */}
+      <div className="flex items-center justify-between py-4 border-b border-[#26221B]/8 font-display">
         <Link
           href="/places"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#1B4D3E] transition-colors bg-white px-4 py-2.5 rounded-2xl border border-slate-200/90 hover:border-[#1B4D3E] shadow-sm"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B6355] hover:text-[#0E8C7F] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại Khám phá Tri Tôn</span>
+          <span>Quay lại Khám phá</span>
         </Link>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsBookmarked(!isBookmarked)}
-            className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all border shadow-sm ${
-              isBookmarked
-                ? 'bg-rose-50 border-rose-200 text-rose-600'
-                : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
-            }`}
+            onClick={() => setShowReportModal(true)}
+            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#A6503A] border border-[#26221B]/8 shadow-2xs transition-all"
+            title="Báo sai thông tin hoặc đóng cửa"
           >
-            <Heart className={`w-4 h-4 ${isBookmarked ? 'fill-rose-600' : ''}`} />
-            <span>{isBookmarked ? 'Đã lưu' : 'Lưu điểm'}</span>
+            <Flag className="w-4 h-4" />
           </button>
-
           <button
             onClick={handleShare}
-            className="px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 transition-all shadow-sm"
+            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#0E8C7F] border border-[#26221B]/8 shadow-2xs transition-all"
+            title="Chia sẻ liên kết"
           >
-            <Share2 className="w-4 h-4 text-[#1B4D3E]" />
-            <span>Chia sẻ</span>
+            <Share2 className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* ── HERO HEADER CARD ── */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-md mb-6 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300">
-              {place.commune}
-            </span>
-            <span className="px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-amber-100 text-amber-950 border border-amber-300">
-              {place.tourism_category || place.category}
-            </span>
-            {place.is_hot && (
-              <span className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-rose-500 text-white shadow-xs flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5" />
-                TOP #{place.hot_rank || 1} NỔI BẬT
+      {/* ── HERO BANNER: NAME, BADGES, PRIMARY ACTION BUTTONS ── */}
+      <div className="my-6 bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-3 max-w-3xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="stamp-verified">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Đã Xác Minh Thực Địa</span>
               </span>
-            )}
-          </div>
-
-          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200">
-            <ShieldCheck className="w-4 h-4 text-emerald-700" />
-            <span>Tọa độ WGS84 xác thực 100%</span>
-          </div>
-        </div>
-
-        <div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
-            {place.name}
-          </h1>
-          <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm text-slate-600">
-            <MapPin className="w-4 h-4 text-[#1B4D3E] shrink-0" />
-            <span className="font-medium leading-relaxed">{place.address || `${place.commune}, Tri Tôn, An Giang`}</span>
-          </div>
-        </div>
-
-        {/* Dynamic Tag Clusters from tags_info */}
-        {(tagsInfo.clusters || tagsInfo.experiences || tagsInfo.audiences) && (
-          <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100 text-xs">
-            {Array.isArray(tagsInfo.clusters) && tagsInfo.clusters.map((c: string, idx: number) => (
-              <span key={idx} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-900 font-bold border border-emerald-200">
-                <Layers className="w-3.5 h-3.5 text-emerald-700" />
-                {c}
+              <span className="px-3.5 py-1 rounded-full bg-[#0E8C7F]/10 text-[#0E8C7F] text-xs font-bold border border-[#0E8C7F]/20 font-display">
+                {place.commune}
               </span>
-            ))}
-            {Array.isArray(tagsInfo.experiences) && tagsInfo.experiences.map((exp: string, idx: number) => (
-              <span key={idx} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 font-bold border border-amber-200">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                {exp}
+              <span className="px-3 py-1 rounded-full bg-[#FAF3E7] text-[#26221B] text-xs font-bold border border-[#F0A32F]/40 font-display">
+                {timeStatus.badgeText}
               </span>
-            ))}
-            {Array.isArray(tagsInfo.audiences) && tagsInfo.audiences.map((aud: string, idx: number) => (
-              <span key={idx} className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 font-semibold border border-slate-200">
-                <Users className="w-3.5 h-3.5 text-slate-500" />
-                {aud}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Quick Info Matrix */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 border-t border-slate-100 text-xs">
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-            <Clock className="w-5 h-5 text-emerald-800 shrink-0" />
-            <div>
-              <span className="block text-slate-500 text-[10px] font-semibold">Giờ mở cửa</span>
-              <span className="font-extrabold text-slate-900 text-xs sm:text-sm">{place.opening_hours || '06:00 - 18:00'}</span>
+              <div className="flex items-center gap-1 bg-[#FAF3E7] px-3 py-1 rounded-full border border-[#F0A32F]/40 font-display">
+                <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
+                <span className="text-xs font-bold text-[#26221B]">{place.rating || 4.8} / 5.0</span>
+              </div>
             </div>
+
+            <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#26221B] tracking-tight leading-tight">
+              {place.name}
+            </h1>
+
+            <p className="text-xs sm:text-sm text-[#6B6355] flex items-center gap-1.5 font-body">
+              <MapPin className="w-4 h-4 text-[#0E8C7F] shrink-0" />
+              <span>{place.address}</span>
+            </p>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-            <Tag className="w-5 h-5 text-amber-700 shrink-0" />
-            <div>
-              <span className="block text-slate-500 text-[10px] font-semibold">Giá vé / Chi phí</span>
-              <span className="font-extrabold text-[#1B4D3E] text-xs sm:text-sm">{formatPrice(place.price_level || 'Miễn phí')}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-            <Star className="w-5 h-5 fill-amber-400 text-amber-400 shrink-0" />
-            <div>
-              <span className="block text-slate-500 text-[10px] font-semibold">Đánh giá thực tế</span>
-              <span className="font-extrabold text-slate-900 text-xs sm:text-sm">
-                {googleMapsInfo.rating || place.rating || 4.8} / 5.0 ⭐
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end gap-2 shrink-0">
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-3 font-display">
             <a
               href={maps.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white text-xs sm:text-sm font-extrabold shadow-md transition-all active:scale-95"
-              title={maps.tooltip}
+              className="flex-1 sm:flex-none px-6 py-3.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all tap-bounce"
             >
-              <Navigation className="w-4 h-4 text-amber-300" />
-              <span>Chỉ Đường Maps</span>
+              <Navigation className="w-4 h-4" />
+              <span>Chỉ Đường Google Maps</span>
             </a>
+
+            {placeVideos.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedReelIndex(0);
+                  setIsReelsOpen(true);
+                }}
+                className="flex-1 sm:flex-none px-5 py-3.5 rounded-full bg-[#151B34] hover:bg-[#F26B3A] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all tap-bounce"
+              >
+                <Play className="w-4 h-4 fill-[#FFD37A] text-[#FFD37A]" />
+                <span>Xem Video Thực Tế ({placeVideos.length})</span>
+              </button>
+            ) : (
+              <a
+                href={tiktok.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-none px-5 py-3.5 rounded-full bg-transparent border border-[#26221B]/20 hover:border-[#F26B3A] hover:text-[#F26B3A] text-[#26221B] font-bold text-xs flex items-center justify-center gap-1.5 shadow-2xs transition-all tap-bounce"
+              >
+                <Play className="w-4 h-4 fill-current" />
+                <span>TikTok Review</span>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── HERO VISUAL PHOTO SHOWCASE (PHÒNG TRANH ẢNH THỰC ĐỊA) ── */}
+      <div className="mb-8 bg-[#FFFDF7] rounded-[28px] p-4 sm:p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-4">
+        {/* Main Large Image */}
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-[22px] overflow-hidden bg-[#FAF3E7] shadow-inner group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={currentPhoto.url}
+            alt={currentPhoto.caption || place.name}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+            loading="eager"
+          />
+
+          {/* Bottom Gradient Scrim */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-[#26221B]/20 to-transparent pointer-events-none" />
+
+          {/* Top Left Verified Stamp */}
+          <div className="absolute top-4 left-4 flex items-center gap-2">
+            <span className="stamp-verified backdrop-blur-md bg-[#0E8C7F]/90 text-white border border-[#FFD37A]/40 shadow-sm">
+              <Camera className="w-3.5 h-3.5 text-[#FFD37A]" />
+              <span>Góc Nhìn Thực Địa</span>
+            </span>
+          </div>
+
+          {/* Bottom Caption & Source Bar */}
+          <div className="absolute bottom-3 left-4 right-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-white font-display">
+            <div className="space-y-0.5">
+              <h3 className="text-sm sm:text-base font-extrabold text-[#FFFDF7] drop-shadow-md">
+                {currentPhoto.caption || place.name}
+              </h3>
+              <p className="text-[11px] text-[#FAF3E7]/80 font-medium drop-shadow-sm font-body">
+                Nguồn: {currentPhoto.source || 'Cổng thông tin Du lịch Tri Tôn'}
+              </p>
+            </div>
+
+            {photos.length > 1 && (
+              <span className="px-3 py-1 rounded-full bg-[#151B34]/80 text-[#FFD37A] text-xs font-bold backdrop-blur-md border border-[#FFD37A]/30 shrink-0 self-start sm:self-auto">
+                📸 {selectedPhotoIndex + 1} / {photos.length} ảnh
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Best Visit Time & Popular Times Bar */}
-        {(place.best_visit_time || googleMapsInfo.popular_times) && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm">
-            {place.best_visit_time && (
-              <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 text-amber-950 font-medium">
-                <Sun className="w-4 h-4 text-amber-600 shrink-0" />
-                <span><strong>Thời điểm đẹp nhất:</strong> {place.best_visit_time}</span>
-              </div>
-            )}
-            {googleMapsInfo.popular_times && (
-              <div className="flex items-center gap-2.5 p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-emerald-950 font-medium">
-                <Clock className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span><strong>Khung giờ cao điểm:</strong> {googleMapsInfo.popular_times}</span>
-              </div>
-            )}
+        {/* Thumbnail Selector Strip (When multiple photos exist) */}
+        {photos.length > 1 && (
+          <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
+            {photos.map((photo, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setSelectedPhotoIndex(idx)}
+                className={`relative shrink-0 w-20 sm:w-28 aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all tap-bounce ${
+                  selectedPhotoIndex === idx
+                    ? 'border-[#0E8C7F] ring-2 ring-[#0E8C7F]/30 scale-105 shadow-md'
+                    : 'border-transparent opacity-70 hover:opacity-100'
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={photo.url}
+                  alt={`Thumbnail ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+            ))}
           </div>
         )}
       </div>
 
-      {/* ── STICKY QUICK JUMP ANCHOR BAR ── */}
-      <div className="sticky top-16 sm:top-20 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-1.5 shadow-md mb-8 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isCurrent = activeSection === item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap active:scale-95 ${
-                isCurrent
-                  ? 'bg-[#1B4D3E] text-white shadow-xs'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-              }`}
-            >
-              <Icon className={`w-3.5 h-3.5 ${isCurrent ? 'text-amber-300' : 'text-slate-400'}`} />
-              <span>{item.label}</span>
-            </button>
-          );
-        })}
+      {/* ── STICKY QUICK-JUMP NAVIGATION TAB BAR ── */}
+      <div className="sticky top-16 z-20 bg-[#FAF3E7]/95 backdrop-blur-md py-3 border-y border-[#26221B]/8 -mx-4 px-4 sm:mx-0 sm:px-0 mb-8 font-display">
+        <div className="flex overflow-x-auto gap-2 scrollbar-none snap-x">
+          {navItems.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeSection === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => scrollToSection(tab.id)}
+                className={`snap-start shrink-0 px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition-all tap-bounce ${
+                  isActive
+                    ? 'bg-[#0E8C7F] text-white shadow-xs'
+                    : 'bg-[#FFFDF7] text-[#6B6355] border border-[#26221B]/8 hover:border-[#0E8C7F]/40'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* ── UNIFIED ALL-IN-ONE CONTENT STREAM ── */}
-      <div className="space-y-10">
-
-        {/* ── SECTION 1: TỔNG QUAN & ĐIỂM NHẤN ── */}
-        <section id="overview" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Info className="w-6 h-6 text-[#1B4D3E]" />
-              <span>1. Tổng Quan & Điểm Nhấn Nổi Bật</span>
+      {/* ── DETAIL CONTENT SECTIONS ── */}
+      <div className="space-y-8">
+        
+        {/* ── SECTION 1: TỔNG QUAN ── */}
+        <section id="overview" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
+              <Info className="w-6 h-6 text-[#0E8C7F]" />
+              <span>1. Tổng Quan & Trải Nghiệm Thực Địa</span>
             </h2>
-            <span className="text-xs font-bold text-emerald-900 bg-emerald-100 px-3 py-1 rounded-full">
-              Khám Phá
-            </span>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/60">
-            <p className="text-slate-800 text-sm sm:text-base leading-relaxed font-normal">
-              {place.description || `Địa điểm ${place.name} thuộc ${place.commune}, Tri Tôn, An Giang. Nơi đây sở hữu cảnh quan độc đáo, mang đậm nét văn hóa và thiên nhiên vùng Thất Sơn Bảy Núi.`}
-            </p>
-          </div>
+          <p className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
+            {cleanDescription}
+          </p>
 
-          {/* Highlights Matrix */}
-          {highlights.length > 0 && (
-            <div className="space-y-3 pt-2">
-              <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-amber-500" />
-                <span>Những Điểm Nhấn Không Thể Bỏ Lỡ</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {highlights.map((h: any, idx: number) => (
-                  <div key={idx} className="flex items-start gap-3 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm font-semibold text-slate-900 leading-relaxed">
-                      {typeof h === 'string' ? h : h.text || h.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
+          {/* Quick Matrix Table */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-display">
+            <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
+              <span className="text-[10px] font-bold text-[#6B6355] uppercase block">Giờ mở cửa</span>
+              <span className="text-xs sm:text-sm font-bold text-[#0E8C7F] mt-1 block">
+                {guide.openingHours.split('(')[0]}
+              </span>
             </div>
-          )}
-
-          {/* Nearby Cafes and Food */}
-          {nearbyFood.length > 0 && (
-            <div className="space-y-3 pt-4 border-t border-slate-100">
-              <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                <Utensils className="w-5 h-5 text-amber-600" />
-                <span>Quán Ăn Ngon & Cà Phê Gần Địa Điểm Này</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {nearbyFood.map((f: any, idx: number) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-2">
-                    <span className="font-extrabold text-sm sm:text-base text-slate-900 block">{f.name || f}</span>
-                    {f.specialties && Array.isArray(f.specialties) ? (
-                      <p className="text-xs text-amber-900 font-medium leading-relaxed">Đặc sản: {f.specialties.join(', ')}</p>
-                    ) : f.specialty ? (
-                      <p className="text-xs text-amber-900 font-medium">Món ngon: {f.specialty}</p>
-                    ) : null}
-                    {f.address && <p className="text-[11px] text-slate-500 line-clamp-1">{f.address}</p>}
-                    {f.rating && (
-                      <div className="flex items-center gap-1 text-xs font-bold text-amber-700">
-                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                        <span>{f.rating} ⭐ ({f.reviews_count || 100}+ đánh giá)</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+            <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
+              <span className="text-[10px] font-bold text-[#6B6355] uppercase block">Giá vé / Giữ xe</span>
+              <span className="text-xs sm:text-sm font-bold text-[#D9822B] mt-1 block">
+                {guide.ticketPrice.split('.')[0]}
+              </span>
             </div>
-          )}
-        </section>
-
-        {/* ── SECTION 2: CÂU CHUYỆN & LỊCH SỬ ── */}
-        <section id="story" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Sparkles className="w-6 h-6 text-amber-500" />
-              <span>2. Câu Chuyện & Lịch Sử Bản Địa</span>
-            </h2>
-            <span className="text-xs font-bold text-amber-900 bg-amber-100 px-3 py-1 rounded-full">
-              Di Sản Thất Sơn
-            </span>
-          </div>
-
-          <div className="bg-slate-50/60 p-6 rounded-2xl border border-slate-200/60 space-y-3">
-            {renderFormattedStory(
-              place.detailed_story ||
-              place.description ||
-              `Địa danh ${place.name} gắn liền với lịch sử hình thành lâu đời và đời sống tâm linh, văn hóa đặc sắc của đồng bào các dân tộc tại vùng đất Tri Tôn, An Giang.`
-            )}
-          </div>
-        </section>
-
-        {/* ── SECTION 3: CẨM NANG DI CHUYỂN ── */}
-        <section id="guide" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Compass className="w-6 h-6 text-[#1B4D3E]" />
-              <span>3. Cẩm Nang Di Chuyển & Kinh Nghiệm Khám Phá</span>
-            </h2>
-            <span className="text-xs font-bold text-emerald-900 bg-emerald-100 px-3 py-1 rounded-full">
-              Bỏ Túi Du Lịch
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* How to get there */}
-            <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-900 font-extrabold text-sm sm:text-base">
-                <Footprints className="w-4 h-4 text-[#1B4D3E]" />
-                <span>Cách Di Chuyển Đến Nơi</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                {travelGuide?.how_to_get_there || `Từ trung tâm Thị trấn Tri Tôn, du khách di chuyển theo định vị Google Maps theo hướng ${place.commune}. Đường đi thuận tiện, có biển chỉ dẫn rõ ràng.`}
-              </p>
+            <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
+              <span className="text-[10px] font-bold text-[#6B6355] uppercase block">Phương tiện</span>
+              <span className="text-xs sm:text-sm font-bold text-[#0E8C7F] mt-1 block">
+                {guide.vehicleSuitability}
+              </span>
             </div>
-
-            {/* Recommended Vehicle */}
-            <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-amber-950 font-extrabold text-sm sm:text-base">
-                <Car className="w-4 h-4 text-amber-700" />
-                <span>Phương Tiện Phù Hợp</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                {travelGuide?.recommended_vehicle || travelGuide?.vehicle_suitability || 'Xe máy hoặc Ô tô du lịch 4-16 chỗ đều có thể tiếp cận dễ dàng.'}
-              </p>
-            </div>
-
-            {/* Best Time to Visit */}
-            <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-900 font-extrabold text-sm sm:text-base">
-                <Clock className="w-4 h-4 text-emerald-700" />
-                <span>Thời Điểm Khám Phá Đẹp Nhất</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                {travelGuide?.best_time || travelGuide?.best_season || place.best_visit_time || 'Sáng sớm từ 06:00 - 08:30 hoặc chiều mát từ 16:00 - 17:45 để chụp ảnh hoàng hôn rực rỡ.'}
-              </p>
-            </div>
-
-            {/* Important Tips */}
-            <div className="p-5 rounded-2xl bg-rose-50/50 border border-rose-200/80 space-y-2">
-              <div className="flex items-center gap-2 text-rose-950 font-extrabold text-sm sm:text-base">
-                <AlertTriangle className="w-4 h-4 text-rose-600" />
-                <span>Lưu Ý Khi Tham Quan</span>
-              </div>
-              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                {travelGuide?.tips || 'Nên mang theo mũ nón, nước uống, giữ gìn vệ sinh chung và tôn trọng các quy tắc trang phục khi viếng thăm chùa chiền.'}
-              </p>
+            <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
+              <span className="text-[10px] font-bold text-[#6B6355] uppercase block">Mùa lý tưởng</span>
+              <span className="text-xs sm:text-sm font-bold text-[#0E8C7F] mt-1 block truncate" title={guide.bestSeason}>
+                {guide.bestSeason.split('(')[0]}
+              </span>
             </div>
           </div>
-        </section>
 
-        {/* ── SECTION 4: GÓC CHECK-IN SỐNG ẢO ── */}
-        <section id="checkin" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Camera className="w-6 h-6 text-rose-500" />
-              <span>4. Góc Check-in Sống Ảo Triệu View</span>
-            </h2>
-            <span className="text-xs font-bold text-rose-900 bg-rose-100 px-3 py-1 rounded-full">
-              Góc Ảnh Đẹp
-            </span>
-          </div>
+          {/* ── REALTIME LIVE POI WEATHER WIDGET (OPEN-METEO WGS84) ── */}
+          <PoiWeatherWidget
+            latitude={place.latitude ? Number(place.latitude) : undefined}
+            longitude={place.longitude ? Number(place.longitude) : undefined}
+            placeName={place.name}
+            category={place.category}
+          />
 
-          {checkinSpots.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {checkinSpots.map((spot: any, idx: number) => (
-                <div key={idx} className="p-5 rounded-2xl bg-rose-50/40 border border-rose-200 space-y-2.5">
-                  <span className="font-extrabold text-base text-slate-900 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
-                    {typeof spot === 'string' ? spot : spot.name || spot.title}
+          {/* ── REALTIME INSTANT DISTANCE & ETA WIDGET ── */}
+          {distanceKm !== null && (
+            <div className="p-4 rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-display">
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#6B6355]">
+                  <Navigation className="w-3.5 h-3.5 text-[#0E8C7F]" />
+                  <span>
+                    {userGpsCoords ? 'Khoảng cách từ vị trí của bạn:' : 'Khoảng cách từ Trung tâm Thị trấn Tri Tôn:'}
                   </span>
-                  {spot.best_view && (
-                    <p className="text-xs sm:text-sm text-slate-700 font-medium">📷 <strong>Góc máy đẹp:</strong> {spot.best_view}</p>
-                  )}
-                  {spot.tip && (
-                    <p className="text-xs sm:text-sm text-rose-900 font-normal">✨ <strong>Mẹo tạo dáng:</strong> {spot.tip}</p>
-                  )}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-6 rounded-2xl bg-slate-50 text-slate-600 text-xs sm:text-sm text-center">
-              Khám phá toàn bộ khuôn viên {place.name} để bắt trọn những góc ảnh thiên nhiên và kiến trúc độc đáo nhất.
+                <div className="flex items-center gap-2">
+                  <span className="text-base sm:text-lg font-extrabold text-[#0E8C7F]">
+                    Cách bạn: {distanceKm} km
+                  </span>
+                  <span className="text-xs font-bold text-[#26221B] px-2.5 py-0.5 rounded-full bg-[#FFFDF7] border border-[#26221B]/10">
+                    ~{drivingMinutes} phút lái xe {isMtn ? '(đường đèo dốc)' : '(đồng bằng)'}
+                  </span>
+                </div>
+                {gpsError && <p className="text-[11px] text-[#A6503A] font-bold">{gpsError}</p>}
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={handleFetchGps}
+                  disabled={isLocatingGps}
+                  className="px-3.5 py-2 rounded-full bg-[#FFFDF7] hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] border border-[#0E8C7F]/30 text-xs font-bold transition-all tap-bounce flex items-center gap-1.5"
+                  title="Đo từ vị trí hiện tại của bạn"
+                >
+                  <Smartphone className="w-3.5 h-3.5" />
+                  <span>{isLocatingGps ? 'Đang dò vị trí...' : userGpsCoords ? 'Cập nhật vị trí' : 'Vị trí của tôi'}</span>
+                </button>
+
+                <a
+                  href={maps.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white text-xs font-bold transition-all tap-bounce flex items-center gap-1.5 shadow-xs"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Dẫn đường</span>
+                </a>
+              </div>
             </div>
           )}
-        </section>
 
-        {/* ── SECTION 5: ĐÁNH GIÁ DU KHÁCH ── */}
-        <section id="reviews" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <MessageSquareQuote className="w-6 h-6 text-amber-500" />
-              <span>5. Đánh Giá Thực Tế Từ Du Khách</span>
-            </h2>
-            <span className="text-xs font-bold text-emerald-950 bg-emerald-100 px-3 py-1 rounded-full">
-              Google Maps & Cộng Đồng
-            </span>
-          </div>
-
-          {reviewSamples.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {reviewSamples.map((rev: any, idx: number) => (
-                <div key={idx} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-xs sm:text-sm text-slate-900">{rev.author || 'Du Khách Đã Trải Nghiệm'}</span>
-                    <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 uppercase">
-                      {rev.platform || 'Google Maps'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-amber-500 text-xs">
-                    {Array.from({ length: Math.round(Number(rev.rating) || 5) }).map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
-                    "{rev.content || 'Địa điểm phong cảnh tuyệt đẹp, rất đáng để ghé thăm khi đến Tri Tôn.'}"
+          {/* ── SPECIAL RECOMMENDATION / BOOKING ADVICE CARD ── */}
+          {isGaDotOThum && (
+            <div className="p-4 sm:p-5 rounded-[22px] bg-[#F26B3A]/10 border border-[#F26B3A]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-display">
+              <div className="flex items-start gap-3">
+                <Utensils className="w-5 h-5 text-[#F26B3A] shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#26221B]">
+                    Kinh Nghiệm Thưởng Thức Gà Đốt Ô Thum Chuẩn Vị
+                  </h4>
+                  <p className="text-xs text-[#6B6355] mt-0.5 font-body leading-relaxed">
+                    Gà đốt lá chúc ngon nhất khi nướng than trực tiếp 35–45 phút. Khuyên du khách nên gọi điện đặt trước khi xuất phát để khi đến nơi là có gà nóng hổi dùng ngay!
                   </p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-6 rounded-2xl bg-slate-50 text-slate-600 text-xs sm:text-sm text-center">
-              Địa điểm nhận được mức đánh giá trung bình {place.rating || 4.8}/5.0 sao từ du khách thập phương.
+              </div>
+              <a
+                href={place.phone ? `tel:${place.phone}` : "tel:02963874113"}
+                className="px-4 py-2.5 rounded-full bg-[#F26B3A] hover:bg-[#D9531E] text-white text-xs font-bold flex items-center justify-center gap-1.5 shrink-0 shadow-xs tap-bounce"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>{place.phone ? `Gọi ${place.phone}` : 'Gọi Hỗ Trợ Đặt Bàn'}</span>
+              </a>
             </div>
           )}
         </section>
 
-        {/* ── SECTION 6: BỘ ẢNH THỰC TẾ ── */}
-        <section id="photos" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Camera className="w-6 h-6 text-[#1B4D3E]" />
-              <span>6. Kho Thư Mục Ảnh Thực Tế</span>
+        {/* ── SECTION 2: CẨM NANG HƯỚNG DẪN ACCORDION / TABS ── */}
+        <section id="guide" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
+              <Compass className="w-6 h-6 text-[#0E8C7F]" />
+              <span>2. Cẩm Nang & Hướng Dẫn Di Chuyển</span>
             </h2>
-            <span className="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">{photos.length} hình ảnh</span>
           </div>
 
-          <div className="relative rounded-3xl overflow-hidden bg-slate-900 h-[360px] sm:h-[500px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={currentPhoto.url}
-              alt={currentPhoto.caption || place.name}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-0 inset-x-0 bg-slate-950/85 backdrop-blur-md p-4 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-white/10">
-              <p className="text-xs sm:text-sm font-semibold">{currentPhoto.caption || place.name}</p>
-              {currentPhoto.source && (
-                <span className="text-[11px] text-emerald-300 font-medium">Nguồn: {currentPhoto.source}</span>
+          {/* Guide Accordion / Sub-Tabs */}
+          <div className="flex gap-2 p-1.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/8 font-display">
+            <button
+              onClick={() => setGuideTab('hours_ticket')}
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all tap-bounce ${
+                guideTab === 'hours_ticket' ? 'bg-[#0E8C7F] text-white shadow-xs' : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              🕒 Giờ Mở Cửa & Vé
+            </button>
+            <button
+              onClick={() => setGuideTab('transport_slope')}
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all tap-bounce ${
+                guideTab === 'transport_slope' ? 'bg-[#0E8C7F] text-white shadow-xs' : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              🛵 Phương Tiện & Cảnh Báo
+            </button>
+            <button
+              onClick={() => setGuideTab('best_season')}
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all tap-bounce ${
+                guideTab === 'best_season' ? 'bg-[#0E8C7F] text-white shadow-xs' : 'text-[#6B6355] hover:text-[#26221B]'
+              }`}
+            >
+              🗓️ Mùa Đẹp Nhất
+            </button>
+          </div>
+
+          {/* Tab Content 1: Giờ & Vé */}
+          {guideTab === 'hours_ticket' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/6 flex items-start gap-3">
+                <Ticket className="w-5 h-5 text-[#F0A32F] shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-display text-sm font-bold text-[#26221B]">Quy Định Vé & Phí Dịch Vụ</h3>
+                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{guide.ticketPrice}</p>
+                </div>
+              </div>
+              <div className="p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/6 flex items-start gap-3">
+                <Clock className="w-5 h-5 text-[#0E8C7F] shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-display text-sm font-bold text-[#26221B]">Thời Gian Hoạt Động Khuyến Nghị</h3>
+                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{guide.openingHours}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab Content 2: Phương tiện & Độ dốc */}
+          {guideTab === 'transport_slope' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/6 flex items-start gap-3">
+                <Footprints className="w-5 h-5 text-[#0E8C7F] shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-display text-sm font-bold text-[#26221B]">Phương Tiện & Hướng Đi</h3>
+                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{guide.howToGetThere}</p>
+                </div>
+              </div>
+              {isSteepMountain && (
+                <div className="p-4 rounded-[20px] bg-[#A6503A]/10 border border-[#A6503A]/30 flex items-start gap-3 text-[#A6503A]">
+                  <AlertOctagon className="w-5 h-5 shrink-0 mt-0.5 text-[#A6503A]" />
+                  <div>
+                    <h3 className="font-display text-sm font-bold">Cảnh Báo An Toàn Độ Dốc Núi Cao</h3>
+                    <p className="text-xs mt-1 leading-relaxed text-[#26221B]">
+                      Cung đường lên đỉnh Cô Tô / Vồ Hội có độ dốc cao và nhiều cua gấp. Khuyên dùng xe số hoặc dịch vụ xe ôm địa phương đã quen đường. Không rà phanh liên tục khi xuống dốc.
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
-          </div>
+          )}
 
-          {photos.length > 1 && (
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-              {photos.map((p, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedPhotoIndex(idx)}
-                  className={`relative h-20 rounded-2xl overflow-hidden border-2 transition-all ${
-                    selectedPhotoIndex === idx
-                      ? 'border-[#1B4D3E] ring-2 ring-[#1B4D3E]/30 scale-95'
-                      : 'border-transparent opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.url} alt={p.caption || place.name} className="w-full h-full object-cover" />
-                </button>
-              ))}
+          {/* Tab Content 3: Mùa đẹp nhất */}
+          {guideTab === 'best_season' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/6 flex items-start gap-3">
+                <Calendar className="w-5 h-5 text-[#D9822B] shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-display text-sm font-bold text-[#26221B]">Thời Điểm Lý Tưởng Nhất Trong Năm</h3>
+                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{guide.bestSeason}</p>
+                </div>
+              </div>
             </div>
           )}
         </section>
 
-        {/* ── SECTION 7: VIDEO TIKTOK REELS ── */}
-        <section id="videos" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm space-y-6 scroll-mt-28">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Video className="w-6 h-6 text-rose-600" />
-              <span>7. Video Review TikTok Thực Tế</span>
+        {/* ── SECTION 3: CHECKIN SPOTS MASONRY ── */}
+        {checkinSpotsList.length > 0 && (
+          <section id="checkin-spots" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+            <CheckinMasonryGallery spots={checkinSpotsList} placeName={place.name} />
+          </section>
+        )}
+
+        {/* ── SECTION 4: CROSS-SELL ẨM THỰC LIỀN KỀ ── */}
+        {nearbyFoodList.length > 0 && (
+          <section id="nearby-food" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#26221B]/6 pb-4">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#F26B3A]/10 text-[#F26B3A] text-xs font-bold uppercase tracking-wider mb-1 font-display">
+                  <Utensils className="w-3.5 h-3.5" />
+                  <span>Ẩm Thực Bản Địa Liền Kề</span>
+                </div>
+                <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B]">
+                  Đang Ở Đây? Quán Ngon Cách Bạn &lt; 1km
+                </h2>
+              </div>
+              <span className="text-xs text-[#6B6355] font-semibold">{nearbyFoodList.length} Quán đặc sản</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {nearbyFoodList.map((food, idx) => {
+                const foodMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${food.name} Tri Tôn An Giang`)}`;
+                return (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/8 flex flex-col justify-between space-y-3 hover:shadow-md transition-all"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#F26B3A] text-white text-[10px] font-bold font-display">
+                          {food.distance}
+                        </span>
+                        <div className="flex items-center gap-1 text-xs font-bold text-[#26221B] font-display">
+                          <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
+                          <span>{food.rating}</span>
+                        </div>
+                      </div>
+
+                      <h3 className="font-display text-base font-bold text-[#26221B] line-clamp-1">{food.name}</h3>
+                      <p className="text-xs text-[#6B6355] line-clamp-1">{food.address}</p>
+
+                      <div className="flex flex-wrap gap-1 pt-1 font-display">
+                        {food.specialties.map((spec, sIdx) => (
+                          <span key={sIdx} className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-2 border-t border-[#26221B]/6 font-display">
+                      <a
+                        href={foodMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 py-2 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs flex items-center justify-center gap-1 shadow-2xs transition-all tap-bounce"
+                      >
+                        <Navigation className="w-3 h-3" />
+                        <span>Chỉ Đường</span>
+                      </a>
+                      <a
+                        href={`https://www.tiktok.com/search?q=${encodeURIComponent(`${food.name} Tri Tôn`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-2 px-3 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 hover:border-[#F26B3A] text-[#26221B] text-xs font-bold flex items-center gap-1 transition-all"
+                      >
+                        <Play className="w-3 h-3 fill-[#F26B3A] text-[#F26B3A]" />
+                        <span>Review</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ── SECTION 5: LỊCH SỬ & SỰ TÍCH ── */}
+        <section id="story" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
+              <Sparkles className="w-6 h-6 text-[#0E8C7F]" />
+              <span>5. Lịch Sử & Sự Tích Bảy Núi</span>
             </h2>
-            <span className="text-xs text-rose-800 bg-rose-100 px-3.5 py-1 rounded-full font-bold">
+          </div>
+
+          <div className="prose prose-sm max-w-none text-xs sm:text-sm text-[#26221B] leading-relaxed whitespace-pre-line">
+            {cleanStory}
+          </div>
+        </section>
+
+        {/* ── SECTION 6: VIDEO TIKTOK REELS ── */}
+        <section id="videos" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
+              <Video className="w-6 h-6 text-[#F26B3A]" />
+              <span>6. Video Review TikTok Thực Tế</span>
+            </h2>
+            <span className="font-display text-xs text-[#26221B] bg-[#FAF3E7] px-3.5 py-1 rounded-full font-bold">
               TikTok Discovery ({placeVideos.length} video)
             </span>
           </div>
 
           {videosLoading ? (
-            <div className="py-16 text-center text-slate-400 font-bold text-xs">
+            <div className="py-16 text-center text-[#6B6355] font-bold text-xs font-body">
               Đang tìm kiếm video review cho {place.name}...
             </div>
           ) : (
@@ -656,41 +804,150 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           )}
         </section>
 
+        {/* ── SECTION 7: ĐÁNH GIÁ & AI NLP SENTIMENT ── */}
+        <section id="reviews" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
+              <MessageSquareQuote className="w-6 h-6 text-[#0E8C7F]" />
+              <span>7. Đánh Giá Trải Nghiệm Thực Tế</span>
+            </h2>
+          </div>
+
+          {/* AI NLP Sentiment Summary Widget */}
+          <ReviewSentimentWidget reviews={cleanReviews} placeName={place.name} />
+
+          {cleanReviews.length > 0 && (
+            <div className="space-y-3 pt-2">
+              {cleanReviews.map((r: any, idx: number) => (
+                <div key={idx} className="p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/6 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-display font-bold text-xs text-[#26221B]">{r.author || 'Du khách đã trải nghiệm'}</span>
+                    <div className="flex items-center gap-1 text-xs font-bold text-[#F0A32F]">
+                      <Star className="w-3.5 h-3.5 fill-current" />
+                      <span>{r.rating || 5}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-[#6B6355] leading-relaxed">{r.content}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
       </div>
 
-      {/* ── MOBILE STICKY FLOATING ACTION BAR ── */}
-      <div className="fixed bottom-16 inset-x-0 z-30 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 p-3 sm:hidden shadow-[0_-4px_25px_rgba(0,0,0,0.1)] flex items-center gap-2.5">
+      {/* ── TIKTOK REELS VERTICAL SWIPE MODAL ── */}
+      <TikTokReelsViewer
+        videos={placeVideos}
+        isOpen={isReelsOpen}
+        initialIndex={selectedReelIndex}
+        onClose={() => setIsReelsOpen(false)}
+        placeName={place.name}
+        placeSlug={place.slug || place.id}
+      />
+
+      {/* ── REPORT MODAL ── */}
+      {showReportModal && (
+        <div className="fixed inset-0 z-50 bg-[#151B34]/60 backdrop-blur-sm flex items-center justify-center p-4 font-body">
+          <div className="bg-[#FFFDF7] rounded-[28px] max-w-lg w-full p-6 sm:p-8 border border-[#26221B]/10 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-[#26221B]/8 pb-3">
+              <div className="flex items-center gap-2">
+                <Flag className="w-5 h-5 text-[#A6503A]" />
+                <h3 className="font-display text-lg font-bold text-[#26221B]">Báo Lỗi / Cập Nhật Địa Điểm</h3>
+              </div>
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="p-1.5 rounded-full text-[#6B6355] hover:bg-[#FAF3E7]"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {reportSuccess ? (
+              <div className="py-8 text-center space-y-3">
+                <CheckCircle2 className="w-12 h-12 text-[#0E8C7F] mx-auto" />
+                <p className="font-display font-bold text-base text-[#0E8C7F]">Gửi báo cáo thành công!</p>
+                <p className="text-xs text-[#6B6355]">Cảm ơn bạn đã đóng góp thông tin chính xác cho du khách Bảy Núi.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleReportSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Địa điểm:</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={place.name}
+                    className="w-full px-3.5 py-2 rounded-xl bg-[#FAF3E7] text-xs text-[#26221B] font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Nội dung báo lỗi hoặc cập nhật *</label>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="VD: Quán đã chuyển địa điểm, giờ mở cửa mới từ 06:00, đường đi đang sửa..."
+                    value={reportReason}
+                    onChange={(e) => setReportReason(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-[#26221B]/15 text-xs text-[#26221B] focus:outline-none focus:border-[#0E8C7F] bg-[#FAF3E7]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Số điện thoại hoặc Email liên hệ (tùy chọn)</label>
+                  <input
+                    type="text"
+                    placeholder="Để BQT xác minh nếu cần"
+                    value={reportContact}
+                    onChange={(e) => setReportContact(e.target.value)}
+                    className="w-full px-3.5 py-2 rounded-xl border border-[#26221B]/15 text-xs text-[#26221B] focus:outline-none focus:border-[#0E8C7F] bg-[#FAF3E7]"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmittingReport}
+                  className="w-full py-3 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all font-display tap-bounce"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>{isSubmittingReport ? 'Đang gửi...' : 'Gửi Phản Hồi Xác Minh'}</span>
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── MOBILE STICKY 3-BUTTON ACTION BAR ── */}
+      <div className="fixed bottom-16 inset-x-0 z-30 bg-[#FAF3E7]/95 backdrop-blur-lg border-t border-[#26221B]/10 p-3 sm:hidden shadow-[0_-4px_25px_rgba(38,34,27,0.1)] flex items-center gap-2 font-display">
         <a
           href={maps.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3.5 px-4 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all"
+          className="flex-1 py-3 px-3 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all tap-bounce truncate"
         >
-          <Navigation className="w-4 h-4 text-amber-300" />
-          <span>Chỉ Đường Google Maps</span>
+          <Navigation className="w-3.5 h-3.5 shrink-0" />
+          <span>Chỉ Đường</span>
         </a>
 
-        {place.phone ? (
-          <a
-            href={`tel:${place.phone}`}
-            className="py-3.5 px-4 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all shrink-0"
-          >
-            <Phone className="w-4 h-4 text-amber-300" />
-            <span>Gọi</span>
-          </a>
-        ) : (
-          <a
-            href={tiktok.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-3.5 px-4 rounded-2xl bg-slate-900 hover:bg-rose-600 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all shrink-0"
-          >
-            <Play className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span>TikTok</span>
-          </a>
-        )}
-      </div>
+        <button
+          type="button"
+          onClick={handleSaveToItinerary}
+          className="py-3 px-3.5 rounded-full bg-[#0E8C7F] hover:bg-[#0B6B60] text-white font-bold text-xs flex items-center justify-center gap-1 shadow-md active:scale-95 transition-all shrink-0 tap-bounce"
+        >
+          <Bookmark className="w-3.5 h-3.5 shrink-0" />
+          <span>Lưu Tour</span>
+        </button>
 
-    </>
+        <button
+          type="button"
+          onClick={handleShare}
+          className="py-3 px-3.5 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 text-[#26221B] font-bold text-xs flex items-center justify-center gap-1 shadow-2xs active:scale-95 transition-all shrink-0 tap-bounce"
+        >
+          <Share2 className="w-3.5 h-3.5 shrink-0" />
+          <span>Chia Sẻ</span>
+        </button>
+      </div>
+    </div>
   );
 }

@@ -3,8 +3,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
-  Send, Bot, User, Sparkles, Trash2, ArrowLeft,
-  Compass, MapPin, Navigation, Play, RefreshCw, Flame, ExternalLink
+  Send, Bot, User, Trash2, ArrowLeft,
+  MapPin, Navigation, Play, Sparkles, RefreshCw, Flame, ExternalLink
 } from 'lucide-react';
 import FormattedChatMessage from '@/components/FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from '@/components/WireDiagramItinerary';
@@ -97,185 +97,252 @@ export default function ChatbotPage() {
   }, [messages, isTyping, scrollToBottom]);
 
   const presets = [
-    '🔥 Tour Kinh Điển 1 Ngày',
-    '🗺️ Toàn Cảnh Bảy Núi 2N1Đ',
-    '🍗 Quán Gà Đốt Ô Thum ngon',
-    '🍲 Cháo Bò Trái Trúc chuẩn vị',
-    '📸 Điểm check-in đẹp nhất',
+    'Tour Kinh Điển 1 Ngày',
+    'Gà Đốt Ô Thum Quán Chuẩn',
+    'Cách Đi Hồ Tà Pạ',
+    'Chùa Xvayton Có Gì Hay',
+    'Top Homestay Núi Cô Tô'
   ];
 
-  // Handle Preset Select
-  const handlePresetSelect = async (slug: string) => {
-    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const botPlaceholderId = (Date.now() + 1).toString();
-
-    setMessages(prev => [
-      ...prev,
-      {
-        id: Date.now().toString(),
-        sender: 'user',
-        text: `Xem sơ đồ lịch trình: ${slug}`,
-        timestamp: now,
-      },
-      {
-        id: botPlaceholderId,
-        sender: 'assistant',
-        text: 'Đang nạp sơ đồ lịch trình thực địa...',
-        timestamp: now,
-      },
-    ]);
-
+  const handlePresetSelect = async (presetSlug: string) => {
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: `Xem lịch trình: ${presetSlug}`,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+    setMessages(prev => [...prev, userMsg]);
+    setIsTyping(true);
     setIsLoadingItinerary(true);
 
     try {
-      const res = await fetch(`/api/v1/chat/itinerary?slug=${slug}`);
-      if (!res.ok) throw new Error('Failed to fetch itinerary');
-      const data = await res.json();
-
-      if (data.itinerary) {
-        setMessages(prev => prev.map(m =>
-          m.id === botPlaceholderId
-            ? {
-                ...m,
-                text: `Dưới đây là sơ đồ nối dây chi tiết cho **${data.itinerary.title}** (${data.itinerary.duration}):`,
-                itinerary: data.itinerary,
-                showPresetPicker: false,
-              }
-            : m
-        ));
+      const res = await fetch(`/api/v1/chat/itinerary?slug=${encodeURIComponent(presetSlug)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.itinerary) {
+          const botMsg: Message = {
+            id: (Date.now() + 1).toString(),
+            sender: 'assistant',
+            text: `Đây là sơ đồ lịch trình **${data.itinerary.title}** được xây dựng từ dữ liệu thực địa:`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            itinerary: data.itinerary,
+            suggestions: [
+              'Tìm quán ăn gần đây',
+              'Thời điểm đẹp nhất đi cung này?',
+              'Có chỗ thuê xe máy không?',
+            ],
+          };
+          setMessages(prev => [...prev, botMsg]);
+          setIsLoadingItinerary(false);
+          setIsTyping(false);
+          return;
+        }
       }
-    } catch {
-      setMessages(prev => prev.map(m =>
-        m.id === botPlaceholderId
-          ? {
-              ...m,
-              text: 'Không thể tải lịch trình này lúc này. Bạn có thể thử lại hoặc chọn lịch trình khác!',
-            }
-          : m
-      ));
-    } finally {
-      setIsLoadingItinerary(false);
-    }
+    } catch { /* fallback to standard query */ }
+
+    setIsLoadingItinerary(false);
+    await handleSend(`Lên lịch trình ${presetSlug}`);
   };
 
-  // Handle Send Message (Streaming)
   const handleSend = async (customText?: string) => {
-    const userQuery = (customText || input).trim();
-    if (!userQuery || isTyping || isLoadingItinerary) return;
+    const textToSend = customText || input;
+    if (!textToSend.trim()) return;
 
-    setInput('');
-    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const botMessageId = (Date.now() + 1).toString();
+    if (
+      textToSend.toLowerCase().includes('lịch trình') ||
+      textToSend.toLowerCase().includes('tour') ||
+      textToSend.toLowerCase().includes('1 ngày') ||
+      textToSend.toLowerCase().includes('2 ngày')
+    ) {
+      const lower = textToSend.toLowerCase();
+      let matchedSlug = 'classic-1day';
+      if (lower.includes('2 ngày') || lower.includes('2n1d') || lower.includes('2n1đ')) {
+        matchedSlug = 'backpack-2d1n';
+      } else if (lower.includes('ẩm thực') || lower.includes('ăn')) {
+        matchedSlug = 'foodie-trail';
+      } else if (lower.includes('chùa') || lower.includes('tâm linh') || lower.includes('khmer')) {
+        matchedSlug = 'pagoda-heritage';
+      } else if (lower.includes('trekking') || lower.includes('núi') || lower.includes('cô tô')) {
+        matchedSlug = 'co-to-trekking';
+      }
 
-    const historyForApi = messages
-      .filter(m => m.text.trim())
-      .slice(-6)
-      .map(m => ({
-        role: m.sender === 'user' ? 'user' : 'assistant',
-        content: m.text,
-      }));
-
-    setMessages(prev => [
-      ...prev,
-      {
+      const userMsg: Message = {
         id: Date.now().toString(),
         sender: 'user',
-        text: userQuery,
-        timestamp: now,
-      },
-      {
-        id: botMessageId,
-        sender: 'assistant',
-        text: '',
-        timestamp: now,
-      },
-    ]);
+        text: textToSend,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages(prev => [...prev, userMsg]);
+      if (!customText) setInput('');
+      setIsTyping(true);
+      setIsLoadingItinerary(true);
 
+      try {
+        const res = await fetch(`/api/v1/chat/itinerary?slug=${matchedSlug}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.itinerary) {
+            const botMsg: Message = {
+              id: (Date.now() + 1).toString(),
+              sender: 'assistant',
+              text: `Tôi đã lập sơ đồ lịch trình **${data.itinerary.title}** phù hợp nhất cho bạn:`,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              itinerary: data.itinerary,
+              suggestions: [
+                'Quán Gà Đốt Ô Thum ngon nhất',
+                'Số hotline cứu hộ xe máy',
+                'Xem các điểm check-in lân cận',
+              ],
+            };
+            setMessages(prev => [...prev, botMsg]);
+            setIsLoadingItinerary(false);
+            setIsTyping(false);
+            return;
+          }
+        }
+      } catch { /* fallback to standard query */ }
+      setIsLoadingItinerary(false);
+    }
+
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: textToSend,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages(prev => [...prev, userMsg]);
+    if (!customText) setInput('');
     setIsTyping(true);
+
+    const botMsgId = (Date.now() + 1).toString();
+    const botMsg: Message = {
+      id: botMsgId,
+      sender: 'assistant',
+      text: '',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages(prev => [...prev, botMsg]);
 
     try {
       const res = await fetch('/api/v1/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: userQuery,
-          history: historyForApi,
-          sessionId: sessionIdRef.current,
+          question: textToSend,
+          session_id: sessionIdRef.current,
+          history: messages.slice(-6).map(m => ({
+            sender: m.sender,
+            text: m.text,
+          })),
         }),
       });
 
-      if (!res.ok) throw new Error('Stream request failed');
-      if (!res.body) throw new Error('No response body');
+      if (!res.ok || !res.body) {
+        throw new Error('API request failed');
+      }
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let streamBuffer = '';
+      let buffer = '';
       let accumulatedText = '';
-      let receivedPlaces: EmbeddedSpot[] = [];
+      let extractedSpots: EmbeddedSpot[] = [];
+      let extractedSuggestions: string[] = [];
 
       while (true) {
-        const { done, value } = await reader.read();
+        const { value, done } = await reader.read();
         if (done) break;
 
-        streamBuffer += decoder.decode(value, { stream: true });
-        const lines = streamBuffer.split('\n\n');
-        streamBuffer = lines.pop() || '';
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
-          const jsonStr = line.replace('data: ', '').trim();
-          if (jsonStr === '[DONE]') break;
+          const jsonStr = line.slice(6).trim();
+          if (!jsonStr) continue;
 
           try {
-            const evt = JSON.parse(jsonStr);
-
-            if (evt.type === 'places' && Array.isArray(evt.data)) {
-              receivedPlaces = evt.data.map((p: any) => ({
-                id: p.id || p.slug,
-                name: p.name,
-                commune: p.commune || 'Tri Tôn',
-                category: p.category || 'Điểm đến',
-                imageUrl: p.image_url || p.imageUrl || '',
-                rating: p.rating || 4.8,
-              }));
-              setMessages(prev => prev.map(m =>
-                m.id === botMessageId
-                  ? { ...m, spots: receivedPlaces }
-                  : m
-              ));
-            } else if (evt.type === 'text') {
-              accumulatedText += evt.data;
-              setMessages(prev => prev.map(m =>
-                m.id === botMessageId
-                  ? { ...m, text: accumulatedText }
-                  : m
-              ));
-            } else if (evt.type === 'itinerary' && evt.data) {
-              setMessages(prev => prev.map(m =>
-                m.id === botMessageId
-                  ? { ...m, itinerary: evt.data, showPresetPicker: false }
-                  : m
-              ));
-            } else if (evt.type === 'suggestions' && Array.isArray(evt.data)) {
-              setMessages(prev => prev.map(m =>
-                m.id === botMessageId
-                  ? { ...m, suggestions: evt.data }
-                  : m
-              ));
+            const event = JSON.parse(jsonStr);
+            if (event.type === 'token') {
+              accumulatedText += event.token;
+              setMessages(prev =>
+                prev.map(m =>
+                  m.id === botMsgId
+                    ? { ...m, text: accumulatedText }
+                    : m
+                )
+              );
+            } else if (event.type === 'metadata') {
+              if (event.places && Array.isArray(event.places)) {
+                extractedSpots = event.places.map((p: any) => ({
+                  id: p.id,
+                  name: p.name,
+                  commune: p.commune,
+                  category: p.category,
+                  imageUrl: p.imageUrl || p.image_url || '',
+                  rating: p.rating || 4.5,
+                }));
+              }
+              if (event.suggestions && Array.isArray(event.suggestions)) {
+                extractedSuggestions = event.suggestions;
+              }
+            } else if (event.type === 'done') {
+              setMessages(prev =>
+                prev.map(m =>
+                  m.id === botMsgId
+                    ? {
+                        ...m,
+                        text: accumulatedText || event.full_text || m.text,
+                        spots: extractedSpots.length > 0 ? extractedSpots : m.spots,
+                        suggestions: extractedSuggestions.length > 0 ? extractedSuggestions : m.suggestions,
+                      }
+                    : m
+                )
+              );
             }
-          } catch { /* ignore JSON chunk errors */ }
+          } catch { /* ignore stream parse err */ }
         }
       }
-    } catch (err) {
-      console.error('Chat error:', err);
-      setMessages(prev => prev.map(m =>
-        m.id === botMessageId
-          ? {
-              ...m,
-              text: 'Dạ, hiện tại đường truyền đang bận một chút. Bạn vui lòng thử đặt lại câu hỏi nhé!',
-            }
-          : m
-      ));
+    } catch {
+      try {
+        const fallbackRes = await fetch('/api/v1/chat/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            question: textToSend,
+            session_id: sessionIdRef.current,
+          }),
+        });
+
+        if (fallbackRes.ok) {
+          const data = await fallbackRes.json();
+          setMessages(prev =>
+            prev.map(m =>
+              m.id === botMsgId
+                ? {
+                    ...m,
+                    text: data.answer || data.text || 'Tôi đã nhận được thông tin nhưng chưa thể phản hồi ngay.',
+                    suggestions: data.suggestions || ['Khám phá Tà Pạ', 'Gà Đốt Ô Thum', 'Lịch trình 1 ngày'],
+                  }
+                : m
+            )
+          );
+        }
+      } catch {
+        setMessages(prev =>
+          prev.map(m =>
+            m.id === botMsgId
+              ? {
+                  ...m,
+                  text: 'Xin lỗi, kết nối bị gián đoạn. Bạn vui lòng thử lại hoặc bấm vào các câu hỏi gợi ý bên dưới nhé.',
+                  suggestions: ['Gợi ý tour 1 ngày', 'Quán Gà Đốt Ô Thum', 'Chùa Xvayton'],
+                }
+              : m
+          )
+        );
+      }
     } finally {
       setIsTyping(false);
     }
@@ -291,29 +358,29 @@ export default function ChatbotPage() {
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] bg-[#F8F9FA] text-slate-900 font-sans">
-      {/* ── TOP HEADER BAR (Mobile First) ──────────────────────────────── */}
-      <header className="bg-[#1B4D3E] text-white px-3 sm:px-6 py-3 flex items-center justify-between shadow-md shrink-0 border-b border-emerald-800">
+    <div className="flex flex-col h-[100dvh] bg-[#FAF3E7] text-[#26221B] font-body">
+      {/* ── TOP HEADER BAR (Folk-Modern Jade Bar) ──────────────────────── */}
+      <header className="bg-[#0E8C7F] text-white px-3 sm:px-6 py-3 flex items-center justify-between shadow-md shrink-0 border-b border-[#0B6B60]">
         <div className="flex items-center gap-2.5">
           <Link
             href="/"
-            className="p-2 -ml-1 rounded-xl text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors active:scale-95"
+            className="p-2 -ml-1 rounded-full text-white hover:bg-[#0B6B60] transition-colors active:scale-95"
             title="Quay lại Trang Chủ"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
 
-          <div className="w-9 h-9 rounded-xl bg-[#143B2F] border border-[#D99B26] flex items-center justify-center shadow-xs shrink-0">
-            <Bot className="w-5 h-5 text-[#D99B26]" />
+          <div className="w-9 h-9 rounded-2xl bg-[#0B6B60] border border-[#FFD37A]/50 flex items-center justify-center shadow-xs shrink-0">
+            <Bot className="w-5 h-5 text-[#FFD37A]" />
           </div>
 
           <div>
-            <h1 className="font-black text-sm sm:text-base flex items-center gap-2 leading-none">
+            <h1 className="font-display font-extrabold text-sm sm:text-base flex items-center gap-2 leading-none text-[#FFFDF7]">
               <span>Trợ Lý AI Tri Tôn</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#FFD37A] animate-ping" />
             </h1>
-            <p className="text-[10px] sm:text-xs text-emerald-200 mt-1 font-medium">
-              Live Internet • 82 Địa Điểm • 35 Lịch Trình Thực Địa
+            <p className="text-[10px] sm:text-xs text-[#FAF3E7]/80 mt-1 font-medium font-body">
+              149 Địa Điểm Đã Xác Minh • 35 Lịch Trình Gợi Ý
             </p>
           </div>
         </div>
@@ -322,7 +389,7 @@ export default function ChatbotPage() {
           <button
             onClick={handleClearHistory}
             title="Xóa lịch sử trò chuyện"
-            className="p-2 rounded-xl text-emerald-200 hover:text-white hover:bg-emerald-800 transition-colors active:scale-95 flex items-center gap-1 text-xs font-bold"
+            className="p-2 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95 flex items-center gap-1 text-xs font-bold font-display"
           >
             <Trash2 className="w-4 h-4" />
             <span className="hidden sm:inline">Xóa chat</span>
@@ -331,12 +398,12 @@ export default function ChatbotPage() {
       </header>
 
       {/* ── QUICK PRESET FILTER CHIPS ───────────────────────────────────── */}
-      <div className="px-3 py-2 bg-white border-b border-slate-200 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">
+      <div className="px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">
         {presets.map((preset, idx) => (
           <button
             key={idx}
             onClick={() => handleSend(preset)}
-            className="px-3.5 py-1.5 rounded-full bg-[#F8F9FA] border border-slate-200 hover:border-[#1B4D3E] hover:text-[#1B4D3E] text-slate-700 font-bold transition-all shadow-2xs active:scale-95 shrink-0"
+            className="px-3.5 py-1.5 rounded-full bg-[#FAF3E7] border border-[#26221B]/10 hover:border-[#0E8C7F] hover:text-[#0E8C7F] text-[#26221B] font-bold transition-all shadow-2xs active:scale-95 shrink-0 font-display"
           >
             {preset}
           </button>
@@ -355,14 +422,14 @@ export default function ChatbotPage() {
           >
             {/* Avatar */}
             <div
-              className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-xs ${
-                msg.sender === 'user' ? 'bg-[#D99B26]' : 'bg-[#143B2F]'
+              className={`w-8 h-8 rounded-2xl flex items-center justify-center shrink-0 shadow-xs ${
+                msg.sender === 'user' ? 'bg-[#F0A32F]' : 'bg-[#0E8C7F]'
               }`}
             >
               {msg.sender === 'user' ? (
-                <User className="w-4 h-4 text-slate-900" />
+                <User className="w-4 h-4 text-[#26221B]" />
               ) : (
-                <Bot className="w-4 h-4 text-[#D99B26]" />
+                <Bot className="w-4 h-4 text-[#FFD37A]" />
               )}
             </div>
 
@@ -373,22 +440,22 @@ export default function ChatbotPage() {
             >
               {/* Bubble Text */}
               <div
-                className={`w-full rounded-2xl px-4 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
+                className={`w-full rounded-[22px] px-4 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
                   msg.sender === 'user'
-                    ? 'bg-[#1B4D3E] text-white rounded-tr-none'
-                    : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'
+                    ? 'bg-[#0E8C7F] text-white rounded-tr-none'
+                    : 'bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8 rounded-tl-none'
                 }`}
               >
                 {msg.sender === 'user' ? (
                   <p className="whitespace-pre-line font-medium text-white">{msg.text}</p>
                 ) : msg.text.trim() === '' && !msg.itinerary ? (
                   <div className="flex items-center gap-2 py-1">
-                    <div className="flex items-center gap-1 text-[#1B4D3E]">
-                      <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce [animation-delay:-0.3s]" />
-                      <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce [animation-delay:-0.15s]" />
-                      <span className="w-2 h-2 rounded-full bg-[#1B4D3E] animate-bounce" />
+                    <div className="flex items-center gap-1 text-[#0E8C7F]">
+                      <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce [animation-delay:-0.3s]" />
+                      <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce [animation-delay:-0.15s]" />
+                      <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce" />
                     </div>
-                    <span className="text-xs font-medium text-slate-500">
+                    <span className="text-xs font-medium text-[#6B6355]">
                       {isLoadingItinerary ? 'Đang tải sơ đồ lịch trình...' : 'AI đang tra cứu thực địa...'}
                     </span>
                   </div>
@@ -397,7 +464,7 @@ export default function ChatbotPage() {
                 )}
                 <span
                   className={`block text-[9px] sm:text-[10px] mt-1 ${
-                    msg.sender === 'user' ? 'text-emerald-300 text-right' : 'text-slate-400'
+                    msg.sender === 'user' ? 'text-[#FAF3E7]/80 text-right' : 'text-[#6B6355]/70'
                   }`}
                 >
                   {msg.timestamp}
@@ -413,7 +480,7 @@ export default function ChatbotPage() {
 
               {/* Preset Itinerary Picker */}
               {msg.sender === 'assistant' && msg.showPresetPicker && (
-                <div className="w-full bg-white rounded-2xl p-3 border border-slate-200 shadow-xs">
+                <div className="w-full bg-[#FFFDF7] rounded-[22px] p-3 border border-[#26221B]/8 shadow-xs">
                   <ItineraryPresetPicker onSelect={handlePresetSelect} />
                 </div>
               )}
@@ -424,7 +491,7 @@ export default function ChatbotPage() {
                   {msg.spots.map((spot, i) => (
                     <div
                       key={`spot-${msg.id}-${i}`}
-                      className="min-w-[210px] max-w-[230px] bg-white rounded-2xl p-2.5 border border-slate-200 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#1B4D3E] transition-all"
+                      className="min-w-[210px] max-w-[230px] bg-[#FFFDF7] rounded-2xl p-2.5 border border-[#26221B]/8 flex items-center gap-2.5 shrink-0 snap-start shadow-xs hover:border-[#0E8C7F] transition-all"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       {spot.imageUrl && (
@@ -435,24 +502,24 @@ export default function ChatbotPage() {
                         />
                       )}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-700">
-                          <MapPin className="w-2.5 h-2.5 text-[#D99B26]" />
+                        <div className="flex items-center gap-1 text-[9px] font-bold text-[#0E8C7F]">
+                          <MapPin className="w-2.5 h-2.5 text-[#F0A32F]" />
                           <span className="truncate">{spot.commune}</span>
                         </div>
-                        <h4 className="font-bold text-xs text-slate-900 truncate">{spot.name}</h4>
+                        <h4 className="font-bold text-xs text-[#26221B] truncate font-display">{spot.name}</h4>
                         <div className="flex items-center gap-1.5 mt-1.5">
                           <a
                             href={getGoogleMapsUrl({ name: spot.name, commune: spot.commune })}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-[10px] font-bold text-[#1B4D3E] bg-emerald-50 hover:bg-[#1B4D3E] hover:text-white px-2 py-0.5 rounded-lg transition-colors min-h-[24px]"
+                            className="flex items-center gap-1 text-[10px] font-bold text-[#26221B] bg-[#F0A32F] hover:bg-[#C97F1B] hover:text-white px-2 py-0.5 rounded-full transition-colors min-h-[24px]"
                           >
                             <Navigation className="w-2.5 h-2.5" />Maps
                           </a>
                           {spot.id && (
                             <Link
                               href={`/places/${spot.id}`}
-                              className="flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-50 hover:bg-amber-600 hover:text-white px-2 py-0.5 rounded-lg transition-colors min-h-[24px]"
+                              className="flex items-center gap-1 text-[10px] font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 hover:bg-[#0E8C7F] hover:text-white px-2 py-0.5 rounded-full transition-colors min-h-[24px]"
                             >
                               Xem
                             </Link>
@@ -471,7 +538,7 @@ export default function ChatbotPage() {
                     <button
                       key={`sug-${msg.id}-${i}`}
                       onClick={() => handleSend(sug)}
-                      className="px-3 py-1.5 rounded-full border border-[#D99B26]/50 text-[#1B4D3E] bg-amber-50/80 hover:bg-[#D99B26] hover:text-slate-950 text-xs font-bold transition-all shadow-2xs active:scale-95"
+                      className="px-3.5 py-1.5 rounded-full border border-[#F0A32F]/50 text-[#26221B] bg-[#FFFDF7] hover:bg-[#F0A32F] hover:text-[#26221B] text-xs font-bold transition-all shadow-2xs active:scale-95 font-display"
                     >
                       {sug}
                     </button>
@@ -483,8 +550,8 @@ export default function ChatbotPage() {
         ))}
       </main>
 
-      {/* ── BOTTOM INPUT BAR (Mobile Keyboard Safe) ─────────────────────── */}
-      <footer className="p-3 sm:p-4 bg-white border-t border-slate-200 shrink-0 pb-safe">
+      {/* ── BOTTOM INPUT BAR (Folk-Modern Safe Area) ─────────────────────── */}
+      <footer className="p-3 sm:p-4 bg-[#FFFDF7] border-t border-[#26221B]/8 shrink-0 pb-safe">
         <div className="max-w-4xl mx-auto flex items-center gap-2">
           <input
             type="text"
@@ -492,14 +559,14 @@ export default function ChatbotPage() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Hỏi AI về Hồ Tà Pạ, Gà Đốt Ô Thum, Chùa Khmer..."
-            className="flex-1 px-4 py-3 rounded-2xl border border-slate-200 text-xs sm:text-sm text-slate-900 focus:outline-none focus:border-[#1B4D3E] focus:ring-2 focus:ring-[#1B4D3E]/20 bg-[#F8F9FA]"
+            className="flex-1 px-4 py-3 rounded-full border border-[#26221B]/15 text-xs sm:text-sm text-[#26221B] focus:outline-none focus:border-[#0E8C7F] focus:ring-2 focus:ring-[#0E8C7F]/20 bg-[#FAF3E7] font-body"
           />
           <button
             onClick={() => handleSend()}
             disabled={isTyping || isLoadingItinerary || !input.trim()}
-            className="px-4 py-3 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[48px] min-h-[44px] shadow-sm active:scale-95"
+            className="px-5 py-3 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] disabled:opacity-50 disabled:cursor-not-allowed text-[#26221B] hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shrink-0 min-w-[54px] min-h-[44px] shadow-xs active:scale-95 font-display"
           >
-            <Send className="w-4 h-4 text-[#D99B26]" />
+            <Send className="w-4 h-4 text-[#26221B]" />
             <span className="hidden sm:inline">Gửi</span>
           </button>
         </div>
