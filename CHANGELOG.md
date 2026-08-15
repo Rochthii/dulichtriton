@@ -51,11 +51,21 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   13. *Gà Đốt Thành Đạt Ô Thum*: Phục vụ chu đáo, chòi lá rộng rãi cho khách gia đình và đoàn phượt.
   14. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc, muối ớt giã cối đá thơm lừng.
   15. *Quán Gà Đốt Vườn Nho Ô Thum*: Mô hình sinh thái hái nho 2ha kết hợp thưởng thức gà đốt chòi lá ven hồ.
-### 🧹 Rà Soát, Thanh Lọc & Làm Sạch Dữ Liệu (Master Data Clean-up)
-- **Loại Bỏ Hoàn Toàn 22 Bản Ghi Rác / Trùng Lặp / Không Tồn Tại**:
-  - *Địa danh chung / Rác OSM*: Xóa bỏ các mục rác quét từ OpenStreetMap không phải quán hay điểm du lịch thực tế (`tri-ton`, `co-to`, `ba-chuc`, `my-truc`, `tigon`, `diem-du-lich-tri-ton-12` / ភូមិស្រែឃ្មួញ, `nha-hang-an`, `tinh-tam`, `hanh-tam`, `thien-duyan`, `nha-tro-quoc-tien`, `khmer-temple`, `nha-thieu-nhi`, `gia-ga-ot-o-thum`, `dac-san-ga-dot-o-thum-tri-ton`).
-  - *Mục Trùng Lặp (Duplicate POIs)*: Hợp nhất và xóa các ID trùng lặp (`ho-soai-chek-2`, `b49161b0-chùa-phi-lai-ba-chú`, `e563b663-chùa-tam-bửu-ba-chú`, `lo-uong-thot-not-ut-hue`, `con-uong-tuyen-tranh-t941t948`, `cau-go-ong-lua`, `cau-khi-ong-thot-not`, `khu-trung-bay-toi-ac-pol-pot`, `1370b402-nhà-hàng-gà-đốt-ô-th`).
-- **Thanh Lọc Trực Tiếp CSDL Supabase PostgreSQL**: Đã thực hiện lệnh `DELETE` thanh trừng 21 bản ghi rác trên Cloud Database, đưa Master Data về **139 POIs thực địa 100% chuẩn xác, sạch sẽ và có thật tại Tri Tôn**.
+### ☕ Nâng Cấp & Chuẩn Hóa 12 Quán Cà Phê View Đẹp & Sống Ảo Tri Tôn
+- **12 Bài Viết Chuyên Sâu Về Quán Cafe View Đẹp Bảy Núi (2,500 – 3,500 ký tự mỗi bài)**:
+  1. *RUỘNG Coffee & Tea Tri Tôn*: Cây cầu gỗ vươn dài ra giữa cánh đồng lúa Soài Chék, view toàn cảnh Núi Cô Tô lúc hoàng hôn.
+  2. *Tiệm Cà Phê Nhà Quê*: Ngôi nhà gỗ vintage cổ kính Nam Bộ, chòi "chữa lành" giữa đồng lúa Cầu Số 10.
+  3. *Windy Hill Coffee & Homestay*: Quán cafe lưng chừng đồi dốc lộng gió, ngắm trọn thung lũng lúa Tà Pạ từ trên cao.
+  4. *Anpalm Cafe Tri Tôn (Thốt Nốt Tri Tôn)*: Không gian nội thất gỗ thốt nốt ấm áp, chuyên nước thốt nốt tươi và thốt nốt dầm sữa.
+  5. *CHẠM Coffee & Tea*: Phong cách Industrial Minimalist hiện đại, phòng máy lạnh & đêm nhạc Acoustic cuối tuần.
+  6. *Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)*: Sân vườn sát mép nước hồ Soài Chék, điểm săn mây sớm và hoàng hôn.
+  7. *Cà Phê Thốt Nốt Tà Pạ View*: Chòi lá mộc mạc ngắm chùa Núi Tà Pạ và ruộng lúa ô vuông bàn cờ.
+  8. *Cà Phê Suối Đá Ô Tà Sóc*: Thưởng thức cà phê bên dòng suối đá tự nhiên dưới tán rừng tầm vông mát lạnh.
+  9. *Lang Lang Coffee & Tea*: Tone trắng Hàn Quốc ngọt ngào, trà trái cây nhiệt đới và bánh ngọt nướng mỗi ngày.
+  10. *Quy Coffee House Tri Tôn (Quý's Coffee)*: Không gian Retro hoài niệm cổ điển, cà phê pha phin truyền thống đậm đà.
+  11. *An Sơn Trà Quán*: Trà hoa thảo mộc, trà sen tuyết, không gian thưởng trà thiền tịnh dưới chân Núi Cô Tô.
+  12. *Tuyết Anh Homestay & Coffee*: Sân vườn phong cách Địa Trung Hải, hồ cá Koi thư giãn và giàn hoa giấy rực rỡ.
+- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 12 bài viết chi tiết lên Supabase Cloud Database.
 
 ---
 
