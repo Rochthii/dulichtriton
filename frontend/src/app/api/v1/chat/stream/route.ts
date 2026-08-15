@@ -1,18 +1,28 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { streamAIResponse, lookupSemanticCache } from '@/lib/aiProvider';
-import { getDynamicSystemConfig } from '@/lib/systemConfig';
+import { streamAIResponse, generateQueryEmbedding } from '@/lib/aiProvider';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-const BASE_SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
-Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
+// In-Memory Hot Question Cache (0ms latency, zero quota usage)
+const HOT_QUERY_CACHE = new Map<string, { answer: string; places: any[]; suggestions: string[]; timestamp: number }>();
 
-QUY TẮC CỐT LÕI (MANDATORY RULES):
+// ── Types ────────────────────────────────────────────────────────────────────
+interface Turn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+// ── Base System Prompt with Tri Tôn Master Persona & Link Formats ──────────────
+const BASE_SYSTEM_PROMPT = `
+Bạn là Trợ Lý AI Du Lịch Tri Tôn chuyên sâu, chuyên gia hướng dẫn bản địa 24/7 của huyện Tri Tôn, tỉnh An Giang, Việt Nam.
+Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn hóa Khmer, ẩm thực và danh thắng Bảy Núi.
+
 1. **Ưu tiên thông tin thực tế & cập nhật trên Internet**:
    - Luôn luôn ưu tiên thông tin thực tế mới nhất, khách quan, chính xác từ kết quả tìm kiếm internet về địa danh, giờ mở cửa, giá cả, món ăn, dịch vụ tại Tri Tôn, An Giang.
 
@@ -31,72 +41,58 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
 
 3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
-   - Gà Đốt Ô Thum: Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
-   - Cháo Bò Tri Tôn: Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
-   - Bún Nước Lèo Khmer: Nấu từ cá lóc đồng nướng rỉa thịt, ngải bún và sả ớt ăn kèm rau muống bào.
-   - Đu Đủ Đâm Rina (Xã Châu Lăng): Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
-   - Bánh Bò Thốt Nốt Nướng Tân Lợi: Thơm béo nước cốt dừa và đường thốt nốt.
+   - Gà Đốt Ô Thum (Xã Ô Lâm): Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
+   - Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng): Lòng bò tươi béo ngậy, nước lèo nấu trái chúc thơm thanh, ăn kèm bánh mì hoặc bún.
+   - Bún Nước Lèo Khmer (Thị trấn Tri Tôn): Nấu từ mắm cá sặc/cá lóc, bắp chuối, ngải bún và củ nghệ tươi.
+   - Bánh Cống, Bánh Bò Thốt Nốt, Nước Thốt Nốt Tươi ướp lạnh.
 
-4. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
-   - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
-   - Lang Lang Coffee & Tea (Đường Trần Hưng Đạo, Thị trấn Tri Tôn): Không gian check-in hiện đại, trà thốt nốt tươi, mở đến 21:30.
-   - Quy Coffee House (Đường Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn): Phong cách mộc ấm cúng, acoustic cuối tuần, mở đến 22:00.
-   - NY Coffee & Tea (Đường Nguyễn Trãi, Thị trấn Tri Tôn): Trà sữa & kem thốt nốt máy lạnh, mở đến 22:00.
-   - Khu Ẩm Thực Chợ Đêm Tri Tôn: Ăn vặt đêm, cháo bò trái chúc, bánh xèo tép đồng, mở đến 22:30.
-   - Quảng Trường & Phố Đi Bộ Trung Tâm: Dạo mát đón gió đồi, thả diều, trà chanh vỉa hè sôi động từ 17:00 - 23:00.
+4. **Tôn trọng văn hóa Chùa Tháp Khmer**:
+   - Khi vào chánh điện: Mặc trang phục lịch sự, cởi giày dép, không chỉ ngón tay trực tiếp vào tượng Phật.
+`;
 
-5. **Phạm vi hỗ trợ**:
-   - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
-
-interface Turn { role: 'user' | 'assistant'; content: string }
+// ── Helpers ──────────────────────────────────────────────────────────────────
+async function getDynamicSystemConfig(key: string, defaultValue: string): Promise<string> {
+  try {
+    const { data } = await supabase
+      .from('system_configs')
+      .select('config_value')
+      .eq('config_key', key)
+      .maybeSingle();
+    return data?.config_value || defaultValue;
+  } catch {
+    return defaultValue;
+  }
+}
 
 async function loadHistory(sessionId: string): Promise<Turn[]> {
-  const { data } = await supabase
-    .from('chat_sessions').select('turns').eq('session_id', sessionId).single();
-  if (!data) return [];
-  return (data.turns as Turn[]).slice(-6);
-}
-
-async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
-  await supabase.from('chat_sessions')
-    .upsert({ session_id: sessionId, turns: history.slice(-20) }, { onConflict: 'session_id' });
-}
-
-async function generateQueryEmbedding(text: string): Promise<number[] | null> {
-  const keys = [
-    process.env.GEMINI_API_KEY,
-    process.env.GEMINI_API_KEY_2,
-    process.env.GEMINI_API_KEY_3,
-    process.env.GEMINI_API_KEY_4,
-  ].filter(Boolean) as string[];
-  for (const key of keys) {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${key}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'models/gemini-embedding-001',
-            content: { parts: [{ text }] },
-            outputDimensionality: 768,
-          }),
-          signal: AbortSignal.timeout(3500),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        const v = data?.embedding?.values;
-        if (Array.isArray(v) && v.length > 0) return v;
-      }
-    } catch { /* silent */ }
+  try {
+    const { data } = await supabase
+      .from('conversations')
+      .select('turns')
+      .eq('session_id', sessionId)
+      .maybeSingle();
+    return (data?.turns as Turn[]) || [];
+  } catch {
+    return [];
   }
-  return null;
 }
 
-// ── Observability ────────────────────────────────────────────────────────────
-interface ChatLogEntry {
+async function saveHistory(sessionId: string, turns: Turn[]): Promise<void> {
+  try {
+    await supabase.from('conversations').upsert(
+      {
+        session_id: sessionId,
+        turns: turns.slice(-10),
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'session_id' }
+    );
+  } catch (err) {
+    console.warn('[ChatStream] Save history warning:', err);
+  }
+}
+
+function logChatEvent(entry: {
   session_id: string;
   query: string;
   response_preview?: string;
@@ -105,48 +101,72 @@ interface ChatLogEntry {
   places_count?: number;
   latency_ms?: number;
   is_out_scope?: boolean;
+}) {
+  void Promise.resolve(
+    supabase.from('chat_logs').insert({
+      session_id: entry.session_id,
+      user_message: entry.query,
+      bot_response: entry.response_preview || '',
+      provider_used: entry.provider_used || 'unknown',
+      rag_method: entry.rag_method || 'none',
+      places_count: entry.places_count || 0,
+      latency_ms: entry.latency_ms || 0,
+      is_out_of_scope: entry.is_out_scope || false,
+    })
+  ).catch(e => console.warn('[Observability] Warning:', e));
 }
 
-function logChatEvent(entry: ChatLogEntry): void {
-  void Promise.resolve(supabase.from('chat_logs').insert(entry))
-    .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
-    .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
+async function lookupSemanticCache(
+  vector: number[],
+  client: typeof supabase,
+  threshold: number = 0.90
+): Promise<{ answer_text: string; places_json: Record<string, unknown>[] } | null> {
+  try {
+    const { data, error } = await client.rpc('match_semantic_cache', {
+      query_embedding: vector,
+      match_threshold: threshold,
+      match_count: 1,
+    });
+    if (error || !data || data.length === 0) return null;
+    return {
+      answer_text: data[0].answer_text,
+      places_json: data[0].places_json || [],
+    };
+  } catch {
+    return null;
+  }
 }
 
-// ── Live Weather Telemetry Fetcher ──────────────────────────────────────────
 async function fetchLiveWeatherContext(): Promise<string> {
   try {
     const res = await fetch(
-      'https://api.open-meteo.com/v1/forecast?latitude=10.4215&longitude=105.0125&current=temperature_2m,relative_humidity_2m,precipitation,weather_code&timezone=Asia%2FBangkok',
-      { signal: AbortSignal.timeout(2500) }
+      'https://api.open-meteo.com/v1/forecast?latitude=10.42&longitude=104.98&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Asia%2FHo_Chi_Minh',
+      { next: { revalidate: 1800 } }
     );
-    if (res.ok) {
-      const data = await res.json();
-      const cur = data?.current;
-      const temp = Math.round(cur?.temperature_2m || 29);
-      const hum = cur?.relative_humidity_2m || 75;
-      const rain = (cur?.precipitation || 0) > 0;
-      return `\n[THÔNG TIN THỜI TIẾT THỜI GIAN THỰC TẠI TRI TÔN]\nNhiệt độ hiện tại: ${temp}°C, Độ ẩm: ${hum}%, Tình trạng: ${rain ? 'Có mưa rào Bảy Núi' : 'Nắng ấm trong lành'}.\nMùa hiện tại: Mùa lúa chín vàng Tà Pạ (tháng 8 - 11), rất đẹp để ngắm cảnh.\n`;
-    }
+    if (!res.ok) return '';
+    const data = await res.json();
+    const cur = data.current;
+    if (!cur) return '';
+
+    let weatherDesc = 'trời đẹp, thuận lợi du lịch';
+    if (cur.weather_code >= 51 && cur.weather_code <= 67) weatherDesc = 'có mưa rải rác';
+    else if (cur.weather_code >= 80) weatherDesc = 'mưa rào';
+    else if (cur.weather_code === 0) weatherDesc = 'trời quang, nắng đẹp';
+    else if (cur.weather_code <= 3) weatherDesc = 'nhiều mây, mát mẻ';
+
+    return `\n\n[Thời tiết Tri Tôn hiện tại: ${cur.temperature_2m}°C, ${weatherDesc}, gió ${cur.wind_speed_10m} km/h. Hãy chủ động nhắc du khách mang nón lá/áo mưa nếu cần.]`;
   } catch {
-    // silent fallback
+    return '';
   }
-  return `\n[THÔNG TIN THỜI TIẾT TRI TÔN]\nNhiệt độ: ~29-32°C, Khí hậu nắng ấm thuận lợi du lịch Bảy Núi. Mùa lúa chín Tà Pạ tháng 8-11.\n`;
 }
 
-// ── Smart Intent Classifier & Out-of-Scope Guard ────────────────────────────
-function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
-  const lower = queryStr.toLowerCase();
-
-  if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi')) {
-    return false;
-  }
+function checkIsOutOfScope(query: string, history: Turn[] = []): boolean {
+  const lower = query.toLowerCase();
 
   const travelKeywords = [
-    'đi từ', 'từ ', 'xe ', 'bến xe', 'vé xe', 'phương tiện', 'khoảng cách',
-    'bao xa', 'bao nhiêu km', 'mất bao lâu', 'mất mấy tiếng', 'mất mấy giờ',
-    'đường đi', 'di chuyển', 'bằng xe', 'chặng', 'thời tiết', 'gà đốt', 'hồ tà pạ',
-    'chùa', 'ăn gì', 'quán nào', 'ở đâu'
+    'tri tôn', 'an giang', 'tà pạ', 'ô thum', 'cô tô', 'tức dụp', 'núi tô', 'châu lăng', 'ô lâm',
+    'gà đốt', 'cháo bò', 'chùa', 'khmer', 'thốt nốt', 'du lịch', 'khách sạn', 'homestay', 'quán',
+    'lịch trình', 'tour', 'xe', 'đường', 'thuê', 'ăn gì', 'ở đâu', 'chơi gì', 'giá vé', 'thời tiết'
   ];
   if (travelKeywords.some(kw => lower.includes(kw))) {
     return false;
@@ -176,7 +196,7 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
 
 function buildSuggestions(lower: string): string[] {
   if (lower.includes('ăn') || lower.includes('gà đốt') || lower.includes('cháo bò'))
-    return ['Quán Gà Đốt Ô Thum chuẩn vị nhất', 'Địa chỉ quán Cháo Bò lá trúc', 'Bún nước lèo Khmer'];
+    return ['Quán Gà Đốt Ô Thum chuẩn vị nhất', 'Địa chỉ quán Cháo Bò lá chúc', 'Bún nước lèo Khmer'];
   if (lower.includes('chùa') || lower.includes('khmer') || lower.includes('văn hóa'))
     return ['Đường lên Chùa Tà Pạ', 'Cổng trời Chùa Koh Kas', 'Lễ hội Đua bò Khmer'];
   if (lower.includes('ở') || lower.includes('homestay') || lower.includes('khách sạn'))
@@ -184,24 +204,43 @@ function buildSuggestions(lower: string): string[] {
   return ['Thời tiết Tri Tôn hôm nay thế nào?', 'Gà Đốt Ô Thum có cần đặt trước?', 'Lịch trình 1 ngày tối ưu'];
 }
 
-// In-Memory Hot Question Cache (0ms latency, zero quota usage)
-const HOT_QUERY_CACHE = new Map<string, { answer: string; places: any[]; suggestions: string[]; timestamp: number }>();
-
 // ── SSE Stream Handler ───────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
-  try { body = await req.json(); } catch { return new Response('Invalid JSON', { status: 400 }); }
+  try { 
+    body = await req.json(); 
+  } catch { 
+    return new Response(JSON.stringify({ error: 'Invalid JSON' }), { 
+      status: 400, 
+      headers: { 'Content-Type': 'application/json' } 
+    }); 
+  }
 
-  const queryStr = (body.query as string)?.trim();
-  if (!queryStr) return new Response('Missing query', { status: 400 });
+  // Support query, question, message, or prompt
+  const queryStr = (
+    (body.query as string) || 
+    (body.question as string) || 
+    (body.message as string) || 
+    (body.prompt as string) || 
+    ''
+  ).trim();
+
+  if (!queryStr) {
+    return new Response(JSON.stringify({ error: 'Missing query' }), { 
+      status: 400, 
+      headers: { 'Content-Type': 'application/json' } 
+    });
+  }
+
   const sessionId = (body.session_id as string)?.trim() || 'anonymous';
-
   const encoder = new TextEncoder();
 
   const readable = new ReadableStream({
     async start(controller) {
       const send = (obj: object) => {
-        try { controller.enqueue(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`)); } catch { /* closed */ }
+        try { 
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`)); 
+        } catch { /* closed */ }
       };
 
       try {
@@ -209,20 +248,32 @@ export async function POST(req: NextRequest) {
         const lower = queryStr.toLowerCase();
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
-        // 0. Check In-Memory Instant Hot Cache (0ms, 0 API calls, 0 DB queries)
+        // 0. Check In-Memory Instant Hot Cache (0ms response, 0 API calls, 0 DB queries)
         const hotHit = HOT_QUERY_CACHE.get(cleanQ);
         if (hotHit && Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000) {
           if (hotHit.places && hotHit.places.length > 0) {
-            send({ type: 'places', data: hotHit.places });
+            send({ 
+              type: 'metadata', 
+              places: hotHit.places, 
+              suggestions: hotHit.suggestions || buildSuggestions(lower),
+              data: hotHit.places 
+            });
           }
+
           const words = hotHit.answer.split(' ');
           for (let i = 0; i < words.length; i += 3) {
             const chunk = words.slice(i, i + 3).join(' ') + ' ';
-            send({ type: 'text_delta', delta: chunk });
-            await new Promise(r => setTimeout(r, 12));
+            send({ type: 'token', token: chunk, delta: chunk });
+            await new Promise(r => setTimeout(r, 15));
           }
-          send({ type: 'suggestions', data: hotHit.suggestions || buildSuggestions(lower) });
-          send({ type: 'done' });
+
+          send({ 
+            type: 'done', 
+            full_text: hotHit.answer,
+            suggestions: hotHit.suggestions || buildSuggestions(lower),
+            places: hotHit.places 
+          });
+
           logChatEvent({
             session_id: sessionId,
             query: queryStr,
@@ -232,6 +283,7 @@ export async function POST(req: NextRequest) {
             latency_ms: Date.now() - t0,
             is_out_scope: false,
           });
+
           controller.close();
           return;
         }
@@ -245,9 +297,13 @@ export async function POST(req: NextRequest) {
 
         // 2. Out-of-scope guard with history context
         if (checkIsOutOfScope(queryStr, history)) {
-          send({ type: 'text_delta', delta: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.' });
-          send({ type: 'suggestions', data: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] });
-          send({ type: 'done' });
+          const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
+          send({ type: 'token', token: oosMsg, delta: oosMsg });
+          send({ 
+            type: 'done', 
+            full_text: oosMsg,
+            suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] 
+          });
           logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true });
           controller.close();
           return;
@@ -257,10 +313,19 @@ export async function POST(req: NextRequest) {
         if (queryVector) {
           const cacheHit = await lookupSemanticCache(queryVector, supabase, 0.90);
           if (cacheHit) {
-            send({ type: 'places', data: cacheHit.places_json || [] });
-            send({ type: 'text_delta', delta: cacheHit.answer_text });
-            send({ type: 'suggestions', data: buildSuggestions(lower) });
-            send({ type: 'done' });
+            send({ 
+              type: 'metadata', 
+              places: cacheHit.places_json || [], 
+              suggestions: buildSuggestions(lower),
+              data: cacheHit.places_json || [] 
+            });
+            send({ type: 'token', token: cacheHit.answer_text, delta: cacheHit.answer_text });
+            send({ 
+              type: 'done', 
+              full_text: cacheHit.answer_text,
+              suggestions: buildSuggestions(lower),
+              places: cacheHit.places_json || [] 
+            });
 
             logChatEvent({
               session_id: sessionId,
@@ -295,9 +360,14 @@ export async function POST(req: NextRequest) {
         }
 
         const formattedPlaces = places.map(p => ({
-          id: p.id, slug: p.slug || p.id, name: p.name,
-          commune: p.commune, category: p.category,
-          rating: p.rating, image_url: p.image_url,
+          id: p.id, 
+          slug: p.slug || p.id, 
+          name: p.name,
+          commune: p.commune, 
+          category: p.category,
+          rating: p.rating || 4.8, 
+          image_url: p.image_url,
+          imageUrl: p.image_url,
         }));
 
         const ragContext = places.length > 0
@@ -306,10 +376,13 @@ export async function POST(req: NextRequest) {
             ).join('\n')
           : '';
 
-        // Send place cards early (if any)
-        if (formattedPlaces.length > 0) {
-          send({ type: 'places', data: formattedPlaces });
-        }
+        // Send metadata & place cards early
+        send({ 
+          type: 'metadata', 
+          places: formattedPlaces, 
+          suggestions: buildSuggestions(lower),
+          data: formattedPlaces 
+        });
 
         // Build system message with history & live weather context
         const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
@@ -331,16 +404,24 @@ export async function POST(req: NextRequest) {
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
           if (chunk.type === 'delta' && chunk.content) {
             fullText += chunk.content;
-            send({ type: 'text_delta', delta: chunk.content });
+            send({ 
+              type: 'token', 
+              token: chunk.content, 
+              delta: chunk.content 
+            });
           }
           if (chunk.type === 'done' && chunk.provider) {
             providerUsed = chunk.provider;
           }
         }
 
-        // Send suggestion chips
-        send({ type: 'suggestions', data: buildSuggestions(lower) });
-        send({ type: 'done' });
+        // Send completion event
+        send({ 
+          type: 'done', 
+          full_text: fullText,
+          suggestions: buildSuggestions(lower),
+          places: formattedPlaces 
+        });
 
         // Save conversation turn
         if (fullText.trim()) {
@@ -374,7 +455,9 @@ export async function POST(req: NextRequest) {
 
       } catch (err) {
         console.error('Chat stream error:', err);
-        send({ type: 'error', message: 'Lỗi xử lý luồng AI' });
+        const errMsg = 'Hiện tại hệ thống AI đang bận xử lý, bạn vui lòng thử lại sau giây lát nhé!';
+        send({ type: 'token', token: errMsg, delta: errMsg });
+        send({ type: 'done', full_text: errMsg, suggestions: ['Hồ Tà Pạ', 'Gà Đốt Ô Thum'] });
       } finally {
         controller.close();
       }

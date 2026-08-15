@@ -232,6 +232,7 @@ export default function ChatbotPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: textToSend,
+          query: textToSend,
           session_id: sessionIdRef.current,
           history: messages.slice(-6).map(m => ({
             sender: m.sender,
@@ -266,8 +267,9 @@ export default function ChatbotPage() {
 
           try {
             const event = JSON.parse(jsonStr);
-            if (event.type === 'token') {
-              accumulatedText += event.token;
+            if (event.type === 'token' || event.type === 'text_delta') {
+              const delta = event.token || event.delta || '';
+              accumulatedText += delta;
               setMessages(prev =>
                 prev.map(m =>
                   m.id === botMsgId
@@ -275,9 +277,10 @@ export default function ChatbotPage() {
                     : m
                 )
               );
-            } else if (event.type === 'metadata') {
-              if (event.places && Array.isArray(event.places)) {
-                extractedSpots = event.places.map((p: any) => ({
+            } else if (event.type === 'metadata' || event.type === 'places') {
+              const rawPlaces = event.places || event.data;
+              if (rawPlaces && Array.isArray(rawPlaces)) {
+                extractedSpots = rawPlaces.map((p: any) => ({
                   id: p.id,
                   name: p.name,
                   commune: p.commune,
@@ -297,7 +300,7 @@ export default function ChatbotPage() {
                         ...m,
                         text: accumulatedText || event.full_text || m.text,
                         spots: extractedSpots.length > 0 ? extractedSpots : m.spots,
-                        suggestions: extractedSuggestions.length > 0 ? extractedSuggestions : m.suggestions,
+                        suggestions: (event.suggestions && event.suggestions.length > 0) ? event.suggestions : (extractedSuggestions.length > 0 ? extractedSuggestions : m.suggestions),
                       }
                     : m
                 )
