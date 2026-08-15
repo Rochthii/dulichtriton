@@ -149,22 +149,46 @@ export default function ChatbotPage() {
     const textToSend = customText || input;
     if (!textToSend.trim()) return;
 
-    if (
-      textToSend.toLowerCase().includes('lịch trình') ||
-      textToSend.toLowerCase().includes('tour') ||
-      textToSend.toLowerCase().includes('1 ngày') ||
-      textToSend.toLowerCase().includes('2 ngày')
-    ) {
-      const lower = textToSend.toLowerCase();
-      let matchedSlug = 'classic-1day';
-      if (lower.includes('2 ngày') || lower.includes('2n1d') || lower.includes('2n1đ')) {
-        matchedSlug = 'backpack-2d1n';
-      } else if (lower.includes('ẩm thực') || lower.includes('ăn')) {
-        matchedSlug = 'foodie-trail';
-      } else if (lower.includes('chùa') || lower.includes('tâm linh') || lower.includes('khmer')) {
-        matchedSlug = 'pagoda-heritage';
+    const lower = textToSend.toLowerCase();
+    const isItinIntent = 
+      lower.includes('lịch trình') ||
+      lower.includes('tour') ||
+      lower.includes('kế hoạch') ||
+      lower.includes('1 ngày') ||
+      lower.includes('2 ngày') ||
+      lower.includes('3 ngày') ||
+      lower.includes('2n1đ') ||
+      lower.includes('3n2đ') ||
+      lower.includes('2d1n') ||
+      lower.includes('3d2n') ||
+      lower.includes('2n1d') ||
+      lower.includes('3n2d') ||
+      lower.includes('nửa ngày');
+
+    if (isItinIntent) {
+      let matchedSlug = 'kinh-dien-1-ngay';
+      if (lower.includes('3 ngày') || lower.includes('3n2đ') || lower.includes('3d2n') || lower.includes('3n2d') || lower.includes('3 ngày 2 đêm')) {
+        matchedSlug = 'kham-pha-sau-3n2d';
+      } else if (lower.includes('2 ngày') || lower.includes('2n1đ') || lower.includes('2d1n') || lower.includes('2n1d') || lower.includes('2 ngày 1 đêm') || lower.includes('cuối tuần')) {
+        matchedSlug = 'toan-canh-2n1d';
+      } else if (lower.includes('ẩm thực') || lower.includes('ăn uống') || lower.includes('food')) {
+        matchedSlug = 'food-tour-am-thuc-1-ngay-dem';
+      } else if (lower.includes('chùa') || lower.includes('tâm linh') || lower.includes('khmer') || lower.includes('hành hương')) {
+        matchedSlug = 'tam-linh-hanh-huong-1-ngay';
+      } else if (lower.includes('lịch sử') || lower.includes('về nguồn') || lower.includes('nhà mồ') || lower.includes('tức dụp')) {
+        matchedSlug = 'lich-su-ve-nguon-1-ngay';
+      } else if (lower.includes('sống ảo') || lower.includes('checkin') || lower.includes('chụp ảnh') || lower.includes('cổng trời')) {
+        matchedSlug = 'song-ao-checkin-1-ngay';
+      } else if (lower.includes('đêm') || lower.includes('tối') || lower.includes('chợ đêm')) {
+        matchedSlug = 'tri-ton-ve-dem-cafe-cho-dem';
+      } else if (lower.includes('đua bò') || lower.includes('lễ hội')) {
+        matchedSlug = 'mua-le-hoi-dua-bo';
       } else if (lower.includes('trekking') || lower.includes('núi') || lower.includes('cô tô')) {
-        matchedSlug = 'co-to-trekking';
+        matchedSlug = 'trekking-cafe-chieu';
+      } else if (lower.includes('gia đình') || lower.includes('trẻ nhỏ')) {
+        matchedSlug = 'family-weekend-2n1d';
+      } else if (lower.includes('nửa ngày') || lower.includes('express')) {
+        matchedSlug = 'express-nua-ngay';
       }
 
       const userMsg: Message = {

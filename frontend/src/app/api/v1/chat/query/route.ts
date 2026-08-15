@@ -433,10 +433,12 @@ export async function POST(req: NextRequest) {
     // 0. Intent-Clustered RAG Router for Broad & Itinerary Queries
     let targetPoiIds: string[] = [];
 
-    if (lowerQuery.includes('lịch trình 1 ngày') || lowerQuery.includes('đi 1 ngày') || (lowerQuery.includes('lịch trình') && !lowerQuery.includes('săn mây'))) {
-      targetPoiIds = ["PL001", "CK002", "FD006", "CK010", "CK001"];
-    } else if (lowerQuery.includes('2 ngày 1 đêm') || lowerQuery.includes('2n1đ') || lowerQuery.includes('tour 2 ngày')) {
+    if (lowerQuery.includes('3 ngày') || lowerQuery.includes('3n2đ') || lowerQuery.includes('3d2n') || lowerQuery.includes('tour 3 ngày')) {
+      targetPoiIds = ["PL001", "PL004", "HG005", "PL010", "CK002", "FD006", "CF002"];
+    } else if (lowerQuery.includes('2 ngày 1 đêm') || lowerQuery.includes('2n1đ') || lowerQuery.includes('tour 2 ngày') || lowerQuery.includes('2 ngày')) {
       targetPoiIds = ["PL001", "PL004", "HG005", "PL010"];
+    } else if (lowerQuery.includes('lịch trình 1 ngày') || lowerQuery.includes('đi 1 ngày') || (lowerQuery.includes('lịch trình') && !lowerQuery.includes('săn mây'))) {
+      targetPoiIds = ["PL001", "CK002", "FD006", "CK010", "CK001"];
     } else if (lowerQuery.includes('food tour') || (lowerQuery.includes('từ sáng tới tối') && lowerQuery.includes('ăn'))) {
       targetPoiIds = ["FD009", "FD006", "FD016", "FD017"];
     } else if (lowerQuery.includes('săn mây') || lowerQuery.includes('bình minh')) {
@@ -580,22 +582,31 @@ export async function POST(req: NextRequest) {
     const formattedPlaces: any[] = [];
 
     // Calculate Route & Cost Breakdown if itinerary intent
-    const isItineraryQuery = lowerQuery.includes('lịch trình') || lowerQuery.includes('tour') || lowerQuery.includes('đi đâu') || lowerQuery.includes('1 ngày') || lowerQuery.includes('2 ngày');
+    const isItineraryQuery = 
+      lowerQuery.includes('lịch trình') || 
+      lowerQuery.includes('tour') || 
+      lowerQuery.includes('đi đâu') || 
+      lowerQuery.includes('1 ngày') || 
+      lowerQuery.includes('2 ngày') || 
+      lowerQuery.includes('3 ngày') || 
+      lowerQuery.includes('3n2đ') || 
+      lowerQuery.includes('2n1đ');
     let routeSummarySnippet = '';
     let costSnippet = '';
 
     if (places && places.length > 0) {
       if (isItineraryQuery) {
+        const numDays = (lowerQuery.includes('3 ngày') || lowerQuery.includes('3n2đ')) ? 3 : (lowerQuery.includes('2 ngày') || lowerQuery.includes('2n1đ')) ? 2 : 1;
         const routeData = calculateItineraryRoute(places.map((p: any) => ({
           id: p.id,
           name: p.name,
           latitude: p.latitude ? Number(p.latitude) : 10.4128,
           longitude: p.longitude ? Number(p.longitude) : 105.0068,
         })));
-        const costData = calculateItineraryCost(lowerQuery.includes('2 ngày') ? 2 : 1, places.length, lowerQuery.includes('2 ngày'));
+        const costData = calculateItineraryCost(numDays, places.length, numDays > 1);
         
-        routeSummarySnippet = `\n📊 TỔNG HÀNH TRÌNH TÍNH TOÁN POSTGIS:\n- Tổng quãng đường: ~${routeData.totalDistanceKm} km\n- Phút di chuyển xe máy: ~${routeData.totalTravelTimeMinutes} phút\n- Ngân sách ước tính: ${costData.formattedRange}`;
-        costSnippet = `\n💰 CHI TIẾT NGÂN SÁCH DỰ KIẾN:\n- Ăn uống (Sáng/Trưa/Tối): ~${Math.round((costData.breakfastEst + costData.lunchEst + costData.dinnerEst)/1000)}k\n- Thuê xe máy & xăng: ~${Math.round((costData.motorbikeRentalEst + costData.fuelEst)/1000)}k\n- Vé tham quan: ~${Math.round(costData.ticketEst/1000)}k`;
+        routeSummarySnippet = `\n📊 TỔNG HÀNH TRÌNH TÍNH TOÁN POSTGIS (${numDays} NGÀY):\n- Tổng quãng đường: ~${routeData.totalDistanceKm} km\n- Phút di chuyển xe máy: ~${routeData.totalTravelTimeMinutes} phút\n- Ngân sách ước tính: ${costData.formattedRange}`;
+        costSnippet = `\n💰 CHI TIẾT NGÂN SÁCH DỰ KIẾN:\n- Ăn uống: ~${Math.round((costData.breakfastEst + costData.lunchEst + costData.dinnerEst)/1000)}k\n- Thuê xe máy & xăng: ~${Math.round((costData.motorbikeRentalEst + costData.fuelEst)/1000)}k\n- Vé tham quan & lưu trú: ~${Math.round(costData.ticketEst/1000)}k`;
       }
 
       ragContext = places

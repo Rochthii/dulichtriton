@@ -96,6 +96,13 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của 149 địa điểm Tri Tôn trong cơ sở dữ liệu.
   - Sử dụng công thức Haversine kết hợp hệ số uốn lượn đường đèo Bảy Núi ($1.25\times$) để tính toán chính xác quãng đường (km) và thời gian di chuyển (phút) giữa từng chặng dừng.
   - Nút bấm **"⚡ Tự Động Đo GPS & Quãng Đường"** tự động tính tổng quãng đường tour `total_distance_km` và hiển thị chi tiết thẻ kết nối chặng `➔ ~X km (Y phút di chuyển)`.
+### 🤖 Khắc Phục & Chuẩn Hóa Sơ Đồ Lịch Trình Tự Động Trong Chatbot (/chatbot & ChatbotWidget)
+- **Tự Động Xuất Sơ Đồ Trực Quan Cho Tất Cả Lịch Trình 1 Ngày, 2 Ngày, 3 Ngày (`WireDiagramItinerary`)**:
+  - Khắc phục lỗi khi người dùng gõ tin nhắn tự do yêu cầu *"lịch trình 3 ngày"*, *"tour 3 ngày 2 đêm"*, *"lịch trình 2 ngày"* hệ thống chỉ trả về văn bản thường do điều kiện lọc cũ bỏ sót `3 ngày` và `3n2đ`.
+  - Chuẩn hóa bộ từ khóa nhận diện ý định (`isItinIntent`): Nhận diện trọn vẹn `1 ngày`, `2 ngày`, `3 ngày`, `2N1Đ`, `3N2Đ`, `nửa ngày`, `ẩm thực / food tour`, `tâm linh`, `lịch sử`, `sống ảo`, `chạy xe đêm`, `đua bò`...
+  - Ánh xạ chính xác tới toàn bộ 27 tour mẫu trong Supabase (`kham-pha-sau-3n2d`, `toan-canh-2n1d`, `kinh-dien-1-ngay`, `song-ao-checkin-1-ngay`, `tam-linh-hanh-huong-1-ngay`...).
+  - Bổ sung `SLUG_ALIASES` trong `/api/v1/chat/itinerary` đảm bảo tương thích ngược 100% giữa các mã slug cũ và mới.
+
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
   - **Lễ Hội Đua Bò Bảy Núi (Lễ Sene Dolta)** (Tháng 8 - 9 Âm lịch): Di sản văn hóa phi vật thể Quốc gia tại Sân đua bò Chùa Tà Miệt (Xã Lương Phi) và Chùa Rô (Xã Châu Lăng).

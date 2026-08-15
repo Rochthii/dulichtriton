@@ -97,15 +97,28 @@ function findMatchingPlace(stopName: string, poiId: string, placesMap: Map<strin
   return null;
 }
 
+const SLUG_ALIASES: Record<string, string> = {
+  'classic-1day': 'kinh-dien-1-ngay',
+  'backpack-2d1n': 'toan-canh-2n1d',
+  'deep-explore-3d2n': 'kham-pha-sau-3n2d',
+  'foodie-trail': 'food-tour-am-thuc-1-ngay-dem',
+  'pagoda-heritage': 'tam-linh-hanh-huong-1-ngay',
+  'co-to-trekking': 'trekking-cafe-chieu',
+  '3-days': 'kham-pha-sau-3n2d',
+  '2-days': 'toan-canh-2n1d',
+  '1-day': 'kinh-dien-1-ngay',
+};
+
 // ── Load & convert from lichtrinh.json with real POI enrichment ──────────────
-async function loadFromJsonFile(slug: string): Promise<ItineraryData | null> {
+async function loadFromJsonFile(slugInput: string): Promise<ItineraryData | null> {
   try {
+    const slug = SLUG_ALIASES[slugInput] || slugInput;
     const filePath = path.join(process.cwd(), '..', 'data', 'lichtrinh.json');
     if (!fs.existsSync(filePath)) return null;
 
     const raw = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const itin = (raw.itineraries as Record<string, unknown>[])
-      .find((i) => i.slug === slug || i.id === slug);
+      .find((i) => i.slug === slug || i.id === slug || i.slug === slugInput || i.id === slugInput);
     if (!itin) return null;
 
     const placesMap = await getPlacesMap();
