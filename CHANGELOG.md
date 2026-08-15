@@ -85,11 +85,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 📱 Thu Gọn & Tối Ưu Thanh Chọn Khung Giờ Trên Mobile (Compact Time Slots Switcher)
-- **Thiết Kế Tối Giản, Thanh Thoát (`page.tsx`)**:
-  - Tái cấu trúc thanh chọn 4 khung giờ trải nghiệm (Sáng sớm, Buổi trưa, Chiều tà, Buổi tối) thành dạng **Segmented Control 4 cột ngang nhỏ gọn, tinh tế** (`p-1 rounded-2xl`).
-  - Trên Mobile: Tối ưu nhãn ngắn gọn (`Sáng sớm`, `Buổi trưa`, `Chiều tà`, `Buổi tối`), icon SVG nhỏ nhắn sắc nét, giảm 65% chiều cao chiếm dụng trên màn hình điện thoại mà vẫn đảm bảo cảm giác chạm bấm (Tap target) mượt mà.
-  - Trên Desktop: Tự động bung rộng hiển thị kèm khung giờ chi tiết và gợi ý địa điểm tiêu biểu.
+### 💌 Hệ Thống Góp Ý & Đóng Góp Dữ Liệu Cộng Đồng (Community Feedback & Contributions)
+- **Cơ Sở Dữ Liệu Supabase PostgreSQL (`public.feedbacks`)**:
+  - Tạo bảng `feedbacks` lưu trữ toàn vẹn: Họ tên, Email, Số điện thoại/Zalo, Chủ đề phân loại (`place_contribution`, `place_correction`, `photo_contribution`, `feature_request`, `general`), Tiêu đề, Nội dung góp ý, Đánh giá sao (1-5★), Trạng thái xử lý (`pending`, `reviewed`, `resolved`), Metadata IP & Thiết bị.
+  - Tích hợp Row Level Security (RLS) và ghi nhận Audit Log `FEEDBACK_SUBMITTED`.
+- **API Endpoint Chuẩn Hóa (`/api/v1/feedback` & `/api/v1/admin/feedbacks`)**:
+  - `POST /api/v1/feedback`: Kiểm tra hợp lệ dữ liệu, chuẩn hóa Unicode NFC tiếng Việt, lưu trữ an toàn vào Supabase.
+  - `GET / PATCH /api/v1/admin/feedbacks`: Cho phép Ban quản trị xem danh sách, lọc theo trạng thái/chủ đề và duyệt chuyển trạng thái.
+- **Khu Vực Góp Ý Trực Tiếp Trên Trang Chủ (`FeedbackSection.tsx`)**:
+  - Thiết kế đậm chất Folk-Modern Bảy Núi với 5 thẻ phân loại chủ đề trực quan, bộ chọn đánh giá 5 sao tương tác, khung nhập liệu có bộ đếm ký tự, màn hình chúc mừng kèm mã phiếu tiếp nhận.
+- **Trang Quản Trị Phản Hồi (`/admin/feedbacks`)**:
+  - Bảng điều khiển riêng biệt cho Ban quản trị theo dõi chi tiết phản hồi du khách, thông tin liên hệ, IP gửi, và nút xử lý trạng thái tức thì.
 
 ---
 

@@ -10,6 +10,7 @@ import TriTonWeatherWidget from "@/components/TriTonWeatherWidget";
 import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
 import { sanitizeDescription, getCategoryFallbackImage } from "@/lib/dataSanitizer";
 import heroImagesData from "@/data/hero_images.json";
+import FeedbackSection from "@/components/FeedbackSection";
 import {
   Utensils,
   MapPin,
@@ -960,7 +961,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 6. 24/7 SOS EMERGENCY HOTLINE BANNER ──────────────────────── */}
+        {/* ── 6. FEEDBACK & COMMUNITY CONTRIBUTION ──────────────────────── */}
+        <FeedbackSection />
+
+        {/* ── 7. 24/7 SOS EMERGENCY HOTLINE BANNER ──────────────────────── */}
         <section className="bg-gradient-to-br from-[#151B34] to-[#1E2647] rounded-[28px] p-6 sm:p-8 text-white border border-white/10 shadow-lg font-body">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2 max-w-xl">

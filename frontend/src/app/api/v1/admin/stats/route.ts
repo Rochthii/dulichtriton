@@ -13,7 +13,7 @@ export async function GET() {
       supabase.from('places').select('id', { count: 'exact', head: true }).eq('is_active', true),
       supabase.from('video_discoveries').select('id', { count: 'exact', head: true }),
       supabase.from('chat_logs').select('id', { count: 'exact', head: true }),
-      supabase.from('audit_logs').select('id', { count: 'exact', head: true }).or('action.ilike.%CORRECTION%,action.ilike.%FEEDBACK%'),
+      supabase.from('feedbacks').select('id', { count: 'exact', head: true }),
       supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(10),
       supabase.from('places').select('id, name, commune, category, tourism_category, rating, is_hot, open_late, image_url').eq('is_active', true),
     ]);

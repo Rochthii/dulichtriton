@@ -26,6 +26,16 @@ __pycache__/
 htmlcov/
 *.log
 logs/*.log
+scratch/
+setup_*.py
+create_*.py
+test_*.py
+scratch_*.py
+check_*.py
+inspect_*.py
+list_*.py
+sync_*.py
+curate_*.py
 
 # 3. Node.js & Next.js Frontend
 node_modules/

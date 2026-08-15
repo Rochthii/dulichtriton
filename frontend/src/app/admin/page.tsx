@@ -249,7 +249,7 @@ export default function AdminDashboardPage() {
 
         {/* Metric 5: Feedback Inbox */}
         <Link
-          href="/admin/feedback"
+          href="/admin/feedbacks"
           className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs hover:shadow-md hover:border-purple-300 transition-all space-y-3 block group"
         >
           <div className="flex items-center justify-between">
