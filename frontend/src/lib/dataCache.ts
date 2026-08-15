@@ -2,10 +2,10 @@
  * Global Next.js Data Cache with Tag-Based On-Demand Invalidation
  * Du Lịch Tri Tôn AI Project
  * 
- * Architecture:
- * - 1st Visitor (or Build Time): Fetches from Supabase once and persists to Next.js Data Cache on Vercel.
- * - 2nd to 1,000,000th Visitor: Served from Next.js Data Cache with 0 Supabase DB queries and 0 quota cost.
- * - Admin Update: Calls revalidateTag('places' | 'food' | 'stays' | 'culture' | 'videos') to purge cache instantly worldwide.
+ * Rules:
+ * 1. Single Master Cache Key per domain (no cache dilution by query params).
+ * 2. Revalidation Safety Net: 86400s (24h) fallback while on-demand revalidateTag is instant.
+ * 3. Separation of Concerns: No private/user data stored in shared public cache.
  */
 
 import { unstable_cache, revalidateTag, revalidatePath } from 'next/cache';
@@ -38,37 +38,27 @@ export const getCachedAllPlaces = unstable_cache(
     }
     return localMasterPois as any[];
   },
-  ['master-places-all'],
+  ['master-places-all-v3'],
   {
     tags: ['places'],
-    revalidate: 86400, // 24h background revalidation fallback
+    revalidate: 86400, // 24h safety net
   }
 );
 
 /**
- * 2. Food & Gastronomy Places Cache
+ * 2. Master Food & Gastronomy Places (Unfiltered Master)
  * Tag: 'places', 'food'
  */
-export const getCachedFoodPlaces = unstable_cache(
-  async (commune: string = 'ALL', nightOnly: boolean = false, limit: number = 100) => {
+export const getCachedAllFoodPlaces = unstable_cache(
+  async () => {
     try {
-      let query = supabase
+      const { data: foodPlaces, error } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, open_late, night_hours, phone')
+        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, open_late, night_hours, phone, is_hot')
         .or('category.eq.gastronomy,category.eq.food,category.ilike.%Ẩm thực%,category.ilike.%Nhà hàng%,category.ilike.%Quán%,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Quán%,id.ilike.AT%,id.ilike.CF%,id.ilike.DS%')
         .eq('is_active', true)
-        .order('rating', { ascending: false })
-        .limit(limit);
+        .order('rating', { ascending: false });
 
-      if (nightOnly) {
-        query = query.eq('open_late', true);
-      }
-
-      if (commune && commune !== 'ALL' && commune !== 'Tất cả') {
-        query = query.ilike('commune', `%${commune}%`);
-      }
-
-      const { data: foodPlaces, error } = await query;
       if (!error && foodPlaces && foodPlaces.length > 0) {
         return foodPlaces;
       }
@@ -76,49 +66,51 @@ export const getCachedFoodPlaces = unstable_cache(
       console.warn('[DataCache] Food fetch error, using local fallback:', e);
     }
 
-    // Local Fallback
-    return (localMasterPois as any[])
-      .filter((p) => {
-        const isFood =
-          p.category === 'gastronomy' ||
-          p.category === 'food' ||
-          p.category === 'am_thuc' ||
-          (p.tourism_category && p.tourism_category.includes('Ẩm Thực')) ||
-          (p.id && (p.id.startsWith('AT') || p.id.startsWith('CF') || p.id.startsWith('DS')));
-        
-        if (!isFood) return false;
-        if (nightOnly && !p.open_late) return false;
-        if (commune && commune !== 'ALL' && commune !== 'Tất cả' && p.commune !== commune) return false;
-        return true;
-      })
-      .slice(0, limit);
+    return (localMasterPois as any[]).filter((p) => {
+      return (
+        p.category === 'gastronomy' ||
+        p.category === 'food' ||
+        p.category === 'am_thuc' ||
+        (p.tourism_category && p.tourism_category.includes('Ẩm Thực')) ||
+        (p.id && (p.id.startsWith('AT') || p.id.startsWith('CF') || p.id.startsWith('DS')))
+      );
+    });
   },
-  ['food-places-catalog'],
+  ['master-food-places-v3'],
   {
     tags: ['places', 'food'],
-    revalidate: 86400,
+    revalidate: 86400, // 24h safety net
   }
 );
 
 /**
- * 3. Stays & Accommodations Cache
+ * Helper to get filtered food places from single master cache
+ */
+export async function getCachedFoodPlaces(commune: string = 'ALL', nightOnly: boolean = false, limit: number = 100) {
+  const allFood = await getCachedAllFoodPlaces();
+  return allFood
+    .filter((p: any) => {
+      if (nightOnly && !p.open_late) return false;
+      if (commune && commune !== 'ALL' && commune !== 'Tất cả' && !p.commune?.includes(commune)) return false;
+      return true;
+    })
+    .slice(0, limit);
+}
+
+/**
+ * 3. Master Stays & Accommodations (Unfiltered Master)
  * Tag: 'places', 'stays'
  */
-export const getCachedStayPlaces = unstable_cache(
-  async (commune: string = 'ALL', limit: number = 100) => {
+export const getCachedAllStayPlaces = unstable_cache(
+  async () => {
     try {
-      let query = supabase
+      const { data: stays, error } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, description, price_level, video_url, address, opening_hours, phone')
+        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, phone, is_hot')
         .or('category.ilike.%Homestay%,category.ilike.%Khách sạn%,category.ilike.%Nhà nghỉ%,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách sạn%,id.ilike.KS%,id.ilike.HS%')
-        .order('rating', { ascending: false })
-        .limit(limit);
+        .eq('is_active', true)
+        .order('rating', { ascending: false });
 
-      if (commune && commune !== 'ALL' && commune !== 'Tất cả') {
-        query = query.ilike('commune', `%${commune}%`);
-      }
-
-      const { data: stays, error } = await query;
       if (!error && stays && stays.length > 0) {
         return stays;
       }
@@ -126,46 +118,50 @@ export const getCachedStayPlaces = unstable_cache(
       console.warn('[DataCache] Stays fetch error, using local fallback:', e);
     }
 
-    return (localMasterPois as any[])
-      .filter((p) => {
-        const isStay =
-          p.category === 'hotel' ||
-          p.category === 'homestay' ||
-          p.category === 'stay' ||
-          (p.tourism_category && (p.tourism_category.includes('Khách sạn') || p.tourism_category.includes('Homestay'))) ||
-          (p.id && (p.id.startsWith('KS') || p.id.startsWith('HS')));
-        if (!isStay) return false;
-        if (commune && commune !== 'ALL' && commune !== 'Tất cả' && p.commune !== commune) return false;
-        return true;
-      })
-      .slice(0, limit);
+    return (localMasterPois as any[]).filter((p) => {
+      return (
+        p.category === 'hotel' ||
+        p.category === 'homestay' ||
+        p.category === 'stay' ||
+        (p.tourism_category && (p.tourism_category.includes('Khách sạn') || p.tourism_category.includes('Homestay'))) ||
+        (p.id && (p.id.startsWith('KS') || p.id.startsWith('HS')))
+      );
+    });
   },
-  ['stays-places-catalog'],
+  ['master-stays-places-v3'],
   {
     tags: ['places', 'stays'],
-    revalidate: 86400,
+    revalidate: 86400, // 24h safety net
   }
 );
 
 /**
- * 4. Culture & Pagodas Cache
+ * Helper to get filtered stay places from single master cache
+ */
+export async function getCachedStayPlaces(commune: string = 'ALL', limit: number = 100) {
+  const allStays = await getCachedAllStayPlaces();
+  return allStays
+    .filter((p: any) => {
+      if (commune && commune !== 'ALL' && commune !== 'Tất cả' && !p.commune?.includes(commune)) return false;
+      return true;
+    })
+    .slice(0, limit);
+}
+
+/**
+ * 4. Master Culture & Pagodas (Unfiltered Master)
  * Tag: 'places', 'culture'
  */
-export const getCachedCulturePlaces = unstable_cache(
-  async (commune: string = 'ALL', limit: number = 100) => {
+export const getCachedAllCulturePlaces = unstable_cache(
+  async () => {
     try {
-      let query = supabase
+      const { data: cultureItems, error } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, description, price_level, video_url, address, opening_hours')
+        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, is_hot')
         .or('category.ilike.%Chùa%,category.ilike.%Văn hóa%,category.ilike.%Di tích%,category.ilike.%Di sản%,category.eq.spiritual,category.eq.culture,tourism_category.ilike.%Tâm linh%,tourism_category.ilike.%Văn hóa%,id.ilike.CH%,id.ilike.DT%')
-        .order('rating', { ascending: false })
-        .limit(limit);
+        .eq('is_active', true)
+        .order('rating', { ascending: false });
 
-      if (commune && commune !== 'ALL' && commune !== 'Tất cả') {
-        query = query.ilike('commune', `%${commune}%`);
-      }
-
-      const { data: cultureItems, error } = await query;
       if (!error && cultureItems && cultureItems.length > 0) {
         return cultureItems;
       }
@@ -173,56 +169,51 @@ export const getCachedCulturePlaces = unstable_cache(
       console.warn('[DataCache] Culture fetch error, using local fallback:', e);
     }
 
-    return (localMasterPois as any[])
-      .filter((p) => {
-        const isCulture =
-          p.category === 'spiritual' ||
-          p.category === 'culture' ||
-          p.category === 'history' ||
-          (p.tourism_category && (p.tourism_category.includes('Tâm linh') || p.tourism_category.includes('Văn hóa') || p.tourism_category.includes('Di tích'))) ||
-          (p.id && (p.id.startsWith('CH') || p.id.startsWith('DT')));
-        if (!isCulture) return false;
-        if (commune && commune !== 'ALL' && commune !== 'Tất cả' && p.commune !== commune) return false;
-        return true;
-      })
-      .slice(0, limit);
+    return (localMasterPois as any[]).filter((p) => {
+      return (
+        p.category === 'spiritual' ||
+        p.category === 'culture' ||
+        p.category === 'history' ||
+        (p.tourism_category && (p.tourism_category.includes('Tâm linh') || p.tourism_category.includes('Văn hóa') || p.tourism_category.includes('Di tích'))) ||
+        (p.id && (p.id.startsWith('CH') || p.id.startsWith('DT')))
+      );
+    });
   },
-  ['culture-places-catalog'],
+  ['master-culture-places-v3'],
   {
     tags: ['places', 'culture'],
-    revalidate: 86400,
+    revalidate: 86400, // 24h safety net
   }
 );
 
 /**
- * 5. Discovered TikTok Videos Cache
+ * Helper to get filtered culture places from single master cache
+ */
+export async function getCachedCulturePlaces(commune: string = 'ALL', limit: number = 100) {
+  const allCulture = await getCachedAllCulturePlaces();
+  return allCulture
+    .filter((p: any) => {
+      if (commune && commune !== 'ALL' && commune !== 'Tất cả' && !p.commune?.includes(commune)) return false;
+      return true;
+    })
+    .slice(0, limit);
+}
+
+/**
+ * 5. Master Discovered TikTok Videos (Unfiltered Master)
  * Tag: 'videos'
  */
-export const getCachedVideos = unstable_cache(
-  async (placeId: string = 'ALL', sort: string = 'relevant', limit: number = 30) => {
+export const getCachedAllVideos = unstable_cache(
+  async () => {
     try {
-      let query = supabase
+      const { data: dbData, error } = await supabase
         .from('video_discoveries')
         .select(
           'id, platform, external_video_id, video_url, embed_url, thumbnail_url, title, author_name, view_count, matched_poi_id, matched_alias, relevance_score, score_breakdown, verification_status'
         )
-        .in('verification_status', ['VERIFIED', 'RELEVANT']);
+        .in('verification_status', ['VERIFIED', 'RELEVANT'])
+        .order('relevance_score', { ascending: false });
 
-      if (placeId && placeId !== 'ALL') {
-        query = query.eq('matched_poi_id', placeId);
-      }
-
-      if (sort === 'recent') {
-        query = query.order('discovered_at', { ascending: false });
-      } else if (sort === 'popular') {
-        query = query.order('view_count', { ascending: false, nullsFirst: false });
-      } else {
-        query = query.order('relevance_score', { ascending: false });
-      }
-
-      query = query.limit(limit);
-
-      const { data: dbData, error } = await query;
       if (!error && dbData) {
         return dbData.map((v) => ({
           id: v.id,
@@ -245,12 +236,32 @@ export const getCachedVideos = unstable_cache(
     }
     return [];
   },
-  ['videos-triton-catalog'],
+  ['master-videos-triton-v3'],
   {
     tags: ['videos'],
-    revalidate: 86400,
+    revalidate: 86400, // 24h safety net
   }
 );
+
+/**
+ * Helper to get filtered videos from single master cache
+ */
+export async function getCachedVideos(placeId: string = 'ALL', sort: string = 'relevant', limit: number = 30) {
+  const allVideos = await getCachedAllVideos();
+  let list = [...allVideos];
+
+  if (placeId && placeId !== 'ALL') {
+    list = list.filter((v: any) => v.matched_poi_id === placeId);
+  }
+
+  if (sort === 'popular') {
+    list.sort((a: any, b: any) => (b.view_count || 0) - (a.view_count || 0));
+  } else {
+    list.sort((a: any, b: any) => (b.relevance_score || 0) - (a.relevance_score || 0));
+  }
+
+  return list.slice(0, limit);
+}
 
 /**
  * On-Demand Global Cache Purge (Triggered by Admin Actions)
