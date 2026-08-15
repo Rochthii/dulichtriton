@@ -107,9 +107,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - **Interactive 4-Season Festival Timeline**: Banner trình diễn 5 kỳ lễ hội với thời gian âm/dương lịch, địa điểm tổ chức và nút bấm hỏi AI nhanh.
   - **4 Di Sản & Tinh Hoa Làng Nghề Trăm Tuổi**: Kinh Lá Buông (Satra Slarkrit) độc bản, Dàn nhạc Ngũ Âm & Múa Dù Kê (Robam), Làng Dệt Thổ Cẩm Châu Lăng, Lò Gốm Bếp Cà-Ràng Ô Lâm.
   - **Bộ Lọc Tabs Phân Loại Mạch Lạc**: `Tất Cả` | `Lễ Hội & Sân Đua Bò` | `Chùa Khmer Cổ Kính` | `Di Tích Lịch Sử` | `Làng Nghề & Di Sản`.
-- **Nạp 6 Khối Tri Thức Văn Hóa Mới & 100% Vector Embeddings 768d**:
-  - Bổ sung `KB013` (Tết Chôl Chnăm Thmây), `KB014` (Lễ Ok Om Bok & Thả đèn gió), `KB015` (Lễ Dâng Y Kathina & Nhạc Ngũ Âm), `KB016` (Nghệ thuật Múa Dân Gian Khmer), `KB017` (Làng Nghề Truyền Thống Tri Tôn), `KB018` (Lễ Hội Khinh Khí Cầu).
-  - Đạt **162/162 địa điểm** và **22/22 khối tri thức** có Vector Embeddings 768d trong pgvector.
+- **Nạp Bản Tổng Quan Toàn Diện Master Dossier Tri Tôn (`KB000-TRI-TON-MASTER-OVERVIEW`)**:
+  - Biên soạn và nạp hồ sơ tri thức tổng quan toàn diện, chuẩn xác và sâu sắc nhất về Tri Tôn:
+    • *Địa lý & Tự nhiên*: Bán sơn địa rộng 600km² lớn nhất An Giang, 4 ngọn núi Thất Sơn (Cô Tô, Núi Dài, Núi Tượng, Núi Nước).
+    • *15 Đơn vị hành chính*: TT. Tri Tôn, TT. Ba Chúc, Xã Ô Lâm, Núi Tô, Châu Lăng, Lương Phi, An Tức, Cô Tô, Lê Trì, Vĩnh Gia, Lạc Quới, Tà Đảnh, Tân Tuyến, Vĩnh Phước, Lương An Trà.
+    • *Tam tộc cộng cư*: Kinh - Khmer (34% dân số) - Hoa đoàn kết, gắn bó.
+    • *Tôn giáo & Tín ngưỡng*: 35 chùa Nam Tông Khmer, Di sản Kinh lá buông, Đạo Tứ Ân Hiếu Nghĩa Ba Chúc.
+    • *Di tích lịch sử Quốc gia*: Đồi Tức Dụp (128 ngày đêm), Căn cứ Ô Tà Sóc, Nhà Mồ Ba Chúc, Kênh Vĩnh Tế.
+    • *Ẩm thực đặc sản độc bản*: Cây Chúc Bảy Núi (Gà Đốt Ô Thum, Cháo bò trái chúc, Bò nướng), Cây Thốt Nốt (Bánh bò Út Cột, Đường thốt nốt), Bún cá Sơ Nương, Đu đủ đâm RiNa.
+    • *Lễ hội 4 mùa*: Đua Bò Bảy Núi, Tết Chôl Chnăm Thmây, Lễ Cúng Trăng Ok Om Bok, Lễ Dâng Y Kathina, Khinh khí cầu Thất Sơn.
+  - Hoàn tất Vector Embeddings 768 chiều cho **163/163 địa điểm ($100\%$)** và **23/23 khối tri thức ($100\%$)** trong Supabase PostgreSQL pgvector.
 
 ---
 
