@@ -51,8 +51,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   13. *Gà Đốt Thành Đạt Ô Thum*: Phục vụ chu đáo, chòi lá rộng rãi cho khách gia đình và đoàn phượt.
   14. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc, muối ớt giã cối đá thơm lừng.
   15. *Quán Gà Đốt Vườn Nho Ô Thum*: Mô hình sinh thái hái nho 2ha kết hợp thưởng thức gà đốt chòi lá ven hồ.
-- **Tuyệt Đối Tuân Thủ Thuật Ngữ Văn Hóa**: 100% sử dụng thuật ngữ **"Gà Đốt"**, loại bỏ hoàn toàn từ "gà nướng".
-- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 140 địa điểm có bài viết chi tiết và 161 POIs lên Supabase Cloud.
+### 🧹 Rà Soát, Thanh Lọc & Làm Sạch Dữ Liệu (Master Data Clean-up)
+- **Loại Bỏ Hoàn Toàn 22 Bản Ghi Rác / Trùng Lặp / Không Tồn Tại**:
+  - *Địa danh chung / Rác OSM*: Xóa bỏ các mục rác quét từ OpenStreetMap không phải quán hay điểm du lịch thực tế (`tri-ton`, `co-to`, `ba-chuc`, `my-truc`, `tigon`, `diem-du-lich-tri-ton-12` / ភូមិស្រែឃ្មួញ, `nha-hang-an`, `tinh-tam`, `hanh-tam`, `thien-duyan`, `nha-tro-quoc-tien`, `khmer-temple`, `nha-thieu-nhi`, `gia-ga-ot-o-thum`, `dac-san-ga-dot-o-thum-tri-ton`).
+  - *Mục Trùng Lặp (Duplicate POIs)*: Hợp nhất và xóa các ID trùng lặp (`ho-soai-chek-2`, `b49161b0-chùa-phi-lai-ba-chú`, `e563b663-chùa-tam-bửu-ba-chú`, `lo-uong-thot-not-ut-hue`, `con-uong-tuyen-tranh-t941t948`, `cau-go-ong-lua`, `cau-khi-ong-thot-not`, `khu-trung-bay-toi-ac-pol-pot`, `1370b402-nhà-hàng-gà-đốt-ô-th`).
+- **Thanh Lọc Trực Tiếp CSDL Supabase PostgreSQL**: Đã thực hiện lệnh `DELETE` thanh trừng 21 bản ghi rác trên Cloud Database, đưa Master Data về **139 POIs thực địa 100% chuẩn xác, sạch sẽ và có thật tại Tri Tôn**.
 
 ---
 
