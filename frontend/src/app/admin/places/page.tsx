@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   Plus,
   Trash2,
+  RotateCcw,
   Image as ImageIcon,
   Moon,
   Phone,
@@ -23,6 +24,10 @@ import {
   DollarSign,
   AlertCircle,
   Database,
+  CheckSquare,
+  Square,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 
 interface PlaceRecord {
@@ -87,16 +92,24 @@ export default function AdminPlacesPage() {
   const [communeFilter, setCommuneFilter] = useState('ALL');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [nightFilter, setNightFilter] = useState(false);
+  const [activeStatusFilter, setActiveStatusFilter] = useState<'ALL' | 'ACTIVE' | 'INACTIVE'>('ACTIVE');
+
+  // Selected items for batch actions
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   // Modals state
   const [editingPlace, setEditingPlace] = useState<PlaceRecord | null>(null);
   const [activeEditTab, setActiveEditTab] = useState<'basic' | 'story' | 'service' | 'media'>('basic');
   const [isAddingNew, setIsAddingNew] = useState(false);
+  const [activeAddTab, setActiveAddTab] = useState<'basic' | 'story' | 'service' | 'media'>('basic');
   const [showAuditLogsModal, setShowAuditLogsModal] = useState(false);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [loadingAuditLogs, setLoadingAuditLogs] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [syncingVector, setSyncingVector] = useState(false);
+
+  // Delete Confirm Modal
+  const [deletingPlace, setDeletingPlace] = useState<PlaceRecord | null>(null);
 
   const [newPlace, setNewPlace] = useState<Partial<PlaceRecord>>({
     name: '',
@@ -104,7 +117,7 @@ export default function AdminPlacesPage() {
     category: 'Danh thắng check-in',
     tourism_category: 'Địa Điểm Tham Quan',
     rating: 4.8,
-    image_url: '',
+    image_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
     description: '',
     detailed_story: '',
     phone: '',
@@ -290,7 +303,7 @@ export default function AdminPlacesPage() {
           category: 'Danh thắng check-in',
           tourism_category: 'Địa Điểm Tham Quan',
           rating: 4.8,
-          image_url: '',
+          image_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
           description: '',
           detailed_story: '',
           phone: '',
@@ -314,10 +327,49 @@ export default function AdminPlacesPage() {
     }
   };
 
+  const handleDeletePlace = async () => {
+    if (!deletingPlace) return;
+
+    try {
+      const res = await fetch(`/api/v1/admin/places?id=${deletingPlace.id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setPlaces(places.map((p) => (p.id === deletingPlace.id ? { ...p, is_active: false } : p)));
+        setDeletingPlace(null);
+        setStatusMsg(`Đã tắt kích hoạt / chuyển vào thùng rác địa điểm "${deletingPlace.name}"!`);
+        setTimeout(() => setStatusMsg(null), 3500);
+      }
+    } catch (err) {
+      console.warn('Failed to delete place:', err);
+    }
+  };
+
+  const handleRestorePlace = async (place: PlaceRecord) => {
+    try {
+      const res = await fetch('/api/v1/admin/places', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: place.id, is_active: true }),
+      });
+      if (res.ok) {
+        setPlaces(places.map((p) => (p.id === place.id ? { ...p, is_active: true } : p)));
+        setStatusMsg(`Đã khôi phục hoạt động cho "${place.name}"!`);
+        setTimeout(() => setStatusMsg(null), 3000);
+      }
+    } catch (err) {
+      console.warn('Failed to restore place:', err);
+    }
+  };
+
+  // Filter places
   const filteredPlaces = places.filter((p) => {
     if (nightFilter && !p.open_late) return false;
+    if (activeStatusFilter === 'ACTIVE' && p.is_active === false) return false;
+    if (activeStatusFilter === 'INACTIVE' && p.is_active !== false) return false;
     return true;
   });
+
+  const activeCount = places.filter((p) => p.is_active !== false).length;
+  const inactiveCount = places.filter((p) => p.is_active === false).length;
 
   return (
     <div className="space-y-6">
@@ -326,17 +378,22 @@ export default function AdminPlacesPage() {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">
-              CMS Quản Trị Địa Điểm
+              CMS Quản Trị Địa Điểm Toàn Diện
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-bold text-xs border border-amber-200">
-              149 Master POIs Live
+              {activeCount} Địa Điểm Hoạt Động
             </span>
+            {inactiveCount > 0 && (
+              <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-800 font-bold text-xs border border-rose-200">
+                {inactiveCount} Đã Ẩn / Thùng Rác
+              </span>
+            )}
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Quản Lý 149 Địa Điểm & Rich Content
+            Quản Lý 149 Địa Điểm & Rich Content (CRUD Đầy Đủ)
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Chỉnh sửa câu chuyện thực địa, gắn hotline đặt bàn, bật chuyên đề Tri Tôn Về Đêm và tự động cập nhật Vector Embeddings 768d cho AI Chatbot.
+            Thêm mới, sửa chi tiết Rich Story, xóa/khôi phục, gắn hotline đặt bàn, bật Tri Tôn Về Đêm và tự động đồng bộ Vector Embeddings 768d cho AI Chatbot.
           </p>
         </div>
 
@@ -347,11 +404,14 @@ export default function AdminPlacesPage() {
             className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
           >
             <Clock className="w-4 h-4 text-slate-500" />
-            <span>Xem Nhật Ký Audit Log</span>
+            <span>Audit Logs</span>
           </button>
 
           <button
-            onClick={() => setIsAddingNew(true)}
+            onClick={() => {
+              setIsAddingNew(true);
+              setActiveAddTab('basic');
+            }}
             type="button"
             className="flex items-center gap-1.5 px-5 py-2.5 rounded-2xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold text-xs shadow-md shadow-emerald-900/10 transition-all cursor-pointer"
           >
@@ -368,7 +428,7 @@ export default function AdminPlacesPage() {
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{statusMsg}</span>
           </div>
-          <button onClick={() => setStatusMsg(null)} className="text-emerald-600 hover:text-emerald-900">
+          <button onClick={() => setStatusMsg(null)} className="text-emerald-600 hover:text-emerald-900 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -414,6 +474,28 @@ export default function AdminPlacesPage() {
                 </option>
               ))}
             </select>
+
+            {/* Active Status Tabs */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-2xl text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setActiveStatusFilter('ACTIVE')}
+                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                  activeStatusFilter === 'ACTIVE' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500'
+                }`}
+              >
+                Hoạt Động ({activeCount})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveStatusFilter('INACTIVE')}
+                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                  activeStatusFilter === 'INACTIVE' ? 'bg-rose-600 text-white shadow-xs' : 'text-slate-500'
+                }`}
+              >
+                Thùng Rác ({inactiveCount})
+              </button>
+            </div>
 
             <button
               type="button"
@@ -462,7 +544,7 @@ export default function AdminPlacesPage() {
                 <th className="p-4">Chuyên Đề & Đêm</th>
                 <th className="p-4">Hotline Đặt Bàn</th>
                 <th className="p-4 text-center">Trạng Thái HOT</th>
-                <th className="p-4 text-right">Thao Tác</th>
+                <th className="p-4 text-right">Quản Trị Thao Tác</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -481,7 +563,12 @@ export default function AdminPlacesPage() {
                 </tr>
               ) : (
                 filteredPlaces.map((place) => (
-                  <tr key={place.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr
+                    key={place.id}
+                    className={`transition-colors ${
+                      place.is_active === false ? 'bg-rose-50/40 hover:bg-rose-50/70' : 'hover:bg-slate-50/80'
+                    }`}
+                  >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-2xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
@@ -500,6 +587,11 @@ export default function AdminPlacesPage() {
                             {place.is_hot && (
                               <span className="px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-black">
                                 HOT
+                              </span>
+                            )}
+                            {place.is_active === false && (
+                              <span className="px-1.5 py-0.5 rounded-md bg-rose-100 text-rose-800 text-[10px] font-black">
+                                ĐÃ ẨN
                               </span>
                             )}
                           </div>
@@ -582,10 +674,30 @@ export default function AdminPlacesPage() {
                           }}
                           type="button"
                           className="p-2 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-600 border border-slate-200 transition-all cursor-pointer"
-                          title="Chỉnh sửa chi tiết"
+                          title="Chỉnh sửa chi tiết (Rich Story)"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
+
+                        {place.is_active === false ? (
+                          <button
+                            onClick={() => handleRestorePlace(place)}
+                            type="button"
+                            className="p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-all cursor-pointer"
+                            title="Khôi phục hoạt động"
+                          >
+                            <RotateCcw className="w-4 h-4" />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => setDeletingPlace(place)}
+                            type="button"
+                            className="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition-all cursor-pointer"
+                            title="Xóa / Tắt kích hoạt"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        )}
 
                         <a
                           href={`/places/${place.id || place.slug}`}
@@ -606,11 +718,365 @@ export default function AdminPlacesPage() {
         </div>
       </div>
 
+      {/* Delete Confirmation Modal */}
+      {deletingPlace && (
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl border border-slate-200 p-6 space-y-4">
+            <div className="flex items-center gap-3 text-rose-600">
+              <div className="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center">
+                <AlertCircle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-extrabold text-base text-slate-900">Xác Nhận Xóa / Ẩn Địa Điểm</h3>
+                <p className="text-xs text-slate-500 font-medium">Hành động này sẽ thay đổi trạng thái trên CSDL</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-700 leading-relaxed bg-rose-50 p-3.5 rounded-2xl border border-rose-100">
+              Bạn có chắc chắn muốn tắt kích hoạt địa điểm <strong className="text-rose-900">{deletingPlace.name}</strong>? Địa điểm sẽ bị ẩn khỏi danh sách gợi ý cho du khách và AI Chatbot.
+            </p>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setDeletingPlace(null)}
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
+              >
+                Hủy bỏ
+              </button>
+              <button
+                type="button"
+                onClick={handleDeletePlace}
+                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md cursor-pointer flex items-center gap-1.5"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Xác Nhận Ẩn</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add New POI Modal (Full 4 Tabs) */}
+      {isAddingNew && (
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div>
+                <span className="text-xs text-slate-500 font-bold">Tạo mới điểm đến Bảy Núi</span>
+                <h3 className="font-black text-lg text-slate-900 mt-0.5">Thêm Địa Điểm Mới Vào Master Data</h3>
+              </div>
+              <button
+                onClick={() => setIsAddingNew(false)}
+                className="p-2 rounded-full hover:bg-slate-200 text-slate-500 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Add Tabs */}
+            <div className="flex border-b border-slate-200 bg-slate-100 px-5 gap-2 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => setActiveAddTab('basic')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeAddTab === 'basic' ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white' : 'text-slate-600'
+                }`}
+              >
+                1. Thông Tin Cơ Bản
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveAddTab('story')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeAddTab === 'story' ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white' : 'text-slate-600'
+                }`}
+              >
+                2. Rich Story & Câu Chuyện
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveAddTab('service')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeAddTab === 'service' ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white' : 'text-slate-600'
+                }`}
+              >
+                3. Đêm & Hotline Đặt Chỗ
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveAddTab('media')}
+                className={`py-3 px-3 border-b-2 transition-all cursor-pointer ${
+                  activeAddTab === 'media' ? 'border-[#1B4D3E] text-[#1B4D3E] bg-white' : 'text-slate-600'
+                }`}
+              >
+                4. Ảnh & Video TikTok
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNew} className="p-6 overflow-y-auto flex-1 space-y-4 text-xs">
+              {activeAddTab === 'basic' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Tên Địa Điểm:</label>
+                      <input
+                        type="text"
+                        value={newPlace.name}
+                        onChange={(e) => setNewPlace({ ...newPlace, name: e.target.value })}
+                        placeholder="VD: Cà Phê Mây Hồ Soài Chék"
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Xã / Thị Trấn:</label>
+                      <select
+                        value={newPlace.commune}
+                        onChange={(e) => setNewPlace({ ...newPlace, commune: e.target.value })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      >
+                        {communes.filter((c) => c !== 'ALL').map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Phân Nhóm Du Lịch:</label>
+                      <select
+                        value={newPlace.tourism_category}
+                        onChange={(e) => setNewPlace({ ...newPlace, tourism_category: e.target.value })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      >
+                        <option value="Danh thắng check-in">Danh thắng check-in</option>
+                        <option value="Văn hóa & Tâm linh">Văn hóa & Tâm linh</option>
+                        <option value="Ẩm thực & Đặc sản">Ẩm thực & Đặc sản</option>
+                        <option value="Quán Cà Phê">Quán Cà Phê</option>
+                        <option value="Homestay & Lưu Trú">Homestay & Lưu Trú</option>
+                        <option value="Di tích Lịch sử">Di tích Lịch sử</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Đánh Giá (Rating):</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="1"
+                        max="5"
+                        value={newPlace.rating}
+                        onChange={(e) => setNewPlace({ ...newPlace, rating: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Vĩ độ (Latitude):</label>
+                      <input
+                        type="number"
+                        step="0.000001"
+                        value={newPlace.latitude}
+                        onChange={(e) => setNewPlace({ ...newPlace, latitude: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Kinh độ (Longitude):</label>
+                      <input
+                        type="number"
+                        step="0.000001"
+                        value={newPlace.longitude}
+                        onChange={(e) => setNewPlace({ ...newPlace, longitude: parseFloat(e.target.value) })}
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Mô Tả Tóm Tắt:</label>
+                    <textarea
+                      rows={2}
+                      value={newPlace.description}
+                      onChange={(e) => setNewPlace({ ...newPlace, description: e.target.value })}
+                      placeholder="Mô tả nổi bật ngắn gọn..."
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeAddTab === 'story' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">
+                      Câu Chuyện Chi Tiết & Sự Tích Bảy Núi (Detailed Story):
+                    </label>
+                    <textarea
+                      rows={8}
+                      value={newPlace.detailed_story}
+                      onChange={(e) => setNewPlace({ ...newPlace, detailed_story: e.target.value })}
+                      placeholder="Nhập nội dung cẩm nang, truyền thuyết, sự tích..."
+                      className="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs leading-relaxed"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Khung Giờ Vàng Check-in:</label>
+                    <input
+                      type="text"
+                      value={newPlace.golden_time_windows}
+                      onChange={(e) => setNewPlace({ ...newPlace, golden_time_windows: e.target.value })}
+                      placeholder="06:00–08:00 • 16:00–17:30"
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeAddTab === 'service' && (
+                <div className="space-y-4">
+                  <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Moon className="w-5 h-5 text-purple-700" />
+                        <div>
+                          <div className="font-bold text-purple-900">Chuyên Đề "Tri Tôn Về Đêm"</div>
+                          <div className="text-[11px] text-purple-600">Bật nếu địa điểm mở cửa phục vụ sau 17:30</div>
+                        </div>
+                      </div>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(newPlace.open_late)}
+                        onChange={(e) => setNewPlace({ ...newPlace, open_late: e.target.checked })}
+                        className="w-5 h-5 rounded text-purple-700 focus:ring-purple-500"
+                      />
+                    </div>
+
+                    {newPlace.open_late && (
+                      <div>
+                        <label className="font-bold text-purple-900 block mb-1">Khung Giờ Mở Cửa Buổi Tối:</label>
+                        <input
+                          type="text"
+                          value={newPlace.night_hours}
+                          onChange={(e) => setNewPlace({ ...newPlace, night_hours: e.target.value })}
+                          placeholder="17:00 - 22:30"
+                          className="w-full p-2 rounded-xl bg-white border border-purple-200 font-bold text-xs"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Hotline Đặt Bàn / Homestay:</label>
+                      <input
+                        type="text"
+                        value={newPlace.phone}
+                        onChange={(e) => setNewPlace({ ...newPlace, phone: e.target.value })}
+                        placeholder="0296 3874 113"
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="font-bold text-slate-700 block mb-1">Mức Giá / Vé Tham Quan:</label>
+                      <input
+                        type="text"
+                        value={newPlace.price_level}
+                        onChange={(e) => setNewPlace({ ...newPlace, price_level: e.target.value })}
+                        placeholder="Miễn phí / 20k - 50k"
+                        className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeAddTab === 'media' && (
+                <div className="space-y-4">
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Tải Ảnh Lên Cloudinary:</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleCloudinaryUpload(e, false)}
+                      disabled={uploadingImages}
+                      className="w-full p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện:</label>
+                    <input
+                      type="text"
+                      value={newPlace.image_url}
+                      onChange={(e) => setNewPlace({ ...newPlace, image_url: e.target.value })}
+                      placeholder="https://..."
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1">Link Video TikTok:</label>
+                    <input
+                      type="text"
+                      value={newPlace.video_url}
+                      onChange={(e) => setNewPlace({ ...newPlace, video_url: e.target.value })}
+                      placeholder="https://www.tiktok.com/@..."
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                <div className="flex items-center gap-1.5 text-emerald-800 font-bold text-[11px]">
+                  <Database className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Tự động sinh Vector Embeddings 768d cho AI Chatbot</span>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsAddingNew(false)}
+                    className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer"
+                  >
+                    Hủy bỏ
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={syncingVector}
+                    className="px-5 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    {syncingVector ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Đang Tạo & Đồng Bộ Vector...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-amber-300" />
+                        <span>Tạo Mới & Đồng Bộ</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Edit Place Modal */}
       {editingPlace && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
-            {/* Modal Header */}
             <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div>
                 <div className="flex items-center gap-2">

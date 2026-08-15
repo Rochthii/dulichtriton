@@ -16,6 +16,9 @@ import {
   X,
   RefreshCw,
   Eye,
+  ArrowUp,
+  ArrowDown,
+  Layers,
 } from 'lucide-react';
 
 interface StopItem {
@@ -138,9 +141,55 @@ export default function AdminItinerariesPage() {
     }
   };
 
-  const filtered = itineraries.filter((it) =>
-    it.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (it.duration && it.duration.toLowerCase().includes(searchQuery.toLowerCase()))
+  // Helper to add stop in edit mode
+  const handleAddStopInEdit = () => {
+    if (!editingTour) return;
+    const stops = editingTour.stops || [];
+    setEditingTour({
+      ...editingTour,
+      stops: [...stops, { time: '09:00', name: 'Điểm tham quan mới', cluster: 'Tri Tôn' }],
+    });
+  };
+
+  const handleRemoveStopInEdit = (index: number) => {
+    if (!editingTour || !editingTour.stops) return;
+    const stops = [...editingTour.stops];
+    stops.splice(index, 1);
+    setEditingTour({ ...editingTour, stops });
+  };
+
+  const handleUpdateStopInEdit = (index: number, field: keyof StopItem, val: string) => {
+    if (!editingTour || !editingTour.stops) return;
+    const stops = [...editingTour.stops];
+    stops[index] = { ...stops[index], [field]: val };
+    setEditingTour({ ...editingTour, stops });
+  };
+
+  // Helper for add mode
+  const handleAddStopInNew = () => {
+    const stops = newTour.stops || [];
+    setNewTour({
+      ...newTour,
+      stops: [...stops, { time: '09:00', name: 'Điểm tham quan mới', cluster: 'Tri Tôn' }],
+    });
+  };
+
+  const handleRemoveStopInNew = (index: number) => {
+    const stops = [...(newTour.stops || [])];
+    stops.splice(index, 1);
+    setNewTour({ ...newTour, stops });
+  };
+
+  const handleUpdateStopInNew = (index: number, field: keyof StopItem, val: string) => {
+    const stops = [...(newTour.stops || [])];
+    stops[index] = { ...stops[index], [field]: val };
+    setNewTour({ ...newTour, stops });
+  };
+
+  const filtered = itineraries.filter(
+    (it) =>
+      it.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (it.duration && it.duration.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
@@ -157,10 +206,10 @@ export default function AdminItinerariesPage() {
             </span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Quản Lý 35 Lịch Trình & Kịch Bản Gợi Ý
+            Quản Lý 35 Lịch Trình & Kịch Bản Gợi Ý (CRUD)
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Thiết lập danh sách các điểm dừng, cự ly km, phương tiện di chuyển và chi phí dự kiến cho từng tour tham quan Tri Tôn.
+            Thêm mới, chỉnh sửa chi tiết các chặng dừng, sắp xếp lộ trình và cập nhật thông tin gợi ý tour cho du khách.
           </p>
         </div>
 
@@ -181,7 +230,7 @@ export default function AdminItinerariesPage() {
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span>{statusMsg}</span>
           </div>
-          <button onClick={() => setStatusMsg(null)} className="text-emerald-600 hover:text-emerald-900">
+          <button onClick={() => setStatusMsg(null)} className="text-emerald-600 hover:text-emerald-900 cursor-pointer">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -305,10 +354,10 @@ export default function AdminItinerariesPage() {
         )}
       </div>
 
-      {/* Edit Modal */}
+      {/* Edit Modal (With Stops Manager) */}
       {editingTour && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-2xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+          <div className="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
             <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
               <h3 className="font-extrabold text-base text-slate-900">
                 Chỉnh Sửa Lịch Trình: {editingTour.title}
@@ -375,11 +424,68 @@ export default function AdminItinerariesPage() {
                 </div>
               </div>
 
+              {/* Dynamic Stops Manager */}
+              <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-slate-800 flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-emerald-700" />
+                    <span>Danh Sách Chặng Dừng ({editingTour.stops?.length || 0} chặng):</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleAddStopInEdit}
+                    className="px-2.5 py-1 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Thêm Chặng Dừng</span>
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {editingTour.stops?.map((stop, idx) => (
+                    <div key={idx} className="flex items-center gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200">
+                      <span className="w-5 h-5 rounded-full bg-emerald-700 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                        {idx + 1}
+                      </span>
+                      <input
+                        type="text"
+                        value={stop.time}
+                        onChange={(e) => handleUpdateStopInEdit(idx, 'time', e.target.value)}
+                        placeholder="07:00"
+                        className="w-20 p-1.5 rounded-xl bg-white border border-slate-200 font-mono font-bold text-xs"
+                      />
+                      <input
+                        type="text"
+                        value={stop.name}
+                        onChange={(e) => handleUpdateStopInEdit(idx, 'name', e.target.value)}
+                        placeholder="Tên địa điểm / hoạt động..."
+                        className="flex-1 p-1.5 rounded-xl bg-white border border-slate-200 font-bold text-xs"
+                      />
+                      <input
+                        type="text"
+                        value={stop.cluster || ''}
+                        onChange={(e) => handleUpdateStopInEdit(idx, 'cluster', e.target.value)}
+                        placeholder="Cụm (Tà Pạ, Ô Lâm...)"
+                        className="w-28 p-1.5 rounded-xl bg-white border border-slate-200 text-xs"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveStopInEdit(idx)}
+                        className="p-1.5 rounded-lg hover:bg-rose-100 text-rose-600 cursor-pointer"
+                        title="Xóa chặng này"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex justify-end gap-2 pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setEditingTour(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700 cursor-pointer"
                 >
                   Hủy bỏ
                 </button>
@@ -388,6 +494,153 @@ export default function AdminItinerariesPage() {
                   className="px-5 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold shadow-md cursor-pointer"
                 >
                   Lưu Thay Đổi
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Add New Tour Modal */}
+      {isAddingNew && (
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <h3 className="font-extrabold text-base text-slate-900">
+                Tạo Lịch Trình Gợi Ý Mới
+              </h3>
+              <button
+                onClick={() => setIsAddingNew(false)}
+                className="p-1.5 rounded-full hover:bg-slate-200 text-slate-500 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNew} className="p-6 overflow-y-auto flex-1 space-y-4 text-xs">
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Tên Lịch Trình:</label>
+                <input
+                  type="text"
+                  value={newTour.title}
+                  onChange={(e) => setNewTour({ ...newTour, title: e.target.value })}
+                  placeholder="VD: Tour Săn Mây & Ngắm Hoàng Hôn Cô Tô 1 Ngày"
+                  className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-slate-700 block mb-1">Thời Lượng:</label>
+                  <input
+                    type="text"
+                    value={newTour.duration}
+                    onChange={(e) => setNewTour({ ...newTour, duration: e.target.value })}
+                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="font-bold text-slate-700 block mb-1">Tổng Quãng Đường (km):</label>
+                  <input
+                    type="number"
+                    value={newTour.total_distance_km}
+                    onChange={(e) => setNewTour({ ...newTour, total_distance_km: parseInt(e.target.value) || 0 })}
+                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-bold"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-bold text-slate-700 block mb-1">Phương Tiện:</label>
+                  <input
+                    type="text"
+                    value={newTour.recommended_vehicle || ''}
+                    onChange={(e) => setNewTour({ ...newTour, recommended_vehicle: e.target.value })}
+                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                  />
+                </div>
+                <div>
+                  <label className="font-bold text-slate-700 block mb-1">Ngân Sách Dự Kiến:</label>
+                  <input
+                    type="text"
+                    value={newTour.budget_estimate || ''}
+                    onChange={(e) => setNewTour({ ...newTour, budget_estimate: e.target.value })}
+                    className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                  />
+                </div>
+              </div>
+
+              {/* Dynamic Stops Manager */}
+              <div className="space-y-2 pt-2 border-t border-slate-100">
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-slate-800 flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-emerald-700" />
+                    <span>Danh Sách Chặng Dừng:</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleAddStopInNew}
+                    className="px-2.5 py-1 rounded-xl bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-bold text-[11px] flex items-center gap-1 cursor-pointer"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Thêm Chặng</span>
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {newTour.stops?.map((stop, idx) => (
+                    <div key={idx} className="flex items-center gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200">
+                      <span className="w-5 h-5 rounded-full bg-emerald-700 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                        {idx + 1}
+                      </span>
+                      <input
+                        type="text"
+                        value={stop.time}
+                        onChange={(e) => handleUpdateStopInNew(idx, 'time', e.target.value)}
+                        placeholder="07:00"
+                        className="w-20 p-1.5 rounded-xl bg-white border border-slate-200 font-mono font-bold text-xs"
+                      />
+                      <input
+                        type="text"
+                        value={stop.name}
+                        onChange={(e) => handleUpdateStopInNew(idx, 'name', e.target.value)}
+                        placeholder="Tên địa điểm / hoạt động..."
+                        className="flex-1 p-1.5 rounded-xl bg-white border border-slate-200 font-bold text-xs"
+                      />
+                      <input
+                        type="text"
+                        value={stop.cluster || ''}
+                        onChange={(e) => handleUpdateStopInNew(idx, 'cluster', e.target.value)}
+                        placeholder="Cụm"
+                        className="w-28 p-1.5 rounded-xl bg-white border border-slate-200 text-xs"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveStopInNew(idx)}
+                        className="p-1.5 rounded-lg hover:bg-rose-100 text-rose-600 cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsAddingNew(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700 cursor-pointer"
+                >
+                  Hủy bỏ
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#1B4D3E] hover:bg-[#143B2F] text-white font-bold shadow-md cursor-pointer"
+                >
+                  Tạo Lịch Trình
                 </button>
               </div>
             </form>
