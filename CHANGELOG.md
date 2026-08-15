@@ -89,6 +89,13 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 - **Nạp Toàn Bộ Bộ 27-35 Lịch Trình Thực Địa Từ `lichtrinh.json` Vào Supabase (`public.preset_itineraries`)**:
   - Chuyển đổi và nạp đầy đủ toàn bộ bộ lịch trình mẫu chuyên sâu Thất Sơn: Từ *Kinh điển 1 ngày, Toàn cảnh 2N1Đ, Khám phá sâu 3N2Đ, Check-in sống ảo, Tâm linh hành hương, Lịch sử về nguồn, Food Tour ngày & đêm, Cafe Hopping, Chạy xe đêm, Săn hoàng hôn & BBQ Ô Thum, Mùa Lễ hội Đua Bò Bảy Núi, Trekking Vồ Hội Núi Cô Tô, Family Weekend, Backpacker Tour, Luxury Chill, Mùa lúa chín photography*...
   - Mỗi lịch trình được cấu trúc hóa chi tiết: Thời lượng, Ngân sách dự kiến, Đối tượng phù hợp, Phương tiện di chuyển, Toàn bộ các điểm dừng (stops) có tọa độ, thời gian bắt đầu/kết thúc, thời lượng lưu trú và mẹo du lịch (tips).
+- **Tính Năng Kéo Thả Sắp Xếp Điểm Dừng (HTML5 Native Drag & Drop Reordering)**:
+  - Cho phép quản trị viên kéo thả trực quan vị trí bất kỳ chặng dừng nào trong tour với biểu tượng `GripVertical`, hiệu ứng mờ nhạt và viền sáng khi thả.
+  - Hỗ trợ phím di chuyển nhanh Lên/Xuống (`ArrowUp`/`ArrowDown`) để thao tác thuận tiện trên mọi thiết bị.
+- **Tính Năng Tự Động Đo Khoảng Cách GPS Thực Địa (Automated Haversine & Travel Time)**:
+  - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của 149 địa điểm Tri Tôn trong cơ sở dữ liệu.
+  - Sử dụng công thức Haversine kết hợp hệ số uốn lượn đường đèo Bảy Núi ($1.25\times$) để tính toán chính xác quãng đường (km) và thời gian di chuyển (phút) giữa từng chặng dừng.
+  - Nút bấm **"⚡ Tự Động Đo GPS & Quãng Đường"** tự động tính tổng quãng đường tour `total_distance_km` và hiển thị chi tiết thẻ kết nối chặng `➔ ~X km (Y phút di chuyển)`.
 - **Hỗ Trợ Đầy Đủ Thao Tác CRUD Quản Trị Trực Tuyến**:
   - `GET`: Nạp danh sách 27-35 tour mẫu trực tiếp từ database theo thứ tự `sort_order`.
   - `POST`: Thêm tour mới, tùy chỉnh các điểm dừng tương tác trực quan.
