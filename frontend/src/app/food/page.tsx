@@ -27,12 +27,65 @@ interface FoodItem {
   is_hot?: boolean;
 }
 
+function getInitialFoodList(): FoodItem[] {
+  const gastronomyList = (localMasterPois as any[])
+    .filter(
+      (p) =>
+        p.category === "gastronomy" ||
+        p.category === "food" ||
+        (p.id && (p.id.startsWith("AT") || p.id.startsWith("CF") || p.id.startsWith("DS")))
+    )
+    .map((p) => {
+      let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
+      if (p.image_url && typeof p.image_url === "string" && p.image_url.startsWith("http")) {
+        img = p.image_url;
+      } else if (Array.isArray(p.photos) && p.photos.length > 0) {
+        const p0 = p.photos[0];
+        if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
+        else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
+      }
+
+      return {
+        id: p.id,
+        slug: p.slug || p.id,
+        name: p.name,
+        category: p.category || "gastronomy",
+        tourism_category: p.tourism_category || "Ẩm Thực Đặc Sản",
+        commune: p.commune || "Thị trấn Tri Tôn",
+        rating: p.rating ? Number(p.rating) : 4.8,
+        image_url: img,
+        video_url: p.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(p.name + " Tri Tôn")}`,
+        hours: p.night_hours || p.opening_hours || (p.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+        description: p.description || "",
+        detailed_story: p.detailed_story,
+        open_late: !!p.open_late,
+        night_hours: p.night_hours,
+        phone: p.phone,
+        price_level: p.price_level || "35k - 150k",
+        address: p.address || "",
+        is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
+      };
+    });
+
+  gastronomyList.sort((a, b) => {
+    const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+    const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+    if (aHasStory && !bHasStory) return -1;
+    if (!aHasStory && bHasStory) return 1;
+    if (a.is_hot && !b.is_hot) return -1;
+    if (!a.is_hot && b.is_hot) return 1;
+    return (b.rating || 0) - (a.rating || 0);
+  });
+
+  return gastronomyList;
+}
+
 export default function FoodPage() {
-  const [foods, setFoods] = useState<FoodItem[]>([]);
+  const [foods, setFoods] = useState<FoodItem[]>(getInitialFoodList);
   const [selectedCommune, setSelectedCommune] = useState("Tất cả");
   const [nightOnly, setNightOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     function processFoodData(json: any) {
@@ -59,6 +112,7 @@ export default function FoodPage() {
             video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
             hours: item.night_hours || item.opening_hours || (item.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
             description: item.description || "",
+            detailed_story: item.detailed_story,
             open_late: !!item.open_late,
             night_hours: item.night_hours,
             phone: item.phone,
@@ -101,55 +155,8 @@ export default function FoodPage() {
         processFoodData(json);
       } catch (err) {
         console.warn("API fetch failed, using local master:", err);
-        fallbackToLocalMaster();
-      } finally {
-        setLoading(false);
       }
     }
-
-    function fallbackToLocalMaster() {
-      const gastronomyList = (localMasterPois as any[])
-        .filter(
-          (p) =>
-            p.category === "gastronomy" ||
-            p.category === "food" ||
-            (p.id && (p.id.startsWith("AT") || p.id.startsWith("CF") || p.id.startsWith("DS")))
-        )
-        .map((p) => ({
-          id: p.id,
-          slug: p.slug || p.id,
-          name: p.name,
-          category: p.category || "gastronomy",
-          tourism_category: p.tourism_category || "Ẩm Thực Đặc Sản",
-          commune: p.commune || "Thị trấn Tri Tôn",
-          rating: p.rating ? Number(p.rating) : 4.8,
-          image_url: p.image_url || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-          video_url: p.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(p.name + " Tri Tôn")}`,
-          hours: p.night_hours || p.opening_hours || (p.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
-          description: p.description || "",
-          detailed_story: p.detailed_story,
-          open_late: !!p.open_late,
-          night_hours: p.night_hours,
-          phone: p.phone,
-          price_level: p.price_level || "35k - 150k",
-          address: p.address || "",
-          is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
-        }));
-
-      // Sort Rich Detailed Stories & Hot first
-      gastronomyList.sort((a, b) => {
-        const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
-        const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
-        if (aHasStory && !bHasStory) return -1;
-        if (!aHasStory && bHasStory) return 1;
-        if (a.is_hot && !b.is_hot) return -1;
-        if (!a.is_hot && b.is_hot) return 1;
-        return (b.rating || 0) - (a.rating || 0);
-      });
-
-      setFoods(gastronomyList);
-    }
-
     loadLiveFoodData();
   }, []);
 

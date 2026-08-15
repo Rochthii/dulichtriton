@@ -135,7 +135,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     <div className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between font-body">
       <div>
         {/* Image Header with Scrim */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+        <Link href={detailUrl} prefetch={true} className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 cursor-pointer">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={getOptimizedImageUrl(resolvedCoverUrl, { width: 800, dpr: 2, quality: 'best' })}
@@ -147,7 +147,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
           {/* Top Badges */}
-          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5">
+          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5 pointer-events-none">
             {place.is_hot ? (
               <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
                 <Flame className="w-3 h-3 text-[#26221B] fill-[#26221B]" />
@@ -162,8 +162,8 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           </div>
 
           {/* Rating & Favorite Badges */}
-          <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 flex items-center gap-1.5">
-            <span className="px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
+          <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 flex items-center gap-1.5 z-10" onClick={(e) => e.stopPropagation()}>
+            <span className="px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display pointer-events-none">
               <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
               <span>{place.rating || 4.8}</span>
             </span>
@@ -191,16 +191,16 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               {place.name}
             </h3>
           </div>
-        </div>
+        </Link>
 
         {/* Content Details */}
-        <div className="p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355]">
+        <Link href={detailUrl} prefetch={true} className="block p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355] cursor-pointer hover:bg-amber-50/30 transition-colors">
           {cleanDescription && (
             <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
               {cleanDescription}
             </p>
           )}
-        </div>
+        </Link>
       </div>
 
       {/* Card Footer Actions */}

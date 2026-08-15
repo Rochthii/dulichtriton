@@ -37,7 +37,7 @@ export default function SiteNav() {
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-xs transition-all">
       <div className="mx-auto flex h-16 md:h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center shrink-0 group whitespace-nowrap">
+        <Link href="/" prefetch={true} className="flex items-center shrink-0 group whitespace-nowrap">
           <AppLogo size="md" showText={true} />
         </Link>
 
@@ -51,6 +51,7 @@ export default function SiteNav() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={true}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F] border border-emerald-200 shadow-2xs font-black"
@@ -72,6 +73,7 @@ export default function SiteNav() {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={true}
                 className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F]"
@@ -88,6 +90,7 @@ export default function SiteNav() {
         <div className="hidden md:flex items-center gap-2.5 shrink-0">
           <Link
             href="/chatbot"
+            prefetch={true}
             className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0"
           >
             <Bot className="h-4 w-4 text-slate-950" />

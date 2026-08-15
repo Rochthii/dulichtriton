@@ -59,6 +59,7 @@ export default function MobileBottomNav() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={true}
               className={`flex flex-col items-center justify-center flex-1 h-full py-1 transition-all active:scale-95 select-none ${
                 item.isActive
                   ? "text-[#0E8C7F]"
