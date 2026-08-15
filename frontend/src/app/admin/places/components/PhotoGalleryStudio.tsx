@@ -12,6 +12,8 @@ import {
   RefreshCw,
   Plus,
   Zap,
+  Sparkles,
+  CheckCircle2,
 } from 'lucide-react';
 import { compressImageFile } from '@/lib/imageCompressor';
 
@@ -35,7 +37,11 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
   setStatusMsg,
 }) => {
   const [urlInput, setUrlInput] = useState('');
+  const [mapsUrlInput, setMapsUrlInput] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [extracting, setExtracting] = useState(false);
+  const [extractedImages, setExtractedImages] = useState<string[]>([]);
+  const [extractedTitle, setExtractedTitle] = useState<string>('');
   const [compressionSavings, setCompressionSavings] = useState<string | null>(null);
 
   // 1. Multi-file upload with client-side Canvas WebP compression
@@ -80,7 +86,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
         const currentPhotos = Array.isArray(photos) && photos.length > 0 ? photos : (coverUrl ? [coverUrl] : []);
         const updatedPhotos = Array.from(new Set([...currentPhotos, ...data.urls]));
         const newCover = coverUrl || data.urls[0];
-        
+
         onPhotosChange(updatedPhotos, newCover);
         setStatusMsg(`Đã tải lên thành công ${data.urls.length} ảnh đã nén WebP vào Cloudinary!`);
         setTimeout(() => setStatusMsg(null), 3500);
@@ -120,7 +126,67 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
     setTimeout(() => setStatusMsg(null), 3000);
   };
 
-  // 3. Move Photo Left / Right
+  // 3. Auto-Scrape Images from Google Maps / Web
+  const handleScrapeImages = async () => {
+    if (!mapsUrlInput.trim()) return;
+
+    setExtracting(true);
+    setExtractedImages([]);
+    setExtractedTitle('');
+
+    try {
+      const res = await fetch('/api/v1/admin/scrape-images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: mapsUrlInput.trim() }),
+      });
+
+      const data = await res.json();
+      if (data.images && data.images.length > 0) {
+        setExtractedImages(data.images);
+        setExtractedTitle(data.title || '');
+        setStatusMsg(`Đã trích xuất thành công ${data.images.length} ảnh chất lượng cao từ Google Maps / Web!`);
+        setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(data.error || 'Không tìm thấy ảnh từ đường link này. Vui lòng kiểm tra lại link.');
+        setTimeout(() => setStatusMsg(null), 3500);
+      }
+    } catch (err) {
+      console.warn('Scrape images error:', err);
+      setStatusMsg('Lỗi kết nối trích xuất ảnh. Vui lòng thử lại.');
+      setTimeout(() => setStatusMsg(null), 3000);
+    } finally {
+      setExtracting(false);
+    }
+  };
+
+  // 4. Add all extracted images to album
+  const handleAddAllExtracted = () => {
+    if (extractedImages.length === 0) return;
+
+    const currentPhotos = Array.isArray(photos) && photos.length > 0 ? photos : (coverUrl ? [coverUrl] : []);
+    const updatedPhotos = Array.from(new Set([...currentPhotos, ...extractedImages]));
+    const newCover = coverUrl || extractedImages[0];
+
+    onPhotosChange(updatedPhotos, newCover);
+    setStatusMsg(`Đã nạp toàn bộ ${extractedImages.length} ảnh trích xuất vào Album!`);
+    setTimeout(() => setStatusMsg(null), 3000);
+  };
+
+  // 5. Add single extracted image to album
+  const handleAddSingleExtracted = (url: string) => {
+    const currentPhotos = Array.isArray(photos) && photos.length > 0 ? photos : (coverUrl ? [coverUrl] : []);
+    if (currentPhotos.includes(url)) return;
+
+    const updatedPhotos = [...currentPhotos, url];
+    const newCover = coverUrl || url;
+
+    onPhotosChange(updatedPhotos, newCover);
+    setStatusMsg('Đã thêm ảnh vào Album!');
+    setTimeout(() => setStatusMsg(null), 2000);
+  };
+
+  // 6. Move Photo Left / Right
   const handleMove = (index: number, direction: 'left' | 'right') => {
     if (!photos || photos.length <= 1) return;
     const targetIdx = direction === 'left' ? index - 1 : index + 1;
@@ -134,7 +200,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
     onPhotosChange(newPhotos, coverUrl);
   };
 
-  // 4. Delete Photo
+  // 7. Delete Photo
   const handleDelete = (index: number) => {
     const removedUrl = photos[index];
     const newPhotos = photos.filter((_, i) => i !== index);
@@ -149,15 +215,108 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* 1. Multi-file upload with compression */}
+      {/* 1. Google Maps / Web Auto-Extractor */}
+      <div className="bg-gradient-to-r from-blue-50/90 via-indigo-50/80 to-emerald-50/80 p-3.5 rounded-2xl border border-blue-200/90 shadow-xs space-y-2.5">
+        <div className="flex items-center justify-between">
+          <label className="font-extrabold text-blue-950 text-xs flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-blue-600" /> Tự Động Trích Xuất Ảnh Từ Google Maps / Website:
+          </label>
+          <span className="text-[11px] text-blue-700 font-bold bg-blue-100/70 px-2 py-0.5 rounded-md">
+            Hỗ trợ maps.app.goo.gl & Web
+          </span>
+        </div>
+
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={mapsUrlInput}
+            onChange={(e) => setMapsUrlInput(e.target.value)}
+            placeholder="Dán link Google Maps hoặc Website quán (vd: https://maps.app.goo.gl/...)..."
+            className="flex-1 p-2 rounded-xl bg-white border border-blue-200 text-xs text-slate-800 placeholder:text-slate-400 focus:border-blue-600 outline-hidden"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleScrapeImages();
+              }
+            }}
+          />
+          <button
+            type="button"
+            onClick={handleScrapeImages}
+            disabled={extracting || !mapsUrlInput.trim()}
+            className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50 shadow-xs"
+          >
+            {extracting ? (
+              <>
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Đang Trích Xuất...
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5" /> Trích Xuất Ảnh
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Extracted Images List Drawer */}
+        {extractedImages.length > 0 && (
+          <div className="p-3 bg-white rounded-xl border border-blue-200 space-y-2 mt-2 animate-fade-in">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                Tìm thấy {extractedImages.length} ảnh HD {extractedTitle ? `("${extractedTitle}")` : ''}
+              </span>
+              <button
+                type="button"
+                onClick={handleAddAllExtracted}
+                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[11px] font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs"
+              >
+                <Plus className="w-3 h-3" /> Nạp Toàn Bộ ({extractedImages.length}) Vào Album
+              </button>
+            </div>
+
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 max-h-36 overflow-y-auto p-1 bg-slate-50 rounded-lg">
+              {extractedImages.map((imgUrl, i) => {
+                const alreadyInAlbum = photos.includes(imgUrl);
+                return (
+                  <div
+                    key={i}
+                    onClick={() => !alreadyInAlbum && handleAddSingleExtracted(imgUrl)}
+                    className={`group relative rounded-lg overflow-hidden border cursor-pointer aspect-video bg-slate-200 transition-all ${
+                      alreadyInAlbum
+                        ? 'border-emerald-500 ring-1 ring-emerald-500 opacity-60 cursor-default'
+                        : 'border-slate-300 hover:border-blue-500'
+                    }`}
+                    title={alreadyInAlbum ? 'Đã có trong album' : 'Bấm để thêm ảnh này vào album'}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={imgUrl} alt={`Extracted ${i + 1}`} className="w-full h-full object-cover" />
+                    {alreadyInAlbum ? (
+                      <span className="absolute inset-0 bg-emerald-900/50 flex items-center justify-center text-white text-[10px] font-bold">
+                        ✓ Đã có
+                      </span>
+                    ) : (
+                      <span className="absolute bottom-0 inset-x-0 bg-blue-900/80 text-white text-[9px] text-center font-bold py-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        + Thêm
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 2. Multi-file upload with client-side Canvas WebP compression */}
       <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
         <div className="flex items-center justify-between mb-1.5">
           <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
-            <Upload className="w-4 h-4 text-emerald-700" /> Tải Lên Hàng Loạt Ảnh (Tự Động Nén WebP):
+            <Upload className="w-4 h-4 text-emerald-700" /> Tải Lên Hàng Loạt Ảnh Từ Máy (Nén WebP Siêu Tốc):
           </label>
           <span className="text-[11px] text-slate-500 font-medium">Hỗ trợ chọn 5–10 ảnh cùng lúc</span>
         </div>
-        
+
         <input
           type="file"
           accept="image/*"
@@ -180,17 +339,17 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
         )}
       </div>
 
-      {/* 2. Add from URL */}
+      {/* 3. Add from direct URLs */}
       <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
         <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5 mb-1.5">
-          <LinkIcon className="w-4 h-4 text-blue-600" /> Thêm Ảnh Từ URL (Google Maps, FB, Báo chí, CDN):
+          <LinkIcon className="w-4 h-4 text-slate-600" /> Nhập Trực Tiếp Link URL Ảnh (Phân tách bởi dấu phẩy):
         </label>
         <div className="flex gap-2">
           <input
             type="text"
             value={urlInput}
             onChange={(e) => setUrlInput(e.target.value)}
-            placeholder="Dán link ảnh (hỗ trợ nhiều link cách nhau bởi dấu phẩy)..."
+            placeholder="Dán link ảnh trực tiếp (hỗ trợ nhiều link cách nhau bởi dấu phẩy)..."
             className="flex-1 p-2 rounded-xl bg-white border border-slate-200 text-xs"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -209,7 +368,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
         </div>
       </div>
 
-      {/* 3. Photo Gallery Grid */}
+      {/* 4. Photo Gallery Grid */}
       <div>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5">
@@ -223,10 +382,10 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
           </span>
         </div>
 
-        {(!photos || photos.length === 0) ? (
+        {!photos || photos.length === 0 ? (
           <div className="text-center py-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
             <ImageIcon className="w-7 h-7 text-slate-300 mx-auto mb-1.5" />
-            <p className="text-xs text-slate-500">Chưa có ảnh nào trong Album. Hãy tải ảnh lên từ máy hoặc nhập URL.</p>
+            <p className="text-xs text-slate-500">Chưa có ảnh nào trong Album. Hãy trích xuất từ Google Maps hoặc tải ảnh lên.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 max-h-56 overflow-y-auto p-1 bg-slate-50/50 rounded-xl border border-slate-100">
@@ -306,7 +465,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
         )}
       </div>
 
-      {/* 4. Link Video TikTok */}
+      {/* 5. Link Video TikTok */}
       <div>
         <label className="font-bold text-slate-700 block mb-1 text-xs">Link Video TikTok Trực Tiếp:</label>
         <input

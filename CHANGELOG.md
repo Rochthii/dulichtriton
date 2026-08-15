@@ -78,7 +78,15 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - `PlaceTable.tsx`: Component chuyên bảng danh sách địa điểm, tìm kiếm, lọc xã/danh mục và thao tác hàng loạt.
   - `AuditLogsModal.tsx`: Modal xem nhật ký kiểm toán hệ thống.
   - `DeleteConfirmModal.tsx`: Modal xác nhận vô hiệu hóa địa điểm.
-  - `page.tsx`: File điều phối chính rút gọn xuống **290 dòng**, cực kỳ dễ bảo trì và tiết kiệm 85%+ token xử lý.
+### 🌐 Bộ Cào / Trích Xuất Ảnh Tự Động Từ Google Maps & Website (/api/v1/admin/scrape-images)
+- **API Bóc Tách Ảnh Thông Minh (`POST /api/v1/admin/scrape-images`)**:
+  - Tự động giải mã đường link rút gọn Google Maps (`maps.app.goo.gl`, `goo.gl/maps`).
+  - Quét và bóc tách toàn bộ ảnh gốc từ máy chủ Google UserContent (`lh3.googleusercontent.com/p/...`).
+  - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
+  - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
+- **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
+  - Dán link Google Maps $\rightarrow$ Bấm nút **"🚀 Trích Xuất Ảnh"** $\rightarrow$ Xem trước danh sách ảnh tìm thấy.
+  - Hỗ trợ nút bấm **"Nạp Toàn Bộ Vào Album"** (1-Click Import) hoặc click chọn từng ảnh ưng ý để nạp vào địa điểm.
 
 ---
 
