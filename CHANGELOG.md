@@ -85,13 +85,12 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 📸 Quản Lý Góc Check-in & Tọa Độ Sống Ảo (`CheckinSpotsManager`)
-- **Module Quản Trị Góc Check-in Mới (`CheckinSpotsManager.tsx`)**:
-  - Tích hợp Tab thứ 5 trong Modal Quản trị Địa điểm: Cho phép xem trước hình ảnh, đổi tên góc chụp, tinh chỉnh mẹo bắt sáng và chọn nhanh ảnh từ Album `photos[]`.
-  - Tự động lưu và cập nhật trường `checkin_spots` vào Supabase PostgreSQL qua API `/api/v1/admin/places`.
-- **Khắc Phục Hiển Thị Trùng Lặp Ảnh Check-in (`dataSanitizer.ts`)**:
-  - Cập nhật thuật toán `parseCheckinSpots` tự động phân phối các bức ảnh thực tế khác nhau trong Album địa điểm (`photos[0]`, `photos[1]`, `photos[2]`) cho từng thẻ góc chụp thay vì dùng chung 1 ảnh stock placeholder.
-  - Đã nạp bộ ảnh thực địa cho các góc sống ảo tại Cổng Trời Chùa Koh Kas, Chùa Tà Pạ và các điểm du lịch tiêu biểu.
+### 🗺️ Chuẩn Hóa Chỉ Đường Google Maps Toàn Hệ Thống (`maps.ts` & `resolvePlaceExternalLinks`)
+- **Khắc Phục Lỗi IP Geolocation & Điều Hướng Sai Lệch**:
+  - *Nguyên nhân trước đó*: Sử dụng link `maps/dir/` khiến Google Maps tự động định vị điểm xuất phát bằng IP mạng (dẫn đến bị nhảy vị trí về TP.HCM/Cần Thơ hoặc bị lỗi).
+  - *Chuẩn hóa mới*: Chuyển đổi 100% các nút "Chỉ đường Google Maps" trên toàn bộ Trang Chủ, Trang Chi Tiết, Thẻ Địa Điểm, Bản Đồ sang định dạng chuẩn tìm kiếm:
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(Tên_Địa_Điểm + " " + Xã + " Tri Tôn An Giang")}`.
+  - *Ưu điểm*: Mở chính xác điểm ghim (marker) trên Google Maps có đầy đủ đánh giá, hình ảnh và cho phép người dùng bấm "Chỉ đường" trực tiếp từ GPS phần cứng của điện thoại mà không lo bị lệch IP.
 
 ---
 

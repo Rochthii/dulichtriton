@@ -31,14 +31,12 @@ export function cleanLocationName(text: string): string {
 }
 
 /**
- * Generate standard Google Maps turn-by-turn navigation URL
- * Directly prompts Google Maps app to route from device's native GPS to the exact destination
+ * Generate standard Google Maps Search URL with full Place Name + Commune + Tri Tôn + An Giang
+ * Opens Google Maps app or web directly to the verified destination marker without IP Geolocation errors
  */
 export function getGoogleMapsUrl(options: GoogleMapsOptions | string, commune?: string): string {
   let name = '';
   let com = '';
-  let lat: number | undefined;
-  let lng: number | undefined;
 
   if (typeof options === 'string') {
     name = cleanLocationName(options);
@@ -46,14 +44,6 @@ export function getGoogleMapsUrl(options: GoogleMapsOptions | string, commune?: 
   } else {
     name = cleanLocationName(options.name);
     com = options.commune ? cleanLocationName(options.commune) : '';
-    lat = options.lat;
-    lng = options.lng;
-  }
-
-  // If coordinates are valid WGS84 within Tri Tôn bounding box, use exact coords for pin-point accuracy
-  if (lat && lng && lat >= 10.25 && lat <= 10.65 && lng >= 104.8 && lng <= 105.25) {
-    const label = encodeURIComponent(`${name}, ${com}`);
-    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=${label}&travelmode=driving`;
   }
 
   const parts: string[] = [name];
@@ -68,7 +58,7 @@ export function getGoogleMapsUrl(options: GoogleMapsOptions | string, commune?: 
   }
 
   const query = parts.join(' ').replace(/\s+/g, ' ').trim();
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=driving`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 /**
@@ -78,15 +68,12 @@ export function getGoogleMapsDirectionUrl(
   destination: { name: string; commune?: string; lat?: number; lng?: number },
   origin?: { lat: number; lng: number }
 ): string {
-  const destStr = destination.lat && destination.lng
-    ? `${destination.lat},${destination.lng}`
-    : encodeURIComponent(`${destination.name}, ${destination.commune || ''}, Tri Tôn, An Giang`);
-
   if (origin && origin.lat && origin.lng) {
+    const destStr = encodeURIComponent(`${destination.name} ${destination.commune || ''} Tri Tôn An Giang`.trim());
     return `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destStr}&travelmode=driving`;
   }
 
-  return `https://www.google.com/maps/dir/?api=1&destination=${destStr}&travelmode=driving`;
+  return getGoogleMapsUrl(destination);
 }
 
 /**
