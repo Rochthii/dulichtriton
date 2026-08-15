@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Search, Moon, Phone, Navigation, Play } from "lucide-react";
+import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Search, Moon, Phone, Navigation, Play, Sparkles, Award } from "lucide-react";
 import localMasterPois from "@/data/triton_pois_full.json";
 
 interface FoodItem {
@@ -22,6 +22,7 @@ interface FoodItem {
   phone?: string;
   price_level?: string;
   address?: string;
+  is_hot?: boolean;
 }
 
 export default function FoodPage() {
@@ -66,8 +67,17 @@ export default function FoodPage() {
               phone: item.phone,
               price_level: item.price_level || "35k - 150k",
               address: item.address || "",
+              is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
             };
           });
+
+          // Sort Hot & Top rated dishes to the very top!
+          formatted.sort((a: FoodItem, b: FoodItem) => {
+            if (a.is_hot && !b.is_hot) return -1;
+            if (!a.is_hot && b.is_hot) return 1;
+            return (b.rating || 0) - (a.rating || 0);
+          });
+
           setFoods(formatted);
         } else {
           fallbackToLocalMaster();
@@ -105,13 +115,26 @@ export default function FoodPage() {
           phone: p.phone,
           price_level: p.price_level || "35k - 150k",
           address: p.address || "",
+          is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
         }));
+
+      // Sort Hot first
+      gastronomyList.sort((a, b) => {
+        if (a.is_hot && !b.is_hot) return -1;
+        if (!a.is_hot && b.is_hot) return 1;
+        return (b.rating || 0) - (a.rating || 0);
+      });
 
       setFoods(gastronomyList);
     }
 
     loadLiveFoodData();
   }, []);
+
+  // Top Signature Hot Dishes (Showcased prominently at top)
+  const topSignatureHotFoods = useMemo(() => {
+    return foods.slice(0, 4);
+  }, [foods]);
 
   // Dynamic Commune List from Live Data
   const communes = useMemo(() => {
@@ -161,6 +184,89 @@ export default function FoodPage() {
             </p>
           </div>
         </section>
+
+        {/* 🌟 TOP 4 ĐẶC SẢN & QUÁN HOT NHẤT PHẢI THỬ (HOT SPOTLIGHT) 🌟 */}
+        {topSignatureHotFoods.length > 0 && !searchQuery && selectedCommune === "Tất cả" && !nightOnly && (
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-1.5 text-xs font-black text-[#F26B3A] uppercase tracking-wider font-display">
+                  <Flame className="w-4 h-4 fill-[#F26B3A]" />
+                  <span>Tinh Hoa Ẩm Thực Bảy Núi</span>
+                </div>
+                <h2 className="text-xl md:text-2xl font-black text-[#26221B] font-display mt-0.5">
+                  Top Đặc Sản & Quán Ăn Hot Nhất Phải Thử
+                </h2>
+              </div>
+              <span className="text-xs font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 px-3 py-1 rounded-full border border-[#0E8C7F]/20 hidden sm:inline-block">
+                Ưu Tiên Khuyên Dùng
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {topSignatureHotFoods.map((hotItem, hidx) => (
+                <div
+                  key={hotItem.id}
+                  className="group relative bg-[#FFFDF7] rounded-3xl overflow-hidden border-2 border-amber-300 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+                >
+                  <div className="relative h-44 w-full overflow-hidden bg-slate-200">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={hotItem.image_url}
+                      alt={hotItem.name}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+                    <div className="absolute top-2.5 left-2.5 flex items-center gap-1">
+                      <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] uppercase shadow-xs flex items-center gap-1 font-display">
+                        <Award className="w-3 h-3" /> TOP #{hidx + 1}
+                      </span>
+                    </div>
+
+                    <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-[11px] flex items-center gap-1 shadow-xs">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
+                      <span>{hotItem.rating}</span>
+                    </span>
+
+                    <div className="absolute bottom-2.5 left-3 right-3 text-white">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-amber-300 font-mono">
+                        {hotItem.commune}
+                      </span>
+                      <h3 className="font-display font-black text-sm leading-tight text-white line-clamp-1">
+                        {hotItem.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 space-y-2 text-xs">
+                    <p className="text-[11px] text-[#6B6355] line-clamp-2 leading-relaxed">
+                      {hotItem.description || "Món ăn đặc sản nức tiếng Bảy Núi với hương vị đậm đà truyền thống."}
+                    </p>
+                    <div className="flex items-center justify-between pt-2 border-t border-[#26221B]/6">
+                      <Link
+                        href={`/places/${hotItem.slug || hotItem.id}`}
+                        className="text-xs font-bold text-[#0E8C7F] hover:underline flex items-center gap-1 font-display"
+                      >
+                        <span>Xem quán</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </Link>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotItem.name + " " + hotItem.commune + " Tri Tôn")}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-2.5 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[11px] flex items-center gap-1 transition-colors"
+                      >
+                        <Navigation className="w-3 h-3" />
+                        <span>Chỉ đường</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Filter & Search Hub */}
         <section className="bg-[#FFFDF7] p-4 md:p-6 rounded-3xl border border-[#26221B]/8 shadow-xs space-y-4">
@@ -216,8 +322,8 @@ export default function FoodPage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
-              <Flame className="w-5 h-5 text-[#F26B3A]" />
-              <span>Danh Sách Địa Điểm Ẩm Thực ({filteredFoods.length} Địa Điểm)</span>
+              <Utensils className="w-5 h-5 text-[#0E8C7F]" />
+              <span>Toàn Bộ Danh Sách Ẩm Thực ({filteredFoods.length} Địa Điểm)</span>
             </h2>
             <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
           </div>
