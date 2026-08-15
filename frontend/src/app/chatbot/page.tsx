@@ -434,9 +434,9 @@ export default function ChatbotPage() {
             </div>
 
             <div
-              className={`max-w-[94%] sm:max-w-[85%] space-y-2 flex flex-col ${
-                msg.sender === 'user' ? 'items-end' : 'items-start'
-              }`}
+              className={`space-y-2 flex flex-col flex-1 min-w-0 ${
+                msg.itinerary ? 'w-full max-w-full' : 'max-w-[94%] sm:max-w-[85%]'
+              } ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
             >
               {/* Bubble Text */}
               <div

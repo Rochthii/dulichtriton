@@ -476,7 +476,7 @@ export default function ChatbotWidget() {
                   {msg.sender === 'user' ? <User className="w-4 h-4 text-[#26221B]" /> : <Bot className="w-4 h-4 text-[#FFD37A]" />}
                 </div>
 
-                <div className={`max-w-[92%] sm:max-w-[88%] space-y-2 flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`space-y-2 flex flex-col flex-1 min-w-0 ${msg.itinerary ? 'w-full max-w-full' : 'max-w-[92%] sm:max-w-[88%]'} ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   {/* Text bubble */}
                   <div className={`w-full rounded-[22px] px-3.5 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
                     msg.sender === 'user'
