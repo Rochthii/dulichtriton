@@ -23,7 +23,19 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   8. *Bánh Bò Thốt Nốt Nướng Than Chợ Tri Tôn*: Bánh bò rễ tre nướng khuôn gang than hồng làm từ đường thốt nốt nguyên chất và nước cốt dừa béo ngậy.
   9. *Khu Ẩm Thực Chợ Đêm & Phố Đi Bộ Tri Tôn*: Tâm điểm ăn vặt về đêm với nước thốt nốt tươi ướp lạnh, bánh kẹp nướng, xiên que nướng và bắp mỡ hành.
   10. *Đá Vồ Hội Mẹ Núi Cô Tô*: Mỏm đá granite sừng sững cao hơn 500m nhìn toàn cảnh cánh đồng Tà Pạ và hoàng hôn biên giới Campuchia.
-- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 125 bài viết chi tiết vào bảng `places` trên Supabase Cloud.
+### 📸 Bổ Sung 10 Tọa Độ Check-in, Sống Ảo & Khu Du Lịch Sinh Thái
+- **10 Bài Viết Chuyên Sâu Về Điểm Chụp Ảnh & Cảnh Quan (2,500 – 4,000 ký tự mỗi bài)**:
+  1. *Suối Vàng Soài So & Suối Bạc Núi Cô Tô*: Dòng suối đá tự nhiên tuôn trào dưới chân Núi Cô Tô, tắm suối mát lạnh và cắm trại dã ngoại dưới tán rừng mát rượi.
+  2. *Con Đường Tơ Lụa Tà Pạ*: Cung đường bê tông uốn lượn mềm mại xẻ dọc cánh đồng Tà Pạ và Soài Chek, hai bên là hàng thốt nốt và cây trâm cổ thụ.
+  3. *Cầu Gỗ Mộc Mạc Hồ Ô Thum*: Cây cầu gỗ nhô ra giữa mặt hồ nước xanh màu ngọc bích, tọa độ ngắm hoàng hôn và đồi núi Ô Lâm đẹp nhất Bảy Núi.
+  4. *Vườn Nho Nông Trại Ô Thum (Quy mô 2ha)*: Giàn nho trĩu quả quanh năm, trải nghiệm tự tay hái quả tại vườn kết hợp thưởng thức gà đốt lá chúc chòi lá ven hồ.
+  5. *Cung Đường Ven Vách Đá Núi Dài (Cung Đèo Lương Phi - Ba Chúc)*: Cung đường đèo uốn lượn áp sát vách đá granite dựng đứng, ngắm thung lũng lúa bao la.
+  6. *Hồ Ô Tà Lọt (Tuyệt Tình Cốc Núi Cấm)*: Hồ nước ngọt nguyên sơ ẩn mình trong thung lũng đá, nước trong vắt màu ngọc lục bảo, điểm chèo SUP và cắm trại chill.
+  7. *Sân Tiên & Dấu Chân Tiên Đỉnh Núi Cô Tô*: Phiến đá hoa cương phẳng rộng cao hơn 500m lưu dấu tích thần thoại, điểm săn biển mây bình minh và ngắm ngàn sao.
+  8. *Con Đường Thốt Nốt Ô Lâm - Cô Tô*: Hàng trăm cây thốt nốt cổ thụ cao vút mọc thẳng tắp hai bên đường làng, bối cảnh chụp ảnh triệu view.
+  9. *Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)*: Dòng kênh lịch sử do danh tướng Thoại Ngọc Hầu chỉ huy đào đắp năm 1819, ngắm cánh đồng sen mùa nước nổi.
+  10. *Vườn Mãng Cầu Triền Đá Núi Tô*: Vườn cây ăn trái bám rễ sâu vào kẽ đá hoa cương, quả mãng cầu dai ngọt lịm hấp thụ khoáng chất đá núi.
+- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 126 bài viết chi tiết vào bảng `places` trên Supabase Cloud.
 
 ---
 
