@@ -619,29 +619,33 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Time Slots Filter Tabs */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-[#FFFDF7] p-2 rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
+          {/* Time Slots Filter Tabs - Compact & Sleek */}
+          <div className="grid grid-cols-4 gap-1 sm:gap-2 bg-[#FFFDF7] p-1 sm:p-1.5 rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
             {[
-              { key: "morning", label: "Sáng sớm (06:00 - 08:30)", icon: Sunrise, desc: "Săn mây & Hồ Tà Pạ" },
-              { key: "noon", label: "Buổi trưa (11:00 - 13:30)", icon: Sun, desc: "Gà Đốt lá chúc Ô Thum" },
-              { key: "afternoon", label: "Chiều tà (15:30 - 17:30)", icon: Sunset, desc: "Cổng trời Koh Kas" },
-              { key: "evening", label: "Buổi tối (18:00 - 21:00)", icon: Moon, desc: "Chợ đêm & Cà phê phố" },
+              { key: "morning", mobileLabel: "Sáng sớm", desktopLabel: "Sáng sớm (06:00 - 08:30)", icon: Sunrise, desc: "Săn mây & Hồ Tà Pạ" },
+              { key: "noon", mobileLabel: "Buổi trưa", desktopLabel: "Buổi trưa (11:00 - 13:30)", icon: Sun, desc: "Gà Đốt Ô Thum" },
+              { key: "afternoon", mobileLabel: "Chiều tà", desktopLabel: "Chiều tà (15:30 - 17:30)", icon: Sunset, desc: "Cổng trời Koh Kas" },
+              { key: "evening", mobileLabel: "Buổi tối", desktopLabel: "Buổi tối (18:00 - 21:00)", icon: Moon, desc: "Chợ đêm & Phố" },
             ].map((slot) => {
               const Icon = slot.icon;
               const isActive = activeTimeSlot === slot.key;
               return (
                 <button
                   key={slot.key}
+                  type="button"
                   onClick={() => setActiveTimeSlot(slot.key as TimeSlot)}
-                  className={`p-3 rounded-2xl flex flex-col items-center justify-center text-center transition-all tap-bounce ${
+                  className={`py-1.5 sm:py-2.5 px-1 sm:px-2 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center text-center transition-all tap-bounce cursor-pointer ${
                     isActive
-                      ? "bg-[#F0A32F] text-[#26221B] shadow-xs"
+                      ? "bg-[#F0A32F] text-[#26221B] shadow-xs font-black"
                       : "hover:bg-[#FAF3E7] text-[#6B6355]"
                   }`}
                 >
-                  <Icon className={`w-5 h-5 mb-1 ${isActive ? "text-[#26221B]" : "text-[#0E8C7F]"}`} />
-                  <span className="text-xs font-bold">{slot.label}</span>
-                  <span className={`text-[10px] hidden sm:block ${isActive ? "text-[#26221B]/80" : "text-[#6B6355]/70"}`}>
+                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 mb-0.5 sm:mb-1 ${isActive ? "text-[#26221B]" : "text-[#0E8C7F]"}`} />
+                  <span className="text-[10px] sm:text-xs font-bold leading-tight line-clamp-1">
+                    <span className="sm:hidden">{slot.mobileLabel}</span>
+                    <span className="hidden sm:inline">{slot.desktopLabel}</span>
+                  </span>
+                  <span className={`text-[9px] hidden sm:block mt-0.5 ${isActive ? "text-[#26221B]/80" : "text-[#6B6355]/70"}`}>
                     {slot.desc}
                   </span>
                 </button>

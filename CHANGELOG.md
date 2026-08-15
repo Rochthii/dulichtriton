@@ -85,13 +85,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### ⚡ Bộ Lọc Cụm Địa Lý Tức Thì 0ms (Instant In-Memory Cluster Spotlight)
-- **Lọc Cụm Tức Thì Ngay Trên Trang Chủ (`page.tsx`)**:
-  - Khi người dùng bấm vào bất kỳ cụm nào trong **"4 Cụm Thắng Cảnh Trọng Điểm Bảy Núi"** (Tà Pạ & Núi Tô, Ô Lâm & Hồ Ô Thum, Cô Tô & Soài So, Ba Chúc & Lương Phi), hệ thống kích hoạt bộ lọc **In-Memory tức thì $0\text{ms}$** mà không cần reload trang hay chờ 1-2s.
-  - Tự động mở rộng **Bảng Điểm Đến Tiêu Biểu Của Cụm** ngay dưới các thẻ cụm, hiển thị đầy đủ hình ảnh thực tế, đánh giá sao, thời gian mở cửa, nút "Chi Tiết" và "Chỉ Đường" Google Maps.
-  - Nút chuyển hướng trang Khám Phá được tích hợp `prefetch={true}` giúp chuyển trang mượt mà không có độ trễ.
-- **Khởi Tạo Dữ Liệu Tức Thì Trên Trang Khám Phá (`places/page.tsx`)**:
-  - Pre-populate dữ liệu địa phương ngay từ lần render đầu tiên ($0\text{ms}$ skeleton) và tự động nhận diện tham số URL (`?commune=...`, `?category=...`) được bọc trong `<Suspense>`.
+### 📱 Thu Gọn & Tối Ưu Thanh Chọn Khung Giờ Trên Mobile (Compact Time Slots Switcher)
+- **Thiết Kế Tối Giản, Thanh Thoát (`page.tsx`)**:
+  - Tái cấu trúc thanh chọn 4 khung giờ trải nghiệm (Sáng sớm, Buổi trưa, Chiều tà, Buổi tối) thành dạng **Segmented Control 4 cột ngang nhỏ gọn, tinh tế** (`p-1 rounded-2xl`).
+  - Trên Mobile: Tối ưu nhãn ngắn gọn (`Sáng sớm`, `Buổi trưa`, `Chiều tà`, `Buổi tối`), icon SVG nhỏ nhắn sắc nét, giảm 65% chiều cao chiếm dụng trên màn hình điện thoại mà vẫn đảm bảo cảm giác chạm bấm (Tap target) mượt mà.
+  - Trên Desktop: Tự động bung rộng hiển thị kèm khung giờ chi tiết và gợi ý địa điểm tiêu biểu.
 
 ---
 
