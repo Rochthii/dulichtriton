@@ -228,7 +228,7 @@ export default function FoodClientPage({ restaurants: initialRestaurants }: Food
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-[#26221B]">Đặt Trước Nhà Hàng & Món Ăn Bản Địa</h2>
             <p className="font-body text-xs text-[#6B6355] mt-1.5 max-w-lg mx-auto">
-              Gà Đốt Ô Thum cần 45 phút nướng trên than hồng cùng lá chúc. Đặt trước ngay để nhà hàng chuẩn bị sẵn sàng khi bạn tới nơi!
+              Gà Đốt Ô Thum cần 35-45 phút đốt chín đều cùng lá chúc trong nồi kín. Đặt trước ngay để quán chuẩn bị sẵn sàng khi bạn tới nơi!
             </p>
           </div>
 

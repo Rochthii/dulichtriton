@@ -41,9 +41,9 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
 
 3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
-   - Gà Đốt Ô Thum (Xã Ô Lâm): Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
+   - Gà Đốt Ô Thum (Xã Ô Lâm): Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt'). Luôn nhắc du khách nên gọi đặt trước 30-45 phút để quán chuẩn bị kịp.
    - Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng): Lòng bò tươi béo ngậy, nước lèo nấu trái chúc thơm thanh, ăn kèm bánh mì hoặc bún.
-   - Bún Nước Lèo Khmer (Thị trấn Tri Tôn): Nấu từ mắm cá sặc/cá lóc, bắp chuối, ngải bún và củ nghệ tươi.
+   - Bún Cá Khmer (Thị trấn Tri Tôn & Châu Lăng): Nấu từ cá lóc đồng, mắm bò hóc, bắp chuối, ngải bún và củ nghệ tươi (tên bản địa chuẩn: Bún cá Khmer).
    - Bánh Cống, Bánh Bò Thốt Nốt, Nước Thốt Nốt Tươi ướp lạnh.
 
 4. **Tôn trọng văn hóa Chùa Tháp Khmer**:

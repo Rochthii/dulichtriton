@@ -31,13 +31,13 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Hồ+Tà+Pạ+Xã+Núi+Tô+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/hotapa)
 
      ### 2. Quán Gà Đốt Ô Thum
-     Đặc sản gà thả đồi ướp lá chúc nướng than hồng thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
+     Đặc sản gà thả đồi ướp lá chúc đốt kín trong nồi thố thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
 
 3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
-   - Gà Đốt Ô Thum (Xã Ô Lâm): Nướng than 35-45 phút, cần dặn du khách gọi đặt trước khi khởi hành để không phải chờ lâu.
+   - Gà Đốt Ô Thum (Xã Ô Lâm): Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt'). Luôn nhắc du khách nên gọi đặt trước 30-45 phút để quán chuẩn bị kịp.
    - Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng): Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
-   - Bún Nước Lèo Khmer: Nấu từ cá lóc đồng nướng rỉa thịt, ngải bún và sả ớt ăn kèm rau muống bào.
+   - Bún Cá Khmer: Nấu từ cá lóc đồng, mắm bò hóc, bắp chuối, ngải bún và củ nghệ tươi (tên bản địa chuẩn: Bún cá Khmer).
    - Đu Đủ Đâm Rina (Xã Châu Lăng): Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
    - Bánh Bò Thốt Nốt Nướng Tân Lợi: Thơm béo nước cốt dừa và đường thốt nốt.
 

@@ -286,7 +286,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cánh đồng lúa Tà Pạ Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Núi Tô"
   },
   {
     "id": "nui-co-to",
@@ -596,7 +596,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Hồ Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "chua-xa-ton-chua-svayton",
@@ -810,8 +810,8 @@
     "address": "Xã An Tức, huyện Tri Tôn, An Giang",
     "latitude": 10.3768,
     "longitude": 104.9542,
-    "description": "Khu di tích lịch sử cách mạng hào hùng gắn liền với tên gọi \"Ngọn đồi 2 triệu đô\", xã An Tức. Hệ thống hang luồn tự nhiên trong lòng khối đá granite khổng lồ từng là căn cứ vững chắc của quân dân Bảy Núi.",
-    "detailed_story": "Khu di tích lịch sử cách mạng hào hùng gắn liền với tên gọi \"Ngọn đồi 2 triệu đô\", xã An Tức. Hệ thống hang luồn tự nhiên trong lòng khối đá granite khổng lồ từng là căn cứ vững chắc của quân dân Bảy Núi.",
+    "description": "Khu di tích Lịch sử Đồi Tức Dụp (Ngọn Đồi 2 Triệu Đô) — Căn cứ địa cách mạng hào hùng kiên cường thời kháng chiến với hệ thống hang ngầm tự nhiên độc đáo. [Lưu ý thực tế: Du khách nên gọi điện hotline trước khi đến để cập nhật giá vé & dịch vụ mới nhất].",
+    "detailed_story": "### Lịch sử Ngọn Đồi 2 Triệu Đô\nĐồi Tức Dụp (tiếng Khmer nghĩa là Nước chảy trong đêm) thuộc Xã An Tức. Nơi đây từng là căn cứ địa kiên cường với hệ thống hang luồn tự nhiên trong lòng đá khối.\n\n### Lưu ý Thực địa Quan Trọng\nHiện tại có phản ánh về việc thay đổi mức giá vé tham quan và một số hạng mục dịch vụ. Du khách được khuyến nghị nên liên hệ ban quản lý/hotline để xác nhận thông tin giá vé và tình trạng hoạt động trước khi xuất phát.",
     "travel_guide_json": "{\"how_to_get_there\": \"Từ trung tâm thị trấn Tri Tôn, di chuyển bằng xe máy hoặc ô tô theo các tuyến Tỉnh lộ 941, 943 hoặc 948 để đến khu vực Khu du lịch Đồi Tức Dụp.\", \"opening_hours\": \"06:00 - 18:00 hằng ngày.\", \"ticket_price\": \"Miễn phí tham quan.\", \"best_season\": \"Tháng 9 đến tháng 11 (Mùa nước nổi & lúa chín) hoặc tháng 12 đến tháng 4 (Mùa khô).\", \"vehicle_suitability\": \"Xe máy, Ô tô 4-16 chỗ.\"}",
     "checkin_spots_json": "[\"Bối cảnh tự nhiên bao quanh Khu du lịch Đồi Tức Dụp\", \"Hàng cây thốt nốt đặc trưng vùng Bảy Núi\", \"Góc nhìn ngắm bình minh hoặc hoàng hôn Tri Tôn\"]",
     "highlights_json": "[\"Hệ thống hang đá tự nhiên\", \"Khu bắn súng thể thao\", \"Công viên giải trí du lịch\"]",
@@ -1300,7 +1300,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Đặc sản Gà đốt Ô Thum Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "lau-bo-thit-bo-bay-nui-tri-ton",
@@ -1573,7 +1573,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cà Phê Thốt Nốt Tà Pạ View Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Núi Tô"
   },
   {
     "id": "ca-phe-suoi-da-o-ta-soc",
@@ -1755,7 +1755,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Siêu Đẳng Hồ Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "quan-ga-dot-tuan-toi-o-thum",
@@ -1846,7 +1846,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Tuấn Tới Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "quan-ga-dot-sau-bup-o-thum",
@@ -1937,7 +1937,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Sáu Búp Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "quan-ga-dot-ro-thum-khmer",
@@ -2028,7 +2028,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Rô THUM Khmer Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "tri-ton",
@@ -2287,7 +2287,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "chua-ta-phot",
@@ -3151,8 +3151,8 @@
     "address": "Huyện Tri Tôn, tỉnh An Giang",
     "latitude": 10.4240344,
     "longitude": 104.9999364,
-    "description": "Khám phá hồ Latina - điểm đến tuyệt vời giữa Bảy Núi",
-    "detailed_story": "**Hồ Latina: Cảnh quan yên bình giữa dãy núi granite**\n\nHuyện Tri Tôn, tỉnh An Giang, là vùng đất thuộc hệ thống danh thắng và cảnh quan thiên nhiên độc đáo giữa dãy Thất Sơn (Bảy Núi) hùng vĩ. Hồ Latina là một trong những điểm đến không thể bỏ qua khi đến đây. Đây là nơi mang đến cho du khách cơ hội khám phá cảnh sắc yên bình, không khí trong lành và lòng hiếu khách của người dân địa phương.\n\nTrong chuyến hành trình đến hồ Latina, bạn sẽ được tận hưởng vẻ đẹp hoang sơ của đồng bằng phù sa, những dải núi đá granite trùng điệp và phong cách văn hóa phong phú của dân Khmer. Hồ Latina nhỏ nhưng có vẻ đẹp đặc biệt, mang đến cho du khách nhiều góc chụp hình đẹp. Đặc biệt, sáng sớm và chiều là thời điểm phù hợp để chụp ảnh hồ Latina.\n\nKhi đến hồ Latina, bạn có thể thưởng thức đặc sản nước thốt nốt tươi, bánh bò thốt nốt và tìm hiểu các phong tục tập quán truyền thống của người dân địa phương. Đây là cơ hội để bạn trải nghiệm cuộc sống bản địa và khám phá văn hóa phong phú của người Khmer.\n\n**Đánh giá thực tế**\n\nTrước khi đến hồ Latina, bạn có thể xem đánh giá của những du khách đã từng đến đây. Họ cho biết hồ Latina có cảnh quan mát mẻ, thoải mái và nhiều góc chụp hình đẹp. Một số du khách còn cho biết họ đã bị ấn tượng bởi vẻ đẹp hoang sơ của hồ Latina và đã chụp được nhiều bức ảnh đẹp.\n\nTóm lại, hồ Latina là điểm đến tuyệt vời giữa Bảy Núi, mang đến cho du khách cơ hội khám phá cảnh sắc yên bình, không khí trong lành và lòng hiếu khách của người dân địa phương.",
+    "description": "Hồ Đá Latina (Vách Đá Latina) — Tuyệt tác vách đá dựng đứng soi bóng mặt nước tĩnh lặng, nằm tại khu vực Xã An Hảo, ngay cung đường giáp ranh TX. Tịnh Biên và Tri Tôn. Điểm check-in chụp ảnh vách đá hùng vĩ nổi tiếng.",
+    "detailed_story": "### Vị trí và Ranh giới Thực địa\nHồ Đá Latina nằm dưới chân núi Cấm, thuộc địa phận Xã An Hảo (tiếp giáp ranh giới giữa TX. Tịnh Biên và Tri Tôn). Du khách cần chú ý định vị chính xác vì khu vực này nằm trên trục đường liên ranh giới.\n\n### Trải nghiệm & Cảnh quan\nĐiểm nhấn ấn tượng nhất là vách đá hoa cương dựng đứng sừng sững bên hồ nước trong xanh. Đây là góc săn ảnh check-in thiên nhiên độc đáo, mang vẻ đẹp hoang sơ kỳ vĩ.",
     "travel_guide_json": "{\"how_to_get_there\": \"Từ trung tâm thị trấn Tri Tôn, di chuyển bằng xe máy hoặc ô tô theo các tuyến Tỉnh lộ 941, 943 hoặc 948 để đến khu vực hồ latina.\", \"opening_hours\": \"06:00 - 18:00 hằng ngày.\", \"ticket_price\": \"Miễn phí tham quan.\", \"best_season\": \"Tháng 9 đến tháng 11 (Mùa nước nổi & lúa chín) hoặc tháng 12 đến tháng 4 (Mùa khô).\", \"vehicle_suitability\": \"Xe máy, Ô tô 4-16 chỗ.\"}",
     "checkin_spots_json": "[\"Bối cảnh tự nhiên bao quanh hồ latina\", \"Hàng cây thốt nốt đặc trưng vùng Bảy Núi\", \"Góc nhìn ngắm bình minh hoặc hoàng hôn Tri Tôn\"]",
     "highlights_json": "[\"camp_site\"]",
@@ -3232,7 +3232,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "hồ latina Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)"
   },
   {
     "id": "chua-ba-xoai",
@@ -3424,8 +3424,8 @@
     "address": "Huyện Tri Tôn, tỉnh An Giang",
     "latitude": 10.3740163,
     "longitude": 104.9772662,
-    "description": "Gà đốt Thảo Nguyên Hồ Ô Thum - Nước điệu đậm nét văn hóa Khmer",
-    "detailed_story": "**Gà đốt Thảo Nguyên Hồ Ô Thum: Một bản giao hưởng giữa núi rừng và sóng nước**\n\nNằm dưới chân dãy Thất Sơn hùng vĩ, Gà đốt Thảo Nguyên Hồ Ô Thum là một điểm dừng chân lý tưởng cho những tâm hồn muốn tìm về sự tĩnh lặng của vùng đất Tri Tôn. Tại đây, du khách sẽ được đắm mình trong không gian giao thoa giữa nét hoang sơ của đồng bằng phù sa và vẻ kỳ vĩ của những dãy núi đá granite.\n\nSự quyến rũ của vùng đất này còn nằm ở bản sắc văn hóa Khmer đậm nét, hiện hữu qua những thức quà dân dã như nước thốt nốt tươi hay bánh bò thốt nốt ngọt thanh, tạo nên một nhịp sống bản địa đầy mê hoặc.\n\n**Trải nghiệm ẩm thực: Giữa kỳ vọng và thực tế**\n\nĐiểm nhấn của hành trình chính là món gà đốt đặc trưng bên bờ hồ Ô Thum tĩnh lặng. Một số thực khách dành lời khen cho hương vị đặc sản, nhưng cũng không ít ý kiến bày tỏ sự thất vọng về sự chưa tương xứng giữa chất lượng và giá thành.\n\nMột số phản hồi cho rằng thịt gà đôi khi bị khô cứng, dịch vụ phục vụ còn chậm trễ và không gian chưa thực sự được chăm chút tinh tế về mặt vệ sinh. Dù còn những ý kiến trái chiều về sự đồng nhất giữa giá cả và chất lượng món ăn, Gà đốt Thảo Nguyên vẫn là một phần không thể thiếu trên bản đồ văn hóa ẩm thực Bảy Núi, nơi bạn có thể tìm thấy sự kết hợp giữa cảnh quan thiên nhiên và nhịp sống địa phương đầy chân thực.",
+    "description": "Gà Đốt Thảo Nguyên — Quán phục vụ đặc sản Gà Đốt lá chúc truyền thống ven hồ Ô Thum, Xã Ô Lâm. [Mẹo thực địa: Gà được đốt chín kỹ trong nồi kín với sả và lá chúc tươi từ 35–45 phút, du khách nên gọi đặt món trước khi đến để không phải chờ lâu].",
+    "detailed_story": "### Bí quyết Gà Đốt Bản Địa\nGà Đốt là món ăn trứ danh của đồng bào Khmer Bảy Núi. Gà đồi thả vườn được tẩm ướp sả, ớt, tỏi và lá chúc tươi, sau đó xếp vào nồi/thố đậy kín nắp để đốt trên lửa lớn. Hơi nóng và tinh dầu lá chúc thấm sâu vào từng thớ thịt giúp da gà vàng ươm, giòn rụm và thịt ngọt đậm đà.\n\n### Lời khuyên khi dùng bữa\nDo quy trình đốt gà thủ công chuẩn vị mất khoảng 35–45 phút, du khách nên gọi đặt trước 30-45 phút trước khi đến để được thưởng thức gà nóng hổi vừa chín tới.",
     "travel_guide_json": "{\"how_to_get_there\": \"Từ trung tâm thị trấn Tri Tôn, di chuyển bằng xe máy hoặc ô tô theo các tuyến Tỉnh lộ 941, 943 hoặc 948 để đến khu vực Gà đốt Thảo Nguyên Hồ Ô Thum.\", \"opening_hours\": \"06:00 - 18:00 hằng ngày.\", \"ticket_price\": \"Miễn phí tham quan.\", \"best_season\": \"Tháng 9 đến tháng 11 (Mùa nước nổi & lúa chín) hoặc tháng 12 đến tháng 4 (Mùa khô).\", \"vehicle_suitability\": \"Xe máy, Ô tô 4-16 chỗ.\"}",
     "checkin_spots_json": "[\"Bối cảnh tự nhiên bao quanh Gà đốt Thảo Nguyên Hồ Ô Thum\", \"Hàng cây thốt nốt đặc trưng vùng Bảy Núi\", \"Góc nhìn ngắm bình minh hoặc hoàng hôn Tri Tôn\"]",
     "highlights_json": "[\"artwork\"]",
@@ -3505,7 +3505,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Gà đốt Thảo Nguyên Hồ Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "quan-bo-leo-nui",
@@ -3995,7 +3995,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Phi Lai Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "khmer-temple",
@@ -5220,7 +5220,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Núi Tà Pạ Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Núi Tô"
   },
   {
     "id": "drink-hammock-chill",
@@ -6228,7 +6228,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tam Bửu Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "ho-o-ta-soc",
@@ -7713,7 +7713,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Con Đường Tơ Lụa Tà Pạ Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Núi Tô"
   },
   {
     "id": "97e67ffb-con-đường-tơ-lụa-soà",
@@ -8175,7 +8175,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc) Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "a810d441-cây-thốt-nốt-cô-độc-",
@@ -8329,7 +8329,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cầu Gỗ Mộc Mạc Hồ Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "4fc712e3-cầu-gỗ-giữa-đồng-lúa",
@@ -8560,7 +8560,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "1c3216be-căn-nhà-gỗ-vintage-n",
@@ -9022,7 +9022,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu) Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "8f6a436c-quán-kiều-tiên-gà-đố",
@@ -9099,7 +9099,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Kiều Tiên Gà Đốt Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "dec77a0e-gà-đốt-ô-thum-kim-su",
@@ -9176,7 +9176,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Gà Đốt Ô Thum Kim Suổl Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "ec52a58c-gà-đốt-ô-thum-thảo-n",
@@ -9186,8 +9186,8 @@
     "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
     "latitude": 10.378,
     "longitude": 104.991,
-    "description": "1080P/2K/4K分辨率，以RTX 5050为基准（25款主流游戏测试成绩取平均值） 数据来源于：TechPowerUp 桌面端显卡天梯图：",
-    "detailed_story": "**1. Tổng quan**\nGà Đốt Ô Thum Thảo Nguyên là một điểm đến ẩm thực hấp dẫn nằm tại Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang. Nơi đây mở cửa từ 08:00 đến 19:00, mang đến cho du khách cơ hội trải nghiệm ẩm thực phong phú với mức giá khoảng 250k - 320k. Với vị trí đắc địa, Gà Đốt Ô Thum Thảo Nguyên hứa hẹn sẽ là một điểm dừng chân lý tưởng cho những ai yêu thích khám phá văn hóa ẩm thực địa phương.\n\n**2. Đánh giá từ du khách**\nDo chưa có đánh giá cụ thể từ du khách, chúng tôi không thể tổng hợp ưu nhược điểm của Gà Đốt Ô Thum Thảo Nguyên. Tuy nhiên, với vị trí tuyệt đẹp và thực đơn phong phú, nơi đây chắc chắn sẽ mang lại những trải nghiệm độc đáo và đáng nhớ cho du khách.\n\n**3. Lời khuyên**\nKhi đến Gà Đốt Ô Thum Thảo Nguyên, du khách nên chuẩn bị trước về thời gian mở cửa và mức giá để có thể lên kế hoạch phù hợp. Ngoài ra, nên thử các món ăn đặc trưng của nhà hàng và tận hưởng không gian đậm chất địa phương. Hãy đến và khám phá những điều thú vị tại Gà Đốt Ô Thum Thảo Nguyên, một điểm đến ẩm thực không thể bỏ qua tại Tri Tôn, An Giang.",
+    "description": "Gà Đốt Thảo Nguyên — Quán phục vụ đặc sản Gà Đốt lá chúc truyền thống ven hồ Ô Thum, Xã Ô Lâm. [Mẹo thực địa: Gà được đốt chín kỹ trong nồi kín với sả và lá chúc tươi từ 35–45 phút, du khách nên gọi đặt món trước khi đến để không phải chờ lâu].",
+    "detailed_story": "### Bí quyết Gà Đốt Bản Địa\nGà Đốt là món ăn trứ danh của đồng bào Khmer Bảy Núi. Gà đồi thả vườn được tẩm ướp sả, ớt, tỏi và lá chúc tươi, sau đó xếp vào nồi/thố đậy kín nắp để đốt trên lửa lớn. Hơi nóng và tinh dầu lá chúc thấm sâu vào từng thớ thịt giúp da gà vàng ươm, giòn rụm và thịt ngọt đậm đà.\n\n### Lời khuyên khi dùng bữa\nDo quy trình đốt gà thủ công chuẩn vị mất khoảng 35–45 phút, du khách nên gọi đặt trước 30-45 phút trước khi đến để được thưởng thức gà nóng hổi vừa chín tới.",
     "travel_guide_json": null,
     "checkin_spots_json": null,
     "highlights_json": null,
@@ -9253,7 +9253,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Gà Đốt Ô Thum Thảo Nguyên Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "24a1fc67-gà-đốt-vương-ngọc-ô-",
@@ -9330,7 +9330,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Gà Đốt Vương Ngọc Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "159c4012-quán-đu-đủ-đâm-rina-",
@@ -10023,7 +10023,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bò 7 Món Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "6c77d0e8-quán-cháo-bò-trái-tr",
@@ -10100,7 +10100,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Cháo Bò Trái Trúc Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "8b5a9b10-quán-bánh-xèo-tép-bô",
@@ -10331,7 +10331,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Nhà hàng Gà Đốt Ô Thum Siêu Bó Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "2f0b8880-quán-bún-nước-lèo-tr",
@@ -11024,7 +11024,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Phi Lai Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "e563b663-chùa-tam-bửu-ba-chúc",
@@ -11101,7 +11101,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tam Bửu Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "28310684-khu-di-tích-căn-cứ-ô",
@@ -11419,8 +11419,8 @@
     "address": "Khu vực Vách đá Latina, Dưới chân Núi Cấm, Xã An Hảo, Tri Tôn, An Giang",
     "latitude": 10.482,
     "longitude": 105.002,
-    "description": "Hồ Đá Latina — Thắng cảnh đặc sắc tại Khu vực Vách đá Latina, Dưới chân Núi Cấm, Xã An Hảo, Tri Tôn, An Giang với cảnh quan thiên nhiên Bảy Núi trong lành.",
-    "detailed_story": "**1. Tổng quan**\nHồ Đá Latina - Một thiên nhiên kỳ diệu tại Tri Tôn, An Giang. Nơi đây tọa lạc tại Khu vực Vách đá Latina, dưới chân Núi Cấm, Xã An Hảo, Tri Tôn. Với diện tích rộng hàng vạn km², Hồ Đá Latina mang đến một không gian tuyệt đẹp, phù hợp cho những người yêu thiên nhiên và muốn tìm kiếm một điểm đến lý tưởng cho chuyến du lịch.\n\n**2. Đánh giá từ du khách**\nChưa có đánh giá từ du khách, nhưng chắc chắn Hồ Đá Latina sẽ mang lại những trải nghiệm đáng nhớ và ấn tượng sâu sắc. Du khách sẽ được tận hưởng không gian thiên nhiên rộng lớn, mát mẻ và yên bình. Tuy nhiên, vì hồ chưa có đánh giá nên không có thông tin về ưu và nhược điểm của nơi đây.\n\n**3. Lời khuyên**\nKhi đến Hồ Đá Latina, bạn nên chuẩn bị sẵn sàng để khám phá thiên nhiên kỳ diệu này. Vì hồ mở cửa tự do, bạn hoàn toàn có thể đến đây mà không cần phải trả phí. Tuy nhiên, bạn nên chú ý đến thời tiết và điều kiện đường đi để có thể đến nơi an toàn. Ngoài ra, nên mang theo nước uống và thức ăn để có thể tận hưởng không gian đẹp này một cách thoải mái nhất.",
+    "description": "Hồ Đá Latina (Vách Đá Latina) — Tuyệt tác vách đá dựng đứng soi bóng mặt nước tĩnh lặng, nằm tại khu vực Xã An Hảo, ngay cung đường giáp ranh TX. Tịnh Biên và Tri Tôn. Điểm check-in chụp ảnh vách đá hùng vĩ nổi tiếng.",
+    "detailed_story": "### Vị trí và Ranh giới Thực địa\nHồ Đá Latina nằm dưới chân núi Cấm, thuộc địa phận Xã An Hảo (tiếp giáp ranh giới giữa TX. Tịnh Biên và Tri Tôn). Du khách cần chú ý định vị chính xác vì khu vực này nằm trên trục đường liên ranh giới.\n\n### Trải nghiệm & Cảnh quan\nĐiểm nhấn ấn tượng nhất là vách đá hoa cương dựng đứng sừng sững bên hồ nước trong xanh. Đây là góc săn ảnh check-in thiên nhiên độc đáo, mang vẻ đẹp hoang sơ kỳ vĩ.",
     "travel_guide_json": null,
     "checkin_spots_json": null,
     "highlights_json": null,
@@ -11486,7 +11486,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Hồ Đá Latina Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)"
   },
   {
     "id": "3adb5c32-đá-vồ-hội-mẹ-cô-tô",
@@ -11717,7 +11717,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cánh Đồng Lúa Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Ba Chúc"
   },
   {
     "id": "9764c175-vườn-nho-nông-trại-ô",
@@ -11794,7 +11794,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Vườn Nho Nông Trại Ô Thum Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã Ô Lâm"
   },
   {
     "id": "30ac578e-vườn-mãng-cầu-núi-tô",
@@ -12112,8 +12112,8 @@
     "address": "Vách đá đứng Latina, Dưới chân Núi Cấm, Xã An Hảo, Tri Tôn, An Giang",
     "latitude": 10.4825,
     "longitude": 105.0025,
-    "description": "30 thg 6, 2026· Vách ngăn phòng khách là gì? Vách ngăn phòng khách là những tấm vách ngăn có thể được làm từ nhiều loại vật …",
-    "detailed_story": "**1. Tổng quan**\nVách Đá Đứng Latina là một địa điểm du lịch văn hóa nổi bật tại Tri Tôn, An Giang. Đây là một trong những điểm đến thú vị không thể bỏ qua khi đến với vùng đất này.\n\n**2. Đánh giá từ du khách**\nVì chưn có đánh giá từ du khách, nên tôi sẽ dựa trên mô tả gốc và một số đánh giá thực tế khác để tóm tắt ưu và nhược điểm của địa điểm này.\n\n* Ưu điểm: Vách Đá Đứng Latina tọa lạc tại một vị trí đẹp, nằm dưới chân núi Cấm, tạo nên một cảnh quan tuyệt đẹp.\n* Nhược điểm: Chưa có đánh giá thực tế nào từ du khách, không có thông tin về các tiện ích hoặc dịch vụ tại địa điểm này.\n\n**3. Lời khuyên**\nKhi đến Vách Đá Đứng Latina, bạn nên:\n\n* Tìm hiểu thêm thông tin về địa điểm này, bao gồm các tiện ích, dịch vụ, và lịch trình mở cửa.\n* Đi thăm vào thời điểm đẹp nhất, khi ánh nắng mặt trời không quá mạnh.\n* Đừng quên mang theo nước uống và trang thiết bị cần thiết cho một chuyến đi du lịch an toàn và thoải mái.",
+    "description": "Hồ Đá Latina (Vách Đá Latina) — Tuyệt tác vách đá dựng đứng soi bóng mặt nước tĩnh lặng, nằm tại khu vực Xã An Hảo, ngay cung đường giáp ranh TX. Tịnh Biên và Tri Tôn. Điểm check-in chụp ảnh vách đá hùng vĩ nổi tiếng.",
+    "detailed_story": "### Vị trí và Ranh giới Thực địa\nHồ Đá Latina nằm dưới chân núi Cấm, thuộc địa phận Xã An Hảo (tiếp giáp ranh giới giữa TX. Tịnh Biên và Tri Tôn). Du khách cần chú ý định vị chính xác vì khu vực này nằm trên trục đường liên ranh giới.\n\n### Trải nghiệm & Cảnh quan\nĐiểm nhấn ấn tượng nhất là vách đá hoa cương dựng đứng sừng sững bên hồ nước trong xanh. Đây là góc săn ảnh check-in thiên nhiên độc đáo, mang vẻ đẹp hoang sơ kỳ vĩ.",
     "travel_guide_json": null,
     "checkin_spots_json": null,
     "highlights_json": null,
@@ -12179,7 +12179,7 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Vách Đá Đứng Latina Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)"
   },
   {
     "id": "f0d6fe60-bãi-thả-diều-hoàng-h",
