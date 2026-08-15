@@ -31,7 +31,19 @@ export const getCachedAllPlaces = unstable_cache(
         .order('rating', { ascending: false });
 
       if (!error && data && data.length > 0) {
-        return data;
+        // Intelligently merge rich detailed_story & field_tips from local master JSON
+        const merged = data.map((sp: any) => {
+          const local = (localMasterPois as any[]).find(
+            (lp: any) => lp.id === sp.id || lp.slug === sp.slug || lp.name === sp.name
+          );
+          return {
+            ...local,
+            ...sp,
+            detailed_story: sp.detailed_story || local?.detailed_story,
+            field_tips: sp.field_tips || local?.field_tips,
+          };
+        });
+        return merged;
       }
     } catch (e) {
       console.warn('[DataCache] Supabase fetch failed, falling back to local master:', e);

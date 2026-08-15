@@ -71,6 +71,9 @@ export async function getPlacesFiltered(commune?: string, category?: string): Pr
  * Lookup order: 1) slug, 2) id (text PK like "CF001").
  */
 export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const masterPois = require('@/data/triton_pois_full.json') as any[];
+
   try {
     // 1. Try matching by slug first (SEO-friendly URLs)
     const { data: bySlug } = await supabase
@@ -79,42 +82,59 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
       .eq('slug', idOrSlug)
       .maybeSingle();
 
-    if (bySlug) return bySlug as Place;
+    if (bySlug) {
+      const local = masterPois.find(
+        (p: any) => p.id === bySlug.id || p.slug === bySlug.slug || p.name === bySlug.name
+      );
+      return {
+        ...local,
+        ...bySlug,
+        detailed_story: bySlug.detailed_story || local?.detailed_story,
+        field_tips: bySlug.field_tips || local?.field_tips,
+      } as Place;
+    }
 
     // 2. Fallback: match by primary key id (e.g. "CF001", "AT002")
-    const { data: byId, error: idError } = await supabase
+    const { data: byId } = await supabase
       .from('places')
       .select('*')
       .eq('id', idOrSlug)
       .maybeSingle();
 
-    if (byId) return byId as Place;
-
-    // 3. Fallback: local cleaned master JSON
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const masterPois = require('@/data/triton_pois_full.json');
-      if (Array.isArray(masterPois)) {
-        const found = masterPois.find((p: any) => p.id === idOrSlug || p.slug === idOrSlug || p.name?.toLowerCase().includes(idOrSlug.toLowerCase()));
-        if (found) return found as Place;
-      }
-    } catch {
-      // ignore
+    if (byId) {
+      const local = masterPois.find(
+        (p: any) => p.id === byId.id || p.slug === byId.slug || p.name === byId.name
+      );
+      return {
+        ...local,
+        ...byId,
+        detailed_story: byId.detailed_story || local?.detailed_story,
+        field_tips: byId.field_tips || local?.field_tips,
+      } as Place;
     }
 
-    console.error(`[getPlaceById] No place found for slug/id: "${idOrSlug}"`, idError);
+    // 3. Fallback: local cleaned master JSON
+    if (Array.isArray(masterPois)) {
+      const found = masterPois.find(
+        (p: any) =>
+          p.id === idOrSlug ||
+          p.slug === idOrSlug ||
+          p.name?.toLowerCase().includes(idOrSlug.toLowerCase())
+      );
+      if (found) return found as Place;
+    }
+
     return null;
   } catch (err) {
     console.error(`[getPlaceById] Failed to query Supabase for "${idOrSlug}":`, err);
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const masterPois = require('@/data/triton_pois_full.json');
-      if (Array.isArray(masterPois)) {
-        const found = masterPois.find((p: any) => p.id === idOrSlug || p.slug === idOrSlug || p.name?.toLowerCase().includes(idOrSlug.toLowerCase()));
-        if (found) return found as Place;
-      }
-    } catch {
-      // ignore
+    if (Array.isArray(masterPois)) {
+      const found = masterPois.find(
+        (p: any) =>
+          p.id === idOrSlug ||
+          p.slug === idOrSlug ||
+          p.name?.toLowerCase().includes(idOrSlug.toLowerCase())
+      );
+      if (found) return found as Place;
     }
     return null;
   }
