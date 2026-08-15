@@ -30,11 +30,11 @@ const FESTIVALS_DATA = [
     id: "fest-dua-bo",
     name: "Lễ Hội Đua Bò Bảy Núi (Lễ Sene Dolta)",
     time: "Tháng 8 - 9 Âm Lịch (Cuối T9 - Đầu T10)",
-    location: "Sân Đua Bò Chùa Tà Miệt (Xã Lương Phi) & Chùa Rô (Xã Châu Lăng)",
+    location: "Sân Đua Bò Tà Pạ - Soài Chek (Xã Núi Tô), Chùa Rô (Xã Châu Lăng) & Cái Nôi Chùa Tà Miệt (Xã Lương Phi)",
     tag: "Di Sản Quốc Gia",
     badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
-    desc: "Hội thi đua bò kịch tính và độc nhất vô nhị vùng Bảy Núi trên bãi bùn lầy, gắn liền với lễ cúng ông bà Dolta thiêng liêng của đồng bào Khmer.",
-    highlights: ["Màn so tài thần tốc 'tạt bùn rẽ sóng'", "Điệu múa trống Chhay-dăm rộn rã", "Thu hút hàng vạn du khách & nhiếp ảnh gia"]
+    desc: "Hội thi đua bò kịch tính và độc nhất vô nhị vùng Bảy Núi trên bãi bùn lầy, khởi nguồn từ tập tục cày ruộng chùa Tà Miệt gắn liền với lễ cúng ông bà Dolta thiêng liêng.",
+    highlights: ["Màn so tài thần tốc 'tạt bùn rẽ sóng' tại Sân Tà Pạ - Soài Chek", "Điệu múa trống Chhay-dăm rộn rã", "Cái nôi cội nguồn tại Chùa Tà Miệt (Xã Lương Phi)"]
   },
   {
     id: "fest-chol-chnam-thmay",
