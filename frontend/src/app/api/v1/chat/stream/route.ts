@@ -319,6 +319,25 @@ export async function POST(req: NextRequest) {
           });
         }
 
+        // Fallback: match by individual keywords or featured places
+        if (matchedPlacesMap.size === 0) {
+          const words = cleanQ.split(/\s+/).filter(w => w.length >= 3);
+          for (const w of words) {
+            const localMatches = (masterPois as any[]).filter(p => {
+              const pName = (p.name || '').toLowerCase();
+              const pCat = (p.category || '').toLowerCase();
+              return pName.includes(w) || pCat.includes(w);
+            }).slice(0, 2);
+            localMatches.forEach(p => {
+              if (!matchedPlacesMap.has(p.id)) matchedPlacesMap.set(p.id, p);
+            });
+          }
+        }
+
+        if (matchedPlacesMap.size === 0) {
+          (masterPois as any[]).slice(0, 4).forEach(p => matchedPlacesMap.set(p.id, p));
+        }
+
         const places = Array.from(matchedPlacesMap.values()).slice(0, 6);
         const formattedPlaces = places.map(p => ({
           id: p.id, 
