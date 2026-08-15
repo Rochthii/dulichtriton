@@ -104,7 +104,7 @@
     "best_time": "Chiều hoàng hôn hoặc sáng sớm",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "reviews": [
       {
         "platform": "google_maps",
@@ -198,7 +198,13 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô) Tri Tôn An Giang",
-    "field_tips": "view toàn cảnh thung lũng, 3 đường lên"
+    "field_tips": "view toàn cảnh thung lũng, 3 đường lên",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+      "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1600&auto=format&fit=crop"
+    ]
   },
   {
     "id": "canh-dong-lua-ta-pa",
@@ -1062,7 +1068,7 @@
     "best_time": "Nắng sớm hoặc chiều buồm",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
     "reviews": [
       {
         "platform": "facebook",
@@ -1138,7 +1144,12 @@
     "opening_hours": "05:30 - 18:30 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đến lúc sáng sớm 06:00–07:30 hoặc chiều tà 16:30–17:30 để chụp ảnh ngược sáng đẹp nhất. Giữ gìn vệ sinh và không dẫm đạp lúa của bà con.",
-    "is_hot": true
+    "is_hot": true,
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop"
+    ]
   },
   {
     "id": "khu-di-tich-o-ta-soc",
@@ -5188,7 +5199,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5250,7 +5261,12 @@
     "opening_hours": "06:30 - 18:30 (Mỗi ngày)",
     "price_level": "20.000đ - 45.000đ / ly",
     "ticket_price": "20.000đ - 45.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "photos": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1600&auto=format&fit=crop"
+    ]
   },
   {
     "id": "f7f5ca30-windy-hill-coffee-&-",
@@ -7810,7 +7826,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?q=80&w=1600&auto=format&fit=crop",
     "reviews": [
       {
         "platform": "google_maps",
@@ -7870,7 +7886,13 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "250.000đ - 320.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "photos": [
+      "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop"
+    ]
   },
   {
     "id": "8f6a436c-quán-kiều-tiên-gà-đố",
