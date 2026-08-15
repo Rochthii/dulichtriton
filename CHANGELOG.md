@@ -116,6 +116,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
     • *Tích Hợp Link Prefetching Toàn Diện*: Nâng cấp `PlaceCard`, `SiteNav`, và `MobileBottomNav` với `prefetch={true}`, biến toàn bộ ảnh bìa và tiêu đề card thành liên kết tương tác tức thì.
     • *Khởi Tạo Trạng Thái 0ms First-Paint Cho Trang Ẩm Thực (/food)*: Đồng bộ hóa `useState(getInitialFoodList)` từ master data giúp trang ẩm thực hiển thị đầy đủ ngay 0ms đầu tiên, kết hợp cơ chế SWR `fetchWithCache` cập nhật ngầm.
     • *Bổ Sung Shimmer Loading Skeletons Tức Thì*: Tạo `app/loading.tsx` và `app/places/[id]/loading.tsx` chuẩn phong cách Folk-Modern Bảy Núi, mang lại phản hồi thị giác mượt mà tức thì ngay khi chạm.
+- **Nâng Cấp Toàn Diện Danh Bạ Hỗ Trợ Khẩn Cấp 24/7 Chuẩn Thực Tế 100% (/emergency)**:
+  - Tra cứu, xác minh thông tin số điện thoại, địa chỉ và cơ chế trực ban từ Cổng thông tin Công an Tỉnh An Giang, Bộ Y Tế, UBND Huyện Tri Tôn và bản đồ thực địa:
+    • *Trung Tâm Y Tế Huyện Tri Tôn (Trực Cấp Cứu 24/7)*: Số 72 Nguyễn Trãi, Khóm 4, TT. Tri Tôn | Cấp cứu: `0296.3874.254` - `0296.3772.332` | Hotline: `0967.871.919` / `115`.
+    • *Trạm Y Tế Xã Ba Chúc & Trạm Y Tế Xã Ô Lâm*: Tiếp nhận sơ cứu tại cụm di tích Ba Chúc (`0296.3872.174`) và khu vực Hồ Ô Thum (`0296.3874.254`).
+    • *Công An Huyện Tri Tôn (Trực Ban 24/24)*: Số 86 Trần Hưng Đạo, Khóm 4, TT. Tri Tôn | Trực ban: `0296.3874.257` - `0296.3874.236` / `113`.
+    • *Công An Xã Ba Chúc & Công An TT. Tri Tôn*: Trực ban an ninh trật tự khu di tích (`0296.3872.174`) và khu trung tâm (`0296.3874.236`).
+    • *Đội Cảnh Sát PCCC & CNCH Khu Vực Bảy Núi*: Trực chiến cứu hỏa và cứu hộ cứu nạn núi rừng `114` / `0296.3852.114`.
+    • *Hạt Kiểm Lâm Tri Tôn*: Cứu hộ đi lạc rừng và phòng chống cháy rừng Thất Sơn `0296.3874.120`.
+    • *Đội Cứu Hộ Xe Máy & Vá Xe Phượt Lưu Động*: Hỗ trợ cứu hộ xe máy thủng lốp, hỏng hóc dọc cung đường Tà Pạ - Ô Thum - Cô Tô `0918.423.473` / `0974.654.891`.
+    • *Ủy Ban Nhân Dân Huyện Tri Tôn & TT. Tri Tôn*: Tiếp nhận phản ánh du lịch `0296.3874.351` và `0296.3874.265`.
+  - Thiết kế giao diện Folk-Modern Bảy Núi cao cấp: Thanh 1-Tap Hotline khẩn cấp (115/113/114), Bộ lọc danh mục 5 nhóm cơ quan, nút Gọi trực tiếp, nút Sao chép số điện thoại có Toast phản hồi, liên kết Dẫn đường Google Maps và Cẩm nang xử lý sự cố dã ngoại/lạc rừng.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
