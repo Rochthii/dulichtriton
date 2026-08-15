@@ -114,10 +114,12 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió, Đèn Nước** (Rằm tháng 10 Âm lịch): Nghi thức đút Cốm Dẹp (Ombok) cầu may mắn cho trẻ nhỏ và thả đèn gió bay rực sáng bầu trời Thất Sơn.
   - **Đại Lễ Dâng Y Kathina** (Rằm tháng 9 - Rằm tháng 10 Âm lịch): Đại lễ Phật giáo trang trọng, hòa tấu Dàn nhạc Ngũ Âm (Pinpeat) và vũ điệu múa trống Chhay-dăm.
   - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn** (Dịp lễ 30/4 - 1/5 và 2/9): Trải nghiệm bay khinh khí cầu ngắm núi Cô Tô và cánh đồng Tà Pạ mùa lúa chín.
-- **Nâng Cấp Không Gian Trực Quan & Bộ Lọc Tabs Trên Trang `/culture`**:
-  - **Interactive 4-Season Festival Timeline**: Banner trình diễn 5 kỳ lễ hội với thời gian âm/dương lịch, địa điểm tổ chức và nút bấm hỏi AI nhanh.
-  - **4 Di Sản & Tinh Hoa Làng Nghề Trăm Tuổi**: Kinh Lá Buông (Satra Slarkrit) độc bản, Dàn nhạc Ngũ Âm & Múa Dù Kê (Robam), Làng Dệt Thổ Cẩm Châu Lăng, Lò Gốm Bếp Cà-Ràng Ô Lâm.
-  - **Bộ Lọc Tabs Phân Loại Mạch Lạc**: `Tất Cả` | `Lễ Hội & Sân Đua Bò` | `Chùa Khmer Cổ Kính` | `Di Tích Lịch Sử` | `Làng Nghề & Di Sản`.
+- **Đại Tu Toàn Diện Giao Diện `/culture` Theo Chuẩn Thiết Kế 'Folk-Modern Bảy Núi' (Design System Skill)**:
+  - Loại bỏ hoàn toàn giao diện phẳng pastel đơn điệu, thay thế bằng hệ sinh thái thiết kế chuẩn thương hiệu Thất Sơn:
+    • *Ảnh bìa lễ hội tỉ lệ 16:9 sắc nét*: Mỗi thẻ lễ hội có ảnh chụp thực địa, gradient scrim tối màu và nhãn danh mục chuyên biệt (`--festival: #7C5CBF`, `--saffron: #D9822B`, `--jade: #0E8C7F`, `--sunset: #F26B3A`).
+    • *Thẻ bảo vật & làng nghề kèm con dấu di sản*: Thiết kế dạng bưu thiếp lưu niệm ấm áp (`#FFFDF7`, viền `#EBE1D0`, bo góc `rounded-[26px]`) đóng con dấu `BẢO VẬT QUỐC GIA` / `DI SẢN TRĂM TUỔI`.
+    • *Bộ lọc Tabs dạng Pill bo tròn toàn phần*: Nút lọc `rounded-full` mượt mà, phản hồi chuyển trạng thái tức thì.
+    • *Thẻ địa điểm thực địa chuẩn 4:3*: Khung ảnh chuẩn tỉ lệ, badge sao vàng, tên địa danh chuẩn `Bricolage Grotesque` và 2 nút hành động `[Xem Chi Tiết]` + `[Chỉ đường Google Maps]`.
 - **Nạp Bản Tổng Quan Toàn Diện Master Dossier Tri Tôn (`KB000-TRI-TON-MASTER-OVERVIEW`)**:
   - Biên soạn và nạp hồ sơ tri thức tổng quan toàn diện, chuẩn xác và sâu sắc nhất về Tri Tôn:
     • *Địa lý & Tự nhiên*: Bán sơn địa rộng 600km² lớn nhất An Giang, 4 ngọn núi Thất Sơn (Cô Tô, Núi Dài, Núi Tượng, Núi Nước).
