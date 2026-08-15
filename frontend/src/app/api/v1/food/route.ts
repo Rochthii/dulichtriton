@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import localMasterPois from '@/data/triton_pois_full.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,31 +12,61 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const commune = searchParams.get('commune');
-    const limit = parseInt(searchParams.get('limit') || '12', 10);
+    const nightOnly = searchParams.get('night') === 'true';
+    const limit = parseInt(searchParams.get('limit') || '100', 10);
 
     let query = supabase
       .from('places')
-      .select('id, slug, name, commune, category, rating, image_url, description, price_level, video_url, address, opening_hours')
-      .or('category.ilike.%Ẩm thực%,category.ilike.%Nhà hàng%,category.ilike.%Quán%,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Nhà hàng%')
+      .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, open_late, night_hours, phone')
+      .or('category.eq.gastronomy,category.eq.food,category.ilike.%Ẩm thực%,category.ilike.%Nhà hàng%,category.ilike.%Quán%,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Quán%,id.ilike.AT%,id.ilike.CF%,id.ilike.DS%')
+      .eq('is_active', true)
       .order('rating', { ascending: false })
       .limit(limit);
 
-    if (commune && commune !== 'ALL') {
+    if (nightOnly) {
+      query = query.eq('open_late', true);
+    }
+
+    if (commune && commune !== 'ALL' && commune !== 'Tất cả') {
       query = query.ilike('commune', `%${commune}%`);
     }
 
     const { data: foodPlaces, error } = await query;
-    if (error) {
-      console.error('[Food API Error]:', error);
-      throw error;
+
+    if (!error && foodPlaces && foodPlaces.length > 0) {
+      return NextResponse.json(
+        { success: true, count: foodPlaces.length, food: foodPlaces, source: 'supabase' },
+        { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' } }
+      );
     }
 
+    // Reliable Local Fallback
+    const fallbackFood = (localMasterPois as any[])
+      .filter((p) => {
+        const isFood =
+          p.category === 'gastronomy' ||
+          p.category === 'food' ||
+          p.category === 'am_thuc' ||
+          (p.tourism_category && p.tourism_category.includes('Ẩm Thực')) ||
+          (p.id && (p.id.startsWith('AT') || p.id.startsWith('CF') || p.id.startsWith('DS')));
+        
+        if (!isFood) return false;
+        if (nightOnly && !p.open_late) return false;
+        if (commune && commune !== 'ALL' && commune !== 'Tất cả' && p.commune !== commune) return false;
+        return true;
+      })
+      .slice(0, limit);
+
     return NextResponse.json(
-      { success: true, count: foodPlaces?.length || 0, food: foodPlaces || [], source: 'supabase' },
+      { success: true, count: fallbackFood.length, food: fallbackFood, source: 'local_master' },
       { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' } }
     );
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Error fetching food places';
-    return NextResponse.json({ error: msg }, { status: 500 });
+    console.warn('[Food API Error]:', err);
+    // Fallback on catch
+    const fallbackFood = (localMasterPois as any[]).filter(
+      (p) => p.category === 'gastronomy' || (p.id && (p.id.startsWith('AT') || p.id.startsWith('CF') || p.id.startsWith('DS')))
+    );
+    return NextResponse.json({ success: true, count: fallbackFood.length, food: fallbackFood, source: 'fallback_error' });
   }
 }

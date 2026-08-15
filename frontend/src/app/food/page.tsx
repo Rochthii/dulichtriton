@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import HotPlacesSection from "@/components/HotPlacesSection";
-import { Utensils, MapPin, Star, Flame, ChevronRight, Clock } from "lucide-react";
+import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Search, Moon, Phone, Navigation, Play } from "lucide-react";
+import localMasterPois from "@/data/triton_pois_full.json";
 
 interface FoodItem {
   id: string;
@@ -18,26 +17,29 @@ interface FoodItem {
   video_url?: string;
   hours: string;
   description?: string;
+  open_late?: boolean;
+  night_hours?: string;
+  phone?: string;
+  price_level?: string;
+  address?: string;
 }
 
 export default function FoodPage() {
   const [foods, setFoods] = useState<FoodItem[]>([]);
   const [selectedCommune, setSelectedCommune] = useState("Tất cả");
+  const [nightOnly, setNightOnly] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadLiveFoodData() {
       setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from("places")
-          .select("id, slug, name, category, tourism_category, commune, rating, photos, image_url, video_url, opening_hours, description")
-          .or("category.eq.food,category.eq.Bún nước lèo,tourism_category.ilike.%Ẩm Thực%,tourism_category.ilike.%Cà Phê%,tourism_category.ilike.%Quán%")
-          .eq("is_active", true)
-          .order("rating", { ascending: false });
+        const res = await fetch("/api/v1/food?limit=100");
+        const json = await res.json();
 
-        if (!error && data && data.length > 0) {
-          const formatted = data.map((item: any) => {
+        if (json.food && json.food.length > 0) {
+          const formatted = json.food.map((item: any) => {
             let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
             if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
               img = item.image_url;
@@ -46,35 +48,72 @@ export default function FoodPage() {
               if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
               else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
             }
+
             return {
               id: item.id,
               slug: item.slug || item.id,
               name: item.name,
-              category: item.category || "food",
+              category: item.category || "gastronomy",
               tourism_category: item.tourism_category || "Ẩm Thực Đặc Sản",
               commune: item.commune || "Thị trấn Tri Tôn",
               rating: item.rating ? Number(item.rating) : 4.8,
               image_url: img,
-              video_url: item.video_url || `https://www.tiktok.com/search?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
-              hours: item.opening_hours || "06:00 - 21:00",
-              description: item.description || ""
+              video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
+              hours: item.night_hours || item.opening_hours || (item.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+              description: item.description || "",
+              open_late: !!item.open_late,
+              night_hours: item.night_hours,
+              phone: item.phone,
+              price_level: item.price_level || "35k - 150k",
+              address: item.address || "",
             };
           });
           setFoods(formatted);
         } else {
-          setFoods([]);
+          fallbackToLocalMaster();
         }
       } catch (err) {
-        console.error("Supabase fetch error:", err);
-        setFoods([]);
+        console.warn("API fetch failed, using local master:", err);
+        fallbackToLocalMaster();
       } finally {
         setLoading(false);
       }
     }
+
+    function fallbackToLocalMaster() {
+      const gastronomyList = (localMasterPois as any[])
+        .filter(
+          (p) =>
+            p.category === "gastronomy" ||
+            p.category === "food" ||
+            (p.id && (p.id.startsWith("AT") || p.id.startsWith("CF") || p.id.startsWith("DS")))
+        )
+        .map((p) => ({
+          id: p.id,
+          slug: p.slug || p.id,
+          name: p.name,
+          category: p.category || "gastronomy",
+          tourism_category: p.tourism_category || "Ẩm Thực Đặc Sản",
+          commune: p.commune || "Thị trấn Tri Tôn",
+          rating: p.rating ? Number(p.rating) : 4.8,
+          image_url: p.image_url || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+          video_url: p.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(p.name + " Tri Tôn")}`,
+          hours: p.night_hours || p.opening_hours || (p.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+          description: p.description || "",
+          open_late: !!p.open_late,
+          night_hours: p.night_hours,
+          phone: p.phone,
+          price_level: p.price_level || "35k - 150k",
+          address: p.address || "",
+        }));
+
+      setFoods(gastronomyList);
+    }
+
     loadLiveFoodData();
   }, []);
 
-  // Dynamic Commune List from Live Data (Zero Hardcoding)
+  // Dynamic Commune List from Live Data
   const communes = useMemo(() => {
     const set = new Set<string>();
     foods.forEach((f) => {
@@ -84,146 +123,223 @@ export default function FoodPage() {
   }, [foods]);
 
   const filteredFoods = useMemo(() => {
-    if (selectedCommune === "Tất cả") return foods;
-    return foods.filter(f => f.commune === selectedCommune);
-  }, [foods, selectedCommune]);
+    return foods.filter((f) => {
+      if (nightOnly && !f.open_late) return false;
+      if (selectedCommune !== "Tất cả" && f.commune !== selectedCommune) return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const matchName = f.name.toLowerCase().includes(q);
+        const matchDesc = (f.description || "").toLowerCase().includes(q);
+        const matchCommune = f.commune.toLowerCase().includes(q);
+        if (!matchName && !matchDesc && !matchCommune) return false;
+      }
+      return true;
+    });
+  }, [foods, selectedCommune, nightOnly, searchQuery]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F4F9F5] font-body-base text-slate-800 antialiased selection:bg-emerald-200">
-      
+    <div className="flex min-h-screen flex-col bg-[#FAF3E7] font-body text-[#26221B] antialiased">
       {/* Background Graphic Accents */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-emerald-300/20 blur-3xl" />
+        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-emerald-300/15 blur-3xl" />
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-amber-300/15 blur-3xl" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-container-max flex-grow flex-col space-y-10 px-margin-mobile py-8 md:px-margin-desktop md:py-12">
-        
-        {/* Dynamic Food Hot Section */}
-        <HotPlacesSection
-          categoryFilter="ẩm thực"
-          limit={3}
-          title="🔥 TOP QUÁN ĂN & ĐẶC SẢN HOT NHẤT TRI TÔN"
-          subtitle="Ma trận các quán ăn chuẩn giờ mở cửa, được đánh giá cao nhất bởi thực khách Bảy Núi"
-        />
-        
-        {/* Header Hero Section */}
-        <section className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#063821] via-[#0D4B2D] to-[#125C37] text-white p-8 sm:p-12 shadow-2xl border border-emerald-500/20">
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-200 text-xs font-bold border border-white/20 backdrop-blur-md">
-              <Flame className="h-4 w-4 text-amber-300" />
-              <span>Dữ Liệu Trực Tuyến Live Database ({foods.length} Quán Ăn & Cà Phê)</span>
+      <main className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-8 px-4 py-8 md:px-6 md:py-10">
+        {/* Banner Section */}
+        <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0E8C7F] to-[#085A52] p-6 text-white shadow-md md:p-10 border border-[#0B6B60]">
+          <div className="relative z-10 max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
+              <Utensils className="h-3.5 w-3.5" />
+              <span>Thiên Đường Ẩm Thực Bảy Núi</span>
             </div>
-            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white tracking-tight leading-tight">
-              Ẩm Thực Đặc Sản <br />
-              <span className="text-amber-300">Đậm Đà Bản Vị Bảy Núi</span>
+            <h1 className="font-display text-2xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
+              Khám Phá Hương Vị Đặc Sản & Quán Ngon Tri Tôn
             </h1>
-            <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-light max-w-2xl">
-              Khám phá toàn bộ {foods.length} quán ăn, nhà hàng gà đốt Ô Thum lá chúc, quán cháo bò trái trúc, bánh bò thốt nốt và các quán cà phê view núi đẹp nhất Tri Tôn.
+            <p className="text-xs md:text-sm text-white/85 leading-relaxed font-body">
+              Gà đốt Ô Thum, Cháo bò Tri Tôn, Bánh canh Vĩnh Trung, Bún cá Châu Lăng, Đu đủ đâm Rếch Cô Tô và các quán cà phê ngắm cảnh mở muộn về đêm.
             </p>
           </div>
         </section>
 
-        {/* Filter Pills */}
-        <section className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-200/80 pb-4">
-            <h2 className="font-heading text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-              <Utensils className="h-5 w-5 text-amber-500" />
-              <span>Danh Sách Ẩm Thực & Quán Cà Phê</span>
-            </h2>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-full">
-                {filteredFoods.length} / {foods.length} Địa Điểm
-              </span>
+        {/* Filter & Search Hub */}
+        <section className="bg-[#FFFDF7] p-4 md:p-6 rounded-3xl border border-[#26221B]/8 shadow-xs space-y-4">
+          <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
+            {/* Search Input */}
+            <div className="relative flex-1 w-full">
+              <Search className="w-4 h-4 text-[#6B6355] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Tìm kiếm món ăn, quán gà đốt, cháo bò, quán cà phê..."
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus:outline-none focus:border-[#0E8C7F]"
+              />
             </div>
+
+            {/* Night Filter Button */}
+            <button
+              onClick={() => setNightOnly(!nightOnly)}
+              className={`flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
+                nightOnly
+                  ? "bg-purple-900 text-purple-100 shadow-sm border border-purple-500"
+                  : "bg-[#FAF3E7] text-[#6B6355] hover:bg-purple-50 hover:text-purple-900 border border-[#26221B]/10"
+              }`}
+            >
+              <Moon className={`w-3.5 h-3.5 ${nightOnly ? "text-amber-300 fill-amber-300" : "text-purple-700"}`} />
+              <span>Tri Tôn Về Đêm (Quán Mở Muộn)</span>
+            </button>
           </div>
 
-          {/* Commune Filter Buttons */}
-          <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-none">
-            {communes.map((c) => (
+          {/* Communes Filter Horizontal Scroll */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <span className="text-xs font-bold text-[#6B6355] whitespace-nowrap mr-1 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> Khu Vực:
+            </span>
+            {communes.map((commune) => (
               <button
-                key={c}
-                onClick={() => setSelectedCommune(c)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm ${
-                  selectedCommune === c
-                    ? "bg-emerald-900 text-white shadow-emerald-900/20"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-emerald-500"
+                key={commune}
+                onClick={() => setSelectedCommune(commune)}
+                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  selectedCommune === commune
+                    ? "bg-[#0E8C7F] text-white shadow-xs"
+                    : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
                 }`}
               >
-                {c}
+                {commune}
               </button>
             ))}
           </div>
+        </section>
 
-          {/* Food Cards Grid */}
+        {/* Food Places Grid */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
+              <Flame className="w-5 h-5 text-[#F26B3A]" />
+              <span>Danh Sách Địa Điểm Ẩm Thực ({filteredFoods.length} Địa Điểm)</span>
+            </h2>
+            <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
+          </div>
+
           {loading ? (
-            <div className="py-16 text-center text-slate-400 font-bold text-sm">
-              Đang tải danh sách ẩm thực Tri Tôn...
+            <div className="py-16 text-center text-[#6B6355] font-bold">
+              Đang tải danh sách quán ngon Bảy Núi...
             </div>
           ) : filteredFoods.length === 0 ? (
-            <div className="py-16 text-center text-slate-500 font-bold text-sm bg-white rounded-3xl p-8 border border-slate-200">
-              Không có quán ăn nào thuộc khu vực {selectedCommune}.
+            <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">
+              <Utensils className="w-8 h-8 text-[#6B6355]/40 mx-auto" />
+              <div className="font-bold text-sm text-[#26221B]">Không tìm thấy quán ăn nào phù hợp với bộ lọc.</div>
+              <button
+                onClick={() => {
+                  setSelectedCommune("Tất cả");
+                  setNightOnly(false);
+                  setSearchQuery("");
+                }}
+                className="px-4 py-2 rounded-xl bg-[#0E8C7F] text-white text-xs font-bold cursor-pointer"
+              >
+                Xóa tất cả bộ lọc
+              </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {filteredFoods.map((food) => (
-                <Link
+                <div
                   key={food.id}
-                  href={`/places/${food.slug || food.id}`}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl justify-between cursor-pointer"
+                  className="group bg-[#FFFDF7] rounded-3xl overflow-hidden border border-[#26221B]/8 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                    {/* Image Header */}
+                    <div className="relative h-48 w-full overflow-hidden bg-slate-200">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={food.image_url}
                         alt={food.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                       />
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
-                        {food.tourism_category}
-                      </div>
-                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/90 text-amber-600 font-extrabold text-[11px] shadow-sm">
-                        <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                        {food.rating}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                      {food.open_late && (
+                        <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-purple-900/90 text-purple-100 font-extrabold text-[10px] backdrop-blur-xs flex items-center gap-1 border border-purple-400/30">
+                          <Moon className="w-3 h-3 text-amber-300 fill-amber-300" />
+                          <span>Mở Muộn</span>
+                        </span>
+                      )}
+
+                      <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-xs flex items-center gap-1 shadow-xs">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+                        <span>{food.rating}</span>
+                      </span>
+
+                      <div className="absolute bottom-3 left-3 right-3 text-white">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300">
+                          {food.commune}
+                        </span>
+                        <h3 className="font-display font-bold text-sm leading-snug line-clamp-1">
+                          {food.name}
+                        </h3>
                       </div>
                     </div>
 
-                    <div className="p-6 space-y-3">
-                      <div className="flex items-center justify-between text-xs font-bold text-slate-500">
-                        <span className="flex items-center gap-1 text-emerald-800">
-                          <MapPin className="h-4 w-4 text-emerald-600 shrink-0" />
-                          {food.commune}
-                        </span>
-                        <span className="flex items-center gap-1 text-amber-700">
-                          <Clock className="h-3.5 w-3.5 text-amber-500 shrink-0" />
-                          {food.hours}
-                        </span>
+                    {/* Content Details */}
+                    <div className="p-4 space-y-2.5 text-xs text-[#6B6355]">
+                      <div className="flex items-center gap-1.5 text-[11px] text-[#26221B]">
+                        <Clock className="w-3.5 h-3.5 text-[#0E8C7F] shrink-0" />
+                        <span className="font-semibold">{food.hours}</span>
                       </div>
 
-                      <h3 className="font-heading text-xl font-extrabold text-slate-900 group-hover:text-emerald-800 transition-colors">
-                        {food.name}
-                      </h3>
+                      {food.address && (
+                        <div className="flex items-start gap-1.5 text-[11px] line-clamp-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#F26B3A] shrink-0 mt-0.5" />
+                          <span>{food.address}</span>
+                        </div>
+                      )}
 
                       {food.description && (
-                        <p className="text-xs text-slate-600 line-clamp-2 font-light leading-relaxed">
+                        <p className="text-[11px] text-[#6B6355] line-clamp-2 leading-relaxed">
                           {food.description}
                         </p>
                       )}
                     </div>
                   </div>
 
-                  <div className="p-6 pt-0">
-                    <div className="w-full py-3 bg-slate-900 group-hover:bg-emerald-900 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-md transition-all">
-                      <span>Xem chi tiết & Chỉ đường GPS</span>
-                      <ChevronRight className="h-4 w-4 text-amber-300 group-hover:translate-x-0.5 transition-transform" />
-                    </div>
+                  {/* Card Footer Actions */}
+                  <div className="p-4 pt-0 border-t border-[#26221B]/5 mt-2 flex items-center justify-between gap-2">
+                    <Link
+                      href={`/places/${food.slug || food.id}`}
+                      className="flex-1 py-2 rounded-xl bg-[#0E8C7F] hover:bg-[#085A52] text-white text-center font-bold text-xs transition-colors shadow-2xs"
+                    >
+                      Xem Chi Tiết
+                    </Link>
+
+                    {food.video_url && (
+                      <a
+                        href={food.video_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        title="Xem Video TikTok Thực Địa"
+                        className="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 transition-colors"
+                      >
+                        <Play className="w-4 h-4 fill-rose-600 text-rose-600" />
+                      </a>
+                    )}
+
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.name + " " + food.commune + " Tri Tôn")}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Mở Google Maps Chỉ Đường"
+                      className="p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition-colors"
+                    >
+                      <Navigation className="w-4 h-4" />
+                    </a>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}
         </section>
-
       </main>
     </div>
   );
