@@ -24,6 +24,24 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // 1.5. CSRF Origin Verification for state-mutating requests (POST, PUT, DELETE, PATCH)
+  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(req.method) && pathname.startsWith('/api/')) {
+    const origin = req.headers.get('origin');
+    const host = req.headers.get('host');
+    if (origin && host) {
+      const originHost = origin.replace(/^https?:\/\//, '');
+      if (originHost !== host && !originHost.endsWith('.vercel.app') && !originHost.includes('localhost')) {
+        return new NextResponse(
+          JSON.stringify({ 
+            error: 'CSRF Forbidden: Origin mismatch.',
+            message: 'Từ chối yêu cầu từ nguồn không được ủy quyền.' 
+          }),
+          { status: 403, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+  }
+
   // 2. Sliding Window Rate Limiting (Anti-DDoS & Wallet Drain Shield)
   if (pathname.startsWith('/api/v1/chat/')) {
     // Protect AI Chatbot endpoints: max 20 prompts / minute per IP
