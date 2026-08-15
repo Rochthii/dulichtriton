@@ -3,35 +3,35 @@
     "id": "hero-1",
     "title": "Hàng Còng Cổ Thụ & Cánh Đồng Lúa Tà Pạ",
     "location": "Xã Núi Tô, Tri Tôn",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
     "fallback_url": "/images/hero/hero_hang_cong_ta_pa.jpg"
   },
   {
     "id": "hero-2",
-    "title": "Hồ Tà Pạ - Tuyệt Tình Cốc Bảy Núi",
+    "title": "Hồ Tà Pạ - Tuyệt Tình Cốc Bảy Núi (Nước Ngọc Bích)",
     "location": "Đồi Tà Pạ, Xã Núi Tô",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758532/tri_ton_hero/hero_ho_ta_pa.webp",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
     "fallback_url": "/images/hero/hero_ho_ta_pa.jpg"
   },
   {
     "id": "hero-3",
     "title": "Cổng Trời Tri Tôn - Chùa Koh Kas",
     "location": "Xã Châu Lăng, Tri Tôn",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
     "fallback_url": "/images/hero/hero_cong_troi_koh_kas.jpg"
   },
   {
     "id": "hero-4",
     "title": "Chùa Khmer Chikaeng Krom Cổ Kính",
     "location": "Thị trấn Tri Tôn",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758534/tri_ton_hero/hero_chua_khmer_chikaeng.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
     "fallback_url": "/images/hero/hero_chua_khmer_chikaeng.jpg"
   },
   {
     "id": "hero-5",
     "title": "Hoàng Hôn Cánh Đồng Thốt Nốt Bảy Núi",
     "location": "Xã An Tức, Tri Tôn",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
     "fallback_url": "/images/hero/hero_dong_thot_not.jpg"
   }
 ]

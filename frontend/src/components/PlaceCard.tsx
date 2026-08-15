@@ -6,6 +6,7 @@ import { MapPin, Star, Clock, Tag, Navigation, Play, Camera, Heart, Ticket, Uten
 import { formatPrice } from '@/lib/utils';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { parseTravelGuide, sanitizeDescription } from '@/lib/dataSanitizer';
+import { getOptimizedImageUrl } from '@/lib/imageOptimizer';
 
 export interface PlacePhoto {
   url: string;
@@ -159,7 +160,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#FAF3E7] pointer-events-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={coverPhoto.url}
+          src={getOptimizedImageUrl(coverPhoto.url, { width: 900, dpr: 2, quality: 'best' })}
           alt={coverPhoto.caption || place.name}
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"

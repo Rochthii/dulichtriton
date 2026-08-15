@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { Utensils, MapPin, Star, Flame, ChevronRight, Clock, Search, Moon, Phone, Navigation, Play, Sparkles, Award } from "lucide-react";
 import localMasterPois from "@/data/triton_pois_full.json";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 
 interface FoodItem {
   id: string;
@@ -212,9 +213,11 @@ export default function FoodPage() {
                   <div className="relative h-44 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={hotItem.image_url}
+                      src={getOptimizedImageUrl(hotItem.image_url, { width: 900, dpr: 2, quality: 'best' })}
                       alt={hotItem.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
@@ -359,10 +362,11 @@ export default function FoodPage() {
                     <div className="relative h-48 w-full overflow-hidden bg-slate-200">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={food.image_url}
+                        src={getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' })}
                         alt={food.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 

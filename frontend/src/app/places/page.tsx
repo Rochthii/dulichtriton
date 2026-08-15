@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import PlaceCard, { Place } from "@/components/PlaceCard";
 import localMasterPois from "@/data/triton_pois_full.json";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 import {
   MapPin,
   Clock,
@@ -202,9 +203,11 @@ export default function PlacesPage() {
                   <div className="relative h-44 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={hotPlace.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200"}
+                      src={getOptimizedImageUrl(hotPlace.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb", { width: 900, dpr: 2, quality: 'best' })}
                       alt={hotPlace.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 

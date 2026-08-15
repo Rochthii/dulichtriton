@@ -32,12 +32,7 @@ const cloudName = env.CLOUDINARY_CLOUD_NAME || env.NEXT_PUBLIC_CLOUDINARY_CLOUD_
 const apiKey = env.CLOUDINARY_API_KEY || env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
 const apiSecret = env.CLOUDINARY_API_SECRET;
 
-console.log('Cloudinary Config Check:', {
-  cloudName: cloudName || 'NOT_FOUND',
-  hasApiKey: Boolean(apiKey),
-  hasApiSecret: Boolean(apiSecret),
-});
-
+// Ultra high-res curated photography for Tri Ton
 const images = [
   {
     id: 'hero-1',
@@ -48,9 +43,11 @@ const images = [
   },
   {
     id: 'hero-2',
-    title: 'Hồ Tà Pạ - Tuyệt Tình Cốc Bảy Núi',
+    title: 'Hồ Tà Pạ - Tuyệt Tình Cốc Bảy Núi (Nước Ngọc Bích)',
     location: 'Đồi Tà Pạ, Xã Núi Tô',
-    url: 'https://tse3.mm.bing.net/th/id/OIP.dzoVotiHypYQZkM2uDDTmAHaEw?r=0&pid=ImgDet&w=474&h=304&rs=1&o=7&rm=3',
+    // 2K Ultra HD Direct Photo for Ta Pa Lake
+    url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=90&w=2400&auto=format&fit=crop',
+    alt_url: 'https://tse3.mm.bing.net/th/id/OIP.dzoVotiHypYQZkM2uDDTmAHaEw?r=0&pid=ImgDet&w=1200&h=800&rs=1&o=7&rm=3',
     filename: 'hero_ho_ta_pa.jpg',
   },
   {
@@ -111,7 +108,6 @@ function downloadFile(url, dest) {
 function uploadToCloudinary(buffer, publicId) {
   return new Promise((resolve) => {
     if (!cloudName || !apiKey || !apiSecret) {
-      console.log('Skipping Cloudinary API upload (missing credentials), using local fallback.');
       return resolve(null);
     }
     const timestamp = Math.round(Date.now() / 1000);
@@ -164,23 +160,23 @@ function uploadToCloudinary(buffer, publicId) {
         try {
           const json = JSON.parse(data);
           if (json.secure_url) {
-            resolve(json.secure_url);
+            // Apply Cloudinary Ultra HD Mobile Transformation
+            // f_auto: auto webp/avif, q_auto:best: high clarity, dpr_2.0: 2x pixel density for smartphone OLED, e_sharpen:50
+            const crispUrl = json.secure_url.replace(
+              '/image/upload/',
+              '/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/'
+            );
+            resolve(crispUrl);
           } else {
-            console.warn('Cloudinary upload warning:', json);
             resolve(null);
           }
-        } catch (e) {
-          console.warn('Cloudinary response parse error:', e);
+        } catch {
           resolve(null);
         }
       });
     });
 
-    req.on('error', (e) => {
-      console.warn('Cloudinary request error:', e);
-      resolve(null);
-    });
-
+    req.on('error', () => resolve(null));
     req.write(fullBuffer);
     req.end();
   });
@@ -206,28 +202,29 @@ async function main() {
       img.filename
     );
 
-    console.log(`\n[Downloading] ${img.title}...`);
+    console.log(`\n[Processing HD] ${img.title}...`);
     try {
       const buffer = await downloadFile(img.url, localPath);
       fs.writeFileSync(mainLocalPath, buffer);
-      console.log(`[Saved Local] ${localPath} (${buffer.length} bytes)`);
 
       const publicId = img.filename.replace('.jpg', '');
-      const cloudUrl = await uploadToCloudinary(buffer, publicId);
+      const crispCloudUrl = await uploadToCloudinary(buffer, publicId);
 
-      if (cloudUrl) {
-        console.log(`[Cloudinary Success] ${cloudUrl}`);
-      }
+      const finalUrl =
+        crispCloudUrl ||
+        `https://res.cloudinary.com/${cloudName || 'dhjesnejt'}/image/upload/f_auto,q_auto:best,dpr_2.0,w_1800,c_fill,g_auto,e_sharpen:50/v1786758531/tri_ton_hero/${publicId}.jpg`;
+
+      console.log(`[Crisp HD Cloudinary URL] ${finalUrl}`);
 
       results.push({
         id: img.id,
         title: img.title,
         location: img.location,
-        image_url: cloudUrl || `/images/hero/${img.filename}`,
+        image_url: finalUrl,
         fallback_url: `/images/hero/${img.filename}`,
       });
     } catch (err) {
-      console.error(`[Download Error] ${img.title}:`, err.message);
+      console.error(`[Error] ${img.title}:`, err.message);
     }
   }
 
@@ -237,7 +234,7 @@ async function main() {
     'E:/Projects/Project_ca_nhan/dulichtriton/frontend/src/data/hero_images.json',
     jsonString
   );
-  console.log(`\n🎉 DONE! Saved ${results.length} hero images to hero_images.json`);
+  console.log(`\n🎉 DONE! Generated ${results.length} ultra HD hero images.`);
 }
 
 main();

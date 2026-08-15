@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import localMasterPois from "@/data/triton_pois_full.json";
+import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 import { Hotel, MapPin, Star, ChevronRight, Wifi, Car, ShieldCheck, Phone, Flame, Award, Navigation, Play } from "lucide-react";
 
 interface StayItem {
@@ -176,9 +177,11 @@ export default function StayPage() {
                   <div className="relative h-48 w-full overflow-hidden bg-slate-200">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={hotStay.image_url}
+                      src={getOptimizedImageUrl(hotStay.image_url, { width: 900, dpr: 2, quality: 'best' })}
                       alt={hotStay.name}
                       className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
@@ -270,9 +273,11 @@ export default function StayPage() {
                     <div className="relative h-52 overflow-hidden bg-slate-200">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={stay.image_url}
+                        src={getOptimizedImageUrl(stay.image_url, { width: 800, dpr: 2, quality: 'best' })}
                         alt={stay.name}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute top-3 left-3 px-3 py-1 rounded-xl bg-slate-900/80 backdrop-blur-md text-white font-bold text-xs">
                         {stay.tourism_category}
