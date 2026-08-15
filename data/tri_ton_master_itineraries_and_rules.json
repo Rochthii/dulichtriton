@@ -130,8 +130,8 @@
   ],
   "food_time_matrix": {
     "breakfast_06_10h": [
-      { "id": "FD009", "name": "Bún nước lèo Sơ Nương", "rating": 4.7, "price": "25k–35k", "note": "Đóng cửa lúc 11:00 sáng" },
-      { "id": "FD019", "name": "Bún nước lèo Chị Tư", "rating": 4.8, "price": "25k–35k", "note": "Chuyên bún nước lèo Khmer" },
+      { "id": "FD009", "name": "Bún cá củ ngải Sơ Nương", "rating": 4.7, "price": "25k–35k", "note": "Đóng cửa lúc 11:00 sáng" },
+      { "id": "FD019", "name": "Bún cá củ ngải Chị Tư", "rating": 4.8, "price": "25k–35k", "note": "Chuyên bún cá củ ngải Khmer" },
       { "id": "FD013", "name": "Bánh canh Lò Rèn (>30 năm gia truyền)", "rating": 4.7, "price": "30k–45k", "note": "Mở từ 06:00 sáng" },
       { "id": "FD015", "name": "Cháo bò trái trúc Ba Chúc", "rating": 4.6, "price": "30k–50k", "note": "Mở từ 06:00–14:00" }
     ],
@@ -177,7 +177,7 @@
         { "time": "05:30", "id": "PL001", "name": "Hồ Tà Pạ (Săn bình minh)", "cluster": "Tà Pạ" },
         { "time": "06:30", "id": "HG001", "name": "Chùa Tà Pạ (Chùa Núi)", "cluster": "Tà Pạ" },
         { "time": "07:00", "id": "PL011", "name": "Cánh đồng lúa & Con đường tơ lụa Tà Pạ", "cluster": "Tà Pạ" },
-        { "time": "08:15", "id": "FD009", "name": "Ăn sáng Bún nước lèo Sơ Nương (Chỉ mở sáng)", "cluster": "Thị trấn Tri Tôn" },
+        { "time": "08:15", "id": "FD009", "name": "Ăn sáng Bún cá củ ngải Sơ Nương (Chỉ mở sáng)", "cluster": "Thị trấn Tri Tôn" },
         { "time": "09:15", "id": "HG002", "name": "Chùa Xà Tón + Mua bánh kẹp Chùa Cũ FD024", "cluster": "Thị trấn Tri Tôn" },
         { "time": "10:15", "id": "CK010", "name": "Cổng Trời Koh Kas + Vòm Còng Châu Lăng", "cluster": "Châu Lăng" },
         { "time": "12:00", "id": "FD006", "name": "Ăn trưa Đu đủ đâm RiNa (Mở đúng 12:00)", "cluster": "Châu Lăng" },
@@ -196,7 +196,7 @@
       "overnight_stay": ["CF012 (Tuyết Anh Homestay)", "CF013 (Rồng Vàng Resort)", "CF016 (Soài Chek Homestay)"],
       "day_1": [
         { "time": "05:30", "id": "PL001", "name": "Bình minh Hồ Tà Pạ & Chùa Tà Pạ HG001" },
-        { "time": "08:00", "id": "FD009", "name": "Ăn sáng Bún nước lèo Sơ Nương" },
+        { "time": "08:00", "id": "FD009", "name": "Ăn sáng Bún cá củ ngải Sơ Nương" },
         { "time": "10:15", "id": "PL002", "name": "Cụm Soài So: Hồ Soài So + Suối Vàng PL016" },
         { "time": "11:30", "id": "CF010", "name": "Cà phê Mùa Gió Lên view hồ Soài So" },
         { "time": "13:00", "id": "FD001", "name": "Thưởng thức Gà đốt Ô Thum" },
@@ -229,7 +229,7 @@
       "day_3": [
         { "time": "07:00", "id": "PL012", "name": "Cụm Ô Tà Sóc: Rừng tầm vông + Căn cứ kháng chiến HG008 + Hồ Ô Tà Sóc PL005" },
         { "time": "10:00", "id": "CK007", "name": "Cung đường ven vách đá Núi Dài PL017" },
-        { "time": "12:00", "id": "FD009", "name": "Ăn trưa bún nước lèo / bánh canh thị trấn" },
+        { "time": "12:00", "id": "FD009", "name": "Ăn trưa bún cá củ ngải / bánh canh thị trấn" },
         { "time": "14:00", "id": "PL006", "name": "Hồ Ô Tà Lọt hoang sơ + Cà phê suối CF015 (Option trek vách đá Latina PL019)" },
         { "time": "16:30", "id": "CK001", "name": "Hoàng hôn chốt tour: Tuyến tránh ĐT941" }
       ]

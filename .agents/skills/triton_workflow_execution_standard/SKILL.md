@@ -25,7 +25,7 @@ Tài liệu này đóng gói trọn vẹn quy trình kỹ thuật chuẩn Enterp
 * **Chỉ tiến hành thi công khi đã thông nhất phương án tối ưu nhất**.
 
 ### 🍜 RULE-22: Tri Ton Cultural & Culinary Accuracy Standard
-* **Thuật ngữ Ẩm thực**: Tri Tôn KHÔNG gọi là "Bún nước lèo" — tên gọi ẩm thực chuẩn bản địa phải luôn là **"Bún cá Khmer" (hoặc Bún cá An Giang mắm bò hóc)**.
+* **Thuật ngữ Ẩm thực**: Tri Tôn TUYỆT ĐỐI KHÔNG CÓ BÚN NƯỚC LÈO, KHÔNG NẤU MẮM — tên gọi ẩm thực chuẩn bản địa phải luôn là **"Bún Cá Củ Ngải" (Bún cá Khmer / Bún cá Tri Tôn nấu cá lóc đồng, nghệ tươi và củ ngải bún thanh ngọt, không để mắm)**.
 * **Địa danh hành chính**: Tuyệt đối KHÔNG dùng cụm từ "Huyện Tri Tôn" — luôn luôn dùng tên Xã hoặc Thị trấn cụ thể.
 
 ---

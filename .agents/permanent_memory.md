@@ -20,7 +20,7 @@
 [FOOD SPECIALTIES]
 - Gà Đốt Ô Thum lá chúc (Xã Ô Lâm)
 - Cháo Bò Tri Tôn lòng tươi lá chúc (Thị trấn Tri Tôn & Châu Lăng)
-- Bún Cá Khmer mắm bò hóc (Không dùng từ "Bún nước lèo")
+- Bún Cá Củ Ngải Tri Tôn / Bún Cá Khmer (Nấu củ ngải bún + nghệ tươi thanh ngọt, TUYỆT ĐỐI KHÔNG DÙNG MẮM / Không gọi "Bún nước lèo")
 - Bánh bò thốt nốt nướng / hấp, Nước thốt nốt tươi ướp lạnh, Bánh cống, Bò nướng bảy món
 
 [SYSTEM ARCHITECTURE (v28.0.0 - 2026-08-15)]
