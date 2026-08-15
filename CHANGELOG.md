@@ -110,6 +110,10 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
   - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
   - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
+- **Khắc Phục Lỗi TypeScript Build Vercel (TS2345/TS7006) Trong `culture/page.tsx` & `chat/page.tsx`**:
+  - Sửa chữ ký hàm `fetchWithCache` trong `culture/page.tsx` khớp hoàn toàn với định nghĩa generic SWR cache (`key, async fetcher, ttlMs, onRevalidated`).
+  - Chuẩn hóa type props `searchParams` trong `chat/page.tsx` tương thích 100% với Next.js 14, 15 và 16.3 Turbopack.
+  - Dọn sạch các import không sử dụng từ `lucide-react` để đảm bảo 0 cảnh báo linter.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:

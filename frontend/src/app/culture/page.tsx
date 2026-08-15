@@ -2,12 +2,11 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { 
-  Landmark, MapPin, Calendar, Compass, Clock, Star, Sparkles, ChevronRight, 
-  Award, ShieldCheck, Flame, Navigation, BookOpen, Music, Layers, Eye, MessageSquareText,
-  ChevronDown, Heart, ArrowUpRight, Share2, Info
+  Landmark, MapPin, Calendar, Clock, Star, Sparkles, 
+  Flame, Navigation, BookOpen, Music, Layers, MessageSquareText,
+  ArrowUpRight
 } from "lucide-react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 import { fetchWithCache } from "@/lib/fastCache";
@@ -168,7 +167,7 @@ export default function CulturePage() {
 
   useEffect(() => {
     function processCultureData(json: any) {
-      const data = json?.culture || [];
+      const data = Array.isArray(json) ? json : (json?.culture || []);
       if (data && data.length > 0) {
         const formatted = data.map((item: any) => {
           let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
@@ -207,8 +206,15 @@ export default function CulturePage() {
     async function loadLiveCultureData() {
       try {
         const json = await fetchWithCache(
-          '/api/v1/culture',
-          (data) => data && data.culture && data.culture.length > 0
+          "client-culture-catalog-v1",
+          async () => {
+            const res = await fetch("/api/v1/culture?limit=100");
+            return await res.json();
+          },
+          60 * 60 * 1000,
+          (freshJson: any) => {
+            processCultureData(freshJson);
+          }
         );
         processCultureData(json);
       } catch (err) {
