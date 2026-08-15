@@ -3,37 +3,41 @@
 import React, { useState } from 'react';
 import { 
   Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2, 
-  ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink 
+  ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink, MapPin, Bike, Coins, PhoneCall
 } from 'lucide-react';
+import type { ItineraryData } from './WireDiagramItinerary';
+import ItineraryExportModal from './ItineraryExportModal';
 
 interface FormattedChatMessageProps {
   content: string;
   isAssistant?: boolean;
+  itinerary?: ItineraryData | null;
 }
 
-export default function FormattedChatMessage({ content, isAssistant = true }: FormattedChatMessageProps) {
+export default function FormattedChatMessage({ content, isAssistant = true, itinerary }: FormattedChatMessageProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  if (!content) return null;
+  if (!content && !itinerary) return null;
 
-  const isLongContent = content.length > 550;
+  const isLongContent = (content || '').length > 550;
   const shouldTruncate = isAssistant && isLongContent && !isExpanded;
 
-  const hasItinerary =
-    /lịch trình|lộ trình|tour|sáng \(|trưa \(|chiều \(|tối \(/i.test(content);
+  const hasItinerary = !!itinerary || /lịch trình|lộ trình|tour|sáng \(|trưa \(|chiều \(|tối \(|chặng 1|chặng 2/i.test(content || '');
 
   const handleSave = () => {
     try {
       const savedList = JSON.parse(localStorage.getItem('triton_saved_itineraries') || '[]');
-      const titleMatch = content.match(/###?\s*🌟?\s*(.+)/);
-      const title = titleMatch ? titleMatch[1].trim() : 'Lịch Trình Du Lịch Tri Tôn';
+      const titleMatch = (content || '').match(/###?\s*🌟?\s*(.+)/);
+      const title = itinerary?.title || (titleMatch ? titleMatch[1].trim() : 'Lịch Trình Du Lịch Tri Tôn');
       
       const newEntry = {
         id: `itin_${Date.now()}`,
         title,
         content,
+        itinerary,
         savedAt: new Date().toLocaleString('vi-VN'),
       };
 
@@ -52,43 +56,82 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
       return;
     }
 
-    const formattedBody = content
+    const title = itinerary?.title || 'Lịch Trình Du Lịch Tri Tôn';
+    const tagline = itinerary?.tagline || 'Cẩm nang du lịch trải nghiệm Bảy Núi An Giang';
+    const duration = itinerary?.duration || '1 Ngày';
+    const totalKm = itinerary?.stops?.reduce((s, st) => s + (st.travel_to_next_km || 0), 0) || 30;
+    const budget = itinerary?.budget_range || '350.000đ - 650.000đ/người';
+    const stops = itinerary?.stops || [];
+
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('https://dulichtriton.vn/planner')}`;
+
+    // Render stops into a beautiful printable timeline
+    let stopsHtml = '';
+    if (stops.length > 0) {
+      stopsHtml = `
+        <div class="timeline-container">
+          <h2 class="timeline-title">🗺️ SƠ ĐỒ LỊCH TRÌNH & CÁC TRẠM DỪNG THỰC ĐỊA</h2>
+          <div class="stops-list">
+            ${stops.map((st, idx) => `
+              <div class="stop-card">
+                <div class="stop-header">
+                  <span class="stop-badge">TRẠM ${st.order || idx + 1}</span>
+                  <span class="stop-time">⏰ ${st.time_start || ''} – ${st.time_end || ''}</span>
+                  <span class="stop-cat">${st.category?.toUpperCase() || 'THAM QUAN'}</span>
+                </div>
+                <div class="stop-body">
+                  <h3 class="stop-name">${st.name}</h3>
+                  <div class="stop-commune">📍 Xã/Thị trấn: <strong>${st.commune || 'Tri Tôn'}</strong></div>
+                  ${st.tip ? `<div class="stop-tip">💡 <em>Lời khuyên:</em> ${st.tip}</div>` : ''}
+                  ${st.cost_vnd ? `<div class="stop-cost">💵 Chi phí ước tính: <strong>${st.cost_vnd}</strong></div>` : ''}
+                  ${st.travel_to_next_km ? `
+                    <div class="stop-travel">
+                      🛵 Di chuyển đến trạm tiếp theo: <strong>${st.travel_to_next_km} km</strong> (${st.travel_to_next_min || 10} phút)
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    const formattedBody = (content || '')
       .replace(/###?\s*(.+)/g, '<h3 class="section-title">$1</h3>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="action-link">$1</a>')
       .replace(/-(.*)/g, '<li class="bullet-item">$1</li>');
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent('https://dulichtriton.vn/planner')}`;
-
     const htmlContent = `
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Lịch Trình & Cẩm Nang Du Lịch Tri Tôn — AI Assistant</title>
+          <title>${title} — Lịch Trình Du Lịch Tri Tôn</title>
           <meta charset="utf-8" />
           <style>
             @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Bricolage+Grotesque:wght@700;800&display=swap');
-            @page { size: A4; margin: 12mm; }
+            @page { size: A4; margin: 10mm; }
             body {
               font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
               color: #26221B;
-              line-height: 1.6;
+              line-height: 1.5;
               padding: 0;
               margin: 0;
               background-color: #FAF3E7;
             }
             .page-container {
               background: #FFFDF7;
-              border-radius: 20px;
-              padding: 24px;
+              border-radius: 16px;
+              padding: 20px;
               border: 1px solid rgba(38,34,27,0.1);
             }
             .header-card {
               background: linear-gradient(135deg, #0E8C7F 0%, #085A52 100%);
               color: white;
-              padding: 22px 26px;
+              padding: 20px 24px;
               border-radius: 16px;
-              margin-bottom: 20px;
+              margin-bottom: 16px;
               border-bottom: 4px solid #F0A32F;
               display: flex;
               justify-content: space-between;
@@ -96,37 +139,49 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
             }
             .header-title {
               font-family: 'Bricolage Grotesque', sans-serif;
-              font-size: 20px;
+              font-size: 18px;
               font-weight: 800;
-              margin: 0 0 6px 0;
-              letter-spacing: -0.5px;
+              margin: 0 0 4px 0;
+              letter-spacing: -0.3px;
             }
             .header-meta {
               font-size: 11px;
               color: #E6FAF6;
               display: flex;
-              gap: 12px;
+              gap: 8px;
               align-items: center;
+              margin-top: 4px;
             }
             .badge-verified {
               background: #F0A32F;
               color: #26221B;
               font-weight: 800;
-              padding: 2px 8px;
-              border-radius: 6px;
-              font-size: 10px;
+              padding: 2px 6px;
+              border-radius: 4px;
+              font-size: 9px;
               text-transform: uppercase;
+            }
+            .summary-bar {
+              display: flex;
+              gap: 16px;
+              background: rgba(255,255,255,0.15);
+              padding: 6px 12px;
+              border-radius: 8px;
+              margin-top: 8px;
+              font-size: 11px;
+              font-weight: 600;
             }
             .qr-side {
               background: white;
               padding: 6px;
-              border-radius: 12px;
+              border-radius: 10px;
               border: 2px solid #F0A32F;
               text-align: center;
+              shrink-0: 0;
             }
             .qr-side img {
-              width: 75px;
-              height: 75px;
+              width: 70px;
+              height: 70px;
               display: block;
             }
             .qr-label {
@@ -135,23 +190,106 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
               color: #26221B;
               margin-top: 2px;
             }
+            .timeline-container {
+              margin: 16px 0;
+            }
+            .timeline-title {
+              font-family: 'Bricolage Grotesque', sans-serif;
+              font-size: 14px;
+              font-weight: 800;
+              color: #0E8C7F;
+              margin-bottom: 12px;
+              padding-bottom: 4px;
+              border-bottom: 2px solid #EAE0D0;
+            }
+            .stops-list {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+            .stop-card {
+              background: white;
+              border: 1px solid #E5DECF;
+              border-left: 4px solid #0E8C7F;
+              border-radius: 10px;
+              padding: 10px 14px;
+            }
+            .stop-header {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 4px;
+            }
+            .stop-badge {
+              background: #0E8C7F;
+              color: white;
+              font-weight: 800;
+              font-size: 10px;
+              padding: 1px 6px;
+              border-radius: 4px;
+            }
+            .stop-time {
+              font-weight: 800;
+              color: #B45309;
+              font-size: 11px;
+            }
+            .stop-cat {
+              background: #FAF3E7;
+              color: #6B6355;
+              font-size: 9px;
+              font-weight: 700;
+              padding: 1px 6px;
+              border-radius: 4px;
+              margin-left: auto;
+            }
+            .stop-name {
+              font-size: 13px;
+              font-weight: 800;
+              color: #1A1713;
+              margin: 0 0 2px 0;
+            }
+            .stop-commune {
+              font-size: 11px;
+              color: #6B6355;
+            }
+            .stop-tip {
+              font-size: 11px;
+              color: #0E8C7F;
+              margin-top: 4px;
+              background: #F0FAF8;
+              padding: 4px 8px;
+              border-radius: 6px;
+            }
+            .stop-cost {
+              font-size: 10px;
+              color: #B45309;
+              margin-top: 2px;
+            }
+            .stop-travel {
+              font-size: 10px;
+              color: #78716C;
+              margin-top: 4px;
+              padding-top: 4px;
+              border-top: 1px dashed #E5DECF;
+            }
             .section-title {
               color: #0E8C7F;
               font-family: 'Bricolage Grotesque', sans-serif;
-              font-size: 15px;
+              font-size: 14px;
               font-weight: 800;
-              margin-top: 18px;
-              margin-bottom: 8px;
+              margin-top: 14px;
+              margin-bottom: 6px;
               padding-bottom: 4px;
               border-bottom: 2px solid #EAE0D0;
             }
             .content-box {
-              font-size: 12px;
-              line-height: 1.7;
+              font-size: 11px;
+              line-height: 1.6;
               color: #3B342A;
+              margin-bottom: 12px;
             }
             .bullet-item {
-              margin-bottom: 6px;
+              margin-bottom: 4px;
               list-style-type: none;
               padding-left: 0;
             }
@@ -159,32 +297,32 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
               display: inline-block;
               color: #0E8C7F;
               background: #FAF3E7;
-              padding: 3px 8px;
-              border-radius: 6px;
+              padding: 2px 6px;
+              border-radius: 4px;
               text-decoration: none;
               font-weight: 700;
               font-size: 10px;
-              margin-right: 6px;
-              margin-top: 3px;
+              margin-right: 4px;
+              margin-top: 2px;
               border: 1px solid rgba(14,140,127,0.2);
             }
             .emergency-box {
-              margin-top: 20px;
-              padding: 12px 16px;
+              margin-top: 16px;
+              padding: 10px 14px;
               background: #FAF3E7;
               border: 1px solid rgba(240,163,47,0.4);
-              border-radius: 12px;
-              font-size: 11px;
+              border-radius: 10px;
+              font-size: 10px;
               display: flex;
               justify-content: space-between;
               align-items: center;
             }
             .footer-bar {
-              margin-top: 20px;
-              padding-top: 12px;
+              margin-top: 14px;
+              padding-top: 10px;
               border-top: 1px solid #EAE0D0;
               text-align: center;
-              font-size: 10px;
+              font-size: 9px;
               color: #6B6355;
             }
           </style>
@@ -193,7 +331,13 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
           <div class="page-container">
             <div class="header-card">
               <div>
-                <h1 class="header-title">🌾 LỊCH TRÌNH & CẨM NANG DU LỊCH TRI TÔN</h1>
+                <h1 class="header-title">🌾 ${title}</h1>
+                <div style="font-size: 11px; color: #FAF3E7; opacity: 0.9;">${tagline}</div>
+                <div class="summary-bar">
+                  <span>⏱️ ${duration}</span>
+                  <span>🛵 ~${typeof totalKm === 'number' ? totalKm.toFixed(0) : totalKm} km</span>
+                  <span>💵 ${budget}</span>
+                </div>
                 <div class="header-meta">
                   <span>Trợ Lý AI Du Lịch Bảy Núi</span>
                   <span>•</span>
@@ -207,9 +351,9 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
               </div>
             </div>
 
-            <div class="content-box">
-              ${formattedBody}
-            </div>
+            ${content ? `<div class="content-box">${formattedBody}</div>` : ''}
+
+            ${stopsHtml}
 
             <div class="emergency-box">
               <div>
@@ -242,63 +386,26 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
 
   // ── Render inline tokens (Bold + Markdown Links + Plain text) ──────────────
   const renderInlineFormatted = (text: string) => {
-    // Match markdown link: [label](url) OR bold: **bold** (support URLs with query parameters & spaces)
     const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
     const parts = text.split(tokenRegex);
 
     return parts.map((part, index) => {
       if (!part) return null;
 
-      // 1. Markdown Links: [label](url)
+      // Markdown Link: [Label](URL)
       const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
       if (linkMatch) {
-        const label = linkMatch[1].trim();
-        const rawUrl = linkMatch[2].trim();
+        const label = linkMatch[1];
+        let url = linkMatch[2].trim();
 
-        // Ensure safe valid URL encoding (fixes spaces or unicode query strings)
-        let url = rawUrl;
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-          url = `https://${url}`;
-        }
-        // If url has raw unencoded spaces, encode them
-        if (url.includes(' ')) {
+        try {
           url = encodeURI(url);
+        } catch {
+          // ignore
         }
 
-        const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || /maps|chỉ đường/i.test(label);
-        const isTikTok = url.includes('tiktok.com') || /tiktok/i.test(label);
-
-        if (isMaps) {
-          return (
-            <a
-              key={index}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 my-1 mr-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-[11px] shadow-2xs transition-all active:scale-95 no-underline"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Navigation className="w-3 h-3 text-amber-300 shrink-0" />
-              <span>{label.replace(/^[📍🗺️]\s*/, '')}</span>
-            </a>
-          );
-        }
-
-        if (isTikTok) {
-          return (
-            <a
-              key={index}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 my-1 mr-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-[11px] shadow-2xs transition-all active:scale-95 no-underline"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Play className="w-3 h-3 fill-white text-white shrink-0" />
-              <span>{label.replace(/^[▶🎵]\s*/, '')}</span>
-            </a>
-          );
-        }
+        const isTikTok = url.includes('tiktok.com');
+        const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || url.includes('goo.gl');
 
         return (
           <a
@@ -306,259 +413,173 @@ export default function FormattedChatMessage({ content, isAssistant = true }: Fo
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#1B4D3E] hover:underline font-bold inline-flex items-center gap-0.5 text-xs mx-1"
-            onClick={(e) => e.stopPropagation()}
+            className={`inline-flex items-center gap-1 px-2.5 py-0.5 my-0.5 rounded-full text-xs font-bold transition-all ${
+              isTikTok
+                ? 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 hover:border-rose-300'
+                : isMaps
+                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300'
+                : 'bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100'
+            }`}
           >
+            {isTikTok ? (
+              <Play className="w-3 h-3 text-rose-600 fill-rose-600 shrink-0" />
+            ) : isMaps ? (
+              <Navigation className="w-3 h-3 text-emerald-700 shrink-0" />
+            ) : (
+              <ExternalLink className="w-3 h-3 text-amber-700 shrink-0" />
+            )}
             <span>{label}</span>
-            <ExternalLink className="w-3 h-3 inline" />
           </a>
         );
       }
 
-      // 2. Bold text: **text**
-      if (part.startsWith('**') && part.endsWith('**')) {
-        const innerText = part.slice(2, -2);
+      // Bold: **Text**
+      const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+      if (boldMatch) {
         return (
-          <strong key={index} className="font-extrabold text-[#1B4D3E]">
-            {innerText}
+          <strong key={index} className="font-extrabold text-[#1A1713]">
+            {boldMatch[1]}
           </strong>
         );
       }
 
-      // 3. Regular text
-      return part;
+      return <span key={index}>{part}</span>;
     });
   };
 
-  // Split into lines for structured parsing
-  const lines = content.split('\n');
-  const elements: React.ReactNode[] = [];
-  let listItems: React.ReactNode[] = [];
-
-  const flushList = (keyPrefix: string) => {
-    if (listItems.length > 0) {
-      elements.push(
-        <ul key={`list-${keyPrefix}`} className="space-y-2 my-2.5">
-          {listItems}
-        </ul>
-      );
-      listItems = [];
-    }
-  };
-
-  lines.forEach((line, idx) => {
-    const trimmed = line.trim();
-
-    if (!trimmed) {
-      flushList(String(idx));
-      return;
-    }
-
-    // Headings: ### or ## or #
-    if (trimmed.startsWith('#')) {
-      flushList(String(idx));
-      const headingText = trimmed.replace(/^#+\s*/, '');
-      const isItineraryHeader = /lịch trình|lộ trình|tour/i.test(headingText);
-
-      elements.push(
-        <div key={`h-${idx}`} className="mt-3.5 mb-2 pt-2 border-t border-slate-100 first:mt-0 first:pt-0 first:border-0">
-          <div className="flex items-center gap-2">
-            {isItineraryHeader ? (
-              <div className="p-1 rounded-lg bg-amber-100 text-[#B45309]">
-                <Clock className="w-4 h-4" />
-              </div>
-            ) : (
-              <div className="p-1 rounded-lg bg-emerald-100 text-[#1B4D3E]">
-                <Sparkles className="w-4 h-4" />
-              </div>
-            )}
-            <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#1B4D3E] tracking-tight">
-              {renderInlineFormatted(headingText)}
-            </h3>
-          </div>
-        </div>
-      );
-      return;
-    }
-
-    // Bullet Points (- or * or numbered list)
-    const isBullet = trimmed.startsWith('- ') || trimmed.startsWith('* ') || /^\d+\.\s/.test(trimmed);
-
-    if (isBullet) {
-      const rawText = trimmed.replace(/^([-*]|\d+\.)\s*/, '');
-
-      // Check if bullet item represents a Time Slot (Sáng / Trưa / Chiều / Tối / Ngày)
-      const isTimeSlot = /^(Sáng|Trưa|Chiều|Tối|Ngày\s*\d+)/i.test(rawText.replace(/\*\*/g, '').trim());
-
-      if (isTimeSlot) {
-        listItems.push(
-          <li key={`li-${idx}`} className="bg-emerald-50/90 rounded-2xl p-3 sm:p-3.5 border border-emerald-200/80 shadow-xs flex items-start gap-3">
-            <div className="w-6 h-6 rounded-lg bg-[#D99B26] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-              <Clock className="w-3.5 h-3.5" />
-            </div>
-            <div className="text-xs sm:text-sm text-slate-800 leading-relaxed flex-1 font-medium">
-              {renderInlineFormatted(rawText)}
-            </div>
-          </li>
-        );
-      } else {
-        listItems.push(
-          <li key={`li-${idx}`} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800 leading-relaxed font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1B4D3E] shrink-0 mt-2" />
-            <div className="flex-1">{renderInlineFormatted(rawText)}</div>
-          </li>
-        );
-      }
-      return;
-    }
-
-    // Regular Paragraph
-    flushList(String(idx));
-    elements.push(
-      <p key={`p-${idx}`} className="text-xs sm:text-sm leading-relaxed text-slate-800 my-1 font-normal">
-        {renderInlineFormatted(trimmed)}
-      </p>
-    );
-  });
-
-  flushList('final');
-
-  // QR Code URL (encodes current page URL with encoded text preview)
-  const encodedText = encodeURIComponent(content.slice(0, 300));
-  const qrCodeImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://dulichtriton.vercel.app/chatbot?share=${encodedText}`;
+  const lines = (content || '').split('\n');
 
   return (
-    <div className="space-y-3 text-slate-900">
-      {/* ── GOOGLE AI OVERVIEW HEADER BADGE ── */}
-      {isAssistant && (
-        <div className="flex items-center justify-between pb-2 border-b border-slate-100 text-xs">
-          <div className="flex items-center gap-1.5 font-extrabold text-[#1B4D3E]">
-            <Sparkles className="w-4 h-4 text-amber-500 fill-amber-500/20" />
-            <span>Thông tin tổng quan do AI tạo</span>
-          </div>
-          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
-            <Globe className="w-3 h-3 text-emerald-700" />
-            Google AI Overview
-          </span>
-        </div>
-      )}
+    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#26221B] font-body">
+      <div className={`space-y-1.5 ${shouldTruncate ? 'line-clamp-6' : ''}`}>
+        {lines.map((line, idx) => {
+          const trimmed = line.trim();
+          if (!trimmed) return <div key={idx} className="h-1" />;
 
-      {/* ── CONTENT STREAM WITH EXPAND/COLLAPSE ACCORDION ── */}
-      <div className={`relative transition-all duration-300 ${shouldTruncate ? 'max-h-56 overflow-hidden' : ''}`}>
-        {elements}
+          // H3 Heading (### Section)
+          if (trimmed.startsWith('###')) {
+            const titleText = trimmed.replace(/^###\s*/, '');
+            return (
+              <h4
+                key={idx}
+                className="font-display font-black text-sm sm:text-base text-[#0E8C7F] mt-3 mb-1 pt-1.5 border-t border-[#26221B]/6 flex items-center gap-1.5"
+              >
+                <Sparkles className="w-4 h-4 text-[#F0A32F] shrink-0" />
+                <span>{titleText}</span>
+              </h4>
+            );
+          }
 
-        {/* Gradient Fade-out when collapsed */}
-        {shouldTruncate && (
-          <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
-        )}
+          // Timeline Stop (07:00, Sáng, Chiều, Chặng...)
+          const isTimeline = /^(\d{1,2}:\d{2}|Sáng|Trưa|Chiều|Tối|Chặng \d)/i.test(trimmed);
+          if (isTimeline) {
+            return (
+              <div
+                key={idx}
+                className="p-2.5 rounded-2xl bg-[#FFFDF7] border border-[#26221B]/8 shadow-2xs space-y-1 my-1.5"
+              >
+                <div className="flex items-center gap-1.5 font-bold text-xs text-[#0E8C7F] font-display">
+                  <Clock className="w-3.5 h-3.5 text-[#F0A32F] shrink-0" />
+                  <span>{trimmed.split(':')[0]}</span>
+                </div>
+                <div className="text-xs text-[#3B342A] pl-5">
+                  {renderInlineFormatted(trimmed.substring(trimmed.indexOf(':') + 1 || 0))}
+                </div>
+              </div>
+            );
+          }
+
+          // Bullet point (- or *)
+          if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            const bulletText = trimmed.replace(/^[-*]\s*/, '');
+            return (
+              <div key={idx} className="flex items-start gap-2 pl-1 py-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0E8C7F] mt-2 shrink-0" />
+                <div className="flex-1">{renderInlineFormatted(bulletText)}</div>
+              </div>
+            );
+          }
+
+          // Regular paragraph
+          return (
+            <p key={idx} className="py-0.5">
+              {renderInlineFormatted(trimmed)}
+            </p>
+          );
+        })}
       </div>
 
-      {/* Accordion Toggle Button for Mobile / Long Messages */}
-      {isAssistant && isLongContent && (
+      {/* Truncate Toggle Button */}
+      {isLongContent && isAssistant && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full py-2 px-3 mt-1 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-[#1B4D3E] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60"
+          className="inline-flex items-center gap-1 text-xs font-bold text-[#0E8C7F] hover:text-[#0A6B61] transition-colors py-1 cursor-pointer"
         >
           {isExpanded ? (
             <>
-              <span>Thu gọn câu trả lời</span>
+              <span>Thu gọn bớt</span>
               <ChevronUp className="w-3.5 h-3.5" />
             </>
           ) : (
             <>
-              <span>Đọc toàn bộ nội dung chi tiết</span>
+              <span>Xem đầy đủ toàn bộ lộ trình</span>
               <ChevronDown className="w-3.5 h-3.5" />
             </>
           )}
         </button>
       )}
 
-      {/* ── ACTION BAR (Lưu, Xuất PDF & QR Lịch Trình) ── */}
-      {isAssistant && hasItinerary && (
-        <div className="pt-2.5 border-t border-[#26221B]/8 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#6B6355] font-display">
-          <span className="font-bold text-[#0E8C7F] flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Lịch trình & gợi ý Bảy Núi</span>
-          </span>
+      {/* Action Bar (Lưu & Xuất Lịch Trình PDF & QR) */}
+      {hasItinerary && isAssistant && (
+        <div className="pt-2 mt-2 border-t border-[#26221B]/8 flex flex-wrap items-center gap-2">
+          <button
+            onClick={handleSave}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shadow-2xs ${
+              isSaved
+                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                : 'bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/10'
+            }`}
+          >
+            {isSaved ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Đã Lưu Lịch Trình</span>
+              </>
+            ) : (
+              <>
+                <Bookmark className="w-3.5 h-3.5 text-[#0E8C7F]" />
+                <span>Lưu Lịch Trình</span>
+              </>
+            )}
+          </button>
 
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={handlePrint}
-              className="px-3 py-1.5 rounded-full bg-[#FAF3E7] hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] border border-[#0E8C7F]/30 flex items-center gap-1.5 font-bold transition-all tap-bounce shadow-2xs"
-              title="Xuất File PDF Lịch Trình Màu Sắc & Mã QR Dẫn Đường"
-            >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Xuất PDF & Mã QR</span>
-            </button>
+          <button
+            onClick={handlePrint}
+            title="Xuất File PDF Sơ Đồ Lịch Trình Kèm Mã QR Thực Địa"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#0E8C7F] hover:bg-[#0A6B61] text-white transition-all cursor-pointer shadow-xs active:scale-95"
+          >
+            <Printer className="w-3.5 h-3.5 text-amber-300" />
+            <span>Xuất PDF Sơ Đồ & QR</span>
+          </button>
 
+          {itinerary && (
             <button
-              onClick={handleSave}
-              className={`px-2.5 py-1.5 rounded-full flex items-center gap-1 font-bold transition-all tap-bounce ${
-                isSaved
-                  ? 'bg-[#0E8C7F]/15 text-[#0E8C7F] border border-[#0E8C7F]/30'
-                  : 'bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/10'
-              }`}
-              title="Lưu lịch trình này"
-            >
-              {isSaved ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-[#0E8C7F]" />
-                  <span>Đã lưu</span>
-                </>
-              ) : (
-                <>
-                  <Bookmark className="w-3.5 h-3.5" />
-                  <span>Lưu</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={() => setShowQRModal(true)}
-              className="p-1.5 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/10 flex items-center transition-colors"
-              title="Chia sẻ mã QR"
+              onClick={() => setShowExportModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition-all cursor-pointer shadow-xs active:scale-95"
             >
               <QrCode className="w-3.5 h-3.5" />
+              <span>Tải Ảnh QR Lộ Trình</span>
             </button>
-          </div>
+          )}
         </div>
       )}
 
-      {/* QR Code Modal for sharing text overview */}
-      {showQRModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-slate-200 text-center space-y-4">
-            <div className="flex items-center justify-between">
-              <h4 className="font-extrabold text-sm text-[#1B4D3E]">Chia Sẻ Thông Tin Tri Tôn</h4>
-              <button
-                onClick={() => setShowQRModal(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrCodeImgUrl}
-                alt="QR Code"
-                className="w-44 h-44 rounded-xl shadow-xs"
-              />
-            </div>
-
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Quét mã QR bằng Camera điện thoại để mở nội dung này trên thiết bị khác.
-            </p>
-
-            <button
-              onClick={() => setShowQRModal(false)}
-              className="w-full py-2.5 rounded-xl bg-[#1B4D3E] text-white font-bold text-xs"
-            >
-              Đóng
-            </button>
-          </div>
-        </div>
+      {/* High-Res Export Modal */}
+      {showExportModal && itinerary && (
+        <ItineraryExportModal
+          itinerary={itinerary}
+          onClose={() => setShowExportModal(false)}
+        />
       )}
     </div>
   );

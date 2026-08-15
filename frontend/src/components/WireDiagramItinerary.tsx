@@ -17,8 +17,11 @@ import {
   Lightbulb,
   Coins,
   BarChart3,
-  CheckCircle2
+  CheckCircle2,
+  Printer,
+  QrCode
 } from 'lucide-react';
+import ItineraryExportModal from './ItineraryExportModal';
 
 export interface ItineraryStop {
   order: number;
@@ -84,6 +87,7 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
 
   // Scroll detection for animated metro line drawing
   const [visibleStops, setVisibleStops] = useState<Record<number, boolean>>({});
+  const [showExportModal, setShowExportModal] = useState(false);
   const stopRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -128,6 +132,16 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
             </h3>
             <p className="text-white/80 text-xs mt-1 leading-snug font-body">{tagline}</p>
           </div>
+
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F0A32F] hover:bg-[#D98E20] text-[#26221B] font-bold text-xs shadow-xs active:scale-95 transition-all cursor-pointer shrink-0"
+            title="Xuất Bản Đồ Sơ Đồ Lịch Trình PDF & Mã QR"
+          >
+            <Printer className="w-3.5 h-3.5 text-[#26221B]" />
+            <span className="hidden sm:inline">Xuất Sơ Đồ PDF/QR</span>
+            <span className="sm:hidden">Xuất PDF</span>
+          </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 pt-2.5 border-t border-white/15 text-xs text-white/90 font-display">
@@ -323,6 +337,14 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
           Dữ liệu thực địa Tri Tôn, An Giang • Xác thực 100%
         </p>
       </div>
+
+      {/* ── HIGH-RES PDF & QR EXPORT MODAL ─────────────────────────────── */}
+      {showExportModal && (
+        <ItineraryExportModal
+          itinerary={itinerary}
+          onClose={() => setShowExportModal(false)}
+        />
+      )}
     </div>
   );
 }

@@ -498,7 +498,11 @@ export default function ChatbotWidget() {
                         </span>
                       </div>
                     ) : (
-                      <FormattedChatMessage content={msg.text} isAssistant={msg.sender === 'assistant'} />
+                      <FormattedChatMessage
+                        content={msg.text}
+                        isAssistant={msg.sender === 'assistant'}
+                        itinerary={msg.itinerary}
+                      />
                     )}
                     <span className={`block text-[9px] sm:text-[10px] mt-1 ${msg.sender === 'user' ? 'text-[#FAF3E7]/80 text-right' : 'text-[#6B6355]/70'}`}>
                       {msg.timestamp}

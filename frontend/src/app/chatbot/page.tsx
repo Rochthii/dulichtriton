@@ -460,7 +460,11 @@ export default function ChatbotPage() {
                     </span>
                   </div>
                 ) : (
-                  <FormattedChatMessage content={msg.text} isAssistant={msg.sender === 'assistant'} />
+                  <FormattedChatMessage
+                    content={msg.text}
+                    isAssistant={msg.sender === 'assistant'}
+                    itinerary={msg.itinerary}
+                  />
                 )}
                 <span
                   className={`block text-[9px] sm:text-[10px] mt-1 ${
