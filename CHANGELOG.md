@@ -110,12 +110,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Chuẩn hóa toàn bộ đường dẫn từ `/chat` sang route chính thức `/chatbot`.
   - Thiết lập cơ chế Redirect kép (Server Route Redirect tại `app/chat/page.tsx` + Edge Redirects trong `next.config.ts`), chuyển hướng 308 vĩnh viễn từ `/chat` sang `/chatbot` kèm theo toàn bộ tham số truy vấn `?q=...`.
   - Tích hợp hook `useSearchParams()` trong `chatbot/page.tsx` tự động bóc tách tham số `q` và kích hoạt luồng trả lời trực tiếp ngay khi người dùng vừa chuyển trang từ `/culture`.
-- **Chuẩn Hóa Ẩm Thực Bản Địa: Tri Tôn KHÔNG CÓ Bún Nước Lèo, KHÔNG Nấu Mắm — Chuẩn Ẩm Thực 100% Là 'BÚN CÁ CỦ NGẢI' (RULE-22)**:
-  - Khắc phục triệt để quan niệm sai lệch về ẩm thực Tri Tôn trên toàn bộ hệ thống (dữ liệu, routes chatbot, cẩm nang du lịch và cơ sở dữ liệu Supabase):
-    • *Đặc Trưng Ẩm Thực Cốt Lõi*: Ở Tri Tôn, món bún cá truyền thống của đồng bào Khmer là **Bún Cá Củ Ngải** (nấu từ cá lóc đồng tươi xào nghệ tươi, nước dùng hầm xương thanh ngọt tự nhiên cùng củ ngải bún giã nhuyễn thơm lừng — **TUYỆT ĐỐI KHÔNG DÙNG MẮM / KHÔNG PHẢI BÚN NƯỚC LÈO** nấu mắm bò hóc như Sóc Trăng hay Trà Vinh).
-    • *Đồng Bộ Toàn Diện Tên Quán & Đặc Sản*: Đổi toàn bộ các tên quán `Quán Bún Nước Lèo Tri Tôn Chị Tư`, `Bún nước lèo Sơ Nương` $\rightarrow$ `Quán Bún Cá Củ Ngải Chị Tư`, `Bún Cá Củ Ngải Sơ Nương`.
-    • *Cập Nhật System Prompt Chatbot AI*: Bắt buộc AI phân biệt rõ ràng: Bún cá Tri Tôn là bún cá củ ngải thanh ngọt không mắm, ăn kèm bông điên điển, rau muống bào, bắp chuối, rau nhút và heo quay da giòn.
-    • *Đồng Bộ 46 POIs Liên Quan Trong Supabase*: Đã cập nhật `places` và `knowledge_base` trên Supabase bảo đảm dữ liệu thực tế 100% chuẩn xác.
+- **Thanh Lọc Triệt Để 2 Địa Điểm Không Có Thật Theo Thực Tế Bản Địa: `Gà Đốt Siêu Đẳng` & `Bún Cá Sơ Nương` (RULE-02 & RULE-03)**:
+  - Tiếp thu phản hồi thực tế từ người dùng, tiến hành quét sạch 100% hai địa điểm ảo không tồn tại ngoài đời thực khỏi toàn bộ hệ thống:
+    • *Xóa Bỏ Địa Điểm Không Tồn Tại*: Loại bỏ hoàn toàn `Quán Gà Đốt Siêu Đẳng Hồ Ô Thum` và `Quán Bún Cá Sơ Nương Khmer` khỏi `data/triton_pois_full.json`, `tri_ton_master_cleaned.csv` (chuẩn hóa về 149 records), `tri_ton_itineraries.json`, `lichtrinh.json` và cơ sở dữ liệu Supabase `places`.
+    • *Thay Thế Bằng Quán Thực Tế Xác Minh 100%*: Thay thế các liên kết gợi ý sang các quán thực tế lâu năm nổi tiếng như `Gà Đốt Thảo Nguyên Hồ Ô Thum`, `Gà Đốt Tuấn Tới Ô Thum`, `Quán Bún Cá Củ Ngải Chị Tư` (Đường Trần Hưng Đạo) và `Quán Bún Cá Dook Tri Tôn`.
+    • *Quét Sạch Rác Dữ Liệu Crawler*: Làm sạch toàn bộ mô tả sai lệch, rác văn bản tiếng Pháp/LinkedIn trên các POIs nhà vườn.
 
 ### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
 - **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
