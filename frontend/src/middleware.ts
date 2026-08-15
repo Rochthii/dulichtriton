@@ -1,0 +1,102 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, isSuspiciousBot } from '@/lib/rateLimiter';
+
+export function middleware(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 
+             req.headers.get('x-real-ip') || 
+             '127.0.0.1';
+  const pathname = req.nextUrl.pathname;
+  const userAgent = req.headers.get('user-agent');
+
+  // 1. Block Suspicious Scraper Bots on API routes (anti-scraping)
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/v1/admin')) {
+    if (isSuspiciousBot(userAgent)) {
+      return new NextResponse(
+        JSON.stringify({ 
+          error: 'Access Denied: Automated bot scraping detected.',
+          message: 'Hệ thống bảo mật phát hiện truy vấn tự động không hợp lệ.' 
+        }),
+        { 
+          status: 403, 
+          headers: { 'Content-Type': 'application/json' } 
+        }
+      );
+    }
+  }
+
+  // 2. Sliding Window Rate Limiting (Anti-DDoS & Wallet Drain Shield)
+  if (pathname.startsWith('/api/v1/chat/')) {
+    // Protect AI Chatbot endpoints: max 20 prompts / minute per IP
+    const limitResult = checkRateLimit(`chat_${ip}`, 20, 60);
+    if (!limitResult.allowed) {
+      return new NextResponse(
+        JSON.stringify({
+          error: 'Rate limit exceeded. Please slow down.',
+          message: `Bạn đã gửi quá nhiều câu hỏi trong thời gian ngắn. Vui lòng thử lại sau ${limitResult.resetSeconds} giây!`,
+          reset_seconds: limitResult.resetSeconds,
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'Retry-After': String(limitResult.resetSeconds),
+            'X-RateLimit-Limit': String(limitResult.limit),
+            'X-RateLimit-Remaining': '0',
+          },
+        }
+      );
+    }
+  } else if (pathname.startsWith('/api/v1/admin/auth/login')) {
+    // Protect Admin Login: max 5 login attempts / minute per IP (Anti Brute-force)
+    const limitResult = checkRateLimit(`login_${ip}`, 5, 60);
+    if (!limitResult.allowed) {
+      return new NextResponse(
+        JSON.stringify({
+          error: 'Too many login attempts. Locked for 60 seconds.',
+          message: `Đã thử đăng nhập sai quá nhiều lần. Vui lòng chờ ${limitResult.resetSeconds} giây!`,
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'Retry-After': String(limitResult.resetSeconds),
+          },
+        }
+      );
+    }
+  } else if (pathname.startsWith('/api/')) {
+    // General API rate limit: max 90 requests / minute per IP
+    const limitResult = checkRateLimit(`api_${ip}`, 90, 60);
+    if (!limitResult.allowed) {
+      return new NextResponse(
+        JSON.stringify({
+          error: 'API rate limit exceeded.',
+          message: 'Tần suất gửi yêu cầu quá nhanh. Vui lòng giảm tốc độ truy cập!',
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'Retry-After': String(limitResult.resetSeconds),
+          },
+        }
+      );
+    }
+  }
+
+  // 3. Security Headers Injection
+  const res = NextResponse.next();
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+  res.headers.set('X-Frame-Options', 'DENY');
+  res.headers.set('X-XSS-Protection', '1; mode=block');
+  res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  return res;
+}
+
+export const config = {
+  matcher: [
+    '/api/:path*',
+    '/admin/:path*',
+  ],
+};
