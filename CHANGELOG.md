@@ -67,6 +67,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   12. *Tuyết Anh Homestay & Coffee*: Sân vườn phong cách Địa Trung Hải, hồ cá Koi thư giãn và giàn hoa giấy rực rỡ.
 - **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 12 bài viết chi tiết lên Supabase Cloud Database.
 
+### 🖼️ Photo Gallery Studio — Quản Lý Album Nhiều Ảnh (`photos[]`) (/admin/places)
+- **Tải Lên Hàng Loạt Từ Máy Tính (Multi-file Upload)**: Cho phép chọn đồng thời 5–10 file ảnh từ máy tính, tự động đọc base64 và đẩy lên Cloudinary CDN với nén `f_auto,q_auto`.
+- **Nhập Hàng Loạt Từ URL (Multi-URL Smart Input)**: Hỗ trợ dán danh sách nhiều đường link ảnh (từ Google Maps, Facebook, Báo chí, Unsplash...) phân tách bởi dấu phẩy hoặc dòng mới.
+- **Lưới Quản Lý Album Ảnh Trực Quan (Gallery Grid Studio)**:
+  - Hiển thị toàn bộ ảnh trong mảng `photos[]` dưới dạng thumbnail thẻ ảnh sắc nét.
+  - **⭐ 1-Click Đặt Làm Ảnh Bìa Chính**: Bấm nút ⭐ trên bất kỳ ảnh nào để gán ngay ảnh đó làm `image_url` đại diện (được đóng khung viền vàng nổi bật và badge *Bìa Chính*).
+  - **↔️ Sắp Xếp Thứ Tự Ảnh (Move Left / Right)**: Dễ dàng điều chỉnh thứ tự xuất hiện của ảnh trong album của du khách.
+  - **🗑️ Xóa Ảnh Khỏi Album**: Xóa ảnh thừa hoặc ảnh hỏng, tự động chọn ảnh kế tiếp làm ảnh bìa nếu ảnh bị xóa là ảnh đại diện.
+- **Đồng Bộ CSDL Supabase PostgreSQL**: Đã tích hợp trường `photos` vào toàn bộ API `GET`, `POST`, `PATCH` tại `/api/v1/admin/places`.
+
 ---
 
 ## [v30.0.0-ENTERPRISE-CACHE-GOOGLE-SEARCH-GROUNDING] - 2026-08-15

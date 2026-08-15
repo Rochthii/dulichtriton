@@ -28,6 +28,10 @@ import {
   Square,
   Eye,
   EyeOff,
+  ArrowLeft,
+  ArrowRight,
+  Upload,
+  Link as LinkIcon,
 } from 'lucide-react';
 
 interface PlaceRecord {
@@ -39,6 +43,7 @@ interface PlaceRecord {
   tourism_category?: string;
   rating: number;
   image_url: string;
+  photos?: string[];
   description: string;
   detailed_story?: string;
   phone?: string;
@@ -108,6 +113,10 @@ export default function AdminPlacesPage() {
   const [uploadingImages, setUploadingImages] = useState(false);
   const [syncingVector, setSyncingVector] = useState(false);
 
+  // URL Input for Gallery Studio
+  const [urlInputAdd, setUrlInputAdd] = useState('');
+  const [urlInputEdit, setUrlInputEdit] = useState('');
+
   // Delete Confirm Modal
   const [deletingPlace, setDeletingPlace] = useState<PlaceRecord | null>(null);
 
@@ -118,6 +127,7 @@ export default function AdminPlacesPage() {
     tourism_category: 'Địa Điểm Tham Quan',
     rating: 4.8,
     image_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+    photos: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'],
     description: '',
     detailed_story: '',
     phone: '',
@@ -181,6 +191,7 @@ export default function AdminPlacesPage() {
     fetchAuditLogs();
   };
 
+  // 1. Tải Lên Hàng Loạt Từ Máy Tính (Cloudinary)
   const handleCloudinaryUpload = async (e: React.ChangeEvent<HTMLInputElement>, isEditMode: boolean) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -205,20 +216,128 @@ export default function AdminPlacesPage() {
 
       const data = await res.json();
       if (data.urls && data.urls.length > 0) {
-        const firstUrl = data.urls[0];
         if (isEditMode && editingPlace) {
-          setEditingPlace({ ...editingPlace, image_url: firstUrl });
+          const currentPhotos = Array.isArray(editingPlace.photos) && editingPlace.photos.length > 0
+            ? editingPlace.photos
+            : (editingPlace.image_url ? [editingPlace.image_url] : []);
+          const updatedPhotos = Array.from(new Set([...currentPhotos, ...data.urls]));
+          const newCover = editingPlace.image_url || data.urls[0];
+          setEditingPlace({ ...editingPlace, photos: updatedPhotos, image_url: newCover });
         } else {
-          setNewPlace({ ...newPlace, image_url: firstUrl });
+          const currentPhotos = Array.isArray(newPlace.photos) && newPlace.photos.length > 0
+            ? newPlace.photos
+            : (newPlace.image_url ? [newPlace.image_url] : []);
+          const updatedPhotos = Array.from(new Set([...currentPhotos, ...data.urls]));
+          const newCover = newPlace.image_url || data.urls[0];
+          setNewPlace({ ...newPlace, photos: updatedPhotos, image_url: newCover });
         }
-        setStatusMsg(`Đã tải lên thành công ${data.urls.length} hình ảnh Cloudinary!`);
+        setStatusMsg(`Đã tải lên thành công ${data.urls.length} hình ảnh vào Album Cloudinary!`);
         setTimeout(() => setStatusMsg(null), 3000);
       }
     } catch (err) {
       console.warn('Cloudinary upload error:', err);
     } finally {
       setUploadingImages(false);
+      // Reset input file target value
+      e.target.value = '';
     }
+  };
+
+  // 2. Thêm Ảnh Nhanh Từ URL
+  const handleAddPhotoByUrl = (isEditMode: boolean) => {
+    const rawInput = isEditMode ? urlInputEdit : urlInputAdd;
+    if (!rawInput.trim()) return;
+
+    // Split by comma, newline or whitespace
+    const incomingUrls = rawInput
+      .split(/[\n,\s]+/)
+      .map((u) => u.trim())
+      .filter((u) => u.startsWith('http://') || u.startsWith('https://'));
+
+    if (incomingUrls.length === 0) {
+      setStatusMsg('Vui lòng nhập đường link URL ảnh hợp lệ (bắt đầu bằng http:// hoặc https://)');
+      setTimeout(() => setStatusMsg(null), 3000);
+      return;
+    }
+
+    if (isEditMode && editingPlace) {
+      const currentPhotos = Array.isArray(editingPlace.photos) && editingPlace.photos.length > 0
+        ? editingPlace.photos
+        : (editingPlace.image_url ? [editingPlace.image_url] : []);
+      const updatedPhotos = Array.from(new Set([...currentPhotos, ...incomingUrls]));
+      const newCover = editingPlace.image_url || incomingUrls[0];
+      setEditingPlace({ ...editingPlace, photos: updatedPhotos, image_url: newCover });
+      setUrlInputEdit('');
+    } else {
+      const currentPhotos = Array.isArray(newPlace.photos) && newPlace.photos.length > 0
+        ? newPlace.photos
+        : (newPlace.image_url ? [newPlace.image_url] : []);
+      const updatedPhotos = Array.from(new Set([...currentPhotos, ...incomingUrls]));
+      const newCover = newPlace.image_url || incomingUrls[0];
+      setNewPlace({ ...newPlace, photos: updatedPhotos, image_url: newCover });
+      setUrlInputAdd('');
+    }
+
+    setStatusMsg(`Đã thêm thành công ${incomingUrls.length} ảnh từ URL vào Album!`);
+    setTimeout(() => setStatusMsg(null), 3000);
+  };
+
+  // 3. Đặt Làm Ảnh Bìa Chính (Cover Photo)
+  const handleSetCoverPhoto = (url: string, isEditMode: boolean) => {
+    if (isEditMode && editingPlace) {
+      setEditingPlace({ ...editingPlace, image_url: url });
+    } else {
+      setNewPlace({ ...newPlace, image_url: url });
+    }
+    setStatusMsg('Đã chọn làm ⭐ Ảnh Bìa Chính của địa điểm!');
+    setTimeout(() => setStatusMsg(null), 2500);
+  };
+
+  // 4. Sắp Xếp Thứ Tự Ảnh (Di Chuyển Trái / Phải)
+  const handleMovePhoto = (index: number, direction: 'left' | 'right', isEditMode: boolean) => {
+    const target = isEditMode ? editingPlace : newPlace;
+    if (!target) return;
+
+    const photos = Array.isArray(target.photos) ? [...target.photos] : [];
+    if (photos.length <= 1) return;
+
+    const targetIdx = direction === 'left' ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= photos.length) return;
+
+    const temp = photos[index];
+    photos[index] = photos[targetIdx];
+    photos[targetIdx] = temp;
+
+    if (isEditMode && editingPlace) {
+      setEditingPlace({ ...editingPlace, photos });
+    } else {
+      setNewPlace({ ...newPlace, photos });
+    }
+  };
+
+  // 5. Xóa Ảnh Khỏi Album
+  const handleDeletePhoto = (index: number, isEditMode: boolean) => {
+    const target = isEditMode ? editingPlace : newPlace;
+    if (!target) return;
+
+    const photos = Array.isArray(target.photos) ? [...target.photos] : [];
+    const removedUrl = photos[index];
+    const updatedPhotos = photos.filter((_, i) => i !== index);
+
+    // If deleting the current cover, fallback to first available photo
+    let newCover: string = target.image_url || '';
+    if (target.image_url === removedUrl) {
+      newCover = updatedPhotos[0] || '';
+    }
+
+    if (isEditMode && editingPlace) {
+      setEditingPlace({ ...editingPlace, photos: updatedPhotos, image_url: newCover });
+    } else {
+      setNewPlace({ ...newPlace, photos: updatedPhotos, image_url: newCover });
+    }
+
+    setStatusMsg('Đã xóa ảnh khỏi Album!');
+    setTimeout(() => setStatusMsg(null), 2000);
   };
 
   const handleToggleHot = async (place: PlaceRecord) => {
@@ -669,7 +788,10 @@ export default function AdminPlacesPage() {
 
                         <button
                           onClick={() => {
-                            setEditingPlace(place);
+                            setEditingPlace({
+                              ...place,
+                              photos: Array.isArray(place.photos) && place.photos.length > 0 ? place.photos : (place.image_url ? [place.image_url] : []),
+                            });
                             setActiveEditTab('basic');
                           }}
                           type="button"
@@ -1000,36 +1122,164 @@ export default function AdminPlacesPage() {
 
               {activeAddTab === 'media' && (
                 <div className="space-y-4">
-                  <div>
-                    <label className="font-bold text-slate-700 block mb-1">Tải Ảnh Lên Cloudinary:</label>
+                  {/* 1. Tải Lên Hàng Loạt Từ Máy Tính */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                        <Upload className="w-4 h-4 text-emerald-700" /> Tải Lên Hàng Loạt Ảnh (Cloudinary):
+                      </label>
+                      <span className="text-[11px] text-slate-500 font-medium">Hỗ trợ chọn 5–10 ảnh cùng lúc</span>
+                    </div>
                     <input
                       type="file"
                       accept="image/*"
+                      multiple
                       onChange={(e) => handleCloudinaryUpload(e, false)}
                       disabled={uploadingImages}
-                      className="w-full p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white"
+                      className="w-full p-2 rounded-xl bg-white border border-slate-200 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white hover:file:bg-[#143c30] cursor-pointer"
                     />
+                    {uploadingImages && (
+                      <div className="text-emerald-700 font-bold text-[11px] mt-2 flex items-center gap-1.5">
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Đang tải và tối ưu hóa ảnh lên Cloudinary...
+                      </div>
+                    )}
                   </div>
 
-                  <div>
-                    <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện:</label>
-                    <input
-                      type="text"
-                      value={newPlace.image_url}
-                      onChange={(e) => setNewPlace({ ...newPlace, image_url: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
-                    />
+                  {/* 2. Thêm Ảnh Từ URL */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                    <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5 mb-1.5">
+                      <LinkIcon className="w-4 h-4 text-blue-600" /> Thêm Ảnh Từ URL (Google Maps, FB, Báo chí, CDN):
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={urlInputAdd}
+                        onChange={(e) => setUrlInputAdd(e.target.value)}
+                        placeholder="Dán link ảnh (hỗ trợ nhiều link cách nhau bởi dấu phẩy)..."
+                        className="flex-1 p-2 rounded-xl bg-white border border-slate-200 text-xs"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddPhotoByUrl(false);
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleAddPhotoByUrl(false)}
+                        className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1 shrink-0 cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5" /> Thêm Vào Album
+                      </button>
+                    </div>
                   </div>
 
+                  {/* 3. Lưới Quản Lý Album Ảnh */}
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">Link Video TikTok:</label>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1.5">
+                        <ImageIcon className="w-4 h-4 text-emerald-800" />
+                        <span className="font-bold text-slate-800 text-xs">
+                          Album Ảnh Của Địa Điểm ({Array.isArray(newPlace.photos) ? newPlace.photos.length : (newPlace.image_url ? 1 : 0)} ảnh)
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        ⭐ Viền vàng là <strong className="text-amber-700 font-bold">Ảnh Bìa Chính</strong>
+                      </span>
+                    </div>
+
+                    {(!newPlace.photos || newPlace.photos.length === 0) ? (
+                      <div className="text-center py-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                        <ImageIcon className="w-7 h-7 text-slate-300 mx-auto mb-1.5" />
+                        <p className="text-xs text-slate-500">Chưa có ảnh nào trong Album. Hãy tải ảnh lên từ máy hoặc nhập URL.</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 max-h-56 overflow-y-auto p-1 bg-slate-50/50 rounded-xl border border-slate-100">
+                        {newPlace.photos.map((url, idx) => {
+                          const isCover = newPlace.image_url === url;
+                          return (
+                            <div
+                              key={idx}
+                              className={`group relative rounded-xl overflow-hidden border-2 transition-all bg-white shadow-xs ${
+                                isCover ? 'border-amber-500 ring-2 ring-amber-400/40' : 'border-slate-200 hover:border-emerald-500'
+                              }`}
+                            >
+                              <div className="aspect-video w-full relative overflow-hidden bg-slate-100">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={url}
+                                  alt={`Photo ${idx + 1}`}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                />
+                                {isCover && (
+                                  <span className="absolute top-1 left-1 bg-amber-500 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5">
+                                    <Star className="w-2.5 h-2.5 fill-slate-900" /> Bìa Chính
+                                  </span>
+                                )}
+                                <span className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] font-bold px-1 rounded">
+                                  #{idx + 1}
+                                </span>
+                              </div>
+
+                              <div className="p-1 bg-white flex items-center justify-between border-t border-slate-100">
+                                <div className="flex items-center gap-1">
+                                  {!isCover && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleSetCoverPhoto(url, false)}
+                                      title="Đặt làm Ảnh Bìa Chính"
+                                      className="px-1.5 py-0.5 rounded bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] font-bold flex items-center gap-0.5 transition-all cursor-pointer"
+                                    >
+                                      <Star className="w-2.5 h-2.5" /> Bìa
+                                    </button>
+                                  )}
+                                  {idx > 0 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleMovePhoto(idx, 'left', false)}
+                                      title="Di chuyển sang trái"
+                                      className="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer"
+                                    >
+                                      <ArrowLeft className="w-2.5 h-2.5" />
+                                    </button>
+                                  )}
+                                  {idx < (newPlace.photos?.length || 0) - 1 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleMovePhoto(idx, 'right', false)}
+                                      title="Di chuyển sang phải"
+                                      className="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer"
+                                    >
+                                      <ArrowRight className="w-2.5 h-2.5" />
+                                    </button>
+                                  )}
+                                </div>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeletePhoto(idx, false)}
+                                  title="Xóa ảnh khỏi Album"
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600 transition-all cursor-pointer"
+                                >
+                                  <Trash2 className="w-2.5 h-2.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 4. Link Video TikTok */}
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1 text-xs">Link Video TikTok:</label>
                     <input
                       type="text"
-                      value={newPlace.video_url}
+                      value={newPlace.video_url || ''}
                       onChange={(e) => setNewPlace({ ...newPlace, video_url: e.target.value })}
                       placeholder="https://www.tiktok.com/@..."
-                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs"
                     />
                   </div>
                 </div>
@@ -1325,50 +1575,164 @@ export default function AdminPlacesPage() {
 
               {activeEditTab === 'media' && (
                 <div className="space-y-4">
-                  <div>
-                    <label className="font-bold text-slate-700 block mb-1">Tải Ảnh Lên Cloudinary:</label>
+                  {/* 1. Tải Lên Hàng Loạt Từ Máy Tính */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                        <Upload className="w-4 h-4 text-emerald-700" /> Tải Lên Hàng Loạt Ảnh (Cloudinary):
+                      </label>
+                      <span className="text-[11px] text-slate-500 font-medium">Hỗ trợ chọn 5–10 ảnh cùng lúc</span>
+                    </div>
                     <input
                       type="file"
                       accept="image/*"
+                      multiple
                       onChange={(e) => handleCloudinaryUpload(e, true)}
                       disabled={uploadingImages}
-                      className="w-full p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white"
+                      className="w-full p-2 rounded-xl bg-white border border-slate-200 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#1B4D3E] file:text-white hover:file:bg-[#143c30] cursor-pointer"
                     />
                     {uploadingImages && (
-                      <div className="text-emerald-700 font-bold text-[11px] mt-1 flex items-center gap-1">
-                        <RefreshCw className="w-3 h-3 animate-spin" /> Đang tải ảnh lên Cloudinary...
+                      <div className="text-emerald-700 font-bold text-[11px] mt-2 flex items-center gap-1.5">
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Đang tải và tối ưu hóa ảnh lên Cloudinary...
                       </div>
                     )}
                   </div>
 
-                  <div>
-                    <label className="font-bold text-slate-700 block mb-1">URL Ảnh Đại Diện:</label>
+                  {/* 2. Thêm Ảnh Từ URL */}
+                  <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                    <label className="font-bold text-slate-800 text-xs flex items-center gap-1.5 mb-1.5">
+                      <LinkIcon className="w-4 h-4 text-blue-600" /> Thêm Ảnh Từ URL (Google Maps, FB, Báo chí, CDN):
+                    </label>
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        value={editingPlace.image_url || ''}
-                        onChange={(e) => setEditingPlace({ ...editingPlace, image_url: e.target.value })}
-                        className="flex-1 p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                        value={urlInputEdit}
+                        onChange={(e) => setUrlInputEdit(e.target.value)}
+                        placeholder="Dán link ảnh (hỗ trợ nhiều link cách nhau bởi dấu phẩy)..."
+                        className="flex-1 p-2 rounded-xl bg-white border border-slate-200 text-xs"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleAddPhotoByUrl(true);
+                          }
+                        }}
                       />
-                      {editingPlace.image_url && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={editingPlace.image_url}
-                          alt="Preview"
-                          className="w-12 h-12 rounded-xl object-cover border border-slate-300"
-                        />
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleAddPhotoByUrl(true)}
+                        className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1 shrink-0 cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5" /> Thêm Vào Album
+                      </button>
                     </div>
                   </div>
 
+                  {/* 3. Lưới Quản Lý Album Ảnh */}
                   <div>
-                    <label className="font-bold text-slate-700 block mb-1">Link Video TikTok Trực Tiếp:</label>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1.5">
+                        <ImageIcon className="w-4 h-4 text-emerald-800" />
+                        <span className="font-bold text-slate-800 text-xs">
+                          Album Ảnh Của Địa Điểm ({Array.isArray(editingPlace.photos) ? editingPlace.photos.length : (editingPlace.image_url ? 1 : 0)} ảnh)
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-slate-500 font-medium">
+                        ⭐ Viền vàng là <strong className="text-amber-700 font-bold">Ảnh Bìa Chính</strong>
+                      </span>
+                    </div>
+
+                    {(!editingPlace.photos || editingPlace.photos.length === 0) ? (
+                      <div className="text-center py-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                        <ImageIcon className="w-7 h-7 text-slate-300 mx-auto mb-1.5" />
+                        <p className="text-xs text-slate-500">Chưa có ảnh nào trong Album. Hãy tải ảnh lên từ máy hoặc nhập URL.</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 max-h-56 overflow-y-auto p-1 bg-slate-50/50 rounded-xl border border-slate-100">
+                        {editingPlace.photos.map((url, idx) => {
+                          const isCover = editingPlace.image_url === url;
+                          return (
+                            <div
+                              key={idx}
+                              className={`group relative rounded-xl overflow-hidden border-2 transition-all bg-white shadow-xs ${
+                                isCover ? 'border-amber-500 ring-2 ring-amber-400/40' : 'border-slate-200 hover:border-emerald-500'
+                              }`}
+                            >
+                              <div className="aspect-video w-full relative overflow-hidden bg-slate-100">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={url}
+                                  alt={`Photo ${idx + 1}`}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                />
+                                {isCover && (
+                                  <span className="absolute top-1 left-1 bg-amber-500 text-slate-900 text-[9px] font-black px-1.5 py-0.5 rounded shadow-sm flex items-center gap-0.5">
+                                    <Star className="w-2.5 h-2.5 fill-slate-900" /> Bìa Chính
+                                  </span>
+                                )}
+                                <span className="absolute bottom-1 left-1 bg-black/60 text-white text-[9px] font-bold px-1 rounded">
+                                  #{idx + 1}
+                                </span>
+                              </div>
+
+                              <div className="p-1 bg-white flex items-center justify-between border-t border-slate-100">
+                                <div className="flex items-center gap-1">
+                                  {!isCover && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleSetCoverPhoto(url, true)}
+                                      title="Đặt làm Ảnh Bìa Chính"
+                                      className="px-1.5 py-0.5 rounded bg-amber-50 hover:bg-amber-100 text-amber-700 text-[10px] font-bold flex items-center gap-0.5 transition-all cursor-pointer"
+                                    >
+                                      <Star className="w-2.5 h-2.5" /> Bìa
+                                    </button>
+                                  )}
+                                  {idx > 0 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleMovePhoto(idx, 'left', true)}
+                                      title="Di chuyển sang trái"
+                                      className="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer"
+                                    >
+                                      <ArrowLeft className="w-2.5 h-2.5" />
+                                    </button>
+                                  )}
+                                  {idx < (editingPlace.photos?.length || 0) - 1 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleMovePhoto(idx, 'right', true)}
+                                      title="Di chuyển sang phải"
+                                      className="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all cursor-pointer"
+                                    >
+                                      <ArrowRight className="w-2.5 h-2.5" />
+                                    </button>
+                                  )}
+                                </div>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeletePhoto(idx, true)}
+                                  title="Xóa ảnh khỏi Album"
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600 transition-all cursor-pointer"
+                                >
+                                  <Trash2 className="w-2.5 h-2.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 4. Link Video TikTok */}
+                  <div>
+                    <label className="font-bold text-slate-700 block mb-1 text-xs">Link Video TikTok Trực Tiếp:</label>
                     <input
                       type="text"
                       value={editingPlace.video_url || ''}
                       onChange={(e) => setEditingPlace({ ...editingPlace, video_url: e.target.value })}
                       placeholder="https://www.tiktok.com/@user/video/..."
-                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200"
+                      className="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs"
                     />
                   </div>
                 </div>

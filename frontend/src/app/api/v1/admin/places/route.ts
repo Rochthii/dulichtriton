@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
 
     let query = supabase
       .from('places')
-      .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours, created_at, updated_at')
+      .select('id, slug, name, commune, category, tourism_category, rating, image_url, photos, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours, created_at, updated_at')
       .order('name', { ascending: true });
 
     if (commune && commune !== 'ALL') {
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-      name, commune, category, tourism_category, rating, image_url, 
+      name, commune, category, tourism_category, rating, image_url, photos,
       description, detailed_story, phone, open_late, night_hours,
       golden_time_windows, price_level, video_url, is_hot, latitude, longitude, address 
     } = body;
@@ -104,6 +104,10 @@ export async function POST(req: NextRequest) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
+    const resolvedPhotos = Array.isArray(photos) && photos.length > 0
+      ? photos
+      : (image_url ? [image_url] : []);
+
     const newRecord: Record<string, unknown> = {
       id: `${slug}-${Date.now().toString(36)}`,
       slug: `${slug}-${Date.now().toString(36)}`,
@@ -114,7 +118,8 @@ export async function POST(req: NextRequest) {
       category: category || 'general',
       tourism_category: tourism_category || 'Địa Điểm Tham Quan',
       rating: Number(rating) || 4.8,
-      image_url: image_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+      image_url: image_url || resolvedPhotos[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+      photos: resolvedPhotos,
       description: description || 'Thông tin địa điểm du lịch mới tại Tri Tôn',
       detailed_story: detailed_story || description || '',
       phone: phone || null,
@@ -168,7 +173,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { 
       id, is_hot, is_active, name, commune, category, tourism_category, rating, 
-      image_url, description, detailed_story, phone, open_late, night_hours,
+      image_url, photos, description, detailed_story, phone, open_late, night_hours,
       golden_time_windows, price_level, video_url, latitude, longitude, address 
     } = body;
 
@@ -185,6 +190,7 @@ export async function PATCH(req: NextRequest) {
     if (tourism_category !== undefined) updatePayload.tourism_category = tourism_category;
     if (rating !== undefined) updatePayload.rating = rating;
     if (image_url !== undefined) updatePayload.image_url = image_url;
+    if (photos !== undefined) updatePayload.photos = photos;
     if (description !== undefined) updatePayload.description = description;
     if (detailed_story !== undefined) updatePayload.detailed_story = detailed_story;
     if (phone !== undefined) updatePayload.phone = phone;
