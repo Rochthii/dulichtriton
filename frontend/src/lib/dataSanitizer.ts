@@ -97,8 +97,12 @@ export function sanitizeDescription(
     }
     return `${name} — Thắng cảnh thiên nhiên và di sản văn hóa đặc sắc tại ${commune}, mang đậm bản sắc vùng đất Bảy Núi An Giang.`;
   }
-  // Strip any raw script tags
-  return desc.replace(/<[^>]*>?/gm, '').trim();
+  // Strip any raw script tags and clean redundant geographic naming
+  return desc
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/Thị trấn Tri Tôn,\s*Tri Tôn,\s*An Giang/gi, 'Thị trấn Tri Tôn, An Giang')
+    .replace(/Xã ([^,]+),\s*Tri Tôn,\s*An Giang/gi, 'Xã $1, An Giang')
+    .trim();
 }
 
 /**

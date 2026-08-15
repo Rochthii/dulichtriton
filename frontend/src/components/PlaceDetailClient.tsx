@@ -24,6 +24,7 @@ import { getDeviceHardwareGps, TRI_TON_CENTER_COORDS } from '@/lib/maps';
 import { calculateRoadDistanceKm, estimateDriveMinutes } from '@/lib/routeOptimizer';
 import PoiWeatherWidget from '@/components/PoiWeatherWidget';
 import { supabase } from '@/lib/supabase';
+import { RichTextRenderer } from '@/components/RichTextRenderer';
 
 interface PlaceDetailClientProps {
   place: Place;
@@ -478,9 +479,9 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </h2>
           </div>
 
-          <p className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
-            {cleanDescription}
-          </p>
+          <div className="border-b border-[#26221B]/6 pb-2">
+            <RichTextRenderer content={cleanDescription} />
+          </div>
 
           {/* Quick Matrix Table */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-display">
@@ -774,8 +775,8 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </h2>
           </div>
 
-          <div className="prose prose-sm max-w-none text-xs sm:text-sm text-[#26221B] leading-relaxed whitespace-pre-line">
-            {cleanStory}
+          <div className="pt-1">
+            <RichTextRenderer content={cleanStory} />
           </div>
         </section>
 

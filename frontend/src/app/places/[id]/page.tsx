@@ -16,7 +16,7 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA]">
+    <div className="min-h-screen bg-[#FAF3E7]">
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <PlaceDetailClient place={place} />
       </div>
