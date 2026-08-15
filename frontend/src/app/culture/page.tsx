@@ -282,7 +282,7 @@ export default function CulturePage() {
               Di Sản Văn Hóa & Lễ Hội Bảy Núi
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-white/90 leading-relaxed font-body">
-              Khám phá vùng đất Thất Sơn huyền tích với <strong>Lễ hội Đua Bò Bảy Núi</strong> di sản quốc gia, <strong>Kinh Lá Buông</strong> cổ bản, hơn 30 ngôi <strong>chùa Nam Tông Khmer</strong> cổ kính và các <strong>làng nghề dệt thổ cẩm, gốm đất nung</strong> trăm tuổi.
+              Khám phá vùng đất Thất Sơn huyền tích với <strong>Lễ hội Đua Bò Bảy Núi</strong> di sản quốc gia, <strong>Kinh Lá Buông</strong> cổ bản, <strong>37 ngôi chùa Phật giáo Nam Tông Khmer</strong> cổ kính và các <strong>làng nghề dệt thổ cẩm, gốm đất nung</strong> trăm tuổi.
             </p>
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a 
