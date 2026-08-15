@@ -87,7 +87,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   // Parse Travel Guide, Check-in Spots, Nearby Food
   const guide = parseTravelGuide(place.travel_guide || (place as any).travel_guide_json);
   const nearbyFoodList = parseNearbyFood(place.nearby_cafes_and_food || (place as any).nearby_cafes_and_food_json);
-  const checkinSpotsList = parseCheckinSpots(place.checkin_spots || (place as any).checkin_spots_json, currentPhoto.url);
+  const checkinSpotsList = parseCheckinSpots(place.checkin_spots || (place as any).checkin_spots_json, photos.map((p) => p.url));
   const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);
   const cleanStory = sanitizeDescription(place.detailed_story || place.description, place.name, place.commune, place.category);
   const cleanReviews = sanitizeReviews(place.review_samples || (place as any).reviews);

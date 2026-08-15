@@ -85,12 +85,13 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-  - Dán link Google Maps $\rightarrow$ Bấm nút **"🚀 Trích Xuất Ảnh"** $\rightarrow$ Xem trước danh sách ảnh tìm thấy.
-### 🐛 Sửa Lỗi Hiển Thị Album Ảnh (`PlaceDetailClient`) & Điều Hướng Slug (`getPlaceById`)
-- **Khắc Phục Lỗi Ảnh Xám / Icon Vỡ Trên Trang Chi Tiết**: Chuẩn hóa mảng `photos` trong `PlaceDetailClient.tsx` tự động chuyển đổi cả dạng mảng chuỗi (`string[]`) lẫn mảng đối tượng (`object[]`), giúp ảnh Hero và toàn bộ Thumbnail hiển thị sắc nét 100% thay vì bị lỗi `photo.url undefined`.
-- **Khắc Phục Lỗi 404 Điều Hướng Đường Link Slug**:
-  - Bổ sung hàm `decodeURIComponent()` trong `getPlaceById(idOrSlug)` giúp nhận diện chính xác các đường link có ký tự tiếng Việt hoặc ký tự đặc biệt (`&`, `%`, dấu cách).
-  - Tự động chuẩn hóa Clean SEO Slugs (dạng không dấu `ruong-coffee-tea-tri-ton`) cho toàn bộ 139 địa điểm và đồng bộ lên Supabase PostgreSQL.
+### 📸 Quản Lý Góc Check-in & Tọa Độ Sống Ảo (`CheckinSpotsManager`)
+- **Module Quản Trị Góc Check-in Mới (`CheckinSpotsManager.tsx`)**:
+  - Tích hợp Tab thứ 5 trong Modal Quản trị Địa điểm: Cho phép xem trước hình ảnh, đổi tên góc chụp, tinh chỉnh mẹo bắt sáng và chọn nhanh ảnh từ Album `photos[]`.
+  - Tự động lưu và cập nhật trường `checkin_spots` vào Supabase PostgreSQL qua API `/api/v1/admin/places`.
+- **Khắc Phục Hiển Thị Trùng Lặp Ảnh Check-in (`dataSanitizer.ts`)**:
+  - Cập nhật thuật toán `parseCheckinSpots` tự động phân phối các bức ảnh thực tế khác nhau trong Album địa điểm (`photos[0]`, `photos[1]`, `photos[2]`) cho từng thẻ góc chụp thay vì dùng chung 1 ảnh stock placeholder.
+  - Đã nạp bộ ảnh thực địa cho các góc sống ảo tại Cổng Trời Chùa Koh Kas, Chùa Tà Pạ và các điểm du lịch tiêu biểu.
 
 ---
 

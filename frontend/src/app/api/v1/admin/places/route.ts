@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
 
     let query = supabase
       .from('places')
-      .select('id, slug, name, commune, category, tourism_category, rating, image_url, photos, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours, created_at, updated_at')
+      .select('id, slug, name, commune, category, tourism_category, rating, image_url, photos, checkin_spots, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours, created_at, updated_at')
       .order('name', { ascending: true });
 
     if (commune && commune !== 'ALL') {
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-      name, commune, category, tourism_category, rating, image_url, photos,
+      name, commune, category, tourism_category, rating, image_url, photos, checkin_spots,
       description, detailed_story, phone, open_late, night_hours,
       golden_time_windows, price_level, video_url, is_hot, latitude, longitude, address 
     } = body;
@@ -120,6 +120,7 @@ export async function POST(req: NextRequest) {
       rating: Number(rating) || 4.8,
       image_url: image_url || resolvedPhotos[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
       photos: resolvedPhotos,
+      checkin_spots: checkin_spots || null,
       description: description || 'Thông tin địa điểm du lịch mới tại Tri Tôn',
       detailed_story: detailed_story || description || '',
       phone: phone || null,
@@ -173,7 +174,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { 
       id, is_hot, is_active, name, commune, category, tourism_category, rating, 
-      image_url, photos, description, detailed_story, phone, open_late, night_hours,
+      image_url, photos, checkin_spots, description, detailed_story, phone, open_late, night_hours,
       golden_time_windows, price_level, video_url, latitude, longitude, address 
     } = body;
 
@@ -191,6 +192,7 @@ export async function PATCH(req: NextRequest) {
     if (rating !== undefined) updatePayload.rating = rating;
     if (image_url !== undefined) updatePayload.image_url = image_url;
     if (photos !== undefined) updatePayload.photos = photos;
+    if (checkin_spots !== undefined) updatePayload.checkin_spots = checkin_spots;
     if (description !== undefined) updatePayload.description = description;
     if (detailed_story !== undefined) updatePayload.detailed_story = detailed_story;
     if (phone !== undefined) updatePayload.phone = phone;

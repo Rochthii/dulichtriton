@@ -12,9 +12,11 @@ import {
   DollarSign,
   Image as ImageIcon,
   CheckCircle2,
+  Camera,
 } from 'lucide-react';
 import { PlaceRecord, COMMUNES, CATEGORIES } from '../types';
 import { PhotoGalleryStudio } from './PhotoGalleryStudio';
+import { CheckinSpotsManager, CheckinSpotItem } from './CheckinSpotsManager';
 
 interface PlaceModalProps {
   isEditMode: boolean;
@@ -35,11 +37,23 @@ export const PlaceModal: React.FC<PlaceModalProps> = ({
   syncingVector,
   setStatusMsg,
 }) => {
-  const [activeTab, setActiveTab] = useState<'basic' | 'story' | 'service' | 'media'>('basic');
+  const [activeTab, setActiveTab] = useState<'basic' | 'story' | 'service' | 'media' | 'checkin'>('basic');
 
   const photosList = Array.isArray(placeData.photos) && placeData.photos.length > 0
     ? placeData.photos
     : (placeData.image_url ? [placeData.image_url] : []);
+
+  // Parse checkin_spots
+  let parsedCheckinSpots: CheckinSpotItem[] = [];
+  if (Array.isArray(placeData.checkin_spots)) {
+    parsedCheckinSpots = placeData.checkin_spots as CheckinSpotItem[];
+  } else if (typeof placeData.checkin_spots === 'string') {
+    try {
+      parsedCheckinSpots = JSON.parse(placeData.checkin_spots);
+    } catch {
+      parsedCheckinSpots = [];
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
@@ -56,7 +70,7 @@ export const PlaceModal: React.FC<PlaceModalProps> = ({
               </h3>
               <p className="text-xs text-slate-500 font-medium">
                 {isEditMode
-                  ? 'Cập nhật nội dung, ảnh và tự động đồng bộ Vector Embeddings 768d'
+                  ? 'Cập nhật nội dung, ảnh, góc check-in và tự động đồng bộ Vector Embeddings 768d'
                   : 'Nạp địa điểm mới chuẩn thực địa Tri Tôn'}
               </p>
             </div>
@@ -75,46 +89,57 @@ export const PlaceModal: React.FC<PlaceModalProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('basic')}
-            className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+            className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'basic'
                 ? 'bg-[#1B4D3E] text-white shadow-xs'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
-            <Compass className="w-3.5 h-3.5" /> Thông Tin Cơ Bản
+            <Compass className="w-3.5 h-3.5" /> Cơ Bản
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('story')}
-            className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+            className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'story'
                 ? 'bg-[#1B4D3E] text-white shadow-xs'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
-            <FileText className="w-3.5 h-3.5" /> Bài Viết Chuyên Sâu
+            <FileText className="w-3.5 h-3.5" /> Bài Viết
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('service')}
-            className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+            className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'service'
                 ? 'bg-[#1B4D3E] text-white shadow-xs'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
-            <DollarSign className="w-3.5 h-3.5" /> Dịch Vụ & Giờ Giấc
+            <DollarSign className="w-3.5 h-3.5" /> Dịch Vụ
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('media')}
-            className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+            className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'media'
                 ? 'bg-[#1B4D3E] text-white shadow-xs'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
             }`}
           >
-            <ImageIcon className="w-3.5 h-3.5" /> Album Ảnh ({photosList.length}) & Video
+            <ImageIcon className="w-3.5 h-3.5" /> Album Ảnh ({photosList.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('checkin')}
+            className={`px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'checkin'
+                ? 'bg-[#1B4D3E] text-white shadow-xs'
+                : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <Camera className="w-3.5 h-3.5" /> Góc Check-in ({parsedCheckinSpots.length})
           </button>
         </div>
 
@@ -333,6 +358,20 @@ export const PlaceModal: React.FC<PlaceModalProps> = ({
                 });
               }}
               setStatusMsg={setStatusMsg}
+            />
+          )}
+
+          {/* Tab 5: Check-in Spots Manager */}
+          {activeTab === 'checkin' && (
+            <CheckinSpotsManager
+              checkinSpots={parsedCheckinSpots}
+              photos={photosList}
+              onChange={(updatedSpots) => {
+                onChange({
+                  ...placeData,
+                  checkin_spots: updatedSpots,
+                });
+              }}
             />
           )}
         </form>

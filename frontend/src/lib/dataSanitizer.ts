@@ -226,7 +226,11 @@ export interface CheckinSpotItem {
 /**
  * Safely parse checkin_spots_json
  */
-export function parseCheckinSpots(rawSpots: any, defaultImage: string = ''): CheckinSpotItem[] {
+export function parseCheckinSpots(rawSpots: any, photosList: string[] | string = []): CheckinSpotItem[] {
+  const photosArr = Array.isArray(photosList)
+    ? photosList.filter((p) => p && typeof p === 'string' && !p.includes('unsplash.com'))
+    : (photosList && typeof photosList === 'string' && !photosList.includes('unsplash.com') ? [photosList] : []);
+
   if (!rawSpots) return [];
   let spots: any[] = [];
   if (typeof rawSpots === 'string') {
@@ -240,16 +244,24 @@ export function parseCheckinSpots(rawSpots: any, defaultImage: string = ''): Che
   }
 
   return spots.map((s, idx) => {
+    const fallbackPhoto = photosArr.length > 0
+      ? photosArr[idx % photosArr.length]
+      : (Array.isArray(photosList) ? photosList[0] : photosList) || '';
+
     if (typeof s === 'string') {
       return {
         title: s,
-        photo_url: defaultImage,
+        photo_url: fallbackPhoto,
         tip: 'Góc chụp bắt sáng tự nhiên đẹp nhất vào buổi sáng hoặc hoàng hôn.',
       };
     }
+
+    const spotPhoto = s.photo_url || s.image_url;
+    const finalPhoto = spotPhoto && !spotPhoto.includes('unsplash.com') ? spotPhoto : fallbackPhoto;
+
     return {
       title: s.title || s.name || `Góc sống ảo #${idx + 1}`,
-      photo_url: s.photo_url || s.image_url || defaultImage,
+      photo_url: finalPhoto,
       tip: s.tip || 'Khuyên dùng ống kính góc rộng để lấy trọn vẹn cảnh núi rừng Bảy Núi.',
     };
   });

@@ -1,3 +1,5 @@
+import { CheckinSpotItem } from './components/CheckinSpotsManager';
+
 export interface PlaceRecord {
   id: string;
   slug: string;
@@ -8,6 +10,7 @@ export interface PlaceRecord {
   rating: number;
   image_url: string;
   photos?: string[];
+  checkin_spots?: CheckinSpotItem[] | string;
   description: string;
   detailed_story?: string;
   phone?: string;
