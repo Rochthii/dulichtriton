@@ -34,7 +34,7 @@ const FESTIVALS_DATA = [
     location: "Sân Đua Bò Tà Pạ - Soài Chek (Xã Núi Tô) & Sân Đua Nước Chùa Rô (Xã Châu Lăng)",
     tag: "Di Sản Quốc Gia",
     tagColor: "bg-[#7C5CBF] text-white border-[#7C5CBF]",
-    image_url: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
+    image_url: "/images/culture/festival_dua_bo.jpg",
     desc: "Hội thi thể thao dân gian độc nhất vô nhị trên bãi bùn lầy, nơi các đôi bò dũng mãnh tranh tài tốc độ nghẹt thở trong tiếng hò reo của hàng vạn du khách khắp cả nước.",
     cradle: "Cái nôi cội nguồn khởi phát từ phong tục cày ruộng chùa tại Chùa Tà Miệt (Xã Lương Phi).",
     highlights: [
@@ -51,7 +51,7 @@ const FESTIVALS_DATA = [
     location: "Khắp 37 ngôi chùa Nam Tông Khmer: Wat Xvayton, Chùa Tà Pạ, Chùa Hàng Còng, Chùa Mới",
     tag: "Tết Cổ Truyền",
     tagColor: "bg-[#D9822B] text-white border-[#D9822B]",
-    image_url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop",
+    image_url: "/images/culture/festival_chol_chnam_thmay.jpg",
     desc: "Dịp lễ hội lớn nhất năm của đồng bào Khmer đón mừng năm mới, khắp phum sóc rực rỡ cờ hoa, nghi thức rước Đại lịch Maha Sangkran và té nước chúc phúc an lành.",
     cradle: "Không gian trang nghiêm nhất tại Chùa Xvayton (>300 năm tuổi, TT. Tri Tôn).",
     highlights: [
@@ -68,7 +68,7 @@ const FESTIVALS_DATA = [
     location: "Khuôn viên chùa Khmer, Hồ Tà Pạ, Hồ Ô Thum, Chùa Soài So",
     tag: "Lễ Hội Văn Hóa",
     tagColor: "bg-[#0E8C7F] text-white border-[#0E8C7F]",
-    image_url: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1200&auto=format&fit=crop",
+    image_url: "/images/culture/festival_ok_om_bok.jpg",
     desc: "Đại lễ tạ ơn Thần Mặt Trăng đã ban mưa thuận gió hòa, bảo vệ mùa màng tốt tươi; trẻ nhỏ được các bậc cao niên đút Cốm Dẹp (Ombok) gửi gắm ước nguyện tương lai.",
     cradle: "Nghi thức thả đèn gió khổng lồ sáng rực nền trời đêm Thất Sơn huyền ảo.",
     highlights: [
@@ -85,7 +85,7 @@ const FESTIVALS_DATA = [
     location: "37 Ngôi Chùa Phật Giáo Nam Tông Khmer Tri Tôn",
     tag: "Phật Giáo Nam Tông",
     tagColor: "bg-[#C97F1B] text-white border-[#C97F1B]",
-    image_url: "https://images.unsplash.com/photo-1609743522653-52354461cf27?q=80&w=1200&auto=format&fit=crop",
+    image_url: "/images/culture/festival_kathina.jpg",
     desc: "Đại lễ công đức dâng y cà-sa và tứ vật dụng cho chư tăng sau 3 tháng An Cư Kiết Hạ, đoàn diễu hành rực rỡ trang phục Sampot cùng dàn nhạc ngũ âm rộn rã.",
     cradle: "Tập tục truyền thống ngàn năm gìn giữ chánh pháp Phật giáo Theravada.",
     highlights: [
@@ -102,7 +102,7 @@ const FESTIVALS_DATA = [
     location: "Quảng Trường TT. Tri Tôn & Khu Du Lịch Đồi Tức Dụp",
     tag: "Lễ Hội Hiện Đại",
     tagColor: "bg-[#F26B3A] text-white border-[#F26B3A]",
-    image_url: "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?q=80&w=1200&auto=format&fit=crop",
+    image_url: "/images/culture/festival_khinh_khi_cau.jpg",
     desc: "Chiêm ngưỡng hàng chục quả khinh khí cầu khổng lồ rực rỡ bay lượn trên nền trời Thất Sơn, ngắm toàn cảnh cánh đồng lúa chín Tà Pạ và vách đá Phụng Hoàng Sơn hùng vĩ.",
     cradle: "Sự kiện du lịch - thể thao thường niên thu hút đông đảo du khách trẻ và nhiếp ảnh gia.",
     highlights: [
@@ -120,7 +120,7 @@ const HERITAGE_STORIES = [
     subtitle: "Di Sản Phi Vật Thể Quốc Gia Độc Bản",
     location: "Chùa Xvayton (Wat Xvayton), TT. Tri Tôn",
     icon: BookOpen,
-    image_url: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=800&auto=format&fit=crop",
+    image_url: "/images/culture/heritage_kinh_la_buong.jpg",
     desc: "Bảo vật vô giá lưu giữ giáo lý Phật giáo, văn học và y học cổ truyền Khmer; được khắc tỉ mỉ bằng kim sắt trên lá cây buông/thốt nốt, quét tro than và dầu cây trai bảo quản hàng trăm năm không mục rữa.",
     tag: "Chùa Xà Tón Cổ Kính",
     stamp: "BẢO VẬT QUỐC GIA"
@@ -131,29 +131,29 @@ const HERITAGE_STORIES = [
     subtitle: "Linh Hồn Diễn Xướng Chùa Tháp Nam Tông",
     location: "Các Chùa Khmer & Nhà Trưng Bày Văn Hóa",
     icon: Music,
-    image_url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop",
+    image_url: "/images/culture/heritage_nhac_ngu_am.jpg",
     desc: "Hệ thống hòa âm độc đáo từ 5 chất liệu (Đồng, Sắt, Gỗ, Da, Hơi) với đàn Roneat-Ek, dàn cồng Kong-Vong hòa quyện cùng điệu múa Răm-vông (Lâm-thôn) và kịch hát Dù Kê (Robam).",
     tag: "Âm Nhạc Cổ Truyền",
     stamp: "DIỄN XƯỚNG DÂN GIAN"
   },
   {
     id: "tho-cam",
-    title: "Làng Dệt Thổ Cẩm Châu Lăng",
-    subtitle: "Nghệ Thuật Khung Cửi Gỗ Trăm Năm",
-    location: "Xã Châu Lăng, Tri Tôn",
+    title: "Làng Nghề Thốt Nốt Châu Lăng & Ô Lâm",
+    subtitle: "Đặc Sản Hương Vị Ngọt Ngào Xứ Sở",
+    location: "Xã Châu Lăng & Xã Ô Lâm, Tri Tôn",
     icon: Layers,
-    image_url: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?q=80&w=800&auto=format&fit=crop",
-    desc: "Đôi bàn tay khéo léo của người phụ nữ Khmer dệt nên những chiếc khăn rằn Krama, xà-rông hoa văn Thất Sơn với kỹ thuật nhuộm màu thủ công từ vỏ cây và lá rừng Bảy Núi.",
+    image_url: "/images/culture/heritage_lang_nghe_thot_not.jpg",
+    desc: "Nghề leo cây thốt nốt lấy mật và nấu đường thốt nốt vàng óng truyền đời của người Khmer. Vị ngọt thanh thanh và hương thơm ngào ngạt tạo nên linh hồn của ẩm thực Bảy Núi.",
     tag: "Làng Nghề Thủ Công",
     stamp: "NGHỀ TRUYỀN THỐNG"
   },
   {
     id: "gom-ca-rang",
-    title: "Lò Gốm Bếp Cà-Ràng Ô Lâm",
+    title: "Lò Gốm Đất Nung Phnôm Pi & Bếp Cà-Ràng",
     subtitle: "Kỹ Thuật Nặn Tay Không Bàn Xoay",
-    location: "Xã Ô Lâm, Tri Tôn",
+    location: "Làng Phnôm Pi, Xã Châu Lăng, Tri Tôn",
     icon: Flame,
-    image_url: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?q=80&w=800&auto=format&fit=crop",
+    image_url: "/images/culture/heritage_gom_dat_nung.jpg",
     desc: "Nghề gốm đất nung cổ truyền độc đáo: nặn tay hoàn toàn từ đất sét Thất Sơn, nung lộ thiên bằng rơm rạ tạo nên chiếc bếp cà-ràng hình số 3 và nồi niêu nấu gà đốt Ô Thum lừng danh.",
     tag: "Gốm Đất Nung",
     stamp: "DI SẢN TRĂM TUỔI"

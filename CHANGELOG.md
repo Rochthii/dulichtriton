@@ -124,6 +124,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió, Đèn Nước** (Rằm tháng 10 Âm lịch): Nghi thức đút Cốm Dẹp (Ombok) cầu may mắn cho trẻ nhỏ và thả đèn gió bay rực sáng bầu trời Thất Sơn.
   - **Đại Lễ Dâng Y Kathina** (Rằm tháng 9 - Rằm tháng 10 Âm lịch): Đại lễ Phật giáo trang trọng, hòa tấu Dàn nhạc Ngũ Âm (Pinpeat) và vũ điệu múa trống Chhay-dăm.
   - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn** (Dịp lễ 30/4 - 1/5 và 2/9): Trải nghiệm bay khinh khí cầu ngắm núi Cô Tô và cánh đồng Tà Pạ mùa lúa chín.
+- **Thu Thập & Xác Minh 100% Ảnh Thật Cho 5 Đại Lễ Hội & 4 Bảo Vật / Di Sản Văn Hóa (/images/culture/)**:
+  - Loại bỏ hoàn toàn các ảnh placeholder chung chung không đúng bản chất, thay thế bằng ảnh thực địa đã được tải về lưu trữ nội bộ tại `frontend/public/images/culture/`:
+    • *Lễ Hội Đua Bò Bảy Núi*: Ảnh thật cuộc đua bò bừa nước tạt bùn rẽ sóng đặc sắc tại Tri Tôn (`festival_dua_bo.jpg`).
+    • *Tết Cổ Truyền Chôl Chnăm Thmây*: Ảnh thật nghi thức Đắp Núi Cát Poun Phnum Khsach tích lũy công đức tại chùa Khmer (`festival_chol_chnam_thmay.jpg`).
+    • *Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió*: Ảnh thật nghi thức thả hoa đăng, đèn nước và thả đèn gió rực sáng bầu trời đêm Thất Sơn (`festival_ok_om_bok.jpg`).
+    • *Đại Lễ Dâng Y Kathina*: Ảnh thật nghi lễ dâng y cà-sa và pháp phục Theravada trang nghiêm (`festival_kathina.jpg`).
+    • *Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn*: Ảnh thật lễ hội khinh khí cầu bay trên vùng bán sơn địa Bảy Núi (`festival_khinh_khi_cau.jpg`).
+    • *Bảo Vật Kinh Lá Buông*: Ảnh thật cổ tự Chùa Xvayton (>300 năm tuổi, thị trấn Tri Tôn) nơi lưu giữ kho tàng Kinh lá buông Satra Slarkrit lớn nhất Việt Nam (`heritage_kinh_la_buong.jpg`).
+    • *Dàn Nhạc Ngũ Âm Pinpeat*: Ảnh thật dàn nhạc cổ truyền Khmer Krom và nghệ thuật diễn xướng dân gian (`heritage_nhac_ngu_am.jpg`).
+    • *Làng Nghề Thốt Nốt Châu Lăng & Ô Lâm*: Ảnh thật cánh đồng thốt nốt và nghề nấu đường thốt nốt trứ danh Tri Tôn (`heritage_lang_nghe_thot_not.jpg`).
+    • *Lò Gốm Đất Nung Phnôm Pi & Bếp Cà-Ràng*: Ảnh thật nghệ thuật gốm đất nung cổ truyền Phnôm Pi, xã Châu Lăng (`heritage_gom_dat_nung.jpg`).
 - **Đại Tu Toàn Diện Giao Diện `/culture` Theo Chuẩn Thiết Kế 'Folk-Modern Bảy Núi' (Design System Skill)**:
   - Loại bỏ hoàn toàn giao diện phẳng pastel đơn điệu, thay thế bằng hệ sinh thái thiết kế chuẩn thương hiệu Thất Sơn:
     • *Ảnh bìa lễ hội tỉ lệ 16:9 sắc nét*: Mỗi thẻ lễ hội có ảnh chụp thực địa, gradient scrim tối màu và nhãn danh mục chuyên biệt (`--festival: #7C5CBF`, `--saffron: #D9822B`, `--jade: #0E8C7F`, `--sunset: #F26B3A`).
