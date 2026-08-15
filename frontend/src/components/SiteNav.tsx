@@ -17,6 +17,7 @@ import {
   Home,
   Shield,
 } from "lucide-react";
+import AppLogo from "./AppLogo";
 
 export default function SiteNav() {
   const pathname = usePathname();
@@ -36,18 +37,8 @@ export default function SiteNav() {
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-xs transition-all">
       <div className="mx-auto flex h-16 md:h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 shrink-0 group whitespace-nowrap">
-          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-[#0E8C7F] to-[#0A6B61] flex items-center justify-center text-white shadow-md shadow-[#0E8C7F]/20 group-hover:scale-105 transition-transform shrink-0">
-            <Compass className="h-5.5 w-5.5 text-[#FFD37A]" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display font-black text-lg sm:text-xl tracking-tight text-slate-900 leading-tight">
-              Du Lịch <span className="text-[#0E8C7F]">Tri Tôn</span>
-            </span>
-            <span className="font-body text-[10px] font-bold text-slate-400 uppercase tracking-wider -mt-0.5">
-              Cổng Thông Tin Bảy Núi AI
-            </span>
-          </div>
+        <Link href="/" className="flex items-center shrink-0 group whitespace-nowrap">
+          <AppLogo size="md" showText={true} />
         </Link>
 
         {/* Center Desktop Navigation Links */}

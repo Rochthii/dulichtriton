@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Compass, Phone, ShieldCheck, MapPin, Lock, Sparkles, Heart, Scale, Shield, Code, ExternalLink } from 'lucide-react';
+import AppLogo from './AppLogo';
 
 export default function SiteFooter() {
   return (
@@ -14,15 +15,13 @@ export default function SiteFooter() {
           
           {/* Col 1: Brand & Developer Signature */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5 text-white font-display font-bold text-lg">
-              <div className="h-10 w-10 rounded-2xl bg-[#0E8C7F] text-[#FFD37A] flex items-center justify-center shadow-md border border-[#0E8C7F]/30">
-                <Compass className="h-5 w-5 text-[#FFD37A]" />
-              </div>
+            <Link href="/" className="flex items-center gap-2.5 text-white font-display font-bold text-lg">
+              <AppLogo size="md" />
               <div className="leading-tight">
                 <span className="block text-[#FAF3E7]">DU LỊCH TRI TÔN</span>
                 <span className="block text-[10px] text-[#F0A32F] tracking-widest font-mono font-bold">FOLK-MODERN AI PORTAL</span>
               </div>
-            </div>
+            </Link>
             <p className="text-xs text-[#FAF3E7]/70 leading-relaxed font-body">
               Cổng thông tin & Trợ lý AI du lịch Bảy Núi, hỗ trợ du khách khám phá trọn vẹn 149 danh thắng, chùa Khmer và ẩm thực đặc sản tại Tri Tôn, An Giang.
             </p>
