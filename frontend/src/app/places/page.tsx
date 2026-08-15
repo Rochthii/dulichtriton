@@ -44,6 +44,10 @@ export default function PlacesPage() {
         }));
 
         list.sort((a, b) => {
+          const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+          const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+          if (aHasStory && !bHasStory) return -1;
+          if (!aHasStory && bHasStory) return 1;
           if (a.is_hot && !b.is_hot) return -1;
           if (!a.is_hot && b.is_hot) return 1;
           return (b.rating || 0) - (a.rating || 0);
@@ -92,6 +96,10 @@ export default function PlacesPage() {
       }));
 
       list.sort((a, b) => {
+        const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+        const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+        if (aHasStory && !bHasStory) return -1;
+        if (!aHasStory && bHasStory) return 1;
         if (a.is_hot && !b.is_hot) return -1;
         if (!a.is_hot && b.is_hot) return 1;
         return (b.rating || 0) - (a.rating || 0);

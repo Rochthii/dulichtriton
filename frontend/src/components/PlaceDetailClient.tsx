@@ -229,13 +229,12 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   };
 
   const navItems = [
-    { id: 'overview', label: '1. Tổng Quan', icon: Info },
+    { id: 'story', label: '1. Khám Phá & Sự Tích', icon: Sparkles },
     { id: 'guide', label: '2. Cẩm Nang & Vé', icon: Compass },
     { id: 'checkin-spots', label: '3. Góc Check-in', icon: Camera },
     { id: 'nearby-food', label: '4. Ăn Gì Gần Đây', icon: Utensils },
-    { id: 'story', label: '5. Lịch Sử & Sự Tích', icon: Sparkles },
-    { id: 'videos', label: '6. Video Thực Tế', icon: Video },
-    { id: 'reviews', label: '7. Đánh Giá Du Khách', icon: MessageSquareQuote },
+    { id: 'videos', label: '5. Video Thực Tế', icon: Video },
+    { id: 'reviews', label: '6. Đánh Giá Du Khách', icon: MessageSquareQuote },
   ];
 
   const scrollToSection = (id: string) => {
@@ -470,17 +469,17 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
       {/* ── DETAIL CONTENT SECTIONS ── */}
       <div className="space-y-8">
         
-        {/* ── SECTION 1: TỔNG QUAN ── */}
-        <section id="overview" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
+        {/* ── SECTION 1: BÀI VIẾT KHÁM PHÁ & SỰ TÍCH (ĐẶT Ở ĐẦU TRANG) ── */}
+        <section id="story" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
           <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
             <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
-              <Info className="w-6 h-6 text-[#0E8C7F]" />
-              <span>1. Tổng Quan & Trải Nghiệm Thực Địa</span>
+              <Sparkles className="w-6 h-6 text-[#0E8C7F]" />
+              <span>1. Khám Phá & Sự Tích Bảy Núi</span>
             </h2>
           </div>
 
-          <div className="border-b border-[#26221B]/6 pb-2">
-            <RichTextRenderer content={cleanDescription} />
+          <div className="border-b border-[#26221B]/6 pb-4">
+            <RichTextRenderer content={cleanStory} />
           </div>
 
           {/* Quick Matrix Table */}
@@ -766,26 +765,12 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           </section>
         )}
 
-        {/* ── SECTION 5: LỊCH SỬ & SỰ TÍCH ── */}
-        <section id="story" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
-          <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
-              <Sparkles className="w-6 h-6 text-[#0E8C7F]" />
-              <span>5. Lịch Sử & Sự Tích Bảy Núi</span>
-            </h2>
-          </div>
-
-          <div className="pt-1">
-            <RichTextRenderer content={cleanStory} />
-          </div>
-        </section>
-
-        {/* ── SECTION 6: VIDEO TIKTOK REELS ── */}
+        {/* ── SECTION 5: VIDEO TIKTOK REELS ── */}
         <section id="videos" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
           <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
             <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
               <Video className="w-6 h-6 text-[#F26B3A]" />
-              <span>6. Video Review TikTok Thực Tế</span>
+              <span>5. Video Review TikTok Thực Tế</span>
             </h2>
             <span className="font-display text-xs text-[#26221B] bg-[#FAF3E7] px-3.5 py-1 rounded-full font-bold">
               TikTok Discovery ({placeVideos.length} video)
@@ -805,12 +790,12 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           )}
         </section>
 
-        {/* ── SECTION 7: ĐÁNH GIÁ & AI NLP SENTIMENT ── */}
+        {/* ── SECTION 6: ĐÁNH GIÁ & AI NLP SENTIMENT ── */}
         <section id="reviews" className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-sm space-y-6 scroll-mt-28 font-body">
           <div className="flex items-center justify-between border-b border-[#26221B]/6 pb-4">
             <h2 className="font-display text-xl sm:text-2xl font-bold text-[#26221B] flex items-center gap-2.5">
               <MessageSquareQuote className="w-6 h-6 text-[#0E8C7F]" />
-              <span>7. Đánh Giá Trải Nghiệm Thực Tế</span>
+              <span>6. Đánh Giá Trải Nghiệm Thực Tế</span>
             </h2>
           </div>
 

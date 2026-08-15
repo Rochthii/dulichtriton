@@ -52,7 +52,11 @@ export default function CulturePage() {
           };
         });
 
-        formatted.sort((a: CulturePlace, b: CulturePlace) => {
+        formatted.sort((a: any, b: any) => {
+          const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+          const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+          if (aHasStory && !bHasStory) return -1;
+          if (!aHasStory && bHasStory) return 1;
           if (a.is_hot && !b.is_hot) return -1;
           if (!a.is_hot && b.is_hot) return 1;
           return (b.rating || 0) - (a.rating || 0);
@@ -106,10 +110,15 @@ export default function CulturePage() {
           rating: p.rating ? Number(p.rating) : 4.9,
           image_url: p.image_url || "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop",
           description: p.description || "",
+          detailed_story: p.detailed_story,
           is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
         }));
 
       list.sort((a, b) => {
+        const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+        const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+        if (aHasStory && !bHasStory) return -1;
+        if (!aHasStory && bHasStory) return 1;
         if (a.is_hot && !b.is_hot) return -1;
         if (!a.is_hot && b.is_hot) return 1;
         return (b.rating || 0) - (a.rating || 0);

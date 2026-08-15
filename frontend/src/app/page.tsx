@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { fetchWithCache } from "@/lib/fastCache";
+import localMasterPois from "@/data/triton_pois_full.json";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import TriTonWeatherWidget from "@/components/TriTonWeatherWidget";
 import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
@@ -119,7 +120,7 @@ export default function HomePage() {
             .limit(25);
 
           if (data && data.length > 0) {
-            return data.map((item: any) => {
+            const mapped = data.map((item: any) => {
               let img = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop";
               if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
                 img = item.image_url;
@@ -129,7 +130,8 @@ export default function HomePage() {
                 else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
               }
 
-              const cleanDesc = sanitizeDescription(item.description, item.name, item.commune, item.category);
+              const localMatch = (localMasterPois as any[]).find(lp => lp.id === item.id || lp.slug === item.slug || lp.name === item.name);
+              const cleanDesc = sanitizeDescription(localMatch?.detailed_story || item.description, item.name, item.commune, item.category);
 
               return {
                 id: item.id,
@@ -140,12 +142,22 @@ export default function HomePage() {
                 rating: item.rating ? Number(item.rating) : 4.8,
                 image_url: img,
                 description: cleanDesc,
+                has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
                 golden_time_windows: Array.isArray(item.golden_time_windows)
                   ? item.golden_time_windows
                   : ["06:00–08:30", "16:00–17:30"],
                 cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
               };
             });
+
+            // Prioritize places with rich detailed stories
+            mapped.sort((a: any, b: any) => {
+              if (a.has_story && !b.has_story) return -1;
+              if (!a.has_story && b.has_story) return 1;
+              return (b.rating || 0) - (a.rating || 0);
+            });
+
+            return mapped;
           }
           return [];
         });
@@ -158,10 +170,10 @@ export default function HomePage() {
             .select("id, slug, name, commune, rating, photos, image_url, description, price_level")
             .ilike("category", "%food%")
             .order("rating", { ascending: false })
-            .limit(6);
+            .limit(10);
 
           if (foodsData && foodsData.length > 0) {
-            return foodsData.map((f: any) => {
+            const mappedFoods = foodsData.map((f: any) => {
               let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
               if (f.image_url && typeof f.image_url === "string" && f.image_url.startsWith("http")) {
                 img = f.image_url;
@@ -170,6 +182,9 @@ export default function HomePage() {
                 if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
                 else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
               }
+
+              const localMatch = (localMasterPois as any[]).find(lp => lp.id === f.id || lp.slug === f.slug || lp.name === f.name);
+
               return {
                 id: f.id,
                 slug: f.slug || f.id,
@@ -177,10 +192,19 @@ export default function HomePage() {
                 commune: f.commune || "Tri Tôn",
                 rating: f.rating ? Number(f.rating) : 4.9,
                 image_url: img,
-                description: sanitizeDescription(f.description, f.name, f.commune, 'food'),
+                description: sanitizeDescription(localMatch?.detailed_story || f.description, f.name, f.commune, 'food'),
                 price_level: f.price_level || "Đặc sản bản địa",
+                has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
               };
             });
+
+            mappedFoods.sort((a: any, b: any) => {
+              if (a.has_story && !b.has_story) return -1;
+              if (!a.has_story && b.has_story) return 1;
+              return (b.rating || 0) - (a.rating || 0);
+            });
+
+            return mappedFoods.slice(0, 6);
           }
           return [];
         });

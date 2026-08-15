@@ -68,8 +68,12 @@ export default function FoodPage() {
           };
         });
 
-        // Sort Hot & Top rated dishes to the very top!
-        formatted.sort((a: FoodItem, b: FoodItem) => {
+        // Sort Rich Detailed Stories & Hot Top rated dishes to the very top!
+        formatted.sort((a: any, b: any) => {
+          const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+          const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+          if (aHasStory && !bHasStory) return -1;
+          if (!aHasStory && bHasStory) return 1;
           if (a.is_hot && !b.is_hot) return -1;
           if (!a.is_hot && b.is_hot) return 1;
           return (b.rating || 0) - (a.rating || 0);
@@ -123,6 +127,7 @@ export default function FoodPage() {
           video_url: p.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(p.name + " Tri Tôn")}`,
           hours: p.night_hours || p.opening_hours || (p.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
           description: p.description || "",
+          detailed_story: p.detailed_story,
           open_late: !!p.open_late,
           night_hours: p.night_hours,
           phone: p.phone,
@@ -131,8 +136,12 @@ export default function FoodPage() {
           is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
         }));
 
-      // Sort Hot first
+      // Sort Rich Detailed Stories & Hot first
       gastronomyList.sort((a, b) => {
+        const aHasStory = Boolean(a.detailed_story && a.detailed_story.length > 200);
+        const bHasStory = Boolean(b.detailed_story && b.detailed_story.length > 200);
+        if (aHasStory && !bHasStory) return -1;
+        if (!aHasStory && bHasStory) return 1;
         if (a.is_hot && !b.is_hot) return -1;
         if (!a.is_hot && b.is_hot) return 1;
         return (b.rating || 0) - (a.rating || 0);
