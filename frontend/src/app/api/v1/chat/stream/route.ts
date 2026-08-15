@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { streamAIResponse, generateQueryEmbedding } from '@/lib/aiProvider';
+import masterPois from '@/data/triton_pois_full.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -342,10 +343,25 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // 3. Database Places Matching (for place cards header)
+        // 3. Database Places Matching (Local In-Memory Master Index + Supabase)
         let places: Record<string, unknown>[] = [];
         let ragMethod = 'none';
-        if (queryVector) {
+
+        // 3a. Search in verified local master POIs first (0ms, full rich detailed_story & field_tips)
+        const localMatches = (masterPois as any[]).filter(p => {
+          const pName = (p.name || '').toLowerCase();
+          const pCommune = (p.commune || '').toLowerCase();
+          const pCategory = (p.category || '').toLowerCase();
+          return pName.includes(cleanQ) || 
+                 cleanQ.includes(pName) ||
+                 (pCategory && cleanQ.includes(pCategory)) ||
+                 (pCommune && cleanQ.includes(pCommune));
+        }).slice(0, 3);
+
+        if (localMatches.length > 0) {
+          places = localMatches;
+          ragMethod = 'local-master-verified';
+        } else if (queryVector) {
           const { data: vm } = await supabase.rpc('match_places', {
             query_embedding: queryVector, match_threshold: 0.3, match_count: 4,
           });
@@ -353,7 +369,7 @@ export async function POST(req: NextRequest) {
         }
         if (places.length === 0) {
           const { data: tm } = await supabase.from('places')
-            .select('id,slug,name,commune,category,rating,image_url,description,golden_time_windows')
+            .select('id,slug,name,commune,category,rating,image_url,description,detailed_story,golden_time_windows')
             .or(`name.ilike.%${queryStr}%,category.ilike.%${queryStr}%,commune.ilike.%${queryStr}%,description.ilike.%${queryStr}%`)
             .limit(3);
           if (tm) { places = tm; ragMethod = 'ilike'; }
@@ -366,14 +382,19 @@ export async function POST(req: NextRequest) {
           commune: p.commune, 
           category: p.category,
           rating: p.rating || 4.8, 
-          image_url: p.image_url,
-          imageUrl: p.image_url,
+          image_url: p.image_url || (p as any).imageUrl,
+          imageUrl: p.image_url || (p as any).imageUrl,
         }));
 
+        // Rich RAG Context containing full verified field stories, tips, and guidelines
         const ragContext = places.length > 0
-          ? places.map(p =>
-              `- ${p.name} (${p.commune}): ${p.category}. Đánh giá: ${p.rating}/5. ${p.description ? String(p.description).slice(0, 150) : ''}`
-            ).join('\n')
+          ? places.map(p => {
+              const storySnippet = p.detailed_story ? String(p.detailed_story).slice(0, 600) : (p.description ? String(p.description).slice(0, 200) : '');
+              const tipsSnippet = (p as any).field_tips ? `\n  - Mẹo thực địa: ${(p as any).field_tips}` : '';
+              const hoursSnippet = (p as any).opening_hours ? `\n  - Giờ mở cửa: ${(p as any).opening_hours}` : '';
+              const priceSnippet = (p as any).ticket_price ? `\n  - Mức giá: ${(p as any).ticket_price}` : '';
+              return `* Địa điểm: ${p.name} (Địa phận: ${p.commune || 'Tri Tôn'})\n  - Phân loại: ${p.category} (Đánh giá: ${p.rating || 4.8}/5)${hoursSnippet}${priceSnippet}${tipsSnippet}\n  - Thông tin thực địa chi tiết: ${storySnippet}`;
+            }).join('\n\n')
           : '';
 
         // Send metadata & place cards early
