@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { formatDetailedStory } from '@/lib/storyFormatter';
 
 interface RichTextRendererProps {
   content?: string | null;
@@ -82,7 +83,8 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
     return null;
   }
 
-  const cleanedContent = cleanGeoPhrasing(content);
+  const formattedStory = formatDetailedStory(content);
+  const cleanedContent = cleanGeoPhrasing(formattedStory);
   // Split into raw lines / paragraphs
   const rawParagraphs = cleanedContent.split(/\n\s*\n|\n/);
 

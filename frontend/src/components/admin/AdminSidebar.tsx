@@ -12,6 +12,7 @@ import {
   ArrowLeft,
   Activity,
   FileCheck,
+  Sparkles,
 } from 'lucide-react';
 
 export default function AdminSidebar() {
@@ -23,6 +24,12 @@ export default function AdminSidebar() {
       label: 'Tổng Quan Hệ Thống',
       icon: LayoutDashboard,
       badge: 'Live',
+    },
+    {
+      href: '/admin/stories',
+      label: 'Quản Lý Bài Viết & Typography',
+      icon: Sparkles,
+      badge: 'CMS Studio',
     },
     {
       href: '/admin/places',
