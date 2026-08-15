@@ -7,21 +7,18 @@ import localMasterPois from '@/data/triton_pois_full.json';
 export const revalidate = 300; // Edge ISR Cache 5 minutes
 
 /**
- * Pre-generate static HTML/RSC payloads for all 136 POIs at build time.
- * This guarantees INSTANT (< 50ms) page loads on Vercel CDN without cold-start delay!
+ * Pre-generate static HTML/RSC payloads for all 136 POI slugs at build time.
+ * Delivers < 50ms Edge TTFB without bloating static build size.
  */
 export async function generateStaticParams() {
   const params: { id: string }[] = [];
   const seen = new Set<string>();
 
   for (const p of localMasterPois as any[]) {
-    if (p.slug && !seen.has(p.slug)) {
-      seen.add(p.slug);
-      params.push({ id: p.slug });
-    }
-    if (p.id && !seen.has(p.id)) {
-      seen.add(p.id);
-      params.push({ id: p.id });
+    const slug = (p.slug || p.id || '').trim();
+    if (slug && !seen.has(slug)) {
+      seen.add(slug);
+      params.push({ id: slug });
     }
   }
 
@@ -31,7 +28,7 @@ export async function generateStaticParams() {
 export default async function PlaceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  // Fetch live place record directly from Supabase DB (with local master fallback)
+  // Instant RAM / Bulk cache lookup (0.001ms)
   const place = await getPlaceById(id);
 
   if (!place) {

@@ -53,6 +53,7 @@ export interface Place {
   hot_rank?: number;
   open_late?: boolean;
   night_hours?: string;
+  field_tips?: string;
   is_active?: boolean;
 }
 
