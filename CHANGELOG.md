@@ -86,7 +86,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
   - Dán link Google Maps $\rightarrow$ Bấm nút **"🚀 Trích Xuất Ảnh"** $\rightarrow$ Xem trước danh sách ảnh tìm thấy.
-  - Hỗ trợ nút bấm **"Nạp Toàn Bộ Vào Album"** (1-Click Import) hoặc click chọn từng ảnh ưng ý để nạp vào địa điểm.
+### 🐛 Sửa Lỗi Hiển Thị Album Ảnh (`PlaceDetailClient`) & Điều Hướng Slug (`getPlaceById`)
+- **Khắc Phục Lỗi Ảnh Xám / Icon Vỡ Trên Trang Chi Tiết**: Chuẩn hóa mảng `photos` trong `PlaceDetailClient.tsx` tự động chuyển đổi cả dạng mảng chuỗi (`string[]`) lẫn mảng đối tượng (`object[]`), giúp ảnh Hero và toàn bộ Thumbnail hiển thị sắc nét 100% thay vì bị lỗi `photo.url undefined`.
+- **Khắc Phục Lỗi 404 Điều Hướng Đường Link Slug**:
+  - Bổ sung hàm `decodeURIComponent()` trong `getPlaceById(idOrSlug)` giúp nhận diện chính xác các đường link có ký tự tiếng Việt hoặc ký tự đặc biệt (`&`, `%`, dấu cách).
+  - Tự động chuẩn hóa Clean SEO Slugs (dạng không dấu `ruong-coffee-tea-tri-ton`) cho toàn bộ 139 địa điểm và đồng bộ lên Supabase PostgreSQL.
 
 ---
 

@@ -201,9 +201,7 @@
     "field_tips": "view toàn cảnh thung lũng, 3 đường lên",
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
-      "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1600&auto=format&fit=crop"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
     ]
   },
   {
@@ -296,7 +294,8 @@
     "is_verified": true,
     "tiktok_search_query": "Cánh đồng lúa Tà Pạ Tri Tôn An Giang",
     "commune": "Xã Núi Tô",
-    "field_tips": "mùa lúa chín T9–11"
+    "field_tips": "mùa lúa chín T9–11",
+    "slug": "canh-dong-lua-ta-pa"
   },
   {
     "id": "nui-co-to",
@@ -614,7 +613,8 @@
     "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 320.000đ / con",
     "is_hot": true,
-    "tourism_category": "Cảnh quan thiên nhiên"
+    "tourism_category": "Cảnh quan thiên nhiên",
+    "slug": "ho-o-thum"
   },
   {
     "id": "chua-xa-ton-chua-svayton",
@@ -706,7 +706,8 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Xà Tón (Chùa Svayton) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "chùa Khmer cổ nhất An Giang, kinh lá buông"
+    "field_tips": "chùa Khmer cổ nhất An Giang, kinh lá buông",
+    "slug": "chua-xa-ton-chua-svayton"
   },
   {
     "id": "nha-mo-ba-chuc",
@@ -1146,9 +1147,7 @@
     "field_tips": "Nên đến lúc sáng sớm 06:00–07:30 hoặc chiều tà 16:30–17:30 để chụp ảnh ngược sáng đẹp nhất. Giữ gìn vệ sinh và không dẫm đạp lúa của bà con.",
     "is_hot": true,
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
     ]
   },
   {
@@ -1240,7 +1239,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Khu di tích Ô Tà Sóc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "khu-di-tich-o-ta-soc"
   },
   {
     "id": "lau-bo-thit-bo-bay-nui-tri-ton",
@@ -1331,7 +1331,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Lẩu bò & Thịt bò Bảy Núi Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "lau-bo-thit-bo-bay-nui-tri-ton"
   },
   {
     "id": "le-hoi-dua-bo-bay-nui-tri-ton",
@@ -1422,7 +1423,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Lễ hội Đua bò Bảy Núi Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "le-hoi-dua-bo-bay-nui-tri-ton"
   },
   {
     "id": "ca-phe-thot-not-ta-pa-view",
@@ -1517,7 +1519,8 @@
     "opening_hours": "06:30 - 18:00 (Mỗi ngày)",
     "price_level": "15.000đ - 30.000đ / ly",
     "ticket_price": "15.000đ - 30.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ca-phe-thot-not-ta-pa-view"
   },
   {
     "id": "ca-phe-suoi-da-o-ta-soc",
@@ -1612,7 +1615,8 @@
     "opening_hours": "07:00 - 17:30 (Mỗi ngày)",
     "price_level": "20.000đ - 40.000đ / ly",
     "ticket_price": "20.000đ - 40.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ca-phe-suoi-da-o-ta-soc"
   },
   {
     "id": "quan-ga-dot-sieu-dang-ho-o-thum",
@@ -1703,7 +1707,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Gà Đốt Siêu Đẳng Hồ Ô Thum Tri Tôn An Giang",
-    "commune": "Xã Ô Lâm"
+    "commune": "Xã Ô Lâm",
+    "slug": "quan-ga-dot-sieu-dang-ho-o-thum"
   },
   {
     "id": "quan-ga-dot-tuan-toi-o-thum",
@@ -1797,7 +1802,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-ga-dot-tuan-toi-o-thum"
   },
   {
     "id": "quan-ga-dot-sau-bup-o-thum",
@@ -1891,7 +1897,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "230.000đ - 290.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-ga-dot-sau-bup-o-thum"
   },
   {
     "id": "quan-ga-dot-ro-thum-khmer",
@@ -1985,7 +1992,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:30 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-ga-dot-ro-thum-khmer"
   },
   {
     "id": "chua-ta-phot",
@@ -2076,7 +2084,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tà Phôt Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-ta-phot"
   },
   {
     "id": "tritoni",
@@ -2168,7 +2177,8 @@
     "is_verified": true,
     "tiktok_search_query": "Tritoni Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "hoành tráng hơn cả thành phố"
+    "field_tips": "hoành tráng hơn cả thành phố",
+    "slug": "tritoni"
   },
   {
     "id": "ho-latina",
@@ -2259,7 +2269,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "hồ latina Tri Tôn An Giang",
-    "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)"
+    "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)",
+    "slug": "ho-latina"
   },
   {
     "id": "chua-ba-xoai",
@@ -2351,7 +2362,8 @@
     "is_verified": true,
     "tiktok_search_query": "Chua Ba Xoai Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "chánh điện xuống cấp"
+    "field_tips": "chánh điện xuống cấp",
+    "slug": "chua-ba-xoai"
   },
   {
     "id": "chua-krang-kroch",
@@ -2442,7 +2454,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "chùa Krăng Krốch Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-krang-kroch"
   },
   {
     "id": "ga-dot-thao-nguyen-ho-o-thum",
@@ -2534,7 +2547,8 @@
     "is_verified": true,
     "tiktok_search_query": "Gà đốt Thảo Nguyên Hồ Ô Thum Tri Tôn An Giang",
     "commune": "Xã Ô Lâm",
-    "field_tips": "review chê gà khô cứng, phục vụ lâu"
+    "field_tips": "review chê gà khô cứng, phục vụ lâu",
+    "slug": "ga-dot-thao-nguyen-ho-o-thum"
   },
   {
     "id": "quan-bo-leo-nui",
@@ -2611,7 +2625,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bò leo núi Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-bo-leo-nui"
   },
   {
     "id": "dong-nhin-len-chu-tri-ton",
@@ -2702,7 +2717,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "dong-nhin-len-chu-tri-ton"
   },
   {
     "id": "dua-bo-bay-nui",
@@ -2779,7 +2795,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Đua Bò Bảy Núi Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "dua-bo-bay-nui"
   },
   {
     "id": "diem-dung-chan-duoi-nui-quan-an",
@@ -2856,7 +2873,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "ĐIỂM DỪNG CHÂN DƯỚI NÚI, QUÁN ĂN Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "diem-dung-chan-duoi-nui-quan-an"
   },
   {
     "id": "an-tra",
@@ -2933,7 +2951,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "An trà Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "an-tra"
   },
   {
     "id": "chua-phi-lai",
@@ -3028,7 +3047,8 @@
     "field_tips": "Địa điểm mang tính lịch sử và tâm linh sâu sắc. Khuyên du khách nên giữ thái độ trang nghiêm, ăn mặc kín đáo khi ghé thăm.",
     "opening_hours": "06:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "chua-phi-lai"
   },
   {
     "id": "tho-mo-muc-cave-hang-tho-mo-muc",
@@ -3120,7 +3140,8 @@
     "is_verified": true,
     "tiktok_search_query": "Tho Mo Muc Cave (Hang Tho Mo Muc) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "hoang sơ, ít người"
+    "field_tips": "hoang sơ, ít người",
+    "slug": "tho-mo-muc-cave-hang-tho-mo-muc"
   },
   {
     "id": "dinh-than-cau-dai",
@@ -3211,7 +3232,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Đình thần Cầu Dài Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "dinh-than-cau-dai"
   },
   {
     "id": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot",
@@ -3288,7 +3310,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Khu Trưng bày Tội ác Chiến tranh của Poltpot Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot"
   },
   {
     "id": "tuong-dai-chien-thang-vinh-thong",
@@ -3365,7 +3388,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Tượng đài Chiến thắng Vĩnh Thông Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "tuong-dai-chien-thang-vinh-thong"
   },
   {
     "id": "tuong-dai-vo-van-kiet",
@@ -3456,7 +3480,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Tượng đài Võ Văn Kiệt Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "tuong-dai-vo-van-kiet"
   },
   {
     "id": "nui-sa-lon",
@@ -3547,7 +3572,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Núi Sà Lôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nui-sa-lon"
   },
   {
     "id": "nui-dai",
@@ -3660,7 +3686,8 @@
     "is_verified": true,
     "tiktok_search_query": "Núi Dài Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "đường hiểm trở"
+    "field_tips": "đường hiểm trở",
+    "slug": "nui-dai"
   },
   {
     "id": "chua-thanh-luong",
@@ -3773,7 +3800,8 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Thanh Lương Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "buổi tối lên đèn cực đẹp"
+    "field_tips": "buổi tối lên đèn cực đẹp",
+    "slug": "chua-thanh-luong"
   },
   {
     "id": "nui-nam-quy",
@@ -3885,7 +3913,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Núi Nam Quy Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nui-nam-quy"
   },
   {
     "id": "dien-gieng-nuoc",
@@ -3976,7 +4005,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Điện Giếng Nước Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "dien-gieng-nuoc"
   },
   {
     "id": "son-lap",
@@ -4067,7 +4097,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Sơn Lập Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "son-lap"
   },
   {
     "id": "nui-ta-pa",
@@ -4179,7 +4210,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Núi Tà Pạ Tri Tôn An Giang",
-    "commune": "Xã Núi Tô"
+    "commune": "Xã Núi Tô",
+    "slug": "nui-ta-pa"
   },
   {
     "id": "drink-hammock-chill",
@@ -4257,7 +4289,8 @@
     "is_verified": true,
     "tiktok_search_query": "Drink & Hammock Chill Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "kinh độ 105.12 bất thường → kiểm tra tọa độ"
+    "field_tips": "kinh độ 105.12 bất thường → kiểm tra tọa độ",
+    "slug": "drink-hammock-chill"
   },
   {
     "id": "du-du-dam-khanh-thy",
@@ -4348,7 +4381,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Đu Đủ Đâm Khánh Thy Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "du-du-dam-khanh-thy"
   },
   {
     "id": "kenh-tam-ngan",
@@ -4439,7 +4473,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Kênh Tám Ngàn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "kenh-tam-ngan"
   },
   {
     "id": "kenh-t6",
@@ -4516,7 +4551,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Kênh T6 Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "kenh-t6"
   },
   {
     "id": "cho-tri-ton",
@@ -4607,7 +4643,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chợ Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "cho-tri-ton"
   },
   {
     "id": "chua-tro-poang-trao",
@@ -4684,7 +4721,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tro Poáng Trao Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-tro-poang-trao"
   },
   {
     "id": "chua-xoc-tuc",
@@ -4761,7 +4799,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chua Xoc Tuc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-xoc-tuc"
   },
   {
     "id": "chua-bach-co",
@@ -4838,7 +4877,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chua Bach Co Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-bach-co"
   },
   {
     "id": "chua-coc",
@@ -4915,7 +4955,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chua Coc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-coc"
   },
   {
     "id": "chua-tam-buu",
@@ -5010,7 +5051,8 @@
     "opening_hours": "06:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên kết hợp viếng Chùa Tam Bửu cùng Chùa Phi Lai và Nhà Mồ Ba Chúc. Mặc trang phục lịch sự, kín đáo khi vào chánh điện.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "chua-tam-buu"
   },
   {
     "id": "ho-o-ta-soc",
@@ -5102,7 +5144,8 @@
     "is_verified": true,
     "tiktok_search_query": "Hồ Ô Tà Sóc Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "rừng trúc, giống Đà Lạt"
+    "field_tips": "rừng trúc, giống Đà Lạt",
+    "slug": "ho-o-ta-soc"
   },
   {
     "id": "nui-nuoc",
@@ -5179,7 +5222,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Núi Nước Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nui-nuoc"
   },
   {
     "id": "78da5b5f-ruộng-coffee-&-homes",
@@ -5266,7 +5310,8 @@
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1600&auto=format&fit=crop"
-    ]
+    ],
+    "slug": "ruong-coffee-tea-tri-ton"
   },
   {
     "id": "f7f5ca30-windy-hill-coffee-&-",
@@ -5348,7 +5393,8 @@
     "opening_hours": "06:30 - 21:00 (Mỗi ngày)",
     "price_level": "25.000đ - 50.000đ / ly",
     "ticket_price": "25.000đ - 50.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "windy-hill-coffee-homestay-tri-ton"
   },
   {
     "id": "b6a52dfa-chạm-coffee-&-tea-tr",
@@ -5430,7 +5476,8 @@
     "opening_hours": "06:30 - 22:30 (Mỗi ngày)",
     "price_level": "22.000đ - 45.000đ / ly",
     "ticket_price": "22.000đ - 45.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "cham-coffee-tea-tri-ton"
   },
   {
     "id": "9fd79384-anpalm-cafe-tri-tôn",
@@ -5511,7 +5558,8 @@
     "opening_hours": "06:30 - 22:00 (Mỗi ngày)",
     "price_level": "25.000đ - 45.000đ / ly",
     "ticket_price": "25.000đ - 45.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "anpalm-cafe-tri-ton-thot-not-tri-ton"
   },
   {
     "id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
@@ -5593,7 +5641,8 @@
     "opening_hours": "07:00 - 18:30 (Mỗi ngày)",
     "price_level": "18.000đ - 35.000đ / ly",
     "ticket_price": "18.000đ - 35.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "tiem-ca-phe-nha-que-tri-ton"
   },
   {
     "id": "442b77de-an-sơn-trà-quán",
@@ -5674,7 +5723,8 @@
     "opening_hours": "07:00 - 21:00 (Mỗi ngày)",
     "price_level": "25.000đ - 60.000đ / ấm trà",
     "ticket_price": "25.000đ - 60.000đ / ấm trà",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "an-son-tra-quan"
   },
   {
     "id": "d2759ee4-ny-coffee-&-tea-tri-",
@@ -5752,7 +5802,8 @@
     "is_verified": true,
     "tiktok_search_query": "NY Coffee & Tea Tri Tôn Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "night_hours": "07:00 - 22:00"
+    "night_hours": "07:00 - 22:00",
+    "slug": "ny-coffee-tea-tri-ton"
   },
   {
     "id": "b56c95ef-mây-coffee-&-tea-hồ-",
@@ -5834,7 +5885,8 @@
     "opening_hours": "07:00 - 18:30 (Mỗi ngày)",
     "price_level": "20.000đ - 40.000đ / ly",
     "ticket_price": "20.000đ - 40.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "may-coffee-tea-ho-soai-chek-may-son-garden"
   },
   {
     "id": "d1bd3ece-quy-coffee-house-tri",
@@ -5916,7 +5968,8 @@
     "opening_hours": "06:00 - 21:30 (Mỗi ngày)",
     "price_level": "18.000đ - 35.000đ / ly",
     "ticket_price": "18.000đ - 35.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quy-coffee-house-tri-ton-quys-coffee"
   },
   {
     "id": "cee4075f-lang-lang-coffee-&-t",
@@ -5998,7 +6051,8 @@
     "opening_hours": "07:30 - 22:00 (Mỗi ngày)",
     "price_level": "22.000đ - 45.000đ / món",
     "ticket_price": "22.000đ - 45.000đ / món",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "lang-lang-coffee-tea"
   },
   {
     "id": "7440fc2d-tuyết-anh-homestay-&",
@@ -6079,7 +6133,8 @@
     "opening_hours": "06:30 - 22:00 (Mỗi ngày)",
     "price_level": "20.000đ - 45.000đ / ly",
     "ticket_price": "20.000đ - 45.000đ / ly",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "tuyet-anh-homestay-coffee"
   },
   {
     "id": "c7d6fabf-rồng-vàng-resort-tri",
@@ -6156,7 +6211,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Rồng Vàng Resort Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "rong-vang-resort-tri-ton"
   },
   {
     "id": "3ef4f129-quán-cà-phê-&-điểm-c",
@@ -6233,7 +6289,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-ca-phe-diem-check-in-bo-ho-o-ta-lot"
   },
   {
     "id": "ac550583-soài-chek-homestay-&",
@@ -6310,7 +6367,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Soài Chek Homestay & Coffee Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "soai-chek-homestay-coffee"
   },
   {
     "id": "b62d0291-nhà-nghi-&-khách-sạn",
@@ -6387,7 +6445,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Nhà Nghỉ & Khách Sạn Triệu Gia Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nha-nghi-khach-san-trieu-gia-tri-ton"
   },
   {
     "id": "c24278f3-con-đường-tuyến-trán",
@@ -6464,7 +6523,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948) Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "con-duong-tuyen-tranh-tri-ton-dt941-dt948"
   },
   {
     "id": "9616e5e5-con-đường-tơ-lụa-tà-",
@@ -6545,7 +6605,8 @@
     "opening_hours": "Tự do tham quan cả ngày",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Đẹp nhất lúc bình minh 06:00–07:30 hoặc chiều hoàng hôn 16:30–17:30. Đi xe máy chậm rãi, dựng xe gọn vào lề khi chụp ảnh.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "con-duong-to-lua-ta-pa"
   },
   {
     "id": "97e67ffb-con-đường-tơ-lụa-soà",
@@ -6626,7 +6687,8 @@
     "opening_hours": "Tự do tham quan cả ngày",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Đẹp nhất lúc bình minh 06:00–07:30 hoặc chiều hoàng hôn 16:30–17:30. Đi xe máy chậm rãi, dựng xe gọn vào lề khi chụp ảnh.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "con-duong-to-lua-soai-chek"
   },
   {
     "id": "3383c54e-con-đường-vòm-còng-c",
@@ -6703,7 +6765,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Con Đường Vòm Còng Châu Lăng Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "con-duong-vom-cong-chau-lang"
   },
   {
     "id": "2ac3fb9a-con-đường-thốt-nốt-ô",
@@ -6784,7 +6847,8 @@
     "opening_hours": "Tự do tham quan cả ngày",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Góc chụp hoàng hôn ngược sáng 16:30–17:30 đẹp ngỡ ngàng. Nhớ dừng chân thưởng thức ly nước thốt nốt tươi mát lạnh của bà con ven đường.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "con-duong-thot-not-o-lam-co-to"
   },
   {
     "id": "e4772f7e-con-đường-tre-tầm-vô",
@@ -6865,7 +6929,8 @@
     "opening_hours": "06:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào buổi sáng 07:00–09:00 để chụp ảnh luồng sáng qua tán tre tuyệt đẹp. Tuyệt đối không xả rác và không đốt lửa trong rừng tre.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "con-duong-tre-tam-vong-o-ta-soc"
   },
   {
     "id": "f424d6ea-cung-đường-ven-vách-",
@@ -6946,7 +7011,8 @@
     "opening_hours": "Lưu thông tự do cả ngày",
     "ticket_price": "Miễn phí lưu thông",
     "field_tips": "Chạy xe máy tốc độ vừa phải dưới 40km/h để ngắm trọn vách đá granite hùng vĩ và thung lũng lúa Lương Phi lúc hoàng hôn.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "cung-duong-ven-vach-da-nui-dai-luong-phi"
   },
   {
     "id": "4425a57d-cung-đường-biên-giới",
@@ -7027,7 +7093,8 @@
     "opening_hours": "Lưu thông tự do cả ngày",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào mùa nước nổi (tháng 9–11) để ngắm trọn vẹn cảnh sắc đầm sen và dòng kênh lịch sử Thoại Ngọc Hầu. Mang theo CCCD khi đi dọc tuyến biên giới.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "cung-duong-bien-gioi-kenh-vinh-te-ba-chuc"
   },
   {
     "id": "a810d441-cây-thốt-nốt-cô-độc-",
@@ -7104,7 +7171,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cây Thốt Nốt Cô Độc Châu Lăng Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "cay-thot-not-co-doc-chau-lang"
   },
   {
     "id": "6ffa8a7b-cầu-gỗ-mộc-mạc-hồ-ô-",
@@ -7185,7 +7253,8 @@
     "opening_hours": "07:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "Miễn phí khi dùng ẩm thực (10.000đ / khách vãng lai)",
     "field_tips": "Đẹp nhất vào lúc hoàng hôn 16:30–17:30. Kết hợp chụp ảnh tại cầu gỗ và thưởng thức món gà đốt Ô Thum nóng hổi ven hồ.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "cau-go-moc-mac-ho-o-thum"
   },
   {
     "id": "4fc712e3-cầu-gỗ-giữa-đồng-lúa",
@@ -7266,7 +7335,8 @@
     "opening_hours": "07:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "Miễn phí khi dùng ẩm thực (10.000đ / khách vãng lai)",
     "field_tips": "Đẹp nhất vào lúc hoàng hôn 16:30–17:30. Kết hợp chụp ảnh tại cầu gỗ và thưởng thức món gà đốt Ô Thum nóng hổi ven hồ.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "cau-go-giua-dong-lua-ruong-coffee"
   },
   {
     "id": "5169fbf9-đá-vồ-hội-đổ-(mỏm-đá",
@@ -7343,7 +7413,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo) Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "da-vo-hoi-do-mom-da-song-ao"
   },
   {
     "id": "833d6714-nấc-thang-thiên-đườn",
@@ -7420,7 +7491,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum Tri Tôn An Giang",
-    "commune": "Xã Ô Lâm"
+    "commune": "Xã Ô Lâm",
+    "slug": "nac-thang-thien-duong-kieu-tien-o-thum"
   },
   {
     "id": "1c3216be-căn-nhà-gỗ-vintage-n",
@@ -7497,7 +7569,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Căn Nhà Gỗ Vintage Nhà Quê Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "can-nha-go-vintage-nha-que"
   },
   {
     "id": "d8731ae3-cầu-khỉ-giữa-cánh-đồ",
@@ -7574,7 +7647,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "cau-khi-giua-canh-dong-thot-not"
   },
   {
     "id": "89d12327-quầy-thốt-nốt-tươi-c",
@@ -7651,7 +7725,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quầy Thốt Nốt Tươi Cụm Trái Tim Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quay-thot-not-tuoi-cum-trai-tim"
   },
   {
     "id": "9eaf1e8f-biển-hiệu-ở-đây-khôn",
@@ -7728,7 +7803,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "bien-hieu-o-day-khong-co-gi-ngoai-ky-uc"
   },
   {
     "id": "c4fb60f7-nghệ-thuật-viết-kinh",
@@ -7806,7 +7882,8 @@
     "is_verified": true,
     "tiktok_search_query": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "di sản quốc gia"
+    "field_tips": "di sản quốc gia",
+    "slug": "nghe-thuat-viet-kinh-la-buong-chua-xa-ton"
   },
   {
     "id": "118f63fc-quán-siêu-gà-đốt-ô-t",
@@ -7892,7 +7969,8 @@
       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop"
-    ]
+    ],
+    "slug": "quan-sieu-ga-dot-o-thum-chau-sieu"
   },
   {
     "id": "8f6a436c-quán-kiều-tiên-gà-đố",
@@ -7972,7 +8050,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 320.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-kieu-tien-ga-dot-o-thum"
   },
   {
     "id": "dec77a0e-gà-đốt-ô-thum-kim-su",
@@ -8052,7 +8131,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 300.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ga-dot-o-thum-kim-suol"
   },
   {
     "id": "ec52a58c-gà-đốt-ô-thum-thảo-n",
@@ -8132,7 +8212,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ga-dot-o-thum-thao-nguyen"
   },
   {
     "id": "24a1fc67-gà-đốt-vương-ngọc-ô-",
@@ -8212,7 +8293,8 @@
     "commune": "Xã Ô Lâm",
     "opening_hours": "08:30 - 18:30 (Mỗi ngày)",
     "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ga-dot-vuong-ngoc-o-thum"
   },
   {
     "id": "159c4012-quán-đu-đủ-đâm-rina-",
@@ -8290,7 +8372,8 @@
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm RiNa Khmer Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "hot nhất"
+    "field_tips": "hot nhất",
+    "slug": "quan-du-du-dam-rina-khmer"
   },
   {
     "id": "6739ba72-quán-đu-đủ-đâm-ly-ly",
@@ -8367,7 +8450,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm Ly Ly Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-du-du-dam-ly-ly"
   },
   {
     "id": "a6ed9173-quán-đu-đủ-đâm-ty-tr",
@@ -8444,7 +8528,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm Ty Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-du-du-dam-ty-tri-ton"
   },
   {
     "id": "75671726-quán-bún-cá-sơ-nương",
@@ -8525,7 +8610,8 @@
     "opening_hours": "06:00 - 10:30 (Mỗi ngày)",
     "ticket_price": "20.000đ - 35.000đ / tô",
     "field_tips": "Nên ăn vào buổi sáng sớm tại khu chợ Tri Tôn. Món ăn thanh đạm, ít dầu mỡ, rất thơm mùi củ ngải bún thảo mộc.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-bun-ca-so-nuong-khmer"
   },
   {
     "id": "64fcb54d-quán-bún-cá-dook-tri",
@@ -8602,7 +8688,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bún Cá Dook Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-bun-ca-dook-tri-ton"
   },
   {
     "id": "30e73939-lò-bánh-bò-thốt-nốt-",
@@ -8683,7 +8770,8 @@
     "opening_hours": "06:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "lo-banh-bo-thot-not-nuong-ut-cot"
   },
   {
     "id": "ea5a3976-lò-bánh-bò-thốt-nốt-",
@@ -8764,7 +8852,8 @@
     "opening_hours": "06:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "lo-banh-bo-thot-not-ut-dut"
   },
   {
     "id": "c2a08fb2-quán-bánh-canh-lò-rè",
@@ -8845,7 +8934,8 @@
     "opening_hours": "06:30 - 17:30 (Mỗi ngày)",
     "ticket_price": "25.000đ - 40.000đ / tô",
     "field_tips": "Nên ghé quán vào buổi sáng 07:00 - 08:30 để thưởng thức mẻ sợi bánh canh và cá lóc đồng mới ra lò tươi ngon nhất.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-banh-canh-lo-ren-30-nam"
   },
   {
     "id": "436c0b0d-quán-bò-7-món-ba-chú",
@@ -8922,7 +9012,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bò 7 Món Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Ba Chúc"
+    "commune": "Thị trấn Ba Chúc",
+    "slug": "quan-bo-7-mon-ba-chuc"
   },
   {
     "id": "6c77d0e8-quán-cháo-bò-trái-tr",
@@ -9003,7 +9094,8 @@
     "opening_hours": "06:00 - 11:00 (Buổi sáng mỗi ngày)",
     "ticket_price": "30.000đ - 50.000đ / tô",
     "field_tips": "Nên ăn vào buổi sáng sớm từ 06:30 đến 08:30. Đừng quên vắt thêm nước cốt trái chúc tươi và rắc lá chúc thái nhuyễn để cảm nhận trọn vẹn hương vị đặc sản.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-chao-bo-trai-truc-ba-chuc"
   },
   {
     "id": "8b5a9b10-quán-bánh-xèo-tép-bô",
@@ -9080,7 +9172,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10 Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-banh-xeo-tep-bong-dien-dien-cau-so-10"
   },
   {
     "id": "f229bec5-quán-bò-nướng-trái-t",
@@ -9157,7 +9250,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bò Nướng Trái Trúc Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-bo-nuong-trai-truc-tri-ton"
   },
   {
     "id": "2f0b8880-quán-bún-nước-lèo-tr",
@@ -9234,7 +9328,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bún Nước Lèo Tri Tôn Chị Tư Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-bun-nuoc-leo-tri-ton-chi-tu"
   },
   {
     "id": "fefbce27-lò-đường-thốt-nốt-ng",
@@ -9311,7 +9406,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "lo-duong-thot-not-nguyen-chat-chau-lang-ut-hue"
   },
   {
     "id": "3dadd505-tiệm-bánh-bò-thốt-nố",
@@ -9392,7 +9488,8 @@
     "opening_hours": "06:00 - 19:00 (Mỗi ngày)",
     "ticket_price": "5.000đ - 10.000đ / cái (35.000đ / ổ)",
     "field_tips": "Nên mua bánh bò mới nướng nóng hổi tại chợ Tri Tôn để thưởng thức trọn vẹn vị giòn thơm xém cạnh và ngọt thanh của đường thốt nốt.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "tiem-banh-bo-thot-not-nuong-cho-tri-ton"
   },
   {
     "id": "e13b2eab-quán-đu-đủ-đâm-&-cán",
@@ -9469,7 +9566,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-du-du-dam-canh-ga-nuong-ro"
   },
   {
     "id": "683d2086-quán-bò-nướng-bánh-t",
@@ -9546,7 +9644,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Quán Bò Nướng Bánh Tráng Tư Liêm Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "quan-bo-nuong-banh-trang-tu-liem"
   },
   {
     "id": "3c55a285-tiệm-bánh-kẹp-thốt-n",
@@ -9623,7 +9722,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "tiem-banh-kep-thot-not-banh-cot-dua-chua-cu"
   },
   {
     "id": "df20bed8-chùa-hàng-còng-(krăn",
@@ -9701,7 +9801,8 @@
     "is_verified": true,
     "tiktok_search_query": "Chùa Hàng Còng (Krăng Krốch) Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
-    "field_tips": "400 năm, gần Cổng Trời"
+    "field_tips": "400 năm, gần Cổng Trời",
+    "slug": "chua-hang-cong-krang-kroch"
   },
   {
     "id": "b49161b0-chùa-phi-lai-ba-chúc",
@@ -9778,7 +9879,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Phi Lai Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Ba Chúc"
+    "commune": "Thị trấn Ba Chúc",
+    "slug": "chua-phi-lai-ba-chuc"
   },
   {
     "id": "e563b663-chùa-tam-bửu-ba-chúc",
@@ -9855,7 +9957,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Tam Bửu Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Ba Chúc"
+    "commune": "Thị trấn Ba Chúc",
+    "slug": "chua-tam-buu-ba-chuc"
   },
   {
     "id": "28310684-khu-di-tích-căn-cứ-ô",
@@ -9932,7 +10035,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Khu Di Tích Căn Cứ Ô Tà Sóc Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "khu-di-tich-can-cu-o-ta-soc"
   },
   {
     "id": "814684e1-chùa-soài-so-khmer",
@@ -10013,7 +10117,8 @@
     "opening_hours": "07:00 - 17:30 (Mỗi ngày)",
     "ticket_price": "20.000đ / người (Vé vào cổng)",
     "field_tips": "Nên ghé suối vào mùa nước từ tháng 6 đến tháng 11. Cẩn thận đá trơn trượt và luôn dọn dẹp sạch rác sau khi picnic ven suối.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "chua-soai-so-khmer"
   },
   {
     "id": "5c6c0c5c-chùa-mới-ô-lâm",
@@ -10090,7 +10195,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chùa Mới Ô Lâm Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "chua-moi-o-lam"
   },
   {
     "id": "b4e743c8-hồ-ô-tà-lọt",
@@ -10171,7 +10277,8 @@
     "opening_hours": "Tự do tham quan cả ngày",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Địa điểm hoang sơ tĩnh lặng tuyệt đẹp. Bắt buộc mặc áo phao khi chèo SUP hoặc lội nước, và luôn gom sạch rác thải mang về.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "ho-o-ta-lot"
   },
   {
     "id": "831ebb34-hồ-đá-latina",
@@ -10249,7 +10356,8 @@
     "is_verified": true,
     "tiktok_search_query": "Hồ Đá Latina Tri Tôn An Giang",
     "commune": "Xã An Hảo (Ranh giới giáp TX. Tịnh Biên)",
-    "field_tips": "data ghi Xã An Hảo → nghi thuộc Tịnh Biên, kiểm tra ranh giới"
+    "field_tips": "data ghi Xã An Hảo → nghi thuộc Tịnh Biên, kiểm tra ranh giới",
+    "slug": "ho-da-latina"
   },
   {
     "id": "3adb5c32-đá-vồ-hội-mẹ-cô-tô",
@@ -10330,7 +10438,8 @@
     "opening_hours": "05:00 - 18:30 (Mỗi ngày)",
     "ticket_price": "Miễn phí (Xe ôm lên đỉnh: 70k - 100k/lượt)",
     "field_tips": "Cẩn trọng khi đứng trên mép đá chụp ảnh vì gió rất to và vực sâu. Nên lên đỉnh lúc 16:00 để vừa ngắm toàn cảnh đồng lúa vừa săn hoàng hôn.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "da-vo-hoi-me-co-to"
   },
   {
     "id": "39c60a82-rừng-tầm-vông-ô-tà-s",
@@ -10411,7 +10520,8 @@
     "opening_hours": "06:00 - 18:00 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan",
     "field_tips": "Nên đi vào buổi sáng 07:00–09:00 để chụp ảnh luồng sáng qua tán tre tuyệt đẹp. Tuyệt đối không xả rác và không đốt lửa trong rừng tre.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "rung-tam-vong-o-ta-soc"
   },
   {
     "id": "a8b28369-cánh-đồng-lúa-ba-chú",
@@ -10488,7 +10598,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cánh Đồng Lúa Ba Chúc Tri Tôn An Giang",
-    "commune": "Thị trấn Ba Chúc"
+    "commune": "Thị trấn Ba Chúc",
+    "slug": "canh-dong-lua-ba-chuc"
   },
   {
     "id": "9764c175-vườn-nho-nông-trại-ô",
@@ -10569,7 +10680,8 @@
     "opening_hours": "07:30 - 18:00 (Mỗi ngày)",
     "ticket_price": "250.000đ - 320.000đ / con",
     "field_tips": "Nên liên hệ kiểm tra mùa nho chín rộ trước khi đến. Trải nghiệm hái nho tại vườn và thưởng thức gà đốt lá chúc bên chòi lá mát rượi.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "quan-ga-dot-vuon-nho-o-thum"
   },
   {
     "id": "30ac578e-vườn-mãng-cầu-núi-tô",
@@ -10650,7 +10762,8 @@
     "opening_hours": "07:30 - 17:30 (Mỗi ngày)",
     "ticket_price": "Miễn phí tham quan (Giá mua trái cây theo thời giá)",
     "field_tips": "Mùa thu hoạch rộ từ tháng 6 đến tháng 9. Nên mang giày thể thao để đi dạo vườn dốc đá dễ dàng và thưởng thức mãng cầu ngọt lịm hái tại cây.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "vuon-mang-cau-nui-to"
   },
   {
     "id": "6669ffb7-suối-vàng-soài-so",
@@ -10731,7 +10844,8 @@
     "opening_hours": "07:00 - 17:30 (Mỗi ngày)",
     "ticket_price": "20.000đ / người (Vé vào cổng)",
     "field_tips": "Nên ghé suối vào mùa nước từ tháng 6 đến tháng 11. Cẩn thận đá trơn trượt và luôn dọn dẹp sạch rác sau khi picnic ven suối.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "suoi-vang-soai-so"
   },
   {
     "id": "d3e73741-cánh-đồng-thốt-nốt-c",
@@ -10808,7 +10922,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Cánh Đồng Thốt Nốt Châu Lăng Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "canh-dong-thot-not-chau-lang"
   },
   {
     "id": "749e2a14-vách-đá-đứng-latina",
@@ -10889,7 +11004,8 @@
     "opening_hours": "Lưu thông tự do cả ngày",
     "ticket_price": "Miễn phí lưu thông",
     "field_tips": "Chạy xe máy tốc độ vừa phải dưới 40km/h để ngắm trọn vách đá granite hùng vĩ và thung lũng lúa Lương Phi lúc hoàng hôn.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "vach-da-dung-latina"
   },
   {
     "id": "f0d6fe60-bãi-thả-diều-hoàng-h",
@@ -10966,7 +11082,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Bãi Thả Diều Hoàng Hôn Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "bai-tha-dieu-hoang-hon-tri-ton"
   },
   {
     "id": "6fd80811-chợ-trung-tâm-tri-tô",
@@ -11043,7 +11160,8 @@
     "open_late": false,
     "is_verified": true,
     "tiktok_search_query": "Chợ Trung Tâm Tri Tôn Tri Tôn An Giang",
-    "commune": "Thị trấn Tri Tôn"
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "cho-trung-tam-tri-ton"
   },
   {
     "id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
@@ -11125,7 +11243,8 @@
     "opening_hours": "16:30 - 22:30 (Mỗi đêm)",
     "ticket_price": "10.000đ - 35.000đ / món ăn vặt",
     "field_tips": "Nên ghé chợ đêm vào khoảng 18:30–21:00. Thử ngay ly thốt nốt sữa tươi mát lạnh và bánh kẹp nướng nóng hổi bên vỉa hè quảng trường.",
-    "is_hot": true
+    "is_hot": true,
+    "slug": "khu-am-thuc-cho-dem-tri-ton"
   },
   {
     "id": "quang-truong-va-pho-di-bo-tri-ton",

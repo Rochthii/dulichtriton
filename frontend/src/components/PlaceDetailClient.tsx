@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   MapPin, Navigation, Clock, Tag, Star, Camera, ShieldCheck, 
@@ -41,16 +41,28 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   });
 
   const defaultImg = getCategoryFallbackImage(place.category, place.name);
-  const photos = place.photos && place.photos.length > 0
+  const rawPhotos = Array.isArray(place.photos) && place.photos.length > 0
     ? place.photos
-    : [
-        {
-          url: place.image_url || defaultImg,
-          caption: place.name,
+    : [place.image_url || defaultImg];
+
+  const photos = useMemo(() => {
+    return rawPhotos.map((p: any, idx: number) => {
+      if (typeof p === 'string') {
+        return {
+          url: p,
+          caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
           source: 'Cổng thông tin Du lịch Tri Tôn',
           license: 'Verified Field Data'
-        }
-      ];
+        };
+      }
+      return {
+        url: p.url || place.image_url || defaultImg,
+        caption: p.caption || place.name,
+        source: p.source || 'Cổng thông tin Du lịch Tri Tôn',
+        license: p.license || 'Verified Field Data'
+      };
+    });
+  }, [rawPhotos, place.image_url, place.name, defaultImg]);
 
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -418,7 +430,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
         {/* Thumbnail Selector Strip (When multiple photos exist) */}
         {photos.length > 1 && (
           <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
-            {photos.map((photo, idx) => (
+            {photos.map((photo: { url: string; caption?: string }, idx: number) => (
               <button
                 key={idx}
                 type="button"

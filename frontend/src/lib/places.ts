@@ -74,13 +74,25 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const masterPois = require('@/data/triton_pois_full.json') as any[];
 
+  let decoded = idOrSlug;
   try {
-    // 1. Try matching by slug first (SEO-friendly URLs)
-    const { data: bySlug } = await supabase
+    decoded = decodeURIComponent(idOrSlug).trim();
+  } catch {
+    decoded = idOrSlug.trim();
+  }
+
+  try {
+    // 1. Try matching by slug first (both original and decoded)
+    let { data: bySlug } = await supabase
       .from('places')
       .select('*')
-      .eq('slug', idOrSlug)
+      .eq('slug', decoded)
       .maybeSingle();
+
+    if (!bySlug && decoded !== idOrSlug) {
+      const res = await supabase.from('places').select('*').eq('slug', idOrSlug).maybeSingle();
+      bySlug = res.data;
+    }
 
     if (bySlug) {
       const local = masterPois.find(
@@ -94,12 +106,17 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
       } as Place;
     }
 
-    // 2. Fallback: match by primary key id (e.g. "CF001", "AT002")
-    const { data: byId } = await supabase
+    // 2. Fallback: match by primary key id (e.g. "CF001", "78da5b5f-ruộng-coffee-&-homes")
+    let { data: byId } = await supabase
       .from('places')
       .select('*')
-      .eq('id', idOrSlug)
+      .eq('id', decoded)
       .maybeSingle();
+
+    if (!byId && decoded !== idOrSlug) {
+      const res = await supabase.from('places').select('*').eq('id', idOrSlug).maybeSingle();
+      byId = res.data;
+    }
 
     if (byId) {
       const local = masterPois.find(
@@ -117,9 +134,12 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
     if (Array.isArray(masterPois)) {
       const found = masterPois.find(
         (p: any) =>
+          p.id === decoded ||
           p.id === idOrSlug ||
+          p.slug === decoded ||
           p.slug === idOrSlug ||
-          p.name?.toLowerCase().includes(idOrSlug.toLowerCase())
+          p.name?.toLowerCase() === decoded.toLowerCase() ||
+          p.name?.toLowerCase().includes(decoded.toLowerCase())
       );
       if (found) return found as Place;
     }
@@ -130,9 +150,12 @@ export async function getPlaceById(idOrSlug: string): Promise<Place | null> {
     if (Array.isArray(masterPois)) {
       const found = masterPois.find(
         (p: any) =>
+          p.id === decoded ||
           p.id === idOrSlug ||
+          p.slug === decoded ||
           p.slug === idOrSlug ||
-          p.name?.toLowerCase().includes(idOrSlug.toLowerCase())
+          p.name?.toLowerCase() === decoded.toLowerCase() ||
+          p.name?.toLowerCase().includes(decoded.toLowerCase())
       );
       if (found) return found as Place;
     }
