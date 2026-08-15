@@ -28,10 +28,19 @@ export default function SiteFooter() {
             </p>
             
             {/* Developer Credit Signature Badge */}
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 space-y-1 font-display">
-              <div className="flex items-center gap-1.5 text-xs text-[#FFD37A] font-bold">
-                <Code className="w-3.5 h-3.5 text-[#F0A32F]" />
-                <span>Phát triển bởi Chăm Rốch Thi</span>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 space-y-1.5 font-display">
+              <div className="flex items-center justify-between gap-1.5">
+                <div className="flex items-center gap-1.5 text-xs text-[#FFD37A] font-bold">
+                  <Code className="w-3.5 h-3.5 text-[#F0A32F]" />
+                  <span>Phát triển bởi Chăm Rốch Thi</span>
+                </div>
+                <a
+                  href="mailto:rochthi59@gmail.com"
+                  className="text-[10px] text-[#0E8C7F] hover:text-[#FFD37A] font-mono font-bold bg-[#0E8C7F]/15 hover:bg-[#0E8C7F]/30 px-2 py-0.5 rounded-full transition-colors"
+                  title="Gửi email cho tác giả"
+                >
+                  rochthi59@gmail.com
+                </a>
               </div>
               <p className="text-[11px] text-[#FAF3E7]/60 font-body">
                 Developed with passion by <strong>Cham Roch Thi</strong> for Tri Tôn Tourism Community.

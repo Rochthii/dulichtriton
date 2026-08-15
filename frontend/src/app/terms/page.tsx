@@ -113,7 +113,7 @@ export default function TermsPage() {
             <div className="p-4 bg-[#FAF3E7] rounded-2xl border border-[#26221B]/8 space-y-2 text-xs font-display">
               <div className="flex items-center gap-2 text-[#26221B]">
                 <Mail className="w-4 h-4 text-[#0E8C7F]" />
-                <span>Email tác giả: <strong>chamrochthi@gmail.com</strong></span>
+                <span>Email tác giả: <a href="mailto:rochthi59@gmail.com" className="font-bold underline text-[#0E8C7F] hover:text-[#0A6B61]">rochthi59@gmail.com</a></span>
               </div>
               <div className="flex items-center gap-2 text-[#26221B]">
                 <Phone className="w-4 h-4 text-[#F0A32F]" />
