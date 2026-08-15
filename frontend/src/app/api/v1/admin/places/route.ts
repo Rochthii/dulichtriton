@@ -82,6 +82,43 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// Helpers to normalize Postgres Array and JSONB fields
+function normalizeGoldenTimeWindows(val: unknown): string[] | null {
+  if (Array.isArray(val)) return val.map(String).filter(Boolean);
+  if (typeof val === 'string' && val.trim()) {
+    return val.split(/[•,;]+/).map(s => s.trim()).filter(Boolean);
+  }
+  return null;
+}
+
+function normalizePhotos(photos: unknown, imageUrl?: string): string[] {
+  if (Array.isArray(photos) && photos.length > 0) {
+    return photos.map(String).filter(Boolean);
+  }
+  if (typeof photos === 'string' && photos.trim()) {
+    try {
+      const parsed = JSON.parse(photos);
+      if (Array.isArray(parsed)) return parsed.map(String).filter(Boolean);
+    } catch {
+      return [photos.trim()];
+    }
+  }
+  return imageUrl ? [imageUrl] : [];
+}
+
+function normalizeCheckinSpots(spots: unknown): any[] {
+  if (Array.isArray(spots)) return spots;
+  if (typeof spots === 'string' && spots.trim()) {
+    try {
+      const parsed = JSON.parse(spots);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
 // POST: Create a new POI record
 export async function POST(req: NextRequest) {
   try {
@@ -104,9 +141,8 @@ export async function POST(req: NextRequest) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
-    const resolvedPhotos = Array.isArray(photos) && photos.length > 0
-      ? photos
-      : (image_url ? [image_url] : []);
+    const resolvedPhotos = normalizePhotos(photos, image_url);
+    const resolvedCover = image_url || resolvedPhotos[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop';
 
     const newRecord: Record<string, unknown> = {
       id: `${slug}-${Date.now().toString(36)}`,
@@ -118,19 +154,19 @@ export async function POST(req: NextRequest) {
       category: category || 'general',
       tourism_category: tourism_category || 'Địa Điểm Tham Quan',
       rating: Number(rating) || 4.8,
-      image_url: image_url || resolvedPhotos[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
+      image_url: resolvedCover,
       photos: resolvedPhotos,
-      checkin_spots: checkin_spots || null,
+      checkin_spots: normalizeCheckinSpots(checkin_spots),
       description: description || 'Thông tin địa điểm du lịch mới tại Tri Tôn',
       detailed_story: detailed_story || description || '',
       phone: phone || null,
       open_late: Boolean(open_late),
       night_hours: night_hours || null,
-      golden_time_windows: golden_time_windows || '06:00-08:00 • 16:00-17:30',
+      golden_time_windows: normalizeGoldenTimeWindows(golden_time_windows),
       price_level: price_level || 'Bình dân',
       video_url: video_url || '',
-      latitude: Number(latitude) || 10.42,
-      longitude: Number(longitude) || 105.01,
+      latitude: latitude !== undefined && latitude !== null && latitude !== '' ? Number(latitude) : 10.42,
+      longitude: longitude !== undefined && longitude !== null && longitude !== '' ? Number(longitude) : 105.01,
       address: address || `${commune.trim()}, Tri Tôn, An Giang`,
       is_hot: Boolean(is_hot),
       is_active: true,
@@ -183,26 +219,26 @@ export async function PATCH(req: NextRequest) {
     }
 
     const updatePayload: Record<string, unknown> = { updated_at: new Date().toISOString() };
-    if (is_hot !== undefined) updatePayload.is_hot = is_hot;
-    if (is_active !== undefined) updatePayload.is_active = is_active;
-    if (name !== undefined) updatePayload.name = name;
-    if (commune !== undefined) updatePayload.commune = commune;
+    if (is_hot !== undefined) updatePayload.is_hot = Boolean(is_hot);
+    if (is_active !== undefined) updatePayload.is_active = Boolean(is_active);
+    if (name !== undefined) updatePayload.name = String(name).trim();
+    if (commune !== undefined) updatePayload.commune = String(commune).trim();
     if (category !== undefined) updatePayload.category = category;
     if (tourism_category !== undefined) updatePayload.tourism_category = tourism_category;
-    if (rating !== undefined) updatePayload.rating = rating;
+    if (rating !== undefined && rating !== null && rating !== '') updatePayload.rating = Number(rating);
     if (image_url !== undefined) updatePayload.image_url = image_url;
-    if (photos !== undefined) updatePayload.photos = photos;
-    if (checkin_spots !== undefined) updatePayload.checkin_spots = checkin_spots;
+    if (photos !== undefined) updatePayload.photos = normalizePhotos(photos, image_url);
+    if (checkin_spots !== undefined) updatePayload.checkin_spots = normalizeCheckinSpots(checkin_spots);
     if (description !== undefined) updatePayload.description = description;
     if (detailed_story !== undefined) updatePayload.detailed_story = detailed_story;
     if (phone !== undefined) updatePayload.phone = phone;
-    if (open_late !== undefined) updatePayload.open_late = open_late;
+    if (open_late !== undefined) updatePayload.open_late = Boolean(open_late);
     if (night_hours !== undefined) updatePayload.night_hours = night_hours;
-    if (golden_time_windows !== undefined) updatePayload.golden_time_windows = golden_time_windows;
+    if (golden_time_windows !== undefined) updatePayload.golden_time_windows = normalizeGoldenTimeWindows(golden_time_windows);
     if (price_level !== undefined) updatePayload.price_level = price_level;
     if (video_url !== undefined) updatePayload.video_url = video_url;
-    if (latitude !== undefined) updatePayload.latitude = Number(latitude);
-    if (longitude !== undefined) updatePayload.longitude = Number(longitude);
+    if (latitude !== undefined && latitude !== null && latitude !== '') updatePayload.latitude = Number(latitude);
+    if (longitude !== undefined && longitude !== null && longitude !== '') updatePayload.longitude = Number(longitude);
     if (address !== undefined) updatePayload.address = address;
 
     // Regenerate Vector Embedding if text changed
@@ -223,7 +259,7 @@ export async function PATCH(req: NextRequest) {
 
     if (error) {
       console.error('[AdminPlaces PATCH Error]:', error);
-      throw error;
+      return NextResponse.json({ error: 'Database update error: ' + error.message }, { status: 400 });
     }
 
     logAudit('UPDATE_POI', id, updatePayload);

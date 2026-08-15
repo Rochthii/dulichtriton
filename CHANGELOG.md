@@ -85,17 +85,13 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 💌 Hệ Thống Góp Ý & Đóng Góp Dữ Liệu Cộng Đồng (Community Feedback & Contributions)
-- **Cơ Sở Dữ Liệu Supabase PostgreSQL (`public.feedbacks`)**:
-  - Tạo bảng `feedbacks` lưu trữ toàn vẹn: Họ tên, Email, Số điện thoại/Zalo, Chủ đề phân loại (`place_contribution`, `place_correction`, `photo_contribution`, `feature_request`, `general`), Tiêu đề, Nội dung góp ý, Đánh giá sao (1-5★), Trạng thái xử lý (`pending`, `reviewed`, `resolved`), Metadata IP & Thiết bị.
-  - Tích hợp Row Level Security (RLS) và ghi nhận Audit Log `FEEDBACK_SUBMITTED`.
-- **API Endpoint Chuẩn Hóa (`/api/v1/feedback` & `/api/v1/admin/feedbacks`)**:
-  - `POST /api/v1/feedback`: Kiểm tra hợp lệ dữ liệu, chuẩn hóa Unicode NFC tiếng Việt, lưu trữ an toàn vào Supabase.
-  - `GET / PATCH /api/v1/admin/feedbacks`: Cho phép Ban quản trị xem danh sách, lọc theo trạng thái/chủ đề và duyệt chuyển trạng thái.
-- **Khu Vực Góp Ý Trực Tiếp Trên Trang Chủ (`FeedbackSection.tsx`)**:
-  - Thiết kế đậm chất Folk-Modern Bảy Núi với 5 thẻ phân loại chủ đề trực quan, bộ chọn đánh giá 5 sao tương tác, khung nhập liệu có bộ đếm ký tự, màn hình chúc mừng kèm mã phiếu tiếp nhận.
-- **Trang Quản Trị Phản Hồi (`/admin/feedbacks`)**:
-  - Bảng điều khiển riêng biệt cho Ban quản trị theo dõi chi tiết phản hồi du khách, thông tin liên hệ, IP gửi, và nút xử lý trạng thái tức thì.
+### 🛠️ Khắc Phục Triệt Để Lỗi Lưu Chỉnh Sửa Địa Điểm Trên Trang Admin (/admin/places)
+- **Chuẩn Hóa Kiểu Dữ Liệu PostgreSQL Array & JSONB (`/api/v1/admin/places`)**:
+  - Khắc phục lỗi `22P02: malformed array literal` khi lưu `golden_time_windows` (chuỗi text gửi vào cột `text[]`). Hệ thống hiện tự động chuẩn hóa chuỗi phân tách `•`, `,`, `;` thành mảng chuỗi `text[]` chuẩn PostgreSQL.
+  - Chuẩn hóa toàn bộ các trường mảng và đối tượng: `photos` (`text[]`), `checkin_spots` (`jsonb`), `latitude` & `longitude` (`double precision`), `rating` (`numeric`), `open_late` (`boolean`), `is_hot` (`boolean`).
+- **Thông Báo Trực Quan & Xử Lý Lỗi Rõ Ràng Trên Giao Diện Admin (`admin/places/page.tsx`)**:
+  - Hiển thị thông báo thành công `✅ Đã cập nhật thành công "[Tên địa điểm]"` khi lưu thành công và cập nhật lại danh sách ngay lập tức.
+  - Nếu gặp lỗi từ máy chủ, hiển thị cảnh báo đỏ chi tiết `❌ Không thể lưu: [Nguyên nhân]` thay vì im lặng không phản hồi.
 
 ---
 

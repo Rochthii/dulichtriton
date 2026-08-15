@@ -124,15 +124,21 @@ export default function AdminPlacesPage() {
         body: JSON.stringify(editingPlace),
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setPlaces(places.map((p) => (p.id === editingPlace.id ? { ...p, ...data.place } : p)));
         setEditingPlace(null);
-        setStatusMsg(`Đã cập nhật dữ liệu & Vector Embeddings 768d cho "${editingPlace.name}"!`);
+        setStatusMsg(`✅ Đã cập nhật thành công "${editingPlace.name}"!`);
         setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(`❌ Không thể lưu: ${data.error || 'Lỗi hệ thống'}`);
+        setTimeout(() => setStatusMsg(null), 5000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Failed to save place edit:', err);
+      setStatusMsg(`❌ Lỗi mạng: ${err.message || 'Không thể kết nối máy chủ'}`);
+      setTimeout(() => setStatusMsg(null), 5000);
     } finally {
       setSyncingVector(false);
     }
@@ -149,16 +155,22 @@ export default function AdminPlacesPage() {
         body: JSON.stringify(newPlace),
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setPlaces([data.place, ...places]);
         setIsAddingNew(false);
         setNewPlace(DEFAULT_NEW_PLACE);
-        setStatusMsg(`Đã thêm địa điểm mới & sinh Vector Embeddings thành công!`);
+        setStatusMsg(`✅ Đã thêm địa điểm mới & sinh Vector Embeddings thành công!`);
         setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(`❌ Không thể tạo: ${data.error || 'Lỗi hệ thống'}`);
+        setTimeout(() => setStatusMsg(null), 5000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Failed to create new place:', err);
+      setStatusMsg(`❌ Lỗi mạng: ${err.message || 'Không thể kết nối máy chủ'}`);
+      setTimeout(() => setStatusMsg(null), 5000);
     } finally {
       setSyncingVector(false);
     }
