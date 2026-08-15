@@ -134,3 +134,45 @@ Dự án duy trì bộ 13 màn hình chuẩn theo [docs/ui_prototype_showcase.md
 11. `ItineraryExportModal` (Modal Xuất QR Code / PDF)
 12. `/partner` (Cổng Đăng ký Dịch vụ Đối tác)
 13. `/admin` (Admin Control Center & Audit Logs Dashboard)
+
+---
+
+## ⚡ 6. Next.js Enterprise Cache Architecture (RULE-23)
+
+### 🎯 Nguyên Tắc Single Master Key (Zero Cache Dilution)
+* Mỗi nhóm danh mục (`places`, `food`, `stays`, `culture`, `videos`) chỉ lưu trữ **ĐÚNG 1 MASTER CACHE KEY DUY NHẤT** trên Next.js Data Cache (`master-places-all-v3`, `master-food-places-v3`...).
+* **Tuyệt đối KHÔNG phân mảnh cache theo query params** (`?commune=...&night=...`). Toàn bộ việc lọc xã, tìm kiếm, lọc đêm được xử lý **100% Client-Side / In-Memory (`useMemo`)**.
+
+### 🛡️ Van An Toàn 24h & Invalidation On-Demand
+* Cấu hình `revalidate: 86400` (24h) làm van an toàn phòng trường hợp Vercel evict cache.
+* Khi Admin thực hiện thêm/sửa/xóa điểm du lịch, kích hoạt ngay:
+  ```typescript
+  bumpDataVersion();
+  (revalidateTag as any)('places', { expire: 0 });
+  revalidatePath('/', 'layout');
+  ```
+
+### 🔄 Reactive Client SWR Sync
+* Sử dụng `fastCache.ts` với callback `onRevalidated` để khi dữ liệu mới tải ngầm từ server về, React State tự động cập nhật lại màn hình người dùng ngay lập tức mà không cần F5.
+* **Tách biệt dữ liệu cá nhân**: Lịch sử chat, danh sách yêu thích, phiên chatbot là dữ liệu riêng biệt của từng User, tuyệt đối không gắn tag `'places'` hay lưu vào public shared cache.
+
+---
+
+## 🤖 7. Google Search Grounding & Multi-LLM Resilience Protocol (RULE-24)
+
+### 🌐 Google Search Grounding (Live Web Discovery)
+* Kích hoạt Native Search Grounding trong Gemini API v1beta:
+  ```typescript
+  body: JSON.stringify({
+    system_instruction: { parts: [{ text: systemPrompt }] },
+    contents: [{ parts: [{ text: userPrompt }] }],
+    tools: [{ google_search: {} }],
+  })
+  ```
+* Cho phép AI tự động tra cứu Google Search theo thời gian thực để trả lời các sự kiện, giá vé, quán mới nổi trên internet tại Tri Tôn.
+
+### 🔄 Multi-Key Round-Robin & Multi-Tier Failover (100% Free)
+1. **Tier 1: Google Gemini 2.0 Flash + Search Grounding**: Xoay vòng 4 API Keys liên tục (6,000 lượt hỏi/ngày miễn phí).
+2. **Tier 2: Groq Llama-3.3-70B-Versatile**: Tự động chuyển vùng khi Gemini quá tải (tốc độ 100+ tokens/giây).
+3. **Tier 3: OpenRouter Free Models**: Dự phòng phân tán nhiều nhà cung cấp.
+4. **Tier 4: Smart Local RAG**: Đảm bảo 100% uptime không bao giờ làm gián đoạn trải nghiệm của du khách.

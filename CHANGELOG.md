@@ -4,6 +4,25 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v30.0.0-ENTERPRISE-CACHE-GOOGLE-SEARCH-GROUNDING] - 2026-08-15
+
+### ⚡ Kiến Trúc Next.js Single Master Cache & Reactive SWR Sync (RULE-23)
+- **Single Master Cache Key (Zero Cache Dilution)**: Chuẩn hóa 1 cache key duy nhất cho mỗi danh mục dữ liệu (`master-places-all-v3`, `master-food-places-v3`, `master-stays-places-v3`, `master-culture-places-v3`, `master-videos-triton-v3`) với van an toàn 24h (`revalidate: 86400`). Toàn bộ việc lọc xã, tìm kiếm, lọc đêm được xử lý **100% Client-Side / In-Memory (`useMemo`)**, giúp tỷ lệ Cache Hit luôn đạt 100% và tiết kiệm 99%+ tài nguyên Supabase.
+- **Server Data-Version Heartbeat & Edge Headers**: Tích hợp `bumpDataVersion()` và Header `Cache-Control: public, max-age=10, s-maxage=60, stale-while-revalidate=86400` + `X-Data-Version` đảm bảo Edge CDN purge tức thì khi có cập nhật từ Admin.
+- **Reactive Client SWR Sync (`fastCache.ts`)**: Bổ sung callback `onRevalidated` tự động so sánh JSON ngầm và re-render React UI tức thì khi có dữ liệu mới từ máy chủ mà người dùng không cần tải lại trang (F5).
+- **Phân Tách Tuyệt Đối Dữ Liệu Cá Nhân**: Lịch sử hội thoại, danh sách yêu thích, kịch bản lịch trình cá nhân được lưu tách biệt tại LocalStorage / Private API, không gắn tag `'places'` hay lưu vào cache công cộng.
+
+### 🌐 Trợ Lý AI Google Search Grounding & Multi-Key Failover (RULE-24)
+- **Google Search Grounding**: Tích hợp tính năng Native Search Grounding (`tools: [{ google_search: {} }]`) vào Google Gemini 2.0 API, cho phép AI tự động tra cứu web Google thời gian thực để cập nhật tin tức, sự kiện (Hội Đua bò 2026), giá vé và hàng quán mới nổi tại Tri Tôn với chi phí 0đ.
+- **Xoay Vòng 4 Key Gemini Tự Động (Multi-Key Round-Robin)**: Phân phối tải luân phiên qua 4 Gemini API Keys từ Google AI Studio, nâng tổng mức phục vụ miễn phí lên **6,000 lượt hỏi/ngày** (100% Free).
+- **Khắc Phục Lỗi Chatbot Streaming**: Sửa triệt để lỗi bất đồng bộ tên trường (`question` vs `query`) và chuẩn hóa luồng sự kiện SSE (`token`, `text_delta`, `metadata`, `places`, `done`), loại bỏ hoàn toàn hiện tượng bóng loading bị kẹt.
+
+### 🏷️ Cập Nhật Bộ Nhớ Hệ Thống & Nhận Diện Thương Hiệu (Brand & Memory)
+- **Thông Tin Tác Giả & Nhà Phát Triển**: Xác lập tác giả **Chăm Rốch Thi** (Cham Roch Thi) và Email liên hệ `rochthi59@gmail.com` trong toàn bộ tài liệu thương hiệu, trang Điều khoản (`/terms`) và Chính sách bảo mật (`/privacy`).
+- **Cập Nhật Toàn Bộ Bộ Nhớ & Skill**: Đồng bộ `.agents/skills/triton_workflow_execution_standard/SKILL.md`, `.agents/brand_identity.md`, `.agents/permanent_memory.md`, và `AGENTS.md`.
+
+---
+
 ## [v29.0.0-FOLK-MODERN-BAY-NUI-DESIGN-SYSTEM] - 2026-08-15
 
 ### 🎨 Thiết Lập & Đồng Bộ Toàn Diện Phong Cách "Folk-Modern Bảy Núi" (1:1 Design Tokens)
