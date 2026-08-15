@@ -1,48 +1,81 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-const ITIN_FILE = path.join(process.cwd(), 'data', 'tri_ton_master_itineraries_and_rules.json');
-
-function readMasterItineraries() {
-  try {
-    if (fs.existsSync(ITIN_FILE)) {
-      const content = fs.readFileSync(ITIN_FILE, 'utf-8');
-      return JSON.parse(content);
-    }
-  } catch (err) {
-    console.error('Error reading itineraries file:', err);
-  }
-  return { metadata: {}, master_itineraries: [] };
+interface StopItem {
+  time?: string;
+  time_start?: string;
+  time_end?: string;
+  id?: string;
+  name: string;
+  commune?: string;
+  cluster?: string;
+  category?: string;
+  tip?: string;
+  duration_min?: number;
+  travel_to_next_km?: number;
 }
 
-function writeMasterItineraries(data: Record<string, unknown>) {
-  try {
-    fs.writeFileSync(ITIN_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    return true;
-  } catch (err) {
-    console.error('Error writing itineraries file:', err);
-    return false;
-  }
+interface ItineraryPayload {
+  id?: string;
+  itinerary_id?: string;
+  slug?: string;
+  emoji?: string;
+  title: string;
+  duration: string;
+  total_distance_km?: number;
+  recommended_vehicle?: string;
+  suitable_for?: string;
+  for_whom?: string;
+  budget_estimate?: string;
+  budget?: string;
+  description?: string;
+  tagline?: string;
+  stops?: StopItem[];
+  is_active?: boolean;
+  display_order?: number;
 }
 
-// GET: Fetch all itineraries
+// GET: Fetch all itineraries directly from Supabase PostgreSQL
 export async function GET() {
   try {
-    const data = readMasterItineraries();
-    const list = data.master_itineraries || [];
+    const { data: rows, error } = await supabase
+      .from('preset_itineraries')
+      .select('*')
+      .order('display_order', { ascending: true, nullsFirst: false });
+
+    if (error) {
+      console.error('[AdminItineraries GET Error]:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    // Normalize rows for admin table
+    const itineraries = (rows || []).map((row: any) => ({
+      itinerary_id: row.id,
+      id: row.id,
+      slug: row.slug,
+      emoji: row.emoji || '🧭',
+      title: row.title,
+      duration: row.duration || '1 ngày',
+      total_distance_km: row.total_distance_km || 25,
+      recommended_vehicle: row.recommended_vehicle || 'Xe máy / Ô tô',
+      suitable_for: row.for_whom || row.suitable_for || 'Tất cả du khách',
+      for_whom: row.for_whom || row.suitable_for || 'Tất cả du khách',
+      budget_estimate: row.budget || row.budget_estimate || '200k - 500k/người',
+      budget: row.budget || row.budget_estimate || '200k - 500k/người',
+      description: row.tagline || row.description || '',
+      tagline: row.tagline || row.description || '',
+      stops: Array.isArray(row.stops) ? row.stops : [],
+      is_active: row.is_active ?? true,
+      display_order: row.display_order ?? 1,
+      created_at: row.created_at,
+    }));
+
     return NextResponse.json({
       success: true,
-      count: list.length,
-      itineraries: list,
-      metadata: data.metadata || {},
+      count: itineraries.length,
+      itineraries,
     });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Error fetching itineraries';
@@ -50,108 +83,165 @@ export async function GET() {
   }
 }
 
-// POST: Add a new itinerary
+// POST: Add a new itinerary to Supabase
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { title, duration, total_distance_km, recommended_vehicle, stops, description, suitable_for, budget_estimate } = body;
+    const body: ItineraryPayload = await req.json();
+    const {
+      title,
+      duration,
+      total_distance_km,
+      recommended_vehicle,
+      stops,
+      description,
+      tagline,
+      suitable_for,
+      for_whom,
+      budget_estimate,
+      budget,
+      emoji,
+    } = body;
 
     if (!title || !duration) {
       return NextResponse.json({ error: 'Tiêu đề và thời lượng tour là bắt buộc' }, { status: 400 });
     }
 
-    const data = readMasterItineraries();
-    const list = data.master_itineraries || [];
+    const slug = title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
 
-    const newId = `tour-${Date.now().toString(36)}`;
-    const newTour = {
-      itinerary_id: newId,
+    const newRecord = {
+      slug: `${slug}-${Date.now().toString(36)}`,
+      emoji: emoji || '🧭',
       title: title.trim(),
+      tagline: (tagline || description || '').trim(),
+      for_whom: (for_whom || suitable_for || 'Tất cả du khách').trim(),
       duration: duration.trim(),
-      total_distance_km: Number(total_distance_km) || 30,
-      recommended_vehicle: recommended_vehicle || 'Xe máy / Ô tô',
-      suitable_for: suitable_for || 'Tất cả du khách',
-      budget_estimate: budget_estimate || '300.000đ - 600.000đ/người',
-      description: description || '',
+      budget: (budget || budget_estimate || '300.000đ - 600.000đ/người').trim(),
       stops: Array.isArray(stops) ? stops : [],
-      created_at: new Date().toISOString(),
+      is_active: true,
+      display_order: 99,
     };
 
-    list.unshift(newTour);
-    data.master_itineraries = list;
-    writeMasterItineraries(data);
+    const { data, error } = await supabase
+      .from('preset_itineraries')
+      .insert(newRecord)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[AdminItineraries POST Error]:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 
     // Audit log
     void Promise.resolve(
       supabase.from('audit_logs').insert({
         action: 'CREATE_ITINERARY',
-        target_table: 'itineraries',
-        changes: newTour,
+        target_table: 'preset_itineraries',
+        target_id: data.id,
+        changes: newRecord,
         created_at: new Date().toISOString(),
       })
     ).catch(() => {});
 
-    return NextResponse.json({ success: true, itinerary: newTour });
+    const mapped = {
+      itinerary_id: data.id,
+      ...data,
+      suitable_for: data.for_whom,
+      budget_estimate: data.budget,
+      description: data.tagline,
+    };
+
+    return NextResponse.json({ success: true, itinerary: mapped });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Error creating itinerary';
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
-// PATCH: Update existing itinerary
+// PATCH: Update existing itinerary in Supabase
 export async function PATCH(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { itinerary_id, title, duration, total_distance_km, recommended_vehicle, stops, description, suitable_for, budget_estimate } = body;
+    const body: ItineraryPayload = await req.json();
+    const {
+      id,
+      itinerary_id,
+      title,
+      duration,
+      total_distance_km,
+      recommended_vehicle,
+      stops,
+      description,
+      tagline,
+      suitable_for,
+      for_whom,
+      budget_estimate,
+      budget,
+      emoji,
+      is_active,
+      display_order,
+    } = body;
 
-    if (!itinerary_id) {
+    const targetId = id || itinerary_id;
+    if (!targetId) {
       return NextResponse.json({ error: 'Thiếu mã itinerary_id' }, { status: 400 });
     }
 
-    const data = readMasterItineraries();
-    const list = data.master_itineraries || [];
-    const index = list.findIndex((it: { itinerary_id: string }) => it.itinerary_id === itinerary_id);
+    const updatePayload: Record<string, any> = {};
+    if (title !== undefined) updatePayload.title = title.trim();
+    if (duration !== undefined) updatePayload.duration = duration.trim();
+    if (tagline !== undefined || description !== undefined) updatePayload.tagline = (tagline || description || '').trim();
+    if (for_whom !== undefined || suitable_for !== undefined) updatePayload.for_whom = (for_whom || suitable_for || '').trim();
+    if (budget !== undefined || budget_estimate !== undefined) updatePayload.budget = (budget || budget_estimate || '').trim();
+    if (emoji !== undefined) updatePayload.emoji = emoji.trim();
+    if (stops !== undefined) updatePayload.stops = Array.isArray(stops) ? stops : [];
+    if (is_active !== undefined) updatePayload.is_active = Boolean(is_active);
+    if (display_order !== undefined) updatePayload.display_order = Number(display_order);
 
-    if (index === -1) {
-      return NextResponse.json({ error: 'Không tìm thấy lịch trình cần sửa' }, { status: 404 });
+    const { data, error } = await supabase
+      .from('preset_itineraries')
+      .update(updatePayload)
+      .or(`id.eq.${targetId},slug.eq.${targetId}`)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[AdminItineraries PATCH Error]:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-
-    const existing = list[index];
-    const updated = {
-      ...existing,
-      ...(title !== undefined && { title: title.trim() }),
-      ...(duration !== undefined && { duration: duration.trim() }),
-      ...(total_distance_km !== undefined && { total_distance_km: Number(total_distance_km) }),
-      ...(recommended_vehicle !== undefined && { recommended_vehicle: recommended_vehicle.trim() }),
-      ...(suitable_for !== undefined && { suitable_for: suitable_for.trim() }),
-      ...(budget_estimate !== undefined && { budget_estimate: budget_estimate.trim() }),
-      ...(description !== undefined && { description: description.trim() }),
-      ...(stops !== undefined && { stops }),
-      updated_at: new Date().toISOString(),
-    };
-
-    list[index] = updated;
-    data.master_itineraries = list;
-    writeMasterItineraries(data);
 
     // Audit log
     void Promise.resolve(
       supabase.from('audit_logs').insert({
         action: 'UPDATE_ITINERARY',
-        target_table: 'itineraries',
-        changes: updated,
+        target_table: 'preset_itineraries',
+        target_id: targetId,
+        changes: updatePayload,
         created_at: new Date().toISOString(),
       })
     ).catch(() => {});
 
-    return NextResponse.json({ success: true, itinerary: updated });
+    const mapped = {
+      itinerary_id: data.id,
+      ...data,
+      suitable_for: data.for_whom,
+      budget_estimate: data.budget,
+      description: data.tagline,
+    };
+
+    return NextResponse.json({ success: true, itinerary: mapped });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Error updating itinerary';
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
-// DELETE: Remove itinerary
+// DELETE: Remove or deactivate itinerary in Supabase
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -161,18 +251,22 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Thiếu mã itinerary_id' }, { status: 400 });
     }
 
-    const data = readMasterItineraries();
-    const list = data.master_itineraries || [];
-    const filtered = list.filter((it: { itinerary_id: string }) => it.itinerary_id !== itinerary_id);
+    const { error } = await supabase
+      .from('preset_itineraries')
+      .delete()
+      .or(`id.eq.${itinerary_id},slug.eq.${itinerary_id}`);
 
-    data.master_itineraries = filtered;
-    writeMasterItineraries(data);
+    if (error) {
+      console.error('[AdminItineraries DELETE Error]:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 
     void Promise.resolve(
       supabase.from('audit_logs').insert({
         action: 'DELETE_ITINERARY',
-        target_table: 'itineraries',
-        changes: { deleted_id: itinerary_id },
+        target_table: 'preset_itineraries',
+        target_id: itinerary_id,
+        changes: { deleted_at: new Date().toISOString() },
         created_at: new Date().toISOString(),
       })
     ).catch(() => {});

@@ -85,13 +85,15 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động nâng cấp kích thước thumbnail nhỏ sang định dạng chuẩn nét cao **HD ($1600\text{px}$)** (`=w1600-h1200-k-no`).
   - Hỗ trợ cào ảnh từ bất kỳ trang web / bài báo nào (lấy OpenGraph `og:image`, `twitter:image` và thẻ `<img>` độ nét cao, loại bỏ icon/svg rác).
 - **Giao Diện Trực Quan Trong `PhotoGalleryStudio.tsx`**:
-### 🛠️ Khắc Phục Triệt Để Lỗi Lưu Chỉnh Sửa Địa Điểm Trên Trang Admin (/admin/places)
-- **Chuẩn Hóa Kiểu Dữ Liệu PostgreSQL Array & JSONB (`/api/v1/admin/places`)**:
-  - Khắc phục lỗi `22P02: malformed array literal` khi lưu `golden_time_windows` (chuỗi text gửi vào cột `text[]`). Hệ thống hiện tự động chuẩn hóa chuỗi phân tách `•`, `,`, `;` thành mảng chuỗi `text[]` chuẩn PostgreSQL.
-  - Chuẩn hóa toàn bộ các trường mảng và đối tượng: `photos` (`text[]`), `checkin_spots` (`jsonb`), `latitude` & `longitude` (`double precision`), `rating` (`numeric`), `open_late` (`boolean`), `is_hot` (`boolean`).
-- **Thông Báo Trực Quan & Xử Lý Lỗi Rõ Ràng Trên Giao Diện Admin (`admin/places/page.tsx`)**:
-  - Hiển thị thông báo thành công `✅ Đã cập nhật thành công "[Tên địa điểm]"` khi lưu thành công và cập nhật lại danh sách ngay lập tức.
-  - Nếu gặp lỗi từ máy chủ, hiển thị cảnh báo đỏ chi tiết `❌ Không thể lưu: [Nguyên nhân]` thay vì im lặng không phản hồi.
+### 🗺️ Nâng Cấp Quản Lý Lịch Trình Đồng Bộ Supabase PostgreSQL (/admin/itineraries)
+- **Chuyển Đổi Sang Supabase Database Real-time (`public.preset_itineraries`)**:
+  - Khắc phục triệt để lỗi không nạp được dữ liệu lịch trình do trước đây API đọc/ghi tệp JSON cục bộ (`tri_ton_master_itineraries_and_rules.json`) vốn bị chặn trên môi trường Vercel Serverless Read-only.
+  - Chuyển toàn bộ luồng dữ liệu của `/api/v1/admin/itineraries` sang đọc/ghi trực tiếp vào bảng `public.preset_itineraries` trong Supabase PostgreSQL.
+- **Hỗ Trợ Đầy Đủ Thao Tác CRUD Lịch Trình**:
+  - `GET`: Nạp danh sách tour mẫu Bảy Núi trực tiếp từ database theo thứ tự ưu tiên `display_order`.
+  - `POST`: Tạo tour mới và ghi nhận audit log an toàn.
+  - `PATCH`: Cập nhật các điểm dừng (stops), thời lượng, ngân sách dự kiến, phương tiện đề xuất.
+  - `DELETE`: Xóa tour và ghi vết thao tác vào `audit_logs`.
 
 ---
 

@@ -94,14 +94,21 @@ export default function AdminItinerariesPage() {
         body: JSON.stringify(editingTour),
       });
 
-      if (res.ok) {
-        setItineraries(itineraries.map((it) => (it.itinerary_id === editingTour.itinerary_id ? editingTour : it)));
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setItineraries(itineraries.map((it) => (it.itinerary_id === editingTour.itinerary_id ? { ...it, ...data.itinerary } : it)));
         setEditingTour(null);
-        setStatusMsg(`Đã cập nhật tour "${editingTour.title}" thành công!`);
-        setTimeout(() => setStatusMsg(null), 3000);
+        setStatusMsg(`✅ Đã cập nhật tour "${editingTour.title}" thành công!`);
+        setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(`❌ Không thể lưu: ${data.error || 'Lỗi hệ thống'}`);
+        setTimeout(() => setStatusMsg(null), 5000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Failed to save itinerary:', err);
+      setStatusMsg(`❌ Lỗi kết nối: ${err.message || 'Lỗi mạng'}`);
+      setTimeout(() => setStatusMsg(null), 5000);
     }
   };
 
@@ -114,15 +121,21 @@ export default function AdminItinerariesPage() {
         body: JSON.stringify(newTour),
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         setItineraries([data.itinerary, ...itineraries]);
         setIsAddingNew(false);
-        setStatusMsg(`Đã tạo lịch trình mới thành công!`);
-        setTimeout(() => setStatusMsg(null), 3000);
+        setStatusMsg(`✅ Đã tạo lịch trình mới thành công!`);
+        setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(`❌ Không thể tạo: ${data.error || 'Lỗi hệ thống'}`);
+        setTimeout(() => setStatusMsg(null), 5000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Failed to create itinerary:', err);
+      setStatusMsg(`❌ Lỗi kết nối: ${err.message || 'Lỗi mạng'}`);
+      setTimeout(() => setStatusMsg(null), 5000);
     }
   };
 
@@ -131,13 +144,19 @@ export default function AdminItinerariesPage() {
 
     try {
       const res = await fetch(`/api/v1/admin/itineraries?id=${id}`, { method: 'DELETE' });
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         setItineraries(itineraries.filter((it) => it.itinerary_id !== id));
-        setStatusMsg(`Đã xóa tour "${title}"!`);
-        setTimeout(() => setStatusMsg(null), 3000);
+        setStatusMsg(`✅ Đã xóa tour "${title}" thành công!`);
+        setTimeout(() => setStatusMsg(null), 3500);
+      } else {
+        setStatusMsg(`❌ Lỗi xóa: ${data.error || 'Không thể xóa'}`);
+        setTimeout(() => setStatusMsg(null), 5000);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Failed to delete itinerary:', err);
+      setStatusMsg(`❌ Lỗi kết nối: ${err.message}`);
+      setTimeout(() => setStatusMsg(null), 5000);
     }
   };
 
