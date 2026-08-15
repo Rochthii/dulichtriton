@@ -96,18 +96,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của 149 địa điểm Tri Tôn trong cơ sở dữ liệu.
   - Sử dụng công thức Haversine kết hợp hệ số uốn lượn đường đèo Bảy Núi ($1.25\times$) để tính toán chính xác quãng đường (km) và thời gian di chuyển (phút) giữa từng chặng dừng.
   - Nút bấm **"⚡ Tự Động Đo GPS & Quãng Đường"** tự động tính tổng quãng đường tour `total_distance_km` và hiển thị chi tiết thẻ kết nối chặng `➔ ~X km (Y phút di chuyển)`.
-### 🏷️ Chuẩn Hóa Toàn Diện 6 Danh Mục & Đơn Vị Hành Chính Xã/Thị Trấn (RULE 1 & Master Taxonomy)
-- **Chuẩn Hóa Tuyệt Đối 6 Danh Mục Cốt Lõi (Khắc Phục Tình Trạng Lẫn Lộn Phân Loại)**:
-  - `FOOD` (62 điểm): Hợp nhất toàn bộ các quán ăn, gà đốt, bún cá/bún nước lèo, cháo bò, bánh bò, đu đủ đâm, cà phê view hồ/núi, chợ đêm.
-  - `NATURE` (51 điểm): Khám phá cảnh quan thiên nhiên (Hồ Tà Pạ, Núi Cô Tô, Vồ Hội, Ô Tà Sóc, Suối Soài So, Hồ Soài Chek, Hồ Latina, Cánh đồng lúa).
-  - `SPIRITUAL` (23 điểm): Chùa Nam Tông Khmer cổ kính (Wat Xvayton, Chùa Tà Pạ, Chùa Hàng Còng, Chùa Soài So, Chùa Mới Ô Lâm, Chùa Phi Lai, Chùa Tam Bửu).
-  - `HISTORY` (10 điểm): Địa danh lịch sử & kháng chiến (Khu Chứng tích Nhà Mồ Ba Chúc, Căn cứ Ô Tà Sóc, Đồi Tức Dụp, Kênh Vĩnh Tế).
-  - `STAY` (8 điểm): Khách sạn, Homestay, Resort, Nhà nghỉ nghỉ dưỡng.
-  - `CULTURE` (3 điểm): Công trình biểu tượng văn hóa & Lễ hội (Cổng Trời Koh Kas, Thốt Nốt Trái Tim, Cây Thốt Nốt Cô Độc).
-- **Chuẩn Hóa Đơn Vị Hành Chính Cấp Xã / Thị Trấn (100% Không Dùng 'Huyện Tri Tôn')**:
-  - Gán chuẩn xác từng địa điểm về đúng Xã/Thị trấn: *Xã Ô Lâm (25 điểm), Xã Núi Tô (17 điểm), Xã Châu Lăng (11 điểm), Thị trấn Ba Chúc (11 điểm), Xã Lương Phi (7 điểm), Xã Cô Tô (4 điểm), Xã An Tức (3 điểm), Xã An Hảo (3 điểm), Thị trấn Tri Tôn (76 điểm)*.
-- **Tái Sinh 100% Vector Embeddings 768 Chiều (157/157 Địa Điểm)**:
-  - Sinh mới toàn bộ Vector Embeddings 768d cho toàn bộ 157 địa điểm đã phân loại chuẩn xác, giúp AI trả lời cực kỳ chính xác theo đúng danh mục và vị trí địa lý.
+### 🎪 Mở Rộng Toàn Diện Văn Hóa & 5 Đại Lễ Hội Bảy Núi Tri Tôn (/culture & knowledge_base)
+- **Bổ Sung Trọn Vẹn 5 Đại Lễ Hội Truyền Thống & Sự Kiện Đặc Sắc Tri Tôn**:
+  - **Lễ Hội Đua Bò Bảy Núi (Lễ Sene Dolta)** (Tháng 8 - 9 Âm lịch): Di sản văn hóa phi vật thể Quốc gia tại Sân đua bò Chùa Tà Miệt (Xã Lương Phi) và Chùa Rô (Xã Châu Lăng).
+  - **Tết Cổ Truyền Chôl Chnăm Thmây** (13 - 16 Tháng 4 Dương lịch): Ngày tết rực rỡ mừng năm mới, nghi thức Rước Đại Lịch, Đắp núi cát (Poun Phnum Khsach), Tắm Phật và múa Răm-vông thâu đêm tại các chùa Nam Tông Khmer.
+  - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió, Đèn Nước** (Rằm tháng 10 Âm lịch): Nghi thức đút Cốm Dẹp (Ombok) cầu may mắn cho trẻ nhỏ và thả đèn gió bay rực sáng bầu trời Thất Sơn.
+  - **Đại Lễ Dâng Y Kathina** (Rằm tháng 9 - Rằm tháng 10 Âm lịch): Đại lễ Phật giáo trang trọng, hòa tấu Dàn nhạc Ngũ Âm (Pinpeat) và vũ điệu múa trống Chhay-dăm.
+  - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn** (Dịp lễ 30/4 - 1/5 và 2/9): Trải nghiệm bay khinh khí cầu ngắm núi Cô Tô và cánh đồng Tà Pạ mùa lúa chín.
+- **Nâng Cấp Không Gian Trực Quan & Bộ Lọc Tabs Trên Trang `/culture`**:
+  - **Interactive 4-Season Festival Timeline**: Banner trình diễn 5 kỳ lễ hội với thời gian âm/dương lịch, địa điểm tổ chức và nút bấm hỏi AI nhanh.
+  - **4 Di Sản & Tinh Hoa Làng Nghề Trăm Tuổi**: Kinh Lá Buông (Satra Slarkrit) độc bản, Dàn nhạc Ngũ Âm & Múa Dù Kê (Robam), Làng Dệt Thổ Cẩm Châu Lăng, Lò Gốm Bếp Cà-Ràng Ô Lâm.
+  - **Bộ Lọc Tabs Phân Loại Mạch Lạc**: `Tất Cả` | `Lễ Hội & Sân Đua Bò` | `Chùa Khmer Cổ Kính` | `Di Tích Lịch Sử` | `Làng Nghề & Di Sản`.
+- **Nạp 6 Khối Tri Thức Văn Hóa Mới & 100% Vector Embeddings 768d**:
+  - Bổ sung `KB013` (Tết Chôl Chnăm Thmây), `KB014` (Lễ Ok Om Bok & Thả đèn gió), `KB015` (Lễ Dâng Y Kathina & Nhạc Ngũ Âm), `KB016` (Nghệ thuật Múa Dân Gian Khmer), `KB017` (Làng Nghề Truyền Thống Tri Tôn), `KB018` (Lễ Hội Khinh Khí Cầu).
+  - Đạt **162/162 địa điểm** và **22/22 khối tri thức** có Vector Embeddings 768d trong pgvector.
 
 ---
 

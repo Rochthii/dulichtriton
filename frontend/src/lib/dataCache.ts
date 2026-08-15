@@ -170,7 +170,7 @@ export const getCachedAllCulturePlaces = unstable_cache(
       const { data: cultureItems, error } = await supabase
         .from('places')
         .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, is_hot')
-        .or('category.ilike.%Chùa%,category.ilike.%Văn hóa%,category.ilike.%Di tích%,category.ilike.%Di sản%,category.eq.spiritual,category.eq.culture,tourism_category.ilike.%Tâm linh%,tourism_category.ilike.%Văn hóa%,id.ilike.CH%,id.ilike.DT%')
+        .or('category.ilike.%Chùa%,category.ilike.%Văn hóa%,category.ilike.%Di tích%,category.ilike.%Di sản%,category.eq.spiritual,category.eq.culture,category.eq.history,tourism_category.ilike.%Tâm linh%,tourism_category.ilike.%Văn hóa%,tourism_category.ilike.%Lễ hội%,id.ilike.CH%,id.ilike.DT%')
         .eq('is_active', true)
         .order('rating', { ascending: false });
 
