@@ -4,6 +4,29 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v31.0.0-PRO-ARTICLES-STUDIO-HOT-POIS] - 2026-08-15
+
+### 📝 Studio Quản Lý Bài Viết & Căn Chỉnh Typography (/admin/stories)
+- **CMS Soạn Thảo & Live Preview Chuyên Nghiệp**: Xây dựng trung tâm quản trị bài viết chuyên sâu cho 155 địa điểm với chế độ xem 2 cột (Soạn thảo Markdown bên trái, Xem trước thời gian thực chuẩn Typography bên phải).
+- **Bộ Công Cụ Căn Chỉnh Typography Tự Động (`storyFormatter.ts`)**: Giải quyết triệt để lỗi nén dòng dính chữ từ Google Sheets/CSV, tự động chèn tiêu đề phân đoạn `### 1.`, gạch đầu dòng `- **Nhãn:**` và chuẩn hóa từ vựng bản địa (chuyển đổi toàn bộ "gà nướng" sang "gà đốt" chuẩn ẩm thực Bảy Núi).
+- **Tính Năng Căn Chỉnh Hàng Loạt (1-Click Batch Alignment)**: Bổ sung nút bấm tự động quét và chuẩn hóa toàn bộ 155 địa điểm, lưu trực tiếp lên cơ sở dữ liệu Supabase PostgreSQL.
+
+### 🌟 Bổ Sung 10 Bài Viết Thực Địa Cho Các Địa Điểm Hot Nhất Tri Tôn
+- **10 Bài Viết Chuyên Sâu (2,500 – 4,000 ký tự mỗi bài)** được xác minh thực tế qua Google Search, Google Maps và báo chí địa phương:
+  1. *Cổng Trời Chùa Koh Kas (Cổng Thời Gian Bảy Núi)*: Kiến trúc tháp ba ngọn, tượng thần Brahma 4 mặt, tọa độ săn bình minh giữa cánh đồng lúa Châu Lăng.
+  2. *Quán Bánh Canh Lò Rèn (>30 năm gia truyền)*: 114 Trần Hưng Đạo, sợi bánh thủ công từ gạo sóc Campuchia, nước lèo xương cá lóc ngọt thanh từ thời thím Năm Hải.
+  3. *Quán Cháo Bò & Bò Nướng Trái Chúc Tri Tôn*: Đặc sản linh hồn Bảy Núi với lòng bò tươi giòn, gạo dẻo và hương thơm ngạt ngào của tinh dầu trái chúc tự nhiên.
+  4. *Chùa Tam Bửu Ba Chúc (Tổ đình Đạo Tứ Ân Hiếu Nghĩa)*: Di tích Lịch sử Quốc gia, nóc quả bầu 3 ngấn, bảo vật kiệu Long Đình từ thời Đức Bổn Sư Ngô Lợi năm 1882.
+  5. *Chùa Phi Lai Ba Chúc*: Di tích Lịch sử Quốc gia khởi lập năm 1887, chứng tích hào hùng của cuộc chiến tranh bảo vệ biên giới Tây Nam năm 1978.
+  6. *Bún Cá Lóc Đâm Nước Ngải (Num Banh Chok Khmer)*: Món ăn cổ truyền với cá lóc giã nhuyễn cùng củ ngải bún và nghệ tươi, nước dùng thanh ngọt không tanh.
+  7. *Con Đường Rừng Tre Tầm Vông Ô Tà Sóc*: Cung đường xanh mát rợp bóng hàng ngàn cây tầm vông trên sườn dốc Núi Dài, dẫn vào Căn cứ Tỉnh ủy An Giang.
+  8. *Bánh Bò Thốt Nốt Nướng Than Chợ Tri Tôn*: Bánh bò rễ tre nướng khuôn gang than hồng làm từ đường thốt nốt nguyên chất và nước cốt dừa béo ngậy.
+  9. *Khu Ẩm Thực Chợ Đêm & Phố Đi Bộ Tri Tôn*: Tâm điểm ăn vặt về đêm với nước thốt nốt tươi ướp lạnh, bánh kẹp nướng, xiên que nướng và bắp mỡ hành.
+  10. *Đá Vồ Hội Mẹ Núi Cô Tô*: Mỏm đá granite sừng sững cao hơn 500m nhìn toàn cảnh cánh đồng Tà Pạ và hoàng hôn biên giới Campuchia.
+- **Đồng Bộ Hoàn Toàn Lên Supabase**: Đã nạp thành công 125 bài viết chi tiết vào bảng `places` trên Supabase Cloud.
+
+---
+
 ## [v30.0.0-ENTERPRISE-CACHE-GOOGLE-SEARCH-GROUNDING] - 2026-08-15
 
 ### ⚡ Kiến Trúc Next.js Single Master Cache & Reactive SWR Sync (RULE-23)
