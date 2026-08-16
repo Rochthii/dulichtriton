@@ -43,7 +43,7 @@ const defaultWelcome: Message = {
   id: '1',
   sender: 'assistant',
   text: 'Xin chào! Tôi là Trợ lý AI Du Lịch Tri Tôn. Bạn cần gợi ý **lịch trình**, tìm **đặc sản Bảy Núi**, hay khám phá **chùa Khmer** nào đó?',
-  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  timestamp: '08:00',
   suggestions: ['Gợi ý tour 1 ngày', 'Ăn Gà Đốt ở đâu ngon?', 'Chùa Khmer nào đẹp nhất?'],
   showPresetPicker: true,
 };
@@ -55,24 +55,15 @@ export default function ChatbotWidget() {
   const [input, setInput] = useState('');
   const [unreadCount, setUnreadCount] = useState(0);
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false);
-
-  const [messages, setMessages] = useState<Message[]>(() => {
-    if (typeof window === 'undefined') return [defaultWelcome];
-    try {
-      const saved = localStorage.getItem(SESSION_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as Message[];
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-    } catch { /* ignore */ }
-    return [defaultWelcome];
-  });
+  const [messages, setMessages] = useState<Message[]>([defaultWelcome]);
+  const [isMounted, setIsMounted] = useState(false);
 
   const [isTyping, setIsTyping] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
 
   useEffect(() => {
+    setIsMounted(true);
     const KEY = 'triton_widget_session_id';
     const stored = localStorage.getItem(KEY);
     if (stored) {
@@ -82,15 +73,25 @@ export default function ChatbotWidget() {
       localStorage.setItem(KEY, newId);
       sessionIdRef.current = newId;
     }
+
+    try {
+      const saved = localStorage.getItem(SESSION_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch { /* ignore */ }
   }, []);
 
   useEffect(() => {
-    if (messages.length > 0) {
+    if (isMounted && messages.length > 0) {
       try {
         localStorage.setItem(SESSION_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
       } catch { /* ignore */ }
     }
-  }, [messages]);
+  }, [messages, isMounted]);
 
   const handleSendRef = useRef<((text?: string) => Promise<void>) | null>(null);
 
@@ -517,6 +518,10 @@ export default function ChatbotWidget() {
       setIsOpen(true);
     }
   };
+
+  if (pathname === '/chatbot') {
+    return null;
+  }
 
   return (
     <>

@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v59.0.0-FIX-CHATBOT-ZERO-SSR-HYDRATION-CRASH] - 2026-08-16
+
+### 🛡️ Tách Rời Toàn Bộ Chatbot Khỏi SSR (Zero Server Hydration Crash)
+
+#### 1. Nguyên Nhân Sâu Xa Của Màn Hình "This page couldn't load"
+- Khi người dùng bấm vào `/chatbot`, Next.js 16 và Vercel Edge Server cố gắng render trước mã HTML/RSC phía server.
+- Bên trong chatbot có các logic truy cập `window`, `localStorage` và `useSearchParams` phức tạp. Mặc dù đã có `'use client'`, trên môi trường Serverless của Vercel quá trình Server Prerender / Hydration vẫn có thể xung đột và trả về mã lỗi 500 nếu có bất kỳ thuộc tính DOM nào không khớp hoàn toàn với Client.
+- Đồng thời `ChatbotWidget` cũng được mount trên `layout.tsx`, dẫn đến sự trùng lặp phiên bản state khi cùng lúc vừa mở trang `/chatbot` vừa khởi tạo widget.
+
+#### 2. Giải Pháp Xử Lý Triệt Để
+- **Tách riêng `ChatbotPageClient.tsx`**: Đưa toàn bộ giao diện và logic tương tác của chatbot vào component con.
+- **Dynamic Import với `ssr: false`**: Trang `/chatbot/page.tsx` sử dụng `next/dynamic` với thiết lập `ssr: false`. Điều này đảm bảo Server Vercel không bao giờ cố gắng biên dịch trước DOM của chatbot, loại bỏ 100% khả năng xảy ra Hydration Mismatch.
+- **Ẩn ChatbotWidget khi ở `/chatbot`**: Ngăn chặn tình trạng xung đột bộ nhớ và sự kiện giữa 2 màn hình chat.
+
+---
+
 ## [v58.1.0-FIX-UTF8-ENCODING-AND-DEPLOY-SEO-GEO-LAYER] - 2026-08-16
 
 ### 🌐 Khôi Phục 100% Bộ Mã Tiếng Việt Chuẩn UTF-8 & Triển Khai Toàn Diện Hệ Thống SEO + GEO Cho Domain `dulichtriton.com`
