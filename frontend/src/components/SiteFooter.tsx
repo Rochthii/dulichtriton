@@ -2,10 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Compass, Phone, ShieldCheck, MapPin, Lock, Sparkles, Heart, Scale, Shield, Code, ExternalLink } from 'lucide-react';
 import AppLogo from './AppLogo';
 
 export default function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname === '/chatbot') {
+    return null;
+  }
   return (
     <footer className="border-t border-[#1E2647] bg-[#151B34] text-[#FAF3E7]/80 pt-12 pb-24 md:pb-8 font-body">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

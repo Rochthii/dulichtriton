@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v64.0.0-ISOLATE-FULLSCREEN-CHATBOT-VIEWPORT] - 2026-08-16
+
+### 🛡️ Cách Ly Tuyệt Đối Toàn Bộ Layout Khi Mở Trang Chatbot
+
+#### 1. Nguyên Nhân Hiện Tượng Xung Đột Giao Diện
+- Trang `/chatbot` được thiết kế theo chuẩn toàn màn hình (`h-[100dvh]`).
+- Khi người dùng bấm vào đường dẫn `/chatbot`, cả Header (`SiteNav`), Footer (`SiteFooter`), Widget (`ChatbotWidget`) và Thanh điều hướng dưới (`MobileBottomNav`) cùng được mount đồng thời trong `layout.tsx`, gây ra hiện tượng xung đột DOM (DOM nesting hydration crash) và ép trang rơi vào trạng thái tràn bộ nhớ / crash giao diện.
+
+#### 2. Biện Pháp Khắc Phục Triệt Để
+- **Tự động ẩn `SiteNav` và `SiteFooter`** khi `pathname === '/chatbot'`, giải phóng 100% viewport cho màn hình chat AI độc lập.
+- **Tất cả các nút Hỏi AI trên hệ thống** (Header Desktop, Header Mobile, Bottom Nav, Card) đều trỏ chính xác về `/chatbot` và nhận diện đường dẫn sạch 100%.
+
+---
+
 ## [v63.0.0-FIX-NEXTJS-USE-SEARCH-PARAMS-DEOPT-SUSPENSE-CRASH] - 2026-08-16
 
 ### 🛡️ Thay Thế `useSearchParams()` Bằng Client URLSearchParams (Triệt Tiêu Hoàn Toàn Lỗi Deopt & SSR Crash)

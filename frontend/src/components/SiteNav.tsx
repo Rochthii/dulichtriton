@@ -24,6 +24,10 @@ export default function SiteNav() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  if (pathname === '/chatbot') {
+    return null;
+  }
+
   const navLinks = [
     { name: "Trang Chủ", href: "/", icon: Home },
     { name: "Khám Phá", href: "/places", icon: Compass },
