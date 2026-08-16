@@ -11,9 +11,20 @@
       "category": "classic",
       "duration": "1 ngày",
       "best_season": "Quanh năm",
-      "audiences": ["Mọi lứa tuổi", "Lần đầu tới"],
-      "experiences": ["Khám phá", "Văn hóa", "Ẩm thực"],
-      "clusters": ["Cụm Tà Pạ", "Trung tâm Thị trấn", "Cụm Châu Lăng"],
+      "audiences": [
+        "Mọi lứa tuổi",
+        "Lần đầu tới"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Văn hóa",
+        "Ẩm thực"
+      ],
+      "clusters": [
+        "Cụm Tà Pạ",
+        "Trung tâm Thị trấn",
+        "Cụm Châu Lăng"
+      ],
       "description": "Lịch trình phổ biến nhất, đi đủ điểm must-go của Tri Tôn trong 1 ngày, kết thúc bằng buổi tối chill tại chợ đêm.",
       "days": [
         {
@@ -33,7 +44,7 @@
             {
               "time": "07:30",
               "poi_id": "ho-ta-pa",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc)",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Ngắm hồ xanh ngọc, chụp ảnh vách đá, đi bộ quanh hồ",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí (gửi xe 5k-10k)",
@@ -43,7 +54,7 @@
             {
               "time": "09:15",
               "poi_id": "chua-ta-pa",
-              "name": "Chùa Tà Pạ (Chùa Núi)",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
               "activity": "Chiêm ngưỡng kiến trúc Khmer, ngắm toàn cảnh thung lũng từ trên cao",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -53,7 +64,7 @@
             {
               "time": "10:30",
               "poi_id": "canh-dong-lua-ta-pa",
-              "name": "Con Đường Tơ Lụa Tà Pạ + Cánh đồng lúa",
+              "name": "Cánh đồng lúa Tà Pạ",
               "activity": "Chụp ảnh giữa đồng lúa, hàng thốt nốt",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -63,7 +74,7 @@
             {
               "time": "11:30",
               "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Lẩu bò Bảy Núi",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
               "activity": "Ăn trưa lẩu bò thịt tươi, rau rừng Thất Sơn",
               "duration_minutes": 75,
               "cost_vnd": "80k - 150k/người",
@@ -73,7 +84,7 @@
             {
               "time": "13:30",
               "poi_id": "tritoni",
-              "name": "Tritoni Coffee",
+              "name": "Tritoni",
               "activity": "Nghỉ trưa, cafe máy lạnh, view đẹp hiện đại",
               "duration_minutes": 60,
               "cost_vnd": "25k - 50k",
@@ -82,8 +93,8 @@
             },
             {
               "time": "15:00",
-              "poi_id": "cong-troi-tri-ton-cong-chua-koh-kas",
-              "name": "Cổng Trời Tri Tôn (Cổng chùa Koh Kas)",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
               "activity": "Check-in biểu tượng, ngắm đồng lúa từ cổng Khmer",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -93,7 +104,7 @@
             {
               "time": "16:15",
               "poi_id": "chua-krang-kroch",
-              "name": "Chùa Hàng Còng (Krăng Krốch) + Con Đường Vòm Còng",
+              "name": "chùa Krăng Krốch",
               "activity": "Tham quan chùa cổ 400 năm, chụp ảnh đường hàng còng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -102,8 +113,8 @@
             },
             {
               "time": "17:30",
-              "poi_id": "du-du-dam-khanh-thy",
-              "name": "Đu Đủ Đâm Khánh Thy",
+              "poi_id": "e13b2eab-quán-đu-đủ-đâm-&-cán",
+              "name": "Quán Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng)",
               "activity": "Ăn vặt đặc sản Khmer - đu đủ đâm",
               "duration_minutes": 30,
               "cost_vnd": "20k - 35k",
@@ -112,7 +123,7 @@
             },
             {
               "time": "18:30",
-              "poi_id": "bai-tha-dieu-hoang-hon-tri-ton",
+              "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
               "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
               "activity": "Ngắm hoàng hôn, thả diều, chill trước khi vào đêm",
               "duration_minutes": 45,
@@ -122,7 +133,7 @@
             },
             {
               "time": "19:30",
-              "poi_id": "khu-am-thuc-cho-dem-tri-ton",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
               "activity": "Ăn tối, dạo chợ đêm, thưởng thức đồ ăn vặt thốt nốt, xiên nướng",
               "duration_minutes": 90,
@@ -140,7 +151,13 @@
         "Mang theo tiền mặt vì nhiều quán nhỏ không nhận chuyển khoản"
       ],
       "rating": 4.9,
-      "tags": ["kinh-dien", "1-ngay", "must-go", "cho-dem", "hoang-hon"]
+      "tags": [
+        "kinh-dien",
+        "1-ngay",
+        "must-go",
+        "cho-dem",
+        "hoang-hon"
+      ]
     },
     {
       "id": "itin-002",
@@ -149,9 +166,22 @@
       "category": "comprehensive",
       "duration": "2 ngày 1 đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Mọi lứa tuổi", "Muốn đi đủ"],
-      "experiences": ["Khám phá", "Văn hóa", "Ẩm thực", "Thư giãn"],
-      "clusters": ["Cụm Tà Pạ", "Cụm Cô Tô", "Trung tâm Thị trấn", "Cụm Ô Thum"],
+      "audiences": [
+        "Mọi lứa tuổi",
+        "Muốn đi đủ"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Văn hóa",
+        "Ẩm thực",
+        "Thư giãn"
+      ],
+      "clusters": [
+        "Cụm Tà Pạ",
+        "Cụm Cô Tô",
+        "Trung tâm Thị trấn",
+        "Cụm Ô Thum"
+      ],
       "description": "Đi hết các cụm chính của Tri Tôn trong 2 ngày, tối chill cafe và chợ đêm, ngủ homestay view núi.",
       "days": [
         {
@@ -171,7 +201,7 @@
             {
               "time": "08:00",
               "poi_id": "ho-ta-pa",
-              "name": "Hồ Tà Pạ",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Ngắm hồ, chụp ảnh",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -181,7 +211,7 @@
             {
               "time": "09:45",
               "poi_id": "chua-ta-pa",
-              "name": "Chùa Tà Pạ",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
               "activity": "Tham quan chùa, ngắm cảnh",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -190,7 +220,7 @@
             },
             {
               "time": "11:00",
-              "poi_id": "con-duong-to-lua-ta-pa",
+              "poi_id": "9616e5e5-con-đường-tơ-lụa-tà-",
               "name": "Con Đường Tơ Lụa Tà Pạ",
               "activity": "Chụp ảnh, đi bộ giữa đồng",
               "duration_minutes": 45,
@@ -201,7 +231,7 @@
             {
               "time": "12:00",
               "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Lẩu bò Bảy Núi",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
               "activity": "Ăn trưa",
               "duration_minutes": 75,
               "cost_vnd": "100k - 150k",
@@ -210,8 +240,8 @@
             },
             {
               "time": "14:00",
-              "poi_id": "cong-troi-tri-ton-cong-chua-koh-kas",
-              "name": "Cổng Trời Tri Tôn",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
               "activity": "Check-in",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -221,7 +251,7 @@
             {
               "time": "15:15",
               "poi_id": "chua-krang-kroch",
-              "name": "Chùa Hàng Còng + Vòm Còng",
+              "name": "chùa Krăng Krốch",
               "activity": "Tham quan, chụp ảnh",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -230,8 +260,8 @@
             },
             {
               "time": "16:30",
-              "poi_id": "tuyen-tranh-tri-ton",
-              "name": "Con Đường Tuyến Tránh Tri Tôn",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Ngắm hoàng hôn, chạy xe chill ngắm núi Cô Tô",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -240,8 +270,8 @@
             },
             {
               "time": "18:00",
-              "poi_id": "quy-coffee-house-tri-ton",
-              "name": "Quy Coffee House",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Cafe tối, nghỉ ngơi sau ngày dài",
               "duration_minutes": 60,
               "cost_vnd": "18k - 40k",
@@ -250,8 +280,8 @@
             },
             {
               "time": "19:30",
-              "poi_id": "khu-am-thuc-cho-dem-tri-ton",
-              "name": "Chợ Đêm Tri Tôn",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
               "activity": "Ăn tối, dạo chợ đêm",
               "duration_minutes": 90,
               "cost_vnd": "60k - 120k",
@@ -260,7 +290,7 @@
             },
             {
               "time": "21:30",
-              "poi_id": "tuyet-anh-homestay",
+              "poi_id": "7440fc2d-tuyết-anh-homestay-&",
               "name": "Tuyết Anh Homestay & Coffee",
               "activity": "Check-in, nghỉ ngơi",
               "duration_minutes": 0,
@@ -276,8 +306,8 @@
           "stops": [
             {
               "time": "06:30",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Ngắm bình minh, đi bộ quanh hồ",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -286,7 +316,7 @@
             },
             {
               "time": "07:45",
-              "poi_id": "an-son-tra-quan",
+              "poi_id": "442b77de-an-sơn-trà-quán",
               "name": "An Sơn Trà Quán",
               "activity": "Uống trà sáng, ngắm núi",
               "duration_minutes": 45,
@@ -297,7 +327,7 @@
             {
               "time": "09:00",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "activity": "Leo núi hoặc đi xe ôm lên đỉnh, ngắm Sân Tiên, Vồ Hội",
               "duration_minutes": 150,
               "cost_vnd": "Miễn phí (xe ôm 50k-100k/lượt)",
@@ -316,8 +346,8 @@
             },
             {
               "time": "12:45",
-              "poi_id": "ga-dot-thao-nguyen-ho-o-thum-ho-o-thum",
-              "name": "Gà Đốt Thảo Nguyên Ô Thum",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
               "activity": "Ăn trưa gà đốt lá chúc đặc sản",
               "duration_minutes": 90,
               "cost_vnd": "250k - 350k/con (2-4 người)",
@@ -326,8 +356,8 @@
             },
             {
               "time": "14:30",
-              "poi_id": "ca-phe-thot-not-ta-pa-view",
-              "name": "Cà Phê Thốt Nốt Tà Pạ View",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
               "activity": "Cafe chiều, ngắm cánh đồng Tà Pạ",
               "duration_minutes": 60,
               "cost_vnd": "20k - 45k",
@@ -336,8 +366,8 @@
             },
             {
               "time": "16:00",
-              "poi_id": "nha-thieu-nhi",
-              "name": "Nhà Thiếu Nhi Tri Tôn",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
               "activity": "Đi dạo, ngắm cảnh trung tâm",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -354,7 +384,13 @@
         "Mang giày thể thao nếu leo núi"
       ],
       "rating": 4.8,
-      "tags": ["2n1d", "toan-canh", "homestay", "cho-dem", "nui-co-to"]
+      "tags": [
+        "2n1d",
+        "toan-canh",
+        "homestay",
+        "cho-dem",
+        "nui-co-to"
+      ]
     },
     {
       "id": "itin-003",
@@ -363,54 +399,308 @@
       "category": "deep_exploration",
       "duration": "3 ngày 2 đêm",
       "best_season": "T11-T4 (mùa khô)",
-      "audiences": ["Phượt thủ", "Muốn đi kỹ"],
-      "experiences": ["Khám phá", "Leo núi", "Văn hóa", "Ẩm thực", "Đêm Tri Tôn"],
-      "clusters": ["Tất cả cụm"],
+      "audiences": [
+        "Phượt thủ",
+        "Muốn đi kỹ"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Leo núi",
+        "Văn hóa",
+        "Ẩm thực",
+        "Đêm Tri Tôn"
+      ],
+      "clusters": [
+        "Tất cả cụm"
+      ],
       "description": "Đi kỹ mọi ngóc ngách Tri Tôn, từ núi non đến chùa chiền, ẩm thực và đêm Tri Tôn đầy đủ.",
       "days": [
         {
           "day": 1,
           "title": "Trung tâm + Tà Pạ + Đêm Tri Tôn",
           "stops": [
-            {"time": "07:00", "poi_id": "chua-xa-ton-chua-svayton", "name": "Chùa Xà Tón (Svayton)", "activity": "Tham quan chùa cổ nhất An Giang, xem kinh lá buông", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "Di tích Quốc gia, hơn 500 năm tuổi", "transport_to_next": "Đi bộ"},
-            {"time": "08:30", "poi_id": "cho-tri-ton", "name": "Chợ Tri Tôn", "activity": "Ăn sáng, khám phá chợ", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ, chụp ảnh", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "11:15", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan, ngắm cảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:30", "poi_id": "com-duong-to-lua-ta-pa", "name": "Cánh đồng Tà Pạ + Con Đường Tơ Lụa", "activity": "Chụp ảnh, đi bộ", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "13:30", "poi_id": "tiem-banh-bo-thot-not-cho-tri-ton", "name": "Tiệm Bánh Bò Thốt Nốt Chợ Tri Tôn", "activity": "Ăn trưa nhẹ + tráng miệng", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Về khách sạn"},
-            {"time": "15:00", "poi_id": "rong-vang-resort", "name": "Rồng Vàng Resort Tri Tôn", "activity": "Check-in, nghỉ ngơi", "duration_minutes": 90, "cost_vnd": "500k-900k/phòng", "notes": "Resort đẹp nhất Tri Tôn", "transport_to_next": "Xe máy"},
-            {"time": "17:00", "poi_id": "bai-tha-dieu-hoang-hon", "name": "Bãi Thả Diều Hoàng Hôn", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "18:30", "poi_id": "cham-coffee-tea", "name": "CHẠM Coffee & Tea", "activity": "Cafe tối, thư giãn", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "Mở 7h-22h", "transport_to_next": "Đi bộ"},
-            {"time": "20:00", "poi_id": "khu-am-thuc-cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn tối, dạo phố đêm", "duration_minutes": 90, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Về resort"}
+            {
+              "time": "07:00",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "activity": "Tham quan chùa cổ nhất An Giang, xem kinh lá buông",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "Di tích Quốc gia, hơn 500 năm tuổi",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn sáng, khám phá chợ",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ, chụp ảnh",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "11:15",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan, ngắm cảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp ảnh, đi bộ",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn trưa nhẹ + tráng miệng",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "c7d6fabf-rồng-vàng-resort-tri",
+              "name": "Rồng Vàng Resort Tri Tôn",
+              "activity": "Check-in, nghỉ ngơi",
+              "duration_minutes": 90,
+              "cost_vnd": "500k-900k/phòng",
+              "notes": "Resort đẹp nhất Tri Tôn",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe tối, thư giãn",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "Mở 7h-22h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn tối, dạo phố đêm",
+              "duration_minutes": 90,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Về resort"
+            }
           ]
         },
         {
           "day": 2,
           "title": "Núi Cô Tô + Ô Thum + Đêm Cafe View Núi",
           "stops": [
-            {"time": "05:30", "poi_id": "da-vo-hoi-me-co-to", "name": "Đá Vồ Hội Mẹ Cô Tô (Săn mây)", "activity": "Săn mây bình minh trên đỉnh núi", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "Đi sớm 5h30 để kịp mây", "transport_to_next": "Xuống núi"},
-            {"time": "08:00", "poi_id": "ho-soai-so", "name": "Hồ Soài So", "activity": "Nghỉ chân, ngắm hồ", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:00", "poi_id": "ca-phe-suoi-tri-ton", "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô", "activity": "Cafe sáng bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "10:30", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum", "activity": "Ngắm hồ, đi cầu gỗ", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "11:30", "poi_id": "quan-ga-dot-kieu-tien", "name": "Gà Đốt Kiều Tiên Ô Thum", "activity": "Ăn trưa gà đốt", "duration_minutes": 90, "cost_vnd": "250k-330k/con", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "13:30", "poi_id": "nui-ta-pa", "name": "Núi Tà Pạ", "activity": "Khám phá núi, chụp ảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "15:00", "poi_id": "doi-tuc-dup", "name": "Đồi Tức Dụp", "activity": "Tham quan di tích, hang đá", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Lưu ý: kiểm tra trước khi đến vì có thể đóng cửa", "transport_to_next": "Xe máy"},
-            {"time": "17:00", "poi_id": "con-duong-tuyen-tranh", "name": "Con Đường Tuyến Tránh Tri Tôn", "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "18:30", "poi_id": "may-coffee-tea-ho-soai-chek", "name": "Mây Coffee & Tea Hồ Soài Chék", "activity": "Cafe tối bên hồ, ngắm sao", "duration_minutes": 75, "cost_vnd": "20k-40k", "notes": "Mở 6h30-18h30", "transport_to_next": "Về resort"},
-            {"time": "20:30", "poi_id": "quan-bo-nuong-banh-trang-tu-liem", "name": "Quán Bò Nướng Bánh Tráng Tư Liêm", "activity": "Ăn tối bò nướng", "duration_minutes": 75, "cost_vnd": "90k-180k", "notes": "Mở 16h-22h", "transport_to_next": "Về resort"}
+            {
+              "time": "05:30",
+              "poi_id": "3adb5c32-đá-vồ-hội-mẹ-cô-tô",
+              "name": "Đá Vồ Hội Mẹ Cô Tô",
+              "activity": "Săn mây bình minh trên đỉnh núi",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "Đi sớm 5h30 để kịp mây",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "08:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Nghỉ chân, ngắm hồ",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe sáng bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ, đi cầu gỗ",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn trưa gà đốt",
+              "duration_minutes": 90,
+              "cost_vnd": "250k-330k/con",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "13:30",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "activity": "Khám phá núi, chụp ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "doi-tuc-dup",
+              "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+              "activity": "Tham quan di tích, hang đá",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Lưu ý: kiểm tra trước khi đến vì có thể đóng cửa",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe tối bên hồ, ngắm sao",
+              "duration_minutes": 75,
+              "cost_vnd": "20k-40k",
+              "notes": "Mở 6h30-18h30",
+              "transport_to_next": "Về resort"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "683d2086-quán-bò-nướng-bánh-t",
+              "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+              "activity": "Ăn tối bò nướng",
+              "duration_minutes": 75,
+              "cost_vnd": "90k-180k",
+              "notes": "Mở 16h-22h",
+              "transport_to_next": "Về resort"
+            }
           ]
         },
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều",
           "stops": [
-            {"time": "07:00", "poi_id": "nha-mo-ba-chuc", "name": "Khu di tích Nhà mồ Ba Chúc", "activity": "Tham quan, tưởng niệm", "duration_minutes": 120, "cost_vnd": "Miễn phí", "notes": "Mở 7h30-17h", "transport_to_next": "Đi bộ"},
-            {"time": "09:15", "poi_id": "chua-phi-lai-ba-chuc", "name": "Chùa Phi Lai + Chùa Tam Bửu", "activity": "Tham quan chùa", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy 5 phút"},
-            {"time": "10:30", "poi_id": "quan-chao-bo-trai-truc-ba-chuc", "name": "Quán Cháo Bò Trái Trúc Ba Chúc", "activity": "Ăn sáng muộn", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "11:30", "poi_id": "khu-di-tich-o-ta-soc", "name": "Khu di tích Ô Tà Sóc", "activity": "Tham quan hang Tỉnh Ủy, suối đá", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "13:15", "poi_id": "rung-tam-vong-o-ta-soc", "name": "Rừng Tầm Vông Ô Tà Sóc", "activity": "Đi bộ trong rừng tre", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "14:30", "poi_id": "ca-phe-suoi-da-o-ta-soc", "name": "Cà Phê Suối Đá Ô Tà Sóc", "activity": "Cafe chiều bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "16:00", "poi_id": "ho-o-ta-soc", "name": "Hồ Ô Tà Sóc", "activity": "Ngắm hồ, chụp ảnh", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Hồ đẹp, nước trong", "transport_to_next": "Về trung tâm, kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "nha-mo-ba-chuc",
+              "name": "Khu Chứng Tích Lịch Sử Nhà Mồ Ba Chúc",
+              "activity": "Tham quan, tưởng niệm",
+              "duration_minutes": 120,
+              "cost_vnd": "Miễn phí",
+              "notes": "Mở 7h30-17h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham quan chùa",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy 5 phút"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn sáng muộn",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "khu-di-tich-o-ta-soc",
+              "name": "Khu di tích Ô Tà Sóc",
+              "activity": "Tham quan hang Tỉnh Ủy, suối đá",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "13:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Đi bộ trong rừng tre",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "activity": "Cafe chiều bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "ho-o-ta-soc",
+              "name": "Hồ Ô Tà Sóc & Căn Cứ Lịch Sử Núi Dài",
+              "activity": "Ngắm hồ, chụp ảnh",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Hồ đẹp, nước trong",
+              "transport_to_next": "Về trung tâm, kết thúc"
+            }
           ]
         }
       ],
@@ -421,7 +711,13 @@
         "Kiểm tra Đồi Tức Dụp trước khi đến"
       ],
       "rating": 4.9,
-      "tags": ["3n2d", "kham-pha-sau", "phượt", "dem-tri-ton", "cafe-toi"]
+      "tags": [
+        "3n2d",
+        "kham-pha-sau",
+        "phượt",
+        "dem-tri-ton",
+        "cafe-toi"
+      ]
     },
     {
       "id": "itin-004",
@@ -430,33 +726,151 @@
       "category": "photography",
       "duration": "1 ngày",
       "best_season": "T9-T11 (mùa lúa chín)",
-      "audiences": ["Giới trẻ", "Cặp đôi"],
-      "experiences": ["Sống ảo", "Check-in"],
-      "clusters": ["Cụm Tà Pạ", "Cụm Châu Lăng", "Trung tâm"],
+      "audiences": [
+        "Giới trẻ",
+        "Cặp đôi"
+      ],
+      "experiences": [
+        "Sống ảo",
+        "Check-in"
+      ],
+      "clusters": [
+        "Cụm Tà Pạ",
+        "Cụm Châu Lăng",
+        "Trung tâm"
+      ],
       "description": "Lịch trình chuyên chụp ảnh, đi hết các tọa độ sống ảo hot nhất Tri Tôn, kết thúc bằng cafe đêm.",
       "days": [
         {
           "day": 1,
           "title": "Sáng chụp đồng - Chiều chụp núi - Tối cafe",
           "stops": [
-            {"time": "05:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ (Bình minh)", "activity": "Chụp bình minh, sương sớm trên hồ", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Đi sớm để có ánh sáng đẹp", "transport_to_next": "Đi bộ"},
-            {"time": "07:15", "poi_id": "con-duong-to-lua-ta-pa", "name": "Con Đường Tơ Lụa Tà Pạ", "activity": "Chụp ảnh giữa đồng lúa", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:30", "poi_id": "cay-thot-not-trai-tim-tri-ton", "name": "Cây thốt nốt trái tim", "activity": "Chụp ảnh biểu tượng", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Có 1 cây bị cụt nên trái tim hơi méo", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "cong-troi-tri-ton", "name": "Cổng Trời Tri Tôn", "activity": "Chụp ảnh cổng Khmer", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "10:45", "poi_id": "con-duong-vom-cong-chau-lang", "name": "Con Đường Vòm Còng Châu Lăng", "activity": "Chụp ảnh đường hàng còng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:00", "poi_id": "du-du-dam-rina-khmer", "name": "Quán Đu Đủ Đâm RiNa Khmer", "activity": "Ăn trưa + chụp ảnh món ăn", "duration_minutes": 60, "cost_vnd": "20k-35k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "13:30", "poi_id": "nui-co-to", "name": "Núi Cô Tô - Đá Vồ Hội Đổ", "activity": "Chụp ảnh mỏm đá sống ảo trên đỉnh", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "", "transport_to_next": "Xuống núi"},
-            {"time": "16:00", "poi_id": "dong-nhin-len-chu-tri-ton", "name": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN", "activity": "Chụp ảnh bảng chữ TRI TÔN", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Đi bộ lên 1200-1500 bước", "transport_to_next": "Xe máy"},
-            {"time": "17:00", "poi_id": "con-duong-tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Chụp hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "18:30", "poi_id": "bien-hieu-o-day-khong-co-gi-ngoai-ky-uc", "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức", "activity": "Chụp ảnh góc Việt phục cổ trang", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:30", "poi_id": "lang-lang-coffee-tea", "name": "Lang Lang Coffee & Tea", "activity": "Cafe tối, xem lại ảnh", "duration_minutes": 60, "cost_vnd": "20k-38k", "notes": "Mở 7h-21h30", "transport_to_next": "Kết thúc"}
+            {
+              "time": "05:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp bình minh, sương sớm trên hồ",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đi sớm để có ánh sáng đẹp",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "07:15",
+              "poi_id": "9616e5e5-con-đường-tơ-lụa-tà-",
+              "name": "Con Đường Tơ Lụa Tà Pạ",
+              "activity": "Chụp ảnh giữa đồng lúa",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp ảnh biểu tượng",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Có 1 cây bị cụt nên trái tim hơi méo",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Chụp ảnh cổng Khmer",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "10:45",
+              "poi_id": "3383c54e-con-đường-vòm-còng-c",
+              "name": "Con Đường Vòm Còng Châu Lăng",
+              "activity": "Chụp ảnh đường hàng còng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "159c4012-quán-đu-đủ-đâm-rina-",
+              "name": "Quán Đu Đủ Đâm RiNa Khmer",
+              "activity": "Ăn trưa + chụp ảnh món ăn",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-35k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:30",
+              "poi_id": "nui-co-to",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
+              "activity": "Chụp ảnh mỏm đá sống ảo trên đỉnh",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "chu-tri-ton-nui-co-to",
+              "name": "Biểu Tượng Chữ \"TRI TÔN\" Trên Núi Cô Tô (Sân Tiên)",
+              "activity": "Chụp ảnh bảng chữ TRI TÔN",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đi bộ lên 1200-1500 bước",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "9eaf1e8f-biển-hiệu-ở-đây-khôn",
+              "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+              "activity": "Chụp ảnh góc Việt phục cổ trang",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:30",
+              "poi_id": "cee4075f-lang-lang-coffee-&-t",
+              "name": "Lang Lang Coffee & Tea",
+              "activity": "Cafe tối, xem lại ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-38k",
+              "notes": "Mở 7h-21h30",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "200k - 400k/người",
-      "tips": ["Mang theo tripod nếu chụp bình minh", "Sạc đầy pin điện thoại/máy ảnh", "Mặc đồ màu trắng/vàng để nổi trên nền xanh"],
+      "tips": [
+        "Mang theo tripod nếu chụp bình minh",
+        "Sạc đầy pin điện thoại/máy ảnh",
+        "Mặc đồ màu trắng/vàng để nổi trên nền xanh"
+      ],
       "rating": 4.8,
-      "tags": ["song-ao", "checkin", "chup-anh", "cafe-toi"]
+      "tags": [
+        "song-ao",
+        "checkin",
+        "chup-anh",
+        "cafe-toi"
+      ]
     },
     {
       "id": "itin-005",
@@ -465,31 +879,132 @@
       "category": "spiritual",
       "duration": "1 ngày",
       "best_season": "Quanh năm",
-      "audiences": ["Người lớn tuổi", "Khách hành hương"],
-      "experiences": ["Tâm linh", "Hành hương", "Văn hóa"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ", "Cụm Ba Chúc"],
+      "audiences": [
+        "Người lớn tuổi",
+        "Khách hành hương"
+      ],
+      "experiences": [
+        "Tâm linh",
+        "Hành hương",
+        "Văn hóa"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ",
+        "Cụm Ba Chúc"
+      ],
       "description": "Đi hết các chùa Khmer cổ và di tích tâm linh, kết thúc bằng bữa tối thanh tịnh.",
       "days": [
         {
           "day": 1,
           "title": "Hành hương chùa Khmer",
           "stops": [
-            {"time": "06:00", "poi_id": "chua-xa-ton-chua-svayton", "name": "Chùa Xà Tón (Svayton)", "activity": "Lễ Phật, xem kinh lá buông", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Chùa cổ nhất An Giang", "transport_to_next": "Xe máy 5 phút"},
-            {"time": "08:00", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Lễ Phật, ngắm cảnh", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "chua-ta-phot", "name": "Chùa Tà Phôt", "activity": "Tham quan, lễ Phật", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:30", "poi_id": "chua-krang-kroch", "name": "Chùa Hàng Còng (Krăng Krốch)", "activity": "Tham quan chùa cổ 400 năm", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "12:00", "poi_id": "chua-phi-lai-ba-chuc", "name": "Chùa Phi Lai Ba Chúc", "activity": "Ăn chay + lễ Phật", "duration_minutes": 90, "cost_vnd": "Miễn phí (bún chay free)", "notes": "Có phục vụ bún chay miễn phí", "transport_to_next": "Đi bộ"},
-            {"time": "14:00", "poi_id": "chua-tam-buu-ba-chuc", "name": "Chùa Tam Bửu Ba Chúc", "activity": "Tham quan, tưởng niệm", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "15:30", "poi_id": "chua-thanh-luong", "name": "Chùa Thanh Lương", "activity": "Tham quan", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:30", "poi_id": "chua-ba-xoai", "name": "Chùa Ba Xoài", "activity": "Tham quan chùa cổ", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Chùa cũ, chánh điện xuống cấp", "transport_to_next": "Về trung tâm"},
-            {"time": "18:00", "poi_id": "ca-phe-thot-not-ta-pa-view", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe chiều, thư giãn", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "06:00",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "activity": "Lễ Phật, xem kinh lá buông",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa cổ nhất An Giang",
+              "transport_to_next": "Xe máy 5 phút"
+            },
+            {
+              "time": "08:00",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Lễ Phật, ngắm cảnh",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "chua-ta-phot",
+              "name": "Chùa Tà Phôt",
+              "activity": "Tham quan, lễ Phật",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "chua-krang-kroch",
+              "name": "chùa Krăng Krốch",
+              "activity": "Tham quan chùa cổ 400 năm",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn chay + lễ Phật",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí (bún chay free)",
+              "notes": "Có phục vụ bún chay miễn phí",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham quan, tưởng niệm",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "15:30",
+              "poi_id": "chua-thanh-luong",
+              "name": "Chùa Thanh Lương",
+              "activity": "Tham quan",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "chua-ba-xoai",
+              "name": "Chua Ba Xoai",
+              "activity": "Tham quan chùa cổ",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa cũ, chánh điện xuống cấp",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe chiều, thư giãn",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "100k - 200k/người",
-      "tips": ["Mặc đồ kín đáo khi vào chùa", "Mang theo nón, nước uống", "Không xả rác trong khuôn viên chùa"],
+      "tips": [
+        "Mặc đồ kín đáo khi vào chùa",
+        "Mang theo nón, nước uống",
+        "Không xả rác trong khuôn viên chùa"
+      ],
       "rating": 4.7,
-      "tags": ["tam-linh", "hanh-huong", "chua-khmer", "1-ngay"]
+      "tags": [
+        "tam-linh",
+        "hanh-huong",
+        "chua-khmer",
+        "1-ngay"
+      ]
     },
     {
       "id": "itin-006",
@@ -498,30 +1013,120 @@
       "category": "history",
       "duration": "1 ngày",
       "best_season": "Quanh năm",
-      "audiences": ["Học sinh", "Sinh viên", "Nghiên cứu"],
-      "experiences": ["Lịch sử", "Giáo dục"],
-      "clusters": ["Cụm Ba Chúc", "Cụm Ô Tà Sóc"],
+      "audiences": [
+        "Học sinh",
+        "Sinh viên",
+        "Nghiên cứu"
+      ],
+      "experiences": [
+        "Lịch sử",
+        "Giáo dục"
+      ],
+      "clusters": [
+        "Cụm Ba Chúc",
+        "Cụm Ô Tà Sóc"
+      ],
       "description": "Tìm hiểu lịch sử biên giới Tây Nam, tội ác Pol Pot và căn cứ cách mạng.",
       "days": [
         {
           "day": 1,
           "title": "Hành trình lịch sử",
           "stops": [
-            {"time": "07:00", "poi_id": "nha-mo-ba-chuc", "name": "Khu di tích Nhà mồ Ba Chúc", "activity": "Tham quan nhà mồ, nhà trưng bày chứng tích", "duration_minutes": 120, "cost_vnd": "Miễn phí", "notes": "Mở 7h30-17h", "transport_to_next": "Đi bộ"},
-            {"time": "09:15", "poi_id": "chua-phi-lai-ba-chuc", "name": "Chùa Phi Lai", "activity": "Tham quan di tích", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "10:15", "poi_id": "khu-trung-bay-toi-ac-chien-tranh", "name": "Khu Trưng bày Tội ác Chiến tranh Pol Pot", "activity": "Xem hiện vật, hình ảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:30", "poi_id": "quan-chao-bo-trai-truc", "name": "Quán Cháo Bò Trái Trúc Ba Chúc", "activity": "Ăn trưa", "duration_minutes": 60, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "13:00", "poi_id": "khu-di-tich-o-ta-soc", "name": "Khu di tích Ô Tà Sóc", "activity": "Tham quan hang Tỉnh Ủy", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "14:45", "poi_id": "doi-tuc-dup", "name": "Đồi Tức Dụp", "activity": "Tham quan hang đá, khu di tích", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Kiểm tra trước khi đến", "transport_to_next": "Xe máy"},
-            {"time": "16:30", "poi_id": "tuong-dai-chien-thang-vinh-thong", "name": "Tượng đài Chiến thắng Vĩnh Thông", "activity": "Tham quan", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:30", "poi_id": "ca-phe-check-in-cong-troi-koh-kas", "name": "Cà Phê Check-in Cổng Trời Koh Kas", "activity": "Cafe chiều", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "nha-mo-ba-chuc",
+              "name": "Khu Chứng Tích Lịch Sử Nhà Mồ Ba Chúc",
+              "activity": "Tham quan nhà mồ, nhà trưng bày chứng tích",
+              "duration_minutes": 120,
+              "cost_vnd": "Miễn phí",
+              "notes": "Mở 7h30-17h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham quan di tích",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "10:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Xem hiện vật, hình ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn trưa",
+              "duration_minutes": 60,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "13:00",
+              "poi_id": "khu-di-tich-o-ta-soc",
+              "name": "Khu di tích Ô Tà Sóc",
+              "activity": "Tham quan hang Tỉnh Ủy",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "14:45",
+              "poi_id": "doi-tuc-dup",
+              "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+              "activity": "Tham quan hang đá, khu di tích",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Kiểm tra trước khi đến",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "tuong-dai-chien-thang-vinh-thong",
+              "name": "Tượng đài Chiến thắng Vĩnh Thông",
+              "activity": "Tham quan",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe chiều",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "150k - 300k/người",
-      "tips": ["Mang theo sổ ghi chép nếu đi nghiên cứu", "Không chụp ảnh trong nhà trưng bày nếu không được phép"],
+      "tips": [
+        "Mang theo sổ ghi chép nếu đi nghiên cứu",
+        "Không chụp ảnh trong nhà trưng bày nếu không được phép"
+      ],
       "rating": 4.7,
-      "tags": ["lich-su", "ve-nguon", "giao-duc", "ba-chuc"]
+      "tags": [
+        "lich-su",
+        "ve-nguon",
+        "giao-duc",
+        "ba-chuc"
+      ]
     },
     {
       "id": "itin-007",
@@ -530,34 +1135,162 @@
       "category": "gastronomy",
       "duration": "1 ngày + tối",
       "best_season": "Quanh năm",
-      "audiences": ["Team mê ăn", "Mọi lứa tuổi"],
-      "experiences": ["Ẩm thực", "Khám phá"],
-      "clusters": ["Trung tâm", "Cụm Ô Thum", "Cụm Châu Lăng"],
+      "audiences": [
+        "Team mê ăn",
+        "Mọi lứa tuổi"
+      ],
+      "experiences": [
+        "Ẩm thực",
+        "Khám phá"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Ô Thum",
+        "Cụm Châu Lăng"
+      ],
       "description": "Đi ăn từ sáng đến đêm, thử hết đặc sản Tri Tôn từ bánh canh, gà đốt, đu đủ đâm đến chợ đêm.",
       "days": [
         {
           "day": 1,
           "title": "Ăn sập Tri Tôn từ sáng đến đêm",
           "stops": [
-            {"time": "06:00", "poi_id": "quan-banh-canh-lo-ren", "name": "Quán Bánh Canh Lò Rèn (>30 năm)", "activity": "Ăn sáng bánh canh bột xắt", "duration_minutes": 45, "cost_vnd": "30k-45k", "notes": "Quán lâu đời nhất Tri Tôn", "transport_to_next": "Đi bộ"},
-            {"time": "07:00", "poi_id": "ca-phe-thot-not-ta-pa-view", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe + bánh bò thốt nốt", "duration_minutes": 45, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "08:30", "poi_id": "du-du-dam-rina-khmer", "name": "Đu Đủ Đâm RiNa Khmer", "activity": "Ăn vặt đu đủ đâm", "duration_minutes": 30, "cost_vnd": "20k-35k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "lo-banh-bo-thot-not-ut-cot", "name": "Lò Bánh Bò Thốt Nốt Út Cột", "activity": "Xem làm bánh + ăn thử", "duration_minutes": 45, "cost_vnd": "35k-50k", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "11:00", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum", "activity": "Ngắm hồ trước khi ăn", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "11:45", "poi_id": "ga-dot-thao-nguyen-ho-o-thum", "name": "Gà Đốt Thảo Nguyên Hồ Ô Thum", "activity": "Ăn trưa gà đốt lá chúc", "duration_minutes": 90, "cost_vnd": "250k-320k/con", "notes": "Nên đến trước 12h để không chờ", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "14:00", "poi_id": "quan-bun-ca-tri-ton-chi-tu", "name": "Quán Bún Cá Củ Ngải Chị Tư", "activity": "Ăn chiều bún cá", "duration_minutes": 45, "cost_vnd": "25k-35k", "notes": "Mở 6h-11h, nên đi sớm", "transport_to_next": "Đi bộ"},
-            {"time": "15:00", "poi_id": "lo-duong-thot-not-ut-hue", "name": "Lò Đường Thốt Nốt Út Huệ", "activity": "Xem thắng đường + mua quà", "duration_minutes": 45, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:00", "poi_id": "quan-bo-7-mon-ba-chuc", "name": "Quán Bò 7 Món Ba Chúc", "activity": "Ăn xế bò nướng", "duration_minutes": 60, "cost_vnd": "80k-200k", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:30", "poi_id": "quan-banh-xeo-tep-bong-dien-dien", "name": "Quán Bánh Xèo Tép Bông Điên Điển", "activity": "Ăn tối bánh xèo miền Tây", "duration_minutes": 60, "cost_vnd": "30k-50k", "notes": "Mở 14h-20h", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "khu-am-thuc-cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn vặt đêm: xiên nướng, chè thốt nốt, cháo bò", "duration_minutes": 90, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "tigon-coffee", "name": "Tigon Coffee", "activity": "Cafe đêm, kết thúc food tour", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "06:00",
+              "poi_id": "c2a08fb2-quán-bánh-canh-lò-rè",
+              "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+              "activity": "Ăn sáng bánh canh bột xắt",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-45k",
+              "notes": "Quán lâu đời nhất Tri Tôn",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "07:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe + bánh bò thốt nốt",
+              "duration_minutes": 45,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn vặt đu đủ đâm",
+              "duration_minutes": 30,
+              "cost_vnd": "20k-35k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Xem làm bánh + ăn thử",
+              "duration_minutes": 45,
+              "cost_vnd": "35k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "11:00",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ trước khi ăn",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "11:45",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "activity": "Ăn trưa gà đốt lá chúc",
+              "duration_minutes": 90,
+              "cost_vnd": "250k-320k/con",
+              "notes": "Nên đến trước 12h để không chờ",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn chiều bún cá",
+              "duration_minutes": 45,
+              "cost_vnd": "25k-35k",
+              "notes": "Mở 6h-11h, nên đi sớm",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Xem thắng đường + mua quà",
+              "duration_minutes": 45,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "436c0b0d-quán-bò-7-món-ba-chú",
+              "name": "Quán Bò 7 Món Ba Chúc & Bò Nướng Trái Chúc",
+              "activity": "Ăn xế bò nướng",
+              "duration_minutes": 60,
+              "cost_vnd": "80k-200k",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn tối bánh xèo miền Tây",
+              "duration_minutes": 60,
+              "cost_vnd": "30k-50k",
+              "notes": "Mở 14h-20h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn vặt đêm: xiên nướng, chè thốt nốt, cháo bò",
+              "duration_minutes": 90,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe đêm, kết thúc food tour",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "600k - 1.000k/người",
-      "tips": ["Đi nhóm 3-4 người để chia phần ăn", "Mang theo thuốc tiêu hóa phòng trường hợp ăn quá nhiều", "Uống nhiều nước vì đồ ăn Tri Tôn khá cay"],
+      "tips": [
+        "Đi nhóm 3-4 người để chia phần ăn",
+        "Mang theo thuốc tiêu hóa phòng trường hợp ăn quá nhiều",
+        "Uống nhiều nước vì đồ ăn Tri Tôn khá cay"
+      ],
       "rating": 4.9,
-      "tags": ["food-tour", "am-thuc", "cho-dem", "ga-dot", "an-sap"]
+      "tags": [
+        "food-tour",
+        "am-thuc",
+        "cho-dem",
+        "ga-dot",
+        "an-sap"
+      ]
     },
     {
       "id": "itin-016",
@@ -566,28 +1299,102 @@
       "category": "nightlife",
       "duration": "Buổi tối (4-5 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Giới trẻ", "Cặp đôi", "Nhóm bạn"],
-      "experiences": ["Đêm Tri Tôn", "Cafe", "Ẩm thực đêm"],
-      "clusters": ["Trung tâm Thị trấn"],
+      "audiences": [
+        "Giới trẻ",
+        "Cặp đôi",
+        "Nhóm bạn"
+      ],
+      "experiences": [
+        "Đêm Tri Tôn",
+        "Cafe",
+        "Ẩm thực đêm"
+      ],
+      "clusters": [
+        "Trung tâm Thị trấn"
+      ],
       "description": "Khám phá Tri Tôn khi đêm xuống: cafe view đẹp, chợ đêm sầm uất, nhà thiếu nhi, chạy xe vòng quanh thị trấn.",
       "days": [
         {
           "day": 1,
           "title": "Đêm Tri Tôn chill hết nấc",
           "stops": [
-            {"time": "17:00", "poi_id": "con-duong-tuyen-tranh", "name": "Con Đường Tuyến Tránh Tri Tôn", "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô đổi màu", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "Hoàng hôn đẹp nhất 17h-18h", "transport_to_next": "Về trung tâm"},
-            {"time": "18:15", "poi_id": "bai-tha-dieu-hoang-hon", "name": "Bãi Thả Diều Hoàng Hôn", "activity": "Thả diều, ngắm trời chiều", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "khu-am-thuc-cho-dem", "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn", "activity": "Ăn tối: xiên nướng, cháo bò, chè thốt nốt", "duration_minutes": 75, "cost_vnd": "60k-120k", "notes": "Đông nhất 19h-21h", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi Tri Tôn", "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "Có khu vui chơi cộng đồng", "transport_to_next": "Đi bộ"},
-            {"time": "21:00", "poi_id": "cham-coffee-tea", "name": "CHẠM Coffee & Tea", "activity": "Cafe đêm, trò chuyện", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "Mở 7h-22h, view đẹp hiện đại", "transport_to_next": "Đi bộ"},
-            {"time": "22:00", "poi_id": "chay-vong-quanh-tri-ton", "name": "Chạy xe vòng quanh Tri Tôn", "activity": "Chạy xe ngắm thị trấn về đêm, đường phố yên bình", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "Đường vắng, an toàn, không khí mát", "transport_to_next": "Kết thúc"}
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô đổi màu",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "Hoàng hôn đẹp nhất 17h-18h",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Thả diều, ngắm trời chiều",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối: xiên nướng, cháo bò, chè thốt nốt",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-120k",
+              "notes": "Đông nhất 19h-21h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "Có khu vui chơi cộng đồng",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "21:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe đêm, trò chuyện",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "Mở 7h-22h, view đẹp hiện đại",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "22:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chạy xe ngắm thị trấn về đêm, đường phố yên bình",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đường vắng, an toàn, không khí mát",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "100k - 200k/người",
-      "tips": ["Tri Tôn về đêm rất yên bình, không khí mát mẻ", "Mang theo áo khoác nhẹ vì đêm vùng núi hơi lạnh", "Chợ đêm đông nhất thứ 7, chủ nhật"],
+      "tips": [
+        "Tri Tôn về đêm rất yên bình, không khí mát mẻ",
+        "Mang theo áo khoác nhẹ vì đêm vùng núi hơi lạnh",
+        "Chợ đêm đông nhất thứ 7, chủ nhật"
+      ],
       "rating": 4.7,
-      "tags": ["dem-tri-ton", "cafe-toi", "cho-dem", "nha-thieu-nhi", "chill"]
+      "tags": [
+        "dem-tri-ton",
+        "cafe-toi",
+        "cho-dem",
+        "nha-thieu-nhi",
+        "chill"
+      ]
     },
     {
       "id": "itin-017",
@@ -596,27 +1403,91 @@
       "category": "romantic",
       "duration": "Buổi chiều-tối (5 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Cặp đôi", "Nhóm bạn"],
-      "experiences": ["Hoàng hôn", "Ẩm thực", "Lãng mạn"],
-      "clusters": ["Cụm Ô Thum", "Trung tâm"],
+      "audiences": [
+        "Cặp đôi",
+        "Nhóm bạn"
+      ],
+      "experiences": [
+        "Hoàng hôn",
+        "Ẩm thực",
+        "Lãng mạn"
+      ],
+      "clusters": [
+        "Cụm Ô Thum",
+        "Trung tâm"
+      ],
       "description": "Ngắm hoàng hôn bên hồ Ô Thum, ăn gà đốt lãng mạn, kết thúc bằng cafe đêm.",
       "days": [
         {
           "day": 1,
           "title": "Hoàng hôn + Gà đốt + Cafe đêm",
           "stops": [
-            {"time": "15:30", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum", "activity": "Ngắm hồ, đi cầu gỗ, chụp ảnh chiều", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "16:45", "poi_id": "cau-go-moc-mac-ho-o-thum", "name": "Cầu Gỗ Mộc Mạc Hồ Ô Thum", "activity": "Chụp ảnh hoàng hôn trên cầu gỗ", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Hoàng hôn đẹp nhất 17h-18h", "transport_to_next": "Đi bộ"},
-            {"time": "17:45", "poi_id": "quan-ga-dot-kieu-tien", "name": "Gà Đốt Kiều Tiên Ô Thum", "activity": "Ăn tối gà đốt bên hồ, ngắm hoàng hôn", "duration_minutes": 90, "cost_vnd": "250k-330k/con", "notes": "Đặt bàn trước nếu đi cuối tuần", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "19:30", "poi_id": "ruong-coffee-homestay", "name": "Ruộng Coffee & Homestay", "activity": "Cafe đêm view đồng ruộng", "duration_minutes": 75, "cost_vnd": "20k-45k", "notes": "Mở 6h30-18h30", "transport_to_next": "Đi bộ"},
-            {"time": "21:00", "poi_id": "chay-vong-quanh-tri-ton", "name": "Chạy xe đêm Tri Tôn", "activity": "Chạy xe ngắm phố đêm", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "15:30",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ, đi cầu gỗ, chụp ảnh chiều",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "16:45",
+              "poi_id": "6ffa8a7b-cầu-gỗ-mộc-mạc-hồ-ô-",
+              "name": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+              "activity": "Chụp ảnh hoàng hôn trên cầu gỗ",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Hoàng hôn đẹp nhất 17h-18h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "17:45",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn tối gà đốt bên hồ, ngắm hoàng hôn",
+              "duration_minutes": 90,
+              "cost_vnd": "250k-330k/con",
+              "notes": "Đặt bàn trước nếu đi cuối tuần",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "19:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe đêm view đồng ruộng",
+              "duration_minutes": 75,
+              "cost_vnd": "20k-45k",
+              "notes": "Mở 6h30-18h30",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "21:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chạy xe ngắm phố đêm",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "300k - 500k/cặp",
-      "tips": ["Đặt gà đốt trước 30 phút để không chờ", "Mang theo đèn pin nếu đi cầu gỗ lúc trời tối"],
+      "tips": [
+        "Đặt gà đốt trước 30 phút để không chờ",
+        "Mang theo đèn pin nếu đi cầu gỗ lúc trời tối"
+      ],
       "rating": 4.8,
-      "tags": ["hoang-hon", "lang-man", "cap-doi", "ga-dot", "cafe-dem"]
+      "tags": [
+        "hoang-hon",
+        "lang-man",
+        "cap-doi",
+        "ga-dot",
+        "cafe-dem"
+      ]
     },
     {
       "id": "itin-018",
@@ -625,30 +1496,124 @@
       "category": "cafe_tour",
       "duration": "1 ngày",
       "best_season": "Quanh năm",
-      "audiences": ["Giới trẻ", "Freelancer", "Cặp đôi"],
-      "experiences": ["Cafe", "Thư giãn", "Work & Chill"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ", "Cụm Cô Tô"],
+      "audiences": [
+        "Giới trẻ",
+        "Freelancer",
+        "Cặp đôi"
+      ],
+      "experiences": [
+        "Cafe",
+        "Thư giãn",
+        "Work & Chill"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ",
+        "Cụm Cô Tô"
+      ],
       "description": "Đi hết các quán cafe đẹp nhất Tri Tôn từ sáng đến đêm, vừa làm việc vừa chill.",
       "days": [
         {
           "day": 1,
           "title": "Cafe Hopping cả ngày",
           "stops": [
-            {"time": "07:00", "poi_id": "ca-phe-thot-not-ta-pa-view", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe sáng view cánh đồng, uống nước thốt nốt tươi", "duration_minutes": 90, "cost_vnd": "20k-45k", "notes": "View cánh đồng đẹp nhất", "transport_to_next": "Xe máy 5 phút"},
-            {"time": "09:00", "poi_id": "quy-coffee-house", "name": "Quy Coffee House", "activity": "Cafe làm việc, wifi tốt", "duration_minutes": 120, "cost_vnd": "18k-40k", "notes": "Mở 6h-22h", "transport_to_next": "Xe máy"},
-            {"time": "11:30", "poi_id": "com-tri-ton", "name": "Ăn trưa tại trung tâm", "activity": "Ăn trưa cơm/lẩu", "duration_minutes": 60, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "13:00", "poi_id": "anpalm-cafe", "name": "Anpalm Cafe Tri Tôn", "activity": "Cafe chiều, đọc sách", "duration_minutes": 90, "cost_vnd": "25k-50k", "notes": "Mở 7h-22h", "transport_to_next": "Đi bộ"},
-            {"time": "15:00", "poi_id": "may-coffee-tea", "name": "Mây Coffee & Tea Hồ Soài Chék", "activity": "Cafe view hồ, ngắm núi", "duration_minutes": 90, "cost_vnd": "20k-40k", "notes": "Mở 6h30-18h30", "transport_to_next": "Xe máy"},
-            {"time": "17:00", "poi_id": "windy-hill-coffee", "name": "Windy Hill Coffee & Homestay", "activity": "Cafe hoàng hôn view đồi", "duration_minutes": 60, "cost_vnd": "25k-55k", "notes": "Mở 6h-20h", "transport_to_next": "Về trung tâm"},
-            {"time": "18:30", "poi_id": "ny-coffee-tea", "name": "NY Coffee & Tea Tri Tôn", "activity": "Cafe tối, trò chuyện", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "Mở 7h-21h30", "transport_to_next": "Đi bộ"},
-            {"time": "20:00", "poi_id": "drink-hammock-chill", "name": "Drink & Hammock Chill", "activity": "Nằm võng uống nước, kết thúc ngày", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe sáng view cánh đồng, uống nước thốt nốt tươi",
+              "duration_minutes": 90,
+              "cost_vnd": "20k-45k",
+              "notes": "View cánh đồng đẹp nhất",
+              "transport_to_next": "Xe máy 5 phút"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe làm việc, wifi tốt",
+              "duration_minutes": 120,
+              "cost_vnd": "18k-40k",
+              "notes": "Mở 6h-22h",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn trưa cơm/lẩu",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe chiều, đọc sách",
+              "duration_minutes": 90,
+              "cost_vnd": "25k-50k",
+              "notes": "Mở 7h-22h",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe view hồ, ngắm núi",
+              "duration_minutes": 90,
+              "cost_vnd": "20k-40k",
+              "notes": "Mở 6h30-18h30",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe hoàng hôn view đồi",
+              "duration_minutes": 60,
+              "cost_vnd": "25k-55k",
+              "notes": "Mở 6h-20h",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "ny-coffee-tea-tri-ton",
+              "name": "NY Coffee & Tea Tri Tôn",
+              "activity": "Cafe tối, trò chuyện",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "Mở 7h-21h30",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "activity": "Nằm võng uống nước, kết thúc ngày",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "200k - 400k/người",
-      "tips": ["Mang theo laptop nếu muốn làm việc", "Hỏi wifi và ổ cắm trước khi ngồi lâu", "Thử nước thốt nốt tươi ở mỗi quán"],
+      "tips": [
+        "Mang theo laptop nếu muốn làm việc",
+        "Hỏi wifi và ổ cắm trước khi ngồi lâu",
+        "Thử nước thốt nốt tươi ở mỗi quán"
+      ],
       "rating": 4.7,
-      "tags": ["cafe-hopping", "lam-viec", "chill", "wifi", "view-dep"]
+      "tags": [
+        "cafe-hopping",
+        "lam-viec",
+        "chill",
+        "wifi",
+        "view-dep"
+      ]
     },
     {
       "id": "itin-019",
@@ -657,27 +1622,91 @@
       "category": "night_ride",
       "duration": "Buổi tối (3-4 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Nhóm bạn", "Phượt thủ"],
-      "experiences": ["Đêm Tri Tôn", "Khám phá", "Ẩm thực đêm"],
-      "clusters": ["Trung tâm", "Các tuyến đường chính"],
+      "audiences": [
+        "Nhóm bạn",
+        "Phượt thủ"
+      ],
+      "experiences": [
+        "Đêm Tri Tôn",
+        "Khám phá",
+        "Ẩm thực đêm"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Các tuyến đường chính"
+      ],
       "description": "Chạy xe vòng quanh Tri Tôn về đêm, ghé các điểm sáng đèn, ăn vặt đêm.",
       "days": [
         {
           "day": 1,
           "title": "Night Ride Tri Tôn",
           "stops": [
-            {"time": "18:00", "poi_id": "con-duong-tuyen-tranh", "name": "Con Đường Tuyến Tránh (ĐT941-ĐT948)", "activity": "Chạy xe ngắm núi Cô Tô về đêm", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Đường đẹp, vắng, an toàn", "transport_to_next": "Về trung tâm"},
-            {"time": "19:00", "poi_id": "cho-dem-tri-ton", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn vặt: xiên nướng, chè, cháo", "duration_minutes": 60, "cost_vnd": "50k-80k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:00", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi", "activity": "Đi dạo, ngắm đèn", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "20:30", "poi_id": "chay-vong-quanh", "name": "Chạy vòng quanh các tuyến đường chính", "activity": "Ngắm phố đêm, cảm nhận không khí yên bình", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Đi qua Trần Hưng Đạo, Hùng Vương, Nguyễn Trãi", "transport_to_next": "Về trung tâm"},
-            {"time": "21:30", "poi_id": "tiem-ca-phe-nha-que", "name": "Tiệm Cà Phê Nhà Quê", "activity": "Cafe đêm, kết thúc night ride", "duration_minutes": 60, "cost_vnd": "15k-35k", "notes": "Mở 6h30-21h", "transport_to_next": "Kết thúc"}
+            {
+              "time": "18:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chạy xe ngắm núi Cô Tô về đêm",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đường đẹp, vắng, an toàn",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn vặt: xiên nướng, chè, cháo",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-80k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo, ngắm đèn",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Ngắm phố đêm, cảm nhận không khí yên bình",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đi qua Trần Hưng Đạo, Hùng Vương, Nguyễn Trãi",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "21:30",
+              "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
+              "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
+              "activity": "Cafe đêm, kết thúc night ride",
+              "duration_minutes": 60,
+              "cost_vnd": "15k-35k",
+              "notes": "Mở 6h30-21h",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "80k - 150k/người",
-      "tips": ["Mang theo áo khoác vì đêm vùng núi mát", "Kiểm tra xăng xe trước khi đi", "Đi nhóm đông cho vui"],
+      "tips": [
+        "Mang theo áo khoác vì đêm vùng núi mát",
+        "Kiểm tra xăng xe trước khi đi",
+        "Đi nhóm đông cho vui"
+      ],
       "rating": 4.6,
-      "tags": ["night-ride", "chay-xe-dem", "pho-dem", "nha-thieu-nhi"]
+      "tags": [
+        "night-ride",
+        "chay-xe-dem",
+        "pho-dem",
+        "nha-thieu-nhi"
+      ]
     },
     {
       "id": "itin-020",
@@ -686,26 +1715,79 @@
       "category": "sunset_bbq",
       "duration": "Chiều-tối (4 tiếng)",
       "best_season": "T8-T12 (hồ đầy nước)",
-      "audiences": ["Nhóm bạn", "Gia đình"],
-      "experiences": ["Hoàng hôn", "BBQ", "Ẩm thực"],
-      "clusters": ["Cụm Ô Thum"],
+      "audiences": [
+        "Nhóm bạn",
+        "Gia đình"
+      ],
+      "experiences": [
+        "Hoàng hôn",
+        "BBQ",
+        "Ẩm thực"
+      ],
+      "clusters": [
+        "Cụm Ô Thum"
+      ],
       "description": "Ngắm hoàng hôn bên hồ, ăn gà đốt nướng tại chỗ, chill đêm bên bờ hồ.",
       "days": [
         {
           "day": 1,
           "title": "Hoàng hôn + Gà đốt",
           "stops": [
-            {"time": "16:00", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum", "activity": "Ngắm hồ, đi dạo bờ hồ", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "17:15", "poi_id": "cau-go-moc-mac", "name": "Cầu Gỗ Mộc Mạc", "activity": "Chụp ảnh hoàng hôn", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "18:15", "poi_id": "quan-ga-dot-thao-nguyen", "name": "Gà Đốt Thảo Nguyên Ô Thum", "activity": "Ăn gà đốt nướng, ngắm hồ đêm", "duration_minutes": 120, "cost_vnd": "250k-320k/con", "notes": "Đặt trước 30 phút", "transport_to_next": "Xe máy"},
-            {"time": "20:30", "poi_id": "ca-phe-suoi-tri-ton", "name": "Cà Phê Suối Tri Tôn View Núi Cô Tô", "activity": "Cafe đêm bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "Mở 8h-20h", "transport_to_next": "Kết thúc"}
+            {
+              "time": "16:00",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ, đi dạo bờ hồ",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "17:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp ảnh hoàng hôn",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "18:15",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn gà đốt nướng, ngắm hồ đêm",
+              "duration_minutes": 120,
+              "cost_vnd": "250k-320k/con",
+              "notes": "Đặt trước 30 phút",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe đêm bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "Mở 8h-20h",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "300k - 500k/người",
-      "tips": ["Đi nhóm 4+ người để chia gà", "Mang theo đèn pin nếu ở lại muộn"],
+      "tips": [
+        "Đi nhóm 4+ người để chia gà",
+        "Mang theo đèn pin nếu ở lại muộn"
+      ],
       "rating": 4.8,
-      "tags": ["hoang-hon", "bbq", "ga-dot", "dem-ben-ho"]
+      "tags": [
+        "hoang-hon",
+        "bbq",
+        "ga-dot",
+        "dem-ben-ho"
+      ]
     },
     {
       "id": "itin-021",
@@ -714,25 +1796,67 @@
       "category": "spiritual_night",
       "duration": "Buổi tối (3 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Người lớn tuổi", "Tâm linh"],
-      "experiences": ["Tâm linh", "Đêm yên bình"],
-      "clusters": ["Trung tâm"],
+      "audiences": [
+        "Người lớn tuổi",
+        "Tâm linh"
+      ],
+      "experiences": [
+        "Tâm linh",
+        "Đêm yên bình"
+      ],
+      "clusters": [
+        "Trung tâm"
+      ],
       "description": "Đi chùa về đêm, ngắm đèn chùa, cầu nguyện trong không gian yên tĩnh.",
       "days": [
         {
           "day": 1,
           "title": "Chùa đêm Tri Tôn",
           "stops": [
-            {"time": "18:00", "poi_id": "chua-xa-ton", "name": "Chùa Xà Tón (Svayton)", "activity": "Đi chùa tối, ngắm đèn chùa, cầu nguyện", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "Chùa lên đèn rất đẹp", "transport_to_next": "Đi bộ"},
-            {"time": "19:15", "poi_id": "chua-thanh-luong", "name": "Chùa Thanh Lương", "activity": "Ngắm chùa đêm", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Chùa buổi tối lên đèn cực đẹp", "transport_to_next": "Xe máy"},
-            {"time": "20:15", "poi_id": "ca-phe-thot-not", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe đêm, thư giãn", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "18:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Đi chùa tối, ngắm đèn chùa, cầu nguyện",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa lên đèn rất đẹp",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:15",
+              "poi_id": "chua-thanh-luong",
+              "name": "Chùa Thanh Lương",
+              "activity": "Ngắm chùa đêm",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa buổi tối lên đèn cực đẹp",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "20:15",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe đêm, thư giãn",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "30k - 60k/người",
-      "tips": ["Mặc đồ kín đáo", "Giữ im lặng trong khuôn viên chùa"],
+      "tips": [
+        "Mặc đồ kín đáo",
+        "Giữ im lặng trong khuôn viên chùa"
+      ],
       "rating": 4.6,
-      "tags": ["tam-linh", "chua-dem", "yen-binh"]
+      "tags": [
+        "tam-linh",
+        "chua-dem",
+        "yen-binh"
+      ]
     },
     {
       "id": "itin-022",
@@ -741,41 +1865,177 @@
       "category": "weekend",
       "duration": "2 ngày 1 đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Mọi lứa tuổi", "Cuối tuần"],
-      "experiences": ["Khám phá", "Đêm Tri Tôn", "Cafe", "Ẩm thực"],
-      "clusters": ["Tất cả"],
+      "audiences": [
+        "Mọi lứa tuổi",
+        "Cuối tuần"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Đêm Tri Tôn",
+        "Cafe",
+        "Ẩm thực"
+      ],
+      "clusters": [
+        "Tất cả"
+      ],
       "description": "Lịch trình cuối tuần hoàn hảo: ngày khám phá, tối cafe + chợ đêm, sáng hôm sau săn mây.",
       "days": [
         {
           "day": 1,
           "title": "Ngày khám phá + Đêm Tri Tôn",
           "stops": [
-            {"time": "08:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ, chụp ảnh", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "09:45", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:00", "poi_id": "cong-troi-tri-ton", "name": "Cổng Trời Tri Tôn", "activity": "Check-in", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:30", "poi_id": "lau-bo", "name": "Lẩu bò Bảy Núi", "activity": "Ăn trưa", "duration_minutes": 75, "cost_vnd": "100k-150k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "14:30", "poi_id": "nui-co-to", "name": "Núi Cô Tô", "activity": "Leo núi, ngắm cảnh", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:00", "poi_id": "con-duong-tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "18:30", "poi_id": "cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn tối, dạo chợ", "duration_minutes": 90, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:00", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi", "activity": "Đi dạo", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "cham-coffee", "name": "CHẠM Coffee & Tea", "activity": "Cafe đêm", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Về homestay"},
-            {"time": "22:00", "poi_id": "tuyet-anh-homestay", "name": "Tuyết Anh Homestay", "activity": "Nghỉ ngơi", "duration_minutes": 0, "cost_vnd": "250k-450k", "notes": "", "transport_to_next": ""}
+            {
+              "time": "08:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ, chụp ảnh",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:45",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "activity": "Ăn trưa",
+              "duration_minutes": 75,
+              "cost_vnd": "100k-150k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "nui-co-to",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
+              "activity": "Leo núi, ngắm cảnh",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối, dạo chợ",
+              "duration_minutes": 90,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "activity": "Cafe đêm",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Về homestay"
+            },
+            {
+              "time": "22:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Nghỉ ngơi",
+              "duration_minutes": 0,
+              "cost_vnd": "250k-450k",
+              "notes": "",
+              "transport_to_next": ""
+            }
           ]
         },
         {
           "day": 2,
           "title": "Săn mây + Cafe + Về",
           "stops": [
-            {"time": "05:00", "poi_id": "da-vo-hoi", "name": "Đá Vồ Hội (Săn mây)", "activity": "Săn mây bình minh", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "", "transport_to_next": "Xuống núi"},
-            {"time": "07:30", "poi_id": "ca-phe-suoi", "name": "Cà Phê Suối Tri Tôn", "activity": "Cafe sáng bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:00", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum + Gà Đốt", "activity": "Ngắm hồ + ăn gà đốt", "duration_minutes": 120, "cost_vnd": "250k-350k", "notes": "", "transport_to_next": "Về, kết thúc"}
+            {
+              "time": "05:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Săn mây bình minh",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "07:30",
+              "poi_id": "b56c95ef-mây-coffee-&-tea-hồ-",
+              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+              "activity": "Cafe sáng bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ + ăn gà đốt",
+              "duration_minutes": 120,
+              "cost_vnd": "250k-350k",
+              "notes": "",
+              "transport_to_next": "Về, kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "900k - 1.500k/người",
-      "tips": ["Đặt phòng trước vào cuối tuần", "Săn mây đi sớm 5h"],
+      "tips": [
+        "Đặt phòng trước vào cuối tuần",
+        "Săn mây đi sớm 5h"
+      ],
       "rating": 4.9,
-      "tags": ["weekend", "2n1d", "dem-tri-ton", "san-may", "cafe-dem"]
+      "tags": [
+        "weekend",
+        "2n1d",
+        "dem-tri-ton",
+        "san-may",
+        "cafe-dem"
+      ]
     },
     {
       "id": "itin-023",
@@ -784,32 +2044,141 @@
       "category": "solo",
       "duration": "1 ngày + tối",
       "best_season": "Quanh năm",
-      "audiences": ["Solo", "Freelancer"],
-      "experiences": ["Khám phá", "Cafe", "Đêm yên bình"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ"],
+      "audiences": [
+        "Solo",
+        "Freelancer"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Cafe",
+        "Đêm yên bình"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ"
+      ],
       "description": "Lịch trình cho người đi một mình: tự do khám phá, cafe làm việc, tối chill một mình.",
       "days": [
         {
           "day": 1,
           "title": "Solo Explore Tri Tôn",
           "stops": [
-            {"time": "06:30", "poi_id": "cho-tri-ton", "name": "Chợ Tri Tôn", "activity": "Ăn sáng, ngắm chợ", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "07:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngồi một mình ngắm hồ, đọc sách", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "09:15", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan, thiền", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:30", "poi_id": "quy-coffee", "name": "Quy Coffee House", "activity": "Cafe làm việc, đọc sách", "duration_minutes": 120, "cost_vnd": "18k-40k", "notes": "Wifi tốt", "transport_to_next": "Đi bộ"},
-            {"time": "12:30", "poi_id": "com-trung-tam", "name": "Ăn trưa trung tâm", "activity": "Ăn cơm/lẩu", "duration_minutes": 60, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "14:00", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Đi bộ một mình, suy ngẫm", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "15:30", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Ngắm cảnh, chụp ảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:00", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn một mình", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "18:30", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối một mình", "duration_minutes": 60, "cost_vnd": "50k-80k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:30", "poi_id": "tiem-ca-phe-nha-que", "name": "Tiệm Cà Phê Nhà Quê", "activity": "Cafe đêm, viết nhật ký", "duration_minutes": 75, "cost_vnd": "15k-35k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "06:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn sáng, ngắm chợ",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "07:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngồi một mình ngắm hồ, đọc sách",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:15",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan, thiền",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Cafe làm việc, đọc sách",
+              "duration_minutes": 120,
+              "cost_vnd": "18k-40k",
+              "notes": "Wifi tốt",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn cơm/lẩu",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Đi bộ một mình, suy ngẫm",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "15:30",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Ngắm cảnh, chụp ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn một mình",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối một mình",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-80k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:30",
+              "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
+              "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
+              "activity": "Cafe đêm, viết nhật ký",
+              "duration_minutes": 75,
+              "cost_vnd": "15k-35k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "250k - 450k/người",
-      "tips": ["Tri Tôn rất an toàn cho solo traveler", "Mang theo sách hoặc tai nghe", "Người dân rất thân thiện, đừng ngại hỏi đường"],
+      "tips": [
+        "Tri Tôn rất an toàn cho solo traveler",
+        "Mang theo sách hoặc tai nghe",
+        "Người dân rất thân thiện, đừng ngại hỏi đường"
+      ],
       "rating": 4.7,
-      "tags": ["solo", "1-ngay", "cafe", "dem-yen-binh"]
+      "tags": [
+        "solo",
+        "1-ngay",
+        "cafe",
+        "dem-yen-binh"
+      ]
     },
     {
       "id": "itin-024",
@@ -818,33 +2187,152 @@
       "category": "photography_full",
       "duration": "1 ngày + đêm",
       "best_season": "T9-T11 (mùa lúa chín)",
-      "audiences": ["Nhiếp ảnh gia", "Content Creator"],
-      "experiences": ["Nhiếp ảnh", "Bình minh", "Hoàng hôn", "Đêm"],
-      "clusters": ["Tất cả"],
+      "audiences": [
+        "Nhiếp ảnh gia",
+        "Content Creator"
+      ],
+      "experiences": [
+        "Nhiếp ảnh",
+        "Bình minh",
+        "Hoàng hôn",
+        "Đêm"
+      ],
+      "clusters": [
+        "Tất cả"
+      ],
       "description": "Lịch trình chuyên chụp ảnh từ bình minh đến đêm, đi hết các góc đẹp nhất Tri Tôn.",
       "days": [
         {
           "day": 1,
           "title": "Bình minh → Đồng → Núi → Hoàng hôn → Đêm",
           "stops": [
-            {"time": "05:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ (Bình minh)", "activity": "Chụp bình minh, sương, phản chiếu", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Ánh sáng đẹp nhất 5h30-6h30", "transport_to_next": "Đi bộ"},
-            {"time": "06:45", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Chụp đồng lúa sáng sớm", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:00", "poi_id": "cay-thot-not-trai-tim", "name": "Cây thốt nốt trái tim", "activity": "Chụp biểu tượng", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Chụp kiến trúc Khmer", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:30", "poi_id": "vòm-còng", "name": "Con Đường Vòm Còng", "activity": "Chụp đường hàng còng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm ăn trưa"},
-            {"time": "12:00", "poi_id": "an-trua", "name": "Ăn trưa", "activity": "Nghỉ ngơi", "duration_minutes": 90, "cost_vnd": "80k-150k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "14:00", "poi_id": "nui-co-to", "name": "Núi Cô Tô - Đá Vồ Hội", "activity": "Chụp góc núi, mỏm đá", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "", "transport_to_next": "Xuống núi"},
-            {"time": "16:30", "poi_id": "dong-nhin-len-chu", "name": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN", "activity": "Chụp bảng chữ + hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "17:45", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Chụp hoàng hôn núi Cô Tô", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "19:00", "poi_id": "cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Chụp đêm phố chợ, ánh sáng đèn", "duration_minutes": 75, "cost_vnd": "50k-80k (ăn)", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "chua-xa-ton-dem", "name": "Chùa Xà Tón về đêm", "activity": "Chụp chùa đêm lên đèn", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Chùa đêm rất đẹp", "transport_to_next": "Kết thúc"}
+            {
+              "time": "05:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp bình minh, sương, phản chiếu",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Ánh sáng đẹp nhất 5h30-6h30",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "06:45",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Chụp đồng lúa sáng sớm",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:00",
+              "poi_id": "cay-thot-not-trai-tim",
+              "name": "Hàng Thốt Nốt Trái Tim Ô Lâm",
+              "activity": "Chụp biểu tượng",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Chụp kiến trúc Khmer",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "chua-krang-kroch",
+              "name": "chùa Krăng Krốch",
+              "activity": "Chụp đường hàng còng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm ăn trưa"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Nghỉ ngơi",
+              "duration_minutes": 90,
+              "cost_vnd": "80k-150k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "nui-co-to",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
+              "activity": "Chụp góc núi, mỏm đá",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "chu-tri-ton-nui-co-to",
+              "name": "Biểu Tượng Chữ \"TRI TÔN\" Trên Núi Cô Tô (Sân Tiên)",
+              "activity": "Chụp bảng chữ + hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:45",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Chụp hoàng hôn núi Cô Tô",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Chụp đêm phố chợ, ánh sáng đèn",
+              "duration_minutes": 75,
+              "cost_vnd": "50k-80k (ăn)",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp chùa đêm lên đèn",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa đêm rất đẹp",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "300k - 500k/người",
-      "tips": ["Mang tripod + remote", "Sạc đầy pin, mang pin dự phòng", "Lens wide cho cảnh, tele cho chi tiết"],
+      "tips": [
+        "Mang tripod + remote",
+        "Sạc đầy pin, mang pin dự phòng",
+        "Lens wide cho cảnh, tele cho chi tiết"
+      ],
       "rating": 4.9,
-      "tags": ["nhiep-anh", "binh-minh", "hoang-hon", "dem", "full-day"]
+      "tags": [
+        "nhiep-anh",
+        "binh-minh",
+        "hoang-hon",
+        "dem",
+        "full-day"
+      ]
     },
     {
       "id": "itin-025",
@@ -853,28 +2341,100 @@
       "category": "festival",
       "duration": "1-2 ngày",
       "best_season": "T8-T9 Âm lịch",
-      "audiences": ["Mọi lứa tuổi"],
-      "experiences": ["Lễ hội", "Văn hóa", "Ẩm thực"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ"],
+      "audiences": [
+        "Mọi lứa tuổi"
+      ],
+      "experiences": [
+        "Lễ hội",
+        "Văn hóa",
+        "Ẩm thực"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ"
+      ],
       "description": "Trải nghiệm lễ hội Đua Bò Bảy Núi độc đáo, kết hợp khám phá Tri Tôn.",
       "days": [
         {
           "day": 1,
           "title": "Lễ hội Đua Bò + Khám phá",
           "stops": [
-            {"time": "06:00", "poi_id": "le-hoi-dua-bo", "name": "Lễ hội Đua bò Bảy Núi", "activity": "Xem đua bò, cổ vũ, chụp ảnh", "duration_minutes": 180, "cost_vnd": "Miễn phí", "notes": "Tháng 8-9 Âm lịch, diễn ra tại sân đua bò/chùa", "transport_to_next": "Đi bộ"},
-            {"time": "09:30", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan chùa gần sân đua", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ, nghỉ ngơi", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:30", "poi_id": "ga-dot", "name": "Gà Đốt Ô Thum", "activity": "Ăn trưa", "duration_minutes": 90, "cost_vnd": "250k-350k", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "15:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:00", "poi_id": "cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn tối, dạo phố", "duration_minutes": 90, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "06:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Xem đua bò, cổ vũ, chụp ảnh",
+              "duration_minutes": 180,
+              "cost_vnd": "Miễn phí",
+              "notes": "Tháng 8-9 Âm lịch, diễn ra tại sân đua bò/chùa",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan chùa gần sân đua",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ, nghỉ ngơi",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ăn trưa",
+              "duration_minutes": 90,
+              "cost_vnd": "250k-350k",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối, dạo phố",
+              "duration_minutes": 90,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "400k - 700k/người",
-      "tips": ["Đi sớm để có chỗ ngồi tốt", "Mang theo nước uống, mũ nón", "Lễ hội rất đông, cẩn thận tư trang"],
+      "tips": [
+        "Đi sớm để có chỗ ngồi tốt",
+        "Mang theo nước uống, mũ nón",
+        "Lễ hội rất đông, cẩn thận tư trang"
+      ],
       "rating": 4.8,
-      "tags": ["le-hoi", "dua-bo", "van-hoa", "khmer"]
+      "tags": [
+        "le-hoi",
+        "dua-bo",
+        "van-hoa",
+        "khmer"
+      ]
     },
     {
       "id": "itin-026",
@@ -883,29 +2443,111 @@
       "category": "adventure",
       "duration": "1 ngày",
       "best_season": "T11-T4 (mùa khô)",
-      "audiences": ["Phượt thủ", "Yêu thiên nhiên"],
-      "experiences": ["Trekking", "Leo núi", "Cafe"],
-      "clusters": ["Cụm Cô Tô", "Trung tâm"],
+      "audiences": [
+        "Phượt thủ",
+        "Yêu thiên nhiên"
+      ],
+      "experiences": [
+        "Trekking",
+        "Leo núi",
+        "Cafe"
+      ],
+      "clusters": [
+        "Cụm Cô Tô",
+        "Trung tâm"
+      ],
       "description": "Leo núi Cô Tô buổi sáng, chiều cafe thư giãn, tối chợ đêm.",
       "days": [
         {
           "day": 1,
           "title": "Trek Cô Tô + Cafe",
           "stops": [
-            {"time": "06:00", "poi_id": "nui-co-to", "name": "Núi Cô Tô (Trekking)", "activity": "Leo núi bằng đường bậc thang đá", "duration_minutes": 180, "cost_vnd": "Miễn phí", "notes": "Mang giày thể thao, nước uống", "transport_to_next": "Xuống núi"},
-            {"time": "09:30", "poi_id": "ho-soai-so", "name": "Hồ Soài So", "activity": "Nghỉ chân, rửa mặt", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:15", "poi_id": "ca-phe-suoi", "name": "Cà Phê Suối Tri Tôn", "activity": "Cafe phục hồi sau trek", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:00", "poi_id": "an-trua", "name": "Ăn trưa trung tâm", "activity": "Ăn cơm/lẩu", "duration_minutes": 75, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Về nghỉ"},
-            {"time": "15:00", "poi_id": "windy-hill", "name": "Windy Hill Coffee & Homestay", "activity": "Cafe chiều view đồi", "duration_minutes": 90, "cost_vnd": "25k-55k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "17:00", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "18:30", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối", "duration_minutes": 75, "cost_vnd": "60k-100k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "06:00",
+              "poi_id": "nui-co-to",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
+              "activity": "Leo núi bằng đường bậc thang đá",
+              "duration_minutes": 180,
+              "cost_vnd": "Miễn phí",
+              "notes": "Mang giày thể thao, nước uống",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Nghỉ chân, rửa mặt",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:15",
+              "poi_id": "b56c95ef-mây-coffee-&-tea-hồ-",
+              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+              "activity": "Cafe phục hồi sau trek",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn cơm/lẩu",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Về nghỉ"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "activity": "Cafe chiều view đồi",
+              "duration_minutes": 90,
+              "cost_vnd": "25k-55k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-100k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "250k - 500k/người",
-      "tips": ["Mang 2 lít nước khi trek", "Đi giày có độ bám tốt", "Bôi kem chống nắng"],
+      "tips": [
+        "Mang 2 lít nước khi trek",
+        "Đi giày có độ bám tốt",
+        "Bôi kem chống nắng"
+      ],
       "rating": 4.7,
-      "tags": ["trekking", "leo-nui", "cafe", "adventure"]
+      "tags": [
+        "trekking",
+        "leo-nui",
+        "cafe",
+        "adventure"
+      ]
     },
     {
       "id": "itin-027",
@@ -914,39 +2556,158 @@
       "category": "family",
       "duration": "2 ngày 1 đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Gia đình", "Có trẻ nhỏ"],
-      "experiences": ["Gia đình", "Vui chơi", "Giáo dục", "Ẩm thực"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ"],
+      "audiences": [
+        "Gia đình",
+        "Có trẻ nhỏ"
+      ],
+      "experiences": [
+        "Gia đình",
+        "Vui chơi",
+        "Giáo dục",
+        "Ẩm thực"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ"
+      ],
       "description": "Lịch trình nhẹ nhàng cho gia đình có trẻ nhỏ, không leo núi nhiều, có chỗ chơi cho bé.",
       "days": [
         {
           "day": 1,
           "title": "Ngày nhẹ nhàng + Đêm gia đình",
           "stops": [
-            {"time": "07:30", "poi_id": "cho-tri-ton", "name": "Chợ Tri Tôn", "activity": "Ăn sáng, cho bé ngắm chợ", "duration_minutes": 45, "cost_vnd": "40k-60k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ, cho bé chơi ven hồ", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "Đường bằng, dễ đi xe đẩy", "transport_to_next": "Xe máy 3 phút"},
-            {"time": "10:00", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ (đi xe máy lên)", "activity": "Tham quan, không leo bộ", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "Có đường xe máy lên tận nơi", "transport_to_next": "Xe máy"},
-            {"time": "11:30", "poi_id": "lau-bo", "name": "Lẩu bò Bảy Núi", "activity": "Ăn trưa gia đình", "duration_minutes": 75, "cost_vnd": "100k-200k", "notes": "Quán có ghế trẻ em", "transport_to_next": "Xe máy"},
-            {"time": "13:30", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi Tri Tôn", "activity": "Cho bé chơi khu vui chơi", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Có khu vui chơi trẻ em", "transport_to_next": "Về khách sạn"},
-            {"time": "15:30", "poi_id": "khach-san", "name": "Check-in khách sạn/homestay", "activity": "Nghỉ trưa", "duration_minutes": 90, "cost_vnd": "300k-500k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "17:30", "poi_id": "bai-tha-dieu", "name": "Bãi Thả Diều", "activity": "Cho bé thả diều, ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối gia đình, cho bé ăn vặt", "duration_minutes": 90, "cost_vnd": "80k-150k", "notes": "", "transport_to_next": "Về khách sạn"}
+            {
+              "time": "07:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn sáng, cho bé ngắm chợ",
+              "duration_minutes": 45,
+              "cost_vnd": "40k-60k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ, cho bé chơi ven hồ",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "Đường bằng, dễ đi xe đẩy",
+              "transport_to_next": "Xe máy 3 phút"
+            },
+            {
+              "time": "10:00",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan, không leo bộ",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "Có đường xe máy lên tận nơi",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "activity": "Ăn trưa gia đình",
+              "duration_minutes": 75,
+              "cost_vnd": "100k-200k",
+              "notes": "Quán có ghế trẻ em",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:30",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Cho bé chơi khu vui chơi",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Có khu vui chơi trẻ em",
+              "transport_to_next": "Về khách sạn"
+            },
+            {
+              "time": "15:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Nghỉ trưa",
+              "duration_minutes": 90,
+              "cost_vnd": "300k-500k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
+              "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+              "activity": "Cho bé thả diều, ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối gia đình, cho bé ăn vặt",
+              "duration_minutes": 90,
+              "cost_vnd": "80k-150k",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            }
           ]
         },
         {
           "day": 2,
           "title": "Sáng nhẹ nhàng + Về",
           "stops": [
-            {"time": "07:00", "poi_id": "ca-phe-thot-not", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe sáng gia đình", "duration_minutes": 60, "cost_vnd": "30k-60k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:30", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Đi bộ nhẹ, chụp ảnh gia đình", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in gia đình", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về, kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe sáng gia đình",
+              "duration_minutes": 60,
+              "cost_vnd": "30k-60k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Đi bộ nhẹ, chụp ảnh gia đình",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in gia đình",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về, kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "700k - 1.200k/gia đình",
-      "tips": ["Mang theo xe đẩy nếu bé nhỏ", "Chọn quán có ghế trẻ em", "Tránh leo núi, chọn điểm có đường xe máy"],
+      "tips": [
+        "Mang theo xe đẩy nếu bé nhỏ",
+        "Chọn quán có ghế trẻ em",
+        "Tránh leo núi, chọn điểm có đường xe máy"
+      ],
       "rating": 4.8,
-      "tags": ["gia-dinh", "tre-nho", "weekend", "nhe-nhang"]
+      "tags": [
+        "gia-dinh",
+        "tre-nho",
+        "weekend",
+        "nhe-nhang"
+      ]
     },
     {
       "id": "itin-028",
@@ -955,41 +2716,177 @@
       "category": "budget",
       "duration": "2 ngày 1 đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Backpacker", "Sinh viên", "Budget"],
-      "experiences": ["Khám phá", "Tiết kiệm", "Đêm Tri Tôn"],
-      "clusters": ["Tất cả"],
+      "audiences": [
+        "Backpacker",
+        "Sinh viên",
+        "Budget"
+      ],
+      "experiences": [
+        "Khám phá",
+        "Tiết kiệm",
+        "Đêm Tri Tôn"
+      ],
+      "clusters": [
+        "Tất cả"
+      ],
       "description": "Lịch trình tiết kiệm nhất, đi nhiều nhất với chi phí thấp nhất.",
       "days": [
         {
           "day": 1,
           "title": "Khám phá miễn phí + Đêm chợ",
           "stops": [
-            {"time": "06:00", "poi_id": "cho-tri-ton", "name": "Chợ Tri Tôn", "activity": "Ăn sáng rẻ nhất", "duration_minutes": 30, "cost_vnd": "20k-30k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "07:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ miễn phí", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "08:45", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "10:00", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Đi bộ miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "11:30", "poi_id": "com-binh-dan", "name": "Cơm bình dân trung tâm", "activity": "Ăn trưa rẻ", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "13:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "14:30", "poi_id": "vòm-còng", "name": "Con Đường Vòm Còng", "activity": "Đi bộ miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "16:00", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "17:30", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối rẻ", "duration_minutes": 75, "cost_vnd": "40k-70k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi", "activity": "Đi dạo miễn phí", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về nhà nghỉ"},
-            {"time": "20:00", "poi_id": "nha-nghi-binh-dan", "name": "Nhà nghỉ bình dân", "activity": "Nghỉ ngơi", "duration_minutes": 0, "cost_vnd": "100k-200k", "notes": "", "transport_to_next": ""}
+            {
+              "time": "06:00",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn sáng rẻ nhất",
+              "duration_minutes": 30,
+              "cost_vnd": "20k-30k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "07:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ miễn phí",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "08:45",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "10:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Đi bộ miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn trưa rẻ",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "13:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "chua-krang-kroch",
+              "name": "chùa Krăng Krốch",
+              "activity": "Đi bộ miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối rẻ",
+              "duration_minutes": 75,
+              "cost_vnd": "40k-70k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo miễn phí",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về nhà nghỉ"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Nghỉ ngơi",
+              "duration_minutes": 0,
+              "cost_vnd": "100k-200k",
+              "notes": "",
+              "transport_to_next": ""
+            }
           ]
         },
         {
           "day": 2,
           "title": "Sáng cafe + Về",
           "stops": [
-            {"time": "06:30", "poi_id": "tiem-ca-phe-nha-que", "name": "Tiệm Cà Phê Nhà Quê", "activity": "Cafe sáng rẻ nhất", "duration_minutes": 45, "cost_vnd": "15k-25k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "07:30", "poi_id": "chua-xa-ton", "name": "Chùa Xà Tón", "activity": "Tham quan miễn phí", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về, kết thúc"}
+            {
+              "time": "06:30",
+              "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
+              "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
+              "activity": "Cafe sáng rẻ nhất",
+              "duration_minutes": 45,
+              "cost_vnd": "15k-25k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "07:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham quan miễn phí",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về, kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "250k - 450k/người",
-      "tips": ["Đi bộ hoặc thuê xe đạp để tiết kiệm", "Ăn ở chợ và quán bình dân", "Ngủ nhà nghỉ thay vì resort"],
+      "tips": [
+        "Đi bộ hoặc thuê xe đạp để tiết kiệm",
+        "Ăn ở chợ và quán bình dân",
+        "Ngủ nhà nghỉ thay vì resort"
+      ],
       "rating": 4.6,
-      "tags": ["budget", "backpacker", "tiet-kiem", "mien-phi"]
+      "tags": [
+        "budget",
+        "backpacker",
+        "tiet-kiem",
+        "mien-phi"
+      ]
     },
     {
       "id": "itin-029",
@@ -998,36 +2895,127 @@
       "category": "luxury",
       "duration": "2 ngày 1 đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Cặp đôi", "Nghỉ dưỡng"],
-      "experiences": ["Nghỉ dưỡng", "Spa", "Ẩm thực cao cấp", "Đêm lãng mạn"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ"],
+      "audiences": [
+        "Cặp đôi",
+        "Nghỉ dưỡng"
+      ],
+      "experiences": [
+        "Nghỉ dưỡng",
+        "Spa",
+        "Ẩm thực cao cấp",
+        "Đêm lãng mạn"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ"
+      ],
       "description": "Nghỉ dưỡng tại resort, ăn uống thoải mái, cafe view đẹp, không vội vàng.",
       "days": [
         {
           "day": 1,
           "title": "Check-in resort + Chill",
           "stops": [
-            {"time": "10:00", "poi_id": "rong-vang-resort", "name": "Rồng Vàng Resort Tri Tôn", "activity": "Check-in, nghỉ ngơi, tận hưởng tiện nghi", "duration_minutes": 120, "cost_vnd": "500k-900k/phòng", "notes": "Resort đẹp nhất Tri Tôn", "transport_to_next": "Xe máy"},
-            {"time": "12:30", "poi_id": "lau-bo", "name": "Lẩu bò Bảy Núi", "activity": "Ăn trưa", "duration_minutes": 90, "cost_vnd": "150k-250k", "notes": "", "transport_to_next": "Về resort"},
-            {"time": "14:30", "poi_id": "ruong-coffee", "name": "Ruộng Coffee & Homestay", "activity": "Cafe chiều view đồng", "duration_minutes": 90, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ chiều", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về resort"},
-            {"time": "18:00", "poi_id": "quan-bo-nuong", "name": "Quán Bò Nướng Bánh Tráng Tư Liêm", "activity": "Ăn tối bò nướng", "duration_minutes": 90, "cost_vnd": "90k-180k", "notes": "", "transport_to_next": "Về resort"},
-            {"time": "20:00", "poi_id": "resort-dem", "name": "Rồng Vàng Resort (đêm)", "activity": "Ngắm sao, thư giãn tại resort", "duration_minutes": 0, "cost_vnd": "Đã bao gồm", "notes": "", "transport_to_next": ""}
+            {
+              "time": "10:00",
+              "poi_id": "c7d6fabf-rồng-vàng-resort-tri",
+              "name": "Rồng Vàng Resort Tri Tôn",
+              "activity": "Check-in, nghỉ ngơi, tận hưởng tiện nghi",
+              "duration_minutes": 120,
+              "cost_vnd": "500k-900k/phòng",
+              "notes": "Resort đẹp nhất Tri Tôn",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "activity": "Ăn trưa",
+              "duration_minutes": 90,
+              "cost_vnd": "150k-250k",
+              "notes": "",
+              "transport_to_next": "Về resort"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe chiều view đồng",
+              "duration_minutes": 90,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ chiều",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về resort"
+            },
+            {
+              "time": "18:00",
+              "poi_id": "683d2086-quán-bò-nướng-bánh-t",
+              "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+              "activity": "Ăn tối bò nướng",
+              "duration_minutes": 90,
+              "cost_vnd": "90k-180k",
+              "notes": "",
+              "transport_to_next": "Về resort"
+            },
+            {
+              "time": "20:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm sao, thư giãn tại resort",
+              "duration_minutes": 0,
+              "cost_vnd": "Đã bao gồm",
+              "notes": "",
+              "transport_to_next": ""
+            }
           ]
         },
         {
           "day": 2,
           "title": "Sáng chill + Về",
           "stops": [
-            {"time": "07:00", "poi_id": "ca-phe-thot-not", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe sáng view cánh đồng", "duration_minutes": 90, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:00", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan nhẹ nhàng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về resort, checkout"}
+            {
+              "time": "07:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe sáng view cánh đồng",
+              "duration_minutes": 90,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan nhẹ nhàng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về resort, checkout"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "1.000k - 2.000k/cặp",
-      "tips": ["Đặt phòng trước", "Yêu cầu phòng view núi nếu có"],
+      "tips": [
+        "Đặt phòng trước",
+        "Yêu cầu phòng view núi nếu có"
+      ],
       "rating": 4.8,
-      "tags": ["luxury", "nghi-duong", "resort", "chill"]
+      "tags": [
+        "luxury",
+        "nghi-duong",
+        "resort",
+        "chill"
+      ]
     },
     {
       "id": "itin-030",
@@ -1036,27 +3024,90 @@
       "category": "night_explore",
       "duration": "Buổi tối (3 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Giới trẻ", "Gia đình"],
-      "experiences": ["Đêm Tri Tôn", "Đi bộ", "Ẩm thực đêm"],
-      "clusters": ["Trung tâm Thị trấn"],
+      "audiences": [
+        "Giới trẻ",
+        "Gia đình"
+      ],
+      "experiences": [
+        "Đêm Tri Tôn",
+        "Đi bộ",
+        "Ẩm thực đêm"
+      ],
+      "clusters": [
+        "Trung tâm Thị trấn"
+      ],
       "description": "Đi bộ khám phá trung tâm Tri Tôn về đêm: nhà thiếu nhi, phố đi bộ, ăn vặt đêm.",
       "days": [
         {
           "day": 1,
           "title": "Phố đêm Tri Tôn",
           "stops": [
-            {"time": "18:00", "poi_id": "bai-tha-dieu", "name": "Bãi Thả Diều Hoàng Hôn", "activity": "Ngắm hoàng hôn cuối ngày", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "18:45", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi Tri Tôn", "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh đèn đêm", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "Có khu vui chơi cộng đồng, đẹp về đêm", "transport_to_next": "Đi bộ"},
-            {"time": "19:30", "poi_id": "pho-di-bo", "name": "Phố đi bộ trung tâm (Trần Hưng Đạo - Hùng Vương)", "activity": "Đi bộ ngắm phố, mua sắm, ăn vặt", "duration_minutes": 60, "cost_vnd": "30k-60k", "notes": "Đường phố yên bình, không khí mát", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn tối: xiên nướng, chè, cháo bò đêm", "duration_minutes": 60, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "21:30", "poi_id": "chua-xa-ton-dem", "name": "Chùa Xà Tón về đêm", "activity": "Ngắm chùa đêm lên đèn", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "Chùa đêm rất đẹp và yên tĩnh", "transport_to_next": "Kết thúc"}
+            {
+              "time": "18:00",
+              "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
+              "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+              "activity": "Ngắm hoàng hôn cuối ngày",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "18:45",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh đèn đêm",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "Có khu vui chơi cộng đồng, đẹp về đêm",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:30",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi bộ ngắm phố, mua sắm, ăn vặt",
+              "duration_minutes": 60,
+              "cost_vnd": "30k-60k",
+              "notes": "Đường phố yên bình, không khí mát",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối: xiên nướng, chè, cháo bò đêm",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "21:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm chùa đêm lên đèn",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "Chùa đêm rất đẹp và yên tĩnh",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "80k - 160k/người",
-      "tips": ["Đi giày thoải mái vì đi bộ nhiều", "Tri Tôn đêm rất an toàn", "Mang theo áo khoác nhẹ"],
+      "tips": [
+        "Đi giày thoải mái vì đi bộ nhiều",
+        "Tri Tôn đêm rất an toàn",
+        "Mang theo áo khoác nhẹ"
+      ],
       "rating": 4.7,
-      "tags": ["dem-tri-ton", "nha-thieu-nhi", "pho-di-bo", "di-bo"]
+      "tags": [
+        "dem-tri-ton",
+        "nha-thieu-nhi",
+        "pho-di-bo",
+        "di-bo"
+      ]
     },
     {
       "id": "itin-031",
@@ -1065,31 +3116,130 @@
       "category": "cafe_full_day",
       "duration": "1 ngày + đêm",
       "best_season": "Quanh năm",
-      "audiences": ["Giới trẻ", "Cặp đôi"],
-      "experiences": ["Cafe", "Khám phá", "Đêm Tri Tôn"],
-      "clusters": ["Trung tâm", "Cụm Tà Pạ"],
+      "audiences": [
+        "Giới trẻ",
+        "Cặp đôi"
+      ],
+      "experiences": [
+        "Cafe",
+        "Khám phá",
+        "Đêm Tri Tôn"
+      ],
+      "clusters": [
+        "Trung tâm",
+        "Cụm Tà Pạ"
+      ],
       "description": "Một ngày xen kẽ cafe và khám phá: sáng cafe view đồng, trưa khám phá, chiều cafe view núi, tối cafe đêm.",
       "days": [
         {
           "day": 1,
           "title": "Cafe x Khám phá x Cafe",
           "stops": [
-            {"time": "07:00", "poi_id": "ca-phe-thot-not", "name": "Cà Phê Thốt Nốt Tà Pạ View", "activity": "Cafe sáng view cánh đồng", "duration_minutes": 75, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:30", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ, chụp ảnh", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "10:00", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:30", "poi_id": "com-trung-tam", "name": "Ăn trưa trung tâm", "activity": "Ăn cơm", "duration_minutes": 60, "cost_vnd": "50k-100k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "13:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "14:30", "poi_id": "windy-hill", "name": "Windy Hill Coffee", "activity": "Cafe chiều view đồi", "duration_minutes": 75, "cost_vnd": "25k-55k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:15", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:30", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối", "duration_minutes": 75, "cost_vnd": "60k-100k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "cham-coffee", "name": "CHẠM Coffee & Tea", "activity": "Cafe đêm, kết thúc ngày", "duration_minutes": 75, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe sáng view cánh đồng",
+              "duration_minutes": 75,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ, chụp ảnh",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "10:00",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn cơm",
+              "duration_minutes": 60,
+              "cost_vnd": "50k-100k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "activity": "Cafe chiều view đồi",
+              "duration_minutes": 75,
+              "cost_vnd": "25k-55k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:15",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-100k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "activity": "Cafe đêm, kết thúc ngày",
+              "duration_minutes": 75,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "300k - 550k/người",
-      "tips": ["Thử nước thốt nốt tươi ở mỗi quán", "Mỗi quán có view khác nhau, đừng bỏ lỡ"],
+      "tips": [
+        "Thử nước thốt nốt tươi ở mỗi quán",
+        "Mỗi quán có view khác nhau, đừng bỏ lỡ"
+      ],
       "rating": 4.7,
-      "tags": ["cafe", "kham-pha", "cafe-dem", "full-day"]
+      "tags": [
+        "cafe",
+        "kham-pha",
+        "cafe-dem",
+        "full-day"
+      ]
     },
     {
       "id": "itin-032",
@@ -1098,26 +3248,78 @@
       "category": "express",
       "duration": "Nửa ngày (4-5 tiếng)",
       "best_season": "Quanh năm",
-      "audiences": ["Khách ghé ngang", "Ít thời gian"],
-      "experiences": ["Khám phá nhanh"],
-      "clusters": ["Cụm Tà Pạ", "Trung tâm"],
+      "audiences": [
+        "Khách ghé ngang",
+        "Ít thời gian"
+      ],
+      "experiences": [
+        "Khám phá nhanh"
+      ],
+      "clusters": [
+        "Cụm Tà Pạ",
+        "Trung tâm"
+      ],
       "description": "Đi nhanh các điểm chính trong 4-5 tiếng cho khách không có nhiều thời gian.",
       "days": [
         {
           "day": 1,
           "title": "Express Tri Tôn",
           "stops": [
-            {"time": "08:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ nhanh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "09:15", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan nhanh", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:15", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in nhanh", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:15", "poi_id": "du-du-dam", "name": "Đu Đủ Đâm + Cafe", "activity": "Ăn vặt + cafe nhanh", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "08:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ nhanh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:15",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan nhanh",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:15",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in nhanh",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:15",
+              "poi_id": "e13b2eab-quán-đu-đủ-đâm-&-cán",
+              "name": "Quán Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng)",
+              "activity": "Ăn vặt + cafe nhanh",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "50k - 100k/người",
-      "tips": ["Đi xe máy để tiết kiệm thời gian", "Chọn 3-4 điểm chính thôi"],
+      "tips": [
+        "Đi xe máy để tiết kiệm thời gian",
+        "Chọn 3-4 điểm chính thôi"
+      ],
       "rating": 4.5,
-      "tags": ["express", "nua-ngay", "nhanh", "ghe-ngang"]
+      "tags": [
+        "express",
+        "nua-ngay",
+        "nhanh",
+        "ghe-ngang"
+      ]
     },
     {
       "id": "itin-033",
@@ -1126,37 +3328,136 @@
       "category": "seasonal",
       "duration": "2 ngày 1 đêm",
       "best_season": "T8-T11 (Âm lịch)",
-      "audiences": ["Văn hóa", "Nhiếp ảnh"],
-      "experiences": ["Mùa nước nổi", "Lễ hội", "Văn hóa Khmer"],
-      "clusters": ["Tất cả"],
+      "audiences": [
+        "Văn hóa",
+        "Nhiếp ảnh"
+      ],
+      "experiences": [
+        "Mùa nước nổi",
+        "Lễ hội",
+        "Văn hóa Khmer"
+      ],
+      "clusters": [
+        "Tất cả"
+      ],
       "description": "Trải nghiệm mùa nước nổi và lễ hội Khmer (Dolta/Ok Om Bok), kết hợp khám phá Tri Tôn.",
       "days": [
         {
           "day": 1,
           "title": "Mùa nước nổi + Lễ hội",
           "stops": [
-            {"time": "06:00", "poi_id": "canh-dong-nuoc-noi", "name": "Cánh đồng mùa nước nổi", "activity": "Ngắm đồng nước, chụp ảnh", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "T9-T11 đẹp nhất", "transport_to_next": "Xe máy"},
-            {"time": "08:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ", "activity": "Ngắm hồ mùa nước", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "chua-xa-ton", "name": "Chùa Xà Tón (Lễ hội Dolta)", "activity": "Tham gia lễ hội Khmer nếu trúng dịp", "duration_minutes": 120, "cost_vnd": "Miễn phí", "notes": "Dolta thường T8-T9 Âm lịch", "transport_to_next": "Đi bộ"},
-            {"time": "12:00", "poi_id": "an-trua", "name": "Ăn trưa đặc sản mùa nước nổi", "activity": "Ăn lẩu mắm, cá linh", "duration_minutes": 75, "cost_vnd": "80k-150k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "14:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "16:00", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn mùa nước nổi", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "18:00", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối", "duration_minutes": 75, "cost_vnd": "60k-100k", "notes": "", "transport_to_next": "Về homestay"}
+            {
+              "time": "06:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm đồng nước, chụp ảnh",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "T9-T11 đẹp nhất",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Ngắm hồ mùa nước",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham gia lễ hội Khmer nếu trúng dịp",
+              "duration_minutes": 120,
+              "cost_vnd": "Miễn phí",
+              "notes": "Dolta thường T8-T9 Âm lịch",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn lẩu mắm, cá linh",
+              "duration_minutes": 75,
+              "cost_vnd": "80k-150k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn mùa nước nổi",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-100k",
+              "notes": "",
+              "transport_to_next": "Về homestay"
+            }
           ]
         },
         {
           "day": 2,
           "title": "Sáng lễ hội + Về",
           "stops": [
-            {"time": "07:00", "poi_id": "le-hoi-ok-om-bok", "name": "Lễ hội Ok Om Bok (nếu trúng dịp)", "activity": "Xem cúng trăng, thả đèn", "duration_minutes": 120, "cost_vnd": "Miễn phí", "notes": "Ok Om Bok thường T10 Âm lịch", "transport_to_next": "Xe máy"},
-            {"time": "09:30", "poi_id": "ca-phe-thot-not", "name": "Cà Phê Thốt Nốt", "activity": "Cafe sáng", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Về, kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Xem cúng trăng, thả đèn",
+              "duration_minutes": 120,
+              "cost_vnd": "Miễn phí",
+              "notes": "Ok Om Bok thường T10 Âm lịch",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:30",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "activity": "Cafe sáng",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Về, kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "500k - 900k/người",
-      "tips": ["Kiểm tra lịch lễ hội trước khi đi", "Mặc đồ lịch sự khi tham gia lễ hội"],
+      "tips": [
+        "Kiểm tra lịch lễ hội trước khi đi",
+        "Mặc đồ lịch sự khi tham gia lễ hội"
+      ],
       "rating": 4.8,
-      "tags": ["mua-nuoc-noi", "le-hoi", "khmer", "dolta", "ok-om-bok"]
+      "tags": [
+        "mua-nuoc-noi",
+        "le-hoi",
+        "khmer",
+        "dolta",
+        "ok-om-bok"
+      ]
     },
     {
       "id": "itin-034",
@@ -1165,30 +3466,120 @@
       "category": "seasonal_photo",
       "duration": "1 ngày",
       "best_season": "T9-T11",
-      "audiences": ["Nhiếp ảnh", "Yêu thiên nhiên"],
-      "experiences": ["Mùa lúa chín", "Nhiếp ảnh"],
-      "clusters": ["Cụm Tà Pạ", "Cụm Châu Lăng"],
+      "audiences": [
+        "Nhiếp ảnh",
+        "Yêu thiên nhiên"
+      ],
+      "experiences": [
+        "Mùa lúa chín",
+        "Nhiếp ảnh"
+      ],
+      "clusters": [
+        "Cụm Tà Pạ",
+        "Cụm Châu Lăng"
+      ],
       "description": "Chuyên chụp ảnh mùa lúa chín vàng, đi hết các cánh đồng đẹp nhất Tri Tôn.",
       "days": [
         {
           "day": 1,
           "title": "Săn lúa chín",
           "stops": [
-            {"time": "05:30", "poi_id": "canh-dong-lua-ta-pa", "name": "Cánh đồng lúa Tà Pạ (Bình minh)", "activity": "Chụp lúa chín sáng sớm", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Lúa chín vàng đẹp nhất T9-T11", "transport_to_next": "Đi bộ"},
-            {"time": "07:15", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Chụp đường xuyên đồng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:30", "poi_id": "canh-dong-thot-not-chau-lang", "name": "Cánh Đồng Thốt Nốt Châu Lăng", "activity": "Chụp thốt nốt giữa đồng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Chụp cổng + đồng lúa phía sau", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "11:30", "poi_id": "an-trua", "name": "Ăn trưa", "activity": "Nghỉ ngơi", "duration_minutes": 75, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "13:30", "poi_id": "con-duong-to-lua-soai-chek", "name": "Con Đường Tơ Lụa Soài Chék", "activity": "Chụp chiều", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "15:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ (Chiều)", "activity": "Chụp hồ + lúa chiều", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:30", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Chụp hoàng hôn trên đồng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Kết thúc"}
+            {
+              "time": "05:30",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Chụp lúa chín sáng sớm",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Lúa chín vàng đẹp nhất T9-T11",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "07:15",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Chụp đường xuyên đồng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:30",
+              "poi_id": "d3e73741-cánh-đồng-thốt-nốt-c",
+              "name": "Cánh Đồng Thốt Nốt Châu Lăng",
+              "activity": "Chụp thốt nốt giữa đồng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Chụp cổng + đồng lúa phía sau",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Nghỉ ngơi",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "13:30",
+              "poi_id": "97e67ffb-con-đường-tơ-lụa-soà",
+              "name": "Con Đường Tơ Lụa Soài Chék",
+              "activity": "Chụp chiều",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "15:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Chụp hồ + lúa chiều",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Chụp hoàng hôn trên đồng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Kết thúc"
+            }
           ]
         }
       ],
       "total_cost_estimate_vnd": "150k - 300k/người",
-      "tips": ["Mang lens wide + tele", "Đi sớm để có ánh sáng vàng", "Mặc đồ màu trắng/đỏ để nổi trên nền vàng"],
+      "tips": [
+        "Mang lens wide + tele",
+        "Đi sớm để có ánh sáng vàng",
+        "Mặc đồ màu trắng/đỏ để nổi trên nền vàng"
+      ],
       "rating": 4.9,
-      "tags": ["mua-lua-chin", "nhiep-anh", "t9-t11", "photography"]
+      "tags": [
+        "mua-lua-chin",
+        "nhiep-anh",
+        "t9-t11",
+        "photography"
+      ]
     },
     {
       "id": "itin-035",
@@ -1197,58 +3588,344 @@
       "category": "ultimate",
       "duration": "3 ngày 2 đêm",
       "best_season": "T11-T4",
-      "audiences": ["Muốn trải nghiệm hết"],
-      "experiences": ["Tất cả", "Ngày + Đêm"],
-      "clusters": ["Tất cả"],
+      "audiences": [
+        "Muốn trải nghiệm hết"
+      ],
+      "experiences": [
+        "Tất cả",
+        "Ngày + Đêm"
+      ],
+      "clusters": [
+        "Tất cả"
+      ],
       "description": "Lịch trình ultimate: đi hết Tri Tôn từ bình minh đến đêm khuya, không bỏ lỡ gì.",
       "days": [
         {
           "day": 1,
           "title": "Bình minh → Khám phá → Đêm Tri Tôn",
           "stops": [
-            {"time": "05:00", "poi_id": "ho-ta-pa", "name": "Hồ Tà Pạ (Bình minh)", "activity": "Săn bình minh", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "06:45", "poi_id": "chua-ta-pa", "name": "Chùa Tà Pạ", "activity": "Tham quan", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "08:00", "poi_id": "cho-tri-ton", "name": "Chợ Tri Tôn", "activity": "Ăn sáng", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "09:00", "poi_id": "con-duong-to-lua", "name": "Con Đường Tơ Lụa", "activity": "Đi bộ, chụp ảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:30", "poi_id": "chua-xa-ton", "name": "Chùa Xà Tón", "activity": "Tham quan chùa cổ", "duration_minutes": 75, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:00", "poi_id": "lau-bo", "name": "Lẩu bò Bảy Núi", "activity": "Ăn trưa", "duration_minutes": 75, "cost_vnd": "100k-150k", "notes": "", "transport_to_next": "Về khách sạn"},
-            {"time": "14:00", "poi_id": "cong-troi", "name": "Cổng Trời Tri Tôn", "activity": "Check-in", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "15:15", "poi_id": "vòm-còng", "name": "Con Đường Vòm Còng", "activity": "Chụp ảnh", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "16:30", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "18:00", "poi_id": "bai-tha-dieu", "name": "Bãi Thả Diều", "activity": "Thả diều", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "19:00", "poi_id": "cho-dem", "name": "Chợ Đêm Tri Tôn", "activity": "Ăn tối, dạo chợ", "duration_minutes": 90, "cost_vnd": "60k-120k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "nha-thieu-nhi", "name": "Nhà Thiếu Nhi", "activity": "Đi dạo đêm", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "21:00", "poi_id": "cham-coffee", "name": "CHẠM Coffee & Tea", "activity": "Cafe đêm", "duration_minutes": 60, "cost_vnd": "20k-45k", "notes": "", "transport_to_next": "Về khách sạn"},
-            {"time": "22:00", "poi_id": "chay-vong-quanh", "name": "Chạy xe đêm Tri Tôn", "activity": "Ngắm phố đêm", "duration_minutes": 30, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về khách sạn"}
+            {
+              "time": "05:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Săn bình minh",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "06:45",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "activity": "Tham quan",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "08:00",
+              "poi_id": "cho-tri-ton",
+              "name": "Chợ Tri Tôn",
+              "activity": "Ăn sáng",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Đi bộ, chụp ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Tham quan chùa cổ",
+              "duration_minutes": 75,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:00",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "activity": "Ăn trưa",
+              "duration_minutes": 75,
+              "cost_vnd": "100k-150k",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            },
+            {
+              "time": "14:00",
+              "poi_id": "cong-troi-chua-koh-kas",
+              "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+              "activity": "Check-in",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "15:15",
+              "poi_id": "chua-krang-kroch",
+              "name": "chùa Krăng Krốch",
+              "activity": "Chụp ảnh",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "18:00",
+              "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
+              "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+              "activity": "Thả diều",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối, dạo chợ",
+              "duration_minutes": 90,
+              "cost_vnd": "60k-120k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Đi dạo đêm",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "21:00",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "activity": "Cafe đêm",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-45k",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            },
+            {
+              "time": "22:00",
+              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
+              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+              "activity": "Ngắm phố đêm",
+              "duration_minutes": 30,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            }
           ]
         },
         {
           "day": 2,
           "title": "Săn mây → Núi → Gà đốt → Cafe đêm",
           "stops": [
-            {"time": "05:00", "poi_id": "da-vo-hoi", "name": "Đá Vồ Hội (Săn mây)", "activity": "Săn mây bình minh", "duration_minutes": 120, "cost_vnd": "Xe ôm 50k-100k", "notes": "", "transport_to_next": "Xuống núi"},
-            {"time": "07:30", "poi_id": "ca-phe-suoi", "name": "Cà Phê Suối Tri Tôn", "activity": "Cafe sáng bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy 20 phút"},
-            {"time": "09:00", "poi_id": "ho-o-thum", "name": "Hồ Ô Thum", "activity": "Ngắm hồ, đi cầu gỗ", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "10:30", "poi_id": "ga-dot-thao-nguyen-ho-o-thum", "name": "Gà Đốt Thảo Nguyên", "activity": "Ăn gà đốt", "duration_minutes": 90, "cost_vnd": "250k-320k", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "12:30", "poi_id": "doi-tuc-dup", "name": "Đồi Tức Dụp", "activity": "Tham quan", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "Kiểm tra trước", "transport_to_next": "Xe máy"},
-            {"time": "14:30", "poi_id": "windy-hill", "name": "Windy Hill Coffee", "activity": "Cafe chiều", "duration_minutes": 75, "cost_vnd": "25k-55k", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "16:30", "poi_id": "dong-nhin-len-chu", "name": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN", "activity": "Chụp ảnh bảng chữ", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "17:30", "poi_id": "tuyen-tranh", "name": "Con Đường Tuyến Tránh", "activity": "Ngắm hoàng hôn", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về trung tâm"},
-            {"time": "19:00", "poi_id": "cho-dem", "name": "Chợ Đêm", "activity": "Ăn tối", "duration_minutes": 75, "cost_vnd": "60k-100k", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "20:30", "poi_id": "drink-hammock", "name": "Drink & Hammock Chill", "activity": "Nằm võng uống nước", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Về khách sạn"}
+            {
+              "time": "05:00",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "activity": "Săn mây bình minh",
+              "duration_minutes": 120,
+              "cost_vnd": "Xe ôm 50k-100k",
+              "notes": "",
+              "transport_to_next": "Xuống núi"
+            },
+            {
+              "time": "07:30",
+              "poi_id": "b56c95ef-mây-coffee-&-tea-hồ-",
+              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+              "activity": "Cafe sáng bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy 20 phút"
+            },
+            {
+              "time": "09:00",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "activity": "Ngắm hồ, đi cầu gỗ",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "activity": "Ăn gà đốt",
+              "duration_minutes": 90,
+              "cost_vnd": "250k-320k",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "12:30",
+              "poi_id": "doi-tuc-dup",
+              "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+              "activity": "Tham quan",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "Kiểm tra trước",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "activity": "Cafe chiều",
+              "duration_minutes": 75,
+              "cost_vnd": "25k-55k",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "16:30",
+              "poi_id": "chu-tri-ton-nui-co-to",
+              "name": "Biểu Tượng Chữ \"TRI TÔN\" Trên Núi Cô Tô (Sân Tiên)",
+              "activity": "Chụp ảnh bảng chữ",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "17:30",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "activity": "Ngắm hoàng hôn",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về trung tâm"
+            },
+            {
+              "time": "19:00",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "activity": "Ăn tối",
+              "duration_minutes": 75,
+              "cost_vnd": "60k-100k",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "20:30",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "activity": "Nằm võng uống nước",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Về khách sạn"
+            }
           ]
         },
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều + Về",
           "stops": [
-            {"time": "07:00", "poi_id": "nha-mo-ba-chuc", "name": "Nhà mồ Ba Chúc", "activity": "Tham quan, tưởng niệm", "duration_minutes": 120, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "09:15", "poi_id": "chua-phi-lai", "name": "Chùa Phi Lai + Tam Bửu", "activity": "Tham quan", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Xe máy"},
-            {"time": "10:30", "poi_id": "chao-bo-ba-chuc", "name": "Cháo Bò Trái Trúc Ba Chúc", "activity": "Ăn sáng muộn", "duration_minutes": 45, "cost_vnd": "30k-50k", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "11:30", "poi_id": "o-ta-soc", "name": "Khu di tích Ô Tà Sóc", "activity": "Tham quan hang", "duration_minutes": 90, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "13:15", "poi_id": "rung-tam-vong", "name": "Rừng Tầm Vông", "activity": "Đi bộ trong rừng", "duration_minutes": 60, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Đi bộ"},
-            {"time": "14:30", "poi_id": "ca-phe-suoi-da", "name": "Cà Phê Suối Đá Ô Tà Sóc", "activity": "Cafe chiều bên suối", "duration_minutes": 60, "cost_vnd": "20k-40k", "notes": "", "transport_to_next": "Xe máy 15 phút"},
-            {"time": "16:00", "poi_id": "ho-o-ta-soc", "name": "Hồ Ô Tà Sóc", "activity": "Ngắm hồ, kết thúc", "duration_minutes": 45, "cost_vnd": "Miễn phí", "notes": "", "transport_to_next": "Về, kết thúc"}
+            {
+              "time": "07:00",
+              "poi_id": "nha-mo-ba-chuc",
+              "name": "Khu Chứng Tích Lịch Sử Nhà Mồ Ba Chúc",
+              "activity": "Tham quan, tưởng niệm",
+              "duration_minutes": 120,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "09:15",
+              "poi_id": "chua-phi-lai",
+              "name": "Chùa Phi Lai Ba Chúc (Phi Lai Cổ Tự)",
+              "activity": "Tham quan",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Xe máy"
+            },
+            {
+              "time": "10:30",
+              "poi_id": "6c77d0e8-quán-cháo-bò-trái-tr",
+              "name": "Quán Cháo Bò Tư Xuyên (58 Hùng Vương)",
+              "activity": "Ăn sáng muộn",
+              "duration_minutes": 45,
+              "cost_vnd": "30k-50k",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "11:30",
+              "poi_id": "khu-di-tich-o-ta-soc",
+              "name": "Khu di tích Ô Tà Sóc",
+              "activity": "Tham quan hang",
+              "duration_minutes": 90,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "13:15",
+              "poi_id": "e4772f7e-con-đường-tre-tầm-vô",
+              "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
+              "activity": "Đi bộ trong rừng",
+              "duration_minutes": 60,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Đi bộ"
+            },
+            {
+              "time": "14:30",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "activity": "Cafe chiều bên suối",
+              "duration_minutes": 60,
+              "cost_vnd": "20k-40k",
+              "notes": "",
+              "transport_to_next": "Xe máy 15 phút"
+            },
+            {
+              "time": "16:00",
+              "poi_id": "ho-o-ta-soc",
+              "name": "Hồ Ô Tà Sóc & Căn Cứ Lịch Sử Núi Dài",
+              "activity": "Ngắm hồ, kết thúc",
+              "duration_minutes": 45,
+              "cost_vnd": "Miễn phí",
+              "notes": "",
+              "transport_to_next": "Về, kết thúc"
+            }
           ]
         }
       ],
@@ -1259,14 +3936,65 @@
         "Đặt phòng trước nếu đi cuối tuần",
         "Kiểm tra Đồi Tức Dụp trước khi đến"
       ],
-      "rating": 5.0,
-      "tags": ["full-experience", "3n2d", "ultimate", "ngay-dem", "khong-bo-lo"]
+      "rating": 5,
+      "tags": [
+        "full-experience",
+        "3n2d",
+        "ultimate",
+        "ngay-dem",
+        "khong-bo-lo"
+      ]
     }
   ],
   "metadata": {
-    "categories": ["classic", "comprehensive", "deep_exploration", "photography", "spiritual", "history", "gastronomy", "nature", "adventure", "seasonal", "nightlife", "romantic", "cafe_tour", "night_ride", "sunset_bbq", "spiritual_night", "weekend", "solo", "photography_full", "festival", "budget", "luxury", "night_explore", "cafe_full_day", "express", "seasonal_photo", "ultimate", "family"],
-    "clusters": ["Trung tâm Thị trấn", "Cụm Tà Pạ", "Cụm Cô Tô", "Cụm Châu Lăng", "Cụm Ô Thum", "Cụm Ba Chúc", "Cụm Ô Tà Sóc"],
-    "night_activities": ["Chợ Đêm Tri Tôn", "Nhà Thiếu Nhi", "Phố đi bộ", "Cafe đêm", "Chạy xe vòng quanh", "Chùa đêm", "Bãi thả diều hoàng hôn"],
+    "categories": [
+      "classic",
+      "comprehensive",
+      "deep_exploration",
+      "photography",
+      "spiritual",
+      "history",
+      "gastronomy",
+      "nature",
+      "adventure",
+      "seasonal",
+      "nightlife",
+      "romantic",
+      "cafe_tour",
+      "night_ride",
+      "sunset_bbq",
+      "spiritual_night",
+      "weekend",
+      "solo",
+      "photography_full",
+      "festival",
+      "budget",
+      "luxury",
+      "night_explore",
+      "cafe_full_day",
+      "express",
+      "seasonal_photo",
+      "ultimate",
+      "family"
+    ],
+    "clusters": [
+      "Trung tâm Thị trấn",
+      "Cụm Tà Pạ",
+      "Cụm Cô Tô",
+      "Cụm Châu Lăng",
+      "Cụm Ô Thum",
+      "Cụm Ba Chúc",
+      "Cụm Ô Tà Sóc"
+    ],
+    "night_activities": [
+      "Chợ Đêm Tri Tôn",
+      "Nhà Thiếu Nhi",
+      "Phố đi bộ",
+      "Cafe đêm",
+      "Chạy xe vòng quanh",
+      "Chùa đêm",
+      "Bãi thả diều hoàng hôn"
+    ],
     "total_pois_referenced": 85,
     "evening_itineraries": 12,
     "note": "Tất cả lịch trình đều có hoạt động buổi tối/đêm. Tri Tôn về đêm rất yên bình, an toàn, không khí mát mẻ."

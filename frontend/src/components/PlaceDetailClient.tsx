@@ -7,7 +7,7 @@ import {
   Video, ArrowLeft, Heart, Share2, Sparkles, Play, Globe, Info, Compass,
   CheckCircle2, Utensils, Footprints, Bus, Car, AlertTriangle, Lightbulb, Phone,
   MessageSquareQuote, Layers, Users, Sun, Bookmark, Check, ChevronRight, Award, Ticket,
-  Flag, X, Send, WifiOff, Smartphone, Calendar, AlertOctagon, HelpCircle
+  Flag, X, Send, WifiOff, Smartphone, Calendar, AlertOctagon, HelpCircle, CloudRain
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { formatPrice } from '@/lib/utils';
@@ -533,6 +533,36 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
               <span className="text-xs sm:text-sm font-bold text-[#0E8C7F] mt-1 block truncate" title={guide.bestSeason}>
                 {guide.bestSeason.split('(')[0]}
               </span>
+            </div>
+          </div>
+
+          {/* ── DYNAMIC BẢY NÚI SEASON & WEATHER ADVISORY CARD ── */}
+          <div className="p-4 sm:p-5 rounded-[22px] bg-gradient-to-br from-amber-50/80 via-emerald-50/40 to-[#FFFDF7] border border-amber-300/60 shadow-xs space-y-3 font-body">
+            <div className="flex items-center gap-2 text-xs font-bold text-amber-900 font-display">
+              <Sun className="w-4 h-4 text-amber-600 shrink-0" />
+              <span>Cẩm Nang Khí Hậu & Mẹo Thực Địa Bảy Núi</span>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3 rounded-[16px] bg-white/90 border border-amber-200/60 space-y-1">
+                <span className="font-bold text-emerald-800 flex items-center gap-1.5 font-display">
+                  <CloudRain className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  Mùa Mưa & Nước Nổi (T6 – T11):
+                </span>
+                <p className="text-[#6B6355] leading-relaxed">
+                  Cảnh quan xanh tươi ngút ngàn, đồng lúa ngập nước chụp thốt nốt cô độc và xem đua bừa Chùa Rô cực đẹp. <strong className="text-amber-800">Lưu ý leo núi Cô Tô / Ô Tà Sóc:</strong> Rêu đá trơn trượt, ưu tiên giày bám đá và thuê xe ôm bản địa có 2 phanh phụ.
+                </p>
+              </div>
+
+              <div className="p-3 rounded-[16px] bg-white/90 border border-amber-200/60 space-y-1">
+                <span className="font-bold text-amber-800 flex items-center gap-1.5 font-display">
+                  <Sun className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  Mùa Khô & Lúa Vàng (T12 – T5):
+                </span>
+                <p className="text-[#6B6355] leading-relaxed">
+                  Trời trong xanh, bình minh và hoàng hôn ngũ sắc rực rỡ nhất trong năm. <strong className="text-amber-800">Khung giờ vàng:</strong> Nên khởi hành sáng sớm (06:00 - 08:30) hoặc chiều mát (16:00 - 18:00). Giữa trưa nên nghỉ ngơi dưới rừng tầm vông hoặc quán cafe sân vườn/máy lạnh.
+                </p>
+              </div>
             </div>
           </div>
 
