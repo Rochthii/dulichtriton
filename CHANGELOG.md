@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v63.0.0-FIX-NEXTJS-USE-SEARCH-PARAMS-DEOPT-SUSPENSE-CRASH] - 2026-08-16
+
+### 🛡️ Thay Thế `useSearchParams()` Bằng Client URLSearchParams (Triệt Tiêu Hoàn Toàn Lỗi Deopt & SSR Crash)
+
+#### 1. Nguyên Nhân Gốc Rễ Đích Thực Của Màn Hình Đen `/chatbot`
+- Trong Next.js 16 (App Router), hook `useSearchParams()` từ `next/navigation` yêu cầu **toàn bộ cây component phải được bọc trong `<Suspense>`**. Nếu không, Next.js sẽ kích hoạt cơ chế `client-side deopt`, làm cho các route tĩnh/dynamic bị hủy quá trình render và Vercel văng ra lỗi 500 / Màn hình đen.
+- Khi người dùng truy cập trực tiếp hoặc từ trang khác sang `/chatbot`, `useSearchParams()` cố gắng truy cập query parameters trước khi Suspense boundary sẵn sàng, dẫn đến lỗi Fatal Hydration Exception.
+
+#### 2. Biện Pháp Khắc Phục Chuẩn Xác
+- **Loại bỏ hoàn toàn hook `useSearchParams` từ `next/navigation`**.
+- **Đọc Query Parameters thuần bằng `window.location.search`**: Chỉ kích hoạt sau khi component đã mount an toàn trên Client (`useEffect`), đảm bảo 100% không bao giờ ảnh hưởng tới router và Server Rendering.
+
+---
+
 ## [v62.0.0-COMPREHENSIVE-ERROR-BOUNDARIES-AND-NOT-FOUND-FALLBACKS] - 2026-08-16
 
 ### 🛡️ Hệ Thống Bắt Lỗi Toàn Diện & Xóa Bỏ Vĩnh Viễn Màn Hình Đen Vercel

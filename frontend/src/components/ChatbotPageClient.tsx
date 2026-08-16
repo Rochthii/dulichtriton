@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import {
   Send, Bot, User, Trash2, ArrowLeft,
   MapPin, Navigation
@@ -52,7 +51,6 @@ const defaultWelcome: Message = {
 };
 
 export default function ChatbotPageClient() {
-  const searchParams = useSearchParams();
   const initialQueryHandledRef = useRef(false);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -396,12 +394,14 @@ export default function ChatbotPageClient() {
   };
 
   useEffect(() => {
-    const q = searchParams.get('q') || searchParams.get('prompt') || searchParams.get('question');
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q') || urlParams.get('prompt') || urlParams.get('question');
     if (q && !initialQueryHandledRef.current) {
       initialQueryHandledRef.current = true;
       void handleSend(q);
     }
-  }, [searchParams]);
+  }, []);
 
   return (
     <div className="flex flex-col h-[100dvh] bg-[#FAF3E7] text-[#26221B] font-body">
