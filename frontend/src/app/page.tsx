@@ -660,6 +660,8 @@ export default function HomePage() {
               const { maps, tiktok } = resolvePlaceExternalLinks({
                 name: place.name,
                 commune: place.commune,
+                category: place.category,
+                tiktok_videos: (place as any).tiktok_videos,
               });
               return (
                 <div

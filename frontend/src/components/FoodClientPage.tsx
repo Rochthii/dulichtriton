@@ -160,7 +160,9 @@ export default function FoodClientPage({ restaurants: initialRestaurants }: Food
             const { maps, tiktok } = resolvePlaceExternalLinks({
               name: item.name,
               commune: item.commune,
+              category: item.category || 'food',
               video_url: item.video_url,
+              tiktok_videos: (item as any).tiktok_videos,
             });
             return (
               <div key={item.id} className="relative bg-[#FFFDF7] rounded-[26px] border border-[#26221B]/8 overflow-hidden shadow-[0_2px_10px_rgba(38,34,27,0.08)] hover:shadow-[0_10px_30px_rgba(38,34,27,0.14)] transition-all flex flex-col sm:flex-row group cursor-pointer hover:-translate-y-1">

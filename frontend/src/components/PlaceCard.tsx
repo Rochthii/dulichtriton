@@ -112,6 +112,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     lat: place.latitude,
     lng: place.longitude,
     video_url: place.video_url,
+    tiktok_videos: (place as any).tiktok_videos,
   });
 
   const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);

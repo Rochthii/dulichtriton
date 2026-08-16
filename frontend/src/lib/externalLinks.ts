@@ -27,6 +27,7 @@ export function resolvePlaceExternalLinks(place: {
   lat?: number;
   lng?: number;
   video_url?: string;
+  tiktok_videos?: any[];
 }) {
   const maps = resolveGoogleMapsAction({
     name: place.name,
@@ -40,6 +41,7 @@ export function resolvePlaceExternalLinks(place: {
     commune: place.commune,
     category: place.category,
     directVideoUrl: place.video_url,
+    tiktok_videos: place.tiktok_videos,
   });
 
   return { maps, tiktok };

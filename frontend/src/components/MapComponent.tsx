@@ -131,8 +131,11 @@ export default function MapComponent({ places, selectedPlace, onSelectPlace }: M
           const { maps, tiktok } = resolvePlaceExternalLinks({
             name: place.name,
             commune: place.commune,
+            category: place.category,
             lat: place.latitude,
             lng: place.longitude,
+            video_url: place.video_url,
+            tiktok_videos: (place as any).tiktok_videos,
           });
 
           return (

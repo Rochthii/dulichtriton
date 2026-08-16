@@ -166,9 +166,19 @@ export function getTikTokWebSearchUrl(placeName: string, commune?: string): stri
   return getTikTokHashtagUrl(placeName);
 }
 
+export interface TikTokLinkOptions {
+  placeName: string;
+  commune?: string;
+  category?: string;
+  directVideoUrl?: string;
+  tiktok_videos?: Array<{ video_url?: string; url?: string; [key: string]: any }>;
+  hashtags?: string[];
+}
+
 /**
  * Smart TikTok Action Resolver
- * Resolves direct video URL if available, otherwise resolves the 100% reliable Hashtag URL
+ * - Nếu địa điểm có 1 hoặc nhiều link TikTok thật: Lấy ngẫu nhiên 1 link thật để mở trực tiếp
+ * - Nếu chưa có link thật: Fallback sang Search chính xác theo [Tên Địa Điểm + Tri Tôn An Giang] hoặc Hashtag chuẩn trên điện thoại
  */
 export function resolveTikTokAction(options: TikTokLinkOptions): {
   url: string;
@@ -176,22 +186,43 @@ export function resolveTikTokAction(options: TikTokLinkOptions): {
   label: string;
   isDirect: boolean;
 } {
-  const { placeName, category, directVideoUrl } = options;
+  const { placeName, commune, category, directVideoUrl, tiktok_videos } = options;
+  const tag = resolveTikTokHashtag(placeName, category);
 
+  // 1. Kiểm tra nếu có danh sách video TikTok thật (có thể nhiều link)
+  if (Array.isArray(tiktok_videos) && tiktok_videos.length > 0) {
+    const validUrls = tiktok_videos
+      .map(v => (v.video_url || v.url || '').trim())
+      .filter(u => u.startsWith('http') && u.includes('tiktok.com'));
+
+    if (validUrls.length > 0) {
+      // Chọn ngẫu nhiên 1 link video thật nếu có nhiều video
+      const randomUrl = validUrls[Math.floor(Math.random() * validUrls.length)];
+      return {
+        url: randomUrl,
+        tag,
+        label: 'Xem Video Thực Tế',
+        isDirect: true,
+      };
+    }
+  }
+
+  // 2. Kiểm tra link video trực tiếp đơn lẻ
   if (directVideoUrl && typeof directVideoUrl === 'string' && directVideoUrl.startsWith('http') && directVideoUrl.includes('tiktok.com')) {
     return {
       url: directVideoUrl.trim(),
-      tag: resolveTikTokHashtag(placeName, category),
+      tag,
       label: 'Xem Video Thực Tế',
       isDirect: true,
     };
   }
 
-  const tag = resolveTikTokHashtag(placeName, category);
-  const tagUrl = `https://www.tiktok.com/tag/${tag}`;
+  // 3. Fallback thông minh: Tạo link Search chính xác trên TikTok App / Mobile Web
+  const searchKeyword = `${cleanKeyword(placeName)} ${commune ? commune : ''} Tri Tôn An Giang`.trim();
+  const searchUrl = `https://www.tiktok.com/search?q=${encodeURIComponent(searchKeyword)}`;
 
   return {
-    url: tagUrl,
+    url: searchUrl,
     tag,
     label: `#${tag} trên TikTok`,
     isDirect: false,
