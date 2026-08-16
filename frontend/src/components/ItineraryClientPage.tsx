@@ -279,10 +279,11 @@ export default function ItineraryClientPage() {
           TAB 1: 35 LỊCH TRÌNH CHUẨN THỰC ĐỊA
       ════════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'presets' && (
-        <div className="space-y-8 animate-in fade-in duration-300">
-          {/* Duration Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 bg-[#FFFDF7] p-3 rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
-            <span className="text-xs font-bold text-[#6B6355] px-2">Thời lượng:</span>
+        <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
+          
+          {/* Duration Filter Pills (Horizontal Scroll on Mobile) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none bg-[#FFFDF7] p-2 sm:p-3 rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
+            <span className="text-[11px] sm:text-xs font-bold text-[#6B6355] px-1.5 sm:px-2 shrink-0">Thời lượng:</span>
             {[
               { key: 'all', label: 'Tất Cả' },
               { key: '1-day', label: '1 Ngày Trọn Vẹn' },
@@ -293,7 +294,7 @@ export default function ItineraryClientPage() {
               <button
                 key={f.key}
                 onClick={() => setDurationFilter(f.key as DurationFilter)}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all tap-bounce ${
+                className={`whitespace-nowrap px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all tap-bounce shrink-0 ${
                   durationFilter === f.key
                     ? 'bg-[#0E8C7F] text-white shadow-xs'
                     : 'bg-[#FAF3E7] text-[#6B6355] hover:border-[#0E8C7F]/30 border border-[#26221B]/6'
@@ -304,10 +305,65 @@ export default function ItineraryClientPage() {
             ))}
           </div>
 
-          {/* Presets Grid */}
+          {/* MOBILE PRESET SELECTOR (Compact Swipe Carousel + Quick Picker) */}
+          <div className="block md:hidden space-y-2.5">
+            {/* Quick Dropdown Picker */}
+            <div className="bg-[#FFFDF7] p-3 rounded-2xl border border-[#26221B]/8 shadow-xs space-y-1.5">
+              <label className="text-[11px] font-bold text-[#6B6355] uppercase tracking-wider font-display flex items-center justify-between">
+                <span>Chọn nhanh tour mẫu ({filteredPresets.length} tour)</span>
+                {currentItinerary && (
+                  <span className="text-[#0E8C7F] font-extrabold">{currentItinerary.duration}</span>
+                )}
+              </label>
+              <select
+                value={selectedSlug}
+                onChange={(e) => setSelectedSlug(e.target.value)}
+                className="w-full px-3 py-2 rounded-xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-bold text-[#26221B] focus:outline-none focus:border-[#0E8C7F]"
+              >
+                {filteredPresets.map((p) => (
+                  <option key={p.slug} value={p.slug}>
+                    {p.duration} — {p.title} ({p.budget_range})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Swipeable Horizontal Cards */}
+            <div className="flex overflow-x-auto gap-2 pb-1 scrollbar-none snap-x snap-mandatory">
+              {filteredPresets.map((p) => {
+                const isSelected = selectedSlug === p.slug;
+                return (
+                  <div
+                    key={p.slug}
+                    onClick={() => setSelectedSlug(p.slug)}
+                    className={`snap-start shrink-0 w-[70vw] max-w-[260px] p-2.5 rounded-2xl border cursor-pointer transition-all duration-300 ${
+                      isSelected
+                        ? 'bg-[#FFFDF7] border-[#0E8C7F] ring-2 ring-[#0E8C7F]/30 shadow-md'
+                        : 'bg-[#FFFDF7] border-[#26221B]/8 hover:border-[#0E8C7F]/30'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between font-display mb-1">
+                      <span className="px-2 py-0.5 rounded-full bg-[#0E8C7F]/10 text-[#0E8C7F] text-[9px] font-bold">
+                        {p.duration}
+                      </span>
+                      <span className="text-[10px] font-bold text-[#D9822B]">{p.budget_range}</span>
+                    </div>
+                    <h3 className="font-display text-xs font-bold text-[#26221B] line-clamp-1 mb-0.5">
+                      {p.title}
+                    </h3>
+                    <p className="text-[10px] text-[#6B6355] line-clamp-2 leading-relaxed">
+                      {p.tagline}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Presets Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left Column: Preset Cards List */}
-            <div className="md:col-span-1 space-y-3 max-h-[820px] overflow-y-auto pr-1 scrollbar-thin">
+            {/* DESKTOP Left Column: Preset Cards List (Hidden on Mobile) */}
+            <div className="hidden md:block md:col-span-1 space-y-3 max-h-[820px] overflow-y-auto pr-1 scrollbar-thin">
               {filteredPresets.map((p) => {
                 const isSelected = selectedSlug === p.slug;
                 return (
@@ -341,33 +397,33 @@ export default function ItineraryClientPage() {
             {/* Right Column: Wire Diagram Itinerary View */}
             <div className="md:col-span-2">
               {isLoading ? (
-                <div className="bg-[#FFFDF7] rounded-[28px] p-12 text-center border border-[#26221B]/8 animate-pulse font-display">
+                <div className="bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] p-8 sm:p-12 text-center border border-[#26221B]/8 animate-pulse font-display">
                   <Compass className="w-8 h-8 text-[#0E8C7F] animate-spin mx-auto mb-2" />
                   <p className="text-xs font-bold text-[#6B6355]">Đang nạp chi tiết lộ trình...</p>
                 </div>
               ) : currentItinerary ? (
-                <div className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-md space-y-6">
+                <div className="bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] p-4 sm:p-8 border border-[#26221B]/8 shadow-md space-y-4 sm:space-y-6">
                   {/* Top Bar with Export QR */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#26221B]/6 pb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-[#26221B]/6 pb-3 sm:pb-4">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="px-3 py-1 rounded-full bg-[#0E8C7F] text-white text-xs font-bold font-display">
+                        <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[#0E8C7F] text-white text-[11px] sm:text-xs font-bold font-display">
                           {currentItinerary.duration}
                         </span>
-                        <span className="text-xs font-bold text-[#D9822B] font-display">
+                        <span className="text-[11px] sm:text-xs font-bold text-[#D9822B] font-display">
                           {currentItinerary.budget_range}
                         </span>
                       </div>
-                      <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#26221B]">
+                      <h2 className="font-display text-lg sm:text-2xl font-extrabold text-[#26221B] leading-tight">
                         {currentItinerary.title}
                       </h2>
                     </div>
 
                     <button
                       onClick={() => setShowExportModal(true)}
-                      className="px-4 py-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] text-xs font-bold flex items-center gap-1.5 transition-all font-display tap-bounce shrink-0"
+                      className="w-full sm:w-auto px-4 py-2 sm:py-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] text-xs font-bold flex items-center justify-center gap-1.5 transition-all font-display tap-bounce shrink-0 shadow-2xs"
                     >
-                      <QrCode className="w-4 h-4" />
+                      <QrCode className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       <span>Xuất Lịch Trình (QR/PDF)</span>
                     </button>
                   </div>
