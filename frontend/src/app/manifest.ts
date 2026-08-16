@@ -1,20 +1,65 @@
-import { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from 'next';
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Du Lịch Tri Tôn',
-    short_name: 'Tri Tôn',
-    description: 'Trải nghiệm văn hóa Bảy Núi Tri Tôn với bản đồ Offline và AI',
+    name: 'Du Lịch Tri Tôn - Cẩm Nang & Bản Đồ AI Bảy Núi',
+    short_name: 'Du Lịch Tri Tôn',
+    description: 'Nền tảng du lịch thông minh, 149 điểm thực tế, 35 lịch trình và Trợ lý AI Bảy Núi An Giang.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#F8F9FA',
-    theme_color: '#1B4D3E',
+    background_color: '#FAF3E7',
+    theme_color: '#0E8C7F',
+    orientation: 'portrait-primary',
+    scope: '/',
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
+        src: '/icon.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icon.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/apple-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+        purpose: 'any',
       },
     ],
-  }
+    shortcuts: [
+      {
+        name: 'Bản Đồ GPS Thất Sơn',
+        short_name: 'Bản Đồ',
+        description: 'Mở bản đồ du lịch số và định vị GPS thực địa',
+        url: '/map',
+        icons: [{ src: '/icon.png', sizes: '192x192' }],
+      },
+      {
+        name: '35 Lịch Trình Gợi Ý',
+        short_name: 'Lịch Trình',
+        description: 'Xem các tour du lịch 1 ngày, 2 ngày 1 đêm tối ưu',
+        url: '/planner',
+        icons: [{ src: '/icon.png', sizes: '192x192' }],
+      },
+      {
+        name: 'Ẩm Thực Gà Đốt Ô Thum',
+        short_name: 'Ẩm Thực',
+        description: 'Khám phá quán ăn và món ngon đặc sản Tri Tôn',
+        url: '/food',
+        icons: [{ src: '/icon.png', sizes: '192x192' }],
+      },
+      {
+        name: 'Cứu Hộ Khẩn Cấp 24/7',
+        short_name: 'SOS Cứu Hộ',
+        description: 'Gọi nhanh hotline y tế, công an và cứu hộ xe phượt',
+        url: '/emergency',
+        icons: [{ src: '/icon.png', sizes: '192x192' }],
+      },
+    ],
+  };
 }
