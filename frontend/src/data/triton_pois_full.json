@@ -11538,5 +11538,41 @@
     "is_hot": true,
     "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
     "description": "Quán gà đốt quen thuộc ven hồ Ô Thum chuyên gà thả đồi Bảy Núi đốt nồi đất than hồng rực, chấm muối ớt trái chúc giã tay chua thanh cay nồng."
+  },
+  {
+    "id": "chu-tri-ton-nui-co-to",
+    "name": "Biểu Tượng Chữ \"TRI TÔN\" Trên Núi Cô Tô (Sân Tiên)",
+    "slug": "chu-tri-ton-nui-co-to",
+    "category": "nature",
+    "subcategory": "landmark",
+    "commune": "Xã Núi Tô",
+    "address": "Khu vực Sân Tiên, sườn Núi Cô Tô (Phụng Hoàng Sơn), Xã Núi Tô, Tri Tôn, An Giang",
+    "latitude": 10.3885,
+    "longitude": 104.975,
+    "rating": 4.9,
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_co_to.avif",
+    "description": "Biểu tượng chữ \"TRI TÔN\" khổng lồ gồm các chữ cái cao 7m bằng bê tông cốt thép trắng sứ trên sườn núi Cô Tô, có đèn LED thắp sáng rực rỡ ban đêm và góc chụp xuyên qua chữ \"Ô\" như ô cửa sổ máy bay nhìn toàn cảnh cánh đồng Tà Pạ.",
+    "detailed_story": "### Khám phá Biểu tượng chữ \"TRI TÔN\" trên Núi Cô Tô (Phụng Hoàng Sơn)\n\n**1. Vị trí và Quy mô công trình:**\n* **Vị trí:** Tọa lạc tại khu vực Sân Tiên trên sườn Núi Cô Tô (Phụng Hoàng Sơn), thuộc địa phận Xã Núi Tô, Tri Tôn, An Giang.\n* **Quy mô:** Dòng chữ biểu tượng gồm các chữ cái khổng lồ cao tới 7m, đặt trên bệ đỡ bê tông kiên cố cao 1.5m - 2m. Tổng trọng lượng công trình gần 500 tấn bê tông cốt thép, được sơn màu trắng sứ nổi bật giữa vách đá granite sừng sững.\n* **Hệ thống đèn LED ban đêm:** Được tích hợp hệ thống chiếu sáng ban đêm bằng năng lượng mặt trời. Khi màn đêm buông xuống, toàn bộ dòng chữ bừng sáng rực rỡ giữa nền trời sườn núi, có thể quan sát thấy từ khoảng cách hàng chục kilomet từ trung tâm thị trấn, tuyến tránh chữ Y hay cánh đồng Tà Pạ.\n\n**2. Góc Check-in \"Triệu View\" Ô Cửa Sổ Máy Bay:**\n* Góc chụp độc đáo và viral nhất là đứng hoặc ngồi bên trong lòng chữ \"Ô\" của cụm chữ \"TRI TÔN\". Khung tròn của chữ \"Ô\" tạo thành hiệu ứng như một ô cửa sổ máy bay khổng lồ bao trọn toàn cảnh cánh đồng Tà Pạ bạt ngàn, những hàng thốt nốt soi bóng và thị trấn Tri Tôn bình yên bên dưới.\n\n**3. Hướng dẫn di chuyển và Lưu ý thực địa:**\n* **Điểm xuất phát:** Bắt đầu từ cổng Khu du lịch Hồ Soài So - Suối Vàng (Xã Núi Tô).\n* **Phương thức di chuyển:**\n  - *Thuê xe ôm bản địa:* Do cung đường lên núi có nhiều đoạn dốc đứng và cua gắt nguy hiểm, du khách nên thuê các bác tài xế xe ôm bản địa (xe số có độ thêm phanh phụ chuyên dụng chở khách leo núi).\n  - *Trekking bộ:* Du khách có thể leo bộ men theo đường bậc thang qua Điện Năm Căn lên khu vực Sân Tiên (mất khoảng 45 - 60 phút trekking vừa sức).\n* **Thời điểm check-in lý tưởng nhất:** Sáng sớm (06:00 - 08:00) đón bình minh và săn mây sườn núi, hoặc chiều muộn (16:30 - 18:30) ngắm hoàng hôn buông xuống biển lúa và chiêm ngưỡng dòng chữ lên đèn LED rực rỡ.",
+    "travel_guide_json": "{\"how_to_get_there\":\"Từ TT. Tri Tôn theo đường Trần Hưng Đạo vào cổng Hồ Soài So ➔ Thuê xe ôm bản địa hoặc trekking bộ theo lối Điện Năm Căn lên khu vực Sân Tiên sườn Núi Cô Tô.\",\"opening_hours\":\"Mở cửa tự do 24/7 (Đẹp nhất lúc sáng sớm 06:00 - 08:30 và chiều hoàng hôn 16:30 - 18:30 khi lên đèn LED).\",\"ticket_price\":\"Miễn phí tham quan check-in.\",\"best_season\":\"Quanh năm, đẹp nhất vào mùa lúa chín tháng 8 - 11 và mùa khô tháng 12 - 4.\",\"vehicle_suitability\":\"Xe ôm bản địa leo núi hoặc Trekking đi bộ.\"}",
+    "checkin_spots_json": "[\"Lòng chữ Ô tạo góc nhìn ô cửa sổ máy bay bao quát toàn cảnh đồng lúa Tà Pạ\",\"Bậc thềm bệ đỡ chữ TRI TÔN trắng sứ với phông nền mây trời Bảy Núi\",\"Góc chụp toàn cảnh dòng chữ TRI TÔN rực sáng đèn LED ban đêm từ xa\"]",
+    "highlights_json": "[\"Biểu tượng chữ TRI TÔN cao 7m nổi bật trên sườn Núi Cô Tô\",\"Góc check-in ô cửa sổ máy bay ngắm trọn biển lúa Tà Pạ\",\"Thắp sáng đèn LED rực rỡ sườn núi về đêm\"]",
+    "tags_json": "{\"clusters\":[\"Cụm Cô Tô\",\"Cụm Tà Pạ\",\"Trung tâm Thị trấn\"],\"experiences\":[\"Sống ảo / Check-in\",\"Trekking leo núi\",\"Ngắm hoàng hôn & bình minh\"],\"audiences\":[\"Giới trẻ / Cặp đôi\",\"Phượt thủ\",\"Nhiếp ảnh gia\"],\"best_times\":[\"Sáng sớm săn mây\",\"Chiều hoàng hôn\",\"Ban đêm ngắm đèn LED\"],\"durations\":[\"1 - 2 giờ\"],\"categories\":[\"nature\",\"checkin\"]}",
+    "reviews": [
+      {
+        "platform": "google_maps",
+        "rating": 5,
+        "author": "Du Khách Check-in Tri Tôn",
+        "content": "Điểm check-in biểu tượng cực đẹp khi đến Tri Tôn. Ngồi trong chữ Ô chụp ra view đồng lúa Tà Pạ đẹp như trên máy bay!",
+        "time": "2025"
+      }
+    ],
+    "tiktok_videos": [
+      {
+        "video_url": "https://www.tiktok.com/@thanhsang_weibou/video/7652622140520336661",
+        "embed_url": "https://www.tiktok.com/embed/7652622140520336661",
+        "title": "Check in chữ Tri Tôn trên Núi Cô Tô cực đỉnh",
+        "author": "thanhsang_weibou"
+      }
+    ]
   }
 ]

@@ -458,7 +458,7 @@ export default function GuideClientPage() {
               </div>
               <div>
                 <h3 className="font-display text-base sm:text-lg font-bold text-[#26221B]">
-                  Tuyệt Tác 15 Cung Đường & Lối Mòn Check-in Huyền Thoại Tri Tôn
+                  Tuyệt Tác 16 Cung Đường & Lối Mòn Check-in Huyền Thoại Tri Tôn
                 </h3>
                 <p className="font-body text-xs text-[#6B6355]">
                   Những cung đường tuyệt sắc dành cho phượt thủ, nhiếp ảnh gia và du khách mê xê dịch
@@ -630,6 +630,17 @@ export default function GuideClientPage() {
                   Cung đường biên giới chạy dọc bờ Kênh Vĩnh Tế lịch sử từ Ba Chúc đến Cửa khẩu Vĩnh Gia giáp Campuchia mùa nước nổi.
                 </p>
                 <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 ĐT955A, Xã Vĩnh Gia</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
+                  Biểu Tượng Bảy Núi
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Chữ &quot;TRI TÔN&quot; Núi Cô Tô</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Dòng chữ bê tông trắng cao 7m sườn núi Phụng Hoàng Sơn. Check-in bên trong chữ Ô tạo góc nhìn ô cửa sổ máy bay triệu view.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#0E8C7F]">📍 Sân Tiên, Núi Cô Tô • Rực sáng đèn LED đêm</p>
               </div>
             </div>
           </div>
