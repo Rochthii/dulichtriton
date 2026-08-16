@@ -519,10 +519,6 @@ export default function ChatbotWidget() {
     }
   };
 
-  if (pathname === '/chatbot') {
-    return null;
-  }
-
   return (
     <>
       {/* ── DRAGGABLE FLOATING BUTTON (KÉO THẢ TỰ DO BẤT KỲ VỊ TRÍ) ── */}

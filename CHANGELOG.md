@@ -4,6 +4,21 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.0.0-UNIFIED-CHATBOT-WIDGET-EXPERIENCE] - 2026-08-16
+
+### 💬 Thống Nhất Toàn Bộ Hệ Thống Hỏi AI Về Chatbot Widget Trôi Nổi (Zero Screen Crash)
+
+#### 1. Đơn Giản Hóa Kiến Trúc Giao Diện
+- Loại bỏ sự phân mảnh giữa "Trang Chatbot riêng biệt" và "Widget Chatbot trôi nổi".
+- Trang `/chatbot` giờ đây đóng vai trò chuyển hướng an toàn và mở ngay popup Widget chat tại chỗ.
+- Tất cả các nút bấm **"Trợ Lý AI" (Header Desktop)**, **"Hỏi AI" (Header Mobile)**, **"AI Chat" (Bottom Navigation)** và các nút trên trang chủ đều phát sự kiện `triton:open-chat` để mở trực tiếp khung chat popup thông minh.
+
+#### 2. Lợi Ích Vượt Trội
+- **Không bao giờ bị lỗi chuyển trang hay màn hình đen**: Vì Widget hoạt động dạng popup Overlay ngay trên trang hiện tại, không làm thay đổi URL hay yêu cầu tải lại trang mới.
+- **Tiện lợi tối đa cho du khách**: Vừa xem bản đồ/địa điểm, vừa mở chat AI hỏi đáp mà không bị mất vị trí đang duyệt.
+
+---
+
 ## [v64.0.0-ISOLATE-FULLSCREEN-CHATBOT-VIEWPORT] - 2026-08-16
 
 ### 🛡️ Cách Ly Tuyệt Đối Toàn Bộ Layout Khi Mở Trang Chatbot

@@ -648,13 +648,18 @@ export default function HomePage() {
                 <span className="text-xs font-bold">Bản Đồ GPS</span>
               </Link>
 
-              <Link
-                href="/chatbot"
-                className="p-3 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md group font-display"
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("triton:open-chat"));
+                  }
+                }}
+                className="p-3 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md group font-display cursor-pointer"
               >
                 <Bot className="w-4 h-4 text-[#26221B] group-hover:scale-110 transition-transform" />
                 <span className="text-xs font-bold">Hỏi AI Trợ Lý</span>
-              </Link>
+              </button>
             </div>
           </div>
         </section>

@@ -24,10 +24,6 @@ export default function SiteNav() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  if (pathname === '/chatbot') {
-    return null;
-  }
-
   const navLinks = [
     { name: "Trang Chủ", href: "/", icon: Home },
     { name: "Khám Phá", href: "/places", icon: Compass },
@@ -93,14 +89,19 @@ export default function SiteNav() {
 
         {/* Right CTA Actions */}
         <div className="hidden md:flex items-center gap-2.5 shrink-0">
-          <Link
-            href="/chatbot"
-            prefetch={true}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0"
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("triton:open-chat"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
+            title="Mở Trợ Lý AI Du Lịch Tri Tôn"
           >
             <Bot className="h-4 w-4 text-slate-950" />
             <span>Trợ Lý AI</span>
-          </Link>
+          </button>
 
           <button
             type="button"
@@ -128,15 +129,19 @@ export default function SiteNav() {
 
         {/* Mobile Menu Button & Highlighted AI Button */}
         <div className="flex md:hidden items-center gap-2 shrink-0">
-          <Link
-            href="/chatbot"
-            prefetch={true}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] shadow-sm border border-amber-300 active:scale-95 transition-transform font-display"
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("triton:open-chat"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] shadow-sm border border-amber-300 active:scale-95 transition-transform font-display cursor-pointer"
             title="Hỏi Đáp Cùng Trợ Lý Du Lịch Tri Tôn AI"
           >
             <Bot className="h-4 w-4 text-slate-950 stroke-[2.5]" />
             <span className="font-extrabold tracking-tight">Hỏi AI</span>
-          </Link>
+          </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

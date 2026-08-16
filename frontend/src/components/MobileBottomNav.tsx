@@ -59,11 +59,15 @@ export default function MobileBottomNav() {
 
           if (isAI) {
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                prefetch={true}
-                className="flex flex-col items-center justify-center -mt-6 select-none group"
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.dispatchEvent(new CustomEvent("triton:open-chat"));
+                  }
+                }}
+                className="flex flex-col items-center justify-center -mt-6 select-none group cursor-pointer"
                 title="Hỏi Trợ Lý Du Lịch Tri Tôn AI"
               >
                 <div className="relative flex items-center justify-center w-13 h-13 rounded-full bg-gradient-to-tr from-[#D98E20] via-[#F0A32F] to-[#FFD37A] text-slate-950 shadow-[0_6px_20px_rgba(240,163,47,0.45)] border-4 border-[#FAF3E7] active:scale-95 transition-transform">
@@ -73,10 +77,10 @@ export default function MobileBottomNav() {
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
                   </span>
                 </div>
-                <span className="text-[11px] font-black text-[#D98E20] tracking-tight mt-0.5 font-display">
-                  Trợ Lý AI
+                <span className="text-[10px] font-black text-amber-700 font-display mt-0.5 tracking-tight">
+                  {item.label}
                 </span>
-              </Link>
+              </button>
             );
           }
 
