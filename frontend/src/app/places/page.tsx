@@ -26,13 +26,44 @@ import {
 
 type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
 
+export const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: string[]; keywords: string[] }> = {
+  "cluster-tapa": {
+    name: "Cụm Tà Pạ & Núi Tô",
+    badge: "Check-in Biểu Tượng",
+    communes: ["Núi Tô", "Châu Lăng"],
+    keywords: ["Tà Pạ", "Thốt Nốt", "Koh Kas", "Trái Tim", "Soài Chek", "Sân Cu"],
+  },
+  "cluster-othum": {
+    name: "Cụm Ô Lâm & Hồ Ô Thum",
+    badge: "Ẩm Thực & Lịch Sử",
+    communes: ["Ô Lâm", "An Tức"],
+    keywords: ["Ô Thum", "Tức Dụp", "Gà Đốt", "Kirivong", "Đồi Tức Dụp", "Vườn Nho"],
+  },
+  "cluster-coto": {
+    name: "Cụm Cô Tô & Soài So",
+    badge: "Trekking & Săn Mây",
+    communes: ["Cô Tô", "Tri Tôn", "Núi Tô"],
+    keywords: ["Cô Tô", "Soài So", "Suối Vàng", "Vồ Hội", "Sân Tiên", "Phụng Hoàng Sơn", "Chùa Sà Lôn", "Xà Tón"],
+  },
+  "cluster-bachuc": {
+    name: "Cụm Ba Chúc & Lương Phi",
+    badge: "Văn Hóa & Tâm Linh",
+    communes: ["Ba Chúc", "Lương Phi", "Lê Trì", "Lạc Quới", "Vĩnh Gia"],
+    keywords: ["Ba Chúc", "Nhà Mồ", "Phi Lai", "Tam Bửu", "Núi Tượng", "Núi Dài", "Ô Tà Sóc"],
+  },
+};
+
 function PlacesPageContent() {
   const searchParams = useSearchParams();
   const initialCommune = searchParams.get("commune") || "Tất cả";
   const initialCategory = searchParams.get("category") || "Tất cả";
+  const initialCluster = searchParams.get("cluster");
 
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [selectedCommune, setSelectedCommune] = useState(initialCommune);
+  const [selectedClusterId, setSelectedClusterId] = useState<string | null>(() => {
+    return initialCluster && CLUSTERS_MAP[initialCluster] ? initialCluster : null;
+  });
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
@@ -55,6 +86,10 @@ function PlacesPageContent() {
   useEffect(() => {
     const cParam = searchParams.get("commune");
     const catParam = searchParams.get("category");
+    const clParam = searchParams.get("cluster");
+    if (clParam && CLUSTERS_MAP[clParam]) {
+      setSelectedClusterId(clParam);
+    }
     if (cParam) setSelectedCommune(cParam);
     if (catParam) setActiveCategory(catParam);
   }, [searchParams]);
@@ -177,6 +212,18 @@ function PlacesPageContent() {
         return false;
       }
 
+      // Cluster filter
+      if (selectedClusterId && CLUSTERS_MAP[selectedClusterId]) {
+        const clusterDef = CLUSTERS_MAP[selectedClusterId];
+        const com = (p.commune || "").toLowerCase();
+        const pName = name;
+        const matchCom = clusterDef.communes.some((f) => com.includes(f.toLowerCase()));
+        const matchKey = clusterDef.keywords.some((k) => pName.includes(k.toLowerCase()));
+        if (!matchCom && !matchKey) {
+          return false;
+        }
+      }
+
       // Commune filter
       if (selectedCommune !== "Tất cả" && p.commune !== selectedCommune) {
         return false;
@@ -197,7 +244,7 @@ function PlacesPageContent() {
 
       return true;
     });
-  }, [places, searchQuery, tiktokOnlyFilter, selectedCommune, activeCategory, activeAudience]);
+  }, [places, searchQuery, tiktokOnlyFilter, selectedCommune, activeCategory, activeAudience, selectedClusterId]);
 
   return (
     <div className="min-h-screen bg-[#FAF3E7] font-body text-[#26221B]">
@@ -391,6 +438,40 @@ function PlacesPageContent() {
 
         {/* Places Grid */}
         <section className="space-y-4">
+          {/* Active Cluster Filter Banner */}
+          {selectedClusterId && CLUSTERS_MAP[selectedClusterId] && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-[#0E8C7F]/15 to-amber-500/10 border-2 border-[#0E8C7F]/40 shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <span className="p-2 rounded-xl bg-[#0E8C7F] text-white shrink-0">
+                  <Compass className="w-4 h-4" />
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold text-[#0E8C7F] uppercase tracking-wider font-display">
+                      Đang lọc theo cụm trọng điểm
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#F0A32F] text-[#26221B] font-display">
+                      {CLUSTERS_MAP[selectedClusterId].badge}
+                    </span>
+                  </div>
+                  <h3 className="text-sm sm:text-base font-extrabold text-[#26221B] font-display">
+                    {CLUSTERS_MAP[selectedClusterId].name} ({filteredPlaces.length} địa điểm)
+                  </h3>
+                  <p className="text-[11px] text-[#6B6355] font-body">
+                    Bao gồm các xã: {CLUSTERS_MAP[selectedClusterId].communes.join(", ")}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedClusterId(null)}
+                className="self-start sm:self-center inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 shadow-2xs transition-all cursor-pointer font-display"
+              >
+                <span>✕ Xóa lọc cụm (Xem tất cả 149 điểm)</span>
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0E8C7F]" />

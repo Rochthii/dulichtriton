@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v54.0.0-SEAMLESS-CLUSTER-SMOOTH-SCROLL-AND-SYNC-FILTER] - 2026-08-16
+
+### 🎯 Tự Động Trượt Mượt Mà (Auto Smooth Scroll) & Đồng Bộ Bộ Lọc Cụm Đa Xã Sang Trang Khám Phá
+
+#### 1. Auto Smooth Scroll Khi Bấm Cụm Trên Trang Chủ (`page.tsx`)
+- **Tự động lướt xuống danh sách điểm**: Khi du khách chạm vào bất kỳ Cụm nào (Tà Pạ & Núi Tô, Ô Lâm & Ô Thum, Cô Tô & Soài So, Ba Chúc & Lương Phi), màn hình tự động trượt mượt mà (`smooth scrollIntoView`) xuống ngay bảng danh sách các địa điểm của Cụm đó (`#cluster-spotlight-panel`).
+- **Giao diện phản hồi trực quan trên Mobile**: Bổ sung badge và mũi tên xoay 90° chỉ xuống danh sách, giúp du khách nhận biết tức thì danh sách điểm đã được lọc.
+
+#### 2. Đồng Bộ Hóa Bộ Lọc Cụm Đa Xã Sang Trang Khám Phá (`places/page.tsx`)
+- **Nhận diện param URL `?cluster=...`**: Tích hợp từ điển `CLUSTERS_MAP` đa xã chuẩn xác 100% (ví dụ Cụm Ô Thum tự động bao gồm cả *Xã Ô Lâm & Xã An Tức*).
+- **Banner Bộ Lọc Nổi Bật**: Hiển thị thẻ thông báo nổi bật `[ 📍 Đang lọc theo cụm: Cụm Ô Lâm & Hồ Ô Thum (27 địa điểm) ]` kèm nút `[ ✕ Xóa lọc cụm ]` giúp du khách chuyển đổi linh hoạt giữa xem theo Cụm và xem toàn bộ 149 điểm.
+
+---
+
 ## [v53.0.0-PROMINENT-MOBILE-AI-AND-INSTANT-PAGE-LOAD] - 2026-08-16
 
 ### 🚀 Nâng Cấp Nút AI Nổi Bật Trên Mobile & Tối Ưu Tốc Độ Tải Trang Tức Thì (Instant 0ms)
