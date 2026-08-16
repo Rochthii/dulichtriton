@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { streamAIResponse, generateQueryEmbedding } from '@/lib/aiProvider';
 import masterPois from '@/data/triton_pois_full.json';
+import transportData from '@/data/tri_ton_transportation.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -417,6 +418,12 @@ export async function POST(req: NextRequest) {
             }).join('\n\n')
           : '';
 
+        // Detect if query is about transportation, directions, scenic pathways, or bus lines
+        let transportContext = '';
+        if (/đi|xe|đường|tuyến|phương trang|huệ nghĩa|xe khách|thuê xe|leo núi|vồ hội|cô tô|tà pạ|ô thum|ô tà sóc|tà lọt|tơ lụa|chữ y|nút giao|chỉ đường|di chuyển/i.test(queryStr)) {
+          transportContext = `\n\n[CSDL HƯỚNG DẪN GIAO THÔNG, XE CỘ & CÁC CUNG ĐƯỜNG DANH THẮNG TRI TÔN ĐÃ XÁC MINH]:\n${JSON.stringify(transportData, null, 2)}`;
+        }
+
         const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
         const historySnippet = history.length > 0
           ? '\n\nLịch sử hội thoại gần nhất:\n' +
@@ -424,8 +431,9 @@ export async function POST(req: NextRequest) {
           : '';
         const systemMsg = activeSystemPrompt + historySnippet;
         
-        const userMsg = ragContext
-          ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương nếu phù hợp:\n${ragContext}]`
+        const combinedContext = (ragContext || '') + (transportContext || '');
+        const userMsg = combinedContext
+          ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương đã xác minh nếu phù hợp:\n${combinedContext}]`
           : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy tìm kiếm và cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang trên internet]`;
 
         let fullText = '';

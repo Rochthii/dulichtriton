@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { calculateItineraryRoute } from '@/lib/routeEngine';
 import { generateEvidenceLinks } from '@/lib/evidenceGenerator';
 import { calculateItineraryCost } from '@/lib/costCalculator';
+import transportData from '@/data/tri_ton_transportation.json';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -711,8 +712,14 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Detect if query is about transportation, directions, scenic pathways, or bus lines
+    let transportSnippet = '';
+    if (/đi|xe|đường|tuyến|phương trang|huệ nghĩa|xe khách|thuê xe|leo núi|vồ hội|cô tô|tà pạ|ô thum|ô tà sóc|tà lọt|tơ lụa|chữ y|nút giao|chỉ đường|di chuyển/i.test(queryStr)) {
+      transportSnippet = `\n\nCSDL HƯỚNG DẪN GIAO THÔNG, XE CỘ & CÁC CUNG ĐƯỜNG DANH THẮNG TRI TÔN ĐÃ XÁC MINH:\n${JSON.stringify(transportData, null, 2)}`;
+    }
+
     // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots + knowledge base
-    const combinedRagContext = [ragContext, kbSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
+    const combinedRagContext = [ragContext, kbSnippet, transportSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
     const aiTextResponse = await generateAIResponse(queryStr, combinedRagContext, history);
 
 
