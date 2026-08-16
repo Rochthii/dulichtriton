@@ -16,6 +16,10 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - *Núi Cô Tô & Đỉnh Vồ Hội*: Phnom-Ktô, Vồ Hội Lớn, Vồ Hội Nhỏ cắm trại săn mây, Sân Tiên dấu chân cổ, biểu tượng chữ TRI TÔN cao 7m sườn núi.
   - *Hồ Ô Tà Sóc & Căn cứ Núi Dài*: Ý nghĩa Suối Ông Sóc, Căn cứ Tỉnh ủy An Giang (1962-1967), Điện Trời Gầm, Suối Bạc, Rừng tầm vông.
   - *Ẩm thực Khmer nguyên bản*: Gà Đốt Thảo Nguyên & Vườn Nho Ô Thum, Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng), Bún Cá Củ Ngải Num Banh Chok (Cô Tuôk & Dì Pâu), Bò 7 Món Ba Chúc & Bò nướng trái chúc.
+- **Cơ Chế Điều Hướng TikTok Đa Tầng (Multi-Video & Smart Search Fallback)**:
+  - Nếu địa điểm có nhiều link TikTok thật trong CSDL: Tự động chọn ngẫu nhiên 1 link để mở trực tiếp.
+  - Nếu chưa có link thật: Tự động fallback sang Smart Search chính xác trên TikTok App (`${place.name} ${place.commune} Tri Tôn An Giang`) hoặc Hashtag chuẩn.
+  - Đồng bộ nút Play `▶` tam giác trên 100% thẻ địa điểm (`PlaceCard`), chi tiết (`PlaceDetailClient`), ẩm thực (`FoodClientPage`), văn hóa (`CultureClientPage`) và bản đồ (`MapComponent`).
 - **Biên dịch SSG 166 Tĩnh Routes**: Pass 100% không lỗi biên dịch.
 
 ---
