@@ -93,12 +93,21 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
 5. **Tôn trọng văn hóa Chùa Tháp Khmer**:
    - Khi vào chánh điện: Mặc trang phục lịch sự, cởi giày dép, không chỉ ngón tay trực tiếp vào tượng Phật.
 
-6. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
-   - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
-   - Lang Lang Coffee & Tea (Đường Trần Hưng Đạo, Thị trấn Tri Tôn): Không gian check-in hiện đại, trà thốt nốt tươi, mở đến 21:30.
-   - Quy Coffee House (Đường Nam Kỳ Khởi Nghĩa, Thị trấn Tri Tôn): Phong cách mộc ấm cúng, acoustic cuối tuần, mở đến 22:00.
-   - NY Coffee & Tea (Đường Nguyễn Trãi, Thị trấn Tri Tôn): Trà sữa & kem thốt nốt máy lạnh, mở đến 22:00.
-   - Khu Ẩm Thực Chợ Đêm Tri Tôn & Quảng Trường: Dạo mát, ăn vặt, mở đến 22:30.
+6. **Cẩm nang Quán Cà Phê & Điểm Dừng Chân Thư Giãn Tri Tôn Chuẩn Thực Tế 100%**:
+   - **Quán cà phê view cánh đồng, đồi núi & ngắm cảnh đẹp**:
+     • *RUỘNG Coffee & Tea (RUỘNG Coffee & Homestay)*: Đường vào Hồ Soài Chek, Xã Núi Tô. View ngắm trọn vẹn cánh đồng lúa và sườn Núi Tô, không gian thoáng mát cực chill.
+     • *Tiệm Cà Phê Nhà Quê*: Khu vực Cầu số 10, Xã Tà Đảnh, Tri Tôn. Cầu ván gỗ mộc mạc dẫn thẳng ra giữa biển lúa mênh mông, phong cách làng quê Nam Bộ.
+     • *Windy Hill Coffee & Homestay*: Lưng chừng đồi Tà Pạ, Xã Núi Tô. Tầm nhìn panorama bao quát thung lũng lúa và núi non trùng điệp.
+     • *Mây Sơn Coffee Garden*: Chân Núi Cô Tô, Xã Núi Tô. Không gian vườn đá núi rừng thoáng đãng, đón gió tự nhiên.
+     • *Anpalm Cafe*: Không gian Thất Sơn, nổi bật với thức uống thốt nốt sáng tạo (thốt nốt sữa tươi) và acoustic đêm.
+   - **Quán cà phê trung tâm thị trấn, máy lạnh & mở muộn về đêm**:
+     • *CHẠM Coffee & Tea*: Đường 3 Tháng 2, TT. Tri Tôn. Sân vườn thoáng mát, trà trái cây nhiệt đới, mở đến 22:00.
+     • *NY Coffee & Tea*: 66 Trần Phú, TT. Tri Tôn. Phong cách Hàn Quốc trẻ trung, máy lạnh mát rượi, trà sữa & kem thốt nốt, mở đến 22:00.
+     • *Tritoni Coffee*: 92 Trần Hưng Đạo, TT. Tri Tôn. Cà phê đậm đà, không gian hiện đại.
+     • *Lang Lang Coffee & Tea*: Đường Trần Hưng Đạo, TT. Tri Tôn. Trà thốt nốt tươi, mở đến 21:30.
+     • *Quy Coffee House (Quý's Coffee)*: Đường Nam Kỳ Khởi Nghĩa, TT. Tri Tôn. Không gian mộc ấm cúng, mở đến 22:00.
+     • *Cà Phê Thủy Mộc*: 111 Nguyễn Thị Minh Khai, TT. Tri Tôn. Sân vườn yên tĩnh có hồ cá Koi.
+   - **QUY TẮC NGHIÊM CẤM QUÁN CÀ PHÊ ẢO**: Tuyệt đối KHÔNG nhắc hoặc gợi ý các tên quán ảo không có thật ngoài đời như: "Cà Phê Thốt Nốt Tà Pạ View", "Cà Phê Suối Đá Ô Tà Sóc", "Drink & Hammock Chill". Chỉ sử dụng đúng danh sách các quán thực tế nêu trên.
 
 7. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
    - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: vừa hỏi cảnh đẹp/chùa, vừa hỏi quán ăn/gà đốt, vừa hỏi cafe tối hoặc homestay/lộ trình):
@@ -245,8 +254,10 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
 }
 
 function buildSuggestions(lower: string): string[] {
+  if (lower.includes('cà phê') || lower.includes('cafe') || lower.includes('uống nước'))
+    return ['Quán RUỘNG Coffee view cánh đồng', 'Tiệm Cà Phê Nhà Quê Tà Đảnh', 'Quán CHẠM Coffee mở đêm Tri Tôn', 'NY Coffee & Tea máy lạnh'];
   if (lower.includes('ăn') || lower.includes('gà đốt') || lower.includes('cháo bò'))
-    return ['Quán Gà Đốt Ô Thum chuẩn vị nhất', 'Địa chỉ quán Cháo Bò lá chúc', 'Quán Bún Cá Củ Ngải Dì Dom'];
+    return ['Quán Gà Đốt Thành Đạt Ô Thum', 'Quán Siêu Gà Đốt Ô Thum', 'Địa chỉ Cháo Bò Bảy Núi'];
   if (lower.includes('chùa') || lower.includes('khmer') || lower.includes('văn hóa'))
     return ['Đường lên Chùa Tà Pạ', 'Cổng trời Chùa Koh Kas', 'Lễ hội Đua bò Bảy Núi'];
   if (lower.includes('ở') || lower.includes('homestay') || lower.includes('khách sạn'))
@@ -364,6 +375,12 @@ export async function POST(req: NextRequest) {
 
         // Fallback: match by individual keywords or featured places
         if (matchedPlacesMap.size === 0) {
+          if (lower.includes('cà phê') || lower.includes('cafe') || lower.includes('quán nước')) {
+            (masterPois as any[])
+              .filter(p => p.subcategory === 'cafe' || (p.name && (p.name.toLowerCase().includes('coffee') || p.name.toLowerCase().includes('cà phê'))))
+              .slice(0, 4)
+              .forEach(p => matchedPlacesMap.set(p.id, p));
+          }
           const words = cleanQ.split(/\s+/).filter(w => w.length >= 3);
           for (const w of words) {
             const localMatches = (masterPois as any[]).filter(p => {
