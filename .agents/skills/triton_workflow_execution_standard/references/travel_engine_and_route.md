@@ -12,5 +12,6 @@
 - Ăn sáng: 35.000đ (Cháo bò / Bún cá củ ngải).
 - Ăn trưa: 120.000đ (Gà đốt lá chúc Ô Thum).
 - Ăn tối: 90.000đ (Bò 7 món / Bánh bò thốt nốt).
-- Thuê xe máy & Xăng: 200.000đ/ngày.
-- Lưu trú: 250.000đ – 450.000đ/đêm.
+- Thuê xe máy: 100.000đ – 150.000đ/ngày (thuê trực tiếp tại Homestay/Khách sạn lưu trú).
+- Xăng xe máy: 40.000đ – 50.000đ/ngày (đổ đầy bình chạy quanh các xã).
+- Lưu trú: 250.000đ – 450.000đ/đêm (Homestay view núi / Khách sạn trung tâm).
