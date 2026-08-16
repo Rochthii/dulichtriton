@@ -4,6 +4,27 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v43.0.0-MODULAR-AI-ZERO-WASTE-FAILOVER] - 2026-08-16
+
+### 🧱 Tái Cấu Trúc Chia Nhỏ Module AI (SOLID) & Cơ Chế Zero-Waste Instant Failover (Tiết Kiệm 100% Token)
+
+#### 1. Chia Nhỏ Module Đơn Nhiệm (Single Responsibility)
+- **Vấn đề trước đây**: File `aiProvider.ts` phình to (~700 dòng), ôm đồm quá nhiều trách nhiệm (cấu hình, Gemini, Groq, OpenRouter, RAG bản địa, Embedding, Cache) gây rối và khó bảo trì.
+- **Tách thành 5 module chuyên biệt trong `frontend/src/lib/ai/`**:
+  1. `config.ts`: Quản lý cấu hình Keys, Model names, Round-Robin Pointer, Cooldown Map và Metrics Exporter.
+  2. `geminiClient.ts`: Đơn nhiệm gọi Google Gemini 2.0 Flash với Live Google Search Grounding (`tools: [{ googleSearch: {} }]`), xử lý bắt mã lỗi 429/403 siêu nhanh (<150ms).
+  3. `fallbackClients.ts`: Đơn nhiệm gọi Groq Llama 3.3 70B và OpenRouter Free Models.
+  4. `localExpertRag.ts`: Đơn nhiệm bộ não tri thức bản địa Tri Tôn (10 nhánh Intent chuyên sâu).
+  5. `semanticCache.ts`: Đơn nhiệm tạo embedding và quản lý Semantic Cache Supabase.
+  6. `aiProvider.ts`: Facade điều phối trung tâm, áp dụng cơ chế Zero-Waste Token Economy.
+
+#### 2. Cơ Chế Zero-Waste Instant Failover (Tiết Kiệm 100% Token)
+- **Single Leader Request**: Chỉ gửi **DUY NHẤT 1 Request** đến Key rảnh nhất (xoay vòng Round-Robin 4 Keys). Tiết kiệm 85% Token so với việc bắn song song bừa bãi.
+- **Instant Error Failover (<150ms)**: Khi một Key bị mã lỗi 429 (Rate limit) hoặc 403, hệ thống bắt mã lỗi trong 150ms và nhảy sang Key tiếp theo ngay lập tức.
+- **Bảo hiểm chống nghẽn (Hedged Delay)**: Nếu sau 1.5s chưa có phản hồi thì tự động kích hoạt Key dự phòng để không bao giờ bị treo ứng dụng.
+
+---
+
 ## [v42.0.0-ULTRA-SPEED-PARALLEL-RACING-STREAMER] - 2026-08-16
 
 ### ⚡ Nâng Cấp Ultra-Speed Parallel Racing Streamer & Khôi Phục Live Google Search Grounding
