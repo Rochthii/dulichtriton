@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Map, Navigation, MapPin, Layers, Filter, Globe, 
-  Search, Star, CheckCircle2, Compass, ShieldCheck, ExternalLink, Download
+  Search, Star, CheckCircle2, Compass, ShieldCheck, ExternalLink, Download, X
 } from 'lucide-react';
 import { Place } from '@/components/PlaceCard';
 import { getGoogleMapsUrl } from '@/lib/utils';
@@ -15,10 +15,10 @@ import ItineraryExportModal from './ItineraryExportModal';
 const MapComponent = dynamic(() => import('./MapComponent'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full min-h-[480px] sm:min-h-[580px] rounded-[28px] bg-[#151B34] border border-[#26221B]/10 flex items-center justify-center text-white font-display">
-      <div className="flex flex-col items-center gap-4 animate-pulse">
-        <MapPin className="w-8 h-8 text-[#F0A32F]" />
-        <span>Đang tải Bản Đồ Số GIS Tri Tôn...</span>
+    <div className="w-full h-full min-h-[380px] sm:min-h-[580px] rounded-2xl sm:rounded-[28px] bg-[#151B34] border border-[#26221B]/10 flex items-center justify-center text-white font-display">
+      <div className="flex flex-col items-center gap-3 animate-pulse">
+        <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-[#F0A32F]" />
+        <span className="text-xs sm:text-sm">Đang tải Bản Đồ Số GIS Tri Tôn...</span>
       </div>
     </div>
   )
@@ -33,6 +33,7 @@ export default function MapClientPage({ places }: MapClientPageProps) {
   const [selectedCommune, setSelectedCommune] = useState<string>('all');
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(places[0] || null);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [isMobileCardOpen, setIsMobileCardOpen] = useState(true);
 
   const communes = [
     'all',
@@ -48,8 +49,8 @@ export default function MapClientPage({ places }: MapClientPageProps) {
 
   const categories = [
     { key: 'all', label: `Tất cả (${places.length} điểm)` },
-    { key: 'night_spots', label: '🌙 Tri Tôn Về Đêm (Mở Muộn)' },
-    { key: 'attractions_nature', label: 'Danh thắng Thiên nhiên' },
+    { key: 'night_spots', label: '🌙 Tri Tôn Về Đêm' },
+    { key: 'attractions_nature', label: 'Danh thắng Núi' },
     { key: 'checkin_spots', label: 'Điểm Check-in' },
     { key: 'khmer_pagodas_heritage', label: 'Chùa Khmer & Di tích' },
     { key: 'food_and_restaurants', label: 'Ẩm thực & Quán ăn' },
@@ -78,6 +79,11 @@ export default function MapClientPage({ places }: MapClientPageProps) {
     return matchCat && matchCommune;
   });
 
+  const handleSelectPlaceOnMap = (place: Place) => {
+    setSelectedPlace(place);
+    setIsMobileCardOpen(true);
+  };
+
   return (
     <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen">
       {/* Page Header Banner */}
@@ -90,20 +96,24 @@ export default function MapClientPage({ places }: MapClientPageProps) {
         countValue={`${filteredPlaces.length} điểm hiển thị`}
       />
 
-      {/* FILTER & INTERACTIVE CONTROLS BAR */}
-      <div className="bg-[#FFFDF7] p-5 sm:p-7 rounded-[28px] border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] mb-8 space-y-4">
-        {/* Category Filter */}
+      {/* FILTER & INTERACTIVE CONTROLS BAR (Mobile-First Horizontal Carousel) */}
+      <div className="bg-[#FFFDF7] p-3 sm:p-6 rounded-2xl sm:rounded-[28px] border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.06)] mb-4 sm:mb-8 space-y-2.5 sm:space-y-4">
+        
+        {/* Category Filter (Horizontal Scroll) */}
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#26221B] uppercase tracking-wider mb-2 font-display">
-            <Layers className="w-4 h-4 text-[#0E8C7F]" />
-            <span>Phân Loại Danh Mục Điểm Đến</span>
+          <div className="flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#26221B] uppercase tracking-wider mb-1.5 font-display">
+            <div className="flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[#0E8C7F]" />
+              <span>Phân Loại Danh Mục</span>
+            </div>
+            <span className="text-[10px] text-[#6B6355] font-mono sm:hidden">Vuốt ngang ➔</span>
           </div>
-          <div className="flex flex-wrap items-center gap-2 font-display">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none font-display">
             {categories.map(cat => (
               <button
                 key={cat.key}
                 onClick={() => setSelectedCategory(cat.key)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all active:scale-95 ${
+                className={`whitespace-nowrap px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all shrink-0 active:scale-95 cursor-pointer ${
                   selectedCategory === cat.key
                     ? 'bg-[#0E8C7F] text-white shadow-xs'
                     : 'bg-[#FAF3E7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#0E8C7F]/40'
@@ -115,18 +125,20 @@ export default function MapClientPage({ places }: MapClientPageProps) {
           </div>
         </div>
 
-        {/* Commune Filter */}
+        {/* Commune Filter (Horizontal Scroll) */}
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-[#26221B] uppercase tracking-wider mb-2 font-display">
-            <MapPin className="w-4 h-4 text-[#F0A32F]" />
-            <span>Khu Vực Hành Chính Xã / Thị Trấn</span>
+          <div className="flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#26221B] uppercase tracking-wider mb-1.5 font-display">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-[#F0A32F]" />
+              <span>Khu Vực Hành Chính Xã / Thị Trấn</span>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2 font-display">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none font-display">
             {communes.map((c, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedCommune(c)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all active:scale-95 ${
+                className={`whitespace-nowrap px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all shrink-0 active:scale-95 cursor-pointer ${
                   selectedCommune === c
                     ? 'bg-[#F0A32F] text-[#26221B] shadow-xs'
                     : 'bg-[#FAF3E7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#F0A32F]/40'
@@ -138,33 +150,93 @@ export default function MapClientPage({ places }: MapClientPageProps) {
           </div>
         </div>
         
-        {/* Export Button */}
-        <div className="pt-3 border-t border-[#26221B]/6 flex justify-end font-display">
+        {/* Export Action Bar */}
+        <div className="pt-2 border-t border-[#26221B]/6 flex items-center justify-between font-display">
+          <span className="text-[11px] text-[#6B6355] font-mono">
+            {filteredPlaces.length} địa điểm phù hợp
+          </span>
           <button 
             onClick={() => setIsExportModalOpen(true)}
-            className="px-5 py-2.5 bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs rounded-full flex items-center gap-2 shadow-xs transition-all active:scale-95"
+            className="px-3.5 py-1.5 sm:px-5 sm:py-2 bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-[11px] sm:text-xs rounded-full flex items-center gap-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
           >
-            <Download className="w-4 h-4" />
-            <span>Lưu Lịch Trình (Offline PDF/QR)</span>
+            <Download className="w-3.5 h-3.5" />
+            <span>Xuất QR/PDF</span>
           </button>
         </div>
 
       </div>
 
       {/* MAP & SIDE PANEL SPLIT VIEW */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 relative">
         
-        {/* Main Map Container (2 Cols) */}
-        <div className="lg:col-span-2 relative min-h-[480px] sm:min-h-[580px] rounded-[28px] overflow-hidden border border-[#26221B]/10 shadow-[0_4px_20px_rgba(38,34,27,0.1)]">
+        {/* Main Map Container */}
+        <div className="lg:col-span-2 relative min-h-[400px] sm:min-h-[580px] h-[62vh] max-h-[640px] rounded-2xl sm:rounded-[28px] overflow-hidden border border-[#26221B]/10 shadow-[0_4px_20px_rgba(38,34,27,0.1)]">
           <MapComponent 
             places={filteredPlaces} 
             selectedPlace={selectedPlace} 
-            onSelectPlace={setSelectedPlace} 
+            onSelectPlace={handleSelectPlaceOnMap} 
           />
+
+          {/* FLOATING QUICK CARD ON MOBILE (Bottom Sheet Overlay) */}
+          {selectedPlace && isMobileCardOpen && (
+            <div className="lg:hidden absolute bottom-3 left-3 right-3 z-500 bg-[#FFFDF7]/95 backdrop-blur-md rounded-2xl p-3 border border-[#26221B]/12 shadow-xl animate-in slide-in-from-bottom duration-200 space-y-2">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-12 h-12 rounded-xl bg-slate-900 overflow-hidden shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={selectedPlace.image_url || '/images/tiktok/ho_ta_pa.jpg'}
+                      alt={selectedPlace.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).src = '/images/tiktok/ho_ta_pa.jpg'; }}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="font-display text-xs font-bold text-[#26221B] truncate">{selectedPlace.name}</h3>
+                    <p className="text-[10px] text-[#0E8C7F] font-semibold">{selectedPlace.commune}</p>
+                    <div className="flex items-center gap-1 text-[10px] text-[#6B6355]">
+                      <Star className="w-2.5 h-2.5 fill-[#F0A32F] text-[#F0A32F]" />
+                      <span>{selectedPlace.rating || 4.8}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMobileCardOpen(false)}
+                  className="p-1 rounded-full bg-[#FAF3E7] text-[#6B6355] hover:text-[#26221B] shrink-0 cursor-pointer"
+                  aria-label="Đóng xem trước"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Action Buttons in Floating Mobile Card */}
+              <div className="grid grid-cols-2 gap-2 pt-1 font-display">
+                <a
+                  href={getGoogleMapsUrl({ name: selectedPlace.name, commune: selectedPlace.commune })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 rounded-xl bg-[#F0A32F] text-[#26221B] text-[11px] font-bold flex items-center justify-center gap-1 shadow-2xs active:scale-95 cursor-pointer"
+                >
+                  <Navigation className="w-3 h-3" />
+                  <span>Chỉ Đường</span>
+                </a>
+
+                <Link
+                  href={`/places/${selectedPlace.slug || selectedPlace.id}`}
+                  className="py-2 rounded-xl bg-[#0E8C7F] text-white text-[11px] font-bold flex items-center justify-center gap-1 shadow-2xs active:scale-95 cursor-pointer"
+                >
+                  <span>Chi Tiết</span>
+                  <ExternalLink className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Selected Place Preview Side Panel (1 Col) */}
-        <div className="space-y-6">
+        {/* Selected Place Preview Side Panel (Desktop & Tablet) */}
+        <div className="hidden lg:block space-y-6">
           {selectedPlace ? (
             <div className="bg-[#FFFDF7] rounded-[28px] p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-4">
               <div className="flex items-center justify-between">
