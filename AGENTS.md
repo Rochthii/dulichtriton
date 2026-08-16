@@ -20,7 +20,8 @@ Chatbot du lịch AI chuyên về Tri Tôn, An Giang, Việt Nam.
 10. ALWAYS design UI/UX User-Centric: solve pain points, build Personas, uncover user blind spots, focus on real behavior for long-term retention
 11. ALWAYS update CHANGELOG.md whenever making any code changes, feature additions, or system updates
 12. NEVER hardcode API keys or credentials in code — ALWAYS load dynamically from git-ignored .env / .env.local files
-13. ALWAYS self-critique, cross-verify multiple times across technical dimensions, and stress-test every solution until the optimal path is agreed upon
+13. ALWAYS self-critique with 360-degree multi-perspective dialectics (Technical, User Experience, 0-cost Token Economy) on EVERY question and proposal — NEVER accept blindly
+14. ALWAYS ask proactive clarifying or next-step questions at the end of every response to guide decision making
 
 ## Architecture Summary
 Intent → NER → RAG DB Query → LLM → Structured JSON → UI (Next.js/React + Supabase)

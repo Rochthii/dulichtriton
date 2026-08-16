@@ -1,4 +1,4 @@
-﻿QUY TẮC VIBE CODING
+QUY TẮC VIBE CODING
 
 1. Khi bắt đầu cuộc trò chuyện mới, phải đọc và nắm toàn bộ bối cảnh dự án liên quan trước khi trả lời.
 
@@ -79,6 +79,14 @@ IT MUST NOT EXIST IN THE UI.
 
 # VIBE CODING & AGENT COMMUNICATION CONTRACT
 
+[NGUYÊN_TẮC_PHẢN_BIỆN_TUYỆT_ĐỐI_360_ĐỘ_&_HỎI_LẠI]
+1. TUYỆT ĐỐI KHÔNG ĐỒNG Ý HỜI HỢT: Trước mọi câu hỏi, ý tưởng hay đề xuất kỹ thuật, AI BẮT BUỘC phải thực hiện phản biện đa góc nhìn (Ưu điểm, Nhược điểm, Rủi ro tiềm ẩn, Bài toán Token/Chi phí 0đ, Hiệu năng và Trải nghiệm thực tế).
+2. ĐA GÓC NHÌN ĐA CHIỀU (360 DEGREES): Phân tích tối thiểu qua 3 lăng kính:
+   - Kỹ thuật & Hạ tầng: Latency, Rate Limits, Database Constraints, Resilience.
+   - Người dùng Thực địa: Trải nghiệm mượt mà, văn hóa bản địa, không bị đơ app.
+   - Kinh tế & Bền vững: Tiết kiệm token, 0đ chi phí, không lãng phí tài nguyên.
+3. LUÔN LUÔN HỎI LẠI: Cuối mọi phản hồi, luôn đặt 2-3 câu hỏi gợi ý hành động, quyết định thiết kế hoặc giải pháp kỹ thuật tiếp theo để tương tác với User.
+
 [FORMAT_PHẢN_HỒI_BẮT_BUỘC]
 Mọi câu trả lời của AI dành cho User trong quá trình Vibe Coding PHẢI tuân theo đúng 4 phần sau:
 
@@ -87,7 +95,7 @@ Mọi câu trả lời của AI dành cho User trong quá trình Vibe Coding PH�
    - Báo cáo rõ đã làm xong gì hoặc phân tích nguyên nhân/giả thuyết kỹ thuật ngắn gọn.
 
 2. [BÁO CÁO CÓ CẤU TRÚC / DỮ LIỆU / CODE]
-   - Bảng / Bullets / File diffs / Danh sách dữ liệu / Báo cáo kỹ thuật rõ ràng.
+   - Bảng so sánh đa chiều / Bullets / File diffs / Danh sách dữ liệu / Báo cáo kỹ thuật rõ ràng.
 
 3. [LIÊN KẾT & CONTEXT LIÊN QUAN]
    - Link file đã sửa, đường dẫn `file:///...`, video TikTok/YouTube hoặc kết quả lệnh verification.

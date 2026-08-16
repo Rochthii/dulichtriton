@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v44.0.0-MANDATORY-360-CRITIQUE-AND-INQUIRY-CONTRACT] - 2026-08-16
+
+### 🧠 Chuẩn Hóa Cơ Chế Phản Biện Tuyệt Đối 360 Độ (RULE-21) & Chủ Động Hỏi Lại (Proactive Inquiry)
+
+#### 1. Đóng Gói Vào Bộ Quy Chuẩn Kỹ Sư & Skill (.agents/AGENTS.md & SKILL.md)
+- **Tuyệt đối không chấp nhận hời hợt**: Trước mọi câu hỏi, tình huống phát sinh, thiết kế kiến trúc hay đề xuất kỹ thuật, AI bắt buộc phải phân tích phản biện đa chiều, lật ngược vấn đề, chỉ ra các điểm mù và rủi ro.
+- **3 Lăng kính cốt lõi**:
+  1. *Kỹ thuật & Hạ tầng*: Latency, Rate limits (429), DB constraints, RLS, Edge-cases, Circuit breaker.
+  2. *Người dùng Thực địa*: Trải nghiệm mượt mà, văn hóa ẩm thực/địa giới xã/thị trấn chuẩn xác, không bị đơ app.
+  3. *Kinh tế & 0đ*: Tiết kiệm 100% Token, không lãng phí chi phí API hay tài nguyên máy chủ.
+- **Hợp đồng Hỏi lại**: Bắt buộc ở cuối mọi phản hồi, AI phải luôn đặt 2-3 câu hỏi gợi ý hành động hoặc giải pháp kỹ thuật tiếp theo để tương tác sâu sát với User.
+
+---
+
 ## [v43.0.0-MODULAR-AI-ZERO-WASTE-FAILOVER] - 2026-08-16
 
 ### 🧱 Tái Cấu Trúc Chia Nhỏ Module AI (SOLID) & Cơ Chế Zero-Waste Instant Failover (Tiết Kiệm 100% Token)

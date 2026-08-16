@@ -16,13 +16,13 @@ Tài liệu này đóng gói trọn vẹn quy trình kỹ thuật chuẩn Enterp
 * **100% Credentials phải được nạp động** từ tệp `.env.local` / `.env` (được bảo vệ qua `.gitignore`).
 * **Sử dụng Helper Function**: Luôn sử dụng `load_env()` trong Python hoặc `process.env.NEXT_PUBLIC_*` trong Next.js.
 
-### 🧠 RULE-21: Mandatory 360-Degree Self-Critique & Cross-Verification Standard
-* Trước mọi hành động thiết kế kiến trúc, nâng cấp CSDL hoặc viết code, AI **BẮT BUỘC phải thực hiện tự phản biện 360 độ** trên các khía cạnh:
-  1. *Bảo mật & RLS (Row Level Security)*.
-  2. *Ràng buộc dữ liệu DB-Level (Check constraints, Null safety)*.
-  3. *Hiệu năng truy vấn (Partial Indexes, Unaccent GIN Trigram, HNSW Tuning)*.
-  4. *Trạng thái Edge-cases (Ngoại lệ dữ liệu, Rate limit, Timeout)*.
-* **Chỉ tiến hành thi công khi đã thông nhất phương án tối ưu nhất**.
+### 🧠 RULE-21: Mandatory 360-Degree Universal Critique & Proactive Inquiry Standard
+* **Không Chấp Nhận Hời Hợt**: Trước MỌI câu hỏi, ý tưởng thiết kế, giải pháp kỹ thuật hay tình huống phát sinh, AI **BẮT BUỘC phải thực hiện phản biện đa chiều 360 độ**, tuyệt đối không vội vã đồng ý hoặc code ngay mà chưa chỉ ra các điểm mù và rủi ro.
+* **3 Lăng Kính Phản Biện Cốt Lõi**:
+  1. *Lăng kính Kỹ thuật & Hạ tầng*: Đánh giá Latency, Rate Limit (429), Database Check Constraints, RLS, Edge cases và khả năng chịu tải.
+  2. *Lăng kính Trải nghiệm Người dùng Thực địa*: Trực quan, mượt mà, văn hóa bản địa (không sai sót ẩm thực, địa giới xã/thị trấn), không gây gián đoạn app.
+  3. *Lăng kính Kinh tế & Tài nguyên*: Tiết kiệm 100% Token, tận dụng các giải pháp 0đ, không lãng phí chi phí API hay tài nguyên server.
+* **Luôn Luôn Hỏi Lại & Gợi Ý Hành Động**: Cuối mỗi lượt phản hồi, AI bắt buộc phải đặt 2-3 câu hỏi gợi ý hành động, thiết kế hoặc giải pháp kỹ thuật tiếp theo để User lựa chọn.
 
 ### 🍜 RULE-22: Tri Ton Cultural & Culinary Accuracy Standard
 * **Thuật ngữ Ẩm thực**: Tri Tôn TUYỆT ĐỐI KHÔNG CÓ BÚN NƯỚC LÈO, KHÔNG NẤU MẮM — tên gọi ẩm thực chuẩn bản địa phải luôn là **"Bún Cá Củ Ngải" (Bún cá Khmer / Bún cá Tri Tôn nấu cá lóc đồng, nghệ tươi và củ ngải bún thanh ngọt, không để mắm)**.
