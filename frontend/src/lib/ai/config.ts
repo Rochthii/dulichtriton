@@ -34,11 +34,13 @@ export const AI_CONFIG: AIProviderConfig = {
     'llama-3.1-8b-instant',
   ],
   openRouterModels: [
-    'deepseek/deepseek-chat',
-    'openai/gpt-4o-mini',
-    'qwen/qwen-2.5-72b-instruct',
-    'meta-llama/llama-3.3-70b-instruct',
+    'google/gemma-4-31b-it:free',
+    'google/gemma-4-26b-a4b-it:free',
     'nvidia/nemotron-3-nano-30b-a3b:free',
+    'nvidia/nemotron-3.5-lightning:free',
+    'nvidia/nemotron-3-ultra-550b-a55b:free',
+    'openai/gpt-oss-20b:free',
+    'liquid/lfm-2.5-2.6b:free',
   ],
   timeoutMs: 5000,
   cooldownMs: 20000, // 20s cooldown for 429 rate limit
