@@ -4,6 +4,24 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v34.0.0-OPENGRAPH-WEATHER-ITINERARIES-OPTIMIZATION] - 2026-08-16
+
+### 🌐 Chia Sẻ Mạng Xã Hội (Dynamic OpenGraph & Social Cards)
+- **Dynamic OpenGraph Metadata (`generateMetadata`)**: Tự động sinh thẻ ảnh bìa HD (`og:image`), tiêu đề và mô tả theo từng địa điểm cho Facebook, Zalo, Twitter và Telegram khi du khách share link.
+- **Cấu hình `metadataBase: https://dulichtriton.vn`**: Chuẩn hóa toàn bộ URL tài nguyên mạng xã hội, giải quyết triệt để cảnh báo Next.js.
+
+### 🌤️ Cẩm Nang Khí Hậu & Mẹo Thực Địa Bảy Núi
+- **Thẻ Khí Hậu Động (`PlaceDetailClient.tsx`)**:
+  - *Mùa Mưa & Nước Nổi (T6 - T11)*: Mẹo chụp ảnh thốt nốt cô độc, xem đua bừa Chùa Rô, cảnh báo an toàn rêu đá trơn trượt khi leo núi Cô Tô / Ô Tà Sóc, chỉ dẫn thuê xe ôm 2 phanh phụ.
+  - *Mùa Khô & Lúa Vàng (T12 - T5)*: Khung giờ vàng ngắm bình minh/hoàng hôn (06:00 - 08:30 & 16:00 - 18:00), mẹo tránh nóng giữa trưa dưới rừng tầm vông hoặc quán cafe máy lạnh.
+
+### 🗺️ Tối Ưu Hóa Tuyến Đường 27 Lịch Trình Mẫu (`lichtrinh.json`)
+- **Khớp 100% CSDL Canonical POIs**: Đồng bộ toàn bộ 272 điểm dừng trên 27 tour du lịch (1 ngày, 2N1Đ, 3N2Đ, Phượt, Nghỉ dưỡng, Ẩm thực), loại bỏ 100% lỗi điểm dừng ảo và chuẩn hóa ID chuẩn.
+- **Tuyến Đường Liên Hoàn Không Ngược Đường**: Sắp xếp theo các Cụm địa lý khép kín (Cụm Thị trấn – Cụm Châu Lăng – Cụm Cô Tô/Ô Lâm – Cụm Ba Chúc/Biên giới).
+- **Biên dịch SSG 166 Static Routes**: Pass 100% không lỗi biên dịch.
+
+---
+
 ## [v33.0.0-REAL-VERIFIED-POIS-DATA-REFINEMENT] - 2026-08-16
 
 ### 🧹 Loại Bỏ Địa Điểm Trùng Lặp & Chuẩn Hóa CSDL Thực Tế 100%
