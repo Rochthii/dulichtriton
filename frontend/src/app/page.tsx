@@ -754,8 +754,12 @@ export default function HomePage() {
                   key={place.id}
                   className="bg-[#FFFDF7] rounded-2xl sm:rounded-[26px] border border-[#26221B]/8 shadow-[0_2px_8px_rgba(38,34,27,0.06)] hover:shadow-[0_8px_24px_rgba(38,34,27,0.12)] transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
                 >
-                  {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+                  {/* Thumbnail & Title (Clickable Direct Link) */}
+                  <Link
+                    href={`/places/${place.slug || place.id}`}
+                    prefetch={true}
+                    className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-100 cursor-pointer"
+                  >
                     <img
                       src={place.image_url}
                       alt={place.name}
@@ -771,11 +775,11 @@ export default function HomePage() {
                     </div>
 
                     <div className="absolute bottom-2 left-2 sm:left-3 right-2 sm:right-3 text-white">
-                      <h3 className="font-display text-xs sm:text-base font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7]">
+                      <h3 className="font-display text-xs sm:text-base font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7] group-hover:text-[#FFD37A] transition-colors">
                         {place.name}
                       </h3>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Body Content */}
                   <div className="p-2.5 sm:p-4 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3 font-body">
@@ -955,7 +959,12 @@ export default function HomePage() {
                       key={spot.id}
                       className="bg-[#FAF3E7] rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden group"
                     >
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-200">
+                      {/* Clickable Direct Thumbnail Link */}
+                      <Link
+                        href={`/places/${spot.slug || spot.id}`}
+                        prefetch={true}
+                        className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-200 cursor-pointer"
+                      >
                         <img
                           src={spot.image_url}
                           alt={spot.name}
@@ -964,12 +973,12 @@ export default function HomePage() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-transparent to-transparent" />
                         <div className="absolute bottom-2 left-2 right-2 text-white">
-                          <h4 className="font-display text-xs sm:text-sm font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7]">
+                          <h4 className="font-display text-xs sm:text-sm font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7] group-hover:text-[#FFD37A] transition-colors">
                             {spot.name}
                           </h4>
                           <p className="text-[10px] text-[#FAF3E7]/80 truncate">{spot.commune}</p>
                         </div>
-                      </div>
+                      </Link>
 
                       <div className="p-2.5 sm:p-3 space-y-2 flex-1 flex flex-col justify-between font-body">
                         <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed">

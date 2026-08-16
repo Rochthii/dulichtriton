@@ -341,7 +341,12 @@ export default function FoodPage() {
                     key={hotItem.id}
                     className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-amber-300 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
                   >
-                    <div className="relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200">
+                    {/* Clickable Direct Thumbnail Link */}
+                    <Link
+                      href={`/places/${hotItem.slug || hotItem.id}`}
+                      prefetch={true}
+                      className="block relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200 cursor-pointer"
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={getOptimizedImageUrl(hotItem.image_url, { width: 900, dpr: 2, quality: 'best' })}
@@ -367,11 +372,11 @@ export default function FoodPage() {
                         <span className="text-[9px] font-bold uppercase tracking-wider text-amber-300 font-mono truncate block">
                           {hotItem.commune}
                         </span>
-                        <h3 className="font-display font-black text-xs sm:text-sm leading-tight text-white line-clamp-1">
+                        <h3 className="font-display font-black text-xs sm:text-sm leading-tight text-white line-clamp-1 group-hover:text-amber-300 transition-colors">
                           {hotItem.name}
                         </h3>
                       </div>
-                    </div>
+                    </Link>
 
                     <div className="p-2.5 sm:p-3.5 space-y-1.5 sm:space-y-2 text-xs">
                       <div className="flex items-center justify-between">
@@ -524,8 +529,12 @@ export default function FoodPage() {
                     className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_2px_12px_rgba(240,163,47,0.10)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                   >
                     <div>
-                      {/* Image Header with Scrim */}
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                      {/* Clickable Direct Thumbnail Link */}
+                      <Link
+                        href={`/places/${food.slug || food.id}`}
+                        prefetch={true}
+                        className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 cursor-pointer"
+                      >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' })}
@@ -566,7 +575,7 @@ export default function FoodPage() {
                             {food.name}
                           </h3>
                         </div>
-                      </div>
+                      </Link>
 
                       {/* Content Details */}
                       <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#6B6355]">

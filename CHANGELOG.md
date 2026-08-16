@@ -4,6 +4,25 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v56.0.0-CLICKABLE-IMAGE-CARDS-EXPANDED-TOUCH-TARGETS] - 2026-08-16
+
+### 👆 Mở Rộng Điểm Chạm (Expanded Touch Targets): Bấm Vào Ảnh & Tiêu Đề Mở Thẳng Trang Chi Tiết
+
+#### 1. Trải Nghiệm Tự Nhiên & Tiện Lợi (Natural Mobile UX)
+- **Bấm thẳng vào ảnh hoặc tiêu đề**: 100% các thẻ Card địa điểm, món ăn, danh thắng trên toàn hệ thống giờ đây cho phép du khách chạm trực tiếp vào hình ảnh hoặc tiêu đề để mở ngay trang chi tiết (`/places/[slug]`), không còn bắt buộc phải tìm và bấm trúng nút nhỏ `[Chi Tiết]`.
+
+#### 2. Áp Dụng Toàn Diện Trên Mọi Màn Hình
+- **Trang Chủ (`page.tsx`)**:
+  - TimeSlot Cards (Khung giờ sáng/trưa/chiều/tối).
+  - Cluster Spotlight Cards (Bảng danh sách địa điểm trong Cụm vừa mở).
+- **Trang Ẩm Thực (`food/page.tsx`)**:
+  - Top 4 Signature Hot Foods.
+  - Danh sách toàn bộ quán ăn đặc sản (`filteredFoods`).
+- **Component Đa Năng (`PlaceCard.tsx`)**: Áp dụng cho các trang Khám Phá `/places`, Văn Hóa `/culture`, Lưu Trú `/stay`.
+- **Bảo toàn hành động phụ**: Nút `[Chỉ Đường] (Google Maps)` và `[Yêu Thích]` vẫn giữ nguyên sự kiện độc lập mà không bị xung đột điều hướng.
+
+---
+
 ## [v55.0.0-AUTO-DEPLOYMENT-RECOVERY-ZERO-CRASH] - 2026-08-16
 
 ### 🛡️ Cơ Chế Tự Động Khắc Phục Lệch Phiên Bản Deploy (Deployment Skew Auto-Recovery)
