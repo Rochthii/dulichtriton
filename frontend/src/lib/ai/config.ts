@@ -30,8 +30,9 @@ export const AI_CONFIG: AIProviderConfig = {
     'gemini-1.5-flash',
   ],
   groqModels: [
-    'llama-3.3-70b-versatile',
     'llama-3.1-8b-instant',
+    'llama-3.3-70b-versatile',
+    'gemma2-9b-it',
   ],
   openRouterModels: [
     'google/gemma-4-31b-it:free',

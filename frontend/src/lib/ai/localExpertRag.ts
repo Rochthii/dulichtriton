@@ -87,8 +87,29 @@ Lễ Hội Đua Bò Bảy Núi là **Di sản văn hóa phi vật thể quốc g
    - Đại lễ cúng dâng y cà-sa sau mùa An Cư Kiết Hạ cùng dàn nhạc ngũ âm Pinpeat rộn rã phum sóc.`;
   }
 
-  // 4. GÀ ĐỐT Ô THUM CÓ CẦN ĐẶT TRƯỚC KHÔNG
-  if (/đặt trước|gà đốt|bao lâu|chờ lâu|quán gà đốt|ăn gà/i.test(lower)) {
+  // 4.1 QUÁN SIÊU GÀ ĐỐT Ô THUM (CHAU SIÊU)
+  if (/quán siêu|chau siêu|siêu gà đốt|quán chau siêu/i.test(lower)) {
+    return `### 🍗 Quán Siêu Gà Đốt Ô Thum (Chau Siêu) — Tri Tôn
+
+**Quán Siêu (Chau Siêu)** là một trong những quán gà đốt lá chúc **tiên phong và lâu đời nhất** tại khu vực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn.
+
+### 1. Thông Tin Thực Địa & Vị Trí:
+- **Địa chỉ**: Tuyến đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang (nằm sát bên bờ hồ Ô Thum).
+- **Giờ mở cửa**: 08:30 – 18:30 hàng ngày.
+- **Mức giá**: 280.000đ – 350.000đ/con (gà thả đồi tươi sống nặng 1.2kg – 1.5kg).
+[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Siêu+Gà+Đốt+Ô+Thum+Chau+Siêu+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotchausieu)
+
+### 2. Đặc Sản & Trải Nghiệm Ẩm Thực:
+- **Gà Đốt Lá Chúc Nguyên Bản**: Da gà được đốt vàng ươm, giòn rụm, thịt bên trong mềm ngọt, mọng nước, ngậy thơm mùi tinh dầu lá chúc Thất Sơn và sả tươi.
+- **Nước Chấm Muối Ớt Chúc**: Muối hột rang giã nhuyễn với ớt xiêm rừng, nước cốt trái chúc và lá chúc xắt sợi the the cay nồng.
+- **Món Ăn Kèm Nổi Bật**: Đu đủ đâm ba khía Khmer, cơm chiên tỏi thốt nốt, ếch nướng sa tế, lẩu ếch lá giang.
+- **Không gian**: Chòi lá mộc mạc dựng trên mặt nước và sườn đồi ven hồ, gió mát tự nhiên.
+
+💡 **Lời khuyên thực tế**: Do quán chế biến gà tươi sống đốt lửa than từ 35–45 phút, Bạn **rất nên gọi đặt trước 30 – 45 phút** trước khi đến để không phải chờ đợi lâu vào giờ trưa!`;
+  }
+
+  // 4.2 GÀ ĐỐT Ô THUM CÓ CẦN ĐẶT TRƯỚC KHÔNG
+  if (/đặt trước|đặt bàn|bao lâu|chờ lâu|cần đặt trước/i.test(lower)) {
     return `### 🍗 Gà Đốt Lá Chúc Ô Thum Tri Tôn: Có Cần Đặt Trước Không?
 
 **CÂU TRẢ LỜI LÀ: RẤT NÊN GỌI ĐẶT TRƯỚC TỪ 30 – 45 PHÚT!**

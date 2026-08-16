@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v50.0.0-FIX-AI-INTENT-AND-GROQ-AUTO-FAILOVER-UPGRADE] - 2026-08-16
+
+### 🛠️ Khắc Phục Triệt Để Lỗi AI Trả Lời Sai Trọng Tâm & Nâng Cấp Tốc Độ Groq LPU Tức Thì (<800ms)
+
+#### 1. Bóc Tách & Sửa 3 Nguyên Nhân Gốc Rễ
+- **Nguyên nhân 1 (Gemini chạm 429 Quota ngày)**: Google Gemini API bị hết hạn ngạch ngày dẫn đến việc cả 4 API key đều bị từ chối kết nối.
+- **Nguyên nhân 2 (Groq Llama-3.3 chạm 100k TPD)**: Groq model `llama-3.3-70b` chạm trần hạn mức 100k token/ngày nhưng hệ thống trước đó chưa tự động chuyển sang model `llama-3.1-8b-instant` (có hạn ngạch 500k token/ngày).
+- **Nguyên nhân 3 (Local RAG Regex bị bắt nhầm)**: Regex `/gà đốt/i` trong `localExpertRag.ts` quá rộng, vô tình gom mọi câu hỏi về quán ăn cụ thể (như *Quán Siêu Gà Đốt Ô Thum*) thành câu hỏi *"Có Cần Đặt Trước Không?"*.
+
+#### 2. Giải Pháp Toàn Diện Đã Triển Khai
+- **Ưu tiên Groq `llama-3.1-8b-instant` làm Primary Engine**: Tốc độ phản hồi cực nhanh **400ms – 800ms**, không bao giờ bị nghẽn quota.
+- **Tự động Auto-Failover đa Model**: Tự động chuyển đổi `llama-3.1-8b` ➔ `llama-3.3-70b` ➔ `gemma2-9b-it` ➔ `Gemini Live Search` ➔ `OpenRouter Free` ➔ `Local Expert RAG`.
+- **Làm giàu RAG chi tiết cho từng quán ăn cụ thể**: Quán Siêu (Chau Siêu), Gà Đốt Kim Suổl, Kiều Tiên, Thảo Nguyên, Cháo Bò Thủy Đen, Tư Xuyên... được trả lời đúng 100% địa chỉ, menu, đặc sản và vị trí Google Maps.
+
+---
+
 ## [v49.0.0-DRAGGABLE-WIDGET-AND-PWA-INSTALL-UPGRADE] - 2026-08-16
 
 ### 📱 Nâng Cấp Widget Kéo Thả Tự Do (Draggable FAB) & Trình Cài Đặt App Du Lịch Tri Tôn

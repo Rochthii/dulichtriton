@@ -13,61 +13,70 @@ export interface FallbackCallResult {
 }
 
 /**
- * Gọi Groq Llama 3.3 70B siêu tốc (<700ms)
+ * Gọi Groq LPU siêu tốc (<700ms) với Auto Model Failover
  */
 export async function callGroqFallback(
   systemPrompt: string,
   userPrompt: string,
-  model = 'llama-3.3-70b-versatile',
+  preferredModel?: string,
   timeoutMs = 4500
 ): Promise<FallbackCallResult> {
   if (!AI_CONFIG.groqKey || isKeyInCooldown('groq')) {
     throw new Error('Groq key not available or in cooldown');
   }
 
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const modelsToTry = preferredModel
+    ? [preferredModel, ...AI_CONFIG.groqModels.filter(m => m !== preferredModel)]
+    : AI_CONFIG.groqModels;
 
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${AI_CONFIG.groqKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt },
-        ],
-      }),
-      signal: controller.signal,
-    });
+  for (const model of modelsToTry) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-    clearTimeout(timer);
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${AI_CONFIG.groqKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          temperature: 0.6,
+          max_tokens: 1536,
+        }),
+        signal: controller.signal,
+      });
 
-    if (!res.ok) {
-      if (res.status === 429) setKeyCooldown('groq', 30000);
-      throw new Error(`Groq HTTP ${res.status}`);
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        console.warn(`[Groq] Model ${model} returned HTTP ${res.status}. Trying next model...`);
+        continue;
+      }
+
+      recordKeyUsage('groq');
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content;
+
+      if (text && text.trim()) {
+        return {
+          text: text.trim(),
+          provider: `groq-${model}`,
+        };
+      }
+    } catch (err: any) {
+      clearTimeout(timer);
+      console.warn(`[Groq] Model ${model} exception (${err.message}).`);
+      continue;
     }
-
-    recordKeyUsage('groq');
-    const data = await res.json();
-    const text = data?.choices?.[0]?.message?.content;
-
-    if (!text || !text.trim()) {
-      throw new Error('Groq returned empty text');
-    }
-
-    return {
-      text: text.trim(),
-      provider: `groq:${model}`,
-    };
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
   }
+
+  throw new Error('All Groq models failed or rate limited');
 }
 
 /**

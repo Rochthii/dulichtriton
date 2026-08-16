@@ -288,120 +288,21 @@ async function fetchContextAwareVideos(queryStr: string, matchedPlaces: Record<s
 
 
 
-// ── Parallel LLM Race: fastest winner wins, worst-case ~3s not 20s ──────────
+// ── High-Speed AI Engine (Groq LPU Primary <800ms + Gemini Failover) ──────────
 async function generateAIResponse(
   userQuery: string,
   ragContext: string,
   history: Turn[] = []
 ): Promise<string> {
-  // Build conversation history snippet injected into system prompt
   const historySnippet = history.length > 0
     ? '\n\nLịch sử hội thoại gần nhất:\n' +
       history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
     : '';
   const systemMsg = SYSTEM_PROMPT + historySnippet;
   const userMsg   = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
-  const fullPrompt = `${systemMsg}\n\n${userMsg}`;
 
-  type LLMResult = { text: string; provider: string };
-
-  // ── helper callers with Google Search Grounding ───────────────────────────
-  async function callGemini(key: string, label: string): Promise<LLMResult> {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: fullPrompt }] }],
-            tools: [{ googleSearch: {} }],
-          }),
-          signal: AbortSignal.timeout(7000),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (text) return { text: text.trim(), provider: `${label}-search-grounded` };
-      }
-    } catch {
-      // Fallback silently to non-grounded call
-    }
-
-    // Fallback without tools if needed
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }] }),
-        signal: AbortSignal.timeout(5000),
-      }
-    );
-    if (!res.ok) throw new Error(`Gemini ${label} HTTP ${res.status}`);
-    const data = await res.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error(`Gemini ${label} empty`);
-    return { text: text.trim(), provider: label };
-  }
-
-  async function callOpenRouter(modelName: string): Promise<LLMResult> {
-    const key = process.env.OPENROUTER_API_KEY;
-    if (!key) throw new Error('no openrouter key');
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${key}`,
-        'HTTP-Referer': 'https://dulichtriton.vn',
-        'X-Title': 'Du Lich Tri Ton AI',
-      },
-      body: JSON.stringify({
-        model: modelName,
-        messages: [{ role: 'system', content: systemMsg }, { role: 'user', content: userMsg }],
-      }),
-      signal: AbortSignal.timeout(6000),
-    });
-    if (!res.ok) throw new Error(`OpenRouter (${modelName}) HTTP ${res.status}`);
-    const data = await res.json();
-    const text = data?.choices?.[0]?.message?.content;
-    if (!text) throw new Error(`OpenRouter (${modelName}) empty`);
-    return { text: text.trim(), provider: `openrouter-${modelName}` };
-  }
-
-  // ── fire all in parallel, return the first success ────────────────────────
-  const geminiKeys = [
-    process.env.GEMINI_API_KEY,
-    process.env.GEMINI_API_KEY_2,
-    process.env.GEMINI_API_KEY_3,
-    process.env.GEMINI_API_KEY_4,
-  ].filter(Boolean) as string[];
-
-  const openRouterFreeModels = [
-    'nvidia/nemotron-3-nano-30b-a3b:free',
-    'nvidia/nemotron-3.5-lightning:free',
-    'nvidia/nemotron-nano-9b-v2:free',
-    'nvidia/nemotron-3-ultra-550b-a55b:free',
-    'openai/gpt-oss-20b:free',
-    'cohere/north-mini-code:free',
-    'google/gemma-4-31b-it:free',
-    'google/gemma-4-26b-a4b-it:free',
-  ];
-
-  const races: Promise<LLMResult>[] = [
-    ...geminiKeys.map((k, i) => callGemini(k, `gemini-key${i + 1}`)),
-    ...openRouterFreeModels.map(m => callOpenRouter(m)),
-  ];
-
-  try {
-    const winner = await Promise.any(races);
-    console.log(`[NextAI] Provider winner: ${winner.provider}`);
-    return winner.text;
-  } catch {
-    const fallbackRes = await generateProviderAIResponse(systemMsg, userMsg);
-    return fallbackRes.text;
-  }
+  const aiResult = await generateProviderAIResponse(systemMsg, userMsg);
+  return aiResult.text;
 }
 
 export async function POST(req: NextRequest) {

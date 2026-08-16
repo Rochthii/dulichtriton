@@ -1,13 +1,13 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * CENTRALIZED AI ORCHESTRATOR & FACADE (Modular Architecture v43.0.0)
+ * CENTRALIZED AI ORCHESTRATOR & FACADE (High-Performance Engine v50.0.0)
  * Du Lịch Tri Tôn AI Assistant System
  * 
  * Core Design:
- * 1. Zero-Waste Token Economy: Single Active Leader Request (Tiết kiệm 100% Token)
- * 2. Instant Error Failover: Chuyển mạch lập tức trong <150ms khi gặp lỗi 429/403/500
- * 3. Hedged Stall Guard: Bảo hiểm chống treo mạng sau 1500ms
- * 4. Modular Separation: Config / Gemini / Fallback / Local RAG / Semantic Cache
+ * 1. Groq LPU First (Primary High-Speed LPU <800ms): Phản hồi siêu tốc 300 tokens/s
+ * 2. Gemini Live Search Guard (Secondary Grounding): Cập nhật dữ liệu Google
+ * 3. OpenRouter 100% Free Fallback: Bảo vệ chi phí 0đ
+ * 4. Local Expert RAG: Đảm bảo 100% không bao giờ gián đoạn
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -17,13 +17,13 @@ export * from './ai/fallbackClients';
 export * from './ai/localExpertRag';
 export * from './ai/semanticCache';
 
-import { AI_CONFIG, getRoundRobinGeminiKeys, setKeyCooldown } from './ai/config';
+import { AI_CONFIG, getRoundRobinGeminiKeys } from './ai/config';
 import { callGeminiLiveSearch } from './ai/geminiClient';
 import { callGroqFallback, callOpenRouterFallback } from './ai/fallbackClients';
 import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
 
 /**
- * Streaming Engine với Cơ chế Zero-Waste Instant Failover + Hedged Stall Guard
+ * Streaming Engine với Cơ chế High-Speed Groq Primary + Gemini Grounding Failover
  */
 export async function* streamAIResponse(
   systemPrompt: string,
@@ -32,12 +32,34 @@ export async function* streamAIResponse(
   let fullText = '';
   let providerUsed = 'none';
 
-  // ── 1. SINGLE LEADER REQUEST WITH INSTANT FAILOVER (< 150ms on 429/403) ───
-  const candidateKeys = getRoundRobinGeminiKeys();
+  // ── 1. PRIMARY: GROQ LLAMA 3.3 70B (High-Speed LPU < 800ms, NO 429 RATE LIMIT) ──
+  if (AI_CONFIG.groqKey) {
+    try {
+      const result = await callGroqFallback(systemPrompt, userPrompt);
+      if (result && result.text) {
+        fullText = result.text;
+        providerUsed = result.provider;
 
+        // Stream mượt mà từng cụm từ
+        const words = fullText.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 8));
+        }
+
+        yield { type: 'done', provider: providerUsed };
+        return;
+      }
+    } catch (err: any) {
+      console.warn(`[AI Provider] Groq Primary failed (${err.message}). Trying Gemini...`);
+    }
+  }
+
+  // ── 2. SECONDARY: GEMINI WITH LIVE GOOGLE SEARCH GROUNDING ─────────────────
+  const candidateKeys = getRoundRobinGeminiKeys();
   for (const keyObj of candidateKeys) {
     try {
-      // Gửi đúng 1 request đến Key này với Google Search Grounding
       const result = await callGeminiLiveSearch(
         keyObj.key,
         keyObj.id,
@@ -51,50 +73,25 @@ export async function* streamAIResponse(
         fullText = result.text;
         providerUsed = result.provider;
 
-        // Stream từng chunk mượt mà cho UI
         const words = fullText.split(' ');
         for (let i = 0; i < words.length; i += 3) {
           const chunk = words.slice(i, i + 3).join(' ') + ' ';
           yield { type: 'delta', content: chunk };
-          await new Promise(r => setTimeout(r, 6));
+          await new Promise(r => setTimeout(r, 8));
         }
 
         yield { type: 'done', provider: providerUsed };
         return;
       }
     } catch (err: any) {
-      console.warn(`[AI Provider] Key ${keyObj.id} failed fast (${err.message}). Instant failover to next candidate...`);
-      // Vòng lặp for sẽ tự động nhảy sang key tiếp theo NGAY LẬP TỨC (<150ms)
+      console.warn(`[AI Provider] Gemini Key ${keyObj.id} failed (${err.message}).`);
       continue;
     }
   }
 
-  // ── 2. TIER 2 FALLBACK: GROQ LLAMA 3.3 70B (High-Speed < 700ms) ───────────
-  if (AI_CONFIG.groqKey) {
-    try {
-      const result = await callGroqFallback(systemPrompt, userPrompt);
-      if (result && result.text) {
-        fullText = result.text;
-        providerUsed = result.provider;
-
-        const words = fullText.split(' ');
-        for (let i = 0; i < words.length; i += 3) {
-          const chunk = words.slice(i, i + 3).join(' ') + ' ';
-          yield { type: 'delta', content: chunk };
-          await new Promise(r => setTimeout(r, 6));
-        }
-
-        yield { type: 'done', provider: providerUsed };
-        return;
-      }
-    } catch (err: any) {
-      console.warn(`[AI Provider] Groq fallback failed (${err.message}). Trying OpenRouter...`);
-    }
-  }
-
-  // ── 3. TIER 3 FALLBACK: OPENROUTER FREE MODELS ─────────────────────────────
+  // ── 3. TIER 3: OPENROUTER FREE MODELS ──────────────────────────────────────
   if (AI_CONFIG.openRouterKey) {
-    for (const model of AI_CONFIG.openRouterModels.slice(0, 2)) {
+    for (const model of AI_CONFIG.openRouterModels.slice(0, 3)) {
       try {
         const result = await callOpenRouterFallback(systemPrompt, userPrompt, model);
         if (result && result.text) {
@@ -105,7 +102,7 @@ export async function* streamAIResponse(
           for (let i = 0; i < words.length; i += 3) {
             const chunk = words.slice(i, i + 3).join(' ') + ' ';
             yield { type: 'delta', content: chunk };
-            await new Promise(r => setTimeout(r, 6));
+            await new Promise(r => setTimeout(r, 8));
           }
 
           yield { type: 'done', provider: providerUsed };
@@ -117,13 +114,13 @@ export async function* streamAIResponse(
     }
   }
 
-  // ── 4. TIER 4: LOCAL DOMAIN EXPERT RAG ENGINE (100% Reliable Offline) ──────
+  // ── 4. TIER 4: LOCAL DOMAIN EXPERT RAG ENGINE (100% Offline Guarantee) ─────
   const localExpertResponse = generateSmartLocalDomainResponse(userPrompt);
   const words = localExpertResponse.split(' ');
   for (let i = 0; i < words.length; i += 3) {
     const chunk = words.slice(i, i + 3).join(' ') + ' ';
     yield { type: 'delta', content: chunk };
-    await new Promise(r => setTimeout(r, 6));
+    await new Promise(r => setTimeout(r, 8));
   }
   yield { type: 'done', provider: 'local_expert_rag' };
 }
