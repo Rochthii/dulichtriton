@@ -136,13 +136,100 @@ const CLUSTER_DEFS = [
 type TimeSlot = "morning" | "noon" | "afternoon" | "evening";
 type AudienceFilter = "all" | "youth" | "family" | "trekking" | "spiritual";
 
+function getInitialHotPlaces(): PlaceItem[] {
+  return (localMasterPois as any[])
+    .filter((p) => p.is_hot || p.rating >= 4.8)
+    .slice(0, 16)
+    .map((p) => {
+      let img = getCategoryFallbackImage(p.category, p.name);
+      if (p.image_url && typeof p.image_url === "string" && !p.image_url.includes("unsplash.com")) {
+        img = p.image_url;
+      }
+      return {
+        id: p.id,
+        slug: p.slug || p.id,
+        name: p.name,
+        category: p.category || "check-in",
+        commune: p.commune || "Tri Tôn, An Giang",
+        rating: p.rating ? Number(p.rating) : 4.8,
+        image_url: img,
+        description: sanitizeDescription(p.detailed_story || p.description, p.name, p.commune, p.category),
+        golden_time_windows: Array.isArray(p.golden_time_windows) ? p.golden_time_windows : ["06:00–08:30", "16:00–17:30"],
+        cost_vnd: p.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+      };
+    });
+}
+
+function getInitialFoods(): FoodItem[] {
+  return (localMasterPois as any[])
+    .filter((p) => p.category === "gastronomy" || p.category === "food" || p.name?.toLowerCase().includes("gà đốt") || p.name?.toLowerCase().includes("cháo bò"))
+    .slice(0, 6)
+    .map((f) => {
+      let img = getCategoryFallbackImage("food", f.name);
+      if (f.image_url && typeof f.image_url === "string" && !f.image_url.includes("unsplash.com")) {
+        img = f.image_url;
+      }
+      return {
+        id: f.id,
+        slug: f.slug || f.id,
+        name: f.name,
+        commune: f.commune || "Tri Tôn",
+        rating: f.rating ? Number(f.rating) : 4.9,
+        image_url: img,
+        description: sanitizeDescription(f.detailed_story || f.description, f.name, f.commune, 'food'),
+        price_level: f.price_level || "Đặc sản bản địa",
+      };
+    });
+}
+
+function getInitialPresets(): ItineraryCardItem[] {
+  return [
+    {
+      slug: "tour-1-ngay-tapa-othum",
+      title: "Tri Tôn 1 Ngày: Tà Pạ & Gà Đốt Ô Thum",
+      tagline: "Lộ trình biểu tượng số 1 khám phá trọn vẹn điểm nhấn Bảy Núi trong 24h",
+      for_whom: "Du khách đi trong ngày, gia đình & nhóm bạn",
+      duration: "1 Ngày (06:30 – 17:30)",
+      budget_range: "350.000đ – 550.000đ/người",
+      emoji: "🌅",
+    },
+    {
+      slug: "tour-2n1d-chinh-phuc-co-to",
+      title: "Tri Tôn 2N1Đ: Săn Mây Cô Tô & Di Sản Khmer",
+      tagline: "Hành trình đêm ngắm sao Bảy Núi, đón bình minh Vồ Hội Mẹ và viếng 5 ngôi cổ tự",
+      for_whom: "Giới trẻ, phượt thủ & người yêu văn hóa",
+      duration: "2 Ngày 1 Đêm",
+      budget_range: "850.000đ – 1.350.000đ/người",
+      emoji: "🏕️",
+    },
+    {
+      slug: "tour-foodtour-bay-nui",
+      title: "Food Tour Bảy Núi: Gà Đốt, Cháo Bò & Bò 7 Món",
+      tagline: "Trọn vẹn phong vị ẩm thực Khmer - Kinh độc nhất vô nhị xứ Bảy Núi",
+      for_whom: "Tín đồ ẩm thực & trải nghiệm vị giác",
+      duration: "1–2 Ngày",
+      budget_range: "450.000đ – 750.000đ/người",
+      emoji: "🍗",
+    },
+    {
+      slug: "tour-di-san-tam-linh",
+      title: "Hành Trình Di Sản Tâm Linh & Làng Nghề Cổ",
+      tagline: "Chiêm bái kinh lá buông cổ Chùa Xvayton và làng gốm đất nung Phnôm Pi",
+      for_whom: "Người lớn tuổi, gia đình & nhà nghiên cứu",
+      duration: "1 Ngày",
+      budget_range: "300.000đ – 500.000đ/người",
+      emoji: "🛕",
+    }
+  ];
+}
+
 export default function HomePage() {
   const [activeTimeSlot, setActiveTimeSlot] = useState<TimeSlot>("morning");
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
   const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null);
   const [allMasterPlaces, setAllMasterPlaces] = useState<any[]>(() => localMasterPois as any[]);
-  const [hotPlaces, setHotPlaces] = useState<PlaceItem[]>([]);
-  const [liveFoods, setLiveFoods] = useState<FoodItem[]>([]);
+  const [hotPlaces, setHotPlaces] = useState<PlaceItem[]>(() => getInitialHotPlaces());
+  const [liveFoods, setLiveFoods] = useState<FoodItem[]>(() => getInitialFoods());
   const [liveClusters, setLiveClusters] = useState<ClusterItem[]>(() => {
     return CLUSTER_DEFS.map((def) => {
       const matched = (localMasterPois as any[]).filter((p: any) => {
@@ -164,8 +251,8 @@ export default function HomePage() {
       };
     });
   });
-  const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>(() => getInitialPresets());
+  const [loading, setLoading] = useState(false);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
 
   useEffect(() => {
@@ -176,162 +263,155 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    // Non-blocking Parallel Background SWR Revalidation (0ms Initial Paint)
     async function loadData() {
       try {
-        setLoading(true);
+        Promise.allSettled([
+          // 1. Fetch Hot Places live from Supabase
+          fetchWithCache("home-hot-places-live", async () => {
+            const { data } = await supabase
+              .from("places")
+              .select("id, slug, name, category, commune, rating, photos, image_url, description, golden_time_windows, tags_info, is_hot")
+              .eq("is_verified", true)
+              .order("is_hot", { ascending: false })
+              .order("rating", { ascending: false })
+              .limit(25);
 
-        // 1. Fetch Hot Places live from Supabase (Zero Hardcoding)
-        const cachedHot = await fetchWithCache("home-hot-places-live", async () => {
-          const { data } = await supabase
-            .from("places")
-            .select("id, slug, name, category, commune, rating, photos, image_url, description, golden_time_windows, tags_info, is_hot")
-            .eq("is_verified", true)
-            .order("is_hot", { ascending: false })
-            .order("rating", { ascending: false })
-            .limit(25);
+            if (data && data.length > 0) {
+              const mapped = data.map((item: any) => {
+                let img = getCategoryFallbackImage(item.category, item.name);
+                if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
+                  img = item.image_url;
+                } else if (Array.isArray(item.photos) && item.photos.length > 0) {
+                  const p0 = item.photos[0];
+                  const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+                  if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
+                }
 
-          if (data && data.length > 0) {
-            const mapped = data.map((item: any) => {
-              let img = getCategoryFallbackImage(item.category, item.name);
-              if (item.image_url && typeof item.image_url === "string" && !item.image_url.includes("unsplash.com")) {
-                img = item.image_url;
-              } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-                const p0 = item.photos[0];
-                const pUrl = typeof p0 === "string" ? p0 : p0?.url;
-                if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
-              }
+                const localMatch = (localMasterPois as any[]).find(lp => lp.id === item.id || lp.slug === item.slug || lp.name === item.name);
+                const cleanDesc = sanitizeDescription(localMatch?.detailed_story || item.description, item.name, item.commune, item.category);
 
-              const localMatch = (localMasterPois as any[]).find(lp => lp.id === item.id || lp.slug === item.slug || lp.name === item.name);
-              const cleanDesc = sanitizeDescription(localMatch?.detailed_story || item.description, item.name, item.commune, item.category);
+                return {
+                  id: item.id,
+                  slug: item.slug || item.id,
+                  name: item.name,
+                  category: item.category || "check-in",
+                  commune: item.commune || "Tri Tôn, An Giang",
+                  rating: item.rating ? Number(item.rating) : 4.8,
+                  image_url: img,
+                  description: cleanDesc,
+                  has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
+                  golden_time_windows: Array.isArray(item.golden_time_windows)
+                    ? item.golden_time_windows
+                    : ["06:00–08:30", "16:00–17:30"],
+                  cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+                };
+              });
+
+              mapped.sort((a: any, b: any) => {
+                if (a.has_story && !b.has_story) return -1;
+                if (!a.has_story && b.has_story) return 1;
+                return (b.rating || 0) - (a.rating || 0);
+              });
+
+              return mapped;
+            }
+            return [];
+          }).then((cachedHot) => {
+            if (cachedHot && cachedHot.length > 0) setHotPlaces(cachedHot);
+          }),
+
+          // 2. Fetch Top Foods live from Supabase
+          fetchWithCache("home-foods-live", async () => {
+            const { data: foodsData } = await supabase
+              .from("places")
+              .select("id, slug, name, commune, rating, photos, image_url, description, price_level")
+              .ilike("category", "%food%")
+              .order("rating", { ascending: false })
+              .limit(10);
+
+            if (foodsData && foodsData.length > 0) {
+              const mappedFoods = foodsData.map((f: any) => {
+                let img = getCategoryFallbackImage("food", f.name);
+                if (f.image_url && typeof f.image_url === "string" && !f.image_url.includes("unsplash.com")) {
+                  img = f.image_url;
+                } else if (Array.isArray(f.photos) && f.photos.length > 0) {
+                  const p0 = f.photos[0];
+                  const pUrl = typeof p0 === "string" ? p0 : p0?.url;
+                  if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
+                }
+
+                const localMatch = (localMasterPois as any[]).find(lp => lp.id === f.id || lp.slug === f.slug || lp.name === f.name);
+
+                return {
+                  id: f.id,
+                  slug: f.slug || f.id,
+                  name: f.name,
+                  commune: f.commune || "Tri Tôn",
+                  rating: f.rating ? Number(f.rating) : 4.9,
+                  image_url: img,
+                  description: sanitizeDescription(localMatch?.detailed_story || f.description, f.name, f.commune, 'food'),
+                  price_level: f.price_level || "Đặc sản bản địa",
+                  has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
+                };
+              });
+
+              mappedFoods.sort((a: any, b: any) => {
+                if (a.has_story && !b.has_story) return -1;
+                if (!a.has_story && b.has_story) return 1;
+                return (b.rating || 0) - (a.rating || 0);
+              });
+
+              return mappedFoods.slice(0, 6);
+            }
+            return [];
+          }).then((cachedFoods) => {
+            if (cachedFoods && cachedFoods.length > 0) setLiveFoods(cachedFoods);
+          }),
+
+          // 3. Build 4 Geographic Clusters
+          fetchWithCache("home-clusters-live-v3", async () => {
+            const { data: allPlaces } = await supabase
+              .from("places")
+              .select("id, slug, name, commune, category, image_url, photos, rating, description, golden_time_windows")
+              .eq("is_verified", true);
+
+            const placesPool = (allPlaces && allPlaces.length > 0) ? allPlaces : (localMasterPois as any[]);
+            setAllMasterPlaces(placesPool);
+
+            return CLUSTER_DEFS.map((def) => {
+              const matched = placesPool.filter((p: any) => {
+                const com = (p.commune || "").toLowerCase();
+                const name = (p.name || "").toLowerCase();
+                const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
+                const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
+                return matchCom || matchKey;
+              });
+
+              let img = def.fallbackImg;
+              const placeWithImg = matched.find((p: any) => p.image_url && !p.image_url.includes("unsplash.com"));
+              if (placeWithImg) img = placeWithImg.image_url;
 
               return {
-                id: item.id,
-                slug: item.slug || item.id,
-                name: item.name,
-                category: item.category || "check-in",
-                commune: item.commune || "Tri Tôn, An Giang",
-                rating: item.rating ? Number(item.rating) : 4.8,
-                image_url: img,
-                description: cleanDesc,
-                has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
-                golden_time_windows: Array.isArray(item.golden_time_windows)
-                  ? item.golden_time_windows
-                  : ["06:00–08:30", "16:00–17:30"],
-                cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+                id: def.id,
+                name: def.name,
+                commune: def.commune,
+                badge: def.badge,
+                desc: def.desc,
+                img,
+                link: def.link,
+                placeCount: matched.length > 0 ? matched.length : 12,
               };
             });
-
-            // Prioritize places with rich detailed stories
-            mapped.sort((a: any, b: any) => {
-              if (a.has_story && !b.has_story) return -1;
-              if (!a.has_story && b.has_story) return 1;
-              return (b.rating || 0) - (a.rating || 0);
-            });
-
-            return mapped;
-          }
-          return [];
-        });
-        if (cachedHot) setHotPlaces(cachedHot);
-
-        // 2. Fetch Top Foods live from Supabase
-        const cachedFoods = await fetchWithCache("home-foods-live", async () => {
-          const { data: foodsData } = await supabase
-            .from("places")
-            .select("id, slug, name, commune, rating, photos, image_url, description, price_level")
-            .ilike("category", "%food%")
-            .order("rating", { ascending: false })
-            .limit(10);
-
-          if (foodsData && foodsData.length > 0) {
-            const mappedFoods = foodsData.map((f: any) => {
-              let img = getCategoryFallbackImage("food", f.name);
-              if (f.image_url && typeof f.image_url === "string" && !f.image_url.includes("unsplash.com")) {
-                img = f.image_url;
-              } else if (Array.isArray(f.photos) && f.photos.length > 0) {
-                const p0 = f.photos[0];
-                const pUrl = typeof p0 === "string" ? p0 : p0?.url;
-                if (pUrl && typeof pUrl === "string" && !pUrl.includes("unsplash.com")) img = pUrl;
-              }
-
-              const localMatch = (localMasterPois as any[]).find(lp => lp.id === f.id || lp.slug === f.slug || lp.name === f.name);
-
-              return {
-                id: f.id,
-                slug: f.slug || f.id,
-                name: f.name,
-                commune: f.commune || "Tri Tôn",
-                rating: f.rating ? Number(f.rating) : 4.9,
-                image_url: img,
-                description: sanitizeDescription(localMatch?.detailed_story || f.description, f.name, f.commune, 'food'),
-                price_level: f.price_level || "Đặc sản bản địa",
-                has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
-              };
-            });
-
-            mappedFoods.sort((a: any, b: any) => {
-              if (a.has_story && !b.has_story) return -1;
-              if (!a.has_story && b.has_story) return 1;
-              return (b.rating || 0) - (a.rating || 0);
-            });
-
-            return mappedFoods.slice(0, 6);
-          }
-          return [];
-        });
-        if (cachedFoods) setLiveFoods(cachedFoods);
-
-        // 3. Build 4 Geographic Clusters with accurate multi-commune matching
-        const cachedClusters = await fetchWithCache("home-clusters-live-v3", async () => {
-          const { data: allPlaces } = await supabase
-            .from("places")
-            .select("id, slug, name, commune, category, image_url, photos, rating, description, golden_time_windows")
-            .eq("is_verified", true);
-
-          const placesPool = (allPlaces && allPlaces.length > 0) ? allPlaces : (localMasterPois as any[]);
-          setAllMasterPlaces(placesPool);
-
-          return CLUSTER_DEFS.map((def) => {
-            const matched = placesPool.filter((p: any) => {
-              const com = (p.commune || "").toLowerCase();
-              const name = (p.name || "").toLowerCase();
-              const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
-              const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
-              return matchCom || matchKey;
-            });
-
-            let img = def.fallbackImg;
-            const placeWithImg = matched.find((p: any) => p.image_url && !p.image_url.includes("unsplash.com"));
-            if (placeWithImg) img = placeWithImg.image_url;
-
-            return {
-              id: def.id,
-              name: def.name,
-              commune: def.commune,
-              badge: def.badge,
-              desc: def.desc,
-              img,
-              link: def.link,
-              placeCount: matched.length > 0 ? matched.length : 12,
-            };
-          });
-        });
-        if (cachedClusters) setLiveClusters(cachedClusters);
-
-        // 4. Fetch top presets dynamically from API / lichtrinh.json
-        const res = await fetch("/api/v1/chat/itinerary");
-        if (res.ok) {
-          const itinData = await res.json();
-          if (Array.isArray(itinData.presets)) {
-            setTopPresets(itinData.presets.slice(0, 4));
-          }
-        }
+          }).then((cachedClusters) => {
+            if (cachedClusters && cachedClusters.length > 0) setLiveClusters(cachedClusters);
+          }),
+        ]);
       } catch (err) {
         console.error("Home data load error:", err);
-      } finally {
-        setLoading(false);
       }
     }
+
     loadData();
   }, []);
 

@@ -122,28 +122,24 @@ export default function SiteNav() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button & Quick Actions */}
+        {/* Mobile Menu Button & Highlighted AI Button */}
         <div className="flex md:hidden items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("open-pwa-install"));
-              }
-            }}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200 font-display active:scale-95 transition-transform"
-            title="Cài App Tri Tôn"
+          <Link
+            href="/chatbot"
+            prefetch={true}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] shadow-sm border border-amber-300 active:scale-95 transition-transform font-display"
+            title="Hỏi Đáp Cùng Trợ Lý Du Lịch Tri Tôn AI"
           >
-            <Smartphone className="h-3.5 w-3.5 text-emerald-600" />
-            <span className="font-semibold">Cài App</span>
-          </button>
+            <Bot className="h-4 w-4 text-slate-950 stroke-[2.5]" />
+            <span className="font-extrabold tracking-tight">Hỏi AI</span>
+          </Link>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0"
+            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0 border border-slate-200/60"
             aria-label="Toggle Navigation"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5 text-slate-800" />}
+            {mobileMenuOpen ? <X className="h-5 w-5 text-slate-900" /> : <Menu className="h-5 w-5 text-slate-800" />}
           </button>
         </div>
       </div>

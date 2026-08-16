@@ -52,9 +52,34 @@ export default function MobileBottomNav() {
       className="fixed bottom-0 inset-x-0 z-40 bg-[#FAF3E7]/95 backdrop-blur-lg border-t border-[#26221B]/10 shadow-[0_-4px_20px_rgba(38,34,27,0.08)] sm:hidden transition-all duration-300 font-body"
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >
-      <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
+      <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2 relative">
         {navItems.map((item) => {
           const Icon = item.icon;
+          const isAI = item.href === "/chatbot";
+
+          if (isAI) {
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                prefetch={true}
+                className="flex flex-col items-center justify-center -mt-6 select-none group"
+                title="Hỏi Trợ Lý Du Lịch Tri Tôn AI"
+              >
+                <div className="relative flex items-center justify-center w-13 h-13 rounded-full bg-gradient-to-tr from-[#D98E20] via-[#F0A32F] to-[#FFD37A] text-slate-950 shadow-[0_6px_20px_rgba(240,163,47,0.45)] border-4 border-[#FAF3E7] active:scale-95 transition-transform">
+                  <Bot className="w-6 h-6 text-slate-950 stroke-[2.5]" />
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                  </span>
+                </div>
+                <span className="text-[11px] font-black text-[#D98E20] tracking-tight mt-0.5 font-display">
+                  Trợ Lý AI
+                </span>
+              </Link>
+            );
+          }
+
           return (
             <Link
               key={item.href}
@@ -67,7 +92,7 @@ export default function MobileBottomNav() {
               }`}
             >
               <div
-                className={`relative flex items-center justify-center px-3.5 py-1 rounded-2xl transition-all ${
+                className={`relative flex items-center justify-center px-3 py-1 rounded-2xl transition-all ${
                   item.isActive
                     ? "bg-[#0E8C7F]/15 text-[#0E8C7F] shadow-xs scale-105"
                     : "text-[#6B6355]"
