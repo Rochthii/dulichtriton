@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { streamAIResponse, generateQueryEmbedding } from '@/lib/aiProvider';
 import masterPois from '@/data/triton_pois_full.json';
 import transportData from '@/data/tri_ton_transportation.json';
+import festivalsData from '@/data/tri_ton_festivals.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -69,55 +70,46 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
      • *Từ TP. Cần Thơ*: QL91 ➔ TP. Long Xuyên ➔ ĐT941 ➔ Tri Tôn (khoảng 110km, 2.5 tiếng).
      • *Từ TP. Châu Đốc*: QL91 ➔ Rẽ vào Tỉnh lộ ĐT948 (qua Rừng tràm Trà Sư, KDL Núi Cấm) ➔ Men theo sườn Núi Dài qua Xã Châu Lăng ➔ TT. Tri Tôn (khoảng 45km, 1 tiếng - cung đường ngắm cảnh đẹp nhất).
      • *Từ TP. Rạch Giá (Kiên Giang)*: QL80 ➔ Kênh Tám Ngàn ➔ Xã Cô Tô ➔ TT. Tri Tôn (khoảng 75km, 1.8 tiếng).
-   - **Chỉ dẫn di chuyển đến 15 cung đường tuyệt cảnh & lối mòn check-in huyền thoại**:
-     • *Con Đường Tơ Lụa Tri Tôn (Xã Núi Tô)*: Cung đường bê tông uốn lượn hình chữ S mềm mại giữa cánh đồng lúa Tà Pạ nối Hồ Soài Chek và Hàng Cây Trâm trăm tuổi. Từ chân đồi Tà Pạ đi theo đường bê tông liên ấp về hướng Hồ Soài Chek (đi xe máy/xe đạp lúc 06:00 sáng hoặc 16:30 chiều ngắm hoàng hôn).
-     • *Đường Tuyến Tránh Tri Tôn & Nút Giao Chữ Y (Bao quanh TT. Tri Tôn)*: Tuyến đường 4.3km (4 làn xe rộng 11m) nối ĐT941 sang ĐT948. Nổi tiếng với nút giao hình chữ Y tuyệt đẹp giữa biển lúa, view panorama ôm trọn Núi Cô Tô & Núi Dài, điểm săn mây sườn núi và hoàng hôn triệu view.
-     • *Cung Đường Hàng Cây Trâm Trăm Tuổi (Xã Núi Tô & Cô Tô)*: Hàng cây trâm cổ thụ trăm tuổi xanh ngắt mọc thẳng tắp giữa bờ ruộng lúa. Vào tháng 4 - tháng 6 hàng năm, cả hàng cây trĩu quả trâm chín mọng tím lịm, tạo nên khung cảnh đồng quê miền Tây độc nhất vô nhị.
-     • *Cung Đường Hàng Me Cổ Thụ & Cầu Cây Me (Xã Châu Lăng)*: Tuyến ĐT948 rợp bóng mát bởi hàng me cổ thụ lâu đời, tập trung nhiều quán cháo bò trái chúc, đu đủ đâm Rina và bánh bò thốt nốt nướng than.
-     • *Cung Đường Hoa Kèn Hồng & Bờ Kè Núi Tô (TT. Tri Tôn - Núi Tô)*: Tuyến đường hoa kèn hồng, kèn vàng rực rỡ sắc màu men theo bờ kè kênh dẫn vào Công viên Văn hóa và Hồ Soài Chek.
-     • *Cung Đường Ô Tà Sóc & Rừng Tre Tầm Vông (Xã Lương Phi)*: Từ TT. Tri Tôn theo ĐT948 về hướng Ba Chúc 7km ➔ Ngã ba Xã Lương Phi rẽ trái vào đường Ô Tà Sóc chạy thẳng 2km. Con đường rợp bóng hàng ngàn bụi tầm vông xanh mướt dẫn vào Hang Chỉ Huy, Điện Trời Gầm, Suối Bạc và Đồi Ma Thiên Lãnh.
-     • *Thung Lũng Tà Lọt & Cung Đường Hồ Tà Lọt / Suối Tà Lọt (Xã Lê Trì & An Hảo)*: Thung lũng hoang sơ kẹp giữa Núi Cấm và Núi Dài. Từ ĐT948 (đoạn Lê Trì) rẽ vào đường Tà Lọt men theo triền núi. Nơi có hồ thủy lợi Tà Lọt 531.000m³, suối đá trong vắt và các vườn cây ăn trái bản địa (sầu riêng, bơ, dâu da).
-     • *Cung Đường Cây Thốt Nốt Trái Tim & Chân Núi Cô Tô (Xã Cô Tô & An Tức)*: Từ ngã 3 Tri Tôn đi ĐT941 hướng về Cô Tô 4km là tới cụm thốt nốt hình trái tim huyền thoại giữa cánh đồng lúa.
-     • *Cung Đường Cổng Trời Chùa Koh Kas & Chùa Rô (Xã Châu Lăng)*: Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa xuyên qua cánh đồng lúa 1km. Xe máy vào tận nơi chụp ảnh, ô tô đậu ngoài đường nhựa lớn cách 200m rồi đi bộ vào.
-     • *Cung Đường Đèo Sườn Núi Dài ĐT948 (Trục Phượt Bảy Núi)*: Tuyến huyết mạch uốn lượn ôm sát chân Núi Dài và Núi Cấm, nối Tri Tôn qua Châu Lăng, KDL Núi Cấm và Rừng tràm Trà Sư.
-     • *Đường Vòng Hồ Soài So & Suối Vàng (Xã Núi Tô)*: Từ TT. Tri Tôn theo đường Trần Hưng Đạo 1.5km vào cổng KDL Suối Vàng - Hồ Soài So, ngắm vách đá dựng đứng của Núi Cô Tô in bóng xuống hồ nước 5ha.
-     • *Cung Đường Hồ Soài Chek & Sân Đua Bò Hội Lớn (Xã Núi Tô)*: Tuyến đường hoa dẫn vào lòng hồ Soài Chek thơ mộng, công viên cây xanh và Sân đua bò Bảy Núi lớn nhất tỉnh An Giang.
-     • *Cung Đường Đồi Tức Dụp & Hang C6 Lịch Sử (Xã An Tức)*: Từ TT. Tri Tôn theo ĐT948 đi 12km dẫn vào Đồi Tức Dụp (Ngọn đồi Hai Triệu Đô La) với hệ thống hang đá tự nhiên độc đáo.
-     • *Cung Đường Làng Gốm Đất Nung Phnôm Pi (Xã Châu Lăng)*: Tuyến đường làng phum sóc Khmer dẫn vào làng nghề làm bếp Cà-ràng thủ công độc nhất miền Tây.
-     • *Cung Đường Biên Giới Kênh Vĩnh Tế & Cửa Khẩu Vĩnh Gia (Xã Vĩnh Gia)*: Tuyến đường biên giới chạy dọc bờ Kênh Vĩnh Tế từ Ba Chúc đến Cửa khẩu Vĩnh Gia giáp Campuchia.
-     • *Cung Đường Chinh Phục Chữ "TRI TÔN" Trên Núi Cô Tô (Khu vực Sân Tiên, Xã Núi Tô)*: Biểu tượng chữ "TRI TÔN" bằng bê tông cốt thép trắng sứ cao 7m nổi bật trên vách đá sườn núi Phụng Hoàng Sơn, có hệ thống đèn LED thắp sáng rực rỡ ban đêm. Điểm check-in kinh điển là đứng/ngồi trong lòng chữ "Ô" tạo hiệu ứng ô cửa sổ máy bay nhìn toàn cảnh cánh đồng Tà Pạ và thị trấn Tri Tôn. Cách đi: Khởi hành từ cổng KDL Hồ Soài So ➔ Thuê xe ôm bản địa (có phanh phụ chuyên dụng) hoặc trekking bộ qua Điện Năm Căn lên khu vực Sân Tiên (45 - 60 phút).
-     • *Đường lên Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô)*: Từ đường Nguyễn Trãi (TT. Tri Tôn) rẽ vào dốc bê tông dài 1.2km lên Chùa Núi Tà Pạ. Xe máy (về số 1-2 khi lên/xuống, TUYỆT ĐỐI KHÔNG rà phanh liên tục), ô tô 4-7 chỗ lên tận sân chùa. Xe 16-29 chỗ nên đậu ở chân núi.
-     • *Đường lên Đỉnh Núi Cô Tô & Vồ Hội Mẹ (Xã Cô Tô)*: Dốc đứng hơn 30 độ với cua tay áo cực gắt. CẢNH BÁO AN TOÀN: Tuyệt đối KHÔNG tự lái xe máy cá nhân nếu không quen đường dốc núi nguy hiểm. BẮT BUỘC thuê **Đội xe ôm bản địa Núi Cô Tô** (xe số độ phanh phụ chuyên dụng, khoảng 100k - 150k/người khứ hồi) hoặc trekking bộ 2-3 tiếng.
-     • *Đường vào Hồ Ô Thum (Xã Ô Lâm)*: Từ TT. Tri Tôn theo đường ĐT955B đi Xã Ô Lâm ➔ Rẽ vào đường bờ hồ 1.5km. Đường trải nhựa và bê tông rộng rãi, ô tô 4-29 chỗ và xe máy vào tận bãi đỗ xe các quán gà đốt.
+   - **Chỉ dẫn di chuyển đến các danh thắng & đèo núi**:
+     • *Con Đường Tơ Lụa Tri Tôn (Xã Núi Tô)*: Cung đường bê tông uốn lượn hình chữ S mềm mại giữa cánh đồng lúa Tà Pạ nối Hồ Soài Chek và Hàng Cây Trâm trăm tuổi.
+     • *Đường Tuyến Tránh Tri Tôn & Nút Giao Chữ Y (Bao quanh TT. Tri Tôn)*: Nút giao hình chữ Y tuyệt đẹp giữa biển lúa ngắm Núi Cô Tô & Núi Dài.
+     • *Đường lên Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô)*: Dốc bê tông 1.2km từ đường Nguyễn Trãi lên chùa. Xe máy số, ô tô 4-7 chỗ lên tận nơi.
+     • *Đường lên Đỉnh Núi Cô Tô & Vồ Hội Mẹ (Xã Cô Tô)*: Dốc đứng hơn 30 độ. Khuyến cáo thuê **Đội xe ôm bản địa Núi Cô Tô** (xe số phanh phụ chuyên dụng) hoặc trekking bộ.
 
-5. **Tôn trọng văn hóa Chùa Tháp Khmer**:
-   - Khi vào chánh điện: Mặc trang phục lịch sự, cởi giày dép, không chỉ ngón tay trực tiếp vào tượng Phật.
-
-6. **Cẩm nang Quán Cà Phê & Điểm Dừng Chân Thư Giãn Tri Tôn Chuẩn Thực Tế 100%**:
+5. **Cẩm nang Quán Cà Phê & Điểm Dừng Chân Thư Giãn Tri Tôn Chuẩn Thực Tế 100%**:
    - **Quán cà phê view cánh đồng, đồi núi & ngắm cảnh đẹp**:
-     • *RUỘNG Coffee & Tea (RUỘNG Coffee & Homestay)*: Đường vào Hồ Soài Chek, Xã Núi Tô. View ngắm trọn vẹn cánh đồng lúa và sườn Núi Tô, không gian thoáng mát cực chill.
-     • *Tiệm Cà Phê Nhà Quê*: Khu vực Cầu số 10, Xã Tà Đảnh, Tri Tôn. Cầu ván gỗ mộc mạc dẫn thẳng ra giữa biển lúa mênh mông, phong cách làng quê Nam Bộ.
-     • *Windy Hill Coffee & Homestay*: Lưng chừng đồi Tà Pạ, Xã Núi Tô. Tầm nhìn panorama bao quát thung lũng lúa và núi non trùng điệp.
-     • *Mây Sơn Coffee Garden*: Chân Núi Cô Tô, Xã Núi Tô. Không gian vườn đá núi rừng thoáng đãng, đón gió tự nhiên.
-     • *Anpalm Cafe*: Không gian Thất Sơn, nổi bật với thức uống thốt nốt sáng tạo (thốt nốt sữa tươi) và acoustic đêm.
+     • *RUỘNG Coffee & Tea (RUỘNG Coffee & Homestay)*: Đường vào Hồ Soài Chek, Xã Núi Tô. View ngắm trọn vẹn cánh đồng lúa và sườn Núi Tô.
+     • *Tiệm Cà Phê Nhà Quê*: Khu vực Cầu số 10, Xã Tà Đảnh, Tri Tôn. Cầu ván gỗ mộc mạc dẫn thẳng ra giữa biển lúa mênh mông.
+     • *Windy Hill Coffee & Homestay*: Lưng chừng đồi Tà Pạ, Xã Núi Tô.
+     • *Mây Sơn Coffee Garden*: Chân Núi Cô Tô, Xã Núi Tô.
+     • *Anpalm Cafe*: Nổi bật với thức uống thốt nốt sáng tạo và acoustic đêm.
    - **Quán cà phê trung tâm thị trấn, máy lạnh & mở muộn về đêm**:
-     • *CHẠM Coffee & Tea*: Đường 3 Tháng 2, TT. Tri Tôn. Sân vườn thoáng mát, trà trái cây nhiệt đới, mở đến 22:00.
-     • *NY Coffee & Tea*: 66 Trần Phú, TT. Tri Tôn. Phong cách Hàn Quốc trẻ trung, máy lạnh mát rượi, trà sữa & kem thốt nốt, mở đến 22:00.
-     • *Tritoni Coffee*: 92 Trần Hưng Đạo, TT. Tri Tôn. Cà phê đậm đà, không gian hiện đại.
-     • *Lang Lang Coffee & Tea*: Đường Trần Hưng Đạo, TT. Tri Tôn. Trà thốt nốt tươi, mở đến 21:30.
-     • *Quy Coffee House (Quý's Coffee)*: Đường Nam Kỳ Khởi Nghĩa, TT. Tri Tôn. Không gian mộc ấm cúng, mở đến 22:00.
-     • *Cà Phê Thủy Mộc*: 111 Nguyễn Thị Minh Khai, TT. Tri Tôn. Sân vườn yên tĩnh có hồ cá Koi.
-   - **QUY TẮC NGHIÊM CẤM QUÁN CÀ PHÊ ẢO**: Tuyệt đối KHÔNG nhắc hoặc gợi ý các tên quán ảo không có thật ngoài đời như: "Cà Phê Thốt Nốt Tà Pạ View", "Cà Phê Suối Đá Ô Tà Sóc", "Drink & Hammock Chill". Chỉ sử dụng đúng danh sách các quán thực tế nêu trên.
+     • *CHẠM Coffee & Tea*: Đường 3 Tháng 2, TT. Tri Tôn (mở đến 22:00).
+     • *NY Coffee & Tea*: 66 Trần Phú, TT. Tri Tôn (máy lạnh, kem thốt nốt, mở đến 22:00).
+     • *Tritoni Coffee*: 92 Trần Hưng Đạo, TT. Tri Tôn.
+     • *Lang Lang Coffee & Tea*: Đường Trần Hưng Đạo, TT. Tri Tôn.
+     • *Quy Coffee House*: Đường Nam Kỳ Khởi Nghĩa, TT. Tri Tôn.
+     • *Cà Phê Thủy Mộc*: 111 Nguyễn Thị Minh Khai, TT. Tri Tôn.
+
+6. **Cẩm nang 6 Đại Lễ Hội & Thể Thao Hàng Không Tri Tôn Chuẩn Xác Minh 100%**:
+   - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn ("Bay giữa mùa lễ hội" / "Bay trên Phụng Hoàng Sơn")**:
+     • **Thời gian**: Thường niên vào dịp **Lễ Quốc Khánh 2/9 (01/9 - 03/9)** và dịp **Lễ Sêne Đônta / Đua Bò (tháng 8 - 9 âm lịch)**; đợt dù lượn thể thao vào dịp **30/4 - 1/5**.
+     • **Địa điểm chính**: **Khu Thể thao - Du lịch Tà Pạ - Soài Chek / Sân Đua Bò Tri Tôn (Xã Núi Tô)**. Điểm cất cánh dù lượn: **Đỉnh Phụng Hoàng Sơn (Núi Cô Tô - khu vực Vồ Hội Mẹ / Sân Tiên >500m)**, hạ cánh xuống Sân Tà Pạ. Khuôn viên bay khinh khí cầu: Cánh đồng Tà Pạ và Hồ Soài Chek.
+     • **Nghi thức & Trải nghiệm đỉnh cao**: Thượng cờ Tổ quốc khổng lồ 200m² bằng khinh khí cầu cấp 7; Trình diễn 17 khinh khí cầu rực rỡ; Bay treo khinh khí cầu (Tethered Flight) cao 30-50m ngắm núi Cô Tô; Trình diễn dù lượn Paragliding & Paramotor xả khói ngũ sắc; Đêm Hoa Đăng thổi lửa khinh khí cầu (Night Glow) kết hợp âm nhạc Acoustic.
+     • **Kinh nghiệm đi xem thực tế**: Khung giờ vàng buổi sáng (06:00 - 08:30) xem cất cánh và khinh khí cầu bay êm gió nhất; chiều mát (15:30 - 17:30) xem dù lượn hạ cánh; tối (18:30 - 21:00) xem Đêm hoa đăng. Vị trí ngắm đẹp nhất: Khán đài Sân Đua Bò Tri Tôn và Bờ kè Hồ Soài Chek.
+   - **Lễ Hội Đua Bò Bảy Núi Truyền Thống**: Di sản phi vật thể quốc gia dịp Lễ Sêne Đônta (cuối tháng 8 - đầu tháng 9 âm lịch) tại Sân Đua Bò Tri Tôn (Xã Núi Tô) & Chùa Rô (Xã Châu Lăng). Kịch tính với Vòng Hô lấy đà và Vòng Thả bứt tốc rẽ sóng bùn nước.
+   - **Tết Cổ Truyền Chôl Chnăm Thmây**: 13 - 16/4 dương lịch tại 37 Chùa Khmer Tri Tôn (Nghi thức Đắp Núi Cát tích phúc, Lễ Tắm Phật Srong Preah, Dàn nhạc Ngũ Âm Pinpeat, múa Răm-vông).
+   - **Lễ Hội Sêne Đônta (Lễ Cúng Ông Bà)**: 29/8 - 01/9 âm lịch (Lễ Đặt Cơm Vắt Bay Ben, Cúng Ông Bà tại tư gia, Thả Thuyền Cà Tang).
+   - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió / Đèn Nước**: Đêm rằm tháng 10 âm lịch tại Chùa Xvayton, Hồ Tà Pạ & Hồ Soài So (Cúng trăng, đút Cốm dẹp Om Bok cầu may, thả đèn hoa đăng và đèn gió).
+   - **Đại Lễ Dâng Y Kathina**: Rằm tháng 9 - Rằm tháng 10 âm lịch (Rước Y Cà Sa quanh phum sóc, hòa tấu Nhạc Ngũ Âm).
 
 7. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
-   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: vừa hỏi cảnh đẹp/chùa, vừa hỏi quán ăn/gà đốt, vừa hỏi cafe tối hoặc homestay/lộ trình):
-     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi, tuyệt đối không bỏ sót bất kỳ vế nào.
-     2. Trình bày bài trả lời rõ ràng, tách bạch theo từng đề mục cụ thể:
-        • ### 1. [Vế 1: Tên chủ đề/địa điểm] (Gợi ý chi tiết + Link Maps + Link TikTok)
-        • ### 2. [Vế 2: Tên chủ đề/quán ăn] (Gợi ý chi tiết + Link Maps + Link TikTok)
-        • ### 3. [Vế 3: Tên chủ đề/cafe/homestay] (Gợi ý chi tiết + Link Maps + Link TikTok)
-     3. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm trong từng vế.
-     4. Thêm mục '💡 Gợi ý sắp xếp thời gian di chuyển hợp lý' ở cuối để kết nối các điểm đến thành một hành trình thuận tiện (Sáng -> Trưa -> Chiều -> Tối).
+   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: hỏi lễ hội kèm thời gian, địa điểm, nghi thức, kinh nghiệm thực tế; hoặc hỏi cảnh đẹp + quán ăn + cafe):
+     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi theo đúng cấu trúc tiêu đề rõ ràng, mạch lạc:
+        • ### 1. Thời Gian & Địa Điểm Tổ Chức
+        • ### 2. Các Nghi Thức & Hoạt Động Trải Nghiệm Đỉnh Cao
+        • ### 3. Kinh Nghiệm Đi Xem Thực Tế (Khung giờ vàng, vị trí ngắm, trang phục, ăn uống kết hợp)
+     2. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm xuất hiện trong bài viết.
 `;
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -320,37 +312,24 @@ export async function POST(req: NextRequest) {
         const lower = queryStr.toLowerCase();
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
-        // 0. Check In-Memory Instant Hot Cache (0ms response, 0 API calls, 0 DB queries)
+        // 0. Check In-Memory Instant Hot Cache
         const hotHit = HOT_QUERY_CACHE.get(cleanQ);
         if (hotHit && Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000) {
           if (hotHit.places && hotHit.places.length > 0) {
-            send({ 
-              type: 'metadata', 
-              places: hotHit.places, 
-              suggestions: hotHit.suggestions || buildSuggestions(lower),
-              data: hotHit.places 
-            });
+            send({ type: 'metadata', places: hotHit.places, suggestions: hotHit.suggestions, data: hotHit.places });
           }
-
           const words = hotHit.answer.split(' ');
           for (let i = 0; i < words.length; i += 3) {
             const chunk = words.slice(i, i + 3).join(' ') + ' ';
             send({ type: 'token', token: chunk, delta: chunk });
             await new Promise(r => setTimeout(r, 15));
           }
-
-          send({ 
-            type: 'done', 
-            full_text: hotHit.answer,
-            suggestions: hotHit.suggestions || buildSuggestions(lower),
-            places: hotHit.places 
-          });
-
+          send({ type: 'done', full_text: hotHit.answer, suggestions: hotHit.suggestions, places: hotHit.places });
           controller.close();
           return;
         }
 
-        // 1. Instant In-Memory RAM Entity Matching (0.001ms) from Master Data
+        // 1. Instant In-Memory RAM Entity Matching
         const subQueries = extractSubQueries(queryStr);
         const matchedPlacesMap = new Map<string, any>();
 
@@ -358,39 +337,36 @@ export async function POST(req: NextRequest) {
           const cleanSq = sq.toLowerCase().replace(/[?!.,]/g, '').trim();
           if (cleanSq.length < 2) continue;
 
-          const localMatches = (masterPois as any[]).filter(p => {
-            const pName = (p.name || '').toLowerCase();
-            const pCommune = (p.commune || '').toLowerCase();
-            const pCategory = (p.category || '').toLowerCase();
-            return pName.includes(cleanSq) || 
-                   cleanSq.includes(pName) ||
-                   (pCategory && cleanSq.includes(pCategory)) ||
-                   (pCommune && cleanSq.includes(pCommune));
-          }).slice(0, 2);
-
-          localMatches.forEach(p => {
-            if (!matchedPlacesMap.has(p.id)) matchedPlacesMap.set(p.id, p);
-          });
-        }
-
-        // Fallback: match by individual keywords or featured places
-        if (matchedPlacesMap.size === 0) {
-          if (lower.includes('cà phê') || lower.includes('cafe') || lower.includes('quán nước')) {
+          if (lower.includes('khinh khí cầu') || lower.includes('dù lượn') || lower.includes('thất sơn bay')) {
+            (masterPois as any[])
+              .filter(p => p.id === 'PL020' || p.id === 'PL009' || p.id === 'HG001' || p.id === 'PL001')
+              .forEach(p => matchedPlacesMap.set(p.id, p));
+          } else if (lower.includes('đua bò') || lower.includes('sêne đônta') || lower.includes('sene donta')) {
+            (masterPois as any[])
+              .filter(p => p.id === 'PL020' || p.id === 'HG005' || p.id === 'HG002')
+              .forEach(p => matchedPlacesMap.set(p.id, p));
+          } else if (lower.includes('cà phê') || lower.includes('cafe') || lower.includes('quán nước')) {
             (masterPois as any[])
               .filter(p => p.subcategory === 'cafe' || (p.name && (p.name.toLowerCase().includes('coffee') || p.name.toLowerCase().includes('cà phê'))))
               .slice(0, 4)
               .forEach(p => matchedPlacesMap.set(p.id, p));
-          }
-          const words = cleanQ.split(/\s+/).filter(w => w.length >= 3);
-          for (const w of words) {
-            const localMatches = (masterPois as any[]).filter(p => {
-              const pName = (p.name || '').toLowerCase();
-              const pCat = (p.category || '').toLowerCase();
-              return pName.includes(w) || pCat.includes(w);
-            }).slice(0, 2);
-            localMatches.forEach(p => {
-              if (!matchedPlacesMap.has(p.id)) matchedPlacesMap.set(p.id, p);
-            });
+          } else if (lower.includes('ăn') || lower.includes('đặc sản') || lower.includes('gà đốt')) {
+            (masterPois as any[])
+              .filter(p => p.category === 'gastronomy' || p.category === 'food' || (p.name && p.name.toLowerCase().includes('gà đốt')))
+              .slice(0, 4)
+              .forEach(p => matchedPlacesMap.set(p.id, p));
+          } else {
+            const words = cleanQ.split(' ').filter(w => w.length >= 2);
+            for (const w of words) {
+              const localMatches = (masterPois as any[]).filter(p => {
+                const pName = (p.name || '').toLowerCase();
+                const pCat = (p.category || '').toLowerCase();
+                return pName.includes(w) || pCat.includes(w);
+              }).slice(0, 2);
+              localMatches.forEach(p => {
+                if (!matchedPlacesMap.has(p.id)) matchedPlacesMap.set(p.id, p);
+              });
+            }
           }
         }
 
@@ -410,44 +386,35 @@ export async function POST(req: NextRequest) {
           imageUrl: p.image_url || (p as any).imageUrl,
         }));
 
-        // Send metadata & place cards immediately (< 50ms)
-        send({ 
-          type: 'metadata', 
-          places: formattedPlaces, 
-          suggestions: buildSuggestions(lower),
-          data: formattedPlaces 
-        });
+        send({ type: 'metadata', places: formattedPlaces, suggestions: buildSuggestions(lower), data: formattedPlaces });
 
         // 2. Load History & Out-of-scope check
         const history = await loadHistory(sessionId);
         if (checkIsOutOfScope(queryStr, history)) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
           send({ type: 'token', token: oosMsg, delta: oosMsg });
-          send({ 
-            type: 'done', 
-            full_text: oosMsg,
-            suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] 
-          });
+          send({ type: 'done', full_text: oosMsg, suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'] });
           logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true });
           controller.close();
           return;
         }
 
-        // Rich RAG Context containing full verified field stories, tips, and guidelines
         const ragContext = places.length > 0
           ? places.map(p => {
               const storySnippet = p.detailed_story ? String(p.detailed_story).slice(0, 600) : (p.description ? String(p.description).slice(0, 200) : '');
               const tipsSnippet = (p as any).field_tips ? `\n  - Mẹo thực địa: ${(p as any).field_tips}` : '';
-              const hoursSnippet = (p as any).opening_hours ? `\n  - Giờ mở cửa: ${(p as any).opening_hours}` : '';
-              const priceSnippet = (p as any).ticket_price ? `\n  - Mức giá: ${(p as any).ticket_price}` : '';
-              return `* Địa điểm: ${p.name} (Địa phận: ${p.commune || 'Tri Tôn'})\n  - Phân loại: ${p.category} (Đánh giá: ${p.rating || 4.8}/5)${hoursSnippet}${priceSnippet}${tipsSnippet}\n  - Thông tin thực địa chi tiết: ${storySnippet}`;
+              return `* Địa điểm: ${p.name} (Địa phận: ${p.commune || 'Tri Tôn'})\n  - Phân loại: ${p.category} (Đánh giá: ${p.rating || 4.8}/5)${tipsSnippet}\n  - Thông tin thực địa chi tiết: ${storySnippet}`;
             }).join('\n\n')
           : '';
 
-        // Detect if query is about transportation, directions, scenic pathways, or bus lines
         let transportContext = '';
         if (/đi|xe|đường|tuyến|phương trang|huệ nghĩa|xe khách|thuê xe|leo núi|vồ hội|cô tô|tà pạ|ô thum|ô tà sóc|tà lọt|tơ lụa|chữ y|nút giao|chỉ đường|di chuyển/i.test(queryStr)) {
           transportContext = `\n\n[CSDL HƯỚNG DẪN GIAO THÔNG, XE CỘ & CÁC CUNG ĐƯỜNG DANH THẮNG TRI TÔN ĐÃ XÁC MINH]:\n${JSON.stringify(transportData, null, 2)}`;
+        }
+
+        let festivalsContext = '';
+        if (/khinh khí cầu|dù lượn|lễ hội|hội|đua bò|chôl chnăm|sêne đônta|sene donta|ok om bok|cúng trăng|kathina|dâng y|tết khmer|hoa đăng/i.test(queryStr)) {
+          festivalsContext = `\n\n[CSDL 6 ĐẠI LỄ HỘI & SỰ KIỆN VĂN HÓA THỂ THAO TRI TÔN ĐÃ XÁC MINH 100%]:\n${JSON.stringify(festivalsData, null, 2)}`;
         }
 
         const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
@@ -457,7 +424,7 @@ export async function POST(req: NextRequest) {
           : '';
         const systemMsg = activeSystemPrompt + historySnippet;
         
-        const combinedContext = (ragContext || '') + (transportContext || '');
+        const combinedContext = [ragContext, transportContext, festivalsContext].filter(Boolean).join('\n\n');
         const userMsg = combinedContext
           ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương đã xác minh nếu phù hợp:\n${combinedContext}]`
           : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy tìm kiếm và cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang trên internet]`;
@@ -497,12 +464,14 @@ export async function POST(req: NextRequest) {
           ];
           void saveHistory(sessionId, updatedHistory);
 
-          HOT_QUERY_CACHE.set(cleanQ, {
-            answer: fullText,
-            places: formattedPlaces,
-            suggestions: buildSuggestions(lower),
-            timestamp: Date.now(),
-          });
+          if (fullText.trim().length >= 80 && !fullText.includes('Tôi đã tổng hợp các địa điểm danh thắng')) {
+            HOT_QUERY_CACHE.set(cleanQ, {
+              answer: fullText,
+              places: formattedPlaces,
+              suggestions: buildSuggestions(lower),
+              timestamp: Date.now(),
+            });
+          }
         }
 
         logChatEvent({

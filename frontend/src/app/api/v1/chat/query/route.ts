@@ -3,7 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 import { calculateItineraryRoute } from '@/lib/routeEngine';
 import { generateEvidenceLinks } from '@/lib/evidenceGenerator';
 import { calculateItineraryCost } from '@/lib/costCalculator';
+import { generateAIResponse as generateProviderAIResponse } from '@/lib/aiProvider';
 import transportData from '@/data/tri_ton_transportation.json';
+import festivalsData from '@/data/tri_ton_festivals.json';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -104,17 +106,27 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      • *Cà Phê Thủy Mộc*: 111 Nguyễn Thị Minh Khai, TT. Tri Tôn. Sân vườn yên tĩnh có hồ cá Koi.
    - **QUY TẮC NGHIÊM CẤM QUÁN CÀ PHÊ ẢO**: Tuyệt đối KHÔNG nhắc hoặc gợi ý các tên quán ảo không có thật ngoài đời như: "Cà Phê Thốt Nốt Tà Pạ View", "Cà Phê Suối Đá Ô Tà Sóc", "Drink & Hammock Chill". Chỉ sử dụng đúng danh sách các quán thực tế nêu trên.
 
-6. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
-   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: vừa hỏi cảnh đẹp/chùa, vừa hỏi quán ăn/gà đốt, vừa hỏi cafe tối hoặc homestay/lộ trình):
-     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi, tuyệt đối không bỏ sót bất kỳ vế nào.
-     2. Trình bày bài trả lời rõ ràng, tách bạch theo từng đề mục cụ thể:
-        • ### 1. [Vế 1: Tên chủ đề/địa điểm] (Gợi ý chi tiết + Link Maps + Link TikTok)
-        • ### 2. [Vế 2: Tên chủ đề/quán ăn] (Gợi ý chi tiết + Link Maps + Link TikTok)
-        • ### 3. [Vế 3: Tên chủ đề/cafe/homestay] (Gợi ý chi tiết + Link Maps + Link TikTok)
-     3. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm trong từng vế.
-     4. Thêm mục '💡 Gợi ý sắp xếp thời gian di chuyển hợp lý' ở cuối để kết nối các điểm đến thành một hành trình thuận tiện (Sáng -> Trưa -> Chiều -> Tối).
+6. **Cẩm nang 6 Đại Lễ Hội & Thể Thao Hàng Không Tri Tôn Chuẩn Xác Minh 100%**:
+   - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn ("Bay giữa mùa lễ hội" / "Bay trên Phụng Hoàng Sơn")**:
+     • **Thời gian**: Thường niên vào dịp **Lễ Quốc Khánh 2/9 (01/9 - 03/9)** và dịp **Lễ Sêne Đônta / Đua Bò (tháng 8 - 9 âm lịch)**; đợt dù lượn thể thao vào dịp **30/4 - 1/5**.
+     • **Địa điểm chính**: **Khu Thể thao - Du lịch Tà Pạ - Soài Chek / Sân Đua Bò Tri Tôn (Xã Núi Tô)**. Điểm cất cánh dù lượn: **Đỉnh Phụng Hoàng Sơn (Núi Cô Tô - khu vực Vồ Hội Mẹ / Sân Tiên >500m)**, hạ cánh xuống Sân Tà Pạ. Khuôn viên bay khinh khí cầu: Cánh đồng Tà Pạ và Hồ Soài Chek.
+     • **Nghi thức & Trải nghiệm đỉnh cao**: Thượng cờ Tổ quốc khổng lồ 200m² bằng khinh khí cầu cấp 7; Trình diễn 17 khinh khí cầu rực rỡ; Bay treo khinh khí cầu (Tethered Flight) cao 30-50m ngắm núi Cô Tô; Trình diễn dù lượn Paragliding & Paramotor xả khói ngũ sắc; Đêm Hoa Đăng thổi lửa khinh khí cầu (Night Glow) kết hợp âm nhạc Acoustic.
+     • **Kinh nghiệm đi xem thực tế**: Khung giờ vàng buổi sáng (06:00 - 08:30) xem cất cánh và khinh khí cầu bay êm gió nhất; chiều mát (15:30 - 17:30) xem dù lượn hạ cánh; tối (18:30 - 21:00) xem Đêm hoa đăng. Vị trí ngắm đẹp nhất: Khán đài Sân Đua Bò Tri Tôn và Bờ kè Hồ Soài Chek.
+   - **Lễ Hội Đua Bò Bảy Núi Truyền Thống**: Di sản phi vật thể quốc gia dịp Lễ Sêne Đônta (cuối tháng 8 - đầu tháng 9 âm lịch) tại Sân Đua Bò Tri Tôn (Xã Núi Tô) & Chùa Rô (Xã Châu Lăng). Kịch tính với Vòng Hô lấy đà và Vòng Thả bứt tốc rẽ sóng bùn nước.
+   - **Tết Cổ Truyền Chôl Chnăm Thmây**: 13 - 16/4 dương lịch tại 37 Chùa Khmer Tri Tôn (Nghi thức Đắp Núi Cát tích phúc, Lễ Tắm Phật Srong Preah, Dàn nhạc Ngũ Âm Pinpeat, múa Răm-vông).
+   - **Lễ Hội Sêne Đônta (Lễ Cúng Ông Bà)**: 29/8 - 01/9 âm lịch (Lễ Đặt Cơm Vắt Bay Ben, Cúng Ông Bà tại tư gia, Thả Thuyền Cà Tang).
+   - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió / Đèn Nước**: Đêm rằm tháng 10 âm lịch tại Chùa Xvayton, Hồ Tà Pạ & Hồ Soài So (Cúng trăng, đút Cốm dẹp Om Bok cầu may, thả đèn hoa đăng và đèn gió).
+   - **Đại Lễ Dâng Y Kathina**: Rằm tháng 9 - Rằm tháng 10 âm lịch (Rước Y Cà Sa quanh phum sóc, hòa tấu Nhạc Ngũ Âm).
 
-6. **Phạm vi hỗ trợ**:
+7. **XỬ LÝ CÂU HỎI ĐA VẾ / NHIỀU Ý CÙNG LÚC (MULTI-INTENT & COMPOUND QUESTIONS)**:
+   - Khi người dùng đặt câu hỏi có từ 2-3 vế trở lên (Ví dụ: hỏi lễ hội kèm thời gian, địa điểm, nghi thức, kinh nghiệm thực tế; hoặc hỏi cảnh đẹp + quán ăn + cafe):
+     1. BẮT BUỘC trả lời ĐẦY ĐỦ TỪNG VẾ câu hỏi theo đúng cấu trúc tiêu đề rõ ràng, mạch lạc:
+        • ### 1. Thời Gian & Địa Điểm Tổ Chức
+        • ### 2. Các Nghi Thức & Hoạt Động Trải Nghiệm Đỉnh Cao
+        • ### 3. Kinh Nghiệm Đi Xem Thực Tế (Khung giờ vàng, vị trí ngắm, trang phục, ăn uống kết hợp)
+     2. Đính kèm đầy đủ link Google Maps và TikTok cho từng địa điểm xuất hiện trong bài viết.
+
+8. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
    - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
@@ -387,7 +399,8 @@ async function generateAIResponse(
     console.log(`[NextAI] Provider winner: ${winner.provider}`);
     return winner.text;
   } catch {
-    return 'Tôi đã tổng hợp dữ liệu địa điểm Tri Tôn cho Bạn. Vui lòng tham khảo các gợi ý địa danh bên dưới!';
+    const fallbackRes = await generateProviderAIResponse(systemMsg, userMsg);
+    return fallbackRes.text;
   }
 }
 
@@ -548,8 +561,17 @@ export async function POST(req: NextRequest) {
     if (lowerQuery.includes('tối') || lowerQuery.includes('đêm') || lowerQuery.includes('cafe') || lowerQuery.includes('cà phê')) {
       targetPoiIds.push("CF001", "CF002", "CF008", "CF010", "FD017");
     }
-    if (lowerQuery.includes('ăn chay') || lowerQuery.includes('chay')) {
-      targetPoiIds.push("FD021", "FD024");
+    if (lowerQuery.includes('khinh khí cầu') || lowerQuery.includes('dù lượn') || lowerQuery.includes('thất sơn bay')) {
+      targetPoiIds.push("PL020", "PL009", "HG001", "PL001");
+    }
+    if (lowerQuery.includes('đua bò') || lowerQuery.includes('sêne đônta') || lowerQuery.includes('sene donta')) {
+      targetPoiIds.push("PL020", "HG005", "HG002");
+    }
+    if (lowerQuery.includes('chôl chnăm thmây') || lowerQuery.includes('chol chnam thmay') || lowerQuery.includes('tết khmer')) {
+      targetPoiIds.push("HG002", "HG001", "HG005");
+    }
+    if (lowerQuery.includes('ok om bok') || lowerQuery.includes('cúng trăng') || lowerQuery.includes('đèn gió') || lowerQuery.includes('kathina') || lowerQuery.includes('dâng y')) {
+      targetPoiIds.push("HG002", "PL001", "PL004");
     }
 
     if (targetPoiIds.length > 0) {
@@ -735,8 +757,14 @@ export async function POST(req: NextRequest) {
       transportSnippet = `\n\nCSDL HƯỚNG DẪN GIAO THÔNG, XE CỘ & CÁC CUNG ĐƯỜNG DANH THẮNG TRI TÔN ĐÃ XÁC MINH:\n${JSON.stringify(transportData, null, 2)}`;
     }
 
+    // Detect if query is about festivals, aerial sports, hot air balloons, or traditional events
+    let festivalsSnippet = '';
+    if (/khinh khí cầu|dù lượn|lễ hội|hội|đua bò|chôl chnăm|sêne đônta|sene donta|ok om bok|cúng trăng|kathina|dâng y|tết khmer|hoa đăng/i.test(queryStr)) {
+      festivalsSnippet = `\n\nCSDL 6 ĐẠI LỄ HỘI & SỰ KIỆN VĂN HÓA THỂ THAO TRI TÔN ĐÃ XÁC MINH 100%:\n${JSON.stringify(festivalsData, null, 2)}`;
+    }
+
     // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots + knowledge base
-    const combinedRagContext = [ragContext, kbSnippet, transportSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
+    const combinedRagContext = [ragContext, kbSnippet, transportSnippet, festivalsSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
     const aiTextResponse = await generateAIResponse(queryStr, combinedRagContext, history);
 
 

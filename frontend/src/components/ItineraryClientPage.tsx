@@ -9,6 +9,7 @@ import {
   LocateFixed, ShieldCheck, Crosshair
 } from 'lucide-react';
 import PageHeaderBanner from './PageHeaderBanner';
+import SmartTripBuilder from './SmartTripBuilder';
 import ItineraryExportModal from './ItineraryExportModal';
 import { getGoogleMapsUrl, getDeviceHardwareGps, TRI_TON_CENTER_COORDS } from '@/lib/maps';
 import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
@@ -280,9 +281,21 @@ export default function ItineraryClientPage() {
       ════════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'presets' && (
         <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
-          
+
+          {/* ── SMART TRIP BUILDER: 3-Button Filter ── */}
+          <SmartTripBuilder
+            onTourSelected={(slug, _cost, _name) => {
+              setSelectedSlug(slug);
+              // Smooth scroll to the preset list after short delay
+              setTimeout(() => {
+                const el = document.getElementById('preset-list-anchor');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }, 150);
+            }}
+          />
+
           {/* Duration Filter Pills (Horizontal Scroll on Mobile) */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none bg-[#FFFDF7] p-2 sm:p-3 rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
+          <div id="preset-list-anchor" className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none bg-[#FFFDF7] p-2 sm:p-3 rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
             <span className="text-[11px] sm:text-xs font-bold text-[#6B6355] px-1.5 sm:px-2 shrink-0">Thời lượng:</span>
             {[
               { key: 'all', label: 'Tất Cả' },

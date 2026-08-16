@@ -11,6 +11,7 @@ import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
 import { sanitizeDescription, getCategoryFallbackImage } from "@/lib/dataSanitizer";
 import heroImagesData from "@/data/hero_images.json";
 import FeedbackSection from "@/components/FeedbackSection";
+import SmartTripBuilderMini from "@/components/SmartTripBuilderMini";
 import {
   Utensils,
   MapPin,
@@ -581,6 +582,11 @@ export default function HomePage() {
         {/* ── 2. REALTIME TRI TON WEATHER TELEMETRY ──────────────────────── */}
         <section>
           <TriTonWeatherWidget />
+        </section>
+
+        {/* ── 2.5. SMART TRIP BUILDER MINI (Find My Tour) ───────────── */}
+        <section>
+          <SmartTripBuilderMini />
         </section>
 
         {/* ── 3. AUDIENCE PERSONA FILTER & TIME-SLOT TABS ───────────────── */}

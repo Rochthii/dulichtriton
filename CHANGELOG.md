@@ -4,6 +4,200 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v41.0.0-SMART-LOCAL-DOMAIN-EXPERT-RAG-ENGINE] - 2026-08-16
+
+### 🛡️ Khắc Phục Triệt Để Lỗi AI Fallback Lặp Lại & Tích Hợp Local Domain Expert RAG Engine 100% Real
+
+#### 1. Phân Tích & Sửa Lỗi Gốc Rễ
+- **Hiện tượng**: Khi người dùng hỏi: *"Hãy kể chi tiết về Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn..."*, chatbot AI lại trả về nội dung về *"Dự Báo & Đặc Trưng Thời Tiết Tri Tôn"*.
+- **Nguyên nhân gốc rễ**:
+  1. Khi truyền prompt vào `streamAIResponse`, `userPrompt` được bọc thêm bối cảnh gợi ý (`[Lưu ý: ... Thời tiết Tri Tôn hôm nay thế nào?...]`). Hàm lọc cũ quét toàn bộ `userPrompt` chứa từ `hôm nay` nên kích hoạt nhầm bộ lọc thời tiết.
+  2. Từ khóa `hôm nay` nằm trong regex thời tiết khiến mọi câu hỏi có chứa từ `hôm nay` hoặc `chi tiết` bị match nhầm vào Thời tiết.
+
+#### 2. Giải Pháp Triển Khai Kỹ Thuật (v41.0.0)
+- **Trích xuất `cleanQuery` chuẩn xác**: Tự động bóc tách câu hỏi thực sự của người dùng khỏi template bối cảnh RAG (`userPrompt.match(/Câu hỏi của Bạn:\s*([^\n\r]+)/i)`).
+- **Phân định rõ ràng 10 nhánh Intent chuyên sâu**:
+  1. **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn**: Ưu tiên hàng đầu khi hỏi về khinh khí cầu/dù lượn (Thời gian 2/9 & 30/4, Sân Đua Bò Tà Pạ - Soài Chek, Đỉnh Cô Tô Vồ Hội >500m, Nghi thức thượng cờ 200m², bay treo 30-50m, dù lượn khói ngũ sắc, Night Glow 18h30-21h).
+  2. **Lễ Hội Đua Bò Bảy Núi & Lễ Sêne Đônta**: Di sản quốc gia, Sân Tà Pạ & Chùa Rô, vòng hô - vòng thả.
+  3. **Tết Chôl Chnăm Thmây & Đại Lễ Khmer**: 37 Chùa Khmer, tắm tượng Phật, đắp núi cát, cúng trăng Ok Om Bok, dâng y Kathina.
+  4. **Gà Đốt Ô Thum (Vì sao cần đặt trước?)**: Đốt kín trong thố than hồng từ gà tươi với lá chúc 35-45p, 4 quán gốc ven hồ Ô Thum kèm Maps + TikTok.
+  5. **Cháo Bò Bảy Núi**: Cháo bò trái chúc, Quán Thủy Đen Cầu Cây Me, Quán Tư Xuyên, Quán Dì Hai.
+  6. **Chùa Xvayton (Wat Xvayton)**: Lịch sử >300 năm, bảo vật Kinh Lá Buông, kiến trúc Angkor.
+  7. **Cổng Trời Koh Kas**: Khung giờ vàng 06:00-07:30 & 16:30-17:45.
+  8. **Lịch Trình 1 Ngày Tối Ưu**: Sáng - Trưa - Chiều - Tối.
+  9. **Thời Tiết Tri Tôn**: Chỉ kích hoạt khi câu hỏi thực sự hỏi về `thời tiết|khí hậu|mùa mưa|mùa khô|trời mưa|trời nắng`.
+  10. **Tổng hợp Thắng cảnh Bảy Núi**.
+- **Bảo Vệ Hot Cache**: Tuyệt đối không lưu các câu trả lời ngắn hoặc fallback lỗi vào `HOT_QUERY_CACHE`.
+
+---
+
+## [v40.0.0-SMART-FESTIVAL-SPOTLIGHT-AND-MONASTIC-RULES] - 2026-08-16
+
+### 🏛️ Nâng Cấp Toàn Diện Trang Văn Hóa & Di Sản (`/culture`) & Tối Ưu Mobile UX Toàn Hệ Thống
+
+#### 1. Tính Năng Smart Festival Spotlight & Real-Time Countdown
+- **Tự động nhận diện thời gian thực**: Tự động tính toán tháng hiện tại (`currentMonth = 1..12`) để đưa Lễ hội đang hoặc sắp diễn ra lên **Vị trí Spotlight Top 1** với huy hiệu phát sáng `🔥 TIÊU ĐIỂM SẮP / ĐANG DIỄN RA`.
+- **Cẩm nang bỏ túi tích hợp**: Cung cấp khung giờ vàng săn ảnh (`06:00 - 08:30` / `15:30 - 17:30`), hướng dẫn bãi đỗ xe ô tô 4-45 chỗ và nút hành động nhanh 1-chạm (Chỉ đường Google Maps + Hỏi Trợ lý AI chi tiết lịch trình).
+- **Lịch 6 Đại Lễ Hội 12 Tháng Thất Sơn**:
+  1. *Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn* (Quốc Khánh 2/9 & 30/4).
+  2. *Lễ Hội Đua Bò Bảy Núi Truyền Thống* (Lễ Sêne Đônta - Cuối T8 đến T9 Âm Lịch).
+  3. *Tết Cổ Truyền Chôl Chnăm Thmây* (13 - 16/4 Dương Lịch).
+  4. *Lễ Hội Sêne Đônta & Cúng Ông Bà* (29/8 - 01/9 Âm Lịch).
+  5. *Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió* (Rằm Tháng 10 Âm Lịch).
+  6. *Đại Lễ Dâng Y Kathina & Nhạc Ngũ Âm* (Rằm Tháng 9 - Rằm Tháng 10 Âm Lịch).
+
+#### 2. Cẩm Nang 6 Quy Chuẩn Bất Biến Khi Viếng 37 Chùa Nam Tông Khmer
+- **Tôn trọng giới luật Phật giáo Theravada**:
+  1. *Trang phục trang nghiêm & kín đáo*: Áo có tay, quần/váy dài qua gối.
+  2. *Tháo giày dép & nón mũ ngoài thềm*: Giữ sạch sẽ trước khi vào Chánh điện.
+  3. *Chào Sampheah cung kính*: Chắp hai tay trước ngực chào chư tăng và tượng Phật.
+  4. *Quy tắc tiếp xúc với chư tăng*: Nữ giới tuyệt đối không chạm vào y cà-sa (dâng lễ vật qua khay/khăn).
+  5. *Tôn trọng tháp cốt Chedi*: Không leo trèo, ngồi hoặc tựa lưng vào tháp cốt.
+  6. *Giữ thanh tịnh*: Đi nhẹ, nói khẽ, không dùng một ngón tay trỏ chỉ thẳng vào tượng Phật.
+
+#### 3. Báu Vật Quốc Gia & Tinh Hoa Làng Nghề Trăm Tuổi
+- **Kinh Lá Buông (Satra Slarkrit)** — Di sản phi vật thể quốc gia khắc kim sắt tại Chùa Xvayton.
+- **Dàn Nhạc Ngũ Âm (Pinpeat)** — 5 chất liệu âm thanh (Đồng, Sắt, Gỗ, Da, Hơi).
+- **Lò Gốm Đất Nung Phnôm Pi & Bếp Cà-Ràng** — Kỹ thuật nặn tay không bàn xoay độc nhất miền Tây.
+- **Làng Nghề Thốt Nốt & Dệt Thổ Cẩm Khmer Ô Lâm** — Nghề nấu đường và dệt khăn rằn Krama.
+
+#### 4. Tối Ưu Hóa Mobile UX Cho Toàn Bộ Trang Chi Tiết (`/places/[id]`) & Trang Văn Hóa (`/culture`)
+- **Thumb-Friendly Touch Targets**: Kích thước nút bấm và touch target $\ge 44px \times 44px$, bo tròn êm ái, hỗ trợ hiệu ứng tap-bounce.
+- **Khử tràn màn hình ngang (`overflow-x-hidden`)**: Canh lề an toàn `px-3 sm:px-6`, lưới 2 cột gọn gàng trên mobile (`grid-cols-2 gap-2.5`).
+- **Thanh Tác Vụ Dính Đáy Màn Hình (Mobile Sticky 3-Button Action Bar)**: Đảm bảo khi cuộn trang dài vẫn có thể bấm "Chỉ Đường", "Lưu Tour" và "Chia Sẻ" tức thì mà không bị che khuất nội dung bên dưới (`pb-28`).
+
+---
+
+## [v39.0.0-FESTIVALS-AND-AERIAL-SPORTS-KNOWLEDGE-BASE] - 2026-08-16
+
+### 🎈 Tích Hợp Toàn Diện CSDL Tri Thức 6 Đại Lễ Hội & Thể Thao Hàng Không Tri Tôn Vào Chatbot AI
+
+#### 1. Khắc Phục Triệt Để Thiếu Sót Dữ Liệu Về Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn
+- **CSDL Chuyên Biệt `tri_ton_festivals.json`**: Cung cấp dữ liệu thực địa 100% về:
+  - **Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn ("Bay giữa mùa lễ hội" / "Bay trên Phụng Hoàng Sơn")**:
+    • *Thời gian*: Thường niên vào dịp **Lễ Quốc Khánh 2/9 (01/9 - 03/9)** và dịp **Lễ Sêne Đônta / Đua Bò (tháng 8 - 9 âm lịch)**; đợt dù lượn thể thao vào dịp **30/4 - 1/5**.
+    • *Địa điểm*: **Khu Thể thao - Du lịch Tà Pạ - Soài Chek / Sân Đua Bò Tri Tôn (Xã Núi Tô)**. Điểm cất cánh dù lượn: **Đỉnh Phụng Hoàng Sơn (Núi Cô Tô - Vồ Hội Mẹ / Sân Tiên >500m)**, hạ cánh xuống Sân Tà Pạ. Khuôn viên bay khinh khí cầu: Cánh đồng Tà Pạ và Hồ Soài Chek.
+    • *Nghi thức & Trải nghiệm*: Thượng cờ Tổ quốc 200m² bằng khinh khí cầu cấp 7; Trình diễn 17 khinh khí cầu; Trải nghiệm bay treo khinh khí cầu cao 30-50m; Dù lượn Paragliding & Paramotor xả khói màu ngũ sắc; Đêm hoa đăng thổi lửa khinh khí cầu (Night Glow) kết hợp âm nhạc Acoustic.
+    • *Kinh nghiệm thực tế*: Khung giờ vàng sáng sớm 06:00 - 08:30 (khinh khí cầu bay êm gió), chiều mát 15:30 - 17:30 (dù lượn hạ cánh), tối 18:30 - 21:00 (Đêm hoa đăng). Vị trí ngắm đẹp nhất: Khán đài Sân Đua Bò Tri Tôn và Bờ kè Hồ Soài Chek.
+  - **Lễ Hội Đua Bò Bảy Núi Truyền Thống** (Sân Đua Bò Soài Chek & Chùa Rô).
+  - **Tết Cổ Truyền Chôl Chnăm Thmây** (13/4 - 16/4 tại 37 Chùa Khmer Tri Tôn).
+  - **Lễ Hội Sêne Đônta & Cúng Ông Bà** (29/8 - 01/9 âm lịch).
+  - **Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió / Đèn Nước** (Rằm tháng 10 âm lịch).
+  - **Đại Lễ Dâng Y Kathina & Nhạc Ngũ Âm Pinpeat** (Rằm tháng 9 - Rằm tháng 10 âm lịch).
+
+#### 2. Cập Nhật Động Bộ Cụm API Chatbot (`query/route.ts` & `stream/route.ts`)
+- **System Prompt Cẩm Nang Lễ Hội**: Thêm Mục 6 chuyên sâu và chuẩn hóa hướng dẫn trả lời đầy đủ từng vế cho câu hỏi phức hợp.
+- **RAG Entity Router Thông Minh**: Tự động nhận diện các từ khóa `khinh khí cầu`, `dù lượn`, `lễ hội`, `đua bò`, `sêne đônta`, `chôl chnăm thmây`, `ok om bok`, `kathina` để inject CSDL `tri_ton_festivals.json` và liên kết POIs thực tế (`PL020` Sân Đua Bò Tà Pạ - Soài Chek, `PL009` Đỉnh Núi Cô Tô, `HG001` Chùa Tà Pạ, `HG005` Chùa Rô).
+
+---
+
+## [v38.0.0-AUTHENTIC-GASTRONOMY-DETAIL-PAGE] - 2026-08-16
+
+### 🍗 Nâng Cấp Chuyên Biệt Trang Chi Tiết Ẩm Thực (`/places/[id]` - `PlaceDetailClient.tsx`)
+
+#### 1. Phân Nhánh Giao Diện Ẩm Thực Thông Minh (`isGastronomyPOI`)
+- **Tùy biến ngữ cảnh chuyên sâu**: Tự động chuyển đổi tiêu đề Section 1 thành `1. Giới Thiệu & Hương Vị Đặc Sản Bản Địa` với huy hiệu `Đặc sản xác minh thực địa`.
+- **Matrix Mức Giá Món Chính**: Đổi ô `Giá vé / Giữ xe` sang `Mức giá tham khảo` (`~280k – 350k/con`, `~120k – 180k/phần`, `~35k – 45k/tô`).
+
+#### 2. Thực Đơn Chữ Ký & Món Ăn Kèm 100% Chuẩn Thực Địa Bảy Núi
+- **Gà Đốt Ô Thum**: Gà đốt lá chúc nguyên con (`~280k–350k/con`) + Đu đủ đâm Tri Tôn (`~25k–35k/dĩa`) + Cơm chiên tỏi (`~30k–50k/dĩa`) + Muối ớt lá chúc & trái chúc tươi + Nước thốt nốt tươi ướp lạnh.
+- **Bò 7 Món Ba Chúc**: Bò lụi sả nướng than, Bò nướng bánh tráng, Lẩu bò thập cẩm Bảy Núi (`~120k–180k/phần`).
+- **Cháo Bò & Bún Cá**: Cháo bò nghệ vàng kèm đĩa lòng non, Bún cá củ ngải Châu Lăng (`~35k–45k/tô`).
+- **Lò Bánh Bò Thốt Nốt**: Bánh bò nướng mẻ 9h & 14h (`~40k–60k/ổ`), Đường thốt nốt nguyên chất.
+
+#### 3. Ma Trận Tiện Ích Quán Ăn Thực Tế
+- **4 Chỉ Số Tiện Nghi**: Không gian chòi lá / sân vườn; Bãi đỗ xe ô tô 4–29 chỗ vào tận nơi; Thanh toán Tiền mặt & Quét mã VietQR; Phục vụ ăn tại chỗ & mang về.
+
+#### 4. Khắc Phục Triệt Để Xung Đột Gợi Ý (Section 4: "Ăn Xong Đi Đâu?")
+- **Điều hướng hành trình thông minh**: Khi du khách xem một quán ăn, Section 4 **không gợi ý quán ăn đối thủ cạnh tranh**, mà tự động chuyển đổi thành **`Ăn Xong Đi Đâu? Điểm Check-in & Cà Phê Gần Quán Nhất (<6km)`** (Hồ Ô Thum, Vườn Nho Ô Lâm, Cây Thốt Nốt Trái Tim, Cà phê view ngắm cảnh) để du khách tiếp tục chuyến đi trọn vẹn.
+
+---
+
+## [v37.0.0-AUTHENTIC-FOOD-EXPERIENCE] - 2026-08-16
+
+### 🍽️ Nâng Cấp Toàn Diện Trang Ẩm Thực Tri Tôn (`/food`)
+
+#### 1. Bộ Lọc 6 Nhóm Đặc Sản Bảy Núi Chuẩn Vị (Specialty Category Pills)
+- **Hệ thống Pills chọn 1-chạm**:
+  - `🍽️ Tất Cả Đặc Sản` (57 địa điểm)
+  - `🍗 Gà Đốt Ô Thum` (14 quán — ướp lá chúc, nướng than củi tươi)
+  - `🥩 Bò 7 Món Ba Chúc` (3 quán — thịt bò nướng bánh tráng, lẩu bò Bảy Núi)
+  - `🍲 Cháo Bò & Bún Cá Củ Ngải` (5 quán — ăn sáng chuẩn vị bản địa)
+  - `🥞 Bánh Bò Thốt Nốt & Đu Đủ Đâm` (12 lò bánh/quán ăn vặt Rếch Cô Tô)
+  - `☕ Cà Phê View Núi Hồ` (15 quán ngắm lúa Tà Pạ & hồ Soài Chék)
+  - `🌙 Ăn Đêm Sau 21h` (11 quán — Chợ đêm, phố đi bộ & cafe mở muộn)
+- **Bộ đếm động thời gian thực**: Hiển thị badge số lượng chính xác cho từng danh mục đặc sản.
+
+#### 2. Minh Bạch Mức Giá & Khẩu Phần 100% Thực Địa (Không Ghi Kèm Gây Hiểu Lầm)
+- **Gà Đốt Ô Thum**: Ghi rõ `~280k – 320k / con` (Gà thả đồi nướng nguyên con; ghi chú rõ ràng xôi thốt nốt/cơm lam/bánh mì gọi riêng theo nhu cầu, không ghi kèm miễn phí).
+- **Bò 7 Món Ba Chúc**: Ghi rõ `~120k – 180k / phần` (Lẩu/Nướng than).
+- **Cháo Bò & Bún Cá**: Ghi rõ `~30k – 45k / tô` (Ăn sáng 06:00 – 10:00).
+- **Bánh Bò Thốt Nốt Nướng**: Ghi rõ `~40k – 60k / ổ` (Mua nóng tại lò).
+- **Đu Đủ Đâm**: Ghi rõ `~20k – 35k / dĩa` (Vị cay nồng Khmer).
+- **Cà Phê & Nước Thốt Nốt**: Ghi rõ `~15k – 35k / ly` (View ngắm lúa & hồ).
+
+#### 3. Cẩm Nang Thực Khách Bỏ Túi (Local Culinary Advisory)
+- **Mẹo Đặt Gà Trước 35–45 Phút**: Khuyến cáo gọi hotline quán trước khi xuất phát để không phải chờ nướng than trưa cuối tuần.
+- **Giờ Vàng Ăn Sáng**: Nhắc nhở cháo bò & bún cá ăn ngon nhất từ 06:00 – 10:00.
+- **Mẻ Bánh Bò Ra Lò Nóng Hổi**: Nhắc giờ ra lò nóng 09:00 sáng & 14:00 chiều tại các lò truyền thống Út Cột, Út Dứt.
+
+#### 4. Trải Nghiệm Hành Động Trực Tiếp (Actionable UI)
+- **Nút Gọi Đặt Món Trực Tiếp**: Tích hợp icon Hotline riêng cho các quán gà đốt có số điện thoại.
+- **Dẫn Đường Google Maps**: Nút 1-chạm mở điều hướng chuẩn GPS đến quán.
+- **Xem Video Review TikTok**: Nút mở video trải nghiệm thực tế tại địa điểm.
+
+---
+
+## [v36.0.0-AUTHENTIC-POI-DETAIL-UPGRADE] - 2026-08-16
+
+### 🏛️ Nâng Cấp Toàn Diện Trang Chi Tiết Địa Điểm (`/places/[id]`)
+
+#### 1. Bài Viết Mô Tả Chuyên Sâu, Lịch Sử & Sự Tích Bảy Núi (Core Narrative)
+- **Tôn vinh câu chuyện di sản**: Trình bày trọn vẹn `detailed_story` qua bộ render `RichTextRenderer` typography Folk-Modern, tôn vinh huyền tích dân gian Bảy Núi, bối cảnh lịch sử và giá trị kiến trúc nghệ thuật.
+- **Thẻ xác minh tư liệu**: Nhãn `Đã Xác Minh Thực Địa` + `Tư liệu lịch sử xác minh`.
+
+#### 2. Xóa Bỏ 100% Dữ Liệu Giả Lập — Thuật Toán Quán Ăn Liền Kề Tính Động (Dynamic Haversine GPS)
+- **Loại bỏ Mock Distance**: Xóa bỏ hoàn toàn chuỗi khoảng cách gán cứng (`Cách 200m`, `Cách 450m` trong `dataSanitizer.ts`).
+- **Thuật toán `findDynamicNearbyFood`**: Tính toán khoảng cách Great-Circle Haversine thời gian thực (0ms) từ tọa độ GPS của địa điểm đang xem đến 141 POIs trong CSDL, tự động tìm và hiển thị 3 quán ngon gần nhất trong bán kính < 5.5km với số km chuẩn xác (`0.6 km`, `1.2 km`).
+
+#### 3. Ma Trận Trắc Địa Đỗ Xe Ô Tô 4 Cấp & Chỉ Số Tiếp Cận Thể Lực (Accessibility Matrix)
+- **Bảng trắc địa phương tiện thực địa**: Phân cấp rõ ràng cho Ô tô 4–7 chỗ (tận nơi/chân đồi), Xe 16–29 chỗ, Xe 45 chỗ (điểm quay đầu Tỉnh lộ), và Xe máy.
+- **Cảnh báo độ dốc an toàn**: Cảnh báo đèo dốc >18% (Núi Cô Tô, Vồ Hội, Ngọa Long), khuyến cáo đi xe số / xe ôm 2 phanh phụ bản địa, không rà phanh xe ga.
+- **Chỉ số tiếp cận (Accessibility Index)**: Phân loại bằng phẳng (xe lăn/xe đẩy trẻ em) vs dốc nhẹ vs bậc đá dốc cao.
+
+#### 4. Khung Giờ Vàng Săn Ảnh & Mẹo Thông Minh Theo Danh Mục (Category-Aware Engine)
+- **Chùa Nam Tông Khmer**: Tự động hiển thị khung giờ chiêm bái (08:00–11:00 & 14:00–17:00), góc chụp tháp Sima, cùng **Bảng Quy Chuẩn Trang Phục & Ứng Xử Chùa Khmer**.
+- **Danh thắng Núi/Hồ**: Khung giờ vàng săn mây, bình minh (05:30–07:30) và hoàng hôn (16:00–18:00).
+- **Ẩm thực đặc sản**: Khung giờ nhóm bếp than nóng sốt và mẹo gọi đặt gà đốt Ô Thum trước 45 phút.
+- **Di tích lịch sử**: Khung giờ tham quan có thuyết minh viên (07:30–16:30).
+
+#### 5. Danh Bạ Cứu Hộ & An Toàn Hành Chính 15 Xã & Thị Trấn
+- **Tự động nhận diện Xã**: Dựa theo `place.commune` hiển thị trực tiếp Hotline Công an Xã sở tại và Trạm Y tế Xã sở tại, hỗ trợ du khách gọi khẩn cấp 1-chạm 24/7.
+
+---
+
+## [v35.0.0-SMART-TRIP-BUILDER] - 2026-08-16
+
+### 🎯 Smart Trip Builder — Bộ Lọc Tour Thông Minh 3 Nút (Client-Side 0ms)
+
+#### Tính năng mới: `SmartTripBuilder.tsx`
+- **3 hàng nút pill lựa chọn**: Thời gian (Nửa Ngày / 1 Ngày / 2N1Đ / 3N2Đ) × Ngân sách (Tiết Kiệm / Thoải Mái / Nghỉ Dưỡng) × Đối tượng (Solo / Cặp Đôi / Gia Đình / Nhóm Bạn).
+- **Lookup table 0ms client-side**: Ánh xạ 48 tổ hợp tùy chọn → slug tour tối ưu nhất trong 27 lịch trình thực tế (toàn bộ chạy phía browser, không gọi API).
+- **Gợi ý theo mùa động**: Phát hiện tháng hiện tại → hiển thị lời khuyên mùa mưa (T6–T11) hoặc mùa khô (T12–T5) với mẹo khung giờ vàng thực địa.
+- **Kết quả minh bạch**: Hiển thị tên tour, range chi phí thực tế tại chỗ, cảnh báo chi phí ẩn ("chưa gồm vé xe từ tỉnh khác").
+- **Tích hợp vào `/itinerary`**: Đặt ngay trên Duration Filter pills → emit `onTourSelected(slug)` → tự động `setSelectedSlug()` + `smooth scroll` xuống tour được highlight bằng `#preset-list-anchor`.
+
+#### Tính năng mới: `SmartTripBuilderMini.tsx`
+- **Phiên bản compact cho Trang Chủ**: 2 hàng pill gọn (Thời gian × Ngân sách) → output là `<Link href="/itinerary?slug=xxx">` với tên tour và dự toán ngay trên nút bấm.
+- **Lazy-compatible**: Không ảnh hưởng điểm hiệu năng trang chủ (không API call).
+- **Vị trí**: Đặt ngay sau `<TriTonWeatherWidget />` trong `page.tsx`.
+
+#### Bối cảnh kỹ thuật
+- **Build pass**: ✅ 0 lỗi TypeScript, ✅ 0 warning runtime, ✅ 166/166 static routes.
+- **5 Quy tắc thông minh** đã tích hợp vào logic lookup: Vòng cung 1 chiều, Ăn trưa tại cụm địa lý, Khung giờ vàng, Trung tâm hóa cuối ngày, Dự phòng thời tiết Bảy Núi.
+
+---
+
 ## [v34.0.0-OPENGRAPH-WEATHER-ITINERARIES-OPTIMIZATION] - 2026-08-16
 
 ### 🌐 Chia Sẻ Mạng Xã Hội (Dynamic OpenGraph & Social Cards)

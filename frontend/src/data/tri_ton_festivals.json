@@ -1,0 +1,155 @@
+{
+  "festivals": [
+    {
+      "id": "fest_khinh_khi_cau_du_luon",
+      "name": "Lễ Hội Khinh Khí Cầu & Dù Lượn Thất Sơn (Tri Tôn Bay)",
+      "theme": "Bay giữa mùa lễ hội / Bay trên Phụng Hoàng Sơn",
+      "time": "Thường niên vào dịp Lễ Quốc Khánh 2/9 (từ 01/9 đến 03/9) và dịp Lễ Hội Đua Bò Bảy Núi (cuối tháng 8 - tháng 9 âm lịch); đợt dù lượn thể thao vào dịp 30/4 - 1/5",
+      "location": {
+        "main_arena": "Khu Thể thao - Du lịch Tà Pạ - Soài Chek / Sân Đua Bò Tri Tôn (Xã Núi Tô, Tri Tôn)",
+        "paragliding_takeoff": "Đỉnh Phụng Hoàng Sơn (Núi Cô Tô - khu vực Vồ Hội Mẹ / Sân Tiên, độ cao >500m)",
+        "paragliding_landing": "Sân Thể thao Tà Pạ - Soài Chek (chân đồi Tà Pạ)",
+        "hot_air_balloon_field": "Cánh đồng lúa Tà Pạ và mặt hồ Soài Chek",
+        "commune": "Xã Núi Tô"
+      },
+      "historical_significance": "Sự kiện khinh khí cầu quy mô lớn đầu tiên của miền Tây Nam Bộ, được tổ chức lần đầu năm 2022 chào mừng Quốc khánh 2/9 và kỷ niệm 190 năm thành lập tỉnh An Giang. Sự kiện quy tụ 17 quả khinh khí cầu khổng lồ (gồm 3 khinh khí cầu cấp 7 và 14 khinh khí cầu cấp 1) cùng nghi thức thượng cờ Tổ quốc 200m² bay rực rỡ giữa bầu trời Bảy Núi.",
+      "key_activities_and_rituals": [
+        "Nghi thức Thượng cờ Tổ quốc khổng lồ (200m²) bay bằng khinh khí cầu cấp 7 trên nền trời Thất Sơn",
+        "Trình diễn bay tự do và bay treo khinh khí cầu nhiều màu sắc ngắm toàn cảnh cánh đồng Tà Pạ",
+        "Trải nghiệm bay treo khinh khí cầu (Tethered Flight): Du khách vào giỏ bay lên độ cao 30m - 50m ngắm núi Cô Tô và biển lúa",
+        "Biểu diễn Dù lượn không động cơ (Paragliding) & Dù lượn có động cơ (Paramotor) từ đỉnh Núi Cô Tô xả khói ngũ sắc xuống thung lũng",
+        "Giải dù lượn 'Hạ cánh chính xác' tranh cúp Bảy Núi với sự tham gia của hàng chục phi công dù lượn chuyên nghiệp toàn quốc",
+        "Đêm Hoa Đăng Khinh Khí Cầu (Night Glow): Màn thổi lửa rực sáng khinh khí cầu trong đêm kết hợp âm nhạc Acoustic và lễ hội ánh sáng",
+        "Biểu diễn Diều nghệ thuật khí động học khổng lồ và Chợ ẩm thực đặc sản Khmer Tri Tôn"
+      ],
+      "practical_visitor_guide": {
+        "golden_hours": [
+          "Sáng sớm (06:00 – 08:30): Gió êm nhất, thời tiết mát mẻ, ánh nắng vàng rọi qua vách núi Cô Tô, khinh khí cầu bay đẹp nhất và dù lượn cất cánh",
+          "Chiều mát (15:30 – 17:30): Gió chiều thuận lợi cho các phi công dù lượn hạ cánh liên tục xuống sân và khinh khí cầu bay hoàng hôn",
+          "Buổi tối (18:30 – 21:00): Thưởng thức Đêm Hoa Đăng thổi lửa khinh khí cầu và ẩm thực đường phố"
+        ],
+        "best_viewpoints": [
+          "Khán đài Sân Đua Bò Tri Tôn (KDL Tà Pạ - Soài Chek): Tầm nhìn bao quát toàn bộ đường băng dù lượn và bãi bay khinh khí cầu",
+          "Bờ kè Hồ Soài Chek: Góc chụp phản chiếu bóng khinh khí cầu lung linh trên mặt hồ",
+          "Đỉnh Đồi Tà Pạ / Chùa Tà Pạ: View panorama nhìn từ trên cao xuống toàn cảnh thung lũng khinh khí cầu rực rỡ"
+        ],
+        "transport_and_parking": "Đường nhựa vào tận Khu Thể thao Tà Pạ - Soài Chek. Có bãi đỗ ô tô 4-45 chỗ và bãi giữ xe máy rộng rãi ngay cạnh sân vận động.",
+        "gear_and_clothing": "Nên mặc trang phục màu sắc nổi bật (trắng, vàng, cam), nón rộng vành, kính râm, kem chống nắng. Máy ảnh góc rộng hoặc ống kính tele để bắt trọn khoảnh khắc dù lượn hạ cánh.",
+        "dining_combo": "Sau khi xem hội buổi trưa, di chuyển 4km sang Hồ Ô Thum (Xã Ô Lâm) ăn Gà đốt lá chúc hoặc ghé Chợ Tri Tôn ăn Cháo bò trái chúc, Bún cá củ ngải Châu Lăng."
+      },
+      "maps_query": "Sân Đua Bò Tri Tôn Xã Núi Tô Tri Tôn An Giang",
+      "tiktok_tag": "khinhkhicautriton"
+    },
+    {
+      "id": "fest_dua_bo_bay_nui",
+      "name": "Lễ Hội Đua Bò Bảy Núi Truyền Thống",
+      "theme": "Hội Đua Bò Nước Độc Nhất Vô Nhị Vùng Bảy Núi",
+      "time": "Dịp Lễ Sêne Đônta của đồng bào Khmer (khoảng cuối tháng 8 đến đầu tháng 9 âm lịch hàng năm)",
+      "location": {
+        "main_arena": "Sân Đua Bò Tri Tôn (Khu Thể thao Tà Pạ - Soài Chek, Xã Núi Tô) & Sân Đua Bò Chùa Rô (Xã Châu Lăng)",
+        "commune": "Xã Núi Tô & Xã Châu Lăng"
+      },
+      "historical_significance": "Di sản văn hóa phi vật thể quốc gia, khởi nguồn từ tập tục bừa cấy ruộng chùa vùng Bảy Núi. Đôi bò chiến cùng người điều khiển (tài xế) thi đấu vượt ruộng bùn nước với tốc độ chóng mặt.",
+      "key_activities_and_rituals": [
+        "Vòng hô (vòng đi bộ lấy đà 1-2 vòng quanh sân ruộng nước)",
+        "Vòng thả (vòng bứt tốc quyết định: tài xế đứng trên bừa giật roi xua bò lao như tên bắn tạo nên những màn rẽ sóng bùn mãn nhãn)",
+        "Lễ trao cờ thắng cuộc và tôn vinh người nuôi dưỡng đôi bò khỏe mạnh"
+      ],
+      "practical_visitor_guide": {
+        "golden_hours": "07:00 – 12:00 sáng. Nên đến từ 06:30 để có vị trí đứng sát mép bờ ruộng chụp ảnh bứt tốc đẹp nhất.",
+        "safety_notes": "Đứng trên bờ đê có rào chắn, không đứng thẳng hướng lao của đôi bò ở khúc cua để đảm bảo an toàn.",
+        "gear_and_clothing": "Ủng hoặc dép có quai chắc chắn (dễ lội bùn), áo mưa mỏng bọc máy ảnh chống bùn văng, nón che nắng."
+      },
+      "maps_query": "Sân Đua Bò Chùa Rô Xã Châu Lăng Tri Tôn An Giang",
+      "tiktok_tag": "duabobaynui"
+    },
+    {
+      "id": "fest_chol_chnam_thmey",
+      "name": "Tết Cổ Truyền Chôl Chnăm Thmây",
+      "theme": "Mừng Năm Mới & Lễ Đắp Núi Cát Phúc Đức",
+      "time": "Từ ngày 13 đến 16 tháng 4 Dương lịch hàng năm (kéo dài 3-4 ngày)",
+      "location": {
+        "main_arena": "37 Ngôi Chùa Phật Giáo Nam Tông Khmer Tri Tôn (Chùa Xvayton, Chùa Tà Pạ, Chùa Soài So, Chùa Pnom Pi,...)",
+        "commune": "Toàn huyện Tri Tôn (Thị trấn Tri Tôn, Núi Tô, Châu Lăng, Ô Lâm, Cô Tô, Lương Phi, An Tức)"
+      },
+      "historical_significance": "Tết đón năm mới lớn nhất của người Khmer Nam Bộ, đánh dấu bước chuyển mùa khô sang mùa mưa, cầu mong mưa thuận gió hòa và mùa màng bội thu.",
+      "key_activities_and_rituals": [
+        "Ngày thứ 1 (Moha Sangkranta): Rước Đại lịch Maha Songkran quanh chánh điện chùa",
+        "Ngày thứ 2 (Wonbof): Làm lễ dâng cơm cho sư sãi và thực hiện nghi thức 'Đắp Núi Cát' (Pook Phnom Khsach) tích phúc tiêu trừ nghiệp chướng",
+        "Ngày thứ 3 (Lơng Sâk): Làm Lễ Tắm Phật (Srong Preah) và Tắm Sư bằng nước thơm hoa tươi",
+        "Hội làng: Trình diễn dàn nhạc Ngũ Âm (Pinpeat), múa Răm-vông (Lâm-thôn) và các trò chơi dân gian (kéo co, đập niêu)"
+      ],
+      "practical_visitor_guide": {
+        "etiquette": "Trang phục lịch sự kín đáo qua vai và đầu gối khi vào chùa. Cởi nón và giày dép bên ngoài chánh điện.",
+        "cultural_experience": "Du khách được tham gia nghi thức đắp núi cát và cùng người dân dâng bánh tét, bánh ít thốt nốt lên Tam Bảo."
+      },
+      "maps_query": "Chùa Xvayton Thị trấn Tri Tôn An Giang",
+      "tiktok_tag": "cholchnamthmey"
+    },
+    {
+      "id": "fest_sene_donta",
+      "name": "Lễ Hội Sêne Đônta (Lễ Cúng Ông Bà)",
+      "theme": "Báo Hiếu Tổ Tiên & Thắt Chặt Tình Phum Sóc",
+      "time": "Cuối tháng 8 đến đầu tháng 9 Âm Lịch (từ 29/8 đến 01/9 Âm Lịch)",
+      "location": {
+        "main_arena": "Các phum sóc và 37 ngôi Chùa Khmer Tri Tôn",
+        "commune": "Toàn huyện Tri Tôn"
+      },
+      "historical_significance": "Một trong hai lễ hội lớn nhất của đồng bào Khmer mang ý nghĩa tri ân công đức tổ tiên, ông bà cha mẹ và cầu siêu cho các linh hồn đã khuất.",
+      "key_activities_and_rituals": [
+        "Lễ Đặt Cơm Vắt (Bay Ben): Dâng cơm vắt hình chóp lên chùa lúc rạng sáng",
+        "Lễ Cúng Ông Bà tại tư gia với mâm cỗ truyền thống (bánh tét, cốm dẹp, canh kiểm, chè thốt nốt)",
+        "Nghi thức Thả Thuyền Cà Tang (thuyền bẹ chuối chở lễ vật thả trôi sông/hồ tống tiễn linh hồn tổ tiên)"
+      ],
+      "practical_visitor_guide": {
+        "highlights": "Dịp này thường gắn liền với Hội Đua Bò Bảy Núi, tạo nên không khí vừa linh thiêng vừa tưng bừng khắp các xã Tri Tôn."
+      },
+      "maps_query": "Chùa Tà Pạ Xã Núi Tô Tri Tôn An Giang",
+      "tiktok_tag": "senedonta"
+    },
+    {
+      "id": "fest_ok_om_bok",
+      "name": "Lễ Hội Cúng Trăng Ok Om Bok & Thả Đèn Gió / Đèn Nước",
+      "theme": "Tạ Ơn Thần Mặt Trăng & Đút Cốm Dẹp Cầu May",
+      "time": "Đêm Rằm Tháng 10 Âm Lịch (15/10 Âm Lịch)",
+      "location": {
+        "main_arena": "Khuôn viên Chùa Khmer Xvayton, Hồ Tà Pạ & Hồ Soài So",
+        "commune": "Thị trấn Tri Tôn & Xã Núi Tô"
+      },
+      "historical_significance": "Lễ tạ ơn Thần Mặt Trăng (Nữ thần mùa màng) bảo hộ cho nông nghiệp tươi tốt, kết thúc chu kỳ mùa vụ nông nghiệp trong năm.",
+      "key_activities_and_rituals": [
+        "Nghi thức Cúng Trăng: Dâng cúng cốm dẹp mới giã, khoai môn, dừa tươi, chuối xiêm khi mặt trăng lên đỉnh đầu",
+        "Nghi thức Đút Cốm Dẹp (Ok Om Bok) cho trẻ nhỏ và người thân để cầu phúc lành, bình an",
+        "Thả Đèn Nước (Loy Pratip) lung linh trên mặt hồ Tà Pạ / hồ Soài So và Thả Đèn Gió (Khom Bay) bay lên bầu trời đêm lung linh"
+      ],
+      "practical_visitor_guide": {
+        "golden_hours": "18:30 – 21:30 đêm rằm tháng 10. Không gian huyền ảo và lãng mạn vô cùng đặc sắc.",
+        "specialties": "Thưởng thức món Cốm dẹp (Om Bok) trộn nước dừa nạo và đường thốt nốt thơm lừng."
+      },
+      "maps_query": "Hồ Soài So Xã Núi Tô Tri Tôn An Giang",
+      "tiktok_tag": "okombok"
+    },
+    {
+      "id": "fest_kathina",
+      "name": "Đại Lễ Dâng Y Kathina & Dàn Nhạc Ngũ Âm Pinpeat",
+      "theme": "Đại Lễ Phật Giáo Nam Tông Trang Nghiêm & Hỷ Xả",
+      "time": "Từ Rằm Tháng 9 đến Rằm Tháng 10 Âm Lịch (kéo dài trong 29 ngày sau lễ Xuất Hạ)",
+      "location": {
+        "main_arena": "37 Ngôi Chùa Phật Giáo Nam Tông Khmer Tri Tôn",
+        "commune": "Toàn huyện Tri Tôn"
+      },
+      "historical_significance": "Đại lễ duy nhất trong năm Phật tử được phép dâng cúng áo cà sa Kathina lên chư tăng tu hành sau 3 tháng An Cư Kiết Hạ (Vassa).",
+      "key_activities_and_rituals": [
+        "Đoàn diễu hành rước Y Cà Sa quanh phum sóc và vòng quanh chánh điện 3 vòng",
+        "Hòa tấu Dàn nhạc Ngũ Âm (Pinpeat) 5 chất liệu cổ truyền rộn rã",
+        "Phật tử mặc lễ phục truyền thống Sampot và quàng khăn Krama rực rỡ sắc màu",
+        "Nghi thức Thọ Y và Tuyên ngôn Tăng sự trang nghiêm trong chánh điện"
+      ],
+      "practical_visitor_guide": {
+        "etiquette": "Du khách được chào đón nồng nhiệt tham gia đoàn rước cúng y, nên mang trang phục trang nhã, thái độ tôn kính chư tăng."
+      },
+      "maps_query": "Chùa Xvayton Thị trấn Tri Tôn An Giang",
+      "tiktok_tag": "dungyankathina"
+    }
+  ]
+}
