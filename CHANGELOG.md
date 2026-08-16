@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v33.0.0-REAL-VERIFIED-POIS-DATA-REFINEMENT] - 2026-08-16
+
+### 🧹 Loại Bỏ Địa Điểm Trùng Lặp & Chuẩn Hóa CSDL Thực Tế 100%
+- **Gộp Bỏ 8 Bản Ghi Trùng Lặp (Deduplication)**: Xóa các bản ghi thừa/sơ sài (`khu-di-tich-doi-tuc-dup-hang-c6`, `cong-troi-chua-koh-kas-tual-prasat`, `ho-soai-so`, `b49161b0-chùa-phi-lai-ba-chúc`, `e563b663-chùa-tam-bửu-ba-chúc`, `28310684-khu-di-tích-căn-cứ-ô`, `39c60a82-rừng-tầm-vông-ô-tà-s`, `6fd80811-chợ-trung-tâm-tri-tô`), giữ lại các bản ghi gốc chất lượng cao (>3.500 ký tự).
+- **Loại Bỏ Hoàn Toàn Quán Ảo**: Quét sạch "Cà Phê Thốt Nốt Tà Pạ View", "Cà Phê Suối Đá Ô Tà Sóc" ra khỏi JSON, CSV, System Prompt và RAG Context.
+- **Nạp Tư Liệu Thực Tế Xác Minh 100% Từ Google Maps & Di Sản Quốc Gia**:
+  - *Chùa Xà Tón (Xvayton)*: Lịch sử từ 1696, ý nghĩa tên Xvayton (đàn khỉ níu kéo), Di tích Quốc gia 1986, Kỷ lục Việt Nam 2006 với hơn 100 bộ Kinh lá buông Satra, Di sản phi vật thể quốc gia 2017.
+  - *Lễ hội Đua Bò Bảy Núi*: Di sản phi vật thể quốc gia 2016 dịp Tết Sene Dolta, thể thức thi đấu 2 vòng Hô - Thả, cây kích xà-luôl, luật giẫm giàn bừa.
+  - *Quần thể Chùa Tam Bửu - Phi Lai Ba Chúc*: Tổ đình Đạo Tứ Ân Hiếu Nghĩa do Đức Bổn Sư Ngô Lợi (Năm Thiếp) khai sáng năm 1867, giáo lý Tứ Ân, di tích lịch sử Ba Chúc.
+  - *Núi Cô Tô & Đỉnh Vồ Hội*: Phnom-Ktô, Vồ Hội Lớn, Vồ Hội Nhỏ cắm trại săn mây, Sân Tiên dấu chân cổ, biểu tượng chữ TRI TÔN cao 7m sườn núi.
+  - *Hồ Ô Tà Sóc & Căn cứ Núi Dài*: Ý nghĩa Suối Ông Sóc, Căn cứ Tỉnh ủy An Giang (1962-1967), Điện Trời Gầm, Suối Bạc, Rừng tầm vông.
+  - *Ẩm thực Khmer nguyên bản*: Gà Đốt Thảo Nguyên & Vườn Nho Ô Thum, Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng), Bún Cá Củ Ngải Num Banh Chok (Cô Tuôk & Dì Pâu), Bò 7 Món Ba Chúc & Bò nướng trái chúc.
+- **Biên dịch SSG 166 Tĩnh Routes**: Pass 100% không lỗi biên dịch.
+
+---
+
 ## [v32.0.0-MOBILE-UX-PWA-SMART-SEARCH] - 2026-08-16
 
 ### 📱 Chuẩn Hóa Lưới 2 Cột Mobile & Tối Ưu UX Thiết Bị Di Động
