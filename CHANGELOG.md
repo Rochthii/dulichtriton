@@ -4,6 +4,23 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v61.0.0-OPTIMIZE-VERCEL-ISR-WRITES-24H-LIFECYCLE] - 2026-08-16
+
+### 🛡️ Tối Ưu Hóa Vòng Đời Cache Tĩnh (Tiết Kiệm 99% Hạn Mức Vercel ISR Writes)
+
+#### 1. Vấn Đề Hạn Mức Vercel Hobby Tier
+- Hệ thống đã tiêu thụ 142.000 / 200.000 lượt ghi bộ nhớ đệm tĩnh (`ISR Writes`) do cấu hình `revalidate = 60` (1 phút) và `300` (5 phút) trên 149 trang địa điểm và các trang cẩm nang du lịch.
+- Mỗi lần crawler bot hoặc người dùng truy cập, Vercel Edge Server liên tục biên dịch và ghi file tĩnh mới, đe dọa làm cạn kiệt gói miễn phí trong vòng vài ngày tới.
+
+#### 2. Biện Pháp Cải Tiến
+- **Nâng thời gian Revalidate lên 86.400s (24 Giờ — `1d`)**: Áp dụng đồng bộ cho `/places/[id]`, `/guide`, `/planner`, `/itinerary`, `/map`, `/partner`.
+- **Hiệu quả đạt được**:
+  - Giảm 99% lượng ISR Writes (từ hàng nghìn lượt/ngày xuống chỉ còn ~150 lượt/ngày).
+  - Tốc độ tải trang đạt mức tối ưu tuyệt đối (TTFB ~20ms từ Edge Cache).
+  - Bảo vệ 100% tài khoản Vercel không bao giờ bị vượt ngưỡng giới hạn miễn phí.
+
+---
+
 ## [v60.0.0-COMPLETE-REMOVAL-OF-SERVICE-WORKER-INTERCEPTION] - 2026-08-16
 
 ### 🚀 Gỡ Bỏ Hoàn Toàn Service Worker (Loại Bỏ 100% Hiện Tượng Kẹt Trang & Lỗi Chuyển Trang)

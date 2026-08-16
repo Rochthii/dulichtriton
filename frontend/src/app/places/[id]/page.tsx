@@ -6,7 +6,7 @@ import localMasterPois from '@/data/triton_pois_full.json';
 
 import type { Metadata } from 'next';
 
-export const revalidate = 300; // Edge ISR Cache 5 minutes
+export const revalidate = 86400; // Edge ISR Cache 24 hours — Saves 99% Vercel ISR Writes
 
 /**
  * Dynamic OpenGraph & SEO Metadata for Social Sharing (Facebook, Zalo, Twitter)

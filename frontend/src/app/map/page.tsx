@@ -2,7 +2,7 @@ import React from 'react';
 import MapClientPage from '@/components/MapClientPage';
 import { getPlacesFiltered } from '@/lib/places';
 
-export const revalidate = 60;
+export const revalidate = 86400;
 
 export default async function MapPage() {
   // Fetch real places dynamically from Supabase CSDL for WGS84 GIS map
