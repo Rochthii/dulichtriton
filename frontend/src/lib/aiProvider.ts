@@ -32,7 +32,41 @@ export async function* streamAIResponse(
   let fullText = '';
   let providerUsed = 'none';
 
-  // ── 1. PRIMARY: GROQ LLAMA 3.3 70B (High-Speed LPU < 800ms, NO 429 RATE LIMIT) ──
+  // ── 1. TẦNG 1 (PRIMARY): GEMINI 4-KEYS WITH LIVE GOOGLE SEARCH GROUNDING ────
+  const candidateKeys = getRoundRobinGeminiKeys();
+  for (const keyObj of candidateKeys) {
+    try {
+      const result = await callGeminiLiveSearch(
+        keyObj.key,
+        keyObj.id,
+        'gemini-flash-latest',
+        systemPrompt,
+        userPrompt,
+        4000
+      );
+
+      if (result && result.text) {
+        fullText = result.text;
+        providerUsed = result.provider;
+
+        const words = fullText.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 8));
+        }
+
+        yield { type: 'done', provider: providerUsed };
+        return;
+      }
+    } catch (err: any) {
+      // Khi gặp 429 hoặc lỗi, bắt lỗi tức thì (<100ms) và thử key/tầng tiếp theo
+      console.warn(`[AI Provider] Gemini Key ${keyObj.id} skipped (${err.message}). Instant failover...`);
+      continue;
+    }
+  }
+
+  // ── 2. TẦNG 2 (SECONDARY): GROQ LPU MULTI-MODEL POOL (Siêu Tốc <500ms) ──────
   if (AI_CONFIG.groqKey) {
     try {
       const result = await callGroqFallback(systemPrompt, userPrompt);
@@ -52,40 +86,7 @@ export async function* streamAIResponse(
         return;
       }
     } catch (err: any) {
-      console.warn(`[AI Provider] Groq Primary failed (${err.message}). Trying Gemini...`);
-    }
-  }
-
-  // ── 2. SECONDARY: GEMINI WITH LIVE GOOGLE SEARCH GROUNDING ─────────────────
-  const candidateKeys = getRoundRobinGeminiKeys();
-  for (const keyObj of candidateKeys) {
-    try {
-      const result = await callGeminiLiveSearch(
-        keyObj.key,
-        keyObj.id,
-        'gemini-flash-latest',
-        systemPrompt,
-        userPrompt,
-        4500
-      );
-
-      if (result && result.text) {
-        fullText = result.text;
-        providerUsed = result.provider;
-
-        const words = fullText.split(' ');
-        for (let i = 0; i < words.length; i += 3) {
-          const chunk = words.slice(i, i + 3).join(' ') + ' ';
-          yield { type: 'delta', content: chunk };
-          await new Promise(r => setTimeout(r, 8));
-        }
-
-        yield { type: 'done', provider: providerUsed };
-        return;
-      }
-    } catch (err: any) {
-      console.warn(`[AI Provider] Gemini Key ${keyObj.id} failed (${err.message}).`);
-      continue;
+      console.warn(`[AI Provider] Groq multi-model pool exhausted (${err.message}). Trying OpenRouter...`);
     }
   }
 
