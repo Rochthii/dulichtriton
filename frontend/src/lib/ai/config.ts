@@ -26,23 +26,22 @@ export const AI_CONFIG: AIProviderConfig = {
   groqKey: process.env.GROQ_API_KEY || '',
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
-    'gemini-2.0-flash',
+    'gemini-flash-latest',
     'gemini-1.5-flash',
-    'gemini-2.0-flash-lite',
   ],
   groqModels: [
     'llama-3.3-70b-versatile',
     'llama-3.1-8b-instant',
   ],
   openRouterModels: [
+    'deepseek/deepseek-chat',
+    'openai/gpt-4o-mini',
+    'qwen/qwen-2.5-72b-instruct',
+    'meta-llama/llama-3.3-70b-instruct',
     'nvidia/nemotron-3-nano-30b-a3b:free',
-    'nvidia/nemotron-3.5-lightning:free',
-    'nvidia/nemotron-nano-9b-v2:free',
-    'openai/gpt-oss-20b:free',
-    'google/gemma-4-31b-it:free',
   ],
-  timeoutMs: 6000,
-  cooldownMs: 25000, // 25s cooldown for 429 rate limit
+  timeoutMs: 5000,
+  cooldownMs: 20000, // 20s cooldown for 429 rate limit
 };
 
 // ── In-Memory State & Circuit Breaker ────────────────────────────────────────

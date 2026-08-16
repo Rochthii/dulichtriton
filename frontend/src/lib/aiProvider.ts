@@ -41,7 +41,7 @@ export async function* streamAIResponse(
       const result = await callGeminiLiveSearch(
         keyObj.key,
         keyObj.id,
-        'gemini-2.0-flash',
+        'gemini-flash-latest',
         systemPrompt,
         userPrompt,
         4500
