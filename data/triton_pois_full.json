@@ -1704,204 +1704,6 @@
     ]
   },
   {
-    "id": "quan-ga-dot-sau-bup-o-thum",
-    "name": "Quán Gà Đốt Sáu Búp Ô Thum",
-    "category": "food",
-    "subcategory": "restaurant",
-    "address": "Đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
-    "latitude": 10.4558,
-    "longitude": 104.9815,
-    "description": "Khám phá Quán Gà Đốt Sáu Búp Ô Thum - Một trải nghiệm ẩm thực và văn hóa độc đáo tại Bảy Núi.",
-    "detailed_story": "Quán Gà Đốt Sáu Búp Ô Thum – Gà Đốt Than Hồng Kèm Đu Đủ Đâm Khmer Giòn Cay Tê Tái\n\nNằm trên trục đường chính dẫn vào lòng Hồ Ô Thum thuộc Xã Ô Lâm, Quán Gà Đốt Sáu Búp là một điểm dừng chân ẩm thực dân dã, ấm cúng của người dân địa phương. Quán ghi điểm nhờ món gà đốt than hồng giữ trọn hương vị truyền thống và món đu đủ đâm Khmer giòn sần sật cay nồng bắt miệng.\n\n### 1. Vị Trí & Không Gian Quán\n\n- **Vị trí:** Tuyến đường vào Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi lá mộc mạc, rợp bóng dừa và cây xanh mát mẻ.\n\n### 2. Gà Đốt Than Hồng & Đu Đủ Đâm Trứ Danh\n\n- **Gà đốt lửa than:** Da gà xém cạnh giòn tan, thơm ngát mùi lá chúc tươi và sả đập dập.\n- **Đu đủ đâm cối gỗ Khmer:** Đu đủ sợi giòn đâm cùng ba khía, đậu đũa, ớt hiểm và nước cốt chanh chúc cay xé lưỡi.\n\n### 3. Thông Tin Chi Tiết\n\n- **Giờ mở cửa:** 08:00 – 18:00 hàng ngày.\n- **Mức giá:** 230.000đ – 290.000đ / con.",
-    "travel_guide_json": "{\"how_to_get_there\": \"Từ trung tâm thị trấn Tri Tôn, di chuyển bằng xe máy hoặc ô tô theo các tuyến Tỉnh lộ 941, 943 hoặc 948 để đến khu vực Quán Gà Đốt Sáu Búp Ô Thum.\", \"opening_hours\": \"06:00 - 18:00 hằng ngày.\", \"ticket_price\": \"Miễn phí tham quan.\", \"best_season\": \"Tháng 9 đến tháng 11 (Mùa nước nổi & lúa chín) hoặc tháng 12 đến tháng 4 (Mùa khô).\", \"vehicle_suitability\": \"Xe máy, Ô tô 4-16 chỗ.\"}",
-    "checkin_spots_json": "[\"Bối cảnh tự nhiên bao quanh Quán Gà Đốt Sáu Búp Ô Thum\", \"Hàng cây thốt nốt đặc trưng vùng Bảy Núi\", \"Góc nhìn ngắm bình minh hoặc hoàng hôn Tri Tôn\"]",
-    "highlights_json": "[\"Da gà đốt giòn rụm\", \"Nước chấm lá chúc chuẩn vị\", \"Sân vườn thốt nốt\"]",
-    "nearby_cafes_and_food_json": "[{\"name\": \"Gà Đốt Thảo Nguyên Hồ Ô Thum\", \"type\": \"restaurant\", \"address\": \"Khu ẩm thực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc nguyên con\", \"Muối hột ớt chúc\", \"Lẩu ếch đồng lá giang\"], \"rating\": 4.8, \"reviews_count\": 890}, {\"name\": \"Quán Kiều Tiên Gà Đốt Ô Thum\", \"type\": \"restaurant\", \"address\": \"Bờ hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc\", \"Cơm chiên tỏi thốt nốt\", \"Bún cá củ ngải Khmer\"], \"rating\": 4.7, \"reviews_count\": 640}, {\"name\": \"Quán Gà Đốt Sáu Búp Ô Thum\", \"type\": \"restaurant\", \"address\": \"Đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc giòn da\", \"Ếch nướng sa tế\", \"Gỏi sầu đâu cá khô\"], \"rating\": 4.7, \"reviews_count\": 420}, {\"name\": \"Quán Gà Đốt Rô THUM Khmer\", \"type\": \"restaurant\", \"address\": \"Xã Ô Lâm, Huyện Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc Khmer\", \"Bò nướng ống tre\", \"Lẩu mắm Prahok\"], \"rating\": 4.8, \"reviews_count\": 530}]",
-    "google_maps_info_json": "{\"rating\": 4.6, \"user_ratings_total\": 180, \"popular_times\": \"Đông nhất 08:00 - 10:00 và 16:00 - 17:30\"}",
-    "best_time": "Ăn trưa & tối",
-    "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
-    "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-    "reviews": [
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "12 thg 9, 2025 · Ẩm thực Sài Gòn là một bản giao hưởng của hương vị, nơi mỗi món ăn đều kể một câu chuyện. Khi nhắc đến “các …",
-        "time": "N/A"
-      },
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "24 thg 6, 2026 · Giữa vô số quán ăn ở Sài Gòn, bạn đã tìm được cho mình một địa chỉ ưng ý? Danh sách dưới đây gợi ý những cái …",
-        "time": "N/A"
-      },
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "25 thg 6, 2026 · Bài viết dưới đây, hãy cùng PasGo Team khám phá top các quán ăn ngon Sài Gòn được yêu thích tại các quận …",
-        "time": "N/A"
-      }
-    ],
-    "tiktok_videos": [
-      {
-        "video_url": "https://www.tiktok.com/@thanhsang_weibou/video/7652622140520336661",
-        "embed_url": "https://www.tiktok.com/embed/7652622140520336661",
-        "title": "TikTok Video by @thanhsang_weibou",
-        "author": "thanhsang_weibou"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@hoangquii304/video/7596537265778724104",
-        "embed_url": "https://www.tiktok.com/embed/7596537265778724104",
-        "title": "TikTok Video by @hoangquii304",
-        "author": "hoangquii304"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tpreview2/video/7626330790145674514",
-        "embed_url": "https://www.tiktok.com/embed/7626330790145674514",
-        "title": "TikTok Video by @tpreview2",
-        "author": "tpreview2"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@dauchanphuongnam/video/7641231759325236498",
-        "embed_url": "https://www.tiktok.com/embed/7641231759325236498",
-        "title": "TikTok Video by @dauchanphuongnam",
-        "author": "dauchanphuongnam"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tiemnhabonglx/video/7671958086915034388",
-        "embed_url": "https://www.tiktok.com/embed/7671958086915034388",
-        "title": "TikTok Video by @tiemnhabonglx",
-        "author": "tiemnhabonglx"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@cuongletg/video/7672209335258254612",
-        "embed_url": "https://www.tiktok.com/embed/7672209335258254612",
-        "title": "TikTok Video by @cuongletg",
-        "author": "cuongletg"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@h16092009/video/7658507563520052500",
-        "embed_url": "https://www.tiktok.com/embed/7658507563520052500",
-        "title": "TikTok Video by @h16092009",
-        "author": "h16092009"
-      }
-    ],
-    "open_late": false,
-    "is_verified": true,
-    "tiktok_search_query": "Quán Gà Đốt Sáu Búp Ô Thum Tri Tôn An Giang",
-    "commune": "Xã Ô Lâm",
-    "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
-    "ticket_price": "230.000đ - 290.000đ / con",
-    "is_hot": true,
-    "slug": "quan-ga-dot-sau-bup-o-thum",
-    "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
-  },
-  {
-    "id": "quan-ga-dot-ro-thum-khmer",
-    "name": "Quán Gà Đốt Rô THUM Khmer",
-    "category": "food",
-    "subcategory": "restaurant",
-    "address": "Xã Ô Lâm, Huyện Tri Tôn, An Giang",
-    "latitude": 10.458,
-    "longitude": 104.984,
-    "description": "Quán gà đốt trứ danh ven hồ Ô Thum, xã Ô Lâm. Gà thả vườn thịt chắc, ướp sả ớt lá chúc tươi đâm nhuyễn và nướng than hồng thơm lừng, chấm muối ớt trái chúc cay nồng.",
-    "detailed_story": "Quán Gà Đốt Rô THUM Khmer – Hương Vị Thảo Mộc Bản Địa Cổ Truyền Xứ Bảy Núi\n\nĐược chế biến bởi chính những đầu bếp người Khmer bản xứ tại Xã Ô Lâm, Quán Gà Đốt Rô THUM Khmer giữ gìn trọn vẹn nét văn hóa ẩm thực cổ truyền với công thức tẩm ướp thảo mộc gia truyền hàng chục năm của đồng bào Khmer Bảy Núi.\n\n### 1. Vị Trí & Không Gian Bản Địa\n\n- **Vị trí:** Xã Ô Lâm, tỉnh An Giang (gần khu vực Hồ Ô Thum).\n- **Không gian:** Đậm chất văn hóa phum sóc Khmer với chòi tre lá thốt nốt mộc mạc, yên bình.\n\n### 2. Bí Quyết Thảo Mộc Cổ Truyền\n\n- **Gia vị thảo mộc:** Tinh dầu lá chúc, củ ngải bún, củ nghệ tươi và muối hột Bảy Núi hòa quyện tạo nên mùi thơm độc nhất vô nhị.\n- **Thịt gà ngọt mềm:** Thịt gà chắc nịch, da giòn thơm lừng, chấm muối ớt lá chúc đâm cối đá.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 18:30 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con.",
-    "travel_guide_json": "{\"how_to_get_there\": \"Từ trung tâm thị trấn Tri Tôn, di chuyển bằng xe máy hoặc ô tô theo các tuyến Tỉnh lộ 941, 943 hoặc 948 để đến khu vực Quán Gà Đốt Rô THUM Khmer.\", \"opening_hours\": \"06:00 - 18:00 hằng ngày.\", \"ticket_price\": \"Miễn phí tham quan.\", \"best_season\": \"Tháng 9 đến tháng 11 (Mùa nước nổi & lúa chín) hoặc tháng 12 đến tháng 4 (Mùa khô).\", \"vehicle_suitability\": \"Xe máy, Ô tô 4-16 chỗ.\"}",
-    "checkin_spots_json": "[\"Bối cảnh tự nhiên bao quanh Quán Gà Đốt Rô THUM Khmer\", \"Hàng cây thốt nốt đặc trưng vùng Bảy Núi\", \"Góc nhìn ngắm bình minh hoặc hoàng hôn Tri Tôn\"]",
-    "highlights_json": "[\"Vị bản địa Khmer\", \"Chòi lá mộc mạc\", \"Gà nướng nồi đất\"]",
-    "nearby_cafes_and_food_json": "[{\"name\": \"Gà Đốt Thảo Nguyên Hồ Ô Thum\", \"type\": \"restaurant\", \"address\": \"Khu ẩm thực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc nguyên con\", \"Muối hột ớt chúc\", \"Lẩu ếch đồng lá giang\"], \"rating\": 4.8, \"reviews_count\": 890}, {\"name\": \"Quán Kiều Tiên Gà Đốt Ô Thum\", \"type\": \"restaurant\", \"address\": \"Bờ hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc\", \"Cơm chiên tỏi thốt nốt\", \"Bún cá củ ngải Khmer\"], \"rating\": 4.7, \"reviews_count\": 640}, {\"name\": \"Quán Gà Đốt Sáu Búp Ô Thum\", \"type\": \"restaurant\", \"address\": \"Đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc giòn da\", \"Ếch nướng sa tế\", \"Gỏi sầu đâu cá khô\"], \"rating\": 4.7, \"reviews_count\": 420}, {\"name\": \"Quán Gà Đốt Rô THUM Khmer\", \"type\": \"restaurant\", \"address\": \"Xã Ô Lâm, Huyện Tri Tôn, An Giang\", \"specialties\": [\"Gà đốt lá chúc Khmer\", \"Bò nướng ống tre\", \"Lẩu mắm Prahok\"], \"rating\": 4.8, \"reviews_count\": 530}]",
-    "google_maps_info_json": "{\"rating\": 4.6, \"user_ratings_total\": 180, \"popular_times\": \"Đông nhất 08:00 - 10:00 và 16:00 - 17:30\"}",
-    "best_time": "Cả ngày",
-    "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
-    "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-    "reviews": [
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "12 thg 9, 2025 · Ẩm thực Sài Gòn là một bản giao hưởng của hương vị, nơi mỗi món ăn đều kể một câu chuyện. Khi nhắc đến “các …",
-        "time": "N/A"
-      },
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "24 thg 6, 2026 · Giữa vô số quán ăn ở Sài Gòn, bạn đã tìm được cho mình một địa chỉ ưng ý? Danh sách dưới đây gợi ý những cái …",
-        "time": "N/A"
-      },
-      {
-        "platform": "facebook",
-        "rating": 5,
-        "author": "Facebook User",
-        "content": "25 thg 6, 2026 · Bài viết dưới đây, hãy cùng PasGo Team khám phá top các quán ăn ngon Sài Gòn được yêu thích tại các quận …",
-        "time": "N/A"
-      }
-    ],
-    "tiktok_videos": [
-      {
-        "video_url": "https://www.tiktok.com/@thanhsang_weibou/video/7652622140520336661",
-        "embed_url": "https://www.tiktok.com/embed/7652622140520336661",
-        "title": "TikTok Video by @thanhsang_weibou",
-        "author": "thanhsang_weibou"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@hoangquii304/video/7596537265778724104",
-        "embed_url": "https://www.tiktok.com/embed/7596537265778724104",
-        "title": "TikTok Video by @hoangquii304",
-        "author": "hoangquii304"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tpreview2/video/7626330790145674514",
-        "embed_url": "https://www.tiktok.com/embed/7626330790145674514",
-        "title": "TikTok Video by @tpreview2",
-        "author": "tpreview2"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@dauchanphuongnam/video/7641231759325236498",
-        "embed_url": "https://www.tiktok.com/embed/7641231759325236498",
-        "title": "TikTok Video by @dauchanphuongnam",
-        "author": "dauchanphuongnam"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tiemnhabonglx/video/7671958086915034388",
-        "embed_url": "https://www.tiktok.com/embed/7671958086915034388",
-        "title": "TikTok Video by @tiemnhabonglx",
-        "author": "tiemnhabonglx"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@cuongletg/video/7672209335258254612",
-        "embed_url": "https://www.tiktok.com/embed/7672209335258254612",
-        "title": "TikTok Video by @cuongletg",
-        "author": "cuongletg"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@h16092009/video/7658507563520052500",
-        "embed_url": "https://www.tiktok.com/embed/7658507563520052500",
-        "title": "TikTok Video by @h16092009",
-        "author": "h16092009"
-      }
-    ],
-    "open_late": false,
-    "is_verified": true,
-    "tiktok_search_query": "Quán Gà Đốt Rô THUM Khmer Tri Tôn An Giang",
-    "commune": "Xã Ô Lâm",
-    "opening_hours": "08:30 - 18:30 (Mỗi ngày)",
-    "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true,
-    "slug": "quan-ga-dot-ro-thum-khmer",
-    "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
-  },
-  {
     "id": "chua-ta-phot",
     "name": "Chùa Tà Phôt",
     "category": "spiritual",
@@ -8318,91 +8120,6 @@
     ]
   },
   {
-    "id": "ec52a58c-gà-đốt-ô-thum-thảo-n",
-    "name": "Gà Đốt Ô Thum Thảo Nguyên",
-    "category": "food",
-    "subcategory": "Gà Đốt Ô Thum",
-    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
-    "latitude": 10.378,
-    "longitude": 104.991,
-    "description": "Gà Đốt Thảo Nguyên — Quán phục vụ đặc sản Gà Đốt lá chúc truyền thống ven hồ Ô Thum, Xã Ô Lâm. [Mẹo thực địa: Gà được đốt chín kỹ trong nồi kín với sả và lá chúc tươi từ 35–45 phút, du khách nên gọi đặt món trước khi đến để không phải chờ lâu].",
-    "detailed_story": "Gà Đốt Ô Thum Thảo Nguyên – Không Gian Sinh Thái Sân Vườn Rợp Bóng Mát & Chòi Võng Thư Giãn\n\nNằm trên cung đường ven Hồ Ô Thum thuộc Xã Ô Lâm, Quán Gà Đốt Thảo Nguyên là điểm dừng chân lý tưởng cho những ai yêu thích không gian thiên nhiên mộc mạc, yên tĩnh và rợp bóng cây xanh mát rượi. Quán kết hợp hài hòa giữa ẩm thực gà đốt lá chúc truyền thống và mô hình sinh thái sân vườn miệt vườn Nam Bộ.\n\n### 1. Vị Trí & Không Gian Sinh Thái Sân Vườn\n\n- **Vị trí hành chính:** Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, tỉnh An Giang.\n- **Khuôn viên vườn cây râm mát:** Quán sở hữu diện tích sân vườn rộng rãi rợp bóng những hàng cây ăn trái, vườn xoài cổ thụ và những rặng thốt nốt cao vút.\n- **Chòi lá mắc võng nghỉ trưa:** Mỗi bàn ăn được bố trí trong một chòi lá riêng biệt có trang bị võng nằm, giúp du khách có thể ngả lưng nghỉ ngơi thư giãn, tận hưởng giấc ngủ trưa lộng gió sau chuyến hành trình khám phá Bảy Núi.\n\n### 2. Gà Đốt Thảo Nguyên – Hương Vị Tự Nhiên Thuần Khiết\n\n- **Gà thả vườn tự nhiên:** Gà được nuôi thả trong các khu vườn đồi rộng lớn, ăn thóc bắp và côn trùng tự nhiên nên thịt rất thơm, da mỏng giòn và ít mỡ.\n- **Phương pháp đốt lửa rơm than:** Quán giữ phương pháp đốt gà truyền thống trên than củi và rơm khô, tạo mùi khói rơm thoang thoảng hòa quyện cùng tinh dầu lá chúc ngào ngạt.\n- **Gia vị tự nhiên:** Không lạm dụng phụ gia hay bột ngọt, gia vị được cân chỉnh từ muối hột, mật ong, tiêu sọ Bảy Núi và sả đập dập.\n\n### 3. Món Ăn Kèm Dân Dã Đậm Vị Quê Hương\n\n- **Gỏi bắp chuối gà xé:** Bắp chuối rừng thái mỏng trộn chua ngọt với thịt gà đốt xé phay, rau răm và đậu phộng rang.\n- **Canh gà nấu lá giang chua thanh:** Nước canh thanh mát giải nhiệt mùa hè nóng bức.\n- **Cơm cháy kho quẹt & Đu đủ đâm Khmer:** Những món ăn dân dã làm phong phú thêm bữa ăn gia đình.\n\n### 4. Hướng Dẫn Trải Nghiệm Thực Khách\n\n- **Thời gian lý tưởng:** 10:30 – 14:30 trưa để vừa ăn gà vừa nghỉ võng mát rượi.\n- **Thích hợp cho gia đình có người lớn tuổi và trẻ nhỏ:** Không gian rộng rãi, thoáng mát, bằng phẳng và an toàn.\n\n### 5. Thông Tin Hướng Dẫn\n\n- **Giờ mở cửa:** 08:00 – 18:00 mỗi ngày.\n- **Mức giá:** 240.000đ – 300.000đ / con gà đốt.",
-    "travel_guide_json": null,
-    "checkin_spots_json": null,
-    "highlights_json": null,
-    "nearby_cafes_and_food_json": null,
-    "google_maps_info_json": null,
-    "best_time": "Quanh năm",
-    "tags_json": null,
-    "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-    "reviews": [
-      {
-        "platform": "google_maps",
-        "rating": 4.5,
-        "author": "Du Khách Đã Xác Minh",
-        "content": "Điểm đến Gà Đốt Ô Thum Thảo Nguyên rất đẹp và thoáng mát. Trải nghiệm thực tế tại Tri Tôn rất đáng nhớ!",
-        "time": "Mới nhất"
-      }
-    ],
-    "tiktok_videos": [
-      {
-        "video_url": "https://www.tiktok.com/@thanhsang_weibou/video/7652622140520336661",
-        "embed_url": "https://www.tiktok.com/embed/7652622140520336661",
-        "title": "TikTok Video by @thanhsang_weibou",
-        "author": "thanhsang_weibou"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@hoangquii304/video/7596537265778724104",
-        "embed_url": "https://www.tiktok.com/embed/7596537265778724104",
-        "title": "TikTok Video by @hoangquii304",
-        "author": "hoangquii304"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tpreview2/video/7626330790145674514",
-        "embed_url": "https://www.tiktok.com/embed/7626330790145674514",
-        "title": "TikTok Video by @tpreview2",
-        "author": "tpreview2"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@dauchanphuongnam/video/7641231759325236498",
-        "embed_url": "https://www.tiktok.com/embed/7641231759325236498",
-        "title": "TikTok Video by @dauchanphuongnam",
-        "author": "dauchanphuongnam"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@tiemnhabonglx/video/7671958086915034388",
-        "embed_url": "https://www.tiktok.com/embed/7671958086915034388",
-        "title": "TikTok Video by @tiemnhabonglx",
-        "author": "tiemnhabonglx"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@cuongletg/video/7672209335258254612",
-        "embed_url": "https://www.tiktok.com/embed/7672209335258254612",
-        "title": "TikTok Video by @cuongletg",
-        "author": "cuongletg"
-      },
-      {
-        "video_url": "https://www.tiktok.com/@h16092009/video/7658507563520052500",
-        "embed_url": "https://www.tiktok.com/embed/7658507563520052500",
-        "title": "TikTok Video by @h16092009",
-        "author": "h16092009"
-      }
-    ],
-    "open_late": false,
-    "is_verified": true,
-    "tiktok_search_query": "Gà Đốt Ô Thum Thảo Nguyên Tri Tôn An Giang",
-    "commune": "Xã Ô Lâm",
-    "opening_hours": "08:00 - 18:00 (Mỗi ngày)",
-    "ticket_price": "240.000đ - 300.000đ / con",
-    "is_hot": true,
-    "slug": "ga-dot-o-thum-thao-nguyen",
-    "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
-  },
-  {
     "id": "24a1fc67-gà-đốt-vương-ngọc-ô-",
     "name": "Gà Đốt Vương Ngọc Ô Thum",
     "category": "food",
@@ -11628,88 +11345,6 @@
     "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
   },
   {
-    "id": "quan-ga-dot-7-nui-o-thum",
-    "place_id": "quan-ga-dot-7-nui-o-thum",
-    "name": "Gà Đốt 7 Núi Ô Thum",
-    "slug": "ga-dot-7-nui-o-thum",
-    "category": "food",
-    "subcategory": "Quán gà đốt Ô Thum",
-    "tourism_category": "Ẩm thực Bảy Núi",
-    "description": "Gà Đốt 7 Núi Ô Thum - Đặc sản Gà đốt lá chúc trứ danh tại Hồ Ô Thum, Xã Ô Lâm, Tri Tôn.",
-    "short_description": "Quán gà đốt lá chúc trứ danh bên hồ Ô Thum",
-    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
-    "commune": "Xã Ô Lâm",
-    "district": "Tri Tôn",
-    "province": "An Giang",
-    "latitude": 10.392,
-    "longitude": 104.982,
-    "opening_hours": "08:00 - 18:30 (Mỗi ngày)",
-    "price_level": "240.000đ - 300.000đ / con",
-    "ticket_price": "240.000đ - 300.000đ / con",
-    "rating": 4.8,
-    "review_count": 85,
-    "photos": [
-      "/images/places/ga-dot-o-thum.jpg"
-    ],
-    "search_keywords": [
-      "gà đốt ô thum",
-      "gà đốt lá chúc",
-      "hồ ô thum",
-      "gà đốt 7 núi ô thum"
-    ],
-    "travel_tags": [
-      "ẩm thực",
-      "gà đốt",
-      "hồ ô thum",
-      "đặc sản"
-    ],
-    "is_hot": true,
-    "is_verified": true,
-    "detailed_story": "Gà Đốt 7 Núi Ô Thum – Gà Thả Đồi Bảy Núi Đốt Nồi Đất Rơm Than Hồng Rực\n\nNằm ven hồ Ô Thum, Gà Đốt 7 Núi là địa chỉ quen thuộc chuyên phục vụ các món gà thả đồi Bảy Núi đốt nồi đất truyền thống với rơm khô và than hồng, giữ nguyên độ ngọt tự nhiên và mùi thơm quyến rũ của núi rừng Thất Sơn.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi lá ven hồ thoáng đãng, lộng gió mát mẻ.\n\n### 2. Đặc Trưng Ẩm Thực\n\n- **Gà đồi thả vườn:** Thịt săn chắc, da mỏng giòn, ướp lá chúc vườn thơm nức mũi.\n- **Nước chấm:** Muối ớt chúc chua cay mặn ngọt chuẩn vị Bảy Núi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 18:30 mỗi ngày.\n- **Giá tham khảo:** 240.000đ – 300.000đ / con.",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
-  },
-  {
-    "id": "quan-ga-dot-thanh-dat-o-thum",
-    "place_id": "quan-ga-dot-thanh-dat-o-thum",
-    "name": "Gà Đốt Thành Đạt Ô Thum",
-    "slug": "ga-dot-thanh-dat-o-thum",
-    "category": "food",
-    "subcategory": "Quán gà đốt Ô Thum",
-    "tourism_category": "Ẩm thực Bảy Núi",
-    "description": "Gà Đốt Thành Đạt Ô Thum - Đặc sản Gà đốt lá chúc trứ danh tại Hồ Ô Thum, Xã Ô Lâm, Tri Tôn.",
-    "short_description": "Quán gà đốt lá chúc trứ danh bên hồ Ô Thum",
-    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
-    "commune": "Xã Ô Lâm",
-    "district": "Tri Tôn",
-    "province": "An Giang",
-    "latitude": 10.392999999999999,
-    "longitude": 104.98299999999999,
-    "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
-    "price_level": "240.000đ - 300.000đ / con",
-    "ticket_price": "240.000đ - 300.000đ / con",
-    "rating": 4.8,
-    "review_count": 85,
-    "photos": [
-      "/images/places/ga-dot-o-thum.jpg"
-    ],
-    "search_keywords": [
-      "gà đốt ô thum",
-      "gà đốt lá chúc",
-      "hồ ô thum",
-      "gà đốt thành đạt ô thum"
-    ],
-    "travel_tags": [
-      "ẩm thực",
-      "gà đốt",
-      "hồ ô thum",
-      "đặc sản"
-    ],
-    "is_hot": true,
-    "is_verified": true,
-    "detailed_story": "Gà Đốt Thành Đạt Ô Thum – Phục Vụ Chu Đáo Cho Khách Gia Đình & Đoàn Phượt Bên Bờ Hồ\n\nTọa lạc tại khu vực bờ hồ Ô Thum thuộc Xã Ô Lâm, Gà Đốt Thành Đạt được nhiều đoàn du lịch và gia đình lựa chọn nhờ không gian rộng rãi, phong cách phục vụ nhanh nhẹn, chu đáo và món gà đốt lá chúc luôn đảm bảo độ tươi nóng khi dọn lên bàn.\n\n### 1. Vị Trí & Tiện Ích Phục Vụ\n\n- **Vị trí:** Bờ Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Tiện ích:** Chòi lá mát mẻ, bãi giữ xe rộng rãi, phục vụ chu đáo cho đoàn đông người.\n\n### 2. Gà Đốt Nóng Hổi Chuẩn Vị\n\n- **Gà đốt tươi theo yêu cầu:** Gà đốt chín vàng giòn rụm, thịt ngọt mềm, ăn kèm xôi thốt nốt dẻo bùi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:00 – 19:00 mỗi ngày.\n- **Mức giá:** 240.000đ – 300.000đ / con.",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
-  },
-  {
     "id": "quan-ga-dot-danh-hay-o-thum",
     "place_id": "quan-ga-dot-danh-hay-o-thum",
     "name": "Gà Đốt Danh Hây Ô Thum",
@@ -11749,46 +11384,6 @@
     "is_verified": true,
     "detailed_story": "Gà Đốt Danh Hây Ô Thum – Quán Mộc Mạc Bản Địa & Muối Ớt Lá Chúc Giã Tay Truyền Thống\n\nMang đậm phong cách ẩm thực chân chất, mộc mạc của gia đình người Khmer bản địa tại Xã Ô Lâm, Quán Gà Đốt Danh Hây đem đến cho thực khách trải nghiệm thưởng thức gà đốt lá chúc nguyên bản với giá cả bình dân và chén muối ớt giã tay thơm nồng.\n\n### 1. Vị Trí & Không Gian\n\n- **Vị trí:** Ven Hồ Ô Thum, Xã Ô Lâm, tỉnh An Giang.\n- **Không gian:** Chòi tre đơn sơ dưới tán cây râm mát, gần gũi thiên nhiên.\n\n### 2. Hương Vị Gà Đốt Dân Dã\n\n- **Gà thả vườn ngọt thịt:** Gà chạy đồi thịt thơm ngon, ướp lá chúc vườn nhà đâm nhuyễn.\n- **Muối ớt giã cối đá:** Vị cay nồng của ớt hiểm và chua thanh của trái chúc tươi.\n\n### 3. Thông Tin Quán\n\n- **Giờ mở cửa:** 08:30 – 18:00 hàng ngày.\n- **Mức giá:** 230.000đ – 290.000đ / con.",
     "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
-  },
-  {
-    "id": "quan-ga-dot-oc-dao-ho-o-thum",
-    "place_id": "quan-ga-dot-oc-dao-ho-o-thum",
-    "name": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum",
-    "slug": "ga-dot-oc-dao-quan-ho-o-thum",
-    "category": "food",
-    "subcategory": "Quán gà đốt Ô Thum",
-    "tourism_category": "Ẩm thực Bảy Núi",
-    "description": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum - Mỏm đất nhô ra giữa lòng hồ Ô Thum với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc.",
-    "short_description": "Quán gà đốt mỏm đất view 360 độ ngắm trọn hồ Ô Thum",
-    "address": "Mỏm đất Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
-    "commune": "Xã Ô Lâm",
-    "district": "Tri Tôn",
-    "province": "An Giang",
-    "latitude": 10.3855,
-    "longitude": 104.9755,
-    "opening_hours": "08:00 - 19:00 (Mỗi ngày)",
-    "price_level": "250.000đ - 320.000đ / con",
-    "ticket_price": "250.000đ - 320.000đ / con",
-    "rating": 4.8,
-    "review_count": 80,
-    "photos": [
-      "/images/places/ga-dot-o-thum.jpg"
-    ],
-    "search_keywords": [
-      "gà đốt ốc đảo",
-      "gà đốt ô thum",
-      "hồ ô thum"
-    ],
-    "travel_tags": [
-      "ẩm thực",
-      "gà đốt",
-      "hồ ô thum",
-      "view hồ"
-    ],
-    "is_hot": true,
-    "is_verified": true,
-    "detailed_story": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum – Mỏm Đất Nhô Giữa Lòng Hồ Với View Nước 360 Độ Tuyệt Mỹ\n\nTọa lạc trên một mỏm đất tự nhiên nhô hẳn ra giữa lòng hồ Ô Thum tựa như một ốc đảo xanh thu nhỏ, Quán Gà Đốt Ốc Đảo mang lại trải nghiệm ẩm thực độc nhất vô nhị với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc và dãy đồi núi Ô Lâm trập trùng bao quanh.\n\n### 1. Vị Trí \"Ốc Đảo\" Độc Nhất Vô Nhị\n\n- **Vị trí hành chính:** Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, tỉnh An Giang.\n- **Địa thế ốc đảo xanh:** Quán được bao bọc ba mặt bởi làn nước hồ trong vắt, gió thổi lồng lộng quanh năm mang lại không khí mát lạnh tự nhiên không cần quạt máy.\n\n### 2. Món Gà Đốt Nồi Đất Vàng Giòn\n\n- **Kỹ thuật đốt gà đỉnh cao:** Gà được đốt trong nồi gang đất dày trên than hồng, da gà xém vàng giòn rụm thơm nức mũi mùi lá chúc, thịt bên trong mềm ngọt mọng nước.\n- **Phục vụ đa dạng:** Ngoài gà đốt còn có các món cá lóc nướng trui, lẩu cá lăng nấu măng chua, xôi bắp thốt nốt.\n\n### 3. Trải Nghiệm Ngắm Hoàng Hôn 360 Độ\n\n- **Khung giờ vàng:** 16:30 – 17:45 là khoảnh khắc đẹp nhất khi ánh hoàng hôn nhuộm đỏ cả mặt hồ bao quanh quán.\n\n### 4. Thông Tin Đặt Chỗ\n\n- **Giờ mở cửa:** 08:00 – 19:00 hàng ngày.\n- **Giá bán:** 250.000đ – 320.000đ / con.",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif"
   },
   {
     "id": "chua-ta-miet-coi-nguon-dua-bo",
@@ -11873,5 +11468,33 @@
     "is_hot": true,
     "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1200&auto=format&fit=crop",
     "description": "Cánh cổng cổ kính đứng độc lập giữa cánh đồng lúa Châu Lăng với kiến trúc tháp 3 ngọn và tượng thần Brahma 4 mặt, tọa độ săn bình minh và hoàng hôn huyền ảo bậc nhất Bảy Núi."
+  },
+  {
+    "id": "quan-ga-dot-hoa-mat-troi-nui-dai",
+    "slug": "quan-ga-dot-hoa-mat-troi-nui-dai",
+    "name": "Quán Gà Đốt Hoa Mặt Trời (Núi Dài)",
+    "category": "food",
+    "tourism_category": "Ẩm Thực & Quán Ăn",
+    "commune": "Xã Lê Trì",
+    "latitude": 10.435,
+    "longitude": 104.965,
+    "rating": 4.9,
+    "is_hot": true,
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "description": "Quán gà đốt nổi tiếng bậc nhất nằm trên sườn Núi Dài (đường ĐT948), gà ta thả đồi nướng tươi nguyên con giòn da mọng nước, tẩm ướp lá chúc vườn nhà thơm ngát."
+  },
+  {
+    "id": "quan-ga-dot-ai-do-ho-o-thum",
+    "slug": "quan-ga-dot-ai-do-ho-o-thum",
+    "name": "Quán Gà Đốt Ai Đó Ô Thum",
+    "category": "food",
+    "tourism_category": "Ẩm Thực & Quán Ăn",
+    "commune": "Xã Ô Lâm",
+    "latitude": 10.377,
+    "longitude": 104.9918,
+    "rating": 4.8,
+    "is_hot": true,
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "description": "Quán ăn gia đình ấm cúng ven bờ hồ Ô Thum, được đông đảo thực khách và dân phượt đánh giá cao về hương vị gà đốt truyền thống, giá cả bình dân và phục vụ nhiệt tình."
   }
 ]
