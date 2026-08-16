@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v62.0.0-COMPREHENSIVE-ERROR-BOUNDARIES-AND-NOT-FOUND-FALLBACKS] - 2026-08-16
+
+### 🛡️ Hệ Thống Bắt Lỗi Toàn Diện & Xóa Bỏ Vĩnh Viễn Màn Hình Đen Vercel
+
+#### 1. Nguyên Nhân Màn Hình Đen Mặc Định Của Vercel
+- Khi Next.js gặp một lỗi bất ngờ (hoặc không tìm thấy đường dẫn) mà trong thư mục `src/app/` **chưa có các tệp tin xử lý lỗi chuẩn (`global-error.tsx`, `error.tsx`, `not-found.tsx`)**, Vercel Edge Server sẽ tự động trả về màn hình lỗi mặc định màu đen *"This page couldn't load"*.
+
+#### 2. Giải Pháp Toàn Diện (Zero Black Screen Fallback)
+- **Bổ sung `src/app/global-error.tsx`**: Bắt giữ toàn bộ lỗi ở cấp độ gốc (Root Layout), hiển thị giao diện thông báo đồng bộ dữ liệu kèm nút **Thử Lại Ngay** & **Trang Chủ**.
+- **Bổ sung `src/app/error.tsx`**: Bắt giữ lỗi cục bộ trên từng route mà không làm sập toàn bộ ứng dụng.
+- **Bổ sung `src/app/not-found.tsx`**: Xử lý các đường dẫn 404 bằng giao diện Folk-Modern Bảy Núi thân thiện, hướng dẫn du khách quay về trang chủ hoặc khám phá 149 địa điểm.
+
+---
+
 ## [v61.0.0-OPTIMIZE-VERCEL-ISR-WRITES-24H-LIFECYCLE] - 2026-08-16
 
 ### 🛡️ Tối Ưu Hóa Vòng Đời Cache Tĩnh (Tiết Kiệm 99% Hạn Mức Vercel ISR Writes)
