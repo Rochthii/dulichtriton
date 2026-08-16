@@ -60,7 +60,7 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
 4. **Cẩm nang Giao Thông, Tuyến Đường Di Chuyển & Chỉ Dẫn Leo Núi An Toàn (Transit & Route Mastery)**:
    - **Xe khách chất lượng cao từ TP.HCM**:
      • *Nhà xe Huệ Nghĩa (Hotline 1900 636497)*: Xe Limousine VIP & Giường nằm chạy tuyến thẳng TP.HCM (BX Miền Tây, trạm An Sương) ➔ Bến xe Tri Tôn & Ba Chúc (mỗi 1-2 tiếng có 1 chuyến 24/7).
-     • *Nhà xe Phương Trang FUTA (Hotline 1900 6067)*: Tuyến TP.HCM ➔ Long Xuyên / Châu Đốc, có xe trung chuyển về Tri Tôn.
+     • *Nhà xe Phương Trang FUTA (Hotline 1900 6067 - Văn phòng Tri Tôn: 51 Đường 3 Tháng 2, TT. Tri Tôn)*: Tuyến xe giường nằm cao cấp chạy thẳng TP.HCM (BX Miền Tây) ➔ Bến xe Tri Tôn & Văn phòng 51 Đường 3/2 (nhiều chuyến liên tục trong ngày, có thể đặt vé trực tiếp trên ứng dụng FUTA App hoặc website futabus.vn).
    - **Cung đường tự lái tối ưu**:
      • *Từ TP.HCM*: Cao tốc TP.HCM - Trung Lương - Mỹ Thuận ➔ Cầu Vàm Cống ➔ TP. Long Xuyên ➔ Rẽ trái vào Tỉnh lộ ĐT941 (ngã ba Lộ Tẻ Tri Tôn) ➔ Chạy thẳng 45km đến TT. Tri Tôn (khoảng 210km, 4.5 - 5 tiếng).
      • *Từ TP. Cần Thơ*: QL91 ➔ TP. Long Xuyên ➔ ĐT941 ➔ Tri Tôn (khoảng 110km, 2.5 tiếng).

@@ -1,22 +1,22 @@
 {
   "bus_companies": [
     {
-      "name": "Nhà Xe Huệ Nghĩa (Chuyên Tuyến Thẳng Tri Tôn)",
+      "name": "Nhà Xe Phương Trang (FUTA Bus Lines - Tuyến Thẳng Tri Tôn)",
+      "route": "TP.HCM (Bến xe Miền Tây) ➔ Bến xe Tri Tôn & Văn phòng 51 Đường 3/2, Tri Tôn",
+      "frequency": "Nhiều chuyến liên tục trong ngày",
+      "vehicle_type": "Xe Giường Nằm Chất Lượng Cao & FUTA Express",
+      "ticket_price": "175,000 - 190,000 VND / vé",
+      "phone": "1900 6067",
+      "pickup_point": "Bến xe Miền Tây (TP.HCM) ➔ Văn phòng FUTA Tri Tôn: 51 Đường 3 Tháng 2, TT. Tri Tôn & Bến xe Tri Tôn"
+    },
+    {
+      "name": "Nhà Xe Huệ Nghĩa (Chuyên Tuyến Thẳng Tri Tôn - Ba Chúc)",
       "route": "TP.HCM (Bến xe Miền Tây, trạm An Sương) ➔ Bến xe Tri Tôn / Ba Chúc",
       "frequency": "Mỗi 1-2 giờ / chuyến (24/7)",
       "vehicle_type": "Xe Giường Nằm & Xe Limousine VIP",
       "ticket_price": "170,000 - 220,000 VND / vé",
       "phone": "1900 636497 - 1900 6477",
-      "pickup_point": "Bến xe Miền Tây, Trạm An Sương, Bến xe Tri Tôn, Trạm Ba Chúc"
-    },
-    {
-      "name": "Nhà Xe Phương Trang (FUTA Bus Lines)",
-      "route": "TP.HCM (Bến xe Miền Tây) ➔ TP. Long Xuyên / TP. Châu Đốc ➔ Trung chuyển Tri Tôn",
-      "frequency": "Mỗi 30 - 60 phút / chuyến",
-      "vehicle_type": "Xe Giường Nằm Chất Lượng Cao",
-      "ticket_price": "175,000 VND / vé",
-      "phone": "1900 6067",
-      "pickup_point": "Bến xe Miền Tây, Bến xe Long Xuyên, Bến xe Châu Đốc"
+      "pickup_point": "Bến xe Miền Tây, Trạm An Sương ➔ Bến xe Tri Tôn, Trạm Ba Chúc"
     },
     {
       "name": "Nhà Xe Hiệp Thành",
@@ -25,7 +25,7 @@
       "vehicle_type": "Xe Giường Nằm",
       "ticket_price": "160,000 - 180,000 VND / vé",
       "phone": "028 3853 9089",
-      "pickup_point": "Bến xe Miền Tây, Thị trấn Tri Tôn"
+      "pickup_point": "Bến xe Miền Tây ➔ Bến xe Thị trấn Tri Tôn"
     }
   ],
   "motorbike_rentals": [
@@ -34,7 +34,7 @@
       "address": "Thị trấn Tri Tôn, An Giang",
       "price_per_day": "120,000 - 150,000 VND / ngày",
       "phone": "0918 123 456 - 0987 654 321",
-      "note": "Giao nhận xe miễn phí tận Bến xe Tri Tôn, Homestay và Khách sạn."
+      "note": "Giao nhận xe miễn phí tận Bến xe Tri Tôn, Văn phòng Phương Trang, Homestay và Khách sạn."
     }
   ],
   "mountain_transport": {
