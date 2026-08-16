@@ -379,11 +379,11 @@ export default function FoodPage() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
               {filteredFoods.map((food, idx) => (
                 <div
                   key={food.id}
-                  className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_2px_12px_rgba(240,163,47,0.10)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
                     {/* Image Header with Scrim */}
@@ -399,41 +399,41 @@ export default function FoodPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
                       {/* Top Badges */}
-                      <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5">
+                      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1">
                         {food.open_late ? (
-                          <span className="px-2.5 py-1 rounded-xl bg-purple-900/95 text-amber-300 font-black text-[10px] sm:text-xs uppercase tracking-wider backdrop-blur-md flex items-center gap-1 shadow-sm border border-purple-400/40 font-display">
-                            <Moon className="w-3 h-3 text-amber-300 fill-amber-300" />
+                          <span className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-purple-900/95 text-amber-300 font-black text-[9px] sm:text-xs uppercase tracking-wider backdrop-blur-md flex items-center gap-0.5 sm:gap-1 shadow-sm border border-purple-400/40 font-display">
+                            <Moon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-300 fill-amber-300" />
                             <span>Mở Muộn</span>
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
-                            <Award className="w-3 h-3 text-[#26221B]" />
+                          <span className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[9px] sm:text-xs uppercase tracking-wider flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
+                            <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#26221B]" />
                             <span>TOP #{idx + 1}</span>
                           </span>
                         )}
                       </div>
 
                       {/* Rating Badge */}
-                      <span className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
-                        <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
+                      <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
+                        <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
                         <span>{food.rating}</span>
                       </span>
 
                       {/* Bottom Text on Photo */}
-                      <div className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
-                        <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
+                      <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 text-white space-y-0.5">
+                        <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
                           {food.commune}
                         </span>
-                        <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                        <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
                           {food.name}
                         </h3>
                       </div>
                     </div>
 
                     {/* Content Details */}
-                    <div className="p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355]">
+                    <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#6B6355]">
                       {food.description && (
-                        <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                        <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
                           {food.description}
                         </p>
                       )}
@@ -441,35 +441,35 @@ export default function FoodPage() {
                   </div>
 
                   {/* Card Footer Actions */}
-                  <div className="p-3.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-2">
+                  <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-1.5 sm:gap-2">
                     <Link
                       href={`/places/${food.slug || food.id}`}
-                      className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
+                      className="text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
                     >
                       <span>Xem quán</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
                     </Link>
 
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1 sm:gap-1.5">
                       {food.video_url && (
                         <a
                           href={food.video_url}
                           target="_blank"
                           rel="noreferrer"
                           title="Xem Video TikTok"
-                          className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+                          className="p-1 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
                         >
-                          <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
+                          <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-rose-600 text-rose-600" />
                         </a>
                       )}
                       <a
                         href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.name + " " + food.commune + " Tri Tôn")}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
+                        className="px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
                       >
-                        <Navigation className="w-3 h-3 text-emerald-600" />
-                        <span>Chỉ đường</span>
+                        <Navigation className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600 shrink-0" />
+                        <span className="hidden sm:inline">Chỉ đường</span>
                       </a>
                     </div>
                   </div>
