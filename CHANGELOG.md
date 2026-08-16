@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v55.0.0-AUTO-DEPLOYMENT-RECOVERY-ZERO-CRASH] - 2026-08-16
+
+### 🛡️ Cơ Chế Tự Động Khắc Phục Lệch Phiên Bản Deploy (Deployment Skew Auto-Recovery)
+
+#### 1. Nguyên Nhân Sự Cố "This page couldn't load"
+- Khi hệ thống deploy bản build mới lên máy chủ Vercel, các thiết bị di động đang mở phiên bản cũ khi bấm chuyển trang (SPA Navigation) sẽ yêu cầu các file JavaScript chunk cũ đã bị server xóa/thay thế.
+- Điều này gây ra lỗi `ChunkLoadError` khiến trình duyệt hiển thị màn hình báo lỗi đen của Vercel Webview.
+
+#### 2. Giải Pháp Xử Lý Triệt Để (`DeploymentAutoRecovery.tsx`)
+- **Tự động bắt lỗi Chunk/RSC mismatch**: Lắng nghe `window.onerror` và `window.onunhandledrejection` đối với các lỗi `ChunkLoadError`, `Loading chunk failed`, `Failed to fetch dynamically imported module`.
+- **Tự Động Làm Tươi Liền Mạch (Seamless Auto-Refresh)**: Khi phát hiện phiên bản cũ bị lệch với server, hệ thống tự động làm tươi trang trong **0.05 giây**, tải lại bản build mới nhất của Vercel mà **không bao giờ để người dùng thấy màn hình đen lỗi**!
+
+---
+
 ## [v54.0.0-SEAMLESS-CLUSTER-SMOOTH-SCROLL-AND-SYNC-FILTER] - 2026-08-16
 
 ### 🎯 Tự Động Trượt Mượt Mà (Auto Smooth Scroll) & Đồng Bộ Bộ Lọc Cụm Đa Xã Sang Trang Khám Phá
