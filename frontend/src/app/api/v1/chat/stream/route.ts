@@ -68,12 +68,17 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
      • *Từ TP. Cần Thơ*: QL91 ➔ TP. Long Xuyên ➔ ĐT941 ➔ Tri Tôn (khoảng 110km, 2.5 tiếng).
      • *Từ TP. Châu Đốc*: QL91 ➔ Rẽ vào Tỉnh lộ ĐT948 (qua Rừng tràm Trà Sư, KDL Núi Cấm) ➔ Men theo sườn Núi Dài qua Xã Châu Lăng ➔ TT. Tri Tôn (khoảng 45km, 1 tiếng - cung đường ngắm cảnh đẹp nhất).
      • *Từ TP. Rạch Giá (Kiên Giang)*: QL80 ➔ Kênh Tám Ngàn ➔ Xã Cô Tô ➔ TT. Tri Tôn (khoảng 75km, 1.8 tiếng).
-   - **Chỉ dẫn di chuyển lên các thắng cảnh dốc núi & đường hẹp đặc thù**:
+   - **Chỉ dẫn di chuyển đến các cung đường tuyệt cảnh & lối mòn check-in huyền thoại**:
+     • *Con Đường Tơ Lụa Tri Tôn (Xã Núi Tô)*: Cung đường bê tông uốn lượn hình chữ S mềm mại giữa cánh đồng lúa Tà Pạ nối Hồ Soài Chek và Hàng Cây Trâm trăm tuổi. Từ chân đồi Tà Pạ đi theo đường bê tông liên ấp về hướng Hồ Soài Chek (đi xe máy/xe đạp lúc 06:00 sáng hoặc 16:30 chiều ngắm hoàng hôn).
+     • *Đường Tuyến Tránh Tri Tôn & Nút Giao Chữ Y (Bao quanh TT. Tri Tôn)*: Tuyến đường 4.3km (4 làn xe rộng 11m) nối ĐT941 sang ĐT948. Nổi tiếng với nút giao hình chữ Y tuyệt đẹp giữa biển lúa, view panorama ôm trọn Núi Cô Tô & Núi Dài, điểm săn mây sườn núi và hoàng hôn triệu view.
+     • *Cung Đường Ô Tà Sóc & Rừng Tre Tầm Vông (Xã Lương Phi)*: Từ TT. Tri Tôn theo ĐT948 về hướng Ba Chúc 7km ➔ Ngã ba Xã Lương Phi rẽ trái vào đường Ô Tà Sóc chạy thẳng 2km. Con đường rợp bóng hàng ngàn bụi tầm vông xanh mướt dẫn vào Hang Chỉ Huy, Điện Trời Gầm, Suối Bạc và Đồi Ma Thiên Lãnh.
+     • *Thung Lũng Tà Lọt & Cung Đường Hồ Tà Lọt / Suối Tà Lọt (Xã Lê Trì & An Hảo)*: Thung lũng hoang sơ kẹp giữa Núi Cấm và Núi Dài. Từ ĐT948 (đoạn Lê Trì) rẽ vào đường Tà Lọt men theo triền núi. Nơi có hồ thủy lợi Tà Lọt 531.000m³, suối đá trong vắt và các vườn cây ăn trái bản địa.
+     • *Cung Đường Cây Thốt Nốt Trái Tim & Chân Núi Cô Tô (Xã Cô Tô & An Tức)*: Từ ngã 3 Tri Tôn đi ĐT941 hướng về Cô Tô 4km là tới cụm thốt nốt hình trái tim huyền thoại giữa cánh đồng lúa.
+     • *Cung Đường Cổng Trời Chùa Koh Kas & Chùa Rô (Xã Châu Lăng)*: Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa xuyên qua cánh đồng lúa 1km. Xe máy vào tận nơi chụp ảnh, ô tô đậu ngoài đường nhựa lớn cách 200m rồi đi bộ vào.
+     • *Đường Vòng Hồ Soài So & Suối Vàng (Xã Núi Tô)*: Từ TT. Tri Tôn theo đường Trần Hưng Đạo 1.5km vào cổng KDL Suối Vàng - Hồ Soài So, ngắm vách đá dựng đứng của Núi Cô Tô in bóng xuống hồ nước 5ha.
      • *Đường lên Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô)*: Từ đường Nguyễn Trãi (TT. Tri Tôn) rẽ vào dốc bê tông dài 1.2km lên Chùa Núi Tà Pạ. Xe máy (về số 1-2 khi lên/xuống, TUYỆT ĐỐI KHÔNG rà phanh liên tục), ô tô 4-7 chỗ lên tận sân chùa. Xe 16-29 chỗ nên đậu ở chân núi.
-     • *Đường lên Đỉnh Núi Cô Tô & Vồ Hội Mẹ (Xã Cô Tô)*: Dốc đứng >30 độ với cua tay áo cực gắt. CẢNH BÁO AN TOÀN: Tuyệt đối KHÔNG tự lái xe máy cá nhân nếu không quen đường dốc núi nguy hiểm. BẮT BUỘC thuê **Đội xe ôm bản địa Núi Cô Tô** (xe số độ phanh phụ chuyên dụng, khoảng 100k - 150k/người khứ hồi) hoặc trekking bộ 2-3 tiếng.
+     • *Đường lên Đỉnh Núi Cô Tô & Vồ Hội Mẹ (Xã Cô Tô)*: Dốc đứng hơn 30 độ với cua tay áo cực gắt. CẢNH BÁO AN TOÀN: Tuyệt đối KHÔNG tự lái xe máy cá nhân nếu không quen đường dốc núi nguy hiểm. BẮT BUỘC thuê **Đội xe ôm bản địa Núi Cô Tô** (xe số độ phanh phụ chuyên dụng, khoảng 100k - 150k/người khứ hồi) hoặc trekking bộ 2-3 tiếng.
      • *Đường vào Hồ Ô Thum (Xã Ô Lâm)*: Từ TT. Tri Tôn theo đường ĐT955B đi Xã Ô Lâm ➔ Rẽ vào đường bờ hồ 1.5km. Đường trải nhựa và bê tông rộng rãi, ô tô 4-29 chỗ và xe máy vào tận bãi đỗ xe các quán gà đốt.
-     • *Đường đến Cổng Trời Chùa Koh Kas (Xã Châu Lăng)*: Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa xuyên qua cánh đồng lúa 1km. Xe máy vào tận nơi chụp ảnh, ô tô đậu ngoài đường nhựa lớn cách 200m rồi đi bộ vào.
-     • *Đường đến Căn cứ Ô Tà Sóc & Rừng tầm vông (Xã Lương Phi)*: Từ Tri Tôn theo ĐT948 ➔ Đến ngã ba Xã Lương Phi rẽ trái vào đường Ô Tà Sóc chạy thẳng vào chân Núi Dài. Ô tô, xe máy vào tận nơi.
 
 5. **Tôn trọng văn hóa Chùa Tháp Khmer**:
    - Khi vào chánh điện: Mặc trang phục lịch sự, cởi giày dép, không chỉ ngón tay trực tiếp vào tượng Phật.

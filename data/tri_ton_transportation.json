@@ -42,7 +42,57 @@
       "name": "Đội Xe Ôm Bản Địa Chinh Phục Núi Cô Tô & Vồ Hội",
       "location": "Chân Núi Cô Tô (gần Hồ Soài So / Cổng Chùa Núi)",
       "price_roundtrip": "100,000 - 150,000 VND / người (Khứ hồi lên Vồ Hội)",
-      "safety_warning": "Đường dốc đứng >30 độ với cua tay áo cực gắt. Du khách TUYỆT ĐỐI KHÔNG tự lái xe máy cá nhân nếu không quen đường đèo dốc nguy hiểm. Bắt buộc thuê xe ôm bản địa (xe có phanh phụ chuyên dụng) hoặc trekking bộ 2-3 tiếng."
+      "safety_warning": "Đường dốc đứng hơn 30 độ với cua tay áo cực gắt. Du khách TUYỆT ĐỐI KHÔNG tự lái xe máy cá nhân nếu không quen đường đèo dốc nguy hiểm. Bắt buộc thuê xe ôm bản địa (xe có phanh phụ chuyên dụng) hoặc trekking bộ 2-3 tiếng."
+    }
+  },
+  "scenic_routes_and_byways": {
+    "con_duong_to_lua": {
+      "name": "Con Đường Tơ Lụa Tri Tôn (Cung Đường S Giữa Biển Lúa Tà Pạ)",
+      "location": "Cánh đồng Tà Pạ nối Hồ Soài Chek & Hàng Cây Trâm, Xã Núi Tô",
+      "highlights": "Cung đường bê tông uốn lượn mềm mại như dải lụa vắt ngang cánh đồng lúa Tà Pạ, do người dân địa phương hiến đất làm đường. Xung quanh là hàng cây thốt nốt cổ thụ và hàng cây trâm trăm tuổi, view trọn đỉnh Núi Tô.",
+      "how_to_get_there": "Từ chân Đồi Tà Pạ chạy theo đường bê tông liên ấp hướng về Hồ Soài Chek. Lý tưởng nhất đi xe máy hoặc xe đạp lúc 06:00 sáng hoặc 16:30 chiều ngắm hoàng hôn."
+    },
+    "tuyen_tranh_tri_ton": {
+      "name": "Đường Tuyến Tránh Tri Tôn & Nút Giao Chữ Y Thần Thánh",
+      "location": "Tuyến tránh nối ĐT941 sang ĐT948, bao quanh Thị trấn Tri Tôn",
+      "highlights": "Tuyến đường hiện đại 4.3km, 4 làn xe rộng 11m chạy giữa cánh đồng lúa bao la. Nổi tiếng với Nút giao hình chữ Y tuyệt đẹp hướng tầm nhìn panorama 360 độ ra dãy Núi Cô Tô và Núi Dài, điểm săn mây sườn núi và hoàng hôn triệu view.",
+      "how_to_get_there": "Từ ĐT941 (hướng Long Xuyên vào) trước khi vào nội ô thị trấn, rẽ vào tuyến tránh để đi thẳng qua ĐT948 (đi Châu Lăng / Tịnh Biên) hoặc dừng chân chụp ảnh tại nút giao chữ Y."
+    },
+    "cung_duong_o_ta_soc": {
+      "name": "Cung Đường Ô Tà Sóc & Rừng Tre Tầm Vông Thẳng Tắp",
+      "location": "Khu Di Tích Ô Tà Sóc, sườn Núi Dài (Ngọa Long Sơn), Xã Lương Phi",
+      "highlights": "Con đường bê tông rợp bóng mát bởi hàng ngàn bụi tre tầm vông xanh mướt cao vút hai bên đường, dẫn vào Căn cứ Tỉnh ủy An Giang, Hang Chỉ Huy, Điện Trời Gầm, Suối Bạc và Đồi Ma Thiên Lãnh.",
+      "how_to_get_there": "Từ TT. Tri Tôn theo ĐT948 về hướng Ba Chúc 7km ➔ Đến ngã ba Xã Lương Phi rẽ trái theo biển chỉ dẫn Ô Tà Sóc chạy thẳng 2km vào chân núi. Ô tô, xe máy vào tận nơi."
+    },
+    "thung_lung_ta_lot": {
+      "name": "Thung Lũng Tà Lọt & Cung Đường Hồ Tà Lọt / Suối Tà Lọt",
+      "location": "Thung lũng kẹp giữa Núi Cấm và Núi Dài (giáp ranh Xã An Hảo & Xã Lê Trì)",
+      "highlights": "Vùng thung lũng sơn thủy hữu tình nguyên sơ với hồ thủy lợi Tà Lọt dung tích 531.000m³, Suối Tà Lọt trong vắt chảy qua ghềnh đá và những vườn cây ăn trái trĩu quả (sầu riêng, bơ, dâu da).",
+      "how_to_get_there": "Từ ĐT948 (đoạn qua Lê Trì / chân Núi Dài) rẽ vào đường liên ấp Tà Lọt men theo triền núi. Xe máy là phương tiện tốt nhất để len lỏi khám phá suối và lòng hồ."
+    },
+    "cung_duong_deo_dt948": {
+      "name": "Cung Đường Đèo Sườn Núi Dài ĐT948 (Trục Phượt Bảy Núi)",
+      "location": "Tuyến Tỉnh Lộ ĐT948 kết nối Tri Tôn ➔ Châu Lăng ➔ Lê Trì ➔ Tịnh Biên",
+      "highlights": "Cung đường đèo thấp uốn lượn ôm sát chân Núi Dài và Núi Cấm, hai bên là rừng tầm vông, vườn xoài, vườn chúc và các quán gà đốt đồi nướng than.",
+      "how_to_get_there": "Tuyến huyết mạch chạy thẳng từ trung tâm Tri Tôn đi KDL Núi Cấm và Rừng tràm Trà Sư."
+    },
+    "cung_duong_thot_not_trai_tim": {
+      "name": "Cung Đường Cây Thốt Nốt Trái Tim & Chân Núi Cô Tô",
+      "location": "Tuyến đường liên xã từ Núi Tô qua Xã Cô Tô và Xã An Tức",
+      "highlights": "Cung đường uốn lượn men theo chân Núi Cô Tô với cụm thốt nốt tạo hình trái tim huyền thoại giữa biển lúa và hàng thốt nốt cổ thụ soi bóng mùa nước nổi.",
+      "how_to_get_there": "Từ ngã 3 Tri Tôn đi ĐT941 hướng về Xã Cô Tô khoảng 4km là tới cụm thốt nốt trái tim bên tay phải."
+    },
+    "cung_duong_cong_troi_koh_kas": {
+      "name": "Cung Đường Cổng Trời Koh Kas & Sân Bừa Nước Chùa Rô",
+      "location": "Xã Châu Lăng, Tri Tôn",
+      "highlights": "Cung đường bê tông xuyên giữa biển lúa xanh ngắt dẫn tới Cổng trời Chùa Koh Kas cổ kính đứng trơ trọi giữa đồng và Chùa Rô nơi tổ chức hội đua bừa nước truyền thống.",
+      "how_to_get_there": "Từ ĐT948 (ngã 3 Cây Me) rẽ vào đường ấp An Hòa chạy 1km xuyên đồng ruộng là đến."
+    },
+    "cung_duong_ho_soai_so": {
+      "name": "Cung Đường Vòng Hồ Soài So & Suối Vàng Chân Núi Cô Tô",
+      "location": "Xã Núi Tô, Tri Tôn",
+      "highlights": "Đường nhựa bao quanh lòng hồ Soài So xanh biếc 5ha, ngắm vách đá dựng đứng của Núi Cô Tô phản chiếu xuống mặt nước và dẫn lên Suối Vàng róc rách.",
+      "how_to_get_there": "Từ TT. Tri Tôn theo đường Trần Hưng Đạo đi 1.5km vào cổng KDL Suối Vàng - Hồ Soài So."
     }
   },
   "driving_routes": {
@@ -65,24 +115,6 @@
       "title": "Tuyến Rạch Giá / Kiên Giang ➔ Tri Tôn (Khoảng 75km - 1.8 tiếng)",
       "direction": "TP. Rạch Giá ➔ QL80 ➔ Ngã 3 Ba Hòn hoặc Kênh Tám Ngàn ➔ Xã Tân Tuyến / Cô Tô ➔ Thị trấn Tri Tôn.",
       "best_for": "Ô tô, Xe máy"
-    }
-  },
-  "specific_place_access": {
-    "ho_ta_pa_chua_ta_pa": {
-      "name": "Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô)",
-      "guide": "Từ ngã 3 Tri Tôn đi đường Nguyễn Trãi hướng Núi Tô ➔ Rẽ vào đường dốc bê tông lên Chùa Tà Pạ (dài 1.2km). Xe máy đi số 1-2, ô tô 4-7 chỗ lên tận chùa. Xe 16-29 chỗ đậu dưới bãi xe chân núi."
-    },
-    "ho_o_thum_ga_dot": {
-      "name": "Hồ Ô Thum & Các Quán Gà Đốt (Xã Ô Lâm)",
-      "guide": "Từ TT. Tri Tôn theo đường ĐT955B đi Xã Ô Lâm ➔ Rẽ vào đường bờ hồ 1.5km. Đường trải nhựa và bê tông rộng rãi, ô tô 4-29 chỗ và xe máy vào tận bãi đỗ xe của các quán gà đốt."
-    },
-    "cong_troi_koh_kas": {
-      "name": "Cổng Trời Chùa Koh Kas (Xã Châu Lăng)",
-      "guide": "Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa (Xã Châu Lăng) ➔ Đi giữa cánh đồng lúa 1km là đến cổng. Xe máy vào tận nơi, ô tô đậu ngoài đường nhựa lớn cách 200m."
-    },
-    "can_cu_o_ta_soc": {
-      "name": "Khu Di Tích Căn Cứ Ô Tà Sóc (Xã Lương Phi)",
-      "guide": "Từ TT. Tri Tôn theo ĐT948 hướng đi Ba Chúc ➔ Đến ngã ba Xã Lương Phi rẽ trái vào đường Ô Tà Sóc ➔ Chạy thẳng vào chân Núi Dài và Rừng tầm vông."
     }
   }
 }

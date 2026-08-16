@@ -449,6 +449,113 @@ export default function GuideClientPage() {
               </div>
             </div>
           </div>
+
+          {/* 8 Iconic Scenic Routes & Pathways */}
+          <div className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-5">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2.5 rounded-2xl bg-[#0E8C7F]/10 text-[#0E8C7F]">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-display text-base sm:text-lg font-bold text-[#26221B]">
+                  Tuyệt Tác 8 Cung Đường & Lối Mòn Check-in Huyền Thoại Tri Tôn
+                </h3>
+                <p className="font-body text-xs text-[#6B6355]">
+                  Những cung đường tuyệt sắc dành cho phượt thủ, nhiếp ảnh gia và du khách mê xê dịch
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
+                  Biển Lúa Tà Pạ
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Con Đường Tơ Lụa</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường bê tông uốn lượn hình chữ S mềm mại vắt ngang đồng lúa Tà Pạ, nối Hồ Soài Chek và Hàng Cây Trâm trăm tuổi.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#0E8C7F]">📍 Xã Núi Tô • Check-in lúc 06:00 & 16:30</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#F0A32F]/15 text-[#D9822B] text-[10px] font-bold font-display">
+                  Săn Mây & Hoàng Hôn
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Tuyến Tránh Chữ Y</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Tuyến đường 4 làn rộng thoáng 4.3km nối ĐT941 sang ĐT948. Nút giao chữ Y độc đạo view trọn vẹn Núi Cô Tô và Núi Dài.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#D9822B]">📍 Nối ĐT941 - ĐT948 • View 360 độ</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#7C5CBF]/15 text-[#7C5CBF] text-[10px] font-bold font-display">
+                  Rừng Tre Thẳng Tắp
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Vào Ô Tà Sóc</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường rợp mát bóng tre tầm vông xanh mướt dẫn vào Hang Chỉ Huy, Điện Trời Gầm, Suối Bạc và Đồi Ma Thiên Lãnh.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#7C5CBF]">📍 Xã Lương Phi • Ô tô & xe máy vào tận nơi</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#A6503A]/15 text-[#A6503A] text-[10px] font-bold font-display">
+                  Thung Lũng Sơn Thủy
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Thung Lũng Tà Lọt</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Thung lũng hoang sơ kẹp giữa Núi Cấm và Núi Dài với Hồ Tà Lọt 531.000m³, suối đá róc rách và vườn sầu riêng trĩu quả.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 Xã Lê Trì - An Hảo • Đi phượt xe máy</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
+                  Biểu Tượng Tình Yêu
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Thốt Nốt Trái Tim</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cụm thốt nốt mọc tự nhiên kết thành hình trái tim hoàn mỹ giữa biển lúa vàng rực dưới chân Núi Phụng Hoàng Sơn.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#0E8C7F]">📍 Xã Cô Tô • Cách TT. Tri Tôn 4km</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#F0A32F]/15 text-[#D9822B] text-[10px] font-bold font-display">
+                  Cổ Kính & Đua Bừa
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Cổng Trời Koh Kas</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường đan xuyên cánh đồng lúa dẫn đến Cổng chùa Koh Kas cổ kính trơ trọi giữa đồng và Sân bừa nước Chùa Rô.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#D9822B]">📍 Xã Châu Lăng • Rẽ từ Ngã 3 Cây Me</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#7C5CBF]/15 text-[#7C5CBF] text-[10px] font-bold font-display">
+                  Cung Đèo Bảy Núi
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đèo Sườn Núi Dài (ĐT948)</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường huyết mạch uốn lượn ôm sát chân Núi Dài và Núi Cấm, nối Tri Tôn qua Châu Lăng, KDL Núi Cấm và Trà Sư.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#7C5CBF]">📍 Tuyến Tỉnh lộ ĐT948</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#A6503A]/15 text-[#A6503A] text-[10px] font-bold font-display">
+                  Mặt Nước Phẳng Lặng
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Vòng Hồ Soài So</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Đường nhựa bao quanh lòng hồ 5ha, chiêm ngưỡng vách đá dựng đứng của Núi Cô Tô soi bóng và dòng Suối Vàng thơ mộng.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 Xã Núi Tô • Cách trung tâm 1.5km</p>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
