@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description,
-      url: `https://dulichtriton.vn/places/${place.slug || place.id}`,
+      url: `https://dulichtriton.com/places/${place.slug || place.id}`,
       siteName: 'Du Lịch Tri Tôn AI',
       images: [
         {
@@ -83,11 +83,98 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
     notFound();
   }
 
+  // ── JSON-LD Structured Data (Schema.org TouristAttraction) ────────────────
+  const categoryMap: Record<string, string> = {
+    nature: 'NaturalPlace',
+    temple: 'LandmarksOrHistoricalBuildings',
+    pagoda: 'LandmarksOrHistoricalBuildings',
+    culture: 'LandmarksOrHistoricalBuildings',
+    food: 'FoodEstablishment',
+    restaurant: 'Restaurant',
+    cafe: 'CafeOrCoffeeShop',
+    homestay: 'LodgingBusiness',
+    hotel: 'Hotel',
+    market: 'ShoppingCenter',
+    festival: 'Event',
+  };
+  const addType = categoryMap[place.category || ''] || 'TouristAttraction';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': ['TouristAttraction', addType],
+        '@id': `https://dulichtriton.com/places/${place.slug || place.id}#place`,
+        name: place.name,
+        description: place.description || '',
+        url: `https://dulichtriton.com/places/${place.slug || place.id}`,
+        image: place.image_url
+          ? { '@type': 'ImageObject', url: place.image_url, name: place.name }
+          : undefined,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: place.commune || 'Tri Tôn',
+          addressRegion: 'An Giang',
+          addressCountry: 'VN',
+          streetAddress: (place as any).address || `${place.commune}, Tri Tôn, An Giang`,
+        },
+        geo: (place as any).latitude && (place as any).longitude
+          ? {
+              '@type': 'GeoCoordinates',
+              latitude: (place as any).latitude,
+              longitude: (place as any).longitude,
+            }
+          : undefined,
+        aggregateRating: place.rating
+          ? {
+              '@type': 'AggregateRating',
+              ratingValue: place.rating,
+              bestRating: 5,
+              worstRating: 1,
+              ratingCount: 50,
+            }
+          : undefined,
+        isLocatedInPlace: {
+          '@type': 'AdministrativeArea',
+          name: 'Tri Tôn',
+          containedInPlace: {
+            '@type': 'State',
+            name: 'An Giang',
+            containedInPlace: { '@type': 'Country', name: 'Việt Nam' },
+          },
+        },
+        touristType: ['Du khách trong nước', 'Khách gia đình', 'Phượt thủ'],
+        amenityFeature: [
+          { '@type': 'LocationFeatureSpecification', name: 'Bãi đỗ xe', value: true },
+          { '@type': 'LocationFeatureSpecification', name: 'Chụp ảnh', value: true },
+        ],
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['h1', '.place-description', '.place-story'],
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Du Lịch Tri Tôn', item: 'https://dulichtriton.com' },
+          { '@type': 'ListItem', position: 2, name: 'Địa Điểm', item: 'https://dulichtriton.com/places' },
+          { '@type': 'ListItem', position: 3, name: place.name, item: `https://dulichtriton.com/places/${place.slug || place.id}` },
+        ],
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-[#FAF3E7]">
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <PlaceDetailClient place={place} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-[#FAF3E7]">
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <PlaceDetailClient place={place} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

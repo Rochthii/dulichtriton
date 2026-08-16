@@ -4,6 +4,24 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v58.1.0-FIX-UTF8-ENCODING-AND-DEPLOY-SEO-GEO-LAYER] - 2026-08-16
+
+### 🌐 Khôi Phục 100% Bộ Mã Tiếng Việt Chuẩn UTF-8 & Triển Khai Toàn Diện Hệ Thống SEO + GEO Cho Domain `dulichtriton.com`
+
+#### 1. Khắc Phục Triệt Để Lỗi Vỡ Font Tiếng Việt (Mojibake Encoding)
+- Khôi phục mã nguồn về trạng thái UTF-8 chuẩn xác 100%, loại bỏ hoàn toàn các ký tự lỗi hiển thị do công cụ chuyển đổi dòng lệnh trước đó gây ra.
+- Toàn bộ giao diện Trang Chủ, Header, Khám Phá, Ẩm Thực, Lịch Trình đã hiển thị tiếng Việt dấu thanh chuẩn sắc nét.
+
+#### 2. Kích Hoạt Hệ Thống SEO & GEO (Generative Engine Optimization) Toàn Diện
+- **Tự động sinh `sitemap.xml`**: Bao gồm đầy đủ 149 địa điểm thực địa đã xác minh và các trang chủ lực.
+- **Cấu hình `robots.txt`**: Mở quyền cho các AI Bot hàng đầu (GPTBot, Google-Extended/Gemini, Claude, Perplexity, Cohere, YouBot) đọc và trích dẫn dữ liệu.
+- **Dữ liệu có cấu trúc Schema.org (JSON-LD)**: Bổ sung các schema `WebSite`, `Organization`, `TouristDestination`, `FAQPage` cho trang chủ và `TouristAttraction`, `GeoCoordinates`, `BreadcrumbList` cho từng trang chi tiết `/places/[id]`.
+- **Tệp tin chuẩn GEO `public/llms.txt`**: Cung cấp tài liệu tổng quan và hướng dẫn trích dẫn cho các mô hình ngôn ngữ lớn (LLMs).
+- **API Endpoint GEO `/api/v1/llms-context`**: Cung cấp API dữ liệu JSON sạch của 149 địa điểm phục vụ cho AI Tra cứu và Tổng hợp dữ liệu.
+- **Đồng bộ Domain**: Chuyển đổi toàn bộ liên kết nội bộ, thẻ canonical và openGraph sang tên miền chính thức `dulichtriton.com`.
+
+---
+
 ## [v57.0.0-FIX-CHATBOT-HYDRATION-AND-PWA-SERVICE-WORKER-RELOAD] - 2026-08-16
 
 ### 🛠️ Sửa Triệt Để Lỗi Crash Hydration & Cập Nhật Cấu Hình PWA Service Worker Tự Động Refresh

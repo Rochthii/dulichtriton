@@ -102,7 +102,7 @@ export async function callOpenRouterFallback(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
-        'HTTP-Referer': 'https://dulichtriton.vn',
+        'HTTP-Referer': 'https://dulichtriton.com',
         'X-Title': 'Du Lich Tri Ton AI',
       },
       body: JSON.stringify({

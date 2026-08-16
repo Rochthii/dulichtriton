@@ -64,7 +64,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
     const budget = itinerary?.budget_range || '350.000đ - 650.000đ/người';
     const stops = itinerary?.stops || [];
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('https://dulichtriton.vn/planner')}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('https://dulichtriton.com/planner')}`;
 
     // Render stops into a beautiful printable timeline
     let stopsHtml = '';
@@ -367,7 +367,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
 
             <div class="footer-bar">
               <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin 149 địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>
-              Truy cập trực tuyến: <em>dulichtriton.vn</em>
+              Truy cập trực tuyến: <em>dulichtriton.com</em>
             </div>
           </div>
 

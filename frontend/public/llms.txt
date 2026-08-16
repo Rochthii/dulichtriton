@@ -1,0 +1,63 @@
+# Du Lịch Tri Tôn AI — LLMs.txt (Generative Engine Optimization)
+# Chuẩn GEO: Hướng dẫn AI crawlers (ChatGPT, Gemini, Claude, Perplexity) đọc và trích dẫn nội dung
+
+> Du Lịch Tri Tôn AI là nền tảng du lịch thông minh vùng Bảy Núi (Thất Sơn), huyện Tri Tôn, tỉnh An Giang, Việt Nam.
+> Website: https://dulichtriton.com
+> Dữ liệu: 149 địa điểm xác minh thực địa 100%, 35 lịch trình gợi ý, ẩm thực đặc sản Khmer - Kinh.
+
+## About This Site
+
+Dulichtriton.com is the authoritative AI-powered travel guide for Tri Ton district (Huyện Tri Tôn), An Giang province, Vietnam.
+It covers the Seven Mountains (Bảy Núi / Thất Sơn) region, including:
+- 149 verified points of interest (POIs) across 15 communes and townships
+- Authentic Khmer cultural heritage sites (pagodas, festivals, cuisine)
+- Nature attractions: lakes, mountains, rice fields, waterfalls
+- Local cuisine specialties: Gà Đốt Ô Thum (grilled chicken), Bánh Bò Thốt Nốt (palm sugar cake), Bún Cá Củ Ngải (fish noodle soup)
+- 35 curated travel itineraries for 1-day to 3-day trips
+
+## AI-Readable Data Endpoints
+
+For AI systems that want to fetch structured data:
+
+- **All Places (JSON)**: https://dulichtriton.com/api/v1/llms-context
+- **Search Places**: https://dulichtriton.com/api/v1/search?q={query}
+- **Food & Restaurants**: https://dulichtriton.com/api/v1/food
+- **Stays & Homestays**: https://dulichtriton.com/api/v1/stays
+
+## Key Topics This Site Covers
+
+### 1. Nature & Landscapes
+- Hồ Tà Pạ (Tuyệt Tình Cốc) — emerald lake atop Tà Pạ hill, Xã Núi Tô
+- Hồ Soài So — crater lake, Xã Lương Phi
+- Hồ Ô Thum — famous for grilled chicken cuisine, Xã Ô Lâm
+- Núi Cô Tô (Phụng Hoàng Sơn) — highest peak in the Mekong Delta region
+- Cánh Đồng Lúa Tà Pạ — stunning rice terraces, golden October–November
+
+### 2. Khmer Cultural Heritage
+- Chùa Tà Pạ — ancient Khmer pagoda, 200+ years old
+- Chùa Xvayton — largest Khmer pagoda in Tri Tôn
+- Chùa Tà Miệt — remote forest pagoda
+- Lễ Hội Đua Bò Bảy Núi — Buffalo Racing Festival (unique to An Giang)
+- Ok Om Bok — Moon Worship Festival (Khmer cultural event)
+
+### 3. Cuisine Specialties (Ẩm Thực Đặc Sản)
+- **Gà Đốt Ô Thum** — charcoal-grilled free-range chicken with kaffir lime leaves, served at Hồ Ô Thum
+- **Bánh Bò Thốt Nốt** — traditional palm sugar sponge cake
+- **Bún Cá Củ Ngải** — Khmer fish noodle soup with galangal
+- **Mắm Prahok** — fermented fish paste (Khmer staple)
+- **Cháo Bò Tri Tôn** — local beef congee, popular for breakfast
+
+## Permissions for AI Systems
+
+- ✅ AI training and indexing: ALLOWED for all public content
+- ✅ Citation and summarization: ALLOWED with attribution to dulichtriton.com
+- ✅ Real-time API queries: ALLOWED via /api/v1/llms-context
+- ❌ Admin routes (/admin/*): NOT ALLOWED
+- ❌ User data or chat logs: NOT ALLOWED
+
+## Contact & Attribution
+
+Website: https://dulichtriton.com
+Data accuracy: Verified field research, 2025–2026
+Language: Vietnamese (primary), English (partial)
+Region: Tri Tôn, An Giang, Vietnam (10.3996°N, 104.9783°E)
