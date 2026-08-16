@@ -366,66 +366,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          104.9835,
-          10.4572
-        ]
-      },
-      "properties": {
-        "id": "quan-ga-dot-tuan-toi-o-thum",
-        "name": "Quán Gà Đốt Tuấn Tới Ô Thum",
-        "commune": "Thị trấn Tri Tôn",
-        "category": "gastronomy",
-        "description": "Khám phá Tri Tôn, Quán Gà Đốt Tuấn Tới Ô Thum là điểm dừng chân ẩm thực không thể bỏ lỡ, nơi hương vị bản địa hòa quyện cùng cảnh sắc Bảy Núi hùng vĩ.",
-        "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-        "rating": 4.6,
-        "open_late": false
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          104.9815,
-          10.4558
-        ]
-      },
-      "properties": {
-        "id": "quan-ga-dot-sau-bup-o-thum",
-        "name": "Quán Gà Đốt Sáu Búp Ô Thum",
-        "commune": "Thị trấn Tri Tôn",
-        "category": "gastronomy",
-        "description": "Khám phá Quán Gà Đốt Sáu Búp Ô Thum - Một trải nghiệm ẩm thực và văn hóa độc đáo tại Bảy Núi.",
-        "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-        "rating": 4.6,
-        "open_late": false
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          104.984,
-          10.458
-        ]
-      },
-      "properties": {
-        "id": "quan-ga-dot-ro-thum-khmer",
-        "name": "Quán Gà Đốt Rô THUM Khmer",
-        "commune": "Thị trấn Tri Tôn",
-        "category": "gastronomy",
-        "description": "Quán gà đốt trứ danh ven hồ Ô Thum, xã Ô Lâm. Gà thả vườn thịt chắc, ướp sả ớt lá chúc tươi đâm nhuyễn và nướng than hồng thơm lừng, chấm muối ớt trái chúc cay nồng.",
-        "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-        "rating": 4.6,
-        "open_late": false
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           105.0010215,
           10.4205235
         ]

@@ -34,12 +34,23 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      Đặc sản gà thả đồi ướp lá chúc đốt kín trong nồi thố thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
      [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
 
-3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026**:
-   - Gà Đốt Ô Thum (Xã Ô Lâm): Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt'). Luôn nhắc du khách nên gọi đặt trước 30-45 phút để quán chuẩn bị kịp.
-   - Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng): Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
-   - Bún Cá Củ Ngải Tri Tôn (Bún Cá Khmer): Nấu từ cá lóc đồng xào nghệ tươi, củ ngải bún giã nhuyễn thơm lừng, nước dùng xương ống thanh ngọt tự nhiên — TUYỆT ĐỐI KHÔNG DÙNG MẮM / KHÔNG PHẢI BÚN NƯỚC LÈO. Ăn kèm rau muống bào, bông điên điển, bắp chuối, rau nhút và heo quay da giòn.
-   - Đu Đủ Đâm Rina (Xã Châu Lăng): Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
-   - Bánh Bò Thốt Nốt Nướng Tân Lợi: Thơm béo nước cốt dừa và đường thốt nốt.
+3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026 (Chỉ dùng các quán đã xác minh thực tế 100%)**:
+   - **Gà Đốt Ô Thum & Tri Tôn**: Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt'). Luôn nhắc du khách nên gọi đặt trước 30-45 phút.
+     • **Các quán gà đốt thực tế đã xác minh 100%**:
+       1. *Quán Siêu Gà Đốt Ô Thum (Chau Siêu)*: Quán gốc tiên phong ven hồ Ô Thum, Xã Ô Lâm.
+       2. *Gà Đốt Ô Thum Kim Suổl*: Quán nổi tiếng da giòn, tẩm ướp đậm đà, Ấp Phước An, Xã Ô Lâm.
+       3. *Quán Kiều Tiên Gà Đốt Ô Thum*: Quán ven hồ nổi tiếng có Cầu gỗ & Nấc thang thiên đường, Xã Ô Lâm.
+       4. *Gà Đốt Vương Ngọc Ô Thum*: Quán lâu đời với nước chấm mắm chúc độc quyền, Xã Ô Lâm.
+       5. *Gà Đốt Thảo Nguyên Hồ Ô Thum*: Sân vườn chòi lá thoáng mát ven hồ Ô Thum, Xã Ô Lâm.
+       6. *Quán Gà Đốt Hoa Mặt Trời (Núi Dài)*: Quán nổi tiếng sườn Núi Dài ĐT948, gà thả đồi tươi ngon, Xã Lê Trì.
+       7. *Quán Gà Đốt Ai Đó Ô Thum*: Quán gia đình ven hồ Ô Thum, giá bình dân, Xã Ô Lâm.
+       8. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc bản địa, Xã Ô Lâm.
+       9. *Quán Gà Đốt & Vườn Nho Ô Thum*: Trải nghiệm hái nho 2ha kết hợp gà đốt chòi lá ven hồ, Xã Ô Lâm.
+     • **NGHIÊM CẤM TỰ BỊA TÊN QUÁN**: Tuyệt đối không nhắc hoặc gợi ý các tên quán không có thật ngoài đời như Sáu Búp, Rô THUM, 7 Núi, Thành Đạt, Tuấn Tới.
+   - **Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng)**: Gạo nàng nhen thơm lừng, thịt lòng bò tươi kèm lá chúc và vắt trái chúc nướng.
+   - **Bún Cá Củ Ngải Tri Tôn (Bún Cá Khmer)**: Nấu từ cá lóc đồng xào nghệ tươi, củ ngải bún giã nhuyễn thơm lừng, nước dùng xương ống thanh ngọt tự nhiên — TUYỆT ĐỐI KHÔNG DÙNG MẮM / KHÔNG PHẢI BÚN NƯỚC LÈO. Ăn kèm rau muống bào, bông điên điển, bắp chuối, rau nhút và heo quay da giòn.
+   - **Đu Đủ Đâm Rina (Xã Châu Lăng)**: Giã cối gỗ mắm ruốc, chanh ớt, ba khía cay nồng.
+   - **Bánh Bò Thốt Nốt Nướng**: Lò Út Cột, Lò Út Dứt, Lò Út Huệ. Thơm béo nước cốt dừa và đường thốt nốt.
 
 4. **Cẩm nang Tri Tôn Về Đêm (Quán Cà Phê Mở Muộn & Dạo Phố)**:
    - CHẠM Coffee & Tea (Đường 3/2, Thị trấn Tri Tôn): Sân vườn thoáng mát ngoài trời đón gió núi Bảy Núi về đêm, mở đến 22:00.
