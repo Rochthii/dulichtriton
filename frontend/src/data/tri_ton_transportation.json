@@ -58,6 +58,24 @@
       "highlights": "Tuyến đường hiện đại 4.3km, 4 làn xe rộng 11m chạy giữa cánh đồng lúa bao la. Nổi tiếng với Nút giao hình chữ Y tuyệt đẹp hướng tầm nhìn panorama 360 độ ra dãy Núi Cô Tô và Núi Dài, điểm săn mây sườn núi và hoàng hôn triệu view.",
       "how_to_get_there": "Từ ĐT941 (hướng Long Xuyên vào) trước khi vào nội ô thị trấn, rẽ vào tuyến tránh để đi thẳng qua ĐT948 (đi Châu Lăng / Tịnh Biên) hoặc dừng chân chụp ảnh tại nút giao chữ Y."
     },
+    "cung_duong_hang_cay_tram": {
+      "name": "Cung Đường Hàng Cây Trâm Trăm Tuổi (Mùa Trái Trâm Tím)",
+      "location": "Cánh đồng Xã Núi Tô & Xã Cô Tô",
+      "highlights": "Hàng cây trâm cổ thụ trăm tuổi xanh ngắt mọc thẳng tắp giữa bờ ruộng lúa. Vào tháng 4 - tháng 6 hàng năm, cả hàng cây trĩu quả trâm chín mọng tím lịm, tạo nên khung cảnh đồng quê miền Tây độc nhất vô nhị.",
+      "how_to_get_there": "Từ trung tâm Tri Tôn theo đường vào Hồ Soài Chek hoặc các đường đan liên ấp Xã Núi Tô."
+    },
+    "cung_duong_hang_me_cau_cay_me": {
+      "name": "Cung Đường Hàng Me Cổ Thụ & Cầu Cây Me (Xã Châu Lăng)",
+      "location": "Tuyến ĐT948 đoạn qua Cầu Cây Me, Xã Châu Lăng",
+      "highlights": "Đoạn đường rợp bóng mát bởi hàng me cổ thụ lâu đời, hai bên đường là thiên đường ẩm thực dân dã: Cháo bò trái chúc, Đu đủ đâm Rina, Bánh bò thốt nốt nướng than và Dừa nước ướp lạnh.",
+      "how_to_get_there": "Từ TT. Tri Tôn theo ĐT948 hướng đi Tịnh Biên khoảng 3km đến ngã ba Cầu Cây Me."
+    },
+    "cung_duong_duong_hoa_ken_hong": {
+      "name": "Cung Đường Hoa Kèn Hồng & Bờ Kè Núi Tô",
+      "location": "Bờ kè kênh Núi Tô & lối vào Công viên Văn hóa Tri Tôn",
+      "highlights": "Tuyến đường hoa kèn hồng, kèn vàng và hoa điệp rực rỡ sắc màu được chăm sóc tỉ mỉ, rực rỡ nhất vào mùa xuân hè từ tháng 1 đến tháng 5.",
+      "how_to_get_there": "Nằm ngay khu vực nội ô mở rộng, đoạn nối trung tâm thị trấn về hướng chân Núi Tô."
+    },
     "cung_duong_o_ta_soc": {
       "name": "Cung Đường Ô Tà Sóc & Rừng Tre Tầm Vông Thẳng Tắp",
       "location": "Khu Di Tích Ô Tà Sóc, sườn Núi Dài (Ngọa Long Sơn), Xã Lương Phi",
@@ -93,6 +111,30 @@
       "location": "Xã Núi Tô, Tri Tôn",
       "highlights": "Đường nhựa bao quanh lòng hồ Soài So xanh biếc 5ha, ngắm vách đá dựng đứng của Núi Cô Tô phản chiếu xuống mặt nước và dẫn lên Suối Vàng róc rách.",
       "how_to_get_there": "Từ TT. Tri Tôn theo đường Trần Hưng Đạo đi 1.5km vào cổng KDL Suối Vàng - Hồ Soài So."
+    },
+    "cung_duong_ho_soai_chek": {
+      "name": "Cung Đường Hồ Soài Chek & Sân Đua Bò Hội Lớn (Xã Núi Tô)",
+      "location": "Ấp Tô Hạ, Xã Núi Tô, Tri Tôn",
+      "highlights": "Đường hoa dẫn vào lòng hồ Soài Chek xanh biếc, nằm sát chân Núi Tô, bên cạnh là Công viên văn hóa và Sân Đua Bò Bảy Núi quy mô lớn nhất tỉnh An Giang.",
+      "how_to_get_there": "Từ đường Nguyễn Trãi rẽ vào đường hoa Hồ Soài Chek khoảng 1.8km."
+    },
+    "cung_duong_doi_tuc_dup": {
+      "name": "Cung Đường Đồi Tức Dụp & Hang C6 Lịch Sử (Xã An Tức)",
+      "location": "Tỉnh lộ ĐT948, Xã An Tức, Tri Tôn",
+      "highlights": "Cung đường lịch sử dẫn vào ngọn đồi Tức Dụp (ngọn đồi Hai Triệu Đô La) với hệ thống hang lò ốc độc đáo trong lòng đá granite hùng vĩ.",
+      "how_to_get_there": "Từ TT. Tri Tôn theo ĐT948 đi về hướng Cô Tô / Ba Chúc khoảng 12km."
+    },
+    "cung_duong_lang_gom_phnom_pi": {
+      "name": "Cung Đường Làng Gốm Đất Nung Phnôm Pi (Xã Châu Lăng)",
+      "location": "Ấp Phnôm Pi, Xã Châu Lăng, Tri Tôn",
+      "highlights": "Con đường phum sóc thanh bình dẫn vào làng nghề làm bếp Cà-ràng và đồ gốm đất sét thủ công độc nhất của người Khmer Bảy Núi.",
+      "how_to_get_there": "Từ ngã 3 Cây Me (ĐT948) rẽ vào đường làng ấp Phnôm Pi 800m."
+    },
+    "cung_duong_bien_gioi_vinh_gia": {
+      "name": "Cung Đường Biên Giới Kênh Vĩnh Tế & Cửa Khẩu Vĩnh Gia",
+      "location": "Thị trấn Ba Chúc ➔ Xã Vĩnh Gia, Tri Tôn",
+      "highlights": "Cung đường biên giới chạy dọc bờ Kênh Vĩnh Tế lịch sử, ngắm trọn vẹn cảnh sắc ruộng lúa bát ngát vùng biên thùy giáp Campuchia và mùa nước nổi.",
+      "how_to_get_there": "Từ Thị trấn Ba Chúc theo Tỉnh lộ ĐT955A chạy dọc kênh Vĩnh Tế về Cửa khẩu Vĩnh Gia."
     }
   },
   "driving_routes": {

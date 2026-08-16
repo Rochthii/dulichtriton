@@ -458,7 +458,7 @@ export default function GuideClientPage() {
               </div>
               <div>
                 <h3 className="font-display text-base sm:text-lg font-bold text-[#26221B]">
-                  Tuyệt Tác 8 Cung Đường & Lối Mòn Check-in Huyền Thoại Tri Tôn
+                  Tuyệt Tác 15 Cung Đường & Lối Mòn Check-in Huyền Thoại Tri Tôn
                 </h3>
                 <p className="font-body text-xs text-[#6B6355]">
                   Những cung đường tuyệt sắc dành cho phượt thủ, nhiếp ảnh gia và du khách mê xê dịch
@@ -466,7 +466,7 @@ export default function GuideClientPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
                 <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
                   Biển Lúa Tà Pạ
@@ -487,6 +487,39 @@ export default function GuideClientPage() {
                   Tuyến đường 4 làn rộng thoáng 4.3km nối ĐT941 sang ĐT948. Nút giao chữ Y độc đạo view trọn vẹn Núi Cô Tô và Núi Dài.
                 </p>
                 <p className="font-body text-[10px] font-bold text-[#D9822B]">📍 Nối ĐT941 - ĐT948 • View 360 độ</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#7C5CBF]/15 text-[#7C5CBF] text-[10px] font-bold font-display">
+                  Mùa Trái Trâm Tím
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Hàng Cây Trâm Cổ Thụ</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Hàng cây trâm trăm tuổi xanh ngắt giữa ruộng lúa. Mùa quả chín từ tháng 4-6 nhuộm tím cả góc trời đồng quê Bảy Núi.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#7C5CBF]">📍 Xã Núi Tô • Mùa trâm tháng 4 - 6</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
+                  Thiên Đường Ẩm Thực
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Hàng Me Châu Lăng</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Đoạn đường ĐT948 qua Cầu Cây Me rợp bóng me cổ thụ, nơi có cháo bò trái chúc, đu đủ đâm Rina và bánh bò thốt nốt nướng.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#0E8C7F]">📍 Cầu Cây Me, Xã Châu Lăng</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#A6503A]/15 text-[#A6503A] text-[10px] font-bold font-display">
+                  Sắc Hoa Rực Rỡ
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Hoa Bờ Kè Núi Tô</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Tuyến đường hoa kèn hồng, kèn vàng và hoa điệp rực rỡ men theo bờ kè kênh dẫn vào Công viên Văn hóa và Hồ Soài Chek.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 Nội ô mở rộng TT. Tri Tôn</p>
               </div>
 
               <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
@@ -553,6 +586,50 @@ export default function GuideClientPage() {
                   Đường nhựa bao quanh lòng hồ 5ha, chiêm ngưỡng vách đá dựng đứng của Núi Cô Tô soi bóng và dòng Suối Vàng thơ mộng.
                 </p>
                 <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 Xã Núi Tô • Cách trung tâm 1.5km</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-[10px] font-bold font-display">
+                  Sân Đua Bò Lớn Nhất
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Hồ Soài Chek</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Đường hoa dẫn vào lòng hồ Soài Chek xanh biếc, công viên văn hóa và Sân Đua Bò Bảy Núi lớn nhất tỉnh An Giang.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#0E8C7F]">📍 Ấp Tô Hạ, Xã Núi Tô</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#F0A32F]/15 text-[#D9822B] text-[10px] font-bold font-display">
+                  Đồi Hai Triệu Đô
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Vào Đồi Tức Dụp</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường lịch sử dẫn vào ngọn đồi huyền thoại Tức Dụp với hệ thống hang lò ốc độc đáo trong lòng đá granite hùng vĩ.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#D9822B]">📍 ĐT948, Xã An Tức</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#7C5CBF]/15 text-[#7C5CBF] text-[10px] font-bold font-display">
+                  Làng Nghề Cà-Ràng
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Gốm Phnôm Pi</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Con đường phum sóc thanh bình dẫn vào làng nghề làm bếp Cà-ràng và đồ gốm đất sét thủ công độc nhất của người Khmer.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#7C5CBF]">📍 Ấp Phnôm Pi, Xã Châu Lăng</p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2 hover:shadow-md transition-all">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#A6503A]/15 text-[#A6503A] text-[10px] font-bold font-display">
+                  Biên Giới Tây Nam
+                </span>
+                <h4 className="font-display text-sm font-bold text-[#26221B]">Đường Kênh Vĩnh Tế</h4>
+                <p className="font-body text-[11px] text-[#6B6355] leading-relaxed">
+                  Cung đường biên giới chạy dọc bờ Kênh Vĩnh Tế lịch sử từ Ba Chúc đến Cửa khẩu Vĩnh Gia giáp Campuchia mùa nước nổi.
+                </p>
+                <p className="font-body text-[10px] font-bold text-[#A6503A]">📍 ĐT955A, Xã Vĩnh Gia</p>
               </div>
             </div>
           </div>
