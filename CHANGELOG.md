@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v57.0.0-FIX-CHATBOT-HYDRATION-AND-PWA-SERVICE-WORKER-RELOAD] - 2026-08-16
+
+### 🛠️ Sửa Triệt Để Lỗi Crash Hydration & Cập Nhật Cấu Hình PWA Service Worker Tự Động Refresh
+
+#### 1. Khắc Phục Lỗi Hydration Mismatch Trên Trang `/chatbot`
+- **Loại bỏ `new Date().toLocaleTimeString()` khi khởi tạo tĩnh**: Đồng bộ giờ mặc định `08:00` trên Server và chỉ tính giờ thực tế an toàn trên Client qua hàm `getSafeTime()`, loại bỏ 100% nguy cơ lệch múi giờ (UTC vs GMT+7) gây crash React 19 / Next.js 16.
+- **Tách biệt LocalStorage state**: Khởi tạo state bằng tin nhắn chào mặc định và chỉ tải lịch sử chat `localStorage` sau khi component đã mount trên trình duyệt (`useEffect`).
+- **Cấu hình `export const dynamic = 'force-dynamic'`**: Đảm bảo trang `/chatbot` luôn được render động mượt mà với đầy đủ `useSearchParams`.
+
+#### 2. Cấu Hình PWA Service Worker Không Chặn Bundle Mới
+- Bổ sung `skipWaiting: true`, `clientsClaim: true`, `reloadOnOnline: true` và `buildExcludes` cho `next-pwa` trong `next.config.ts`, đảm bảo Service Worker luôn lập tức cập nhật phiên bản mới nhất từ Vercel mà không giữ lại các file script cũ.
+
+---
+
 ## [v56.0.0-CLICKABLE-IMAGE-CARDS-EXPANDED-TOUCH-TARGETS] - 2026-08-16
 
 ### 👆 Mở Rộng Điểm Chạm (Expanded Touch Targets): Bấm Vào Ảnh & Tiêu Đề Mở Thẳng Trang Chi Tiết

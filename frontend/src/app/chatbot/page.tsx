@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import React, { useState, useRef, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -37,11 +39,16 @@ interface Message {
 const SESSION_KEY = 'triton_chat_page_session';
 const MAX_STORED_MESSAGES = 30;
 
+function getSafeTime(): string {
+  if (typeof window === 'undefined') return '08:00';
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
 const defaultWelcome: Message = {
   id: '1',
   sender: 'assistant',
   text: 'Xin chào! Tôi là Trợ Lý AI Du Lịch Tri Tôn 2026. Bạn cần tư vấn **lịch trình thực địa**, tìm **quán Gà Đốt Ô Thum ngon nhất**, hay khám phá **chùa Khmer** nào?',
-  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  timestamp: '08:00',
   suggestions: ['Gợi ý tour 1 ngày', 'Gà Đốt Ô Thum quán nào ngon?', 'Cách đi Hồ Tà Pạ mùa nước xanh?', 'Chùa Xvayton có gì đặc sắc?'],
   showPresetPicker: true,
 };
@@ -52,22 +59,14 @@ function ChatbotInner() {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(() => {
-    if (typeof window === 'undefined') return [defaultWelcome];
-    try {
-      const saved = localStorage.getItem(SESSION_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved) as Message[];
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-      }
-    } catch { /* ignore */ }
-    return [defaultWelcome];
-  });
+  const [messages, setMessages] = useState<Message[]>([defaultWelcome]);
+  const [isMounted, setIsMounted] = useState(false);
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
 
   useEffect(() => {
+    setIsMounted(true);
     const KEY = 'triton_chat_page_session_id';
     const stored = localStorage.getItem(KEY);
     if (stored) {
@@ -77,15 +76,25 @@ function ChatbotInner() {
       localStorage.setItem(KEY, newId);
       sessionIdRef.current = newId;
     }
+
+    try {
+      const saved = localStorage.getItem(SESSION_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as Message[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch { /* ignore */ }
   }, []);
 
   useEffect(() => {
-    if (messages.length > 0) {
+    if (isMounted && messages.length > 0) {
       try {
         localStorage.setItem(SESSION_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
       } catch { /* ignore */ }
     }
-  }, [messages]);
+  }, [messages, isMounted]);
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
     if (messagesContainerRef.current) {
@@ -113,7 +122,7 @@ function ChatbotInner() {
       id: Date.now().toString(),
       sender: 'user',
       text: `Xem lịch trình: ${presetSlug}`,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getSafeTime(),
     };
     setMessages(prev => [...prev, userMsg]);
     setIsTyping(true);
@@ -128,7 +137,7 @@ function ChatbotInner() {
             id: (Date.now() + 1).toString(),
             sender: 'assistant',
             text: `Đây là sơ đồ lịch trình **${data.itinerary.title}** được xây dựng từ dữ liệu thực địa:`,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            timestamp: getSafeTime(),
             itinerary: data.itinerary,
             suggestions: [
               'Tìm quán ăn gần đây',
@@ -198,7 +207,7 @@ function ChatbotInner() {
         id: Date.now().toString(),
         sender: 'user',
         text: textToSend,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: getSafeTime(),
       };
       setMessages(prev => [...prev, userMsg]);
       if (!customText) setInput('');
@@ -214,7 +223,7 @@ function ChatbotInner() {
               id: (Date.now() + 1).toString(),
               sender: 'assistant',
               text: `Tôi đã lập sơ đồ lịch trình **${data.itinerary.title}** phù hợp nhất cho bạn:`,
-              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              timestamp: getSafeTime(),
               itinerary: data.itinerary,
               suggestions: [
                 'Quán Gà Đốt Ô Thum ngon nhất',
@@ -236,7 +245,7 @@ function ChatbotInner() {
       id: Date.now().toString(),
       sender: 'user',
       text: textToSend,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getSafeTime(),
     };
 
     setMessages(prev => [...prev, userMsg]);
@@ -248,7 +257,7 @@ function ChatbotInner() {
       id: botMsgId,
       sender: 'assistant',
       text: '',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getSafeTime(),
     };
 
     setMessages(prev => [...prev, botMsg]);
@@ -383,7 +392,7 @@ function ChatbotInner() {
     setMessages([{
       ...defaultWelcome,
       id: Date.now().toString(),
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getSafeTime(),
     }]);
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
   };
