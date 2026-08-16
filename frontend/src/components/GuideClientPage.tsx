@@ -348,16 +348,18 @@ export default function GuideClientPage() {
       {/* ── TAB 6: ĐƯỜNG ĐI & XE CỘ ────────────────────────────────────────── */}
       {activeTab === 'transport' && (
         <div className="space-y-8 animate-fade-in">
+          {/* 4 Direction Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-[#FFFDF7] rounded-[26px] p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-3">
               <span className="px-3.5 py-1 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-xs font-bold font-display">
-                Tuyến TP. Hồ Chí Minh → Tri Tôn (~240km)
+                Tuyến TP. Hồ Chí Minh → Tri Tôn (~210km)
               </span>
-              <h3 className="font-display text-base font-bold text-[#26221B]">Xe Khách Giường Nằm Chất Lượng Cao</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">Xe Khách Giường Nằm & Limousine VIP</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Đón xe tại Bến xe Miền Tây (các hãng xe uy tín: Phương Trang, Huệ Nghĩa, Hùng Cường). Xe chạy cao tốc TP.HCM – Mỹ Thuận – Cần Thơ về thẳng Bến xe Thị trấn Tri Tôn.
+                • <strong>Nhà xe Huệ Nghĩa</strong> (Hotline: <strong>1900 636497</strong>): Chạy tuyến thẳng TP.HCM (BX Miền Tây, trạm An Sương) về thẳng BX Tri Tôn & Ba Chúc (mỗi 1-2h có 1 chuyến 24/7).<br/>
+                • <strong>Nhà xe Phương Trang (FUTA)</strong> (Hotline: <strong>1900 6067</strong>): Đón tại BX Miền Tây đi Long Xuyên / Châu Đốc, có xe trung chuyển về Tri Tôn.
               </p>
-              <p className="font-body text-xs font-bold text-[#0E8C7F]">Thời gian: ~5 – 6 tiếng • Giá vé: 180.000đ – 220.000đ</p>
+              <p className="font-body text-xs font-bold text-[#0E8C7F]">Thời gian: ~4.5 – 5 tiếng • Giá vé: 170.000đ – 220.000đ</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[26px] p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-3">
@@ -366,31 +368,85 @@ export default function GuideClientPage() {
               </span>
               <h3 className="font-display text-base font-bold text-[#26221B]">Xe Máy Hoặc Ô Tô Tự Lái</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Chạy theo QL91 về Long Xuyên, rẽ vào ĐT941 chạy dọc kênh Mặc Cần Dưng tuyệt đẹp xuyên qua cánh đồng lúa bạt ngàn về trung tâm Thị trấn Tri Tôn.
+                Chạy theo QL91 qua TP. Long Xuyên, rẽ trái vào Tỉnh lộ ĐT941 (ngã ba Lộ Tẻ Tri Tôn) chạy thẳng 45km dọc bờ kênh xanh mướt xuyên qua cánh đồng lúa bạt ngàn về thẳng trung tâm Thị trấn Tri Tôn.
               </p>
-              <p className="font-body text-xs font-bold text-[#D9822B]">Thời gian: ~2.5 tiếng • Cung đường phượt mượt mà</p>
+              <p className="font-body text-xs font-bold text-[#D9822B]">Thời gian: ~2.5 tiếng • Đường nhựa phẳng đẹp, dễ đi</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[26px] p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-3">
               <span className="px-3.5 py-1 rounded-full bg-[#0E8C7F]/15 text-[#0E8C7F] text-xs font-bold font-display">
-                Tuyến TP. Châu Đốc → Tri Tôn (~42km)
+                Tuyến TP. Châu Đốc → Tri Tôn (~45km)
               </span>
-              <h3 className="font-display text-base font-bold text-[#26221B]">Cung Đường Vòng Núi Thất Sơn</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">Cung Đường Vòng Núi Thất Sơn Đẹp Nhất</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Đi theo tuyến ĐT948 chạy men theo chân núi Cấm và rừng tràm Trà Sư về Tri Tôn. Cung đường ngắm trọn vẹn cảnh sắc hùng vĩ của dãy Thất Sơn.
+                Đi theo QL91 rẽ vào Tỉnh lộ ĐT948 chạy men theo chân Núi Cấm và Rừng tràm Trà Sư, sườn Núi Dài qua Xã Châu Lăng về Tri Tôn. Cung đường đèo thấp uốn lượn ngắm trọn cảnh sắc núi non kỳ vĩ.
               </p>
-              <p className="font-body text-xs font-bold text-[#0E8C7F]">Thời gian: ~1 tiếng • Tuyến kết hợp Châu Đốc - Tri Tôn</p>
+              <p className="font-body text-xs font-bold text-[#0E8C7F]">Thời gian: ~1 tiếng • Tuyến kết hợp Châu Đốc - Trà Sư - Tri Tôn</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[26px] p-6 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-3">
               <span className="px-3.5 py-1 rounded-full bg-[#7C5CBF]/15 text-[#7C5CBF] text-xs font-bold font-display">
-                Phương Tiện Di Chuyển Tại Tri Tôn
+                Tuyến Rạch Giá / Kiên Giang → Tri Tôn (~75km)
               </span>
-              <h3 className="font-display text-base font-bold text-[#26221B]">Thuê Xe Máy Là Lựa Chọn Tốt Nhất</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">Cung Đường Xuyên Vùng Tứ Giác Long Xuyên</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Các điểm tham quan ở Tri Tôn phân bố theo cụm xã cách nhau 3–8km. Đi xe máy giúp bạn tự do dừng chụp ảnh cánh đồng thốt nốt, len lỏi vào các hồ đá và leo dốc núi dễ dàng.
+                Đi theo QL80 qua Kênh Tám Ngàn rẽ về Xã Tân Tuyến / Cô Tô đến Tri Tôn. Tuyến đường kết nối thuận tiện giữa biển Kiên Giang và vùng núi Thất Sơn An Giang.
               </p>
-              <p className="font-body text-xs font-bold text-[#7C5CBF]">Thuê xe máy: 120.000đ – 150.000đ / ngày tại các homestay</p>
+              <p className="font-body text-xs font-bold text-[#7C5CBF]">Thời gian: ~1.8 tiếng • Rất thuận tiện cho phượt thủ miền Tây</p>
+            </div>
+          </div>
+
+          {/* Special Mountain Slopes & Local Guide Box */}
+          <div className="bg-[#FFFDF7] rounded-[28px] p-6 sm:p-8 border-2 border-[#D9822B]/30 shadow-[0_2px_10px_rgba(38,34,27,0.08)] space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-xl bg-[#D9822B]/10 text-[#D9822B]">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <h3 className="font-display text-base sm:text-lg font-bold text-[#26221B]">
+                Cẩm Nang Thực Địa Lên Các Thắng Cảnh Dốc Núi & Đường Hẹp
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-body text-[#6B6355]">
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2">
+                <p className="font-bold text-[#26221B] font-display flex items-center gap-1.5">
+                  <Mountain className="w-4 h-4 text-[#A6503A]" />
+                  Đỉnh Núi Cô Tô & Vồ Hội Mẹ (Xã Cô Tô)
+                </p>
+                <p className="leading-relaxed">
+                  Dốc đứng hơn 30 độ với cua tay áo cực gắt. <strong>CẢNH BÁO:</strong> Tuyệt đối KHÔNG tự lái xe máy cá nhân nếu không quen dốc núi. <strong>Bắt buộc thuê Đội xe ôm Núi Cô Tô</strong> (xe có phanh phụ chuyên dụng, ~100k-150k/người khứ hồi) hoặc đi bộ trekking 2-3 tiếng.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2">
+                <p className="font-bold text-[#26221B] font-display flex items-center gap-1.5">
+                  <Landmark className="w-4 h-4 text-[#0E8C7F]" />
+                  Chùa Tà Pạ & Hồ Tà Pạ (Xã Núi Tô)
+                </p>
+                <p className="leading-relaxed">
+                  Từ đường Nguyễn Trãi rẽ vào dốc bê tông 1.2km lên chùa. Xe máy đi số 1-2, KHÔNG rà thắng liên tục. Ô tô 4-7 chỗ lên tận sân chùa. Xe 16-29 chỗ đậu ở bãi xe chân núi.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2">
+                <p className="font-bold text-[#26221B] font-display flex items-center gap-1.5">
+                  <Utensils className="w-4 h-4 text-[#D9822B]" />
+                  Hồ Ô Thum & Quán Gà Đốt (Xã Ô Lâm)
+                </p>
+                <p className="leading-relaxed">
+                  Đường ĐT955B rẽ vào đường bờ hồ 1.5km trải nhựa và bê tông rộng rãi. Ô tô 4-29 chỗ và xe máy vào tận bãi đỗ xe của các quán gà đốt ven hồ.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-2">
+                <p className="font-bold text-[#26221B] font-display flex items-center gap-1.5">
+                  <Compass className="w-4 h-4 text-[#7C5CBF]" />
+                  Cổng Trời Chùa Koh Kas (Xã Châu Lăng)
+                </p>
+                <p className="leading-relaxed">
+                  Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa xuyên qua cánh đồng lúa 1km. Xe máy vào tận cổng chụp ảnh, ô tô đậu ngoài đường nhựa lớn cách 200m rồi đi bộ vào.
+                </p>
+              </div>
             </div>
           </div>
         </div>

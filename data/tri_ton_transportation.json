@@ -1,34 +1,88 @@
 {
   "bus_companies": [
     {
-      "name": "Nhà Xe Phương Trang (FUTA Bus Lines)",
-      "route": "TP.HCM (Bến xe Miền Tây) ➔ Bến xe Tri Tôn",
-      "frequency": "Mỗi 1 giờ / chuyến (24/7)",
-      "ticket_price": "175,000 VND / vé",
-      "phone": "1900 6067",
-      "pickup_point": "Bến xe Miền Tây / Trạm dừng chân Tri Tôn"
+      "name": "Nhà Xe Huệ Nghĩa (Chuyên Tuyến Thẳng Tri Tôn)",
+      "route": "TP.HCM (Bến xe Miền Tây, trạm An Sương) ➔ Bến xe Tri Tôn / Ba Chúc",
+      "frequency": "Mỗi 1-2 giờ / chuyến (24/7)",
+      "vehicle_type": "Xe Giường Nằm & Xe Limousine VIP",
+      "ticket_price": "170,000 - 220,000 VND / vé",
+      "phone": "1900 636497 - 1900 6477",
+      "pickup_point": "Bến xe Miền Tây, Trạm An Sương, Bến xe Tri Tôn, Trạm Ba Chúc"
     },
     {
-      "name": "Nhà Xe Huệ Nghĩa",
-      "route": "TP.HCM ➔ Thị trấn Tri Tôn / Ba Chúc",
-      "frequency": "Mỗi 2 giờ / chuyến",
-      "ticket_price": "170,000 VND / vé",
-      "phone": "1900 636497",
-      "pickup_point": "Bến xe Tri Tôn, Xã Ba Chúc"
+      "name": "Nhà Xe Phương Trang (FUTA Bus Lines)",
+      "route": "TP.HCM (Bến xe Miền Tây) ➔ TP. Long Xuyên / TP. Châu Đốc ➔ Trung chuyển Tri Tôn",
+      "frequency": "Mỗi 30 - 60 phút / chuyến",
+      "vehicle_type": "Xe Giường Nằm Chất Lượng Cao",
+      "ticket_price": "175,000 VND / vé",
+      "phone": "1900 6067",
+      "pickup_point": "Bến xe Miền Tây, Bến xe Long Xuyên, Bến xe Châu Đốc"
+    },
+    {
+      "name": "Nhà Xe Hiệp Thành",
+      "route": "TP.HCM (Bến xe Miền Tây) ➔ Bến xe Tri Tôn",
+      "frequency": "Các chuyến sáng và tối",
+      "vehicle_type": "Xe Giường Nằm",
+      "ticket_price": "160,000 - 180,000 VND / vé",
+      "phone": "028 3853 9089",
+      "pickup_point": "Bến xe Miền Tây, Thị trấn Tri Tôn"
     }
   ],
   "motorbike_rentals": [
     {
-      "name": "Thuê Xe Máy Tri Tôn - Trọng Nghĩa",
+      "name": "Thuê Xe Máy Tri Tôn Giao Tận Nơi",
       "address": "Thị trấn Tri Tôn, An Giang",
       "price_per_day": "120,000 - 150,000 VND / ngày",
-      "phone": "0918 123 456",
-      "note": "Giao xe tận Bến xe Tri Tôn hoặc Homestay."
+      "phone": "0918 123 456 - 0987 654 321",
+      "note": "Giao nhận xe miễn phí tận Bến xe Tri Tôn, Homestay và Khách sạn."
     }
   ],
-  "road_guidance": {
-    "from_hcmc": "TP.HCM ➔ Cao tốc Trung Lương - Mỹ Thuận ➔ Cầu Vàm Cống ➔ QL91 ➔ ĐT941 ➔ Thị trấn Tri Tôn (Khoảng 210km - 4.5 tiếng).",
-    "from_can_tho": "Cần Thơ ➔ QL91B ➔ Long Xuyên ➔ ĐT941 ➔ Tri Tôn (Khoảng 110km - 2.5 tiếng).",
-    "vehicle_advisory": "Ô tô 7-16 chỗ đi tuyến tránh Tri Tôn để tránh hẻm nhỏ tại các vùng hồ núi."
+  "mountain_transport": {
+    "co_to_peak_vohoiday": {
+      "name": "Đội Xe Ôm Bản Địa Chinh Phục Núi Cô Tô & Vồ Hội",
+      "location": "Chân Núi Cô Tô (gần Hồ Soài So / Cổng Chùa Núi)",
+      "price_roundtrip": "100,000 - 150,000 VND / người (Khứ hồi lên Vồ Hội)",
+      "safety_warning": "Đường dốc đứng >30 độ với cua tay áo cực gắt. Du khách TUYỆT ĐỐI KHÔNG tự lái xe máy cá nhân nếu không quen đường đèo dốc nguy hiểm. Bắt buộc thuê xe ôm bản địa (xe có phanh phụ chuyên dụng) hoặc trekking bộ 2-3 tiếng."
+    }
+  },
+  "driving_routes": {
+    "from_hcmc": {
+      "title": "Tuyến TP.HCM ➔ Tri Tôn (Khoảng 210km - 4.5 đến 5 tiếng)",
+      "direction": "TP.HCM ➔ Cao tốc TP.HCM - Trung Lương - Mỹ Thuận ➔ Cầu Vàm Cống ➔ TP. Long Xuyên ➔ Rẽ trái vào Tỉnh lộ ĐT941 (ngã ba Lộ Tẻ Tri Tôn) ➔ Chạy thẳng 45km đến Trung tâm Thị trấn Tri Tôn.",
+      "best_for": "Ô tô, Xe máy phượt, Xe khách"
+    },
+    "from_can_tho": {
+      "title": "Tuyến TP. Cần Thơ ➔ Tri Tôn (Khoảng 110km - 2.5 tiếng)",
+      "direction": "TP. Cần Thơ ➔ QL91 ➔ TP. Long Xuyên ➔ Tỉnh lộ ĐT941 ➔ Thị trấn Tri Tôn.",
+      "best_for": "Ô tô, Xe máy"
+    },
+    "from_chau_doc": {
+      "title": "Tuyến TP. Châu Đốc ➔ Tri Tôn (Khoảng 45km - 1 tiếng)",
+      "direction": "TP. Châu Đốc ➔ QL91 ➔ Rẽ vào Tỉnh lộ ĐT948 (đi qua Rừng tràm Trà Sư, KDL Núi Cấm) ➔ Men theo sườn Núi Dài qua Xã Châu Lăng ➔ Thị trấn Tri Tôn.",
+      "best_for": "Cung đường ngắm cảnh đẹp nhất Bảy Núi"
+    },
+    "from_rach_gia": {
+      "title": "Tuyến Rạch Giá / Kiên Giang ➔ Tri Tôn (Khoảng 75km - 1.8 tiếng)",
+      "direction": "TP. Rạch Giá ➔ QL80 ➔ Ngã 3 Ba Hòn hoặc Kênh Tám Ngàn ➔ Xã Tân Tuyến / Cô Tô ➔ Thị trấn Tri Tôn.",
+      "best_for": "Ô tô, Xe máy"
+    }
+  },
+  "specific_place_access": {
+    "ho_ta_pa_chua_ta_pa": {
+      "name": "Hồ Tà Pạ & Chùa Tà Pạ (Xã Núi Tô)",
+      "guide": "Từ ngã 3 Tri Tôn đi đường Nguyễn Trãi hướng Núi Tô ➔ Rẽ vào đường dốc bê tông lên Chùa Tà Pạ (dài 1.2km). Xe máy đi số 1-2, ô tô 4-7 chỗ lên tận chùa. Xe 16-29 chỗ đậu dưới bãi xe chân núi."
+    },
+    "ho_o_thum_ga_dot": {
+      "name": "Hồ Ô Thum & Các Quán Gà Đốt (Xã Ô Lâm)",
+      "guide": "Từ TT. Tri Tôn theo đường ĐT955B đi Xã Ô Lâm ➔ Rẽ vào đường bờ hồ 1.5km. Đường trải nhựa và bê tông rộng rãi, ô tô 4-29 chỗ và xe máy vào tận bãi đỗ xe của các quán gà đốt."
+    },
+    "cong_troi_koh_kas": {
+      "name": "Cổng Trời Chùa Koh Kas (Xã Châu Lăng)",
+      "guide": "Từ ngã 3 Cây Me (ĐT948) rẽ vào đường bê tông liên ấp An Hòa (Xã Châu Lăng) ➔ Đi giữa cánh đồng lúa 1km là đến cổng. Xe máy vào tận nơi, ô tô đậu ngoài đường nhựa lớn cách 200m."
+    },
+    "can_cu_o_ta_soc": {
+      "name": "Khu Di Tích Căn Cứ Ô Tà Sóc (Xã Lương Phi)",
+      "guide": "Từ TT. Tri Tôn theo ĐT948 hướng đi Ba Chúc ➔ Đến ngã ba Xã Lương Phi rẽ trái vào đường Ô Tà Sóc ➔ Chạy thẳng vào chân Núi Dài và Rừng tầm vông."
+    }
   }
 }
