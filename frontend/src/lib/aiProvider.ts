@@ -143,180 +143,191 @@ export async function* streamAIResponse(
   let fullText = '';
   let providerUsed = 'none';
 
-  // Tier 1: Gemini Multi-Key Round-Robin with Google Search Grounding (Live Internet Search)
-  const totalGeminiKeys = AI_CONFIG.geminiKeys.length;
+  // ── FAST PATH: PARALLEL RACING LLM ENGINE (< 500ms First Token) ───────────
+  const activeGeminiKeys = AI_CONFIG.geminiKeys
+    .map((k, i) => ({ key: k, id: `gemini_key_${i + 1}` }))
+    .filter(k => !isKeyInCooldown(k.id));
 
-  if (totalGeminiKeys > 0) {
-    const startIdx = geminiRoundRobinPointer;
-    geminiRoundRobinPointer = (geminiRoundRobinPointer + 1) % totalGeminiKeys;
+  // Build racing callers for fast LLM response
+  async function callGeminiStream(keyObj: { key: string; id: string }, model: string): Promise<string> {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
 
-    const keyOrderIndices: number[] = [];
-    for (let i = 0; i < totalGeminiKeys; i++) {
-      keyOrderIndices.push((startIdx + i) % totalGeminiKeys);
-    }
-
-    const activeKeys = keyOrderIndices.filter(idx => !isKeyInCooldown(`gemini_key_${idx + 1}`));
-    const candidateIndices = activeKeys.length > 0 ? activeKeys : keyOrderIndices;
-
-    for (const keyIdx of candidateIndices) {
-      const key = AI_CONFIG.geminiKeys[keyIdx];
-      const keyId = `gemini_key_${keyIdx + 1}`;
-
-      for (const model of AI_CONFIG.geminiModels) {
-        try {
-          const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [
-                  {
-                    role: 'user',
-                    parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }],
-                  },
-                ],
-                generationConfig: {
-                  temperature: 0.7,
-                  maxOutputTokens: 2048,
-                },
-              }),
-              signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
-            }
-          );
-
-          if (!res.ok) {
-            if (res.status === 429) {
-              setKeyCooldown(keyId, 30000);
-              break;
-            }
-            if (res.status === 403 || res.status === 401) {
-              setKeyCooldown(keyId, 60000);
-              break;
-            }
-            continue;
-          }
-
-          if (res.ok) {
-            recordKeyUsage(keyId);
-            const data = await res.json();
-            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (text && text.trim()) {
-              const words = text.split(' ');
-              for (let i = 0; i < words.length; i += 3) {
-                const chunk = words.slice(i, i + 3).join(' ') + ' ';
-                yield { type: 'delta', content: chunk };
-                await new Promise(r => setTimeout(r, 12));
-              }
-              providerUsed = `gemini:${keyId}:${model}`;
-              yield { type: 'done', provider: providerUsed };
-              return;
-            }
-          }
-        } catch (err: unknown) {
-          console.warn(`[AI Provider] Gemini ${keyId} (${model}) failed:`, err);
+    try {
+      // Primary: Google Search Grounding enabled for live web intelligence
+      let res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${keyObj.key}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+            tools: [{ googleSearch: {} }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 2048,
+            },
+          }),
+          signal: controller.signal,
         }
+      );
+
+      // Fallback without tools if tools unsupported on specific sub-tier
+      if (!res.ok && (res.status === 400 || res.status === 404)) {
+        res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${keyObj.key}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: systemPrompt }] },
+              contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+              generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 2048,
+              },
+            }),
+            signal: controller.signal,
+          }
+        );
       }
+
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        if (res.status === 429) setKeyCooldown(keyObj.id, 20000);
+        throw new Error(`Gemini HTTP ${res.status}`);
+      }
+
+      recordKeyUsage(keyObj.id);
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text || !text.trim()) throw new Error('Empty Gemini response');
+      return text.trim();
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
     }
   }
 
-  // Tier 2: Groq Llama 3.3 70B (High-Speed Fallback)
+  async function callGroqFast(): Promise<string> {
+    if (!AI_CONFIG.groqKey || isKeyInCooldown('groq')) throw new Error('Groq unavailable');
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 5000);
+
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${AI_CONFIG.groqKey}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        if (res.status === 429) setKeyCooldown('groq', 20000);
+        throw new Error(`Groq HTTP ${res.status}`);
+      }
+
+      recordKeyUsage('groq');
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content;
+      if (!text || !text.trim()) throw new Error('Empty Groq response');
+      return text.trim();
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
+    }
+  }
+
+  async function callOpenRouterFast(model: string): Promise<string> {
+    if (!AI_CONFIG.openRouterKey || isKeyInCooldown(`openrouter_${model}`)) throw new Error('OpenRouter unavailable');
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
+          'HTTP-Referer': 'https://dulichtriton.vn',
+          'X-Title': 'Du Lich Tri Ton AI',
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        if (res.status === 429) setKeyCooldown(`openrouter_${model}`, 40000);
+        throw new Error(`OpenRouter HTTP ${res.status}`);
+      }
+
+      recordKeyUsage('openrouter');
+      const data = await res.json();
+      const text = data?.choices?.[0]?.message?.content;
+      if (!text || !text.trim()) throw new Error('Empty OpenRouter response');
+      return text.trim();
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
+    }
+  }
+
+  // Build racing list
+  const races: Promise<{ text: string; provider: string }>[] = [];
+
+  for (const k of activeGeminiKeys) {
+    races.push(callGeminiStream(k, 'gemini-2.0-flash').then(t => ({ text: t, provider: `gemini:${k.id}:gemini-2.0-flash (Google Search Grounding)` })));
+    races.push(callGeminiStream(k, 'gemini-1.5-flash').then(t => ({ text: t, provider: `gemini:${k.id}:gemini-1.5-flash` })));
+  }
+
   if (AI_CONFIG.groqKey && !isKeyInCooldown('groq')) {
-    for (const model of AI_CONFIG.groqModels) {
-      try {
-        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${AI_CONFIG.groqKey}`,
-          },
-          body: JSON.stringify({
-            model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt },
-            ],
-            stream: false,
-          }),
-          signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
-        });
+    races.push(callGroqFast().then(t => ({ text: t, provider: 'groq:llama-3.3-70b-versatile' })));
+  }
 
-        if (res.status === 429) {
-          setKeyCooldown('groq', 30000);
-          break;
-        }
-
-        if (res.ok) {
-          recordKeyUsage('groq');
-          const data = await res.json();
-          const text = data?.choices?.[0]?.message?.content;
-          if (text && text.trim()) {
-            const words = text.split(' ');
-            for (let i = 0; i < words.length; i += 3) {
-              const chunk = words.slice(i, i + 3).join(' ') + ' ';
-              yield { type: 'delta', content: chunk };
-              await new Promise(r => setTimeout(r, 12));
-            }
-            providerUsed = `groq:${model}`;
-            yield { type: 'done', provider: providerUsed };
-            return;
-          }
-        }
-      } catch (err: unknown) {
-        console.warn(`[AI Provider] Groq (${model}) failed:`, err);
-      }
+  if (AI_CONFIG.openRouterKey) {
+    const topFree = AI_CONFIG.openRouterModels.slice(0, 3);
+    for (const m of topFree) {
+      races.push(callOpenRouterFast(m).then(t => ({ text: t, provider: `openrouter:${m}` })));
     }
   }
 
-  // Tier 3: OpenRouter Free Models Fallback
-  if (AI_CONFIG.openRouterKey) {
-    for (const model of AI_CONFIG.openRouterModels) {
-      const modelKeyId = `openrouter_${model}`;
-      if (isKeyInCooldown(modelKeyId)) continue;
-
-      try {
-        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
-            'HTTP-Referer': 'https://dulichtriton.vn',
-            'X-Title': 'Du Lich Tri Ton AI',
-          },
-          body: JSON.stringify({
-            model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt },
-            ],
-          }),
-          signal: AbortSignal.timeout(AI_CONFIG.timeoutMs),
-        });
-
-        if (res.status === 429) {
-          setKeyCooldown(modelKeyId, 60000);
-          continue;
+  if (races.length > 0) {
+    try {
+      const winner = await Promise.any(races);
+      if (winner && winner.text && winner.text.trim()) {
+        providerUsed = winner.provider;
+        const words = winner.text.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 8));
         }
-
-        if (res.ok) {
-          recordKeyUsage('openrouter');
-          const data = await res.json();
-          const text = data?.choices?.[0]?.message?.content;
-          if (text && text.trim()) {
-            const words = text.split(' ');
-            for (let i = 0; i < words.length; i += 3) {
-              const chunk = words.slice(i, i + 3).join(' ') + ' ';
-              yield { type: 'delta', content: chunk };
-              await new Promise(r => setTimeout(r, 12));
-            }
-            providerUsed = `openrouter:${model}`;
-            yield { type: 'done', provider: providerUsed };
-            return;
-          }
-        }
-      } catch (err: unknown) {
-        console.warn(`[AI Provider] OpenRouter (${model}) failed:`, err);
+        yield { type: 'done', provider: providerUsed };
+        return;
       }
+    } catch (err) {
+      console.warn('[AI Provider] All live LLM races failed, engaging Local Domain Expert RAG Engine...', err);
     }
   }
 
@@ -326,7 +337,7 @@ export async function* streamAIResponse(
   for (let i = 0; i < words.length; i += 3) {
     const chunk = words.slice(i, i + 3).join(' ') + ' ';
     yield { type: 'delta', content: chunk };
-    await new Promise(r => setTimeout(r, 10));
+    await new Promise(r => setTimeout(r, 6));
   }
   yield { type: 'done', provider: 'local_expert_rag' };
 }

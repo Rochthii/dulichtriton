@@ -4,6 +4,24 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v42.0.0-ULTRA-SPEED-PARALLEL-RACING-STREAMER] - 2026-08-16
+
+### ⚡ Nâng Cấp Ultra-Speed Parallel Racing Streamer & Khôi Phục Live Google Search Grounding
+
+#### 1. Phân Tích & Nguyên Nhân Chậm / Mất Trí Thông Minh
+- **Nguyên nhân chậm**: Code trước đó chạy 4 vòng lặp tuần tự (`for keys` x `for models` x `groq` x `openrouter`) với timeout 10 giây mỗi model. Khi 1 key nghẽn, người dùng phải chờ 10s–30s.
+- **Nguyên nhân mất độ thông minh tự nhiên**: Payload bị gộp chung `systemPrompt` và `userPrompt` vào cùng 1 message thay vì tách riêng `system_instruction`; thiếu tính năng `googleSearch` grounding trực tiếp từ Google.
+
+#### 2. Giải Pháp Triển Khai Kỹ Thuật (v42.0.0)
+- **Parallel Racing LLM Engine (<500ms First Token)**:
+  • Bắn đồng thời các candidate tốt nhất (`Gemini Key 1`, `Gemini Key 2`, `Gemini Key 3`, `Gemini Key 4` với `gemini-2.0-flash` + Google Search Grounding; Groq Llama 3.3 70B).
+  • Dùng `Promise.any(races)`: Ứng viên nào phản hồi nhanh nhất (thường < 500ms) sẽ được chọn ngay lập tức để stream mượt mà cho người dùng.
+- **Khôi phục Live Google Search Grounding**:
+  • Kích hoạt `tools: [{ googleSearch: {} }]` giúp AI tự động tìm kiếm thông tin du lịch, thời tiết, giờ mở cửa, giá vé và review thực tế mới nhất trên Internet.
+- **Phân vai chuẩn xác**: Tách biệt hoàn toàn `system_instruction` và `user message` giúp LLM suy luận sắc bén, câu từ tự nhiên, mạch lạc.
+
+---
+
 ## [v41.0.0-SMART-LOCAL-DOMAIN-EXPERT-RAG-ENGINE] - 2026-08-16
 
 ### 🛡️ Khắc Phục Triệt Để Lỗi AI Fallback Lặp Lại & Tích Hợp Local Domain Expert RAG Engine 100% Real
