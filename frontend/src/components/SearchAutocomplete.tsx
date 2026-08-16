@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   Search, MapPin, ArrowRight, X, Sparkles,
   Utensils, Hotel, Landmark, Compass, TrendingUp, Star,
-  History, Trash2, ChevronRight, Flame
+  History, Trash2, ChevronRight, ArrowUpLeft, CornerDownLeft
 } from 'lucide-react';
 import localMasterPois from '@/data/triton_pois_full.json';
 import { removeVietnameseTones } from '@/app/api/v1/search/route';
@@ -38,6 +38,46 @@ const CATEGORY_TABS = [
   { key: 'stay',    label: 'Lưu Trú',   icon: Hotel },
 ];
 
+// Rich corpus of popular Tri Ton search intents & predictive queries (YouTube-style predictions)
+const CURATED_PREDICTIONS: string[] = [
+  'Gà đốt Ô Thum quán nào ngon nhất',
+  'Gà đốt lá chúc Tri Tôn',
+  'Gà đốt Siêu Gà Ô Thum',
+  'Gà đốt Tuấn 77 Núi Tô',
+  'Gà đốt Việt Kiều Tri Tôn',
+  'Hồ Tà Pạ mùa nước trong',
+  'Hồ Tà Pạ Tuyệt Tình Cốc Bảy Núi',
+  'Hồ Ô Thum chèo sup check-in',
+  'Hồ Soài So Suối Vàng Cô Tô',
+  'Hồ Soài Check Tri Tôn',
+  'Chùa Tà Pạ ngôi chùa trên núi',
+  'Chùa Xvayton ngôi chùa cổ nhất Tri Tôn',
+  'Chùa Hàng Tri Tôn',
+  'Chùa Tam Bửu Ba Chúc di tích',
+  'Nhà mồ Ba Chúc chứng tích lịch sử',
+  'Núi Cô Tô trekking săn mây',
+  'Vồ Hội Núi Cô Tô view hoàng hôn',
+  'Cổng trời Koh Kas Chùa Tual Prasat',
+  'Cây thốt nốt trái tim huyền thoại',
+  'Cánh đồng lúa Tà Pạ góc ngắm flycam',
+  'Đồi Tức Dụp ngọn đồi 2 triệu đô',
+  'Căn cứ Ô Tà Sóc di tích cách mạng',
+  'Bún cá Khmer Tri Tôn rau đồng',
+  'Đu đủ đâm Rina cô Ti phum sóc',
+  'Bánh bò thốt nốt nướng lá chuối',
+  'Chè thốt nốt sữa tươi Tri Tôn',
+  'Ếch nướng Khmer nhồi thịt lá chúc',
+  'Homestay view núi Tri Tôn đẹp nhất',
+  'Khách sạn gần hồ Tà Pạ giá tốt',
+  'Thuê lều cắm trại hồ Tà Pạ',
+  'Quán ăn mở muộn về đêm Tri Tôn',
+  'Lịch trình du lịch Tri Tôn 1 ngày',
+  'Lịch trình Tri Tôn 2 ngày 1 đêm',
+  'Đường đi hồ Tà Pạ có dốc không',
+  'Thuê xe máy phượt Tri Tôn',
+  'Bản đồ 149 điểm du lịch Tri Tôn'
+];
+
 const TRENDING_KEYWORDS = [
   { label: 'Gà Đốt Ô Thum', icon: Utensils, href: '/food' },
   { label: 'Hồ Tà Pạ',      icon: Compass,  href: '/places/ho-ta-pa-tuyet-tinh-coc-pl001' },
@@ -52,6 +92,7 @@ const RECENT_KEY = 'triton_recent_searches_v2';
 export default function SearchAutocomplete() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResultItem[]>([]);
+  const [predictions, setPredictions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -114,6 +155,30 @@ export default function SearchAutocomplete() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  // Compute YouTube-style query predictions based on user typing
+  const computePredictions = useCallback((q: string) => {
+    const qClean = removeVietnameseTones(q);
+    if (!qClean) return [];
+
+    // Search inside curated predictions + POIs names
+    const pool = [
+      ...CURATED_PREDICTIONS,
+      ...(localMasterPois as any[]).map(p => p.name)
+    ];
+
+    const matched = new Set<string>();
+
+    for (const text of pool) {
+      const clean = removeVietnameseTones(text);
+      if (clean.includes(qClean)) {
+        matched.add(text);
+        if (matched.size >= 5) break;
+      }
+    }
+
+    return Array.from(matched);
+  }, []);
+
   // Instant In-Memory 0ms Search matching both Vietnamese & Non-diacritics
   const runInstantClientSearch = useCallback((q: string) => {
     const qClean = removeVietnameseTones(q);
@@ -169,14 +234,18 @@ export default function SearchAutocomplete() {
 
   // Hybrid Search: Immediate 0ms local match + async background API sync
   const doSearch = useCallback(async (q: string) => {
-    // 1. Instant 0ms local result
+    // 1. YouTube-style Query Predictions
+    const preds = computePredictions(q);
+    setPredictions(preds);
+
+    // 2. Instant 0ms local POI match
     const localMatches = runInstantClientSearch(q);
     if (localMatches.length > 0) {
       setResults(localMatches);
       setActiveIdx(-1);
     }
 
-    // 2. Fetch server API
+    // 3. Fetch server API
     if (abortRef.current) abortRef.current.abort();
     abortRef.current = new AbortController();
 
@@ -198,12 +267,13 @@ export default function SearchAutocomplete() {
     } finally {
       setLoading(false);
     }
-  }, [runInstantClientSearch]);
+  }, [computePredictions, runInstantClientSearch]);
 
   useEffect(() => {
     const trimmed = query.trim();
     if (trimmed.length === 0) {
       setResults([]);
+      setPredictions([]);
       setLoading(false);
       return;
     }
@@ -212,9 +282,25 @@ export default function SearchAutocomplete() {
     return () => clearTimeout(timer);
   }, [query, doSearch]);
 
+  // Append suggested keyword to search box (like YouTube's top-left arrow ↖)
+  const handleAppendQuery = (predText: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuery(predText);
+    inputRef.current?.focus();
+  };
+
+  // Submit search directly with a prediction
+  const handleSelectPrediction = (predText: string) => {
+    saveRecentSearch(predText);
+    setQuery(predText);
+    setIsOpen(false);
+    window.dispatchEvent(new CustomEvent('triton:open-chat', { detail: { query: predText } }));
+  };
+
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!isOpen || results.length === 0) return;
+    if (!isOpen || filteredResults.length === 0) return;
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -263,6 +349,7 @@ export default function SearchAutocomplete() {
   const clearSearch = () => {
     setQuery('');
     setResults([]);
+    setPredictions([]);
     setIsOpen(focused);
     setActiveIdx(-1);
     inputRef.current?.focus();
@@ -341,7 +428,7 @@ export default function SearchAutocomplete() {
 
       {/* DROPDOWN RESULTS & INITIAL STATE */}
       {(showInitial || showResults) && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#FFFDF7] rounded-2xl sm:rounded-[24px] shadow-2xl border border-[#26221B]/10 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-150 font-body max-h-[68vh] overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-[#FFFDF7] rounded-2xl sm:rounded-[24px] shadow-2xl border border-[#26221B]/10 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-150 font-body max-h-[70vh] overflow-y-auto">
 
           {/* INITIAL STATE: RECENT SEARCHES + TRENDING */}
           {showInitial && (
@@ -413,8 +500,47 @@ export default function SearchAutocomplete() {
           {/* ACTIVE SEARCH RESULTS STATE */}
           {showResults && (
             <>
-              {/* Quick Filter Category Pills inside dropdown */}
-              <div className="flex items-center gap-1 px-3 py-2 bg-[#FAF3E7] border-b border-[#26221B]/8 overflow-x-auto scrollbar-none font-display">
+              {/* 1. YOUTUBE-STYLE PREDICTIVE KEYWORD SUGGESTIONS (Dự đoán từ khóa) */}
+              {predictions.length > 0 && (
+                <div className="bg-[#FAF3E7]/80 border-b border-[#26221B]/8 p-1.5 space-y-0.5">
+                  <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#6B6355] font-display flex items-center gap-1">
+                    <Search className="w-3 h-3 text-[#0E8C7F]" />
+                    <span>Gợi ý tìm kiếm (Dự đoán)</span>
+                  </div>
+                  {predictions.map((predText) => (
+                    <div
+                      key={predText}
+                      onClick={() => handleSelectPrediction(predText)}
+                      className="flex items-center justify-between px-2.5 py-1.5 rounded-xl hover:bg-[#FFFDF7] text-xs text-[#26221B] transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Search className="w-3.5 h-3.5 text-[#6B6355]/60 group-hover:text-[#0E8C7F] shrink-0" />
+                        <span className="truncate">
+                          <span className="font-semibold text-[#26221B]">{query}</span>
+                          <span className="font-bold text-[#0E8C7F]">
+                            {predText.toLowerCase().startsWith(query.toLowerCase())
+                              ? predText.slice(query.length)
+                              : predText}
+                          </span>
+                        </span>
+                      </div>
+
+                      {/* YouTube Append Button ↖ */}
+                      <button
+                        type="button"
+                        onClick={(e) => handleAppendQuery(predText, e)}
+                        title="Điền vào ô tìm kiếm"
+                        className="p-1 rounded-lg hover:bg-[#0E8C7F]/15 text-[#6B6355] hover:text-[#0E8C7F] transition-colors shrink-0 cursor-pointer active:scale-90"
+                      >
+                        <ArrowUpLeft className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* 2. Quick Filter Category Pills inside dropdown */}
+              <div className="flex items-center gap-1 px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 overflow-x-auto scrollbar-none font-display">
                 {CATEGORY_TABS.map((tab) => {
                   const Icon = tab.icon;
                   const isSelected = selectedGroupFilter === tab.key;
@@ -426,7 +552,7 @@ export default function SearchAutocomplete() {
                       className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 active:scale-95 ${
                         isSelected
                           ? 'bg-[#0E8C7F] text-white shadow-2xs'
-                          : 'bg-[#FFFDF7] text-[#6B6355] border border-[#26221B]/8 hover:border-[#0E8C7F]/30'
+                          : 'bg-[#FAF3E7] text-[#6B6355] border border-[#26221B]/8 hover:border-[#0E8C7F]/30'
                       }`}
                     >
                       <Icon className="w-3 h-3" />
@@ -436,6 +562,7 @@ export default function SearchAutocomplete() {
                 })}
               </div>
 
+              {/* 3. DIRECT POI RESULTS */}
               {loading && filteredResults.length === 0 ? (
                 <div className="p-4 flex items-center justify-center gap-2 text-xs text-[#6B6355] font-medium font-body">
                   <span className="w-3 h-3 border-2 border-[#0E8C7F] border-t-transparent rounded-full animate-spin" />
@@ -550,8 +677,8 @@ export default function SearchAutocomplete() {
                     </button>
                   </div>
                 </div>
-              ) : (
-                /* No results */
+              ) : predictions.length === 0 ? (
+                /* No results & No predictions */
                 <div className="p-4 space-y-3 font-body">
                   <p className="text-xs text-[#6B6355] font-medium text-center">
                     Không tìm thấy địa điểm "<span className="font-bold text-[#26221B]">{query}</span>"
@@ -565,7 +692,7 @@ export default function SearchAutocomplete() {
                     <span>Hỏi Trợ Lý AI Tri Tôn ngay</span>
                   </button>
                 </div>
-              )}
+              ) : null}
             </>
           )}
         </div>
