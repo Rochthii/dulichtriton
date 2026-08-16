@@ -16,6 +16,7 @@ import {
   PhoneCall,
   Home,
   Shield,
+  Smartphone,
 } from "lucide-react";
 import AppLogo from "./AppLogo";
 
@@ -97,6 +98,20 @@ export default function SiteNav() {
             <span>Trợ Lý AI</span>
           </Link>
 
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open-pwa-install"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-full border border-emerald-200 transition-colors font-display whitespace-nowrap shrink-0 cursor-pointer"
+            title="Cài Đặt Ứng Dụng Du Lịch Tri Tôn Vào Điện Thoại"
+          >
+            <Smartphone className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
+            <span>Cài App</span>
+          </button>
+
           <Link
             href="/emergency"
             className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
@@ -108,10 +123,23 @@ export default function SiteNav() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex md:hidden items-center gap-2 shrink-0">
+        <div className="flex md:hidden items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open-pwa-install"));
+              }
+            }}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300 font-display"
+          >
+            <Smartphone className="h-3.5 w-3.5 text-emerald-700" />
+            <span>Cài App</span>
+          </button>
+
           <Link
             href="/chatbot"
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-black bg-[#F0A32F] text-slate-950 font-display"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-black bg-[#F0A32F] text-slate-950 font-display"
           >
             <Bot className="h-3.5 w-3.5" />
             <span>AI</span>
@@ -154,10 +182,24 @@ export default function SiteNav() {
           </div>
 
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("open-pwa-install"));
+                }
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-emerald-600 text-white shadow-sm font-display cursor-pointer"
+            >
+              <Smartphone className="h-4 w-4 text-[#FFD37A]" />
+              <span>Cài Đặt App Tri Tôn Ra Màn Hình Chính</span>
+            </button>
+
             <Link
               href="/chatbot"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-xs font-black bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-sm font-display"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-sm font-display"
             >
               <Bot className="h-4 w-4" />
               <span>Hỏi Đáp Du Lịch Cùng Trợ Lý AI</span>

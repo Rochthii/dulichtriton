@@ -420,28 +420,142 @@ export default function ChatbotWidget() {
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
   };
 
+  // ── DRAGGABLE FLOATING ACTION BUTTON LOGIC ───────────────────────
+  const [fabPos, setFabPos] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    origX: number;
+    origY: number;
+    hasMoved: boolean;
+  }>({ startX: 0, startY: 0, origX: 0, origY: 0, hasMoved: false });
+
+  // Load saved position or set safe default
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = localStorage.getItem('triton_chatbot_fab_pos');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+          // Clamp inside current window
+          const clampedX = Math.min(Math.max(12, parsed.x), window.innerWidth - 72);
+          const clampedY = Math.min(Math.max(60, parsed.y), window.innerHeight - 90);
+          setFabPos({ x: clampedX, y: clampedY });
+          return;
+        }
+      }
+    } catch { /* ignore */ }
+
+    // Safe default: bottom right, above mobile bottom nav
+    const defX = window.innerWidth - (window.innerWidth < 640 ? 68 : 170);
+    const defY = window.innerHeight - (window.innerWidth < 640 ? 145 : 95);
+    setFabPos({ x: defX, y: defY });
+  }, []);
+
+  // Handle Drag Events (Touch + Mouse)
+  const handleStartDrag = (clientX: number, clientY: number) => {
+    if (!fabPos) return;
+    dragRef.current = {
+      startX: clientX,
+      startY: clientY,
+      origX: fabPos.x,
+      origY: fabPos.y,
+      hasMoved: false,
+    };
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMove = (clientX: number, clientY: number) => {
+      const dx = clientX - dragRef.current.startX;
+      const dy = clientY - dragRef.current.startY;
+
+      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+        dragRef.current.hasMoved = true;
+      }
+
+      const nextX = Math.min(Math.max(10, dragRef.current.origX + dx), window.innerWidth - 65);
+      const nextY = Math.min(Math.max(60, dragRef.current.origY + dy), window.innerHeight - 80);
+      setFabPos({ x: nextX, y: nextY });
+    };
+
+    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleEnd = () => {
+      setIsDragging(false);
+      if (fabPos) {
+        try {
+          localStorage.setItem('triton_chatbot_fab_pos', JSON.stringify(fabPos));
+        } catch { /* ignore */ }
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleEnd);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleEnd);
+    };
+  }, [isDragging, fabPos]);
+
+  const handleFabClick = () => {
+    if (!dragRef.current.hasMoved) {
+      setIsOpen(true);
+    }
+  };
+
   return (
     <>
-      {/* ── FLOATING BUTTON (Folk-Modern Palm CTA) ────────────────────── */}
+      {/* ── DRAGGABLE FLOATING BUTTON (KÉO THẢ TỰ DO BẤT KỲ VỊ TRÍ) ── */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 p-4 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white shadow-[0_4px_20px_rgba(240,163,47,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2 group select-none font-display"
-          aria-label="Mở Trợ lý AI Du Lịch Tri Tôn"
+        <div
+          style={
+            fabPos
+              ? { left: `${fabPos.x}px`, top: `${fabPos.y}px`, position: 'fixed' }
+              : { right: '16px', bottom: '80px', position: 'fixed' }
+          }
+          className={`z-50 select-none touch-none ${isDragging ? 'cursor-grabbing scale-105 opacity-90' : 'cursor-grab'}`}
+          onMouseDown={(e) => handleStartDrag(e.clientX, e.clientY)}
+          onTouchStart={(e) => {
+            if (e.touches.length > 0) {
+              handleStartDrag(e.touches[0].clientX, e.touches[0].clientY);
+            }
+          }}
+          onClick={handleFabClick}
         >
-          <div className="relative">
-            <Bot className="w-6 h-6" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#0E8C7F] rounded-full border-2 border-white animate-ping" />
-          </div>
-          <span className="hidden sm:inline-block font-bold text-xs pr-1">
-            Trợ Lý AI Tri Tôn
-          </span>
-          {unreadCount > 0 && (
-            <span className="absolute -top-1 -left-1 bg-[#F26B3A] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
-              {unreadCount}
+          <button
+            type="button"
+            className="p-3.5 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] text-[#26221B] shadow-[0_6px_24px_rgba(240,163,47,0.45)] hover:shadow-[0_8px_30px_rgba(240,163,47,0.6)] border-2 border-white/80 active:scale-95 transition-transform duration-200 flex items-center gap-2 group font-display"
+            aria-label="Mở Trợ lý AI Du Lịch Tri Tôn"
+          >
+            <div className="relative">
+              <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#26221B]" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#0E8C7F] rounded-full border-2 border-white animate-ping" />
+            </div>
+            <span className="hidden sm:inline-block font-black text-xs text-[#26221B] pr-0.5">
+              Trợ Lý AI
             </span>
-          )}
-        </button>
+            {unreadCount > 0 && (
+              <span className="absolute -top-1.5 -left-1.5 bg-[#F26B3A] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+        </div>
       )}
 
       {/* ── CHAT MODAL WINDOW ───────────────────────────────────────────── */}

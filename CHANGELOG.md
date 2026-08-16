@@ -4,6 +4,23 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v49.0.0-DRAGGABLE-WIDGET-AND-PWA-INSTALL-UPGRADE] - 2026-08-16
+
+### 📱 Nâng Cấp Widget Kéo Thả Tự Do (Draggable FAB) & Trình Cài Đặt App Du Lịch Tri Tôn
+
+#### 1. Widget Trợ Lý AI Kéo Thả Tự Do (Draggable Floating Button)
+- **Tùy chỉnh vị trí bất kỳ**: Du khách có thể chạm và kéo thả nút Trợ lý AI đến bất kỳ góc nào trên màn hình (trên, dưới, trái, phải), không còn bị dính cố định góc dưới gây cấn với thanh điều hướng Mobile Bottom Nav.
+- **Tự động lưu vị trí (LocalStorage)**: Vị trí sau khi kéo thả được lưu lại tự động (`triton_chatbot_fab_pos`), chuyển trang hoặc reload không bị mất.
+- **Phân biệt Click vs Drag**: Di chuyển ngón tay >4px kích hoạt chế độ kéo, chạm nhanh kích hoạt mở cửa sổ Chat AI mượt mà.
+
+#### 2. Tính Năng Cài Đặt App (PWA Standalone Mode)
+- **Nút "Cài App" Trực Quan**: Tích hợp trực tiếp trên Header Navbar máy tính (`SiteNav.tsx`) và Mobile Drawer.
+- **Hỗ Trợ Mọi Thiết Bị**:
+  - *Android / Chrome / Cốc Cốc*: Bắt sự kiện `beforeinstallprompt` cài đặt 1 chạm.
+  - *iPhone / iPad (Safari iOS)*: Modal hướng dẫn 2 bước trực quan (Bấm Chia sẻ ➔ Chọn "Thêm vào MH chính").
+
+---
+
 ## [v48.0.0-HYBRID-RADAR-MAP-UPGRADE] - 2026-08-16
 
 ### 🗺️ Nâng Cấp Trang Bản Đồ Hybrid (/map): GPS Live Radar & Chỉ Đường Google Maps 1 Chạm
