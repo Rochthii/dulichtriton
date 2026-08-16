@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip, Circle, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Place } from '@/components/PlaceCard';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { getCategoryFallbackImage } from '@/lib/dataSanitizer';
-import { Navigation, MapPin, Play, Star, Sparkles } from 'lucide-react';
+import { Navigation, MapPin, Play, Star, Sparkles, LocateFixed } from 'lucide-react';
 import Link from 'next/link';
 
 // Color-coded icons by category
@@ -31,6 +31,19 @@ function getCategoryIcon(category: string) {
     shadowSize: [36, 36],
   });
 }
+
+// User GPS Pulse Marker Icon
+const userGpsIcon = new L.DivIcon({
+  className: 'user-gps-pulse-marker',
+  html: `
+    <div style="position: relative; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+      <div style="position: absolute; width: 24px; height: 24px; border-radius: 50%; background: rgba(14, 140, 127, 0.35); animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
+      <div style="position: relative; width: 14px; height: 14px; border-radius: 50%; background: #0E8C7F; border: 2.5px solid #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>
+    </div>
+  `,
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
 
 // 2 Signature Scenic Routes in Tri Tôn
 const SCENIC_ROUTES = [
@@ -61,38 +74,81 @@ interface MapComponentProps {
   places: Place[];
   selectedPlace: Place | null;
   onSelectPlace: (place: Place) => void;
+  userLocation?: { lat: number; lng: number } | null;
+  radiusKm?: number | null;
 }
 
-// Helper component to center map on selected place
-function MapController({ selectedPlace }: { selectedPlace: Place | null }) {
+// Helper component to center map on selected place or user GPS
+function MapController({
+  selectedPlace,
+  userLocation,
+}: {
+  selectedPlace: Place | null;
+  userLocation?: { lat: number; lng: number } | null;
+}) {
   const map = useMap();
+
   useEffect(() => {
     if (selectedPlace && selectedPlace.latitude && selectedPlace.longitude) {
       map.flyTo([selectedPlace.latitude, selectedPlace.longitude], 15, {
         animate: true,
-        duration: 1.5,
+        duration: 1.2,
       });
     }
   }, [selectedPlace, map]);
+
   return null;
 }
 
-export default function MapComponent({ places, selectedPlace, onSelectPlace }: MapComponentProps) {
+export default function MapComponent({
+  places,
+  selectedPlace,
+  onSelectPlace,
+  userLocation,
+  radiusKm,
+}: MapComponentProps) {
   // Tri Tôn Bounding Box center
   const defaultCenter: [number, number] = [10.4215, 105.0125];
 
   return (
     <div className="w-full h-full min-h-[480px] sm:min-h-[580px] rounded-3xl overflow-hidden border border-[#26221B]/10 shadow-lg relative z-0">
-      <MapContainer 
-        center={defaultCenter} 
-        zoom={12} 
-        scrollWheelZoom={true} 
+      <MapContainer
+        center={userLocation ? [userLocation.lat, userLocation.lng] : defaultCenter}
+        zoom={userLocation ? 13 : 12}
+        scrollWheelZoom={true}
         className="w-full h-full absolute inset-0 z-0"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {/* User GPS Live Marker & Radar Circle */}
+        {userLocation && (
+          <>
+            <Marker position={[userLocation.lat, userLocation.lng]} icon={userGpsIcon}>
+              <Popup>
+                <div className="text-xs font-bold font-display text-emerald-800">
+                  📍 Vị trí hiện tại của Bạn
+                </div>
+              </Popup>
+            </Marker>
+
+            {radiusKm && radiusKm > 0 && (
+              <Circle
+                center={[userLocation.lat, userLocation.lng]}
+                radius={radiusKm * 1000}
+                pathOptions={{
+                  color: '#0E8C7F',
+                  fillColor: '#0E8C7F',
+                  fillOpacity: 0.12,
+                  weight: 2,
+                  dashArray: '4, 6',
+                }}
+              />
+            )}
+          </>
+        )}
 
         {/* Scenic Routes Highlight Lines */}
         {SCENIC_ROUTES.map((route, rIdx) => (
@@ -113,30 +169,18 @@ export default function MapComponent({ places, selectedPlace, onSelectPlace }: M
             </Tooltip>
           </Polyline>
         ))}
-        
+
         {places.map((place) => {
           if (!place.latitude || !place.longitude) return null;
 
           const cat = place.tourism_category || place.category || '';
-          const icon = getCategoryIcon(cat);
-          const defaultThumb = getCategoryFallbackImage(place.category, place.name);
+          let catKey = 'attractions_nature';
+          if (cat.toLowerCase().includes('ẩm thực') || cat.toLowerCase().includes('food')) catKey = 'food_and_restaurants';
+          else if (cat.toLowerCase().includes('chùa') || cat.toLowerCase().includes('tâm linh') || cat.toLowerCase().includes('heritage')) catKey = 'khmer_pagodas_heritage';
+          else if (cat.toLowerCase().includes('check-in')) catKey = 'checkin_spots';
+          else if (cat.toLowerCase().includes('lưu trú') || cat.toLowerCase().includes('homestay') || cat.toLowerCase().includes('khách sạn')) catKey = 'cafes_and_homestays';
 
-          const thumbUrl =
-            place.image_url ||
-            (place.photos && place.photos.length > 0 ? place.photos[0].url : null) ||
-            defaultThumb;
-
-          const rating = place.rating ? Number(place.rating).toFixed(1) : '4.8';
-
-          const { maps, tiktok } = resolvePlaceExternalLinks({
-            name: place.name,
-            commune: place.commune,
-            category: place.category,
-            lat: place.latitude,
-            lng: place.longitude,
-            video_url: place.video_url,
-            tiktok_videos: (place as any).tiktok_videos,
-          });
+          const icon = getCategoryIcon(catKey);
 
           return (
             <Marker
@@ -147,71 +191,55 @@ export default function MapComponent({ places, selectedPlace, onSelectPlace }: M
                 click: () => onSelectPlace(place),
               }}
             >
-              <Popup className="custom-popup" minWidth={230} maxWidth={270}>
-                <div style={{ fontFamily: 'Be Vietnam Pro, sans-serif', minWidth: 230 }}>
-                  {/* Thumbnail */}
-                  <div style={{ width: '100%', height: 115, overflow: 'hidden', borderRadius: 12, marginBottom: 8, background: '#151B34' }}>
+              <Popup className="custom-map-popup">
+                <div className="p-1 space-y-2 max-w-[240px]">
+                  <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={thumbUrl}
+                      src={place.image_url || getCategoryFallbackImage(place.category)}
                       alt={place.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      loading="lazy"
+                      className="w-full h-full object-cover"
                     />
+                    <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-white/95 text-[#26221B] font-bold text-[10px] flex items-center gap-0.5">
+                      <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500" />
+                      {place.rating || 4.8}
+                    </span>
                   </div>
 
-                  {/* Meta Bar */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: '#0E8C7F', background: '#FAF3E7', padding: '2px 8px', borderRadius: 99, border: '1px solid rgba(14,140,127,0.2)' }}>
+                  <div>
+                    <span className="text-[9px] font-bold text-[#F0A32F] uppercase tracking-wider block font-mono">
                       {place.commune}
                     </span>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: '#26221B', background: '#F0A32F', padding: '2px 6px', borderRadius: 99 }}>
-                      ★ {rating}
-                    </span>
+                    <h4 className="font-display font-bold text-xs text-[#26221B] line-clamp-1">
+                      {place.name}
+                    </h4>
                   </div>
 
-                  <h4 style={{ fontWeight: 700, fontSize: 13, color: '#26221B', marginBottom: 6, lineHeight: 1.3, fontFamily: 'Bricolage Grotesque, sans-serif' }}>
-                    {place.name}
-                  </h4>
-
-                  {/* Buttons */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginTop: 8 }}>
-                    <a
-                      href={maps.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '7px 0', background: '#F0A32F', color: '#26221B', borderRadius: 99, fontSize: 11, fontWeight: 700, textDecoration: 'none' }}
-                    >
-                      <Navigation style={{ width: 12, height: 12 }} />
-                      <span>Chỉ đường Google Maps</span>
-                    </a>
+                  <div className="flex items-center gap-1.5 pt-1">
                     <Link
                       href={`/places/${place.slug || place.id}`}
-                      style={{ display: 'block', textAlign: 'center', padding: '6px 0', background: '#FAF3E7', color: '#0E8C7F', borderRadius: 99, fontSize: 11, fontWeight: 700, textDecoration: 'none', border: '1px solid rgba(14,140,127,0.2)' }}
+                      className="flex-1 py-1 rounded-lg bg-[#0E8C7F] text-white text-center font-bold text-[10px] font-display hover:bg-[#085A52] transition-colors"
                     >
-                      Xem chi tiết cẩm nang
+                      Chi Tiết
                     </Link>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' ' + place.commune + ' Tri Tôn An Giang')}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                      title="Mở Google Maps chỉ đường"
+                    >
+                      <Navigation className="w-3.5 h-3.5 text-emerald-600" />
+                    </a>
                   </div>
                 </div>
               </Popup>
             </Marker>
           );
         })}
-        
-        <MapController selectedPlace={selectedPlace} />
-      </MapContainer>
-      
-      {/* Top Map Status Overlay */}
-      <div className="absolute top-4 left-4 right-4 flex flex-wrap items-center justify-between gap-2 z-[400] pointer-events-none">
-        <div className="bg-[#151B34]/90 backdrop-blur-md px-3.5 py-2 rounded-2xl text-xs font-semibold flex items-center gap-2 border border-white/10 text-white pointer-events-auto shadow-md font-display">
-          <MapPin className="w-4 h-4 text-[#F0A32F]" />
-          <span>Bản đồ du lịch thực địa Bảy Núi</span>
-        </div>
 
-        <div className="bg-[#0E8C7F] px-3.5 py-2 rounded-2xl text-xs font-bold text-white shadow-md pointer-events-auto font-display">
-          {places.length} Địa điểm đã xác minh
-        </div>
-      </div>
+        <MapController selectedPlace={selectedPlace} userLocation={userLocation} />
+      </MapContainer>
     </div>
   );
 }

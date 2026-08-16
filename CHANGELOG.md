@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v48.0.0-HYBRID-RADAR-MAP-UPGRADE] - 2026-08-16
+
+### 🗺️ Nâng Cấp Trang Bản Đồ Hybrid (/map): GPS Live Radar & Chỉ Đường Google Maps 1 Chạm
+
+#### 1. Kiến Trúc Bản Đồ Tối Ưu Chi Phí & Trải Nghiệm (Hybrid Map Architecture)
+- **Định Vị GPS Live**: Tích hợp nút `📍 Bật GPS Quét Điểm Gần Tôi` với chấm phát xung xanh dương trực quan.
+- **Bộ Lọc Bán Kính Radar**: Chọn quét `3 km` (Đi bộ/Xe đạp), `5 km` (Xe máy gần), `10 km` (Cụm xã) hoặc `Tất cả Tri Tôn`.
+- **Tính Khoảng Cách Thực Tế (Haversine Formula)**: Tự động tính khoảng cách $d$ (km) và thời gian đi xe máy từ vị trí của du khách đến 149 địa điểm.
+- **Chỉ Đường Google Maps 1 Chạm**: Nút bấm `📍 Mở App Google Maps Dẫn Đường` kích hoạt trực tiếp ứng dụng Google Maps trên điện thoại để có giọng nói dẫn đường tiếng Việt và điều hướng an toàn.
+
+---
+
 ## [v47.0.0-COMPREHENSIVE-VERIFIED-STAY-UPGRADE] - 2026-08-16
 
 ### 🏨 Khảo Sát Internet Thực Địa & Nâng Cấp Toàn Diện Danh Mục 12 Cơ Sở Lưu Trú Chuẩn Xác
