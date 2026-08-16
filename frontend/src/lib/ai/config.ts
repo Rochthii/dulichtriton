@@ -27,24 +27,27 @@ export const AI_CONFIG: AIProviderConfig = {
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
     'gemini-flash-latest',
+    'gemini-1.5-flash-latest',
     'gemini-1.5-flash',
+    'gemini-1.5-pro',
   ],
   groqModels: [
     'llama-3.1-8b-instant',
     'llama-3.3-70b-versatile',
     'gemma2-9b-it',
+    'mixtral-8x7b-32768',
   ],
   openRouterModels: [
-    'google/gemma-4-31b-it:free',
-    'google/gemma-4-26b-a4b-it:free',
-    'nvidia/nemotron-3-nano-30b-a3b:free',
-    'nvidia/nemotron-3.5-lightning:free',
-    'nvidia/nemotron-3-ultra-550b-a55b:free',
+    'openrouter/free',
     'openai/gpt-oss-20b:free',
+    'nvidia/nemotron-3.5-lightning:free',
+    'google/gemma-4-31b-it:free',
+    'nvidia/nemotron-3-nano-30b-a3b:free',
+    'nvidia/nemotron-nano-9b-v2:free',
     'liquid/lfm-2.5-2.6b:free',
   ],
-  timeoutMs: 5000,
-  cooldownMs: 20000, // 20s cooldown for 429 rate limit
+  timeoutMs: 4500,
+  cooldownMs: 30000, // 30s cooldown for 429 rate limit
 };
 
 // ── In-Memory State & Circuit Breaker ────────────────────────────────────────

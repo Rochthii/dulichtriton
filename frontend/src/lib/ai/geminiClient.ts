@@ -5,7 +5,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { recordKeyUsage, setKeyCooldown } from './config';
+import { AI_CONFIG, recordKeyUsage, setKeyCooldown } from './config';
 
 export interface GeminiCallResult {
   text: string;
@@ -19,37 +19,22 @@ export interface GeminiCallResult {
 export async function callGeminiLiveSearch(
   key: string,
   keyId: string,
-  model: string,
+  preferredModel: string,
   systemPrompt: string,
   userPrompt: string,
-  timeoutMs = 4500
+  timeoutMs = 4000
 ): Promise<GeminiCallResult> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const models = preferredModel
+    ? [preferredModel, ...AI_CONFIG.geminiModels.filter(m => m !== preferredModel)]
+    : AI_CONFIG.geminiModels;
 
-  try {
-    // 1. Thử gọi với Google Search Grounding (Live Internet Facts)
-    let res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
-          tools: [{ googleSearch: {} }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 2048,
-          },
-        }),
-        signal: controller.signal,
-      }
-    );
+  for (const model of models) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-    // 2. Nếu model tier không hỗ trợ tools -> fallback gọi standard không tools
-    if (!res.ok && (res.status === 400 || res.status === 404)) {
-      res = await fetch(
+    try {
+      // 1. Thử gọi với Google Search Grounding (Live Internet Facts)
+      let res = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
         {
           method: 'POST',
@@ -57,6 +42,7 @@ export async function callGeminiLiveSearch(
           body: JSON.stringify({
             system_instruction: { parts: [{ text: systemPrompt }] },
             contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+            tools: [{ googleSearch: {} }],
             generationConfig: {
               temperature: 0.7,
               maxOutputTokens: 2048,
@@ -65,34 +51,57 @@ export async function callGeminiLiveSearch(
           signal: controller.signal,
         }
       );
-    }
 
-    clearTimeout(timer);
-
-    // 3. Xử lý mã lỗi trả về nhanh (<150ms)
-    if (!res.ok) {
-      if (res.status === 429) {
-        setKeyCooldown(keyId, 25000); // 25s cooldown
-      } else if (res.status === 403 || res.status === 401) {
-        setKeyCooldown(keyId, 60000);
+      // 2. Nếu model không hỗ trợ tools -> fallback gọi standard không tools
+      if (!res.ok && (res.status === 400 || res.status === 404)) {
+        res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: systemPrompt }] },
+              contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+              generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 2048,
+              },
+            }),
+            signal: controller.signal,
+          }
+        );
       }
-      throw new Error(`Gemini ${keyId} HTTP ${res.status}`);
+
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        if (res.status === 429) {
+          setKeyCooldown(keyId, 30000);
+          throw new Error(`Gemini ${keyId} Rate Limited (HTTP 429)`);
+        }
+        console.warn(`[Gemini] Model ${model} on ${keyId} returned HTTP ${res.status}. Trying next model...`);
+        continue;
+      }
+
+      recordKeyUsage(keyId);
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (text && text.trim()) {
+        return {
+          text: text.trim(),
+          provider: `gemini:${keyId}:${model}`,
+        };
+      }
+    } catch (err: any) {
+      clearTimeout(timer);
+      if (err.message.includes('Rate Limited') || err.message.includes('429')) {
+        throw err;
+      }
+      console.warn(`[Gemini] ${keyId} model ${model} failed (${err.message}).`);
+      continue;
     }
-
-    recordKeyUsage(keyId);
-    const data = await res.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!text || !text.trim()) {
-      throw new Error(`Gemini ${keyId} returned empty text`);
-    }
-
-    return {
-      text: text.trim(),
-      provider: `gemini:${keyId}:${model} (Google Search Grounding)`,
-    };
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
   }
+
+  throw new Error(`All Gemini models failed on ${keyId}`);
 }

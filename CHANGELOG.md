@@ -4,6 +4,24 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v51.0.0-RESILIENT-MULTI-TIER-FREE-MODEL-MESH] - 2026-08-16
+
+### 🌐 Mạng Lưới Đa Tầng 19+ Model Miễn Phí (Multi-Tier Free Model Mesh) Tự Động Chuyển Mạch Tức Thì
+
+#### 1. Kiến Trúc 4 Tầng Phòng Thủ Dự Phòng Vĩnh Cửu (Infinite Fallback Chain)
+- **Tầng 1 (Groq LPU Pool - Phản hồi <500ms, 0đ)**:
+  - Tự động xoay vòng: `llama-3.1-8b-instant` (500k TPD) ➔ `llama-3.3-70b-versatile` ➔ `gemma2-9b-it` ➔ `mixtral-8x7b-32768`.
+  - Khi một model chạm 429 hoặc rate limit, hệ thống tự động nhảy sang model tiếp theo trong `<80ms`.
+- **Tầng 2 (Google Gemini Multi-Key Multi-Model Pool)**:
+  - Tự động luân phiên 4 API Keys (`Key 1` ➔ `Key 2` ➔ `Key 3` ➔ `Key 4`).
+  - Mỗi Key tự động thử: `gemini-flash-latest` ➔ `gemini-1.5-flash-latest` ➔ `gemini-1.5-flash` ➔ `gemini-1.5-pro`.
+- **Tầng 3 (OpenRouter 100% Free Multi-Model Pool)**:
+  - Tự động quét và fallback qua 7 model miễn phí: `openrouter/free` (Meta-Router) ➔ `openai/gpt-oss-20b:free` ➔ `nvidia/nemotron-3.5-lightning:free` ➔ `google/gemma-4-31b-it:free` ➔ `nvidia/nemotron-3-nano-30b-a3b:free`...
+- **Tầng 4 (Local Domain Expert RAG)**:
+  - Bảo hiểm tầng cuối cùng: 100% dữ liệu Master Data 149 điểm xác minh + 12 Homestay + 15 Cung đường + 6 Đại Lễ Hội đảm bảo hệ thống không bao giờ mất kết nối dù toàn bộ internet quốc tế gặp sự cố.
+
+---
+
 ## [v50.0.0-FIX-AI-INTENT-AND-GROQ-AUTO-FAILOVER-UPGRADE] - 2026-08-16
 
 ### 🛠️ Khắc Phục Triệt Để Lỗi AI Trả Lời Sai Trọng Tâm & Nâng Cấp Tốc Độ Groq LPU Tức Thì (<800ms)

@@ -89,9 +89,9 @@ export async function* streamAIResponse(
     }
   }
 
-  // ── 3. TIER 3: OPENROUTER FREE MODELS ──────────────────────────────────────
+  // ── 3. TIER 3: OPENROUTER FREE MULTI-MODEL POOL (100% Free Fallback) ──────
   if (AI_CONFIG.openRouterKey) {
-    for (const model of AI_CONFIG.openRouterModels.slice(0, 3)) {
+    for (const model of AI_CONFIG.openRouterModels) {
       try {
         const result = await callOpenRouterFallback(systemPrompt, userPrompt, model);
         if (result && result.text) {
@@ -109,7 +109,7 @@ export async function* streamAIResponse(
           return;
         }
       } catch (err: any) {
-        console.warn(`[AI Provider] OpenRouter ${model} failed:`, err.message);
+        console.warn(`[AI Provider] OpenRouter model ${model} failed (${err.message}). Trying next free model...`);
       }
     }
   }
