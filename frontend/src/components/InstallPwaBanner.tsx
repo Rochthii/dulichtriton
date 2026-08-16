@@ -13,16 +13,22 @@ export default function InstallPwaBanner() {
   const [showInstallModal, setShowInstallModal] = useState(false);
 
   useEffect(() => {
-    // 1. Register Service Worker
+    // 1. Force unregister any stale Service Worker and clear old caches
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then((reg) => {
-          console.log('[PWA] Service Worker registered:', reg.scope);
-        })
-        .catch((err) => {
-          console.warn('[PWA] Service Worker registration failed:', err);
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.unregister().then((success) => {
+            if (success) console.log('[PWA] Stale Service Worker successfully unregistered');
+          });
+        }
+      });
+      if ('caches' in window) {
+        caches.keys().then((names) => {
+          for (const name of names) {
+            caches.delete(name);
+          }
         });
+      }
     }
 
     // 2. Check standalone

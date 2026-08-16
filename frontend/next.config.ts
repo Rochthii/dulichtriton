@@ -68,23 +68,4 @@ const nextConfig: NextConfig = {
 
 let exportedConfig = nextConfig;
 
-try {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const withPWA = require("next-pwa");
-  if (typeof withPWA === "function") {
-    const pwa = withPWA({
-      dest: "public",
-      register: true,
-      skipWaiting: true,
-      clientsClaim: true,
-      reloadOnOnline: true,
-      disable: process.env.NODE_ENV === "development",
-      buildExcludes: [/middleware-manifest\.json$/, /_next\/data\/.*\.json$/],
-    });
-    exportedConfig = pwa(nextConfig);
-  }
-} catch {
-  // next-pwa optional fallback
-}
-
 export default exportedConfig;

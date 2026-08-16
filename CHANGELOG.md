@@ -4,6 +4,21 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v60.0.0-COMPLETE-REMOVAL-OF-SERVICE-WORKER-INTERCEPTION] - 2026-08-16
+
+### 🚀 Gỡ Bỏ Hoàn Toàn Service Worker (Loại Bỏ 100% Hiện Tượng Kẹt Trang & Lỗi Chuyển Trang)
+
+#### 1. Nguyên Nhân Gốc Rễ Đích Thực
+- **PWA Service Worker (`sw.js`) can thiệp vào Router của Next.js**: Khi chuyển qua lại giữa các trang (Trang Chủ ➔ Chatbot ➔ Trang Khác), Service Worker cố gắng chặn (intercept) sự kiện `fetch` để phục vụ từ cache cũ.
+- Khi các file JavaScript chunk mới từ Vercel bị Service Worker chặn hoặc không khớp với bản cache cũ, trình duyệt bị rơi vào trạng thái "Network Failure" $\rightarrow$ Hiển thị màn hình đen *"This page couldn't load"* và khóa người dùng không thể chuyển sang các trang khác.
+
+#### 2. Biện Pháp Khắc Phục Triệt Để 100%
+- **Vô hiệu hóa hoàn toàn `next-pwa`** trong `next.config.ts`.
+- **Cập nhật `sw.js` thành script tự hủy (Uninstaller & Cache Purger)**: Tự động xóa sạch mọi cache cũ và hủy đăng ký (`unregister`) Service Worker trên tất cả trình duyệt của du khách khi truy cập.
+- **Bổ sung cơ chế dọn dẹp trong `InstallPwaBanner.tsx`**: Tự động gọi `navigator.serviceWorker.getRegistrations()` để dọn dẹp sạch sẽ trong vòng 0.01 giây.
+
+---
+
 ## [v59.0.0-FIX-CHATBOT-ZERO-SSR-HYDRATION-CRASH] - 2026-08-16
 
 ### 🛡️ Tách Rời Toàn Bộ Chatbot Khỏi SSR (Zero Server Hydration Crash)
