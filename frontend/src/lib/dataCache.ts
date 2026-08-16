@@ -131,16 +131,28 @@ export const getCachedAllStayPlaces = unstable_cache(
     }
 
     return (localMasterPois as any[]).filter((p) => {
+      const cat = (p.category || '').toLowerCase();
+      const subcat = (p.subcategory || '').toLowerCase();
+      const name = (p.name || '').toLowerCase();
       return (
-        p.category === 'hotel' ||
-        p.category === 'homestay' ||
-        p.category === 'stay' ||
-        (p.tourism_category && (p.tourism_category.includes('Khách sạn') || p.tourism_category.includes('Homestay'))) ||
-        (p.id && (p.id.startsWith('KS') || p.id.startsWith('HS')))
+        cat === 'hotel' ||
+        cat === 'homestay' ||
+        cat === 'stay' ||
+        cat === 'accommodation' ||
+        p.stay_type ||
+        subcat.includes('khách sạn') ||
+        subcat.includes('homestay') ||
+        subcat.includes('nhà nghỉ') ||
+        subcat.includes('cắm trại') ||
+        name.includes('homestay') ||
+        name.includes('khách sạn') ||
+        name.includes('nhà nghỉ') ||
+        name.includes('resort') ||
+        name.includes('camping')
       );
     });
   },
-  ['master-stays-places-v3'],
+  ['master-stays-places-v4'],
   {
     tags: ['places', 'stays'],
     revalidate: 86400, // 24h safety net

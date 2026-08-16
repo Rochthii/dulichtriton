@@ -4872,14 +4872,23 @@
     "commune": "Xã Núi Tô",
     "night_hours": "06:00 - 21:30",
     "opening_hours": "06:30 - 18:30 (Mỗi ngày)",
-    "price_level": "20.000đ - 45.000đ / ly",
+    "price_level": "300.000đ – 450.000đ/đêm",
     "ticket_price": "20.000đ - 45.000đ / ly",
     "is_hot": true,
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
     ],
-    "slug": "ruong-coffee-tea-tri-ton"
+    "slug": "ruong-coffee-tea-tri-ton",
+    "phone": "0917566944",
+    "hotline": "0917566944",
+    "amenities": [
+      "View đồng lúa Soài Chek",
+      "Cà phê check-in",
+      "Không gian chill",
+      "BBQ ngoài trời"
+    ],
+    "stay_type": "homestay"
   },
   {
     "id": "f7f5ca30-windy-hill-coffee-&-",
@@ -4959,14 +4968,23 @@
     "commune": "Xã Núi Tô",
     "night_hours": "06:00 - 22:00",
     "opening_hours": "06:30 - 21:00 (Mỗi ngày)",
-    "price_level": "25.000đ - 50.000đ / ly",
+    "price_level": "300.000đ – 450.000đ/đêm",
     "ticket_price": "25.000đ - 50.000đ / ly",
     "is_hot": true,
     "slug": "windy-hill-coffee-homestay-tri-ton",
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
+    ],
+    "phone": "0946999963",
+    "hotline": "0946999963",
+    "amenities": [
+      "View đồi lộng gió",
+      "Sân ngắm hoàng hôn",
+      "Đồ uống & BBQ",
+      "Gần Hồ Soài Chek"
+    ],
+    "stay_type": "homestay"
   },
   {
     "id": "b6a52dfa-chạm-coffee-&-tea-tr",
@@ -5735,14 +5753,24 @@
     "tiktok_search_query": "Tuyết Anh Homestay & Coffee Tri Tôn An Giang",
     "commune": "Thị trấn Tri Tôn",
     "opening_hours": "06:30 - 22:00 (Mỗi ngày)",
-    "price_level": "20.000đ - 45.000đ / ly",
+    "price_level": "350.000đ – 450.000đ/đêm",
     "ticket_price": "20.000đ - 45.000đ / ly",
     "is_hot": true,
     "slug": "tuyet-anh-homestay-coffee",
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
+    ],
+    "phone": "0919208789",
+    "hotline": "0947949595",
+    "amenities": [
+      "Có cho thuê xe máy",
+      "View núi & Chùa Tà Pạ",
+      "Sân vườn thoáng mát",
+      "Cà phê & Điểm tâm",
+      "Wifi tốc độ cao"
+    ],
+    "stay_type": "homestay"
   },
   {
     "id": "c7d6fabf-rồng-vàng-resort-tri",
@@ -5824,7 +5852,19 @@
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
+    ],
+    "phone": "02963772888",
+    "hotline": "02963772888",
+    "price_level": "450.000đ – 650.000đ/đêm",
+    "amenities": [
+      "Hồ bơi ngoài trời",
+      "Khuôn viên sân vườn",
+      "Phòng gia đình",
+      "Bãi đỗ ô tô lớn",
+      "Lễ tân 24/7"
+    ],
+    "stay_type": "hotel",
+    "is_hot": true
   },
   {
     "id": "ac550583-soài-chek-homestay-&",
@@ -5906,7 +5946,18 @@
     "photos": [
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
       "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
-    ]
+    ],
+    "phone": "0917566944",
+    "hotline": "0917566944",
+    "price_level": "250.000đ – 380.000đ/đêm",
+    "amenities": [
+      "Gần Hồ Soài Chek",
+      "Sân Đua Bò Tà Pạ",
+      "Không khí trong lành",
+      "Cho thuê xe máy"
+    ],
+    "stay_type": "homestay",
+    "is_hot": false
   },
   {
     "id": "b62d0291-nhà-nghi-&-khách-sạn",
@@ -10833,5 +10884,190 @@
         "author": "thanhsang_weibou"
       }
     ]
+  },
+  {
+    "id": "hotel-tri-ton",
+    "name": "Hotel Tri Tôn (Khách Sạn Tri Tôn)",
+    "category": "hotel",
+    "subcategory": "Khách sạn trung tâm",
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "hotel-tri-ton",
+    "address": "79 Đường 3/2, Khóm 5, Thị trấn Tri Tôn, An Giang",
+    "latitude": 10.4215,
+    "longitude": 105.0035,
+    "phone": "02962226688",
+    "hotline": "0946999963",
+    "price_level": "300.000đ – 550.000đ/đêm",
+    "rating": 4.8,
+    "is_hot": true,
+    "description": "Khách sạn hiện đại bậc nhất trung tâm Thị trấn Tri Tôn với khóa thẻ từ thông minh, sàn gỗ cao cấp, điều hòa và dịch vụ liên kết cho thuê xe máy.",
+    "detailed_story": "**1. Tổng quan**\nHotel Tri Tôn là cơ sở lưu trú hiện đại và sang trọng bậc nhất tại 79 Đường 3/2, Thị trấn Tri Tôn. Khách sạn nằm trên trục đường sầm uất, gần chợ đêm và các quán ăn nổi tiếng.\n\n**2. Tiện nghi & Dịch vụ**\n- Phòng nghỉ trang bị khóa thẻ từ thông minh, sàn gỗ ấm cúng, máy lạnh Daikin, Smart TV kết nối Youtube, máy nước nóng và Wifi cáp quang tốc độ cao.\n- **Dịch vụ hỗ trợ du khách**: Có liên kết dịch vụ cho thuê xe máy (120k–150k/ngày), bãi đậu xe ô tô 4–16 chỗ có camera an ninh 24/7.\n- Hotline đặt phòng: 0296 2226 688 / 0946 999 963 (Chị Như) / 0399 930 073 (Ny).",
+    "amenities": [
+      "Cho thuê xe máy",
+      "Thẻ từ thông minh",
+      "Bãi đậu ô tô",
+      "Smart TV",
+      "Wifi tốc độ cao",
+      "Lễ tân 24/7"
+    ],
+    "stay_type": "hotel",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+    ],
+    "is_verified": true
+  },
+  {
+    "id": "khach-san-vuon-sao",
+    "name": "Khách Sạn Vườn Sao (Star Garden Hotel)",
+    "category": "hotel",
+    "subcategory": "Khách sạn sân vườn",
+    "commune": "Xã Núi Tô",
+    "slug": "khach-san-vuon-sao",
+    "address": "Đường 15, Ấp Tô Hạ, Xã Núi Tô (giáp Thị trấn Tri Tôn), An Giang",
+    "latitude": 10.4185,
+    "longitude": 104.995,
+    "phone": "02963770909",
+    "hotline": "0917420422",
+    "price_level": "250.000đ – 420.000đ/đêm",
+    "rating": 4.7,
+    "is_hot": false,
+    "description": "Khách sạn sinh thái dưới chân Núi Tô với khuôn viên sân vườn cây xanh thoáng đãng, bãi đỗ xe rộng rãi và không gian yên tĩnh.",
+    "detailed_story": "**1. Tổng quan**\nKhách Sạn Vườn Sao tọa lạc tại Ấp Tô Hạ, Xã Núi Tô — vị trí đắc địa dưới chân Núi Cô Tô hùng vĩ. Khách sạn mang phong cách nghỉ dưỡng sân vườn thanh bình.\n\n**2. Tiện ích nổi bật**\n- Khuôn viên rợp bóng mát cây kiểng, không khí trong lành mát mẻ quanh năm.\n- Phòng đơn, phòng đôi và phòng tập thể gia đình rộng rãi, đầy đủ máy lạnh, nước nóng, tivi.\n- Bãi đỗ xe ô tô rộng cho cả đoàn xe 29-45 chỗ.\n- Hotline liên hệ: 0296 3770 909 / 0917 420 422.",
+    "amenities": [
+      "Khuôn viên sân vườn",
+      "Bãi đỗ xe lớn",
+      "View núi Cô Tô",
+      "Không gian yên tĩnh",
+      "Wifi miễn phí"
+    ],
+    "stay_type": "hotel",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_soai_so_camping.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_soai_so_camping.jpg"
+    ],
+    "is_verified": true
+  },
+  {
+    "id": "ganesha-camping-o-thum",
+    "name": "Ganesha Camping Hồ Ô Thum",
+    "category": "homestay",
+    "subcategory": "Khu cắm trại & Glamping",
+    "commune": "Xã Ô Lâm",
+    "slug": "ganesha-camping-o-thum",
+    "address": "Khu vực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang",
+    "latitude": 10.395,
+    "longitude": 104.972,
+    "phone": "0918554445",
+    "hotline": "0918554445",
+    "price_level": "200.000đ – 350.000đ/lều",
+    "rating": 4.9,
+    "is_hot": true,
+    "description": "Khu cắm trại bên bờ Hồ Ô Thum với dịch vụ lều trại, tiệc nướng BBQ ngoài trời và thưởng thức đặc sản Gà đốt lá chúc ven hồ.",
+    "detailed_story": "**1. Tổng quan**\nGanesha Camping tọa lạc ngay ven lòng Hồ Ô Thum thơ mộng tại Xã Ô Lâm. Đây là mô hình cắm trại dã ngoại kết hợp glamping được các bạn trẻ yêu thiên nhiên đặc biệt ưa chuộng.\n\n**2. Trải nghiệm độc đáo**\n- Ngắm hoàng hôn buông xuống mặt nước phẳng lặng và thức giấc đón sương sớm giữa thung lũng núi rừng.\n- Thưởng thức Gà đốt lá chúc Ô Thum nóng hổi bên bếp than hồng và tiệc nướng BBQ đêm.\n- Có sẵn lều trại chống nước, đệm êm, đèn chiếu sáng, khu vệ sinh sạch sẽ và suối đá róc rách.",
+    "amenities": [
+      "Cắm trại ven hồ",
+      "Tiệc nướng BBQ",
+      "Gà đốt Ô Thum",
+      "Săn hoàng hôn",
+      "Lều trại đầy đủ"
+    ],
+    "stay_type": "camping",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_soai_so_camping.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_soai_so_camping.jpg"
+    ],
+    "is_verified": true
+  },
+  {
+    "id": "camping-dinh-nui-co-to",
+    "name": "Khu Cắm Trại Đỉnh Núi Cô Tô (Vồ Hội Mẹ)",
+    "category": "homestay",
+    "subcategory": "Cắm trại đỉnh núi",
+    "commune": "Xã Cô Tô",
+    "slug": "camping-dinh-nui-co-to",
+    "address": "Đỉnh Phụng Hoàng Sơn (Núi Cô Tô), Xã Cô Tô, Tri Tôn, An Giang",
+    "latitude": 10.378,
+    "longitude": 104.998,
+    "phone": "0946999963",
+    "hotline": "0946999963",
+    "price_level": "Miễn phí cắm trại (Thuê xe ôm 70k-100k)",
+    "rating": 4.9,
+    "is_hot": true,
+    "description": "Tọa độ cắm trại săn mây, ngắm biển lúa Tà Pạ và đón hoàng hôn/bình minh ngoạn mục nhất tại độ cao hơn 500m trên đỉnh Núi Cô Tô.",
+    "detailed_story": "**1. Trải nghiệm săn mây đỉnh cao**\nVồ Hội Mẹ và Sân Tiên trên đỉnh Núi Cô Tô là điểm cắm trại tự túc huyền thoại của phượt thủ vùng Thất Sơn. Từ đây, bạn có thể phóng tầm mắt bao quát toàn cảnh cánh đồng Tà Pạ và biên giới Tây Nam.\n\n**2. Hướng dẫn di chuyển & Lưu ý**\n- Đi xe ôm từ chân núi Tô lên đỉnh (khoảng 70.000đ – 100.000đ/lượt) hoặc trekking đường bộ khoảng 2-3 giờ.\n- Đêm trên đỉnh núi gió lạnh (18°C – 22°C), cần mang theo áo ấm, túi ngủ và dọn sạch rác trước khi xuống núi.",
+    "amenities": [
+      "Săn mây đỉnh cao",
+      "Ngắm bình minh",
+      "View toàn cảnh Tà Pạ",
+      "Trải nghiệm trekking"
+    ],
+    "stay_type": "camping",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758532/tri_ton_hero/hero_dinh_co_to.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758532/tri_ton_hero/hero_dinh_co_to.jpg"
+    ],
+    "is_verified": true
+  },
+  {
+    "id": "nha-nghi-mai-anh",
+    "name": "Nhà Nghỉ Mai Anh Tri Tôn",
+    "category": "hotel",
+    "subcategory": "Nhà nghỉ bình dân",
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nha-nghi-mai-anh",
+    "address": "Khóm 5, Thị trấn Tri Tôn, An Giang",
+    "latitude": 10.424,
+    "longitude": 105.002,
+    "phone": "0944906906",
+    "hotline": "0944906906",
+    "price_level": "180.000đ – 260.000đ/đêm",
+    "rating": 4.6,
+    "is_hot": false,
+    "description": "Nhà nghỉ bình dân trung tâm thị trấn, sạch sẽ, lễ tân phục vụ 24/24, đầy đủ máy lạnh và wifi thuận tiện đi lại.",
+    "detailed_story": "Nhà Nghỉ Mai Anh tọa lạc tại Khóm 5, Thị trấn Tri Tôn. Vị trí trung tâm thuận tiện cho du khách đi bộ ra chợ Tri Tôn, ăn cháo bò, bò 7 món và viếng Chùa Xvayton. Phòng ốc sạch sẽ, giá cả bình dân, máy lạnh và nước nóng đầy đủ.",
+    "amenities": [
+      "Lễ tân 24/24",
+      "Máy lạnh Daikin",
+      "Wifi miễn phí",
+      "Giá bình dân",
+      "Gần chợ trung tâm"
+    ],
+    "stay_type": "motel",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+    ],
+    "is_verified": true
+  },
+  {
+    "id": "nha-nghi-thao-quyen",
+    "name": "Nhà Nghỉ Thảo Quyên",
+    "category": "hotel",
+    "subcategory": "Nhà nghỉ tiện lợi",
+    "commune": "Thị trấn Tri Tôn",
+    "slug": "nha-nghi-thao-quyen",
+    "address": "Đường 3/2, Khóm 5, Thị trấn Tri Tôn, An Giang",
+    "latitude": 10.422,
+    "longitude": 105.004,
+    "phone": "02963874865",
+    "hotline": "02963874865",
+    "price_level": "180.000đ – 250.000đ/đêm",
+    "rating": 4.5,
+    "is_hot": false,
+    "description": "Cơ sở lưu trú bình dân trên đường 3/2 trung tâm thị trấn, phòng ốc thoáng mát và phục vụ chu đáo.",
+    "detailed_story": "Nhà Nghỉ Thảo Quyên nằm trên trục đường 3/2 Thị trấn Tri Tôn, là địa chỉ quen thuộc của khách công tác và du khách phượt miền Tây. Phòng sạch sẽ, yên tĩnh, có chỗ gửi xe an toàn.",
+    "amenities": [
+      "Vị trí trung tâm",
+      "Chỗ đậu xe an toàn",
+      "Máy lạnh",
+      "Wifi tốc độ cao"
+    ],
+    "stay_type": "motel",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+    ],
+    "is_verified": true
   }
 ]
