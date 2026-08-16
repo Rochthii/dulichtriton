@@ -92,13 +92,20 @@ export default function ChatbotWidget() {
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (isOpen) setUnreadCount(0);
-  }, [isOpen]);
+  const handleSendRef = useRef<((text?: string) => Promise<void>) | null>(null);
 
   useEffect(() => {
-    const handleOpenChat = () => {
+    const handleOpenChat = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const q = customEvent.detail?.query?.trim();
       setIsOpen(true);
+      if (q) {
+        setTimeout(() => {
+          if (handleSendRef.current) {
+            handleSendRef.current(q);
+          }
+        }, 150);
+      }
     };
     window.addEventListener('triton:open-chat', handleOpenChat);
     return () => window.removeEventListener('triton:open-chat', handleOpenChat);
@@ -401,6 +408,8 @@ export default function ChatbotWidget() {
       setIsTyping(false);
     }
   };
+
+  handleSendRef.current = handleSend;
 
   const handleClearHistory = () => {
     setMessages([{
