@@ -11496,5 +11496,47 @@
     "is_hot": true,
     "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
     "description": "Quán ăn gia đình ấm cúng ven bờ hồ Ô Thum, được đông đảo thực khách và dân phượt đánh giá cao về hương vị gà đốt truyền thống, giá cả bình dân và phục vụ nhiệt tình."
+  },
+  {
+    "id": "quan-ga-dot-thanh-dat-o-thum",
+    "slug": "quan-ga-dot-thanh-dat-o-thum",
+    "name": "Gà Đốt Thành Đạt Ô Thum",
+    "category": "food",
+    "tourism_category": "Ẩm Thực & Quán Ăn",
+    "commune": "Xã Ô Lâm",
+    "latitude": 10.3778,
+    "longitude": 104.9928,
+    "rating": 4.8,
+    "is_hot": true,
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "description": "Quán gà đốt nổi tiếng bên trong khu du lịch Hồ Ô Thum, phục vụ nhanh nhẹn, chòi lá thoáng mát đón gió hồ, gà đốt da giòn tẩm ướp lá chúc đậm vị rất thích hợp cho gia đình và đoàn phượt."
+  },
+  {
+    "id": "quan-ga-dot-oc-dao-ho-o-thum",
+    "slug": "quan-ga-dot-oc-dao-ho-o-thum",
+    "name": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum",
+    "category": "food",
+    "tourism_category": "Ẩm Thực & Quán Ăn",
+    "commune": "Xã Ô Lâm",
+    "latitude": 10.3785,
+    "longitude": 104.9935,
+    "rating": 4.8,
+    "is_hot": true,
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "description": "Nằm trên mỏm đất ốc đảo nhô ra lòng hồ Ô Thum với tầm nhìn 360 độ ngắm trọn mặt nước xanh biếc, chuyên gà thả đồi đốt than hồng ăn kèm xôi thốt nốt chiên phồng."
+  },
+  {
+    "id": "quan-ga-dot-7-nui-o-thum",
+    "slug": "quan-ga-dot-7-nui-o-thum",
+    "name": "Gà Đốt 7 Núi Ô Thum",
+    "category": "food",
+    "tourism_category": "Ẩm Thực & Quán Ăn",
+    "commune": "Xã Ô Lâm",
+    "latitude": 10.3772,
+    "longitude": 104.992,
+    "rating": 4.7,
+    "is_hot": true,
+    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
+    "description": "Quán gà đốt quen thuộc ven hồ Ô Thum chuyên gà thả đồi Bảy Núi đốt nồi đất than hồng rực, chấm muối ớt trái chúc giã tay chua thanh cay nồng."
   }
 ]

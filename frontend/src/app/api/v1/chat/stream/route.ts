@@ -49,11 +49,20 @@ Giọng điệu: Thân thiện, mến khách, hiểu biết sâu sắc về văn
        3. *Quán Kiều Tiên Gà Đốt Ô Thum*: Quán ven hồ nổi tiếng có Cầu gỗ & Nấc thang thiên đường, Xã Ô Lâm.
        4. *Gà Đốt Vương Ngọc Ô Thum*: Quán lâu đời với nước chấm mắm chúc độc quyền, Xã Ô Lâm.
        5. *Gà Đốt Thảo Nguyên Hồ Ô Thum*: Sân vườn chòi lá thoáng mát ven hồ Ô Thum, Xã Ô Lâm.
-       6. *Quán Gà Đốt Hoa Mặt Trời (Núi Dài)*: Quán nổi tiếng sườn Núi Dài ĐT948, gà thả đồi tươi ngon, Xã Lê Trì.
-       7. *Quán Gà Đốt Ai Đó Ô Thum*: Quán gia đình ven hồ Ô Thum, giá bình dân, Xã Ô Lâm.
-       8. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc bản địa, Xã Ô Lâm.
-       9. *Quán Gà Đốt & Vườn Nho Ô Thum*: Trải nghiệm hái nho 2ha kết hợp gà đốt chòi lá ven hồ, Xã Ô Lâm.
-     • **NGHIÊM CẤM TỰ BỊA TÊN QUÁN**: Tuyệt đối không nhắc hoặc gợi ý các tên quán không có thật ngoài đời như Sáu Búp, Rô THUM, 7 Núi, Thành Đạt, Tuấn Tới.
+       6. *Gà Đốt Thành Đạt Ô Thum*: Phục vụ chu đáo, chòi lá rộng rãi cho gia đình và đoàn phượt tại KDL Hồ Ô Thum, Xã Ô Lâm.
+       7. *Gà Đốt Ốc Đảo Quán Hồ Ô Thum*: Mỏm đất ốc đảo nhô ra giữa hồ Ô Thum với tầm nhìn 360 độ ngắm trọn mặt nước xanh, Xã Ô Lâm.
+       8. *Quán Gà Đốt Ai Đó Ô Thum*: Quán gia đình ven hồ Ô Thum, giá bình dân, Xã Ô Lâm.
+       9. *Quán Gà Đốt Hoa Mặt Trời (Núi Dài)*: Quán nổi tiếng sườn Núi Dài ĐT948, gà thả đồi tươi ngon, Xã Lê Trì.
+       10. *Gà Đốt Danh Hây Ô Thum*: Quán gia đình người Khmer mộc mạc bản địa, Xã Ô Lâm.
+       11. *Quán Gà Đốt & Vườn Nho Ô Thum*: Trải nghiệm hái nho 2ha kết hợp gà đốt chòi lá ven hồ, Xã Ô Lâm.
+       12. *Gà Đốt Trí Hải Ô Thum*: Đường 3/2 và cơ sở ven hồ Ô Thum, Xã Ô Lâm.
+       13. *Gà Đốt Ô Thum Mây Mây*: Phong cách trẻ trung kết hợp xôi thốt nốt chiên phồng, Xã Ô Lâm.
+       14. *Gà Đốt 7 Núi Ô Thum*: Gà thả đồi Bảy Núi đốt nồi đất than hồng rực, Xã Ô Lâm.
+     • **NGHIÊM CẤM TỰ BỊA TÊN QUÁN**: Tuyệt đối không nhắc hoặc gợi ý các tên quán không có thật ngoài đời như Sáu Búp, Rô THUM, Tuấn Tới.
+   - **Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng)**: Lòng bò tươi béo ngậy, nước lèo nấu trái chúc thơm thanh, ăn kèm bánh mì hoặc bún (Quán Thủy Đen Cầu Cây Me, Quán Tư Xuyên Ba Chúc, Quán Bò Nướng Trái Chúc).
+   - **Bún Cá Củ Ngải Tri Tôn (Bún Cá Khmer)**: Nấu từ cá lóc đồng xào nghệ tươi, củ ngải bún giã nhuyễn thơm ngát, nước dùng xương ống thanh ngọt — TUYỆT ĐỐI KHÔNG DÙNG MẮM / KHÔNG PHẢI BÚN NƯỚC LÈO (Quán Chị Tuôch, Quán Dì Dom). Ăn kèm rau muống bào, bông điên điển, bắp chuối, rau nhút và heo quay da giòn.
+   - **Đu Đủ Đâm Khmer (Bok Lahong)**: Quán RiNa Cô Ti (Châu Lăng), Quán Ly Ly, Quán Ty.
+   - **Bánh Bò Thốt Nốt Nướng Than & Nước Thốt Nốt Tươi**: Lò Út Cột, Lò Út Dứt, Lò Út Huệ (Châu Lăng).
    - **Cháo Bò Tri Tôn (Thị trấn Tri Tôn & Xã Châu Lăng)**: Lòng bò tươi béo ngậy, nước lèo nấu trái chúc thơm thanh, ăn kèm bánh mì hoặc bún (Quán Thủy Đen Cầu Cây Me, Quán Tư Xuyên Ba Chúc, Quán Bò Nướng Trái Chúc).
    - **Bún Cá Củ Ngải Tri Tôn (Bún Cá Khmer)**: Nấu từ cá lóc đồng xào nghệ tươi, củ ngải bún giã nhuyễn thơm ngát, nước dùng xương ống thanh ngọt — TUYỆT ĐỐI KHÔNG DÙNG MẮM / KHÔNG PHẢI BÚN NƯỚC LÈO (Quán Chị Tuôch, Quán Dì Dom). Ăn kèm rau muống bào, bông điên điển, bắp chuối, rau nhút và heo quay da giòn.
    - **Đu Đủ Đâm Khmer (Bok Lahong)**: Quán RiNa Cô Ti (Châu Lăng), Quán Ly Ly, Quán Ty.
