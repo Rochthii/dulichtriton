@@ -28,12 +28,32 @@ const EMERGENCY_PATTERNS = [
 ];
 
 // 2. Từ khóa cần thông tin thời gian thực Internet (Google Search)
+// Bao gồm cả từ ngữ địa phương Nam Bộ thực tế ("lúc này", "bây giờ", "dịp này"...)
 const REALTIME_SEARCH_PATTERNS = [
+  // Thời gian tuyệt đối
   /hôm nay/i, /ngày mai/i, /tuần này/i, /thời tiết/i, /nhiệt độ/i, /dự báo/i,
   /mới nhất/i, /sắp tới/i, /tin tức/i, /vừa xảy ra/i, /đang diễn ra/i,
   /nước nổi năm nay/i, /mùa gặt năm nay/i, /khinh khí cầu năm nay/i,
-  /tình hình giao thông/i, /kẹt xe không/i, /giá vé mới/i
+  /tình hình giao thông/i, /kẹt xe không/i, /giá vé mới/i,
+  // Từ ngữ địa phương Nam Bộ thực tế (VIỆC 2: bổ sung)
+  /lúc này/i, /bây giờ/i, /giờ này/i, /giờ đang/i,
+  /chiều nay/i, /sáng nay/i, /tối nay/i, /đêm nay/i,
+  /dịp này/i, /mùa này/i, /cuối tuần này/i, /dạo này/i,
+  /còn mở không/i, /có mở không/i, /còn bán không/i, /có bán không/i,
+  /đang hoạt động/i, /có diễn ra/i, /có tổ chức không/i,
+  /năm nay có/i, /đang vào mùa/i, /mùa nước nổi/i,
+  /nước hồ/i, /đường có ngập/i, /có sạt lở/i, /sau mưa/i,
 ];
+
+// 3. Compound Intent: Câu hỏi lai (POI tĩnh + yếu tố thời gian thực)
+// Ví dụ: "Quán Siêu Gà Đốt hôm nay có mở chưa?" → REALTIME dù có tên POI nội bộ
+const COMPOUND_REALTIME_PATTERNS = [
+  /có mở.*không/i, /còn mở.*không/i, /hôm nay.*mở/i,
+  /lúc này.*có/i, /bây giờ.*có/i, /chiều nay.*còn/i,
+  /có đẹp không/i, /đang đẹp không/i, /nước có xanh không/i,
+  /đường có trơn không/i, /có nguy hiểm không/i,
+];
+
 
 /**
  * Phân tích ý định câu hỏi chỉ trong < 1ms bằng High-Speed RegEx Matrix
@@ -78,6 +98,18 @@ Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hã
     }
   }
 
+  // ── VIỆC 2: COMPOUND INTENT CHECK (Câu hỏi lai POI + Thời gian thực) ─────────
+  // Phải kiểm tra TRƯỚC khi rơi vào LOCAL_POI để tránh phân loại sai
+  for (const pattern of COMPOUND_REALTIME_PATTERNS) {
+    if (pattern.test(lower)) {
+      return {
+        intent: 'REALTIME_GROUNDED_SEARCH',
+        confidence: 0.92,
+        reason: `Compound intent detected (POI + realtime factor): ${pattern}`,
+      };
+    }
+  }
+
   // ── LUỒNG 3: TRA CỨU TĨNH 149 POIS, ẨM THỰC, LỊCH TRÌNH (80%) ──────────────
   return {
     intent: 'LOCAL_POI_FAST',
@@ -87,24 +119,50 @@ Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hã
 }
 
 /**
- * MỎ NEO CHÂN LÝ (TRUTH ANCHOR):
+ * MỎ NEO CHÂN LÝ (TRUTH ANCHOR) — VIỆC 3: Mở rộng RegEx ngữ nghĩa biến thể
  * Kiểm duyệt và thanh lọc phản hồi từ LLM/Google Search trước khi trả về cho người dùng
  */
 export function applyTruthAnchor(generatedText: string): string {
   let text = generatedText;
 
-  // 1. Sửa lỗi dùng từ "Gà nướng Ô Thum" -> "Gà đốt Ô Thum"
+  // 1. Sửa "gà nướng" → "gà đốt" trong mọi bối cảnh Ô Thum / lá chúc
+  //    RegEx ngữ nghĩa: bắt bất kỳ biến thể nào của "gà + nướng" khi có yếu tố Ô Thum / Hồ Ô Thum / lá chúc
+  text = text.replace(
+    /gà\s+(\w+\s+){0,3}nướng(\s+\w+){0,4}(ô\s*thum|o\s*thum|lá\s*chúc|thát\s*sơn)/gi,
+    (match) => match.replace(/nướng/gi, 'đốt')
+  );
+  // Bắt chiều ngược: "nướng ... ô thum"
+  text = text.replace(
+    /(nướng)(\s+\w+){0,4}(ô\s*thum|hồ\s*ô\s*thum)/gi,
+    (match) => match.replace(/nướng/gi, 'đốt')
+  );
+  // Trường hợp trực tiếp
   text = text.replace(/gà nướng ô thum/gi, 'Gà đốt Ô Thum');
   text = text.replace(/gà nướng lá chúc/gi, 'Gà đốt lá chúc');
+  text = text.replace(/gà nướng than hồng/gi, 'Gà đốt than hồng');
+  text = text.replace(/gà nướng thủ công/gi, 'Gà đốt thủ công');
+  text = text.replace(/gà nướng truyền thống/gi, 'Gà đốt truyền thống');
 
-  // 2. Sửa lỗi nhầm bún cá mắm
-  if (/bún cá/i.test(text) && /mắm cá linh|bún nước lèo/i.test(text)) {
+  // 2. Sửa lỗi bún cá Tri Tôn bị mô tả sai (nấu mắm / bún nước lèo)
+  if (/bún cá/i.test(text)) {
     text = text.replace(/mắm cá linh/gi, 'nghệ tươi và củ ngải bún');
     text = text.replace(/bún nước lèo/gi, 'bún cá củ ngải Khmer');
+    text = text.replace(/nước dùng mắm/gi, 'nước dùng xương ống thanh ngọt');
+    text = text.replace(/nấu bằng mắm/gi, 'nấu bằng nghệ tươi và củ ngải bún giã nhuyễn');
   }
 
   // 3. Loại bỏ các tên quán ảo không có thật
-  text = text.replace(/quán sáu búp|quán rô thum|quán tuấn tới/gi, 'quán gà đốt Ô Thum bản địa');
+  text = text.replace(
+    /quán sáu búp|quán rô thum|quán tuấn tới|quán mười hai|quán tám lúa/gi,
+    'quán gà đốt Ô Thum bản địa'
+  );
+
+  // 4. Sửa nhầm địa giới hành chính xã
+  //    Quán gà đốt ven hồ thuộc XÃ Ô LÂM, không phải TT. Tri Tôn
+  text = text.replace(
+    /(gà đốt|gà nướng|ô thum)[^.]{0,50}(thị trấn tri tôn|tt\. tri tôn)/gi,
+    (match) => match.replace(/thị trấn tri tôn|tt\. tri tôn/gi, 'Xã Ô Lâm, Tri Tôn')
+  );
 
   return text;
 }

@@ -297,6 +297,12 @@ export async function POST(req: NextRequest) {
   }
 
   const sessionId = (body.session_id as string)?.trim() || 'anonymous';
+
+  // VIỆC 1: Nhận conversationHistory trực tiếp từ Client body (ưu tiên hơn DB load)
+  // Client gửi 5 lượt gần nhất → 0ms latency, không cần DB roundtrip
+  const clientHistory: Turn[] = Array.isArray(body.history)
+    ? (body.history as Turn[]).slice(-5)
+    : [];
   const encoder = new TextEncoder();
 
   const readable = new ReadableStream({
@@ -389,7 +395,10 @@ export async function POST(req: NextRequest) {
         send({ type: 'metadata', places: formattedPlaces, suggestions: buildSuggestions(lower), data: formattedPlaces });
 
         // 2. Load History & Out-of-scope check
-        const history = await loadHistory(sessionId);
+        // Ưu tiên: client-sent history (0ms) > DB load (200ms)
+        const history: Turn[] = clientHistory.length > 0
+          ? clientHistory
+          : await loadHistory(sessionId);
         if (checkIsOutOfScope(queryStr, history)) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
           send({ type: 'token', token: oosMsg, delta: oosMsg });
@@ -418,12 +427,21 @@ export async function POST(req: NextRequest) {
         }
 
         const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
+
+        // VIỆC 1: Inject conversation history vào System Prompt với context rõ ràng
         const historySnippet = history.length > 0
-          ? '\n\nLịch sử hội thoại gần nhất:\n' +
-            history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
+          ? '\n\n[NGỮ CẢNH HỘI THOẠI TRƯỚC ĐÓ — Dùng để hiểu đại từ "đó", "chỗ đó", "ở đây", "đó" v.v.]:\n' +
+            history.map(t => `${t.role === 'user' ? '[Du Khách]' : '[Tôi - Trợ lý]'}: ${t.content.slice(0, 300)}`).join('\n')
           : '';
-        const systemMsg = activeSystemPrompt + historySnippet;
-        
+
+        // VIỆC 4: Luôn inject thời tiết thực tế vào mọi câu hỏi (Promise.race với timeout 500ms)
+        const weatherContext = await Promise.race([
+          fetchLiveWeatherContext(),
+          new Promise<string>(resolve => setTimeout(() => resolve(''), 500)),
+        ]);
+
+        const systemMsg = activeSystemPrompt + historySnippet + weatherContext;
+
         const combinedContext = [ragContext, transportContext, festivalsContext].filter(Boolean).join('\n\n');
         const userMsg = combinedContext
           ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương đã xác minh nếu phù hợp:\n${combinedContext}]`
