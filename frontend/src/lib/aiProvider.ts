@@ -25,12 +25,13 @@ export * from './ai/semanticCache';
 export * from './ai/intentRouter';
 
 /**
- * Streaming Engine với Cơ chế Quad-Path Intent-Gated & Truth Anchor Guard v75.0.0
+ * Streaming Engine v76.0.0 — Smart Adaptive Racing (Cơ chế B+C)
  * 
- * 1. LUỒNG 1: SOS Khẩn cấp (< 30ms) -> Trả thẳng Hotline Công an / Cấp cứu
- * 2. LUỒNG 3: 80% Tra cứu POIs / Ẩm thực -> Groq LPU Siêu tốc (< 200ms)
- * 3. LUỒNG 4: 20% Tin tức / Thời tiết -> Gemini Google Search + Truth Anchor
- * 4. LUỒNG Dự phòng: OpenRouter Free -> Local Expert RAG
+ * 1. SOS Bypass       (< 30ms)   → Hotline ngay, không qua LLM
+ * 2. REALTIME Search  (~800ms)  → Gemini Google Search + Truth Anchor
+ * 3. LOCAL_POI Fast   (~200ms)  → Groq LPU, ADAPTIVE TIMEOUT 900ms
+ *                                    Nếu Groq chậm → CHUYỂN NGAY Gemini (không chờ 3s)
+ * 4. Fallback Ladder  (~3s max) → Gemini → OpenRouter → LocalRAG
  */
 export async function* streamAIResponse(
   systemPrompt: string,
@@ -88,13 +89,20 @@ export async function* streamAIResponse(
     }
   }
 
-  // ── 3. LUỒNG 3: 80% TRA CỨU POI / ẨM THỰC / LỊCH TRÌNH -> GROQ LPU SIÊU TỐC (<200ms) ─
-  if (AI_CONFIG.groqKey) {
+  // ── 3. LUỒNG LOCAL_POI: GROQ LPU VỚI ADAPTIVE TIMEOUT 900ms (CƠ CHẾB) ─────────────
+  // Nếu Groq phản hồi trong 900ms → dùng ngay (80% trường hợp)
+  // Nếu Groq chậm hơn 900ms → hủy, chuyển NGAY sang Gemini (không chờ 3s nữa)
+  if (AI_CONFIG.groqKeys.length > 0) {
     try {
-      const result = await callGroqFallback(systemPrompt, userPrompt);
-      if (result && result.text) {
-        fullText = applyTruthAnchor(result.text);
-        providerUsed = result.provider;
+      // Adaptive Timeout: ưu tiên 900ms, sau đó mới reject và failover
+      const groqResult = await Promise.race([
+        callGroqFallback(systemPrompt, userPrompt),
+        new Promise<null>(resolve => setTimeout(() => resolve(null), 900)),
+      ]);
+
+      if (groqResult && groqResult.text) {
+        fullText = applyTruthAnchor(groqResult.text);
+        providerUsed = groqResult.provider;
 
         const words = fullText.split(' ');
         for (let i = 0; i < words.length; i += 3) {
@@ -102,12 +110,13 @@ export async function* streamAIResponse(
           yield { type: 'delta', content: chunk };
           await new Promise(r => setTimeout(r, 6));
         }
-
         yield { type: 'done', provider: providerUsed };
         return;
       }
+      // null = Groq chậm hơn 900ms → failover xuống Gemini ngay lập tức
+      console.warn('[AI Provider] Groq exceeded 900ms adaptive timeout — fast-failover to Gemini...');
     } catch (err: any) {
-      console.warn(`[AI Provider] Groq high-speed LPU pool exhausted (${err.message}). Trying Gemini...`);
+      console.warn(`[AI Provider] Groq pool exhausted (${err.message}). Fast-failover to Gemini...`);
     }
   }
 

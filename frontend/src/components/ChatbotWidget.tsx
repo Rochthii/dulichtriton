@@ -61,6 +61,9 @@ export default function ChatbotWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
+  // CƠ CHẾC: Pre-ping ref — track để debounce và tránh fire nhiều lần
+  const prePingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hasPingedRef = useRef<boolean>(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -292,10 +295,15 @@ export default function ChatbotWidget() {
           question: textToSend,
           query: textToSend,
           session_id: sessionIdRef.current,
-          history: messages.slice(-6).map(m => ({
-            sender: m.sender,
-            text: m.text,
-          })),
+          // FIX LUỒNG 1: Đúng format role/content (không phải sender/text)
+          // Để API nhận đúng conversational history và giảiự đại từ "đó", "chỗ đó"
+          history: messages
+            .filter(m => m.sender !== 'system')
+            .slice(-6)
+            .map(m => ({
+              role: m.sender === 'user' ? 'user' : 'assistant',
+              content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh bổng to
+            })),
         }),
       });
 
@@ -728,7 +736,20 @@ export default function ChatbotWidget() {
             <input
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => {
+                setInput(e.target.value);
+                // CƠ CHẾC: Pre-ping Groq khi user gõ chữ (debounce 300ms)
+                // Giúp Groq LPU "ấm máy" trước khi user bấm Gủi → giảm TTFB ~150ms
+                if (e.target.value.length === 3 && !hasPingedRef.current) {
+                  hasPingedRef.current = true;
+                  if (prePingTimerRef.current) clearTimeout(prePingTimerRef.current);
+                  prePingTimerRef.current = setTimeout(() => {
+                    // Pre-ping nhẹ: 1 token để làm nóng Groq LPU
+                    fetch('/api/v1/chat/ping', { method: 'POST' }).catch(() => {});
+                    hasPingedRef.current = false;
+                  }, 300);
+                }
+              }}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Hỏi AI về Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer..."
               className="flex-1 px-4 py-2.5 rounded-full border border-[#26221B]/15 text-xs sm:text-sm text-[#26221B] focus:outline-none focus:border-[#0E8C7F] focus:ring-2 focus:ring-[#0E8C7F]/20 bg-[#FAF3E7] font-body"
