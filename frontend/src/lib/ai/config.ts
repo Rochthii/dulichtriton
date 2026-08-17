@@ -7,7 +7,8 @@
 
 export interface AIProviderConfig {
   geminiKeys: string[];
-  groqKey: string;
+  groqKeys: string[];    // Round-Robin pool (hỗ trợ đa key)
+  groqKey: string;       // Legacy: key đầu tiên (backward compat)
   openRouterKey: string;
   geminiModels: string[];
   groqModels: string[];
@@ -23,31 +24,36 @@ export const AI_CONFIG: AIProviderConfig = {
     process.env.GEMINI_API_KEY_3,
     process.env.GEMINI_API_KEY_4,
   ].filter(Boolean) as string[],
-  groqKey: process.env.GROQ_API_KEY || '',
+
+  // Groq Round-Robin Pool: hỗ trợ đến 4 keys (thêm GROQ_API_KEY_2, _3, _4 trong Vercel Env)
+  groqKeys: [
+    process.env.GROQ_API_KEY,
+    process.env.GROQ_API_KEY_2,
+    process.env.GROQ_API_KEY_3,
+    process.env.GROQ_API_KEY_4,
+  ].filter(Boolean) as string[],
+  // Legacy field — luôn trỏ vào key đầu tiên
+  get groqKey() { return this.groqKeys[0] || ''; },
+
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
+    'gemini-2.0-flash',
     'gemini-flash-latest',
     'gemini-1.5-flash-latest',
     'gemini-1.5-flash',
-    'gemini-1.5-pro',
   ],
   groqModels: [
-    'llama-3.1-8b-instant',
-    'llama-3.3-70b-versatile',
-    'gemma2-9b-it',
-    'mixtral-8x7b-32768',
+    'llama-3.3-70b-versatile',   // Model mạnh nhất, tiếng Việt tốt
+    'llama-3.1-8b-instant',      // Model nhanh nhất
+    'gemma2-9b-it',              // Backup Google
+    'mixtral-8x7b-32768',        // Context dài
   ],
+  // Giảm xuống chỉ còn 1 model tốt nhất cho Tiếng Việt — tránh timeout chuỗi dài
   openRouterModels: [
-    'openrouter/free',
-    'openai/gpt-oss-20b:free',
-    'nvidia/nemotron-3.5-lightning:free',
-    'google/gemma-4-31b-it:free',
-    'nvidia/nemotron-3-nano-30b-a3b:free',
-    'nvidia/nemotron-nano-9b-v2:free',
-    'liquid/lfm-2.5-2.6b:free',
+    'google/gemma-2-27b-it',
   ],
   timeoutMs: 4500,
-  cooldownMs: 30000, // 30s cooldown for 429 rate limit
+  cooldownMs: 30000,
 };
 
 // ── In-Memory State & Circuit Breaker ────────────────────────────────────────
@@ -56,6 +62,7 @@ const requestCountMap = new Map<string, number>();
 const lastUsedMap = new Map<string, number>();
 
 let geminiRoundRobinPointer = 0;
+let groqRoundRobinPointer = 0;   // Groq Round-Robin Pointer
 
 export function isKeyInCooldown(keyLabel: string): boolean {
   const expiresAt = cooldownMap.get(keyLabel);
@@ -76,6 +83,36 @@ export function recordKeyUsage(keyLabel: string): void {
   const current = requestCountMap.get(keyLabel) || 0;
   requestCountMap.set(keyLabel, current + 1);
   lastUsedMap.set(keyLabel, Date.now());
+}
+
+/**
+ * Groq Round-Robin: xây vòng các Groq Keys không trong cooldown
+ */
+export function getRoundRobinGroqKeys(): { key: string; id: string }[] {
+  const keys = AI_CONFIG.groqKeys;
+  const total = keys.length;
+  if (total === 0) return [];
+
+  const startIdx = groqRoundRobinPointer;
+  groqRoundRobinPointer = (groqRoundRobinPointer + 1) % total;
+
+  const result: { key: string; id: string }[] = [];
+  for (let i = 0; i < total; i++) {
+    const idx = (startIdx + i) % total;
+    const id = `groq_key_${idx + 1}`;
+    if (!isKeyInCooldown(id)) {
+      result.push({ key: keys[idx], id });
+    }
+  }
+
+  // Nếu tất cả trong cooldown → trả về tất cả để thử lại
+  if (result.length === 0) {
+    for (let i = 0; i < total; i++) {
+      result.push({ key: keys[i], id: `groq_key_${i + 1}` });
+    }
+  }
+
+  return result;
 }
 
 /**
