@@ -295,17 +295,15 @@ export default function ChatbotWidget() {
           question: textToSend,
           query: textToSend,
           session_id: sessionIdRef.current,
-          // FIX LUỒNG 1: Đúng format role/content (không phải sender/text)
-          // Để API nhận đúng conversational history và giảiự đại từ "đó", "chỗ đó"
           history: messages
-            .filter(m => m.sender !== 'system')
             .slice(-6)
             .map(m => ({
               role: m.sender === 'user' ? 'user' : 'assistant',
-              content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh bổng to
+              content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh quá tải context
             })),
         }),
       });
+
 
       if (!res.ok || !res.body) {
         throw new Error('API request failed');
