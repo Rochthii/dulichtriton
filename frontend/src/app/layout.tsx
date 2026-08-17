@@ -15,7 +15,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://dulichtriton.vercel.app').replace(/\/+$/, '');
+const SITE_URL = 'https://dulichtriton.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
