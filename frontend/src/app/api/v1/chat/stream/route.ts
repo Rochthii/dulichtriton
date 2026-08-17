@@ -330,7 +330,11 @@ export async function POST(req: NextRequest) {
 
         // 0. Check In-Memory Instant Hot Cache
         const hotHit = HOT_QUERY_CACHE.get(cleanQ);
-        if (hotHit && Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000) {
+        if (
+          hotHit && 
+          Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000 &&
+          !hotHit.answer.includes('Thông Tin & Cẩm Nang Hướng Dẫn Du Lịch Tri Tôn')
+        ) {
           if (hotHit.places && hotHit.places.length > 0) {
             send({ type: 'metadata', places: hotHit.places, suggestions: hotHit.suggestions, data: hotHit.places });
           }
@@ -344,6 +348,7 @@ export async function POST(req: NextRequest) {
           controller.close();
           return;
         }
+
 
         // 1. Instant In-Memory RAM Entity Matching
         const subQueries = extractSubQueries(queryStr);
@@ -492,7 +497,13 @@ export async function POST(req: NextRequest) {
           ];
           void saveHistory(sessionId, updatedHistory);
 
-          if (fullText.trim().length >= 80 && !fullText.includes('Tôi đã tổng hợp các địa điểm danh thắng')) {
+          if (
+            fullText.trim().length >= 80 && 
+            !fullText.includes('Tôi đã tổng hợp các địa điểm danh thắng') &&
+            !fullText.includes('Thông Tin & Cẩm Nang Hướng Dẫn Du Lịch Tri Tôn') &&
+            providerUsed !== 'local_expert_rag' &&
+            providerUsed !== 'local_expert_rag_shield'
+          ) {
             HOT_QUERY_CACHE.set(cleanQ, {
               answer: fullText,
               places: formattedPlaces,
@@ -500,6 +511,7 @@ export async function POST(req: NextRequest) {
               timestamp: Date.now(),
             });
           }
+
         }
 
         logChatEvent({

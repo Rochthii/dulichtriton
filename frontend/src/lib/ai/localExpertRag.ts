@@ -87,57 +87,38 @@ Lễ Hội Đua Bò Bảy Núi là **Di sản văn hóa phi vật thể quốc g
    - Đại lễ cúng dâng y cà-sa sau mùa An Cư Kiết Hạ cùng dàn nhạc ngũ âm Pinpeat rộn rã phum sóc.`;
   }
 
-  // 4.1 QUÁN SIÊU GÀ ĐỐT Ô THUM (CHAU SIÊU)
-  if (/quán siêu|chau siêu|siêu gà đốt|quán chau siêu/i.test(lower)) {
-    return `### 🍗 Quán Siêu Gà Đốt Ô Thum (Chau Siêu) — Tri Tôn
+  // 4. GÀ ĐỐT Ô THUM TRI TÔN (TẤT CẢ CÁC QUÁN & KINH NGHIỆM)
+  if (/gà đốt|gà lá chúc|thành đạt|kim suổl|kiều tiên|ô thum|chau siêu|quán siêu|đặt trước/i.test(lower)) {
+    return `### 🍗 Cẩm Nang Gà Đốt Lá Chúc Ô Thum Tri Tôn (Chuẩn Bản Địa 100%)
 
-**Quán Siêu (Chau Siêu)** là một trong những quán gà đốt lá chúc **tiên phong và lâu đời nhất** tại khu vực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn.
+**Gà Đốt Lá Chúc Ô Thum** là đại tiệc ẩm thực trứ danh của vùng đất Tri Tôn, bắt nguồn từ ẩm thực truyền thống của đồng bào Khmer vùng Bảy Núi.
 
-### 1. Thông Tin Thực Địa & Vị Trí:
-- **Địa chỉ**: Tuyến đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang (nằm sát bên bờ hồ Ô Thum).
-- **Giờ mở cửa**: 08:30 – 18:30 hàng ngày.
-- **Mức giá**: 280.000đ – 350.000đ/con (gà thả đồi tươi sống nặng 1.2kg – 1.5kg).
-[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Siêu+Gà+Đốt+Ô+Thum+Chau+Siêu+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotchausieu)
+### 1. Danh Sách 4 Quán Gà Đốt Ô Thum Đã Xác Minh 100%:
+1. **Gà Đốt Thành Đạt Ô Thum**:
+   - Vị trí: Chòi lá sân vườn thoáng mát ven hồ Ô Thum, Xã Ô Lâm, Tri Tôn.
+   - Đặc sản: Gà đốt lá chúc da giòn thịt ngọt thơm lừng, xôi chiên phồng giòn rụm, phục vụ nhanh chu đáo.
+   [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Thành+Đạt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotthanhdat)
 
-### 2. Đặc Sản & Trải Nghiệm Ẩm Thực:
-- **Gà Đốt Lá Chúc Nguyên Bản**: Da gà được đốt vàng ươm, giòn rụm, thịt bên trong mềm ngọt, mọng nước, ngậy thơm mùi tinh dầu lá chúc Thất Sơn và sả tươi.
-- **Nước Chấm Muối Ớt Chúc**: Muối hột rang giã nhuyễn với ớt xiêm rừng, nước cốt trái chúc và lá chúc xắt sợi the the cay nồng.
-- **Món Ăn Kèm Nổi Bật**: Đu đủ đâm ba khía Khmer, cơm chiên tỏi thốt nốt, ếch nướng sa tế, lẩu ếch lá giang.
-- **Không gian**: Chòi lá mộc mạc dựng trên mặt nước và sườn đồi ven hồ, gió mát tự nhiên.
+2. **Quán Siêu Gà Đốt Ô Thum (Chau Siêu)**:
+   - Vị trí: Quán gốc tiên phong ven bờ hồ Ô Thum, Xã Ô Lâm, Tri Tôn.
+   - Đặc sản: Hương vị gia truyền đậm đà, nước chấm muối ớt lá chúc độc quyền.
+   [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Siêu+Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotchausieu)
 
-💡 **Lời khuyên thực tế**: Do quán chế biến gà tươi sống đốt lửa than từ 35–45 phút, Bạn **rất nên gọi đặt trước 30 – 45 phút** trước khi đến để không phải chờ đợi lâu vào giờ trưa!`;
+3. **Gà Đốt Ô Thum Kim Suổl**:
+   - Vị trí: Tuyến đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn.
+   - Đặc sản: Da gà giòn rụm, tẩm ướp mật ong và sả ớt the nồng.
+   [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Kim+Suổl+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotkimsuol)
+
+4. **Quán Kiều Tiên Gà Đốt Ô Thum**:
+   - Vị trí: Ven hồ Ô Thum, Xã Ô Lâm (có cầu gỗ & nấc thang check-in ngắm hồ).
+   [📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Kiều+Tiên+Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotkieutien)
+
+### 2. Mẹo Thưởng Thức & Lưu Ý Thực Địa:
+- **Thời gian chế biến**: Gà tươi sống đốt lửa than từ **35 – 45 phút**. Bạn **rất nên gọi đặt trước 30 – 45 phút** để không phải chờ đợi vào giờ trưa.
+- **Mức giá**: Dao động **280.000đ – 350.000đ/con** (1.2kg – 1.5kg).
+- **Món ăn kèm khuyên gọi**: **Đu đủ đâm Tri Tôn**, **Cơm chiên tỏi thốt nốt** và **Nước thốt nốt tươi lạnh**.`;
   }
 
-  // 4.2 GÀ ĐỐT Ô THUM CÓ CẦN ĐẶT TRƯỚC KHÔNG
-  if (/đặt trước|đặt bàn|bao lâu|chờ lâu|cần đặt trước/i.test(lower)) {
-    return `### 🍗 Gà Đốt Lá Chúc Ô Thum Tri Tôn: Có Cần Đặt Trước Không?
-
-**CÂU TRẢ LỜI LÀ: RẤT NÊN GỌI ĐẶT TRƯỚC TỪ 30 – 45 PHÚT!**
-
-### 1. Vì sao bắt buộc phải đặt trước?
-- **Phương pháp đốt thủ công truyền thống**: Gà Đốt Ô Thum không dùng gà nướng sẵn làm nguội. Quán chỉ bắt đầu sơ chế khi có khách gọi: Gà thả đồi tươi sống được làm sạch, tẩm ướp sả tươi, tỏi ớt, mật ong và **lá chúc tươi Thất Sơn**, sau đó đặt kín trong thố/nồi đất nung trên lớp muối hột và lá chúc rồi đốt lửa than hồng liên tục từ **35 – 45 phút**.
-- **Chất lượng món ăn**: Thời gian đốt đủ lâu giúp da gà vàng óng, giòn rụm, thịt bên trong chín mềm mọng nước và thấm sâu hương tinh dầu lá chúc ngào ngạt độc quyền.
-- **Tránh chờ đợi**: Vào các ngày cuối tuần hoặc giờ cao điểm trưa (11:00 – 13:30), nếu không đặt trước bạn có thể phải chờ từ 45 – 60 phút.
-
-### 2. Danh sách Quán Gà Đốt Ô Thum Chuẩn Bản Địa Đã Xác Minh 100%:
-### 1. Quán Siêu Gà Đốt Ô Thum (Chau Siêu)
-Quán gốc tiên phong ven hồ Ô Thum, Xã Ô Lâm.
-[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Siêu+Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
-
-### 2. Gà Đốt Ô Thum Kim Suổl
-Quán nổi tiếng da giòn, tẩm ướp đậm đà, Xã Ô Lâm.
-[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Ô+Thum+Kim+Suổl+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotkimsuol)
-
-### 3. Quán Kiều Tiên Gà Đốt Ô Thum
-Quán ven hồ có Cầu gỗ & Nấc thang thiên đường, Xã Ô Lâm.
-[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Quán+Kiều+Tiên+Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotkieutien)
-
-### 4. Gà Đốt Thành Đạt Ô Thum
-Chòi lá sân vườn thoáng mát, phục vụ nhanh chu đáo, KDL Hồ Ô Thum, Xã Ô Lâm.
-[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=Gà+Đốt+Thành+Đạt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang)  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotthanhdat)
-
-💡 **Mức giá tham khảo**: Gà đốt nguyên con **~280.000đ – 350.000đ/con** (đủ cho 2–3 người ăn). Nên gọi thêm **Đu đủ đâm Tri Tôn** (~25k–35k), **Cơm chiên tỏi** và **Nước thốt nốt tươi lạnh**!`;
-  }
 
   // 5. CHÁO BÒ BẢY NÚI
   if (/cháo bò|thủy đen|tư xuyên|châu lăng|bò bảy núi/i.test(lower)) {
