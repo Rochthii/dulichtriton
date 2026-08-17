@@ -191,21 +191,31 @@ async function lookupSemanticCache(
   return null;
 }
 
+let cachedWeatherText = '';
+let cachedWeatherTimestamp = 0;
+
 async function fetchLiveWeatherContext(): Promise<string> {
+  // Cache in-memory 15 phút (900,000ms)
+  if (cachedWeatherText && Date.now() - cachedWeatherTimestamp < 15 * 60 * 1000) {
+    return cachedWeatherText;
+  }
   try {
     const res = await fetch(
       'https://api.open-meteo.com/v1/forecast?latitude=10.4128&longitude=105.0068&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FHo_Chi_Minh',
-      { next: { revalidate: 1800 } }
+      { signal: AbortSignal.timeout(1200) }
     );
-    if (!res.ok) return '';
+    if (!res.ok) return cachedWeatherText;
     const data = await res.json();
     const cur = data?.current_weather;
-    if (!cur) return '';
-    return `\n\n[Dữ liệu thời tiết Tri Tôn thực tế hiện tại: Nhiệt độ ${Math.round(cur.temperature)}°C, Gió cấp ${Math.round(cur.windspeed)} km/h. Khuyên du khách đội nón lá/mũ rộng vành, mang kem chống nắng nếu đi vào buổi trưa.]`;
+    if (!cur) return cachedWeatherText;
+    cachedWeatherText = `\n\n[Dữ liệu thời tiết Tri Tôn thực tế hiện tại: Nhiệt độ ${Math.round(cur.temperature)}°C, Gió cấp ${Math.round(cur.windspeed)} km/h. Khuyên du khách đội nón lá/mũ rộng vành, mang kem chống nắng nếu đi vào buổi trưa.]`;
+    cachedWeatherTimestamp = Date.now();
+    return cachedWeatherText;
   } catch {
-    return '';
+    return cachedWeatherText;
   }
 }
+
 
 function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   const lower = queryStr.toLowerCase();
