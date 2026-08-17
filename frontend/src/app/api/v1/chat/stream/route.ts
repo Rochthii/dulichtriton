@@ -217,7 +217,48 @@ async function fetchLiveWeatherContext(): Promise<string> {
 }
 
 
-function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
+let cachedKnowledgeList: any[] = [];
+let cachedKnowledgeTimestamp = 0;
+
+async function fetchActiveCustomKnowledge(queryStr: string): Promise<string> {
+  const lower = queryStr.toLowerCase();
+  try {
+    // Cache 60s
+    if (Date.now() - cachedKnowledgeTimestamp > 60 * 1000 || cachedKnowledgeList.length === 0) {
+      const { data } = await supabase
+        .from('custom_knowledge_base')
+        .select('title, keywords, content, priority')
+        .eq('is_active', true)
+        .order('priority', { ascending: false });
+
+      if (data && Array.isArray(data)) {
+        cachedKnowledgeList = data;
+        cachedKnowledgeTimestamp = Date.now();
+      }
+    }
+
+    if (cachedKnowledgeList.length === 0) return '';
+
+    // Match keywords or take high priority items
+    const matched = cachedKnowledgeList.filter(item => {
+      if (Array.isArray(item.keywords)) {
+        for (const kw of item.keywords) {
+          if (kw && lower.includes(String(kw).toLowerCase())) return true;
+        }
+      }
+      if (item.title && lower.includes(item.title.toLowerCase())) return true;
+      return false;
+    });
+
+    if (matched.length === 0) return '';
+
+    const listSnippet = matched.map(m => `• [${m.title}]: ${m.content}`).join('\n');
+    return `\n\n[TRI THỨC ĐÍNH CHÍNH & LƯU Ý MỚI NHẤT TỪ QUẢN TRỊ VIÊN ĐỊA PHƯƠNG — BẮT BUỘC ƯU TIÊN SỐ 1]:\n${listSnippet}`;
+  } catch {
+    return '';
+  }
+}
+
   const lower = queryStr.toLowerCase();
 
   if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi') || lower.includes('thất sơn')) {
@@ -457,10 +498,12 @@ export async function POST(req: NextRequest) {
 
         const systemMsg = activeSystemPrompt + historySnippet + weatherContext;
 
-        const combinedContext = [ragContext, transportContext, festivalsContext].filter(Boolean).join('\n\n');
+        const customKnowledgeSnippet = await fetchActiveCustomKnowledge(queryStr);
+        const combinedContext = [customKnowledgeSnippet, ragContext, transportContext, festivalsContext].filter(Boolean).join('\n\n');
         const userMsg = combinedContext
           ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên kiến thức thực tế và kết quả tìm kiếm internet mới nhất. Tham khảo thêm CSDL địa phương đã xác minh nếu phù hợp:\n${combinedContext}]`
           : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy tìm kiếm và cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang trên internet]`;
+
 
         let fullText = '';
         let providerUsed = 'none';

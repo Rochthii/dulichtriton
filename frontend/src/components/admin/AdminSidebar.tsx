@@ -32,6 +32,12 @@ export default function AdminSidebar() {
       badge: 'CMS Studio',
     },
     {
+      href: '/admin/knowledge-base',
+      label: 'Tri Thức & Hỏi Đáp AI',
+      icon: MessageSquareCode,
+      badge: 'Q&A Brain',
+    },
+    {
       href: '/admin/places',
       label: 'Quản Lý 149 Địa Điểm',
       icon: MapPin,
@@ -50,12 +56,19 @@ export default function AdminSidebar() {
       badge: 'Media',
     },
     {
+      href: '/admin/chat-logs',
+      label: 'Nhật Ký Chat & RAG Engine',
+      icon: Activity,
+      badge: 'AI Logs',
+    },
+    {
       href: '/admin/feedback',
       label: 'Hộp Thư Báo Lỗi Thực Địa',
-      icon: MessageSquareCode,
+      icon: ShieldCheck,
       badge: 'Feedback',
     },
   ];
+
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-100 flex flex-col shrink-0 border-r border-slate-800 min-h-screen">
