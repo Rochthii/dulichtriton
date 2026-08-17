@@ -90,6 +90,25 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const [selectedReelIndex, setSelectedReelIndex] = useState(0);
   const [isOffline, setIsOffline] = useState(false);
   const [guideTab, setGuideTab] = useState<'hours_ticket' | 'transport_slope' | 'best_season'>('hours_ticket');
+  const [copiedHashtags, setCopiedHashtags] = useState(false);
+
+  const hashtags = useMemo(() => {
+    const cleanName = (place.name || '').replace(/[^\p{L}\p{N}]/gu, '');
+    const cleanCommune = (place.commune || 'TriTon').replace(/[^\p{L}\p{N}]/gu, '');
+    return [
+      `#${cleanName}`,
+      '#DuLichTriTon',
+      `#${cleanCommune}`,
+      '#BayNuiAnGiang',
+      '#CheckinTriTon',
+    ];
+  }, [place.name, place.commune]);
+
+  const handleCopyHashtags = () => {
+    navigator.clipboard.writeText(hashtags.join(' '));
+    setCopiedHashtags(true);
+    setTimeout(() => setCopiedHashtags(false), 2500);
+  };
 
   // Report modal state
   const [showReportModal, setShowReportModal] = useState(false);
@@ -797,6 +816,36 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
               </a>
             </div>
           )}
+
+          {/* ── BỘ HASHTAG CHECK-IN MẠNG XÃ HỘI & TIKTOK ── */}
+          <div className="p-4 sm:p-5 rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-display">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#26221B]">
+                <Sparkles className="w-4 h-4 text-[#0E8C7F]" />
+                <span>Bộ Hashtag Check-in Mạng Xã Hội (TikTok / Facebook / Reels)</span>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {hashtags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 rounded-full bg-white text-[#0E8C7F] text-xs font-bold border border-[#0E8C7F]/20 shadow-xs"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={handleCopyHashtags}
+                className="px-4 py-2 rounded-full bg-[#0E8C7F] hover:bg-[#0C756A] text-white text-xs font-bold flex items-center gap-1.5 transition-all tap-bounce shadow-xs cursor-pointer"
+              >
+                {copiedHashtags ? <Check className="w-3.5 h-3.5" /> : <Tag className="w-3.5 h-3.5" />}
+                <span>{copiedHashtags ? 'Đã sao chép!' : 'Sao chép Hashtag'}</span>
+              </button>
+            </div>
+          </div>
         </section>
 
         {/* ── SECTION 2: CẨM NANG & MA TRẬN TRẮC ĐỊA BÃI ĐỖ XE ── */}

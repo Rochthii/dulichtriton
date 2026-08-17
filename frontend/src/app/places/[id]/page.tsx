@@ -29,9 +29,26 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     : `Khám phá ${place.name} tại ${place.commune || 'Tri Tôn'}, An Giang với hình ảnh thực tế và hướng dẫn đường đi chi tiết.`;
   const imageUrl = place.image_url || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif';
 
+  const rawKeywords = [
+    place.name,
+    `${place.name} Tri Tôn`,
+    place.commune ? `${place.name} ${place.commune}` : '',
+    place.commune ? `xã ${place.commune}` : '',
+    place.category || '',
+    'du lịch Tri Tôn',
+    'Bảy Núi An Giang',
+    'địa điểm du lịch Tri Tôn',
+    'kinh nghiệm du lịch Tri Tôn',
+    'check in Tri Tôn',
+  ].filter(Boolean);
+
   return {
     title,
     description,
+    keywords: rawKeywords,
+    alternates: {
+      canonical: `${SITE_URL}/places/${place.slug || place.id}`,
+    },
     openGraph: {
       title,
       description,
