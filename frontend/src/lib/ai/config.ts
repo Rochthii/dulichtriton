@@ -37,10 +37,12 @@ export const AI_CONFIG: AIProviderConfig = {
 
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
-    'gemini-3-flash-preview',
-    'gemini-3.7-flash',
-    'gemini-flash-latest',
-    'gemini-flash-lite-latest',
+    'gemini-flash-lite-latest',    // 🥇 Hạn mức Free cao nhất: 1,500 RPD / 30 RPM
+    'gemini-2.5-flash-lite',       // 🥈 1,500 RPD, phản hồi siêu nhanh <300ms
+    'gemini-3.1-flash-lite',       // 🥉 Flash Lite thế hệ mới
+    'gemini-flash-latest',         // Flash chuẩn (Search Grounding tốt)
+    'gemini-3-flash-preview',      // Backup cao cấp
+    'gemini-3.7-flash',            // Backup reasoning
   ],
   groqModels: [
     'llama-3.3-70b-versatile',   // Model mạnh nhất, tiếng Việt tốt
