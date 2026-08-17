@@ -64,6 +64,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
+  verification: {
+    google: 'googleb86c8a47cc2c384e',
+  },
 };
 
 // JSON-LD Structured Data — WebSite + Organization + TouristDestination
