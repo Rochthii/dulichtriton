@@ -44,6 +44,14 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
   const [extractedTitle, setExtractedTitle] = useState<string>('');
   const [compressionSavings, setCompressionSavings] = useState<string | null>(null);
 
+  const [localMsg, setLocalMsg] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const notify = (text: string, type: 'success' | 'error' | 'info' = 'success') => {
+    setLocalMsg({ text, type });
+    setStatusMsg(text);
+    setTimeout(() => setLocalMsg(null), 4000);
+  };
+
   // 1. Multi-file upload with client-side Canvas WebP compression
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -88,13 +96,11 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
         const newCover = coverUrl || data.urls[0];
 
         onPhotosChange(updatedPhotos, newCover);
-        setStatusMsg(`Đã tải lên thành công ${data.urls.length} ảnh đã nén WebP vào Cloudinary!`);
-        setTimeout(() => setStatusMsg(null), 3500);
+        notify(`Đã tải lên thành công ${data.urls.length} ảnh đã nén WebP!`, 'success');
       }
     } catch (err) {
       console.warn('Upload error:', err);
-      setStatusMsg('Có lỗi xảy ra khi tải ảnh lên. Vui lòng thử lại.');
-      setTimeout(() => setStatusMsg(null), 3000);
+      notify('Có lỗi xảy ra khi tải ảnh lên. Vui lòng thử lại.', 'error');
     } finally {
       setUploading(false);
       e.target.value = '';
@@ -111,8 +117,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
       .filter((u) => u.startsWith('http://') || u.startsWith('https://'));
 
     if (incomingUrls.length === 0) {
-      setStatusMsg('Vui lòng nhập đường link URL ảnh hợp lệ (http:// hoặc https://)');
-      setTimeout(() => setStatusMsg(null), 3000);
+      notify('Vui lòng nhập đường link URL ảnh hợp lệ (http:// hoặc https://)', 'error');
       return;
     }
 
@@ -122,8 +127,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
 
     onPhotosChange(updatedPhotos, newCover);
     setUrlInput('');
-    setStatusMsg(`Đã thêm thành công ${incomingUrls.length} ảnh từ URL vào Album!`);
-    setTimeout(() => setStatusMsg(null), 3000);
+    notify(`Đã thêm thành công ${incomingUrls.length} ảnh từ URL vào Album!`, 'success');
   };
 
   // 3. Auto-Scrape Images from Google Maps / Web
@@ -145,20 +149,18 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
       if (data.images && data.images.length > 0) {
         setExtractedImages(data.images);
         setExtractedTitle(data.title || '');
-        setStatusMsg(`Đã trích xuất thành công ${data.images.length} ảnh chất lượng cao từ Google Maps / Web!`);
-        setTimeout(() => setStatusMsg(null), 3500);
+        notify(`Đã trích xuất thành công ${data.images.length} ảnh chất lượng cao!`, 'success');
       } else {
-        setStatusMsg(data.error || 'Không tìm thấy ảnh từ đường link này. Vui lòng kiểm tra lại link.');
-        setTimeout(() => setStatusMsg(null), 3500);
+        notify(data.message || data.error || 'Không tìm thấy ảnh từ đường link này. Vui lòng thử link bài viết hoặc nhập tên địa điểm.', 'error');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.warn('Scrape images error:', err);
-      setStatusMsg('Lỗi kết nối trích xuất ảnh. Vui lòng thử lại.');
-      setTimeout(() => setStatusMsg(null), 3000);
+      notify('Lỗi kết nối trích xuất ảnh: ' + (err.message || 'Không phản hồi'), 'error');
     } finally {
       setExtracting(false);
     }
   };
+
 
   // 4. Add all extracted images to album
   const handleAddAllExtracted = () => {
@@ -231,7 +233,7 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
             type="text"
             value={mapsUrlInput}
             onChange={(e) => setMapsUrlInput(e.target.value)}
-            placeholder="Dán link Google Maps hoặc Website quán (vd: https://maps.app.goo.gl/...)..."
+            placeholder="Dán link Google Maps, link bài viết (Mia.vn, ivivu...) hoặc gõ tên địa điểm (vd: Hồ Tà Pạ)..."
             className="flex-1 p-2 rounded-xl bg-white border border-blue-200 text-xs text-slate-800 placeholder:text-slate-400 focus:border-blue-600 outline-hidden"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -248,15 +250,30 @@ export const PhotoGalleryStudio: React.FC<PhotoGalleryStudioProps> = ({
           >
             {extracting ? (
               <>
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Đang Trích Xuất...
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Đang Tìm Ảnh...
               </>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5" /> Trích Xuất Ảnh
+                <Sparkles className="w-3.5 h-3.5" /> Lấy Ảnh Ngay
               </>
             )}
           </button>
         </div>
+
+        {/* Local In-Modal Status Notification */}
+        {localMsg && (
+          <div
+            className={`p-2.5 rounded-xl text-xs font-bold flex items-center gap-2 animate-fade-in ${
+              localMsg.type === 'success'
+                ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                : 'bg-rose-100 text-rose-900 border border-rose-300'
+            }`}
+          >
+            <CheckCircle2 className={`w-3.5 h-3.5 ${localMsg.type === 'success' ? 'text-emerald-700' : 'text-rose-700'}`} />
+            <span>{localMsg.text}</span>
+          </div>
+        )}
+
 
         {/* Extracted Images List Drawer */}
         {extractedImages.length > 0 && (

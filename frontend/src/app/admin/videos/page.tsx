@@ -59,6 +59,13 @@ export default function AdminVideosPage() {
     fetchVideos();
   }, [statusFilter]);
 
+  const [toastMsg, setToastMsg] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (text: string, type: 'success' | 'error' = 'success') => {
+    setToastMsg({ text, type });
+    setTimeout(() => setToastMsg(null), 3500);
+  };
+
   const handleUpdateStatus = async (id: string, newStatus: 'VERIFIED' | 'REJECTED') => {
     try {
       const res = await fetch('/api/v1/admin/videos', {
@@ -68,9 +75,13 @@ export default function AdminVideosPage() {
       });
       if (res.ok) {
         setVideos(prev => prev.map(v => v.id === id ? { ...v, verification_status: newStatus } : v));
+        showToast(newStatus === 'VERIFIED' ? 'Đã DUYỆT video TikTok thành công!' : 'Đã TỪ CHỐI video');
+      } else {
+        showToast('Không thể cập nhật trạng thái video', 'error');
       }
-    } catch (e) {
+    } catch (e: any) {
       console.warn('Error updating status:', e);
+      showToast('Lỗi mạng khi cập nhật: ' + e.message, 'error');
     }
   };
 
@@ -80,11 +91,16 @@ export default function AdminVideosPage() {
       const res = await fetch(`/api/v1/admin/videos?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setVideos(prev => prev.filter(v => v.id !== id));
+        showToast('Đã xóa vĩnh viễn video khỏi CSDL');
+      } else {
+        showToast('Không thể xóa video', 'error');
       }
-    } catch (e) {
+    } catch (e: any) {
       console.warn('Error deleting video:', e);
+      showToast('Lỗi xóa: ' + e.message, 'error');
     }
   };
+
 
   const filteredVideos = videos.filter(v => {
     if (!searchQuery.trim()) return true;
@@ -98,7 +114,26 @@ export default function AdminVideosPage() {
 
   return (
     <div className="space-y-6">
+      {/* Toast Notification */}
+      {toastMsg && (
+        <div
+          className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl shadow-xl border text-xs font-bold flex items-center gap-2.5 animate-bounce ${
+            toastMsg.type === 'success'
+              ? 'bg-emerald-950 text-emerald-200 border-emerald-800'
+              : 'bg-rose-950 text-rose-200 border-rose-800'
+          }`}
+        >
+          {toastMsg.type === 'success' ? (
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          ) : (
+            <XCircle className="w-4 h-4 text-rose-400" />
+          )}
+          <span>{toastMsg.text}</span>
+        </div>
+      )}
+
       {/* Header Bar */}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-xs">
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-[#B45309] text-xs font-bold mb-2">

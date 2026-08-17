@@ -259,7 +259,9 @@ async function fetchActiveCustomKnowledge(queryStr: string): Promise<string> {
   }
 }
 
+function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
   const lower = queryStr.toLowerCase();
+
 
   if (lower.includes('tri tôn') || lower.includes('an giang') || lower.includes('bảy núi') || lower.includes('thất sơn')) {
     return false;

@@ -282,13 +282,16 @@ export default function AdminPlacesPage() {
         </div>
       </div>
 
-      {/* Status Toast Notification */}
+      {/* Floating Status Toast Notification */}
       {statusMsg && (
-        <div className="bg-emerald-800 text-white px-4 py-3 rounded-2xl text-xs font-bold shadow-lg flex items-center gap-2 animate-fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
-          <span>{statusMsg}</span>
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-950 text-white px-5 py-3.5 rounded-2xl text-xs font-extrabold shadow-2xl border border-slate-700 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-200">
+          <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-4 h-4" />
+          </div>
+          <span className="font-body text-slate-100">{statusMsg}</span>
         </div>
       )}
+
 
       {/* 2. Main Places Table */}
       <PlaceTable
