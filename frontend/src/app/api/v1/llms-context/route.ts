@@ -11,42 +11,36 @@ const masterPois = require('@/data/triton_pois_full.json') as any[];
  *
  * Endpoint này được phép hoàn toàn bởi robots.txt.
  */
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const q = searchParams.get('q')?.toLowerCase() || '';
-  const category = searchParams.get('category') || '';
-  const commune = searchParams.get('commune') || '';
-  const limit = Math.min(parseInt(searchParams.get('limit') || '50', 10), 149);
+import { SITE_URL } from '@/lib/siteConfig';
 
-  let results = masterPois as any[];
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const q = searchParams.get('q')?.toLowerCase();
+  const category = searchParams.get('category');
+  const commune = searchParams.get('commune');
+  const limit = Math.min(parseInt(searchParams.get('limit') || '149', 10), 149);
 
-  // Filter by search query
+  let filtered = masterPois as any[];
+
   if (q) {
-    results = results.filter((p) =>
-      p.name?.toLowerCase().includes(q) ||
-      p.description?.toLowerCase().includes(q) ||
-      p.commune?.toLowerCase().includes(q) ||
-      p.category?.toLowerCase().includes(q)
+    filtered = filtered.filter(
+      (p) =>
+        p.name?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        p.commune?.toLowerCase().includes(q)
     );
   }
 
-  // Filter by category
   if (category) {
-    results = results.filter((p) =>
-      p.category === category || p.tourism_category === category
-    );
+    filtered = filtered.filter((p) => p.category?.toLowerCase() === category.toLowerCase());
   }
 
-  // Filter by commune
   if (commune) {
-    results = results.filter((p) => p.commune === commune);
+    filtered = filtered.filter((p) => p.commune?.toLowerCase().includes(commune.toLowerCase()));
   }
 
-  // Sort by rating descending
-  results = results.sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, limit);
-
-  // Map to clean AI-readable format
-  const places = results.map((p) => ({
+  const places = filtered.slice(0, limit).map((p) => ({
+    id: p.id,
     slug: p.slug || p.id,
     name: p.name,
     category: p.category,
@@ -60,19 +54,19 @@ export async function GET(req: NextRequest) {
     description: p.description || null,
     rating: p.rating || null,
     best_time_to_visit: p.best_time || null,
-    url: `https://dulichtriton.com/places/${p.slug || p.id}`,
+    url: `${SITE_URL}/places/${p.slug || p.id}`,
     image_url: p.image_url || null,
   }));
 
   const response = {
     meta: {
-      source: 'dulichtriton.com',
+      source: SITE_URL,
       description: 'Verified travel data for Tri Tôn, An Giang, Vietnam — 149 POIs, field-researched 2025–2026',
-      license: 'Public — citation permitted with attribution to dulichtriton.com',
+      license: `Public — citation permitted with attribution to ${SITE_URL}`,
       total_results: places.length,
       total_pois: masterPois.length,
       filters_applied: { q: q || null, category: category || null, commune: commune || null, limit },
-      llms_txt: 'https://dulichtriton.com/llms.txt',
+      llms_txt: `${SITE_URL}/llms.txt`,
     },
     destination: {
       name: 'Tri Tôn',

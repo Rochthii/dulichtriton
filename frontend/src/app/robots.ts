@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/siteConfig';
 
-const BASE_URL = 'https://dulichtriton.vercel.app';
+const BASE_URL = SITE_URL;
 
 export default function robots(): MetadataRoute.Robots {
   return {

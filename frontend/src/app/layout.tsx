@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { SITE_URL, SITE_CONFIG } from "@/lib/siteConfig";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import ChatbotWidget from "../components/ChatbotWidget";
@@ -14,8 +15,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
 };
-
-const SITE_URL = 'https://dulichtriton.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

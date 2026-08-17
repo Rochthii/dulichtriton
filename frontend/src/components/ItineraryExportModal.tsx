@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Download, Share2, AlertTriangle, Map, X, Check, MapPin, Clock, Bike, Compass, Phone, Shield, Sparkles } from 'lucide-react';
 import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
+import { SITE_URL } from '@/lib/siteConfig';
 
 interface ItineraryExportModalProps {
   onClose: () => void;
@@ -53,7 +54,7 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
 
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`
-    : `https://dulichtriton.com/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`;
+    : `${SITE_URL}/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`;
 
   const emergencyContacts = {
     police: '0296 3874 113',
@@ -351,7 +352,7 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
 
                   {/* Footer Watermark */}
                   <div style={{ textAlign: 'center', borderTop: '1px solid #E2E8F0', paddingTop: '12px', fontSize: '10px', color: '#94A3B8' }}>
-                    Dự án Chuyên trang Du Lịch Tri Tôn • Website: <strong>dulichtriton.com</strong> • Dữ liệu thực địa chuẩn xác 2026
+                    Dự án Chuyên trang Du Lịch Tri Tôn • Website: <strong>{SITE_URL.replace(/^https?:\/\//, '')}</strong> • Dữ liệu thực địa chuẩn xác 2026
                   </div>
 
                 </div>

@@ -3,6 +3,7 @@ import PlaceDetailClient from '../../../components/PlaceDetailClient';
 import { getPlaceById } from '@/lib/places';
 import { notFound } from 'next/navigation';
 import localMasterPois from '@/data/triton_pois_full.json';
+import { SITE_URL } from '@/lib/siteConfig';
 
 import type { Metadata } from 'next';
 
@@ -18,12 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!place) {
     return {
       title: 'Địa Điểm Không Tồn Tại — Du Lịch Tri Tôn',
-      description: 'Khám phá danh thắng, văn hóa và ẩm thực vùng Bảy Núi Tri Tôn, An Giang.',
+      description: 'Không tìm thấy thông tin địa điểm bạn yêu cầu trên hệ thống Du Lịch Tri Tôn.',
     };
   }
 
-  const title = `${place.name} (${place.commune || 'Tri Tôn'}) — Du Lịch Tri Tôn`;
-  const description = place.description || `Cẩm nang khám phá ${place.name} tại ${place.commune}, Tri Tôn, An Giang. Hướng dẫn đường đi, đặc sản và mẹo du lịch thực tế.`;
+  const title = `${place.name} — Cẩm Nang & Bản Đồ Du Lịch Tri Tôn`;
+  const description = place.description 
+    ? `${place.description.slice(0, 155)}...` 
+    : `Khám phá ${place.name} tại ${place.commune || 'Tri Tôn'}, An Giang với hình ảnh thực tế và hướng dẫn đường đi chi tiết.`;
   const imageUrl = place.image_url || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif';
 
   return {
@@ -32,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description,
-      url: `https://dulichtriton.com/places/${place.slug || place.id}`,
+      url: `${SITE_URL}/places/${place.slug || place.id}`,
       siteName: 'Du Lịch Tri Tôn AI',
       images: [
         {
@@ -104,10 +107,10 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
     '@graph': [
       {
         '@type': ['TouristAttraction', addType],
-        '@id': `https://dulichtriton.com/places/${place.slug || place.id}#place`,
+        '@id': `${SITE_URL}/places/${place.slug || place.id}#place`,
         name: place.name,
         description: place.description || '',
-        url: `https://dulichtriton.com/places/${place.slug || place.id}`,
+        url: `${SITE_URL}/places/${place.slug || place.id}`,
         image: place.image_url
           ? { '@type': 'ImageObject', url: place.image_url, name: place.name }
           : undefined,
@@ -156,9 +159,9 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Du Lịch Tri Tôn', item: 'https://dulichtriton.com' },
-          { '@type': 'ListItem', position: 2, name: 'Địa Điểm', item: 'https://dulichtriton.com/places' },
-          { '@type': 'ListItem', position: 3, name: place.name, item: `https://dulichtriton.com/places/${place.slug || place.id}` },
+          { '@type': 'ListItem', position: 1, name: 'Du Lịch Tri Tôn', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Địa Điểm', item: `${SITE_URL}/places` },
+          { '@type': 'ListItem', position: 3, name: place.name, item: `${SITE_URL}/places/${place.slug || place.id}` },
         ],
       },
     ],
