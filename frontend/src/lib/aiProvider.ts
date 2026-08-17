@@ -11,92 +11,64 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+import { AI_CONFIG, getRoundRobinGeminiKeys } from './ai/config';
+import { callGeminiLiveSearch } from './ai/geminiClient';
+import { callGroqFallback, callOpenRouterFallback } from './ai/fallbackClients';
+import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
+import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
+
 export * from './ai/config';
 export * from './ai/geminiClient';
 export * from './ai/fallbackClients';
 export * from './ai/localExpertRag';
 export * from './ai/semanticCache';
-
-import { AI_CONFIG, getRoundRobinGeminiKeys } from './ai/config';
-import { callGeminiLiveSearch } from './ai/geminiClient';
-import { callGroqFallback, callOpenRouterFallback } from './ai/fallbackClients';
-import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
+export * from './ai/intentRouter';
 
 /**
- * Streaming Engine với Cơ chế High-Speed Groq Primary + Gemini Grounding Failover
+ * Streaming Engine với Cơ chế Quad-Path Intent-Gated & Truth Anchor Guard v75.0.0
+ * 
+ * 1. LUỒNG 1: SOS Khẩn cấp (< 30ms) -> Trả thẳng Hotline Công an / Cấp cứu
+ * 2. LUỒNG 3: 80% Tra cứu POIs / Ẩm thực -> Groq LPU Siêu tốc (< 200ms)
+ * 3. LUỒNG 4: 20% Tin tức / Thời tiết -> Gemini Google Search + Truth Anchor
+ * 4. LUỒNG Dự phòng: OpenRouter Free -> Local Expert RAG
  */
 export async function* streamAIResponse(
   systemPrompt: string,
   userPrompt: string
 ): AsyncGenerator<{ type: 'delta' | 'done'; content?: string; provider?: string }> {
+  // ── 1. LUỒNG 1: SOS KHẨN CẤP (< 30ms BYPASS TOÀN BỘ LLM) ───────────────────
+  const analysis = routeQueryIntent(userPrompt);
+  if (analysis.intent === 'SOS_EMERGENCY' && analysis.emergencyPayload) {
+    const words = analysis.emergencyPayload.split(' ');
+    for (let i = 0; i < words.length; i += 4) {
+      const chunk = words.slice(i, i + 4).join(' ') + ' ';
+      yield { type: 'delta', content: chunk };
+      await new Promise(r => setTimeout(r, 4));
+    }
+    yield { type: 'done', provider: 'emergency_instant_bypass' };
+    return;
+  }
+
   let fullText = '';
   let providerUsed = 'none';
 
-  // ── 1. TẦNG 1 (PRIMARY): GEMINI 4-KEYS WITH LIVE GOOGLE SEARCH GROUNDING ────
-  const candidateKeys = getRoundRobinGeminiKeys();
-  for (const keyObj of candidateKeys) {
-    try {
-      const result = await callGeminiLiveSearch(
-        keyObj.key,
-        keyObj.id,
-        'gemini-flash-latest',
-        systemPrompt,
-        userPrompt,
-        4000
-      );
-
-      if (result && result.text) {
-        fullText = result.text;
-        providerUsed = result.provider;
-
-        const words = fullText.split(' ');
-        for (let i = 0; i < words.length; i += 3) {
-          const chunk = words.slice(i, i + 3).join(' ') + ' ';
-          yield { type: 'delta', content: chunk };
-          await new Promise(r => setTimeout(r, 8));
-        }
-
-        yield { type: 'done', provider: providerUsed };
-        return;
-      }
-    } catch (err: any) {
-      // Khi gặp 429 hoặc lỗi, bắt lỗi tức thì (<100ms) và thử key/tầng tiếp theo
-      console.warn(`[AI Provider] Gemini Key ${keyObj.id} skipped (${err.message}). Instant failover...`);
-      continue;
-    }
-  }
-
-  // ── 2. TẦNG 2 (SECONDARY): GROQ LPU MULTI-MODEL POOL (Siêu Tốc <500ms) ──────
-  if (AI_CONFIG.groqKey) {
-    try {
-      const result = await callGroqFallback(systemPrompt, userPrompt);
-      if (result && result.text) {
-        fullText = result.text;
-        providerUsed = result.provider;
-
-        // Stream mượt mà từng cụm từ
-        const words = fullText.split(' ');
-        for (let i = 0; i < words.length; i += 3) {
-          const chunk = words.slice(i, i + 3).join(' ') + ' ';
-          yield { type: 'delta', content: chunk };
-          await new Promise(r => setTimeout(r, 8));
-        }
-
-        yield { type: 'done', provider: providerUsed };
-        return;
-      }
-    } catch (err: any) {
-      console.warn(`[AI Provider] Groq multi-model pool exhausted (${err.message}). Trying OpenRouter...`);
-    }
-  }
-
-  // ── 3. TIER 3: OPENROUTER FREE MULTI-MODEL POOL (100% Free Fallback) ──────
-  if (AI_CONFIG.openRouterKey) {
-    for (const model of AI_CONFIG.openRouterModels) {
+  // ── 2. LUỒNG 4: NẾU LÀ CÂU HỎI THỜI GIAN THỰC / TIN TỨC -> GỌI GOOGLE SEARCH ──
+  if (analysis.intent === 'REALTIME_GROUNDED_SEARCH') {
+    const candidateKeys = getRoundRobinGeminiKeys();
+    for (const keyObj of candidateKeys) {
       try {
-        const result = await callOpenRouterFallback(systemPrompt, userPrompt, model);
+        const result = await callGeminiLiveSearch(
+          keyObj.key,
+          keyObj.id,
+          'gemini-flash-latest',
+          systemPrompt,
+          userPrompt,
+          4000
+        );
+
         if (result && result.text) {
-          fullText = result.text;
+          // Áp dụng Mỏ neo Chân lý (Truth Anchor) để lọc sạch thông tin rác từ mạng
+          fullText = applyTruthAnchor(result.text);
           providerUsed = result.provider;
 
           const words = fullText.split(' ');
@@ -110,18 +82,100 @@ export async function* streamAIResponse(
           return;
         }
       } catch (err: any) {
-        console.warn(`[AI Provider] OpenRouter model ${model} failed (${err.message}). Trying next free model...`);
+        console.warn(`[AI Provider] Gemini Live Search Key ${keyObj.id} skipped (${err.message}). Failover to fast path...`);
+        continue;
       }
     }
   }
 
-  // ── 4. TIER 4: LOCAL DOMAIN EXPERT RAG ENGINE (100% Offline Guarantee) ─────
+  // ── 3. LUỒNG 3: 80% TRA CỨU POI / ẨM THỰC / LỊCH TRÌNH -> GROQ LPU SIÊU TỐC (<200ms) ─
+  if (AI_CONFIG.groqKey) {
+    try {
+      const result = await callGroqFallback(systemPrompt, userPrompt);
+      if (result && result.text) {
+        fullText = applyTruthAnchor(result.text);
+        providerUsed = result.provider;
+
+        const words = fullText.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 6));
+        }
+
+        yield { type: 'done', provider: providerUsed };
+        return;
+      }
+    } catch (err: any) {
+      console.warn(`[AI Provider] Groq high-speed LPU pool exhausted (${err.message}). Trying Gemini...`);
+    }
+  }
+
+  // ── 4. FALLBACK TẦNG 2: GEMINI MULTI-KEY (NẾU CHƯA THỬ HOẶC GROQ BẬN) ────────
+  const candidateKeys = getRoundRobinGeminiKeys();
+  for (const keyObj of candidateKeys) {
+    try {
+      const result = await callGeminiLiveSearch(
+        keyObj.key,
+        keyObj.id,
+        'gemini-flash-latest',
+        systemPrompt,
+        userPrompt,
+        3500
+      );
+
+      if (result && result.text) {
+        fullText = applyTruthAnchor(result.text);
+        providerUsed = result.provider;
+
+        const words = fullText.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 8));
+        }
+
+        yield { type: 'done', provider: providerUsed };
+        return;
+      }
+    } catch (err: any) {
+      console.warn(`[AI Provider] Gemini Key ${keyObj.id} skipped (${err.message})...`);
+      continue;
+    }
+  }
+
+  // ── 5. FALLBACK TẦNG 3: OPENROUTER FREE MULTI-MODEL POOL ─────────────────────
+  if (AI_CONFIG.openRouterKey) {
+    for (const model of AI_CONFIG.openRouterModels) {
+      try {
+        const result = await callOpenRouterFallback(systemPrompt, userPrompt, model);
+        if (result && result.text) {
+          fullText = applyTruthAnchor(result.text);
+          providerUsed = result.provider;
+
+          const words = fullText.split(' ');
+          for (let i = 0; i < words.length; i += 3) {
+            const chunk = words.slice(i, i + 3).join(' ') + ' ';
+            yield { type: 'delta', content: chunk };
+            await new Promise(r => setTimeout(r, 8));
+          }
+
+          yield { type: 'done', provider: providerUsed };
+          return;
+        }
+      } catch (err: any) {
+        console.warn(`[AI Provider] OpenRouter model ${model} failed (${err.message})...`);
+      }
+    }
+  }
+
+  // ── 6. FALLBACK TẦNG 4: LOCAL DOMAIN EXPERT RAG (100% Offline Guarantee) ────
   const localExpertResponse = generateSmartLocalDomainResponse(userPrompt);
   const words = localExpertResponse.split(' ');
   for (let i = 0; i < words.length; i += 3) {
     const chunk = words.slice(i, i + 3).join(' ') + ' ';
     yield { type: 'delta', content: chunk };
-    await new Promise(r => setTimeout(r, 8));
+    await new Promise(r => setTimeout(r, 6));
   }
   yield { type: 'done', provider: 'local_expert_rag' };
 }
