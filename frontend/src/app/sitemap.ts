@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const masterPois = require('@/data/triton_pois_full.json') as any[];
 
-const BASE_URL = 'https://dulichtriton.com';
+const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://dulichtriton.vercel.app').replace(/\/+$/, '');
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

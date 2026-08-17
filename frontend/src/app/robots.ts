@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 
+const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://dulichtriton.vercel.app').replace(/\/+$/, '');
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -46,7 +48,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/', '/api/v1/admin/', '/_next/'],
       },
     ],
-    sitemap: 'https://dulichtriton.com/sitemap.xml',
-    host: 'https://dulichtriton.com',
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

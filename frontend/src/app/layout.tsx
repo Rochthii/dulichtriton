@@ -15,8 +15,10 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://dulichtriton.vercel.app').replace(/\/+$/, '');
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dulichtriton.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Du Lịch Tri Tôn AI — Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi",
     template: "%s | Du Lịch Tri Tôn AI"
@@ -28,14 +30,14 @@ export const metadata: Metadata = {
     'tour Tri Tôn', 'du lịch An Giang', 'Thất Sơn', 'lịch trình Tri Tôn',
   ],
   alternates: {
-    canonical: 'https://dulichtriton.com',
-    languages: { 'vi-VN': 'https://dulichtriton.com' },
+    canonical: SITE_URL,
+    languages: { 'vi-VN': SITE_URL },
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
     title: "Du Lịch Tri Tôn AI — Khám Phá Kỳ Quan Vùng Bảy Núi An Giang",
     description: "Trợ lý AI hướng dẫn du lịch Tri Tôn, 149 điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.",
-    url: "https://dulichtriton.com",
+    url: SITE_URL,
     siteName: "Du Lịch Tri Tôn AI",
     images: [
       {
@@ -75,25 +77,25 @@ const rootJsonLd = {
   '@graph': [
     {
       '@type': 'WebSite',
-      '@id': 'https://dulichtriton.com/#website',
-      url: 'https://dulichtriton.com',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
       name: 'Du Lịch Tri Tôn AI',
       description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với 149 địa điểm xác minh thực tế.',
       inLanguage: 'vi-VN',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://dulichtriton.com/places?q={search_term_string}',
+        target: `${SITE_URL}/places?q={search_term_string}`,
         'query-input': 'required name=search_term_string',
       },
     },
     {
       '@type': 'Organization',
-      '@id': 'https://dulichtriton.com/#organization',
+      '@id': `${SITE_URL}/#organization`,
       name: 'Du Lịch Tri Tôn AI',
-      url: 'https://dulichtriton.com',
+      url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://dulichtriton.com/icon.png',
+        url: `${SITE_URL}/icon.png`,
         width: 512,
         height: 512,
       },
@@ -109,17 +111,17 @@ const rootJsonLd = {
     },
     {
       '@type': 'TouristDestination',
-      '@id': 'https://dulichtriton.com/#destination',
+      '@id': `${SITE_URL}/#destination`,
       name: 'Tri Tôn, An Giang',
       description: 'Huyện Tri Tôn thuộc vùng Bảy Núi (Thất Sơn), An Giang, Việt Nam. Nơi giao thoa độc đáo giữa văn hóa Khmer, cảnh quan núi rừng Tà Pạ và ẩm thực đặc sắc như Gà Đốt Ô Thum, Bánh Bò Thốt Nốt.',
       geo: { '@type': 'GeoCoordinates', latitude: 10.3996, longitude: 104.9783 },
       touristType: ['Du khách trong nước', 'Khách quốc tế', 'Phượt thủ', 'Gia đình'],
       includesAttraction: [
-        { '@type': 'TouristAttraction', name: 'Hồ Tà Pạ (Tuyệt Tình Cốc)', url: 'https://dulichtriton.com/places/ho-ta-pa' },
-        { '@type': 'TouristAttraction', name: 'Chùa Tà Pạ', url: 'https://dulichtriton.com/places/chua-ta-pa' },
-        { '@type': 'TouristAttraction', name: 'Hồ Soài So', url: 'https://dulichtriton.com/places/ho-soai-so' },
-        { '@type': 'TouristAttraction', name: 'Núi Cô Tô', url: 'https://dulichtriton.com/places/nui-co-to' },
-        { '@type': 'Restaurant', name: 'Gà Đốt Ô Thum', url: 'https://dulichtriton.com/food' },
+        { '@type': 'TouristAttraction', name: 'Hồ Tà Pạ (Tuyệt Tình Cốc)', url: `${SITE_URL}/places/ho-ta-pa` },
+        { '@type': 'TouristAttraction', name: 'Chùa Tà Pạ', url: `${SITE_URL}/places/chua-ta-pa` },
+        { '@type': 'TouristAttraction', name: 'Hồ Soài So', url: `${SITE_URL}/places/ho-soai-so` },
+        { '@type': 'TouristAttraction', name: 'Núi Cô Tô', url: `${SITE_URL}/places/nui-co-to` },
+        { '@type': 'Restaurant', name: 'Gà Đốt Ô Thum', url: `${SITE_URL}/food` },
       ],
     },
     {
