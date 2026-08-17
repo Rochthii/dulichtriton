@@ -37,10 +37,10 @@ export const AI_CONFIG: AIProviderConfig = {
 
   openRouterKey: process.env.OPENROUTER_API_KEY || '',
   geminiModels: [
-    'gemini-2.0-flash',
+    'gemini-3-flash-preview',
+    'gemini-3.7-flash',
     'gemini-flash-latest',
-    'gemini-1.5-flash-latest',
-    'gemini-1.5-flash',
+    'gemini-flash-lite-latest',
   ],
   groqModels: [
     'llama-3.3-70b-versatile',   // Model mạnh nhất, tiếng Việt tốt
