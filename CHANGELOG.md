@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.6.0-BATCH3-5-CHECKIN-CRAFT-PLACES-REAL-PHOTOS] - 2026-08-18
+
+### 🌳 Hoàn Tất Đợt 3 (Batch 3): 5 Địa Điểm Check-in & Làng Nghề Trứ Danh Với Ảnh Thật 100%
+
+#### 1. Nạp Bộ Sưu Tập Ảnh Thực Tế & Điểm Check-in Chi Tiết (Batch 3)
+- **Chùa Hàng Còng (Krăng Krốch)**: 4 ảnh thực tế (Mái vòm hàng còng trăm tuổi, chánh điện sơn hồng 400 năm, tượng Garuda) + 2 Check-in spots.
+- **Hàng Thốt Nốt Trái Tim An Tức**: 4 ảnh thực tế (Vòm cây thốt nốt trái tim hoàn hảo, hoàng hôn rực đỏ đồng ruộng, quầy thốt nốt tươi) + 2 Check-in spots.
+- **Hồ Soài Chek & Cung Đường Hoa**: 4 ảnh thực tế (Mặt hồ ngọc biếc nhìn đỉnh Cô Tô, vườn hoa sao nhái nở rộ bờ đập, cung đường chạy bộ) + 2 Check-in spots.
+- **Quán Đu Đủ Đâm Rina Châu Lăng**: 4 ảnh thực tế (Cối gỗ giã đu đủ đâm mắm ruốc ba khía tép ram, mẹt bò nướng xiên que) + 2 Check-in spots.
+- **Lò Bánh Bò Thốt Nốt Nướng Út Cột**: 4 ảnh thực tế (Bánh bò nướng lá thốt nốt than hồng vỏ rám giòn, hũ đường thốt nốt nguyên chất) + 2 Check-in spots.
+- **Đồng bộ hóa tức thì**: Đã PATCH trực tiếp lên bảng `places` trên Supabase PostgreSQL.
+
+---
+
 ## [v82.5.0-BATCH2-5-HERITAGE-FOOD-PLACES-REAL-PHOTOS] - 2026-08-18
 
 ### 🛕 Hoàn Tất Đợt 2 (Batch 2): 5 Địa Điểm Di Tích & Ẩm Thực Cốt Lõi Với Ảnh Thật 100%
