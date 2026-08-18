@@ -15,7 +15,9 @@
 import masterPois from '@/data/triton_pois_full.json';
 import transportData from '@/data/tri_ton_transportation.json';
 import festivalsData from '@/data/tri_ton_festivals.json';
+import itinerariesData from '@/data/lichtrinh.json';
 import { generateEvidenceLinks } from '../evidenceGenerator';
+import { optimizeClosedLoopRoute, type SpatialPoi } from './spatialRouter';
 
 export interface FormattedPoi {
   id: string;
@@ -393,6 +395,69 @@ export async function buildUnifiedRagContext(
     festivalsSnippet = `\n\n[CSDL 6 ĐẠI LỄ HỘI & SỰ KIỆN VĂN HÓA THỂ THAO TRI TÔN ĐÃ XÁC MINH 100%]:\n${JSON.stringify(festivalsData, null, 2)}`;
   }
 
+  // ── 9. SMART ITINERARY & SPATIAL GRAPH ROUTING ENGINE ─────────────────────
+  let itinerarySnippet = '';
+  const isItineraryQuery = /lịch trình|kế hoạch|gợi ý đi|chơi gì|1 ngày|2 ngày|2n1đ|3 ngày|3n2đ|nửa ngày|tour|tuyến đường|lộ trình|cung đường/i.test(userQuery);
+
+  if (isItineraryQuery) {
+    const rawItins = (itinerariesData as any)?.itineraries || [];
+    let matchedItin: any = null;
+
+    if (lower.includes('3 ngày') || lower.includes('3n2đ')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-003' || it.duration.includes('3 ngày'));
+    } else if (lower.includes('2 ngày') || lower.includes('2n1đ')) {
+      if (lower.includes('budget') || lower.includes('tiết kiệm') || lower.includes('phượt')) {
+        matchedItin = rawItins.find((it: any) => it.id === 'itin-028');
+      } else if (lower.includes('family') || lower.includes('gia đình') || lower.includes('trẻ em')) {
+        matchedItin = rawItins.find((it: any) => it.id === 'itin-027');
+      } else {
+        matchedItin = rawItins.find((it: any) => it.id === 'itin-002');
+      }
+    } else if (lower.includes('ẩm thực') || lower.includes('food') || lower.includes('ăn')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-007');
+    } else if (lower.includes('sống ảo') || lower.includes('chụp ảnh') || lower.includes('checkin') || lower.includes('check-in')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-004');
+    } else if (lower.includes('tâm linh') || lower.includes('chùa') || lower.includes('hành hương')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-005');
+    } else if (lower.includes('cafe') || lower.includes('cà phê')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-018');
+    } else if (lower.includes('đêm') || lower.includes('tối')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-016');
+    } else if (lower.includes('1 ngày') || lower.includes('trong ngày')) {
+      matchedItin = rawItins.find((it: any) => it.id === 'itin-001');
+    }
+
+    if (matchedItin) {
+      itinerarySnippet = `\n\n[GỢI Ý LỊCH TRÌNH KHÉP VÒNG NÚI CHUẨN XÁC ĐÃ TỐI ƯU KILOMET & THỜI GIAN]:\n`;
+      itinerarySnippet += `* Tên Tour: "${matchedItin.name}" (Mã: ${matchedItin.id}, Thời lượng: ${matchedItin.duration})\n`;
+      itinerarySnippet += `* Tổng cự ly cả chuyến: ~${matchedItin.total_distance_km} km | Tổng thời gian chạy xe: ~${matchedItin.total_travel_time_mins} phút\n`;
+      itinerarySnippet += `* Mô tả: ${matchedItin.description}\n`;
+      itinerarySnippet += `* Chi tiết các ngày và chuỗi chặng khép vòng:\n`;
+
+      (matchedItin.days || []).forEach((day: any) => {
+        itinerarySnippet += `\n  🗓️ ${day.title} (Tổng cự ly ngày: ~${day.day_total_distance_km} km):\n`;
+        (day.stops || []).forEach((s: any) => {
+          const distInfo = s.distance_from_prev_km > 0 ? ` [Cách điểm trước: ~${s.distance_from_prev_km}km, chạy xe ~${s.travel_time_mins}p]` : ' [Điểm xuất phát]';
+          itinerarySnippet += `    - [${s.time}] ${s.name} (${s.commune}): ${s.activity}${distInfo}. Chi phí: ${s.cost_vnd}.\n`;
+        });
+      });
+    } else if (selectedPlaces.length >= 2) {
+      // Câu hỏi tùy biến tự chọn điểm -> Kích hoạt Dynamic Spatial Graph Router
+      const candidateSpatialPois: SpatialPoi[] = selectedPlaces.map((p) => ({
+        id: p.id,
+        name: p.name,
+        commune: p.commune || 'Tri Tôn',
+        category: p.category || 'Địa điểm',
+        latitude: Number(p.latitude) || 10.4128,
+        longitude: Number(p.longitude) || 105.0068,
+        activityHint: p.description,
+      }));
+
+      const dynamicRoute = optimizeClosedLoopRoute(candidateSpatialPois, userLat, userLng);
+      itinerarySnippet = `\n\n${dynamicRoute.contextText}\n\n${dynamicRoute.diagramText}`;
+    }
+  }
+
   const weatherText = await Promise.race([
     fetchLiveWeatherContext(),
     new Promise<string>((resolve) => setTimeout(() => resolve(''), 400)),
@@ -401,6 +466,7 @@ export async function buildUnifiedRagContext(
   const fullRagContext = [
     ragLines.length > 0 ? `CSDL 149 ĐỊA ĐIỂM TRI TÔN XÁC MINH PHÙ HỢP:\n${ragLines.join('\n\n')}` : '',
     timeWindowSnippet,
+    itinerarySnippet,
     transportSnippet,
     festivalsSnippet,
     weatherText,

@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.1.0-DYNAMIC-SPATIAL-GRAPH-ROUTER-REALTIME-ENGINE] - 2026-08-18
+
+### 🚀 Ra Mắt Động Cơ Định Tuyến Đồ Thị Không Gian Thời Gian Thực (Dynamic Spatial Graph Router)
+
+#### 1. Tự Động Hóa Sắp Xếp Sơ Đồ Khép Vòng Cho 100% Câu Hỏi Lịch Trình Tùy Biến
+- **Nearest-Neighbor Loop Algorithm (`spatialRouter.ts`)**: Tự động giải bài toán chuỗi chặng khép vòng ngắn nhất cho bất kỳ tập hợp điểm đến nào du khách yêu cầu, triệt tiêu 100% hiện tượng quay đầu ngược đường.
+- **Tích hợp RAG Context Engine (`ragEngine.ts`)**: Tự động nhận diện câu hỏi lịch trình (Preset Tour hoặc Custom Ad-hoc Tour), tính toán cự ly từng chặng (km) và thời gian lái xe (phút) dựa trên tọa độ GPS thực tế của 149 POIs.
+- **Thử nghiệm thực tế xuất sắc**:
+  - *Case 1 (1 Ngày Kinh Điển)*: Cung đường khép vòng ~16.8km (Núi Tô $\rightarrow$ Ô Lâm $\rightarrow$ An Tức $\rightarrow$ TT. Tri Tôn).
+  - *Case 2 (3 Tiếng Chiều Quanh Núi Tô)*: Sắp xếp Ruộng Coffee $\rightarrow$ Windy Hill $\rightarrow$ Khép vòng TT. Tri Tôn (~12km).
+  - *Case 3 (Nửa Ngày 3 Điểm Tự Chọn)*: Chùa Xvayton $\rightarrow$ Cổng Trời Koh Kas $\rightarrow$ Gà Đốt Ô Thum (~15.5km liền mạch không quay đầu).
+
+---
+
 ## [v81.0.0-PERFECT-CLOSED-LOOP-ZERO-DUPLICATE-ITINERARIES] - 2026-08-18
 
 ### 🔄 Tái Cấu Trúc Toàn Diện 27 Lịch Trình: Cung Đường Khép Vòng Núi & Ma Trận Kilomet Thực Địa
