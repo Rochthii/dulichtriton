@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.3.0-MULTI-PHOTOS-PER-PLACE-INGESTION] - 2026-08-18
+
+### 📸 Nạp Bộ Sưu Tập Tối Thiểu 3 - 5 Ảnh Thực Tế Riêng Biệt Cho Từng Địa Điểm
+
+#### 1. Chuẩn Hóa Bộ Sưu Tập Ảnh Thực Tế (Multi-Photo Gallery Standard)
+- **Tối thiểu 3 - 5 ảnh chất lượng cao/địa điểm**: Mỗi địa điểm bao gồm ảnh bìa (Hero), các góc chụp check-in thực tế (Check-in Spots) và ảnh chi tiết cảnh quan/không gian (Gallery Photos).
+- **Đồng bộ hóa 100% lên Database & Frontend**: Đã nạp dữ liệu vào cả cột `photos` và `checkin_spots` của bảng `places` trên Supabase PostgreSQL và file `triton_pois_full.json`.
+
+---
+
 ## [v82.2.0-ZERO-DUPLICATE-UNIQUE-PHOTOS-INGESTION] - 2026-08-18
 
 ### 💎 Triệt Tiêu 100% Ảnh Dùng Chung — Ánh Xạ 1-to-1 Ảnh Riêng Biệt Độc Nhất Cho Từng Địa Điểm
