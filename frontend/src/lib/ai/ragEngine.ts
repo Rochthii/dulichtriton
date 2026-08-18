@@ -1,14 +1,14 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * UNIFIED HYBRID RAG ENGINE v2.0 (High-Precision Grounding)
+ * UNIFIED HYBRID RAG ENGINE v2.1 (Time-Aware Golden Window Grounding)
  * Du Lịch Tri Tôn AI Assistant System
  * 
  * Features:
- * 1. Instant In-Memory RAM Entity Matching (149 Verified POIs) < 1ms
- * 2. Spatial GPS Proximity Distance Matrix (PostGIS Haversine formula)
- * 3. Live Weather Context (Open-Meteo Cache 15m)
- * 4. 6 Major Festivals & Transportation Routing Mastery
- * 5. Dynamic Custom Knowledge & Golden Few-Shot injection
+ * 1. Time-Aware Golden Window Recommendation (Khung giờ vàng ẩm thực & danh thắng)
+ * 2. Instant In-Memory RAM Entity Matching (149 Verified POIs) < 1ms
+ * 3. Spatial GPS Proximity Distance Matrix (PostGIS Haversine formula)
+ * 4. Live Weather Context (Open-Meteo Cache 15m)
+ * 5. 6 Major Festivals & Transportation Routing Mastery
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -41,6 +41,120 @@ export interface RagContextResult {
   places: FormattedPoi[];
   suggestions: string[];
   weatherText?: string;
+  timeWindowText?: string;
+}
+
+// ── Time-Aware Golden Window Calculation (Asia/Ho_Chi_Minh) ───────────────────
+export interface TimeWindowInfo {
+  period: 'morning' | 'noon' | 'afternoon' | 'evening' | 'night';
+  periodLabel: string;
+  currentClock: string;
+  foodTips: string;
+  activityTips: string;
+  recommendedPoiIds: string[];
+  defaultSuggestions: string[];
+}
+
+export function getCurrentTimeWindowInfo(targetDate: Date = new Date()): TimeWindowInfo {
+  // Chuẩn hóa sang múi giờ Việt Nam (UTC+7)
+  const formatter = new Intl.DateTimeFormat('vi-VN', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+  const parts = formatter.formatToParts(targetDate);
+  const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '12', 10);
+  const minute = parseInt(parts.find((p) => p.type === 'minute')?.value || '0', 10);
+  const currentClock = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+
+  // 1. Buổi Sáng Sớm & Ăn Sáng (06:00 – 10:00)
+  if (hour >= 6 && hour < 10) {
+    return {
+      period: 'morning',
+      periodLabel: 'Buổi Sáng (Khung Giờ Ăn Sáng & Đón Nắng Sớm)',
+      currentClock,
+      foodTips: 'Nên ăn sáng Cháo Bò Bảy Núi (Quán Thủy Đen Cầu Cây Me, Quán Dì Hai), Bún Cá Củ Ngải Khmer hoặc Bánh Bò Thốt Nốt Nướng Than.',
+      activityTips: 'Khung giờ vàng 06:00 - 08:30: Chụp ảnh Cổng Trời Chùa Koh Kas đón nắng xiên, viếng Chùa Xvayton chiêm bái Kinh Lá Buông, check-in Hồ Tà Pạ nước trong xanh.',
+      recommendedPoiIds: ['FD009', 'FD013', 'CK010', 'HG002', 'PL001'],
+      defaultSuggestions: [
+        'Quán Cháo Bò Bảy Núi ngon nhất',
+        'Quán Bún Cá Củ Ngải Khmer chuẩn vị',
+        'Cách đi Cổng Trời Chùa Koh Kas sáng sớm',
+        'Đường lên Hồ Tà Pạ mùa này',
+      ],
+    };
+  }
+
+  // 2. Buổi Trưa & Đại Tiệc Gà Đốt (10:00 – 14:30)
+  if (hour >= 10 && hour < 14 || (hour === 14 && minute <= 30)) {
+    return {
+      period: 'noon',
+      periodLabel: 'Buổi Trưa (Khung Giờ Đại Tiệc Ẩm Thực Ven Hồ)',
+      currentClock,
+      foodTips: 'Nên thưởng thức Gà Đốt Lá Chúc Ô Thum bên chòi lá ven Hồ Ô Thum (BẮT BUỘC nhắc du khách gọi đặt trước 30-45 phút), ăn kèm Đu Đủ Đâm Rina và uống Nước thốt nốt tươi mát lạnh.',
+      activityTips: 'Tránh leo núi ngoài trời lúc nắng gắt 11:30 - 13:30. Nên nghỉ ngơi tại các chòi lá ven hồ Ô Thum, tham quan Vườn Nho Ô Thum râm mát.',
+      recommendedPoiIds: ['FD006', 'FD016', 'PL002', 'CF002', 'FD010'],
+      defaultSuggestions: [
+        'Quán Gà Đốt Ô Thum nào ngon nhất?',
+        'Có cần gọi đặt bàn Gà Đốt trước không?',
+        'Quán Đu Đủ Đâm Rina ở đâu?',
+        'Chòi lá ven Hồ Ô Thum view đẹp',
+      ],
+    };
+  }
+
+  // 3. Buổi Chiều Mát & Săn Hoàng Hôn (14:30 – 18:00)
+  if ((hour === 14 && minute > 30) || (hour >= 15 && hour < 18)) {
+    return {
+      period: 'afternoon',
+      periodLabel: 'Buổi Chiều (Khung Giờ Săn Hoàng Hôn & Cánh Đồng Lúa)',
+      currentClock,
+      foodTips: 'Ăn nhẹ xế chiều: Bánh Bò Thốt Nốt Nướng Lò Út Cột, Nước thốt nốt tươi ướp lạnh, Trái trâm chín mọng (tháng 4-6).',
+      activityTips: 'Khung giờ vàng 15:30 - 17:45: Dạo bước trên Con Đường Tơ Lụa Tà Pạ, chụp ảnh Hàng Cây Trâm Trăm Tuổi, check-in Cụm Thốt Nốt Trái Tim, săn hoàng hôn đỏ rực bên Hồ Soài Chek hoặc leo cụm chữ "TRI TÔN" trên Núi Cô Tô.',
+      recommendedPoiIds: ['CK002', 'CK001', 'PL020', 'PL011', 'FD017'],
+      defaultSuggestions: [
+        'Khung giờ chụp ảnh đẹp nhất Hồ Soài Chek',
+        'Vị trí Cây Thốt Nốt Trái Tim',
+        'Cách đi Con Đường Tơ Lụa Tà Pạ',
+        'Lò Bánh Bò Thốt Nốt Út Cột',
+      ],
+    };
+  }
+
+  // 4. Buổi Tối & Cà Phê Phố Đêm (18:00 – 22:30)
+  if (hour >= 18 && hour < 22 || (hour === 22 && minute <= 30)) {
+    return {
+      period: 'evening',
+      periodLabel: 'Buổi Tối (Khung Giờ Ẩm Thực Phố & Cà Phê Chill)',
+      currentClock,
+      foodTips: 'Nên ăn tối Bò 7 Món Tri Tôn, Lẩu Bò Bảy Núi, dạo Chợ Đêm Tri Tôn thưởng thức các món ăn vặt miền Tây.',
+      activityTips: 'Khám phá cà phê đêm: CHẠM Coffee & Tea (mở đến 22:00), NY Coffee & Tea (máy lạnh, kem thốt nốt), Anpalm Cafe (acoustic), ngắm phố thị trấn Tri Tôn rực rỡ.',
+      recommendedPoiIds: ['FD017', 'PL021', 'CF001', 'CF008', 'CF010'],
+      defaultSuggestions: [
+        'Quán Cà Phê Tri Tôn mở muộn về đêm',
+        'Địa chỉ quán Bò 7 Món ngon',
+        'Chợ Đêm Tri Tôn có gì vui?',
+        'Homestay view núi nghỉ đêm tốt nhất',
+      ],
+    };
+  }
+
+  // 5. Đêm Muộn & Rạng Sáng (22:30 – 05:59)
+  return {
+    period: 'night',
+    periodLabel: 'Đêm Muộn & Rạng Sáng (Khung Giờ Nghỉ Dưỡng & Chuẩn Bị Săn Mây)',
+    currentClock,
+    foodTips: 'Các quán ăn hầu hết đã đóng cửa. Có thể tìm ăn nhẹ tại khu vực Bến xe Tri Tôn hoặc các cửa hàng tiện lợi.',
+    activityTips: 'Cảnh báo: Không nên tự lái xe máy vượt đèo Núi Cô Tô / ĐT948 đêm khuya vì sương mù và dốc cao. Nên nghỉ ngơi tại homestay/khách sạn, chuẩn bị thức dậy lúc 05:00 sáng để săn mây Vồ Hội Mẹ / Sân Tiên.',
+    recommendedPoiIds: ['CF012', 'CF013', 'PL009', 'CF016'],
+    defaultSuggestions: [
+      'Hotline cứu hộ xe máy đêm 24/7',
+      'Homestay Núi Cô Tô gần nhất',
+      'Kinh nghiệm săn mây Vồ Hội Mẹ lúc 05:00',
+      'Khách sạn trung tâm Thị trấn Tri Tôn',
+    ],
+  };
 }
 
 // ── In-Memory Weather Cache (15 min TTL) ──────────────────────────────────────
@@ -83,8 +197,10 @@ function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: num
   return Number((R * c).toFixed(1));
 }
 
-// ── Suggestion Builder ───────────────────────────────────────────────────────
-export function buildDynamicSuggestions(lowerQuery: string): string[] {
+// ── Suggestion Builder (Time-Aware) ───────────────────────────────────────────
+export function buildDynamicSuggestions(lowerQuery: string, timeWindow?: TimeWindowInfo): string[] {
+  const tw = timeWindow || getCurrentTimeWindowInfo();
+
   if (lowerQuery.includes('cà phê') || lowerQuery.includes('cafe') || lowerQuery.includes('uống nước')) {
     return [
       'Quán RUỘNG Coffee view cánh đồng',
@@ -116,12 +232,9 @@ export function buildDynamicSuggestions(lowerQuery: string): string[] {
       'Khu cắm trại ven Hồ Ô Thum',
     ];
   }
-  return [
-    'Thời tiết Tri Tôn hôm nay thế nào?',
-    'Gà Đốt Ô Thum có cần đặt trước?',
-    'Lịch trình 1 ngày tối ưu Sáng - Trưa - Chiều',
-    'Con đường tơ lụa Tà Pạ đi thế nào?',
-  ];
+
+  // Nếu câu hỏi mở, trả về gợi ý theo đúng khung giờ hiện tại!
+  return tw.defaultSuggestions;
 }
 
 // ── Core Hybrid RAG Context Extractor ────────────────────────────────────────
@@ -135,8 +248,28 @@ export async function buildUnifiedRagContext(
 
   const matchedMap = new Map<string, any>();
   const poisList = masterPois as any[];
+  const timeWindow = getCurrentTimeWindowInfo();
 
-  // 1. Topic & Intent Fast Clusters
+  // 1. Time-Aware Priority Injection (Nếu câu hỏi mang tính chung chung hoặc hỏi ăn uống theo giờ)
+  const isGeneralQuery =
+    lower.includes('ăn gì') ||
+    lower.includes('đi đâu') ||
+    lower.includes('gợi ý') ||
+    lower.includes('bây giờ') ||
+    lower.includes('hôm nay') ||
+    lower.includes('tư vấn') ||
+    lower.includes('buổi sáng') ||
+    lower.includes('buổi trưa') ||
+    lower.includes('buổi chiều') ||
+    lower.includes('buổi tối');
+
+  if (isGeneralQuery && timeWindow.recommendedPoiIds.length > 0) {
+    poisList
+      .filter((p) => timeWindow.recommendedPoiIds.includes(p.id))
+      .forEach((p) => matchedMap.set(p.id, p));
+  }
+
+  // 2. Topic & Intent Fast Clusters
   if (lower.includes('khinh khí cầu') || lower.includes('dù lượn') || lower.includes('thất sơn bay')) {
     poisList
       .filter((p) => p.id === 'PL020' || p.id === 'PL009' || p.id === 'HG001' || p.id === 'PL001')
@@ -181,7 +314,7 @@ export async function buildUnifiedRagContext(
       .forEach((p) => matchedMap.set(p.id, p));
   }
 
-  // 2. Keyword Substring & N-Gram Search
+  // 3. Keyword Substring & N-Gram Search
   const stopWords = new Set(['ở', 'đâu', 'có', 'gì', 'đẹp', 'nào', 'ngon', 'mấy', 'giờ', 'bao', 'nhiêu', 'cho', 'mình', 'với', 'thì', 'lên', 'ăn', 'đi', 'muốn', 'ngắm', 'chỗ', 'hãy', 'bạn', 'tối', 'sáng', 'thế', 'nào', 'từ', 'vé', 'quán', 'thích', 'tại']);
   const tokens = cleanQ.split(/\s+/).filter((w) => w.length >= 2 && !stopWords.has(w));
 
@@ -198,14 +331,14 @@ export async function buildUnifiedRagContext(
     });
   }
 
-  // 3. Fallback to Hot / Landmark POIs
+  // 4. Fallback to Hot / Landmark POIs
   if (matchedMap.size === 0) {
     poisList.slice(0, 4).forEach((p) => matchedMap.set(p.id, p));
   }
 
   let selectedPlaces = Array.from(matchedMap.values()).slice(0, 6);
 
-  // 4. Spatial Proximity Ranking (if user coordinates provided)
+  // 5. Spatial Proximity Ranking (if user coordinates provided)
   if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
     selectedPlaces = selectedPlaces.map((p) => {
       const lat = Number(p.latitude) || 10.4128;
@@ -215,7 +348,7 @@ export async function buildUnifiedRagContext(
     }).sort((a, b) => (a.distance_km || 0) - (b.distance_km || 0));
   }
 
-  // 5. Format Output POIs with Evidence Links
+  // 6. Format Output POIs with Evidence Links
   const formattedPlaces: FormattedPoi[] = selectedPlaces.map((p) => {
     const evidence = generateEvidenceLinks(p.name, p.commune);
     const imgUrl = p.image_url || p.imageUrl || '';
@@ -239,7 +372,10 @@ export async function buildUnifiedRagContext(
     };
   });
 
-  // 6. Build Text Context for LLM
+  // 7. Build Time Window Context Block
+  const timeWindowSnippet = `\n\n[BỐI CẢNH THỜI GIAN THỰC TẾ & GỢI Ý KHUNG GIỜ VÀNG (ĐỒNG HỒ TRI TÔN: ${timeWindow.currentClock})]:\n- Giai đoạn: ${timeWindow.periodLabel}\n- Món ăn ưu tiên: ${timeWindow.foodTips}\n- Trải nghiệm khuyên dùng: ${timeWindow.activityTips}`;
+
+  // 8. Build Text Context for LLM
   const ragLines = formattedPlaces.map((p) => {
     const distText = p.distance_km !== undefined ? ` (Cách bạn ~${p.distance_km}km)` : '';
     const tips = p.field_tips ? `\n  - Mẹo thực địa: ${p.field_tips}` : '';
@@ -264,6 +400,7 @@ export async function buildUnifiedRagContext(
 
   const fullRagContext = [
     ragLines.length > 0 ? `CSDL 149 ĐỊA ĐIỂM TRI TÔN XÁC MINH PHÙ HỢP:\n${ragLines.join('\n\n')}` : '',
+    timeWindowSnippet,
     transportSnippet,
     festivalsSnippet,
     weatherText,
@@ -274,7 +411,8 @@ export async function buildUnifiedRagContext(
   return {
     ragContext: fullRagContext,
     places: formattedPlaces,
-    suggestions: buildDynamicSuggestions(lower),
+    suggestions: buildDynamicSuggestions(lower, timeWindow),
     weatherText,
+    timeWindowText: timeWindowSnippet,
   };
 }
