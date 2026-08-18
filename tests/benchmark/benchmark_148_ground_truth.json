@@ -1,0 +1,1971 @@
+[
+  {
+    "id": "Q001",
+    "category": "spots",
+    "question": "Hồ Tà Pạ ở đâu, có gì đẹp?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q002",
+    "category": "spots",
+    "question": "Chỗ nào sống ảo đẹp nhất?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q003",
+    "category": "food",
+    "question": "Muốn săn mây thì lên đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q004",
+    "category": "spots",
+    "question": "Ngắm hoàng hôn ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q005",
+    "category": "spots",
+    "question": "Có cánh đồng lúa nào đẹp không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q006",
+    "category": "spots",
+    "question": "Cổng Trời Tri Tôn thuộc xã nào?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q007",
+    "category": "safety",
+    "question": "Hồ ở Tri Tôn có tắm được không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q008",
+    "category": "spots",
+    "question": "Đồi Tức Dụp có gì chơi?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q009",
+    "category": "spots",
+    "question": "Cầu gỗ check-in ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q010",
+    "category": "spots",
+    "question": "Chỗ nào ít người biết?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q011",
+    "category": "food",
+    "question": "Gà đốt Ô Thum quán nào ngon?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q012",
+    "category": "food",
+    "question": "Quán gà đốt nào mở khuya?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q013",
+    "category": "food",
+    "question": "Đu đủ đâm ăn ở đâu ngon?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q014",
+    "category": "food",
+    "question": "Sáng sớm ăn gì ở thị trấn?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q015",
+    "category": "food",
+    "question": "Mua bánh bò thốt nốt ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q016",
+    "category": "food",
+    "question": "Bún nước lèo quán nào?",
+    "must_contain": [
+      "bún cá"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "bún nước lèo"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q017",
+    "category": "food",
+    "question": "Cháo bò trái trúc ăn ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "trái trúc",
+      "lá trúc"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q018",
+    "category": "food",
+    "question": "Tối ăn gì ở Tri Tôn?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q019",
+    "category": "spots",
+    "question": "Mua đường thốt nốt ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q020",
+    "category": "food",
+    "question": "Ăn vặt đêm ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q021",
+    "category": "itinerary",
+    "question": "Lên cho mình lịch trình 1 ngày",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q022",
+    "category": "itinerary",
+    "question": "Tour 2 ngày 1 đêm đi đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q023",
+    "category": "food",
+    "question": "Food tour 1 ngày ăn gì?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q024",
+    "category": "spots",
+    "question": "Ngủ đêm ở đâu tiện?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q025",
+    "category": "food",
+    "question": "Lịch trình săn mây?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q026",
+    "category": "spots",
+    "question": "Đi cùng trẻ nhỏ nên đi đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q027",
+    "category": "food",
+    "question": "Nửa ngày khám phá văn hóa Khmer?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q028",
+    "category": "itinerary",
+    "question": "Bắt đầu từ chợ Tri Tôn đi 1 ngày?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q029",
+    "category": "culture",
+    "question": "Lễ hội đua bò khi nào?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q030",
+    "category": "culture",
+    "question": "Chùa nào cổ nhất An Giang?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q031",
+    "category": "culture",
+    "question": "Kinh lá buông là gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q032",
+    "category": "spots",
+    "question": "Nhà mồ Ba Chúc gắn với sự kiện gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q033",
+    "category": "culture",
+    "question": "Vào chùa Khmer cần lưu ý gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q034",
+    "category": "culture",
+    "question": "Sene Dolta là lễ gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q035",
+    "category": "logistics",
+    "question": "Vé Đồi Tức Dụp bao nhiêu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q036",
+    "category": "logistics",
+    "question": "Hồ Tà Pạ mở cửa mấy giờ?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q037",
+    "category": "logistics",
+    "question": "Từ Sài Gòn đi Tri Tôn mất bao lâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q038",
+    "category": "logistics",
+    "question": "Vườn nho Ô Thum vé bao nhiêu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q039",
+    "category": "food",
+    "question": "Quán RiNa mở cửa lúc mấy giờ?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q040",
+    "category": "food",
+    "question": "Gà đốt bao nhiêu tiền một con?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q041",
+    "category": "spots",
+    "question": "Chỗ nào chill mà ít người?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q042",
+    "category": "spots",
+    "question": "Cà phê view hồ gợi ý?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q043",
+    "category": "spots",
+    "question": "Gần Hồ Tà Pạ còn gì không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q044",
+    "category": "food",
+    "question": "Ăn chay Tri Tôn có gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q045",
+    "category": "safety",
+    "question": "Thời tiết Hà Nội hôm nay?",
+    "must_contain": [
+      "chỉ hỗ trợ"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": false,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q046",
+    "category": "safety",
+    "question": "Viết code Python cho mình?",
+    "must_contain": [
+      "chỉ hỗ trợ"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": false,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q047",
+    "category": "spots",
+    "question": "Tri Tôn thuộc tỉnh nào?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q048",
+    "category": "safety",
+    "question": "Review Đà Lạt cho mình?",
+    "must_contain": [
+      "chỉ hỗ trợ"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": false,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q049",
+    "category": "food",
+    "question": "Gà đốt với gà nướng khác gì?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q050",
+    "category": "spots",
+    "question": "Bạn là ai, giúp được gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q051",
+    "category": "spots",
+    "question": "Có homestay nào view đẹp không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q052",
+    "category": "spots",
+    "question": "Chụp ảnh cưới ở đâu đẹp?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q053",
+    "category": "itinerary",
+    "question": "Đi 3 ngày 2 đêm thì sao?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q054",
+    "category": "food",
+    "question": "Quán nào mở 24/7?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q055",
+    "category": "spots",
+    "question": "Có chỗ nào leo núi không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q056",
+    "category": "food",
+    "question": "Quán nào có view núi?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q057",
+    "category": "culture",
+    "question": "Có chùa nào đẹp để viếng không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q058",
+    "category": "spots",
+    "question": "Mùa nào đẹp nhất để đi Tri Tôn?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q059",
+    "category": "spots",
+    "question": "Có chỗ nào cắm trại không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q060",
+    "category": "food",
+    "question": "Quán nào phù hợp cho nhóm đông?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q061",
+    "category": "spots",
+    "question": "Có chỗ nào cho trẻ em chơi không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q062",
+    "category": "food",
+    "question": "Quán nào có nhạc sống?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q063",
+    "category": "spots",
+    "question": "Có chỗ nào tổ chức tiệc sinh nhật không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q064",
+    "category": "food",
+    "question": "Quán nào mở sớm nhất?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q065",
+    "category": "food",
+    "question": "Quán nào đóng cửa muộn nhất?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q066",
+    "category": "spots",
+    "question": "Có chỗ nào thuê xe máy không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q067",
+    "category": "spots",
+    "question": "Có ATM không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q068",
+    "category": "spots",
+    "question": "Có bệnh viện không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q069",
+    "category": "spots",
+    "question": "Có chỗ nào mua sim không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q070",
+    "category": "spots",
+    "question": "Có wifi free không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q071",
+    "category": "spots",
+    "question": "So sánh Hồ Tà Pạ và Hồ Soài So?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q072",
+    "category": "food",
+    "question": "Gà đốt Siêu vs Kiều Tiên quán nào ngon hơn?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q073",
+    "category": "culture",
+    "question": "So sánh Chùa Xà Tón và Chùa Tà Pạ?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q074",
+    "category": "spots",
+    "question": "So sánh homestay Tuyết Anh và Rồng Vàng?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q075",
+    "category": "spots",
+    "question": "Đường Tơ Lụa Tà Pạ vs Soài Chék cái nào đẹp hơn?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q076",
+    "category": "food",
+    "question": "Bún nước lèo Sơ Nương vs Chị Tư quán nào ngon?",
+    "must_contain": [
+      "bún cá"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "bún nước lèo"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q077",
+    "category": "spots",
+    "question": "So sánh Đồi Tức Dụp và Núi Cô Tô?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q078",
+    "category": "spots",
+    "question": "So sánh Cổng Trời và Thốt Nốt Trái Tim?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q079",
+    "category": "spots",
+    "question": "So sánh cà phê Ruộng và Windy Hill?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q080",
+    "category": "food",
+    "question": "So sánh gà đốt và bò nướng trái trúc?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng",
+      "trái trúc",
+      "lá trúc"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q081",
+    "category": "itinerary",
+    "question": "Có tour nào ghép đoàn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q082",
+    "category": "spots",
+    "question": "Có hướng dẫn viên địa phương không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q083",
+    "category": "spots",
+    "question": "Có chỗ nào bán đồ lưu niệm không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q084",
+    "category": "spots",
+    "question": "Có chỗ nào đổi tiền không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q085",
+    "category": "spots",
+    "question": "Có chỗ nào giặt ủi không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q086",
+    "category": "spots",
+    "question": "Có chỗ nào gửi hành lý không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q087",
+    "category": "spots",
+    "question": "Có chỗ nào sạc điện thoại không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q088",
+    "category": "spots",
+    "question": "Có chỗ nào mua nước uống không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q089",
+    "category": "spots",
+    "question": "Có chỗ nào mua thuốc không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q090",
+    "category": "spots",
+    "question": "Có chỗ nào mua kem chống nắng không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q091",
+    "category": "spots",
+    "question": "Có chỗ nào mua áo mưa không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q092",
+    "category": "spots",
+    "question": "Có chỗ nào mua mũ bảo hiểm không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q093",
+    "category": "spots",
+    "question": "Có chỗ nào mua bản đồ không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q094",
+    "category": "spots",
+    "question": "Có chỗ nào mua sim data 4G không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q095",
+    "category": "spots",
+    "question": "Có chỗ nào mua sạc dự phòng không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q096",
+    "category": "food",
+    "question": "Có chỗ nào mua khăn giấy không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q097",
+    "category": "spots",
+    "question": "Có chỗ nào mua khẩu trang không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q098",
+    "category": "spots",
+    "question": "Có chỗ nào mua nước rửa tay không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q099",
+    "category": "spots",
+    "question": "Có chỗ nào mua thuốc chống muỗi không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q100",
+    "category": "spots",
+    "question": "Cảm ơn bạn, tạm biệt!",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q101",
+    "category": "itinerary",
+    "question": "Đi Tri Tôn 2 ngày với ngân sách 1 triệu được không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q102",
+    "category": "spots",
+    "question": "Du lịch sang chảnh ở Tri Tôn có gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q103",
+    "category": "itinerary",
+    "question": "Có tour free hoàn toàn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q104",
+    "category": "spots",
+    "question": "Ngân sách 500k/ngày thì đi được gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q105",
+    "category": "spots",
+    "question": "Mùa nước nổi (tháng 9-11) Tri Tôn có gì đặc biệt?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q106",
+    "category": "spots",
+    "question": "Mùa khô (tháng 12-4) có nên đi Tri Tôn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q107",
+    "category": "spots",
+    "question": "Tháng 7-8 mùa mưa có đi được không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q108",
+    "category": "culture",
+    "question": "Lễ Sene Dolta có gì đặc sắc?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q109",
+    "category": "spots",
+    "question": "Đi phượt Tri Tôn cần chuẩn bị gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q110",
+    "category": "spots",
+    "question": "Đi Tri Tôn với người yêu thì đi đâu lãng mạn?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q111",
+    "category": "safety",
+    "question": "Đi một mình (solo) ở Tri Tôn có an toàn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q112",
+    "category": "spots",
+    "question": "Đi team building 20 người ở Tri Tôn được không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q113",
+    "category": "spots",
+    "question": "Chụp ảnh ở Tri Tôn góc nào đẹp nhất?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q114",
+    "category": "spots",
+    "question": "Quay video TikTok ở Tri Tôn cần gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q115",
+    "category": "spots",
+    "question": "Flycam có được bay ở Tri Tôn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q116",
+    "category": "food",
+    "question": "Ăn gà đốt Ô Thum như thế nào cho đúng cách?",
+    "must_contain": [
+      "Gà đốt"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới",
+      "gà nướng"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q117",
+    "category": "spots",
+    "question": "Lá chúc là gì, mua ở đâu?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q118",
+    "category": "spots",
+    "question": "Đi Tri Tôn mùa mưa bị kẹt thì làm gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q119",
+    "category": "spots",
+    "question": "Bị lạc ở Tri Tôn thì làm sao?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q120",
+    "category": "spots",
+    "question": "Có bệnh viện ở Tri Tôn không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q121",
+    "category": "food",
+    "question": "Quán nào phù hợp người ăn chay?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q122",
+    "category": "spots",
+    "question": "Đi Tri Tôn với trẻ em 3-5 tuổi cần lưu ý gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q123",
+    "category": "spots",
+    "question": "Đi Tri Tôn với người già trên 60 tuổi?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q124",
+    "category": "spots",
+    "question": "Đi Tri Tôn 4 ngày 3 đêm thì làm gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q125",
+    "category": "safety",
+    "question": "So sánh Tri Tôn với Đà Lạt?",
+    "must_contain": [
+      "chỉ hỗ trợ"
+    ],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": false,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q126",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho photographer chuyên nghiệp?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q127",
+    "category": "spots",
+    "question": "Đi Tri Tôn mùa lúa chín (tháng 10-11) cần lưu ý gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q128",
+    "category": "spots",
+    "question": "Tri Tôn có homestay nào cho digital nomad không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q129",
+    "category": "spots",
+    "question": "Đi Tri Tôn với thú cưng (chó/mèo) được không?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q130",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích lịch sử?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q131",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích adventure?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q132",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích thiền/yoga?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q133",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích street food?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q134",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích cà phê specialty?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q135",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích photography film?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q136",
+    "category": "culture",
+    "question": "Đi Tri Tôn mùa lễ hội đua bò cần chuẩn bị gì?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q137",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích camping?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q138",
+    "category": "itinerary",
+    "question": "Tri Tôn có gì cho người thích motorbike touring?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q139",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích bird watching?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q140",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích fishing?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q141",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích stargazing?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q142",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích cooking class?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q143",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích art & culture?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q144",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích wellness retreat?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q145",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích sunrise/sunset photography?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q146",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích drone photography?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q147",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích night photography?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  },
+  {
+    "id": "Q148",
+    "category": "spots",
+    "question": "Tri Tôn có gì cho người thích portrait photography?",
+    "must_contain": [],
+    "must_not_contain": [
+      "Sáu Búp",
+      "Rô Thum",
+      "Tuấn Tới"
+    ],
+    "requires_links": true,
+    "max_latency_ms": 3500
+  }
+]

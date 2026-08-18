@@ -129,18 +129,45 @@ export function applyTruthAnchor(generatedText: string): string {
     text = text.replace(/nấu bằng mắm/gi, 'nấu bằng nghệ tươi và củ ngải bún giã nhuyễn');
   }
 
-  // 3. Loại bỏ các tên quán ảo không có thật
+  // 3. Sửa lỗi chính tả bản địa: "trái trúc", "lá trúc" -> "trái chúc", "lá chúc"
+  text = text.replace(/trái trúc/gi, 'trái chúc');
+  text = text.replace(/lá trúc/gi, 'lá chúc');
+  text = text.replace(/cây trúc bảy núi/gi, 'cây chúc Bảy Núi');
+
+  // 4. Loại bỏ các tên quán ảo không có thật
   text = text.replace(
     /quán sáu búp|quán rô thum|quán tuấn tới|quán mười hai|quán tám lúa/gi,
     'quán gà đốt Ô Thum bản địa'
   );
 
-  // 4. Sửa nhầm địa giới hành chính xã
+  // 5. Sửa nhầm địa giới hành chính xã
   //    Quán gà đốt ven hồ thuộc XÃ Ô LÂM, không phải TT. Tri Tôn
   text = text.replace(
     /(gà đốt|gà nướng|ô thum)[^.]{0,50}(thị trấn tri tôn|tt\. tri tôn)/gi,
     (match) => match.replace(/thị trấn tri tôn|tt\. tri tôn/gi, 'Xã Ô Lâm, Tri Tôn')
   );
+
+  // 6. Deterministic Evidence Link Injection (Nếu chưa có link trong text)
+  if (!text.includes('google.com/maps') && !text.includes('Tôi chỉ hỗ trợ các nội dung liên quan')) {
+    const knownSpots = [
+      { name: 'Hồ Tà Pạ', query: 'Hồ+Tà+Pạ+Xã+Núi+Tô+Tri+Tôn+An+Giang', tag: 'hotapa' },
+      { name: 'Gà Đốt Ô Thum', query: 'Gà+Đốt+Ô+Thum+Xã+Ô+Lâm+Tri+Tôn+An+Giang', tag: 'gadotothum' },
+      { name: 'Đồi Tức Dụp', query: 'Khu+du+lịch+Đồi+Tức+Dụp+Xã+An+Tức+Tri+Tôn+An+Giang', tag: 'doitucdup' },
+      { name: 'Chùa Xvayton', query: 'Chùa+Xvayton+Thị+trấn+Tri+Tôn+An+Giang', tag: 'chuaxvayton' },
+      { name: 'Chùa Xà Tón', query: 'Chùa+Xvayton+Thị+trấn+Tri+Tôn+An+Giang', tag: 'chuaxvayton' },
+      { name: 'Cổng Trời Koh Kas', query: 'Cổng+Trời+Koh+Kas+Xã+Châu+Lăng+Tri+Tôn+An+Giang', tag: 'congtroikohkas' },
+      { name: 'Cổng Trời Tri Tôn', query: 'Cổng+Trời+Koh+Kas+Xã+Châu+Lăng+Tri+Tôn+An+Giang', tag: 'congtroikohkas' },
+      { name: 'Núi Cô Tô', query: 'Núi+Cô+Tô+Xã+Cô+Tô+Tri+Tôn+An+Giang', tag: 'nuicoto' },
+      { name: 'Hồ Soài Chek', query: 'Hồ+Soài+Chek+Xã+Núi+Tô+Tri+Tôn+An+Giang', tag: 'hosoaichek' },
+      { name: 'Con Đường Tơ Lụa', query: 'Con+Đường+Tơ+Lụa+Xã+Núi+Tô+Tri+Tôn+An+Giang', tag: 'conduongtoluatriton' },
+      { name: 'Đu Đủ Đâm Rina', query: 'Đu+Đủ+Đâm+Rina+Xã+Châu+Lăng+Tri+Tôn+An+Giang', tag: 'dududamrina' },
+    ];
+
+    const matchedSpot = knownSpots.find((s) => text.toLowerCase().includes(s.name.toLowerCase()));
+    if (matchedSpot) {
+      text += `\n\n[📍 Chỉ đường Google Maps](https://www.google.com/maps/search/?api=1&query=${matchedSpot.query})  •  [▶ Xem TikTok Video](https://www.tiktok.com/tag/${matchedSpot.tag})`;
+    }
+  }
 
   return text;
 }
