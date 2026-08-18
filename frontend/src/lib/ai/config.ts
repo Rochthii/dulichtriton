@@ -1,9 +1,30 @@
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * AI CONFIG & STATE MANAGER (Single Responsibility)
- * Du Lịch Tri Tôn AI Assistant System
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import fs from 'fs';
+import path from 'path';
+
+function loadLocalEnvIfNode() {
+  if (typeof process === 'undefined' || !process.cwd) return;
+  try {
+    const paths = [
+      path.resolve(process.cwd(), '.env.local'),
+      path.resolve(process.cwd(), 'frontend', '.env.local'),
+      path.resolve(process.cwd(), '..', 'frontend', '.env.local'),
+    ];
+    for (const p of paths) {
+      if (fs.existsSync(p)) {
+        const content = fs.readFileSync(p, 'utf8');
+        for (const line of content.split('\n')) {
+          const match = line.match(/^([^=]+)=(.*)$/);
+          if (match) {
+            const k = match[1].trim();
+            const v = match[2].trim().replace(/^['"]|['"]$/g, '');
+            if (!process.env[k]) process.env[k] = v;
+          }
+        }
+      }
+    }
+  } catch { /* ignore */ }
+}
+loadLocalEnvIfNode();
 
 export interface AIProviderConfig {
   geminiKeys: string[];

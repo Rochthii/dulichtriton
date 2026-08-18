@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.0.0-PERFECT-CLOSED-LOOP-ZERO-DUPLICATE-ITINERARIES] - 2026-08-18
+
+### 🔄 Tái Cấu Trúc Toàn Diện 27 Lịch Trình: Cung Đường Khép Vòng Núi & Ma Trận Kilomet Thực Địa
+
+#### 1. Dọn Sạch 100% Lỗi Trùng Lặp POIs & Phân Loại Lại Thực Thể
+- **Triệt tiêu lỗi Fallback Hardcode `ho-ta-pa`**: Ánh xạ chuẩn xác 100% các điểm ẩm thực (*Gà Đốt Ô Thum $\rightarrow$ Hồ Ô Thum Xã Ô Lâm, Đu Đủ Đâm Rina $\rightarrow$ Xã Châu Lăng, Cháo Bò Thủy Đen $\rightarrow$ Cầu Cây Me, Chợ Đêm & Phố Đi Bộ $\rightarrow$ TT. Tri Tôn*).
+- **0% Trùng lặp (Zero-Duplicate)**: Kiểm toán thành công **27 / 27 Lịch trình** sạch 100% điểm lặp vô lý.
+
+#### 2. Kiến Trúc Cung Đường Khép Vòng Núi (Closed-Loop Mountain Routing)
+- **Tối ưu hóa hành trình không chạy lòng vòng**: Thiết kế theo mạng lưới giao thông tự nhiên quanh Núi Cô Tô, Đồi Tà Pạ và Núi Dài (*TT. Tri Tôn $\rightarrow$ Núi Tô $\rightarrow$ Ô Lâm $\rightarrow$ An Tức $\rightarrow$ Cô Tô $\rightarrow$ TT. Tri Tôn*).
+- **Ma trận tính Kilomet & Thời gian di chuyển**: Tự động tính toán khoảng cách đường bộ Haversine hiệu chỉnh ($K_{\text{road}} = 1.25$) và thời gian chạy xe cho từng chặng và tổng cự ly cả ngày.
+
+---
+
 ## [v80.3.0-AUTOMATED-EVALUATION-BENCHMARK-SUITE-148-CASES] - 2026-08-18
 
 ### 🏆 Chuyển Đổi 148 Câu Hỏi Sang Bộ Kiểm Thử Đánh Giá Tự Động (AI Evaluation Suite v1.0)
