@@ -27,3 +27,6 @@ description: Production-real engineering workflow, dynamic environment security 
 6. **Smart Delta Sync Protocol (Thay đổi là Push ngay - Chỉ đẩy chỗ đổi)**:
    - Khi có bất kỳ thay đổi nào trên Master Data (POIs, Lịch trình, Menu ẩm thực), **BẮT BUỘC PUSH NGAY LÊN DATABASE SUPABASE POSTGRESQL**.
    - **Tuyệt đối cấm ghi đè mù quáng (Zero-Full-Overwrite)**: Sử dụng Field-Level Diff, **bỏ qua 100% bản ghi đã khớp**, chỉ gửi PATCH cho các trường thay đổi để tiết kiệm >90% I/O và chi phí API (`node scripts/sync/smart_delta_sync.js`).
+7. **PowerShell Windows Command Execution Protocol (Quy Chuẩn Chạy Lệnh Terminal)**:
+   - **Tuyệt đối KHÔNG dùng `&&`**: PowerShell trên Windows không hỗ trợ toán tử `&&` và sẽ văng lỗi `ParserError: The token '&&' is not a valid statement separator`.
+   - **BẮT BUỘC CHỈ DÙNG DẤU CHẤM PHẨY `;`**: Khi nối chuỗi nhiều lệnh (như git add, commit, push), bắt buộc viết dạng: `git add . ; git commit -m "..." ; git push origin ...`.

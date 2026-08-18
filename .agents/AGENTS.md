@@ -16,3 +16,7 @@
 ## ⚡ Tiêu Chuẩn Đồng Bộ Database (Smart Delta Sync Protocol):
 - Mọi chỉnh sửa dữ liệu Master **bắt buộc phải push ngay lên Supabase PostgreSQL**.
 - **Tuyệt đối cấm ghi đè mù quáng**: Phải chạy qua `scripts/sync/smart_delta_sync.js` để chỉ PATCH những trường/bản ghi thay đổi, bỏ qua 100% bản ghi đã khớp.
+
+## 💻 Quy Chuẩn Chạy Lệnh PowerShell (Windows Shell Rule):
+- **Tuyệt đối KHÔNG dùng `&&`**: PowerShell trên Windows sẽ báo lỗi cú pháp `ParserError`.
+- **BẮT BUỘC chỉ dùng dấu chấm phẩy `;`**: Khi nối chuỗi nhiều lệnh, phải viết dạng `git add . ; git commit -m "..." ; git push origin ...`.

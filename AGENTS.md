@@ -15,3 +15,4 @@ Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa | 149 Địa điểm x
 - **Changelog**: [`CHANGELOG.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/CHANGELOG.md)
 - **Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/.agents/skills/triton_workflow_execution_standard/SKILL.md)
 - **Smart Delta Sync Protocol**: [`.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md)
+- **PowerShell Rule**: Tuyệt đối **KHÔNG dùng `&&`**, BẮT BUỘC **dùng dấu chấm phẩy `;`** khi nối chuỗi lệnh trên Windows PowerShell.

@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.6.0-POWERSHELL-TERMINAL-RULE-STANDARDS] - 2026-08-18
+
+### 💻 Bổ Sung Quy Chuẩn Lệnh PowerShell Terminal (; Thay Vì &&)
+
+#### 1. Quy Định Cú Pháp Nối Chuỗi Lệnh Trên Windows PowerShell
+- **Tuyệt đối cấm dùng `&&`**: PowerShell trên Windows không hỗ trợ toán tử `&&` và sẽ gây ra lỗi `ParserError: The token '&&' is not a valid statement separator`.
+- **Bắt buộc dùng dấu chấm phẩy `;`**: Chuẩn hóa toàn bộ kịch bản thực thi lệnh terminal dạng `git add . ; git commit -m "..." ; git push origin ...`.
+- **Cập nhật Skill & Quy tắc hệ thống**: Ghi vết chính thức vào `SKILL.md`, `AGENTS.md`, `.agents/AGENTS.md`.
+
+---
+
 ## [v81.5.0-SMART-DELTA-SYNC-SKILL-STANDARDS] - 2026-08-18
 
 ### 📜 Chuẩn Hóa Skill Hệ Thống: Quy Chuẩn Bắt Buộc Smart Delta Sync Push Lên Database
