@@ -30,8 +30,8 @@
         {
           "day": 1,
           "title": "Khám phá Tri Tôn từ sáng đến tối",
-          "day_total_distance_km": 24.4,
-          "day_total_travel_time_mins": 52,
+          "day_total_distance_km": 34.5,
+          "day_total_travel_time_mins": 72,
           "stops": [
             {
               "stop_order": 1,
@@ -108,20 +108,20 @@
             {
               "stop_order": 5,
               "time": "11:30",
-              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Xã Châu Lăng",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.41,
-                "lng": 105.008
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
-              "activity": "Ăn trưa lẩu bò thịt tươi, rau rừng Thất Sơn",
-              "duration_minutes": 75,
-              "cost_vnd": "80k - 150k/người",
-              "notes": "Quán thoáng mát, sạch sẽ, giá hợp lý"
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 6,
@@ -133,9 +133,9 @@
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 7.7,
+              "travel_time_mins": 15,
+              "transport_to_next": "Xe máy / Ô tô ~7.7km (15 phút)",
               "activity": "Nghỉ trưa, cafe máy lạnh, view đẹp hiện đại",
               "duration_minutes": 60,
               "cost_vnd": "25k - 50k",
@@ -248,8 +248,8 @@
         "cho-dem",
         "hoang-hon"
       ],
-      "total_distance_km": 24.4,
-      "total_travel_time_mins": 52,
+      "total_distance_km": 34.5,
+      "total_travel_time_mins": 72,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1038,7 +1038,7 @@
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều",
-          "day_total_distance_km": 59.1,
+          "day_total_distance_km": 58.8,
           "day_total_travel_time_mins": 118,
           "stops": [
             {
@@ -1141,9 +1141,9 @@
                 "lat": 10.451,
                 "lng": 104.931
               },
-              "distance_from_prev_km": 1.3,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
+              "distance_from_prev_km": 13.7,
+              "travel_time_mins": 27,
+              "transport_to_next": "Xe máy / Ô tô ~13.7km (27 phút)",
               "activity": "Cafe chiều bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -1159,9 +1159,9 @@
                 "lat": 10.452,
                 "lng": 104.932
               },
-              "distance_from_prev_km": 12.9,
-              "travel_time_mins": 26,
-              "transport_to_next": "Xe máy / Ô tô ~12.9km (26 phút)",
+              "distance_from_prev_km": 0.2,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.2km (2 phút)",
               "activity": "Ngắm hồ, chụp ảnh",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -1184,7 +1184,7 @@
         "dem-tri-ton",
         "cafe-toi"
       ],
-      "total_distance_km": 144.2,
+      "total_distance_km": 143.9,
       "total_travel_time_mins": 292,
       "routing_type": "closed_loop_mountain_tour"
     },
@@ -1213,8 +1213,8 @@
         {
           "day": 1,
           "title": "Sáng chụp đồng - Chiều chụp núi - Tối cafe",
-          "day_total_distance_km": 32.7,
-          "day_total_travel_time_mins": 65,
+          "day_total_distance_km": 36,
+          "day_total_travel_time_mins": 71,
           "stops": [
             {
               "stop_order": 1,
@@ -1308,21 +1308,21 @@
             },
             {
               "stop_order": 6,
-              "time": "12:00",
-              "poi_id": "du-du-dam-khanh-thy",
-              "name": "Đu Đủ Đâm Khánh Thy",
-              "commune": "Xã Châu Lăng",
+              "time": "11:30",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.414286,
-                "lng": 104.9992663
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 3,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~3km (6 phút)",
-              "activity": "Ăn trưa + chụp ảnh món ăn",
-              "duration_minutes": 60,
-              "cost_vnd": "20k-35k",
-              "notes": ""
+              "distance_from_prev_km": 9.2,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~9.2km (18 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 7,
@@ -1334,9 +1334,9 @@
                 "lat": 10.3882,
                 "lng": 104.9756
               },
-              "distance_from_prev_km": 4.9,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~4.9km (10 phút)",
+              "distance_from_prev_km": 2,
+              "travel_time_mins": 4,
+              "transport_to_next": "Xe máy / Ô tô ~2km (4 phút)",
               "activity": "Chụp ảnh mỏm đá sống ảo trên đỉnh",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -1430,8 +1430,8 @@
         "chup-anh",
         "cafe-toi"
       ],
-      "total_distance_km": 32.7,
-      "total_travel_time_mins": 65,
+      "total_distance_km": 36,
+      "total_travel_time_mins": 71,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1670,8 +1670,8 @@
         {
           "day": 1,
           "title": "Hành trình lịch sử",
-          "day_total_distance_km": 81.9,
-          "day_total_travel_time_mins": 163,
+          "day_total_distance_km": 87,
+          "day_total_travel_time_mins": 174,
           "stops": [
             {
               "stop_order": 1,
@@ -1730,20 +1730,20 @@
             {
               "stop_order": 4,
               "time": "11:30",
-              "poi_id": "chua-ta-pa",
-              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Xã Núi Tô",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.4182,
-                "lng": 105.0086
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
-              "activity": "Ăn trưa",
-              "duration_minutes": 60,
-              "cost_vnd": "30k-50k",
-              "notes": ""
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 5,
@@ -1755,9 +1755,9 @@
                 "lat": 10.45,
                 "lng": 104.93
               },
-              "distance_from_prev_km": 11.6,
-              "travel_time_mins": 23,
-              "transport_to_next": "Xe máy / Ô tô ~11.6km (23 phút)",
+              "distance_from_prev_km": 12.4,
+              "travel_time_mins": 25,
+              "transport_to_next": "Xe máy / Ô tô ~12.4km (25 phút)",
               "activity": "Tham quan hang Tỉnh Ủy",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -1832,8 +1832,8 @@
         "giao-duc",
         "ba-chuc"
       ],
-      "total_distance_km": 81.9,
-      "total_travel_time_mins": 163,
+      "total_distance_km": 87,
+      "total_travel_time_mins": 174,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2423,8 +2423,8 @@
         {
           "day": 1,
           "title": "Cafe Hopping cả ngày",
-          "day_total_distance_km": 16.6,
-          "day_total_travel_time_mins": 34,
+          "day_total_distance_km": 15.4,
+          "day_total_travel_time_mins": 33,
           "stops": [
             {
               "stop_order": 1,
@@ -2562,9 +2562,9 @@
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 1.5,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.5km (3 phút)",
+              "distance_from_prev_km": 0.3,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.3km (2 phút)",
               "activity": "Nằm võng uống nước, kết thúc ngày",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -2587,8 +2587,8 @@
         "wifi",
         "view-dep"
       ],
-      "total_distance_km": 16.6,
-      "total_travel_time_mins": 34,
+      "total_distance_km": 15.4,
+      "total_travel_time_mins": 33,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3260,8 +3260,8 @@
         {
           "day": 1,
           "title": "Solo Explore Tri Tôn",
-          "day_total_distance_km": 26.1,
-          "day_total_travel_time_mins": 55,
+          "day_total_distance_km": 35.3,
+          "day_total_travel_time_mins": 73,
           "stops": [
             {
               "stop_order": 1,
@@ -3337,21 +3337,21 @@
             },
             {
               "stop_order": 5,
-              "time": "12:30",
-              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Xã Châu Lăng",
+              "time": "11:30",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.41,
-                "lng": 105.008
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
-              "activity": "Ăn cơm/lẩu",
-              "duration_minutes": 60,
-              "cost_vnd": "50k-100k",
-              "notes": ""
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 6,
@@ -3363,9 +3363,9 @@
                 "lat": 10.4285,
                 "lng": 104.9924
               },
-              "distance_from_prev_km": 3.3,
-              "travel_time_mins": 7,
-              "transport_to_next": "Xe máy / Ô tô ~3.3km (7 phút)",
+              "distance_from_prev_km": 7.9,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~7.9km (16 phút)",
               "activity": "Đi bộ một mình, suy ngẫm",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3459,8 +3459,8 @@
         "cafe",
         "dem-yen-binh"
       ],
-      "total_distance_km": 26.1,
-      "total_travel_time_mins": 55,
+      "total_distance_km": 35.3,
+      "total_travel_time_mins": 73,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3890,8 +3890,8 @@
         {
           "day": 1,
           "title": "Trek Cô Tô + Cafe",
-          "day_total_distance_km": 16.3,
-          "day_total_travel_time_mins": 34,
+          "day_total_distance_km": 28.3,
+          "day_total_travel_time_mins": 58,
           "stops": [
             {
               "stop_order": 1,
@@ -3949,21 +3949,21 @@
             },
             {
               "stop_order": 4,
-              "time": "12:00",
-              "poi_id": "cho-tri-ton",
-              "name": "Chợ Tri Tôn",
-              "commune": "Thị trấn Tri Tôn",
+              "time": "11:30",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.4209063,
-                "lng": 105.0027492
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
-              "activity": "Ăn cơm/lẩu",
-              "duration_minutes": 75,
-              "cost_vnd": "60k-120k",
-              "notes": ""
+              "distance_from_prev_km": 7.9,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~7.9km (16 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 5,
@@ -3975,9 +3975,9 @@
                 "lat": 10.417,
                 "lng": 105.0195
               },
-              "distance_from_prev_km": 2.4,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.4km (5 phút)",
+              "distance_from_prev_km": 8.3,
+              "travel_time_mins": 17,
+              "transport_to_next": "Xe máy / Ô tô ~8.3km (17 phút)",
               "activity": "Cafe chiều view đồi",
               "duration_minutes": 90,
               "cost_vnd": "25k-55k",
@@ -4035,8 +4035,8 @@
         "cafe",
         "adventure"
       ],
-      "total_distance_km": 16.3,
-      "total_travel_time_mins": 34,
+      "total_distance_km": 28.3,
+      "total_travel_time_mins": 58,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4319,8 +4319,8 @@
         {
           "day": 1,
           "title": "Khám phá miễn phí + Đêm chợ",
-          "day_total_distance_km": 28,
-          "day_total_travel_time_mins": 59,
+          "day_total_distance_km": 38.8,
+          "day_total_travel_time_mins": 80,
           "stops": [
             {
               "stop_order": 1,
@@ -4397,20 +4397,20 @@
             {
               "stop_order": 5,
               "time": "11:30",
-              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Xã Châu Lăng",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.41,
-                "lng": 105.008
+                "lat": 10.3740163,
+                "lng": 104.9772662
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
-              "activity": "Ăn trưa rẻ",
-              "duration_minutes": 45,
-              "cost_vnd": "30k-50k",
-              "notes": ""
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
+              "activity": "Ăn trưa đặc sản Gà Đốt lá chúc giòn da bên chòi lá ven Hồ Ô Thum",
+              "duration_minutes": 90,
+              "cost_vnd": "140k - 200k/người",
+              "notes": "Nên gọi điện đặt trước 30-40 phút để quán đốt gà chín giòn vừa tới."
             },
             {
               "stop_order": 6,
@@ -4422,9 +4422,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 5.9,
-              "travel_time_mins": 12,
-              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
+              "distance_from_prev_km": 12.1,
+              "travel_time_mins": 24,
+              "transport_to_next": "Xe máy / Ô tô ~12.1km (24 phút)",
               "activity": "Check-in miễn phí",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -4580,8 +4580,8 @@
         "tiet-kiem",
         "mien-phi"
       ],
-      "total_distance_km": 29.9,
-      "total_travel_time_mins": 63,
+      "total_distance_km": 40.7,
+      "total_travel_time_mins": 84,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -6125,8 +6125,8 @@
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều + Về",
-          "day_total_distance_km": 70.4,
-          "day_total_travel_time_mins": 139,
+          "day_total_distance_km": 62.2,
+          "day_total_travel_time_mins": 123,
           "stops": [
             {
               "stop_order": 1,
@@ -6156,9 +6156,9 @@
                 "lat": 10.4997928,
                 "lng": 104.9087656
               },
-              "distance_from_prev_km": 18.7,
-              "travel_time_mins": 37,
-              "transport_to_next": "Xe máy / Ô tô ~18.7km (37 phút)",
+              "distance_from_prev_km": 1.4,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
               "activity": "Tham quan",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -6174,9 +6174,9 @@
                 "lat": 10.414286,
                 "lng": 104.9992663
               },
-              "distance_from_prev_km": 8.1,
-              "travel_time_mins": 16,
-              "transport_to_next": "Xe máy / Ô tô ~8.1km (16 phút)",
+              "distance_from_prev_km": 17.2,
+              "travel_time_mins": 34,
+              "transport_to_next": "Xe máy / Ô tô ~17.2km (34 phút)",
               "activity": "Ăn sáng muộn",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -6272,8 +6272,8 @@
         "ngay-dem",
         "khong-bo-lo"
       ],
-      "total_distance_km": 170.7,
-      "total_travel_time_mins": 347,
+      "total_distance_km": 162.5,
+      "total_travel_time_mins": 331,
       "routing_type": "closed_loop_mountain_tour"
     }
   ]

@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.3.0-SUPABASE-POSTGRESQL-INGESTION-GADOT-LUNCH] - 2026-08-18
+
+### ⚡ Nạp & Đồng Bộ 100% 27 Lịch Trình Lên Supabase PostgreSQL & Ưu Tiên Gà Đốt Ô Thum Trưa
+
+#### 1. Ưu Tiên Tuyệt Đối Gà Đốt Ô Thum (Xã Ô Lâm) Vào Bữa Trưa Tour 1 Ngày
+- **Chuẩn hóa ẩm thực theo Khung Giờ Vàng**: 100% các tour 1 ngày kinh điển (`itin-001`, `itin-004`, `itin-006`, `itin-023`, `itin-026`, `itin-028`) đều được cập nhật bữa trưa lúc 11:30 tại **Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum (Xã Ô Lâm)**, thưởng thức gà đốt giòn rụm lá chúc bên chòi lá ven hồ.
+
+#### 2. Nạp Thành Công 27/27 Lịch Trình Vào Bảng `preset_itineraries` Supabase
+- **Đồng bộ hóa Database Thực tế (Production Real)**: Nạp toàn bộ 27 lịch trình khép vòng núi, bao gồm mảng `stops` có cự ly Kilomet từng chặng (`travel_to_next_km`), thời gian lái xe (`travel_to_next_min`), và địa giới chuẩn cấp Xã/Thị trấn lên Supabase PostgreSQL.
+
+---
+
 ## [v81.2.0-100-PERCENT-AUTHENTIC-MASTER-MATCHED] - 2026-08-18
 
 ### 🛡️ Đồng Bộ Tuyệt Đối 100% Lịch Trình Với Master Cleaned CSV: Triệt Tiêu Lỗi Lệch POI_ID vs Tên
