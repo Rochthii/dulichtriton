@@ -220,6 +220,19 @@ async function fetchLiveWeatherContext(): Promise<string> {
 let cachedKnowledgeList: any[] = [];
 let cachedKnowledgeTimestamp = 0;
 
+// Cache activeSystemPrompt RAM — tránh Supabase round-trip mỗi request (TTL 5 phút)
+let cachedSystemPrompt = '';
+let cachedSystemPromptTimestamp = 0;
+
+async function getActiveSystemPrompt(): Promise<string> {
+  if (cachedSystemPrompt && Date.now() - cachedSystemPromptTimestamp < 5 * 60 * 1000) {
+    return cachedSystemPrompt;
+  }
+  cachedSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
+  cachedSystemPromptTimestamp = Date.now();
+  return cachedSystemPrompt;
+}
+
 async function fetchActiveCustomKnowledge(queryStr: string): Promise<string> {
   const lower = queryStr.toLowerCase();
   try {
@@ -372,10 +385,13 @@ export async function POST(req: NextRequest) {
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
         // 0. Check In-Memory Instant Hot Cache
+        // Bỏ qua cache khi: (1) đang chat multi-turn (ngữ cảnh thay đổi theo lượt)
+        //                   (2) TTL quá 1h (dữ liệu có thể đã lỗi thời)
         const hotHit = HOT_QUERY_CACHE.get(cleanQ);
         if (
-          hotHit && 
-          Date.now() - hotHit.timestamp < 24 * 60 * 60 * 1000 &&
+          hotHit &&
+          clientHistory.length === 0 &&   // Chỉ dùng cache khi câu hỏi độc lập
+          Date.now() - hotHit.timestamp < 60 * 60 * 1000 &&   // TTL: 1h (từ 24h)
           !hotHit.answer.includes('Thông Tin & Cẩm Nang Hướng Dẫn Du Lịch Tri Tôn')
         ) {
           if (hotHit.places && hotHit.places.length > 0) {
@@ -484,7 +500,7 @@ export async function POST(req: NextRequest) {
           festivalsContext = `\n\n[CSDL 6 ĐẠI LỄ HỘI & SỰ KIỆN VĂN HÓA THỂ THAO TRI TÔN ĐÃ XÁC MINH 100%]:\n${JSON.stringify(festivalsData, null, 2)}`;
         }
 
-        const activeSystemPrompt = await getDynamicSystemConfig('SYSTEM_PROMPT', BASE_SYSTEM_PROMPT);
+        const activeSystemPrompt = await getActiveSystemPrompt();
 
         // VIỆC 1: Inject conversation history vào System Prompt với context rõ ràng
         const historySnippet = history.length > 0
@@ -543,6 +559,7 @@ export async function POST(req: NextRequest) {
           void saveHistory(sessionId, updatedHistory);
 
           if (
+            history.length === 0 &&           // Chỉ cache câu hỏi độc lập, không cache multi-turn
             fullText.trim().length >= 80 && 
             !fullText.includes('Tôi đã tổng hợp các địa điểm danh thắng') &&
             !fullText.includes('Thông Tin & Cẩm Nang Hướng Dẫn Du Lịch Tri Tôn') &&

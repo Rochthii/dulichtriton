@@ -88,59 +88,48 @@ export async function* streamAIResponse(
       }
     }
 
-    // ── 3. LUỒNG LOCAL_POI: GROQ LPU ROUND-ROBIN (80% CÂU HỎI ĐỊA ĐIỂM, ẨM THỰC) ─
-    if (AI_CONFIG.groqKeys.length > 0) {
-      try {
-        const groqResult = await callGroqFallback(systemPrompt, userPrompt, undefined, 3500);
-        if (groqResult && groqResult.text) {
-          fullText = applyTruthAnchor(groqResult.text);
-          providerUsed = groqResult.provider;
+    // ── 3 & 4. LUỒNG CHỦ LỰC: SONG SONG HÓA GROQ + GEMINI (Promise.race) ─────────
+    // Ai về trước dùng trước — cắt worst-case từ 12s → ~3.5s
+    const tryGroq = (timeout: number): Promise<{ text: string; provider: string }> => {
+      if (AI_CONFIG.groqKeys.length === 0) return Promise.reject(new Error('No Groq keys'));
+      return callGroqFallback(systemPrompt, userPrompt, undefined, timeout);
+    };
 
-          const words = fullText.split(' ');
-          for (let i = 0; i < words.length; i += 3) {
-            const chunk = words.slice(i, i + 3).join(' ') + ' ';
-            yield { type: 'delta', content: chunk };
-            await new Promise(r => setTimeout(r, 6));
-          }
-          yield { type: 'done', provider: providerUsed };
-          return;
+    const tryGeminiStd = (timeout: number): Promise<{ text: string; provider: string }> => {
+      const keys = getRoundRobinGeminiKeys();
+      if (keys.length === 0) return Promise.reject(new Error('No Gemini keys'));
+      const keyObj = keys[0];
+      return callGeminiLiveSearch(
+        keyObj.key,
+        keyObj.id,
+        AI_CONFIG.geminiModels[0],
+        systemPrompt,
+        userPrompt,
+        timeout
+      );
+    };
+
+    try {
+      const result = await Promise.race([
+        tryGroq(3500),
+        tryGeminiStd(3500),
+      ]);
+
+      if (result && result.text) {
+        fullText = applyTruthAnchor(result.text);
+        providerUsed = result.provider;
+
+        const words = fullText.split(' ');
+        for (let i = 0; i < words.length; i += 3) {
+          const chunk = words.slice(i, i + 3).join(' ') + ' ';
+          yield { type: 'delta', content: chunk };
+          await new Promise(r => setTimeout(r, 6));
         }
-      } catch (err: any) {
-        console.warn(`[AI Provider] Groq pool exhausted (${err.message}). Failover to Gemini...`);
+        yield { type: 'done', provider: providerUsed };
+        return;
       }
-    }
-
-    // ── 4. FALLBACK TẦNG 2: GEMINI MULTI-KEY (NẾU GROQ BẬN HOẶC HẾT QUOTA) ───────
-    const candidateKeys = getRoundRobinGeminiKeys();
-    for (const keyObj of candidateKeys) {
-      try {
-        const result = await callGeminiLiveSearch(
-          keyObj.key,
-          keyObj.id,
-          AI_CONFIG.geminiModels[0],
-          systemPrompt,
-          userPrompt,
-          3500
-        );
-
-        if (result && result.text) {
-          fullText = applyTruthAnchor(result.text);
-          providerUsed = result.provider;
-
-          const words = fullText.split(' ');
-          for (let i = 0; i < words.length; i += 3) {
-            const chunk = words.slice(i, i + 3).join(' ') + ' ';
-            yield { type: 'delta', content: chunk };
-            await new Promise(r => setTimeout(r, 8));
-          }
-
-          yield { type: 'done', provider: providerUsed };
-          return;
-        }
-      } catch (err: any) {
-        console.warn(`[AI Provider] Gemini Key ${keyObj.id} skipped (${err.message})...`);
-        continue;
-      }
+    } catch (err: any) {
+      console.warn(`[AI Provider] Groq+Gemini race both failed (${err.message}). Failover to OpenRouter...`);
     }
 
     // ── 5. FALLBACK TẦNG 3: OPENROUTER FREE MODEL ─────────────────────────────────

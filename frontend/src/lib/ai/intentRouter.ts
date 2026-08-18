@@ -28,30 +28,18 @@ const EMERGENCY_PATTERNS = [
 ];
 
 // 2. Từ khóa cần thông tin thời gian thực Internet (Google Search)
-// Bao gồm cả từ ngữ địa phương Nam Bộ thực tế ("lúc này", "bây giờ", "dịp này"...)
+// CHỈ kích hoạt khi THỰC SỰ cần live Internet data mà LocalRAG + WeatherCache không đáp ứng được.
+// Các từ như "hôm nay", "bây giờ", "có mở không" → Groq + WeatherCache đủ xử lý, không cần Search.
 const REALTIME_SEARCH_PATTERNS = [
-  // Thời gian tuyệt đối
-  /hôm nay/i, /ngày mai/i, /tuần này/i, /thời tiết/i, /nhiệt độ/i, /dự báo/i,
-  /mới nhất/i, /sắp tới/i, /tin tức/i, /vừa xảy ra/i, /đang diễn ra/i,
-  /nước nổi năm nay/i, /mùa gặt năm nay/i, /khinh khí cầu năm nay/i,
-  /tình hình giao thông/i, /kẹt xe không/i, /giá vé mới/i,
-  // Từ ngữ địa phương Nam Bộ thực tế (VIỆC 2: bổ sung)
-  /lúc này/i, /bây giờ/i, /giờ này/i, /giờ đang/i,
-  /chiều nay/i, /sáng nay/i, /tối nay/i, /đêm nay/i,
-  /dịp này/i, /mùa này/i, /cuối tuần này/i, /dạo này/i,
-  /còn mở không/i, /có mở không/i, /còn bán không/i, /có bán không/i,
-  /đang hoạt động/i, /có diễn ra/i, /có tổ chức không/i,
-  /năm nay có/i, /đang vào mùa/i, /mùa nước nổi/i,
-  /nước hồ/i, /đường có ngập/i, /có sạt lở/i, /sau mưa/i,
-];
-
-// 3. Compound Intent: Câu hỏi lai (POI tĩnh + yếu tố thời gian thực)
-// Ví dụ: "Quán Siêu Gà Đốt hôm nay có mở chưa?" → REALTIME dù có tên POI nội bộ
-const COMPOUND_REALTIME_PATTERNS = [
-  /có mở.*không/i, /còn mở.*không/i, /hôm nay.*mở/i,
-  /lúc này.*có/i, /bây giờ.*có/i, /chiều nay.*còn/i,
-  /có đẹp không/i, /đang đẹp không/i, /nước có xanh không/i,
-  /đường có trơn không/i, /có nguy hiểm không/i,
+  // 1. Xác nhận lịch sự kiện/lễ hội cụ thể của năm hiện tại
+  /lễ hội.*năm nay.*có.*không|có tổ chức.*năm nay|năm nay có.*lễ hội/i,
+  /khinh khí cầu.*năm nay|lịch bay.*khinh khí cầu|đua bò.*lịch.*năm nay/i,
+  // 2. Giá vé / chi phí mới nhất (có thể thay đổi thường xuyên)
+  /giá vé.*mới nhất|giá.*hiện tại.*vé|phí tham quan.*mới/i,
+  // 3. Tin tức khẩn cấp / sự cố vừa xảy ra
+  /tin tức.*mới|vừa xảy ra|đang xảy ra.*tai nạn|sự cố.*giao thông/i,
+  // 4. Cảnh báo thời tiết/địa hình khẩn cấp
+  /đường.*ngập.*chưa|sạt lở.*vừa|lũ.*hiện tại|nguy hiểm.*đường/i,
 ];
 
 
@@ -87,7 +75,8 @@ Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hã
     }
   }
 
-  // ── LUỒNG 4: THỜI GIAN THỰC & GOOGLE SEARCH (20%) ─────────────────────────
+  // ── LUỒNG 4: THỜI GIAN THỰC & GOOGLE SEARCH (<5%) ───────────────────────
+  // Chỉ kích hoạt cho xác nhận sự kiện năm nay, giá vé mới nhất, tin tức/sự cố khẩn.
   for (const pattern of REALTIME_SEARCH_PATTERNS) {
     if (pattern.test(lower)) {
       return {
@@ -98,19 +87,8 @@ Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hã
     }
   }
 
-  // ── VIỆC 2: COMPOUND INTENT CHECK (Câu hỏi lai POI + Thời gian thực) ─────────
-  // Phải kiểm tra TRƯỚC khi rơi vào LOCAL_POI để tránh phân loại sai
-  for (const pattern of COMPOUND_REALTIME_PATTERNS) {
-    if (pattern.test(lower)) {
-      return {
-        intent: 'REALTIME_GROUNDED_SEARCH',
-        confidence: 0.92,
-        reason: `Compound intent detected (POI + realtime factor): ${pattern}`,
-      };
-    }
-  }
-
-  // ── LUỒNG 3: TRA CỨU TĨNH 149 POIS, ẨM THỰC, LỊCH TRÌNH (80%) ──────────────
+  // ── LUỒNG 3: TRA CỨU TĨNH 149 POIS, ẨM THỰC, LỊCH TRÌNH (>95%) ─────────
+  // Mọi câu hỏi còn lại (kể cả "hôm nay", "bây giờ", "có mở không"...) → Groq LPU + WeatherCache
   return {
     intent: 'LOCAL_POI_FAST',
     confidence: 0.9,
