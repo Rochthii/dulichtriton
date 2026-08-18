@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.5.0-SMART-DELTA-SYNC-SKILL-STANDARDS] - 2026-08-18
+
+### 📜 Chuẩn Hóa Skill Hệ Thống: Quy Chuẩn Bắt Buộc Smart Delta Sync Push Lên Database
+
+#### 1. Tích Hợp Tiêu Chuẩn Vào Bộ Kỹ Năng Hệ Thống (Workflow Execution Standard)
+- **Quy chuẩn Thay đổi là Push ngay (`smart_delta_sync_protocol.md`)**: Quy định bắt buộc mọi agent, workflow và admin khi cập nhật Master Data phải đẩy ngay lập tức lên Supabase PostgreSQL.
+- **Quy chuẩn 0% Ghi đè mù quáng (Zero-Full-Overwrite)**: Bắt buộc chạy qua `scripts/sync/smart_delta_sync.js`, chỉ gửi PATCH những trường/bản ghi thay đổi, bỏ qua 100% bản ghi đã khớp để bảo vệ tài nguyên và quota API.
+- **Đồng bộ hóa toàn bộ tài liệu**: Cập nhật `SKILL.md`, `AGENTS.md`, `.agents/AGENTS.md`.
+
+---
+
 ## [v81.4.0-SMART-DELTA-SYNC-DATABASE-OPTIMIZATION] - 2026-08-18
 
 ### ⚡ Cơ Chế Smart Delta Sync: Cập Nhật Gia Tăng Thông Minh Cho 160+ Địa Điểm Database

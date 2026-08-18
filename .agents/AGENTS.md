@@ -12,3 +12,7 @@
 2. `[BÁO CÁO CÓ CẤU TRÚC / DỮ LIỆU / CODE]` (Bảng phân tích, code diff, dữ liệu)
 3. `[LIÊN KẾT & CONTEXT LIÊN QUAN]` (Link file:///, commit)
 4. `[HỎI & GỢI Ý BƯỚC TIẾP THEO]` (Luôn đặt 2-3 câu hỏi gợi ý)
+
+## ⚡ Tiêu Chuẩn Đồng Bộ Database (Smart Delta Sync Protocol):
+- Mọi chỉnh sửa dữ liệu Master **bắt buộc phải push ngay lên Supabase PostgreSQL**.
+- **Tuyệt đối cấm ghi đè mù quáng**: Phải chạy qua `scripts/sync/smart_delta_sync.js` để chỉ PATCH những trường/bản ghi thay đổi, bỏ qua 100% bản ghi đã khớp.
