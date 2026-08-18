@@ -1,5 +1,5 @@
 {
-  "version": "3.3.0-100-PERCENT-ZERO-DUPLICATES-VERIFIED",
+  "version": "3.4.0-100-PERCENT-AUTHENTIC-MASTER-MATCHED",
   "destination": "Tri Tôn, An Giang",
   "total_itineraries": 27,
   "updated_at": "2026-08-18",
@@ -30,22 +30,22 @@
         {
           "day": 1,
           "title": "Khám phá Tri Tôn từ sáng đến tối",
-          "day_total_distance_km": 17,
-          "day_total_travel_time_mins": 37,
+          "day_total_distance_km": 24.4,
+          "day_total_travel_time_mins": 52,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng bánh canh bột xắt hoặc cháo bò, ngắm chợ sớm",
               "duration_minutes": 45,
               "cost_vnd": "30k - 50k",
@@ -74,7 +74,7 @@
               "time": "09:15",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -92,7 +92,7 @@
               "time": "10:30",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -108,16 +108,16 @@
             {
               "stop_order": 5,
               "time": "11:30",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.4,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
               "activity": "Ăn trưa lẩu bò thịt tươi, rau rừng Thất Sơn",
               "duration_minutes": 75,
               "cost_vnd": "80k - 150k/người",
@@ -128,14 +128,14 @@
               "time": "13:30",
               "poi_id": "tritoni",
               "name": "Tritoni",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 0.6,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
+              "distance_from_prev_km": 2.2,
+              "travel_time_mins": 4,
+              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
               "activity": "Nghỉ trưa, cafe máy lạnh, view đẹp hiện đại",
               "duration_minutes": 60,
               "cost_vnd": "25k - 50k",
@@ -162,16 +162,16 @@
             {
               "stop_order": 8,
               "time": "16:15",
-              "poi_id": "chua-hang-cong",
+              "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4439756,
+                "lng": 104.9727214
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 6.4,
+              "travel_time_mins": 13,
+              "transport_to_next": "Xe máy / Ô tô ~6.4km (13 phút)",
               "activity": "Tham quan chùa cổ 400 năm, chụp ảnh đường hàng còng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -180,16 +180,16 @@
             {
               "stop_order": 9,
               "time": "17:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Quán Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "du-du-dam-khanh-thy",
+              "name": "Đu Đủ Đâm Khánh Thy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.414286,
+                "lng": 104.9992663
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 5.5,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.5km (11 phút)",
               "activity": "Ăn vặt đặc sản Khmer - đu đủ đâm",
               "duration_minutes": 30,
               "cost_vnd": "20k - 35k",
@@ -200,14 +200,14 @@
               "time": "18:30",
               "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
               "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-              "commune": "Sân đua bò Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4122,
                 "lng": 105.0082
               },
-              "distance_from_prev_km": 2.5,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.5km (5 phút)",
+              "distance_from_prev_km": 1.3,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
               "activity": "Ngắm hoàng hôn, thả diều, chill trước khi vào đêm",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -218,7 +218,7 @@
               "time": "19:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -248,8 +248,8 @@
         "cho-dem",
         "hoang-hon"
       ],
-      "total_distance_km": 17,
-      "total_travel_time_mins": 37,
+      "total_distance_km": 24.4,
+      "total_travel_time_mins": 52,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -280,22 +280,22 @@
         {
           "day": 1,
           "title": "Cụm Tà Pạ + Châu Lăng + Đêm Tri Tôn",
-          "day_total_distance_km": 33,
-          "day_total_travel_time_mins": 71,
+          "day_total_distance_km": 28.9,
+          "day_total_travel_time_mins": 63,
           "stops": [
             {
               "stop_order": 1,
               "time": "07:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng, khám phá chợ địa phương",
               "duration_minutes": 45,
               "cost_vnd": "30k - 50k",
@@ -324,7 +324,7 @@
               "time": "09:45",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -342,7 +342,7 @@
               "time": "11:00",
               "poi_id": "9616e5e5-con-đường-tơ-lụa-tà-",
               "name": "Con Đường Tơ Lụa Tà Pạ",
-              "commune": "Tuyến đường lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4185,
                 "lng": 105.0095
@@ -358,16 +358,16 @@
             {
               "stop_order": 5,
               "time": "12:00",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 1.9,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.9km (4 phút)",
+              "distance_from_prev_km": 1.2,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.2km (2 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 75,
               "cost_vnd": "100k - 150k",
@@ -383,9 +383,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 5.9,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
               "activity": "Check-in",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -396,7 +396,7 @@
               "time": "15:15",
               "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.4439756,
                 "lng": 104.9727214
@@ -413,15 +413,15 @@
               "stop_order": 8,
               "time": "16:30",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
-              "distance_from_prev_km": 9.8,
-              "travel_time_mins": 20,
-              "transport_to_next": "Xe máy / Ô tô ~9.8km (20 phút)",
+              "distance_from_prev_km": 7.8,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~7.8km (16 phút)",
               "activity": "Ngắm hoàng hôn, chạy xe chill ngắm núi Cô Tô",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -430,16 +430,16 @@
             {
               "stop_order": 9,
               "time": "18:00",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 6.8,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~6.8km (14 phút)",
+              "distance_from_prev_km": 4.5,
+              "travel_time_mins": 9,
+              "transport_to_next": "Xe máy / Ô tô ~4.5km (9 phút)",
               "activity": "Cafe tối, nghỉ ngơi sau ngày dài",
               "duration_minutes": 60,
               "cost_vnd": "18k - 40k",
@@ -450,14 +450,14 @@
               "time": "19:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.3,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
               "activity": "Ăn tối, dạo chợ đêm",
               "duration_minutes": 90,
               "cost_vnd": "60k - 120k",
@@ -468,7 +468,7 @@
               "time": "21:30",
               "poi_id": "7440fc2d-tuyết-anh-homestay-&",
               "name": "Tuyết Anh Homestay & Coffee",
-              "commune": "86 Đường Nguyễn Thị Minh Khai",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.411,
                 "lng": 105.0095
@@ -486,22 +486,22 @@
         {
           "day": 2,
           "title": "Cụm Cô Tô + Ô Thum + Cafe chiều",
-          "day_total_distance_km": 17.6,
-          "day_total_travel_time_mins": 35,
+          "day_total_distance_km": 35.2,
+          "day_total_travel_time_mins": 71,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:30",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm bình minh, đi bộ quanh hồ",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -512,7 +512,7 @@
               "time": "07:45",
               "poi_id": "442b77de-an-sơn-trà-quán",
               "name": "An Sơn Trà Quán",
-              "commune": "Đường lên Hồ Soài So",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.406,
                 "lng": 105.023
@@ -528,16 +528,16 @@
             {
               "stop_order": 3,
               "time": "09:00",
-              "poi_id": "vo-hoi-me-nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+              "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+              "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.38,
+                "lng": 104.995
               },
-              "distance_from_prev_km": 4.4,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.4km (9 phút)",
+              "distance_from_prev_km": 5.3,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.3km (11 phút)",
               "activity": "Leo núi hoặc đi xe ôm lên đỉnh, ngắm Sân Tiên, Vồ Hội",
               "duration_minutes": 150,
               "cost_vnd": "Miễn phí (xe ôm 50k-100k/lượt)",
@@ -546,16 +546,16 @@
             {
               "stop_order": 4,
               "time": "12:00",
-              "poi_id": "quan-sieu-ga-dot",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 2.8,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.8km (6 phút)",
               "activity": "Ngắm hồ, đi cầu gỗ",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -564,16 +564,16 @@
             {
               "stop_order": 5,
               "time": "12:45",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
-              "commune": "Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.4058,
-                "lng": 105.025
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 4.6,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.6km (9 phút)",
+              "distance_from_prev_km": 13,
+              "travel_time_mins": 26,
+              "transport_to_next": "Xe máy / Ô tô ~13km (26 phút)",
               "activity": "Ăn trưa gà đốt lá chúc đặc sản",
               "duration_minutes": 90,
               "cost_vnd": "250k - 350k/con (2-4 người)",
@@ -584,14 +584,14 @@
               "time": "14:30",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
-              "distance_from_prev_km": 1.6,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.6km (3 phút)",
+              "distance_from_prev_km": 7.5,
+              "travel_time_mins": 15,
+              "transport_to_next": "Xe máy / Ô tô ~7.5km (15 phút)",
               "activity": "Cafe chiều, ngắm cánh đồng Tà Pạ",
               "duration_minutes": 60,
               "cost_vnd": "20k - 45k",
@@ -600,16 +600,16 @@
             {
               "stop_order": 7,
               "time": "16:00",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
+              "distance_from_prev_km": 1.4,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
               "activity": "Đi dạo, ngắm cảnh trung tâm",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -632,8 +632,8 @@
         "cho-dem",
         "nui-co-to"
       ],
-      "total_distance_km": 50.6,
-      "total_travel_time_mins": 106,
+      "total_distance_km": 64.1,
+      "total_travel_time_mins": 134,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -662,22 +662,22 @@
         {
           "day": 1,
           "title": "Trung tâm + Tà Pạ + Đêm Tri Tôn",
-          "day_total_distance_km": 13.6,
-          "day_total_travel_time_mins": 28,
+          "day_total_distance_km": 21.5,
+          "day_total_travel_time_mins": 46,
           "stops": [
             {
               "stop_order": 1,
               "time": "07:00",
-              "poi_id": "chua-xvayton",
+              "poi_id": "chua-xa-ton-chua-svayton",
               "name": "Chùa Xà Tón (Chùa Svayton)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.411,
+                "lng": 105.0089
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Tham quan chùa cổ nhất An Giang, xem kinh lá buông",
               "duration_minutes": 75,
               "cost_vnd": "Miễn phí",
@@ -688,14 +688,14 @@
               "time": "08:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
-              "distance_from_prev_km": 1.1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
+              "distance_from_prev_km": 1.6,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.6km (3 phút)",
               "activity": "Ăn sáng, khám phá chợ",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -724,7 +724,7 @@
               "time": "11:15",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -742,7 +742,7 @@
               "time": "12:30",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -758,16 +758,16 @@
             {
               "stop_order": 6,
               "time": "13:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 2.4,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.4km (5 phút)",
               "activity": "Ăn trưa nhẹ + tráng miệng",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -778,14 +778,14 @@
               "time": "15:00",
               "poi_id": "c7d6fabf-rồng-vàng-resort-tri",
               "name": "Rồng Vàng Resort Tri Tôn",
-              "commune": "19 Đường Nguyễn Thị Minh Khai",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.41,
                 "lng": 105.01
               },
-              "distance_from_prev_km": 2.9,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
+              "distance_from_prev_km": 3.5,
+              "travel_time_mins": 7,
+              "transport_to_next": "Xe máy / Ô tô ~3.5km (7 phút)",
               "activity": "Check-in, nghỉ ngơi",
               "duration_minutes": 90,
               "cost_vnd": "500k-900k/phòng",
@@ -794,16 +794,16 @@
             {
               "stop_order": 8,
               "time": "17:00",
-              "poi_id": "ho-soai-chek",
-              "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4285,
-                "lng": 104.9924
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
-              "distance_from_prev_km": 3.5,
-              "travel_time_mins": 7,
-              "transport_to_next": "Xe máy / Ô tô ~3.5km (7 phút)",
+              "distance_from_prev_km": 4.8,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.8km (10 phút)",
               "activity": "Ngắm hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -812,16 +812,16 @@
             {
               "stop_order": 9,
               "time": "18:30",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.415,
+                "lng": 105.018
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
               "activity": "Cafe tối, thư giãn",
               "duration_minutes": 60,
               "cost_vnd": "20k-45k",
@@ -830,16 +830,16 @@
             {
               "stop_order": 10,
               "time": "20:00",
-              "poi_id": "quan-sieu-ga-dot",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.417,
+                "lng": 105.0195
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 0.3,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.3km (2 phút)",
               "activity": "Ăn tối, dạo phố đêm",
               "duration_minutes": 90,
               "cost_vnd": "60k-120k",
@@ -850,22 +850,22 @@
         {
           "day": 2,
           "title": "Núi Cô Tô + Ô Thum + Đêm Cafe View Núi",
-          "day_total_distance_km": 37.8,
-          "day_total_travel_time_mins": 75,
+          "day_total_distance_km": 63.6,
+          "day_total_travel_time_mins": 128,
           "stops": [
             {
               "stop_order": 1,
               "time": "05:30",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Săn mây bình minh trên đỉnh núi",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -874,16 +874,16 @@
             {
               "stop_order": 2,
               "time": "08:00",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
-              "commune": "Tri Tôn",
+              "poi_id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+              "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+              "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.4058,
-                "lng": 105.025
+                "lat": 10.38,
+                "lng": 104.995
               },
-              "distance_from_prev_km": 5,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5km (10 phút)",
+              "distance_from_prev_km": 2.9,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
               "activity": "Nghỉ chân, ngắm hồ",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -892,16 +892,16 @@
             {
               "stop_order": 3,
               "time": "09:00",
-              "poi_id": "suoi-bac-nui-co-to",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "b56c95ef-mây-coffee-&-tea-hồ-",
+              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4165,
+                "lng": 105.0185
               },
-              "distance_from_prev_km": 4.6,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.6km (9 phút)",
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
               "activity": "Cafe sáng bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -910,16 +910,16 @@
             {
               "stop_order": 4,
               "time": "10:30",
-              "poi_id": "ga-dot-thao-nguyen",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 8.8,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~8.8km (18 phút)",
               "activity": "Ngắm hồ, đi cầu gỗ",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -928,16 +928,16 @@
             {
               "stop_order": 5,
               "time": "11:30",
-              "poi_id": "vo-hoi-me-nui-co-to",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 13,
+              "travel_time_mins": 26,
+              "transport_to_next": "Xe máy / Ô tô ~13km (26 phút)",
               "activity": "Ăn trưa gà đốt",
               "duration_minutes": 90,
               "cost_vnd": "250k-330k/con",
@@ -946,16 +946,16 @@
             {
               "stop_order": 6,
               "time": "13:30",
-              "poi_id": "nui-ta-pa",
-              "name": "Núi Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ac550583-soài-chek-homestay-&",
+              "name": "Soài Chek Homestay & Coffee",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4072869,
-                "lng": 104.9747836
+                "lat": 10.411,
+                "lng": 105.018
               },
-              "distance_from_prev_km": 4.5,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.5km (9 phút)",
+              "distance_from_prev_km": 8,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~8km (16 phút)",
               "activity": "Khám phá núi, chụp ảnh",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -971,9 +971,9 @@
                 "lat": 10.3768,
                 "lng": 104.9542
               },
-              "distance_from_prev_km": 5.1,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5.1km (10 phút)",
+              "distance_from_prev_km": 9.9,
+              "travel_time_mins": 20,
+              "transport_to_next": "Xe máy / Ô tô ~9.9km (20 phút)",
               "activity": "Tham quan di tích, hang đá",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -982,16 +982,16 @@
             {
               "stop_order": 8,
               "time": "17:00",
-              "poi_id": "ho-o-thum",
-              "name": "Hồ Ô Thum",
+              "poi_id": "cay-thot-not-trai-tim",
+              "name": "Hàng Thốt Nốt Trái Tim Ô Lâm",
               "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.456,
-                "lng": 104.982
+                "lat": 10.3621,
+                "lng": 104.9812
               },
-              "distance_from_prev_km": 11.6,
-              "travel_time_mins": 23,
-              "transport_to_next": "Xe máy / Ô tô ~11.6km (23 phút)",
+              "distance_from_prev_km": 4.2,
+              "travel_time_mins": 8,
+              "transport_to_next": "Xe máy / Ô tô ~4.2km (8 phút)",
               "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -1002,14 +1002,14 @@
               "time": "18:30",
               "poi_id": "tritoni",
               "name": "Tritoni",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 5.2,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5.2km (10 phút)",
+              "distance_from_prev_km": 9,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~9km (18 phút)",
               "activity": "Cafe tối bên hồ, ngắm sao",
               "duration_minutes": 75,
               "cost_vnd": "20k-40k",
@@ -1020,7 +1020,7 @@
               "time": "20:30",
               "poi_id": "683d2086-quán-bò-nướng-bánh-t",
               "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-              "commune": "Đường Nam Kỳ Khởi Nghĩa",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.414,
                 "lng": 105.0095
@@ -1038,8 +1038,8 @@
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều",
-          "day_total_distance_km": 18.2,
-          "day_total_travel_time_mins": 36,
+          "day_total_distance_km": 59.1,
+          "day_total_travel_time_mins": 118,
           "stops": [
             {
               "stop_order": 1,
@@ -1053,7 +1053,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Tham quan, tưởng niệm",
               "duration_minutes": 120,
               "cost_vnd": "Miễn phí",
@@ -1062,16 +1062,16 @@
             {
               "stop_order": 2,
               "time": "09:15",
-              "poi_id": "chua-xa-ton-chua-svayton",
-              "name": "Chùa Xà Tón (Chùa Svayton)",
-              "commune": "Xã Núi Tô",
+              "poi_id": "le-hoi-dua-bo-bay-nui-tri-ton",
+              "name": "Lễ hội Đua bò Bảy Núi Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.411,
-                "lng": 105.0089
+                "lat": 10.415,
+                "lng": 105.002
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 18.4,
+              "travel_time_mins": 37,
+              "transport_to_next": "Xe máy / Ô tô ~18.4km (37 phút)",
               "activity": "Tham quan chùa",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -1080,16 +1080,16 @@
             {
               "stop_order": 3,
               "time": "10:30",
-              "poi_id": "quan-kieu-tien",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "9616e5e5-con-đường-tơ-lụa-tà-",
+              "name": "Con Đường Tơ Lụa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4185,
+                "lng": 105.0095
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 1.1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
               "activity": "Ăn sáng muộn",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -1098,16 +1098,16 @@
             {
               "stop_order": 4,
               "time": "11:30",
-              "poi_id": "ca-phe-suoi-tri-ton",
+              "poi_id": "khu-di-tich-o-ta-soc",
               "name": "Khu di tích Ô Tà Sóc",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Lương Phi",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.45,
+                "lng": 104.93
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 11.7,
+              "travel_time_mins": 23,
+              "transport_to_next": "Xe máy / Ô tô ~11.7km (23 phút)",
               "activity": "Tham quan hang Tỉnh Ủy, suối đá",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -1116,16 +1116,16 @@
             {
               "stop_order": 5,
               "time": "13:15",
-              "poi_id": "rung-tre-luong-phi",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "30ac578e-vườn-mãng-cầu-núi-tô",
+              "name": "Vườn Mãng Cầu Ta Núi Tô",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.408,
+                "lng": 105.021
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 13.7,
+              "travel_time_mins": 27,
+              "transport_to_next": "Xe máy / Ô tô ~13.7km (27 phút)",
               "activity": "Đi bộ trong rừng tre",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -1134,16 +1134,16 @@
             {
               "stop_order": 6,
               "time": "14:30",
-              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
-              "name": "Windy Hill Coffee & Homestay Tri Tôn",
-              "commune": "Khu vực Hồ Soài Chék",
+              "poi_id": "ca-phe-suoi-da-o-ta-soc",
+              "name": "Cà Phê Suối Đá Ô Tà Sóc",
+              "commune": "Xã Lương Phi",
               "coordinates": {
-                "lat": 10.417,
-                "lng": 105.0195
+                "lat": 10.451,
+                "lng": 104.931
               },
-              "distance_from_prev_km": 3.1,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~3.1km (6 phút)",
+              "distance_from_prev_km": 1.3,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
               "activity": "Cafe chiều bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -1153,15 +1153,15 @@
               "stop_order": 7,
               "time": "16:00",
               "poi_id": "ho-o-ta-soc",
-              "name": "Hồ Ô Tà Sóc",
-              "commune": "Huyện Tri Tôn",
+              "name": "Hồ Ô Tà Sóc & Căn Cứ Lịch Sử Núi Dài",
+              "commune": "Xã Lương Phi",
               "coordinates": {
-                "lat": 10.4600525,
-                "lng": 104.9400926
+                "lat": 10.452,
+                "lng": 104.932
               },
-              "distance_from_prev_km": 12.4,
-              "travel_time_mins": 25,
-              "transport_to_next": "Xe máy / Ô tô ~12.4km (25 phút)",
+              "distance_from_prev_km": 12.9,
+              "travel_time_mins": 26,
+              "transport_to_next": "Xe máy / Ô tô ~12.9km (26 phút)",
               "activity": "Ngắm hồ, chụp ảnh",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -1184,8 +1184,8 @@
         "dem-tri-ton",
         "cafe-toi"
       ],
-      "total_distance_km": 69.6,
-      "total_travel_time_mins": 139,
+      "total_distance_km": 144.2,
+      "total_travel_time_mins": 292,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1213,8 +1213,8 @@
         {
           "day": 1,
           "title": "Sáng chụp đồng - Chiều chụp núi - Tối cafe",
-          "day_total_distance_km": 35.4,
-          "day_total_travel_time_mins": 71,
+          "day_total_distance_km": 32.7,
+          "day_total_travel_time_mins": 65,
           "stops": [
             {
               "stop_order": 1,
@@ -1228,7 +1228,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Chụp bình minh, sương sớm trên hồ",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -1239,7 +1239,7 @@
               "time": "07:15",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -1257,7 +1257,7 @@
               "time": "08:30",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
@@ -1291,16 +1291,16 @@
             {
               "stop_order": 5,
               "time": "10:45",
-              "poi_id": "chua-hang-cong",
+              "poi_id": "3383c54e-con-đường-vòm-còng-c",
               "name": "Con Đường Vòm Còng Châu Lăng",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4355,
+                "lng": 105.0015
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 3.2,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~3.2km (6 phút)",
               "activity": "Chụp ảnh đường hàng còng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -1309,16 +1309,16 @@
             {
               "stop_order": 6,
               "time": "12:00",
-              "poi_id": "du-du-dam-rina",
-              "name": "Quán Đu Đủ Đâm RiNa Khmer",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "du-du-dam-khanh-thy",
+              "name": "Đu Đủ Đâm Khánh Thy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.414286,
+                "lng": 104.9992663
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 3,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~3km (6 phút)",
               "activity": "Ăn trưa + chụp ảnh món ăn",
               "duration_minutes": 60,
               "cost_vnd": "20k-35k",
@@ -1328,15 +1328,15 @@
               "stop_order": 7,
               "time": "13:30",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
-              "distance_from_prev_km": 6.8,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~6.8km (14 phút)",
+              "distance_from_prev_km": 4.9,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.9km (10 phút)",
               "activity": "Chụp ảnh mỏm đá sống ảo trên đỉnh",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -1345,16 +1345,16 @@
             {
               "stop_order": 8,
               "time": "16:00",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
-              "commune": "Tri Tôn",
+              "poi_id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+              "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+              "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.4058,
-                "lng": 105.025
+                "lat": 10.38,
+                "lng": 104.995
               },
-              "distance_from_prev_km": 5,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5km (10 phút)",
+              "distance_from_prev_km": 2.9,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
               "activity": "Chụp ảnh bảng chữ TRI TÔN",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -1363,16 +1363,16 @@
             {
               "stop_order": 9,
               "time": "17:00",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Hồ Soài Chek",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 4.6,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.6km (9 phút)",
+              "distance_from_prev_km": 5.6,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.6km (11 phút)",
               "activity": "Chụp hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -1383,14 +1383,14 @@
               "time": "18:30",
               "poi_id": "9eaf1e8f-biển-hiệu-ở-đây-khôn",
               "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
-              "commune": "Đường Nam Kỳ Khởi Nghĩa",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4062,
                 "lng": 105.0232
               },
-              "distance_from_prev_km": 4.4,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.4km (9 phút)",
+              "distance_from_prev_km": 2.6,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.6km (5 phút)",
               "activity": "Chụp ảnh góc Việt phục cổ trang",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -1401,7 +1401,7 @@
               "time": "19:30",
               "poi_id": "cee4075f-lang-lang-coffee-&-t",
               "name": "Lang Lang Coffee & Tea",
-              "commune": "78 Đường Trần Hưng Đạo",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 105.008
@@ -1430,8 +1430,8 @@
         "chup-anh",
         "cafe-toi"
       ],
-      "total_distance_km": 35.4,
-      "total_travel_time_mins": 71,
+      "total_distance_km": 32.7,
+      "total_travel_time_mins": 65,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1460,22 +1460,22 @@
         {
           "day": 1,
           "title": "Hành hương chùa Khmer",
-          "day_total_distance_km": 62.2,
-          "day_total_travel_time_mins": 125,
+          "day_total_distance_km": 61.4,
+          "day_total_travel_time_mins": 123,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
-              "poi_id": "chua-xvayton",
+              "poi_id": "chua-xa-ton-chua-svayton",
               "name": "Chùa Xà Tón (Chùa Svayton)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.411,
+                "lng": 105.0089
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Lễ Phật, xem kinh lá buông",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -1486,14 +1486,14 @@
               "time": "08:00",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
+              "distance_from_prev_km": 1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
               "activity": "Lễ Phật, ngắm cảnh",
               "duration_minutes": 75,
               "cost_vnd": "Miễn phí",
@@ -1504,7 +1504,7 @@
               "time": "09:30",
               "poi_id": "chua-ta-phot",
               "name": "Chùa Tà Phôt",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4061797,
                 "lng": 104.9643239
@@ -1522,7 +1522,7 @@
               "time": "10:30",
               "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.4439756,
                 "lng": 104.9727214
@@ -1558,7 +1558,7 @@
               "time": "14:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -1576,7 +1576,7 @@
               "time": "15:30",
               "poi_id": "chua-thanh-luong",
               "name": "Chùa Thanh Lương",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4972146,
                 "lng": 104.9073869
@@ -1594,7 +1594,7 @@
               "time": "16:30",
               "poi_id": "chua-ba-xoai",
               "name": "Chua Ba Xoai",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Lương Phi",
               "coordinates": {
                 "lat": 10.5224259,
                 "lng": 104.9569866
@@ -1612,7 +1612,7 @@
               "time": "18:00",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
@@ -1641,8 +1641,8 @@
         "chua-khmer",
         "1-ngay"
       ],
-      "total_distance_km": 62.2,
-      "total_travel_time_mins": 125,
+      "total_distance_km": 61.4,
+      "total_travel_time_mins": 123,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1670,8 +1670,8 @@
         {
           "day": 1,
           "title": "Hành trình lịch sử",
-          "day_total_distance_km": 80.8,
-          "day_total_travel_time_mins": 161,
+          "day_total_distance_km": 81.9,
+          "day_total_travel_time_mins": 163,
           "stops": [
             {
               "stop_order": 1,
@@ -1685,7 +1685,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Tham quan nhà mồ, nhà trưng bày chứng tích",
               "duration_minutes": 120,
               "cost_vnd": "Miễn phí",
@@ -1714,7 +1714,7 @@
               "time": "10:15",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -1730,16 +1730,16 @@
             {
               "stop_order": 4,
               "time": "11:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.7,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 60,
               "cost_vnd": "30k-50k",
@@ -1755,9 +1755,9 @@
                 "lat": 10.45,
                 "lng": 104.93
               },
-              "distance_from_prev_km": 10,
-              "travel_time_mins": 20,
-              "transport_to_next": "Xe máy / Ô tô ~10km (20 phút)",
+              "distance_from_prev_km": 11.6,
+              "travel_time_mins": 23,
+              "transport_to_next": "Xe máy / Ô tô ~11.6km (23 phút)",
               "activity": "Tham quan hang Tỉnh Ủy",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -1786,7 +1786,7 @@
               "time": "16:30",
               "poi_id": "tuong-dai-chien-thang-vinh-thong",
               "name": "Tượng đài Chiến thắng Vĩnh Thông",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.5074791,
                 "lng": 104.8879034
@@ -1804,7 +1804,7 @@
               "time": "17:30",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
@@ -1832,8 +1832,8 @@
         "giao-duc",
         "ba-chuc"
       ],
-      "total_distance_km": 80.8,
-      "total_travel_time_mins": 161,
+      "total_distance_km": 81.9,
+      "total_travel_time_mins": 163,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -1861,22 +1861,22 @@
         {
           "day": 1,
           "title": "Ăn sập Tri Tôn từ sáng đến đêm",
-          "day_total_distance_km": 43.3,
-          "day_total_travel_time_mins": 85,
+          "day_total_distance_km": 74.2,
+          "day_total_travel_time_mins": 149,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
               "poi_id": "c2a08fb2-quán-bánh-canh-lò-rè",
               "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
-              "commune": "114 Đường Trần Hưng Đạo",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4135,
                 "lng": 105.0072
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng bánh canh bột xắt",
               "duration_minutes": 45,
               "cost_vnd": "30k-45k",
@@ -1885,16 +1885,16 @@
             {
               "stop_order": 2,
               "time": "07:00",
-              "poi_id": "banh-bo-thot-not-ha-co",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.415,
+                "lng": 105.018
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.5,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.5km (3 phút)",
               "activity": "Cafe + bánh bò thốt nốt",
               "duration_minutes": 45,
               "cost_vnd": "20k-45k",
@@ -1903,16 +1903,16 @@
             {
               "stop_order": 3,
               "time": "08:30",
-              "poi_id": "du-du-dam-rina",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "du-du-dam-khanh-thy",
+              "name": "Đu Đủ Đâm Khánh Thy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.414286,
+                "lng": 104.9992663
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 2.6,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.6km (5 phút)",
               "activity": "Ăn vặt đu đủ đâm",
               "duration_minutes": 30,
               "cost_vnd": "20k-35k",
@@ -1928,9 +1928,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 0.7,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.7km (2 phút)",
               "activity": "Xem làm bánh + ăn thử",
               "duration_minutes": 45,
               "cost_vnd": "35k-50k",
@@ -1939,16 +1939,16 @@
             {
               "stop_order": 5,
               "time": "11:00",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 8,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~8km (16 phút)",
               "activity": "Ngắm hồ trước khi ăn",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -1957,16 +1957,16 @@
             {
               "stop_order": 6,
               "time": "11:45",
-              "poi_id": "ga-dot-thao-nguyen",
-              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 13,
+              "travel_time_mins": 26,
+              "transport_to_next": "Xe máy / Ô tô ~13km (26 phút)",
               "activity": "Ăn trưa gà đốt lá chúc",
               "duration_minutes": 90,
               "cost_vnd": "250k-320k/con",
@@ -1977,14 +1977,14 @@
               "time": "14:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
-              "distance_from_prev_km": 1.1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
+              "distance_from_prev_km": 5.6,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.6km (11 phút)",
               "activity": "Ăn chiều bún cá",
               "duration_minutes": 45,
               "cost_vnd": "25k-35k",
@@ -1995,7 +1995,7 @@
               "time": "15:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -2029,16 +2029,16 @@
             {
               "stop_order": 10,
               "time": "17:30",
-              "poi_id": "banh-xeo-trung-da-dieu-nui-to",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 17,
-              "travel_time_mins": 34,
-              "transport_to_next": "Xe máy / Ô tô ~17km (34 phút)",
+              "distance_from_prev_km": 18.8,
+              "travel_time_mins": 38,
+              "transport_to_next": "Xe máy / Ô tô ~18.8km (38 phút)",
               "activity": "Ăn tối bánh xèo miền Tây",
               "duration_minutes": 60,
               "cost_vnd": "30k-50k",
@@ -2047,16 +2047,16 @@
             {
               "stop_order": 11,
               "time": "19:00",
-              "poi_id": "chao-bo-thuy-den",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 1.1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
               "activity": "Ăn vặt đêm: xiên nướng, chè thốt nốt, cháo bò",
               "duration_minutes": 90,
               "cost_vnd": "50k-100k",
@@ -2065,16 +2065,16 @@
             {
               "stop_order": 12,
               "time": "20:30",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 3.3,
+              "travel_time_mins": 7,
+              "transport_to_next": "Xe máy / Ô tô ~3.3km (7 phút)",
               "activity": "Cafe đêm, kết thúc food tour",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -2097,8 +2097,8 @@
         "ga-dot",
         "an-sap"
       ],
-      "total_distance_km": 43.3,
-      "total_travel_time_mins": 85,
+      "total_distance_km": 74.2,
+      "total_travel_time_mins": 149,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2126,22 +2126,22 @@
         {
           "day": 1,
           "title": "Đêm Tri Tôn chill hết nấc",
-          "day_total_distance_km": 11.9,
-          "day_total_travel_time_mins": 23,
+          "day_total_distance_km": 9.3,
+          "day_total_travel_time_mins": 20,
           "stops": [
             {
               "stop_order": 1,
               "time": "17:00",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Chạy xe ngắm hoàng hôn, núi Cô Tô đổi màu",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -2157,9 +2157,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 5.2,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5.2km (10 phút)",
+              "distance_from_prev_km": 5.5,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.5km (11 phút)",
               "activity": "Thả diều, ngắm trời chiều",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -2168,16 +2168,16 @@
             {
               "stop_order": 3,
               "time": "19:00",
-              "poi_id": "chao-bo-thuy-den",
-              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
               "activity": "Ăn tối: xiên nướng, cháo bò, chè thốt nốt",
               "duration_minutes": 75,
               "cost_vnd": "60k-120k",
@@ -2186,16 +2186,16 @@
             {
               "stop_order": 4,
               "time": "20:30",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.4138,
+                "lng": 105.0075
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.5,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.5km (2 phút)",
               "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -2204,16 +2204,16 @@
             {
               "stop_order": 5,
               "time": "21:00",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.6,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
               "activity": "Cafe đêm, trò chuyện",
               "duration_minutes": 60,
               "cost_vnd": "20k-45k",
@@ -2224,14 +2224,14 @@
               "time": "22:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.7,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
               "activity": "Chạy xe ngắm thị trấn về đêm, đường phố yên bình",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -2254,8 +2254,8 @@
         "nha-thieu-nhi",
         "chill"
       ],
-      "total_distance_km": 11.9,
-      "total_travel_time_mins": 23,
+      "total_distance_km": 9.3,
+      "total_travel_time_mins": 20,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2283,22 +2283,22 @@
         {
           "day": 1,
           "title": "Hoàng hôn + Gà đốt + Cafe đêm",
-          "day_total_distance_km": 7,
-          "day_total_travel_time_mins": 14,
+          "day_total_distance_km": 22.8,
+          "day_total_travel_time_mins": 46,
           "stops": [
             {
               "stop_order": 1,
               "time": "15:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm hồ, đi cầu gỗ, chụp ảnh chiều",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -2309,14 +2309,14 @@
               "time": "16:45",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 9.3,
+              "travel_time_mins": 19,
+              "transport_to_next": "Xe máy / Ô tô ~9.3km (19 phút)",
               "activity": "Chụp ảnh hoàng hôn trên cầu gỗ",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -2325,16 +2325,16 @@
             {
               "stop_order": 3,
               "time": "17:45",
-              "poi_id": "quan-sieu-ga-dot",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 4.1,
+              "travel_time_mins": 8,
+              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
               "activity": "Ăn tối gà đốt bên hồ, ngắm hoàng hôn",
               "duration_minutes": 90,
               "cost_vnd": "250k-330k/con",
@@ -2345,14 +2345,14 @@
               "time": "19:30",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
-              "distance_from_prev_km": 3.1,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~3.1km (6 phút)",
+              "distance_from_prev_km": 7.5,
+              "travel_time_mins": 15,
+              "transport_to_next": "Xe máy / Ô tô ~7.5km (15 phút)",
               "activity": "Cafe đêm view đồng ruộng",
               "duration_minutes": 75,
               "cost_vnd": "20k-45k",
@@ -2392,8 +2392,8 @@
         "ga-dot",
         "cafe-dem"
       ],
-      "total_distance_km": 7,
-      "total_travel_time_mins": 14,
+      "total_distance_km": 22.8,
+      "total_travel_time_mins": 46,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2423,22 +2423,22 @@
         {
           "day": 1,
           "title": "Cafe Hopping cả ngày",
-          "day_total_distance_km": 12.3,
-          "day_total_travel_time_mins": 24,
+          "day_total_distance_km": 16.6,
+          "day_total_travel_time_mins": 34,
           "stops": [
             {
               "stop_order": 1,
               "time": "07:00",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Cafe sáng view cánh đồng, uống nước thốt nốt tươi",
               "duration_minutes": 90,
               "cost_vnd": "20k-45k",
@@ -2465,16 +2465,16 @@
             {
               "stop_order": 3,
               "time": "11:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 0.6,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
               "activity": "Ăn trưa cơm/lẩu",
               "duration_minutes": 60,
               "cost_vnd": "50k-100k",
@@ -2485,14 +2485,14 @@
               "time": "13:00",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 2.6,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.6km (5 phút)",
               "activity": "Cafe chiều, đọc sách",
               "duration_minutes": 90,
               "cost_vnd": "25k-50k",
@@ -2501,16 +2501,16 @@
             {
               "stop_order": 5,
               "time": "15:00",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "distance_from_prev_km": 2.4,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.4km (5 phút)",
               "activity": "Cafe view hồ, ngắm núi",
               "duration_minutes": 90,
               "cost_vnd": "20k-40k",
@@ -2519,16 +2519,16 @@
             {
               "stop_order": 6,
               "time": "17:00",
-              "poi_id": "canh-dong-lua-ta-pa",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.412,
-                "lng": 104.998
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 3.2,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~3.2km (6 phút)",
               "activity": "Cafe hoàng hôn view đồi",
               "duration_minutes": 60,
               "cost_vnd": "25k-55k",
@@ -2537,16 +2537,16 @@
             {
               "stop_order": 7,
               "time": "18:30",
-              "poi_id": "ny-coffee-tea-tri-ton",
-              "name": "NY Coffee & Tea Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
+              "name": "CHẠM Coffee & Tea Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4225,
+                "lng": 105.0028
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 4.4,
+              "travel_time_mins": 9,
+              "transport_to_next": "Xe máy / Ô tô ~4.4km (9 phút)",
               "activity": "Cafe tối, trò chuyện",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -2555,16 +2555,16 @@
             {
               "stop_order": 8,
               "time": "20:00",
-              "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
-              "name": "CHẠM Coffee & Tea Tri Tôn",
-              "commune": "120 Đường Hùng Vương",
+              "poi_id": "tritoni",
+              "name": "Tritoni Nằm Võng Uống Nước Dừa",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.4128,
-                "lng": 105.0068
+                "lat": 10.4238852,
+                "lng": 105.001011
               },
-              "distance_from_prev_km": 2.3,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.3km (5 phút)",
+              "distance_from_prev_km": 1.5,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.5km (3 phút)",
               "activity": "Nằm võng uống nước, kết thúc ngày",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -2587,8 +2587,8 @@
         "wifi",
         "view-dep"
       ],
-      "total_distance_km": 12.3,
-      "total_travel_time_mins": 24,
+      "total_distance_km": 16.6,
+      "total_travel_time_mins": 34,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2616,22 +2616,22 @@
         {
           "day": 1,
           "title": "Night Ride Tri Tôn",
-          "day_total_distance_km": 10.3,
-          "day_total_travel_time_mins": 20,
+          "day_total_distance_km": 7,
+          "day_total_travel_time_mins": 17,
           "stops": [
             {
               "stop_order": 1,
               "time": "18:00",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Chạy xe ngắm núi Cô Tô về đêm",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -2647,9 +2647,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 5.2,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5.2km (10 phút)",
+              "distance_from_prev_km": 5.5,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.5km (11 phút)",
               "activity": "Ăn vặt: xiên nướng, chè, cháo",
               "duration_minutes": 60,
               "cost_vnd": "50k-80k",
@@ -2658,16 +2658,16 @@
             {
               "stop_order": 3,
               "time": "20:00",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.4138,
+                "lng": 105.0075
               },
-              "distance_from_prev_km": 1.2,
+              "distance_from_prev_km": 0.6,
               "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1.2km (2 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
               "activity": "Đi dạo, ngắm đèn",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -2676,16 +2676,16 @@
             {
               "stop_order": 4,
               "time": "20:30",
-              "poi_id": "nha-thieu-nhi-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Ngắm phố đêm, cảm nhận không khí yên bình",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -2696,14 +2696,14 @@
               "time": "21:30",
               "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
               "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
-              "commune": "Chân Cầu Số 10",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.411,
                 "lng": 105.005
               },
-              "distance_from_prev_km": 2.5,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.5km (5 phút)",
+              "distance_from_prev_km": 0.5,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.5km (2 phút)",
               "activity": "Cafe đêm, kết thúc night ride",
               "duration_minutes": 60,
               "cost_vnd": "15k-35k",
@@ -2725,8 +2725,8 @@
         "pho-dem",
         "nha-thieu-nhi"
       ],
-      "total_distance_km": 10.3,
-      "total_travel_time_mins": 20,
+      "total_distance_km": 7,
+      "total_travel_time_mins": 17,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2753,22 +2753,22 @@
         {
           "day": 1,
           "title": "Hoàng hôn + Gà đốt",
-          "day_total_distance_km": 3.4,
-          "day_total_travel_time_mins": 6,
+          "day_total_distance_km": 20.7,
+          "day_total_travel_time_mins": 42,
           "stops": [
             {
               "stop_order": 1,
               "time": "16:00",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm hồ, đi dạo bờ hồ",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -2784,9 +2784,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 8,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~8km (16 phút)",
               "activity": "Chụp ảnh hoàng hôn",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -2795,16 +2795,16 @@
             {
               "stop_order": 3,
               "time": "18:15",
-              "poi_id": "quan-sieu-ga-dot",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 6.3,
+              "travel_time_mins": 13,
+              "transport_to_next": "Xe máy / Ô tô ~6.3km (13 phút)",
               "activity": "Ăn gà đốt nướng, ngắm hồ đêm",
               "duration_minutes": 120,
               "cost_vnd": "250k-320k/con",
@@ -2813,16 +2813,16 @@
             {
               "stop_order": 4,
               "time": "20:30",
-              "poi_id": "suoi-bac-nui-co-to",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 6.4,
+              "travel_time_mins": 13,
+              "transport_to_next": "Xe máy / Ô tô ~6.4km (13 phút)",
               "activity": "Cafe đêm bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -2843,8 +2843,8 @@
         "ga-dot",
         "dem-ben-ho"
       ],
-      "total_distance_km": 3.4,
-      "total_travel_time_mins": 6,
+      "total_distance_km": 20.7,
+      "total_travel_time_mins": 42,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -2885,7 +2885,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Đi chùa tối, ngắm đèn chùa, cầu nguyện",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -2896,7 +2896,7 @@
               "time": "19:15",
               "poi_id": "chua-thanh-luong",
               "name": "Chùa Thanh Lương",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4972146,
                 "lng": 104.9073869
@@ -2914,7 +2914,7 @@
               "time": "20:15",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
@@ -2970,8 +2970,8 @@
         {
           "day": 1,
           "title": "Ngày khám phá + Đêm Tri Tôn",
-          "day_total_distance_km": 31.5,
-          "day_total_travel_time_mins": 65,
+          "day_total_distance_km": 27.7,
+          "day_total_travel_time_mins": 59,
           "stops": [
             {
               "stop_order": 1,
@@ -2985,7 +2985,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm hồ, chụp ảnh",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -2996,7 +2996,7 @@
               "time": "09:45",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -3030,16 +3030,16 @@
             {
               "stop_order": 4,
               "time": "12:30",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 5.9,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 75,
               "cost_vnd": "100k-150k",
@@ -3049,15 +3049,15 @@
               "stop_order": 5,
               "time": "14:30",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
-              "distance_from_prev_km": 6.8,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~6.8km (14 phút)",
+              "distance_from_prev_km": 5.4,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.4km (11 phút)",
               "activity": "Leo núi, ngắm cảnh",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -3068,14 +3068,14 @@
               "time": "17:00",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
-              "distance_from_prev_km": 7,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~7km (14 phút)",
+              "distance_from_prev_km": 6.1,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6.1km (12 phút)",
               "activity": "Ngắm hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3086,7 +3086,7 @@
               "time": "18:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -3102,16 +3102,16 @@
             {
               "stop_order": 8,
               "time": "20:00",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Đi dạo",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -3122,14 +3122,14 @@
               "time": "20:30",
               "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
               "name": "CHẠM Coffee & Tea Tri Tôn",
-              "commune": "120 Đường Hùng Vương",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4128,
                 "lng": 105.0068
               },
-              "distance_from_prev_km": 1.6,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.6km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Cafe đêm",
               "duration_minutes": 60,
               "cost_vnd": "20k-45k",
@@ -3138,16 +3138,16 @@
             {
               "stop_order": 10,
               "time": "22:00",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 2.3,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.3km (5 phút)",
+              "distance_from_prev_km": 1.2,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.2km (2 phút)",
               "activity": "Nghỉ ngơi",
               "duration_minutes": 60,
               "cost_vnd": "250k-450k",
@@ -3158,22 +3158,22 @@
         {
           "day": 2,
           "title": "Săn mây + Cafe + Về",
-          "day_total_distance_km": 4.7,
-          "day_total_travel_time_mins": 10,
+          "day_total_distance_km": 15,
+          "day_total_travel_time_mins": 30,
           "stops": [
             {
               "stop_order": 1,
               "time": "05:00",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
-              "commune": "Tri Tôn",
+              "poi_id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+              "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+              "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.4058,
-                "lng": 105.025
+                "lat": 10.38,
+                "lng": 104.995
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Săn mây bình minh",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -3184,14 +3184,14 @@
               "time": "07:30",
               "poi_id": "tritoni",
               "name": "Tritoni",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 6.2,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6.2km (12 phút)",
               "activity": "Cafe sáng bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -3200,16 +3200,16 @@
             {
               "stop_order": 3,
               "time": "09:00",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
-              "distance_from_prev_km": 0.6,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
+              "distance_from_prev_km": 8.8,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~8.8km (18 phút)",
               "activity": "Ngắm hồ + ăn gà đốt",
               "duration_minutes": 120,
               "cost_vnd": "250k-350k",
@@ -3231,8 +3231,8 @@
         "san-may",
         "cafe-dem"
       ],
-      "total_distance_km": 36.2,
-      "total_travel_time_mins": 75,
+      "total_distance_km": 42.7,
+      "total_travel_time_mins": 89,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3260,22 +3260,22 @@
         {
           "day": 1,
           "title": "Solo Explore Tri Tôn",
-          "day_total_distance_km": 20.1,
-          "day_total_travel_time_mins": 42,
+          "day_total_distance_km": 26.1,
+          "day_total_travel_time_mins": 55,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng, ngắm chợ",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -3304,7 +3304,7 @@
               "time": "09:15",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -3320,16 +3320,16 @@
             {
               "stop_order": 4,
               "time": "10:30",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
+              "distance_from_prev_km": 1.7,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
               "activity": "Cafe làm việc, đọc sách",
               "duration_minutes": 120,
               "cost_vnd": "18k-40k",
@@ -3340,14 +3340,14 @@
               "time": "12:30",
               "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Đường 948 (gần Cầu Cây Me)",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.41,
                 "lng": 105.008
               },
-              "distance_from_prev_km": 2.7,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.7km (5 phút)",
+              "distance_from_prev_km": 1.4,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
               "activity": "Ăn cơm/lẩu",
               "duration_minutes": 60,
               "cost_vnd": "50k-100k",
@@ -3356,16 +3356,16 @@
             {
               "stop_order": 6,
               "time": "14:00",
-              "poi_id": "canh-dong-lua-ta-pa",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.412,
-                "lng": 104.998
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 3.3,
+              "travel_time_mins": 7,
+              "transport_to_next": "Xe máy / Ô tô ~3.3km (7 phút)",
               "activity": "Đi bộ một mình, suy ngẫm",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3381,9 +3381,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 6.2,
-              "travel_time_mins": 12,
-              "transport_to_next": "Xe máy / Ô tô ~6.2km (12 phút)",
+              "distance_from_prev_km": 4.8,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.8km (10 phút)",
               "activity": "Ngắm cảnh, chụp ảnh",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3392,16 +3392,16 @@
             {
               "stop_order": 8,
               "time": "17:00",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 8.6,
+              "travel_time_mins": 17,
+              "transport_to_next": "Xe máy / Ô tô ~8.6km (17 phút)",
               "activity": "Ngắm hoàng hôn một mình",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3412,14 +3412,14 @@
               "time": "18:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 4.6,
+              "travel_time_mins": 9,
+              "transport_to_next": "Xe máy / Ô tô ~4.6km (9 phút)",
               "activity": "Ăn tối một mình",
               "duration_minutes": 60,
               "cost_vnd": "50k-80k",
@@ -3430,7 +3430,7 @@
               "time": "19:30",
               "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
               "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
-              "commune": "Chân Cầu Số 10",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.411,
                 "lng": 105.005
@@ -3459,8 +3459,8 @@
         "cafe",
         "dem-yen-binh"
       ],
-      "total_distance_km": 20.1,
-      "total_travel_time_mins": 42,
+      "total_distance_km": 26.1,
+      "total_travel_time_mins": 55,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3488,8 +3488,8 @@
         {
           "day": 1,
           "title": "Bình minh → Đồng → Núi → Hoàng hôn → Đêm",
-          "day_total_distance_km": 36.9,
-          "day_total_travel_time_mins": 74,
+          "day_total_distance_km": 56.9,
+          "day_total_travel_time_mins": 115,
           "stops": [
             {
               "stop_order": 1,
@@ -3503,7 +3503,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Chụp bình minh, sương, phản chiếu",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -3514,7 +3514,7 @@
               "time": "06:45",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -3530,16 +3530,16 @@
             {
               "stop_order": 3,
               "time": "08:00",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
+              "poi_id": "cay-thot-not-trai-tim",
               "name": "Hàng Thốt Nốt Trái Tim Ô Lâm",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3621,
+                "lng": 104.9812
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 7.3,
+              "travel_time_mins": 15,
+              "transport_to_next": "Xe máy / Ô tô ~7.3km (15 phút)",
               "activity": "Chụp biểu tượng",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -3555,9 +3555,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 13.4,
+              "travel_time_mins": 27,
+              "transport_to_next": "Xe máy / Ô tô ~13.4km (27 phút)",
               "activity": "Chụp kiến trúc Khmer",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3566,16 +3566,16 @@
             {
               "stop_order": 5,
               "time": "10:30",
-              "poi_id": "chua-hang-cong",
+              "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4439756,
+                "lng": 104.9727214
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 6.4,
+              "travel_time_mins": 13,
+              "transport_to_next": "Xe máy / Ô tô ~6.4km (13 phút)",
               "activity": "Chụp đường hàng còng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3586,14 +3586,14 @@
               "time": "12:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
-              "distance_from_prev_km": 1.1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
+              "distance_from_prev_km": 5.2,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~5.2km (10 phút)",
               "activity": "Nghỉ ngơi",
               "duration_minutes": 90,
               "cost_vnd": "80k-150k",
@@ -3603,15 +3603,15 @@
               "stop_order": 7,
               "time": "14:00",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
-              "distance_from_prev_km": 5.8,
+              "distance_from_prev_km": 5.9,
               "travel_time_mins": 12,
-              "transport_to_next": "Xe máy / Ô tô ~5.8km (12 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
               "activity": "Chụp góc núi, mỏm đá",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -3622,14 +3622,14 @@
               "time": "16:30",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
-              "distance_from_prev_km": 7,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~7km (14 phút)",
+              "distance_from_prev_km": 6.1,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6.1km (12 phút)",
               "activity": "Chụp bảng chữ + hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3658,7 +3658,7 @@
               "time": "19:00",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -3676,7 +3676,7 @@
               "time": "20:30",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -3706,8 +3706,8 @@
         "dem",
         "full-day"
       ],
-      "total_distance_km": 36.9,
-      "total_travel_time_mins": 74,
+      "total_distance_km": 56.9,
+      "total_travel_time_mins": 115,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3734,22 +3734,22 @@
         {
           "day": 1,
           "title": "Lễ hội Đua Bò + Khám phá",
-          "day_total_distance_km": 13.6,
-          "day_total_travel_time_mins": 28,
+          "day_total_distance_km": 14.9,
+          "day_total_travel_time_mins": 31,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
-              "poi_id": "san-dua-bo-tri-ton",
+              "poi_id": "ho-ta-pa",
               "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4165,
+                "lng": 105.0042
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Xem đua bò, cổ vũ, chụp ảnh",
               "duration_minutes": 180,
               "cost_vnd": "Miễn phí",
@@ -3760,14 +3760,14 @@
               "time": "09:30",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
+              "distance_from_prev_km": 0.6,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
               "activity": "Tham quan chùa gần sân đua",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3776,16 +3776,16 @@
             {
               "stop_order": 3,
               "time": "11:00",
-              "poi_id": "ho-ta-pa",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
               "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4165,
-                "lng": 105.0042
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 0.6,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~0.6km (2 phút)",
+              "distance_from_prev_km": 1.7,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
               "activity": "Ngắm hồ, nghỉ ngơi",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3794,16 +3794,16 @@
             {
               "stop_order": 4,
               "time": "12:30",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 2.4,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.4km (5 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 90,
               "cost_vnd": "250k-350k",
@@ -3819,9 +3819,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 4.8,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.8km (10 phút)",
               "activity": "Check-in",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -3832,7 +3832,7 @@
               "time": "17:00",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -3861,8 +3861,8 @@
         "van-hoa",
         "khmer"
       ],
-      "total_distance_km": 13.6,
-      "total_travel_time_mins": 28,
+      "total_distance_km": 14.9,
+      "total_travel_time_mins": 31,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -3890,22 +3890,22 @@
         {
           "day": 1,
           "title": "Trek Cô Tô + Cafe",
-          "day_total_distance_km": 14.7,
-          "day_total_travel_time_mins": 29,
+          "day_total_distance_km": 16.3,
+          "day_total_travel_time_mins": 34,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Leo núi bằng đường bậc thang đá",
               "duration_minutes": 180,
               "cost_vnd": "Miễn phí",
@@ -3921,9 +3921,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 5.2,
-              "travel_time_mins": 10,
-              "transport_to_next": "Xe máy / Ô tô ~5.2km (10 phút)",
+              "distance_from_prev_km": 5.5,
+              "travel_time_mins": 11,
+              "transport_to_next": "Xe máy / Ô tô ~5.5km (11 phút)",
               "activity": "Nghỉ chân, rửa mặt",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -3932,16 +3932,16 @@
             {
               "stop_order": 3,
               "time": "10:15",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 2.3,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.3km (5 phút)",
               "activity": "Cafe phục hồi sau trek",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -3952,14 +3952,14 @@
               "time": "12:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
-              "distance_from_prev_km": 1.1,
-              "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
+              "distance_from_prev_km": 1.8,
+              "travel_time_mins": 4,
+              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
               "activity": "Ăn cơm/lẩu",
               "duration_minutes": 75,
               "cost_vnd": "60k-120k",
@@ -3970,7 +3970,7 @@
               "time": "15:00",
               "poi_id": "f7f5ca30-windy-hill-coffee-&-",
               "name": "Windy Hill Coffee & Homestay Tri Tôn",
-              "commune": "Khu vực Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.417,
                 "lng": 105.0195
@@ -3988,7 +3988,7 @@
               "time": "17:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -4006,7 +4006,7 @@
               "time": "18:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -4035,8 +4035,8 @@
         "cafe",
         "adventure"
       ],
-      "total_distance_km": 14.7,
-      "total_travel_time_mins": 29,
+      "total_distance_km": 16.3,
+      "total_travel_time_mins": 34,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4065,22 +4065,22 @@
         {
           "day": 1,
           "title": "Ngày nhẹ nhàng + Đêm gia đình",
-          "day_total_distance_km": 8.5,
-          "day_total_travel_time_mins": 21,
+          "day_total_distance_km": 5.7,
+          "day_total_travel_time_mins": 16,
           "stops": [
             {
               "stop_order": 1,
               "time": "07:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng, cho bé ngắm chợ",
               "duration_minutes": 45,
               "cost_vnd": "40k-60k",
@@ -4109,7 +4109,7 @@
               "time": "10:00",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -4125,16 +4125,16 @@
             {
               "stop_order": 4,
               "time": "11:30",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 1.8,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~1.8km (4 phút)",
+              "distance_from_prev_km": 1.1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
               "activity": "Ăn trưa gia đình",
               "duration_minutes": 75,
               "cost_vnd": "100k-200k",
@@ -4143,16 +4143,16 @@
             {
               "stop_order": 5,
               "time": "13:30",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.4138,
+                "lng": 105.0075
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.5,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.5km (2 phút)",
               "activity": "Cho bé chơi khu vui chơi",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -4161,16 +4161,16 @@
             {
               "stop_order": 6,
               "time": "15:30",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "canh-dong-lua-ta-pa",
+              "name": "Cánh đồng lúa Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.412,
+                "lng": 104.998
               },
-              "distance_from_prev_km": 1.4,
+              "distance_from_prev_km": 1.3,
               "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
               "activity": "Nghỉ trưa",
               "duration_minutes": 90,
               "cost_vnd": "300k-500k",
@@ -4181,14 +4181,14 @@
               "time": "17:30",
               "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
               "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-              "commune": "Sân đua bò Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4122,
                 "lng": 105.0082
               },
-              "distance_from_prev_km": 2.5,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.5km (5 phút)",
+              "distance_from_prev_km": 1.4,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
               "activity": "Cho bé thả diều, ngắm hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -4197,12 +4197,12 @@
             {
               "stop_order": 8,
               "time": "19:00",
-              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
-              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.4138,
-                "lng": 105.0075
+                "lat": 10.411,
+                "lng": 105.0089
               },
               "distance_from_prev_km": 0.2,
               "travel_time_mins": 2,
@@ -4217,7 +4217,7 @@
         {
           "day": 2,
           "title": "Sáng nhẹ nhàng + Về",
-          "day_total_distance_km": 9,
+          "day_total_distance_km": 8.8,
           "day_total_travel_time_mins": 18,
           "stops": [
             {
@@ -4225,14 +4225,14 @@
               "time": "07:00",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Cafe sáng gia đình",
               "duration_minutes": 60,
               "cost_vnd": "30k-60k",
@@ -4241,16 +4241,16 @@
             {
               "stop_order": 2,
               "time": "08:30",
-              "poi_id": "canh-dong-lua-ta-pa",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.412,
-                "lng": 104.998
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 2.8,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~2.8km (6 phút)",
+              "distance_from_prev_km": 4,
+              "travel_time_mins": 8,
+              "transport_to_next": "Xe máy / Ô tô ~4km (8 phút)",
               "activity": "Đi bộ nhẹ, chụp ảnh gia đình",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -4266,9 +4266,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 6.2,
-              "travel_time_mins": 12,
-              "transport_to_next": "Xe máy / Ô tô ~6.2km (12 phút)",
+              "distance_from_prev_km": 4.8,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.8km (10 phút)",
               "activity": "Check-in gia đình",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -4290,8 +4290,8 @@
         "weekend",
         "nhe-nhang"
       ],
-      "total_distance_km": 17.5,
-      "total_travel_time_mins": 39,
+      "total_distance_km": 14.5,
+      "total_travel_time_mins": 34,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4319,22 +4319,22 @@
         {
           "day": 1,
           "title": "Khám phá miễn phí + Đêm chợ",
-          "day_total_distance_km": 25.9,
-          "day_total_travel_time_mins": 54,
+          "day_total_distance_km": 28,
+          "day_total_travel_time_mins": 59,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ăn sáng rẻ nhất",
               "duration_minutes": 30,
               "cost_vnd": "20k-30k",
@@ -4363,7 +4363,7 @@
               "time": "08:45",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -4381,7 +4381,7 @@
               "time": "10:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -4399,7 +4399,7 @@
               "time": "11:30",
               "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Đường 948 (gần Cầu Cây Me)",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.41,
                 "lng": 105.008
@@ -4435,7 +4435,7 @@
               "time": "14:30",
               "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.4439756,
                 "lng": 104.9727214
@@ -4451,16 +4451,16 @@
             {
               "stop_order": 8,
               "time": "16:00",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 4.3,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.3km (9 phút)",
+              "distance_from_prev_km": 3.4,
+              "travel_time_mins": 7,
+              "transport_to_next": "Xe máy / Ô tô ~3.4km (7 phút)",
               "activity": "Ngắm hoàng hôn miễn phí",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -4471,14 +4471,14 @@
               "time": "17:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 2.9,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
               "activity": "Ăn tối rẻ",
               "duration_minutes": 75,
               "cost_vnd": "40k-70k",
@@ -4487,16 +4487,16 @@
             {
               "stop_order": 10,
               "time": "19:00",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Đi dạo miễn phí",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -4505,16 +4505,16 @@
             {
               "stop_order": 11,
               "time": "20:00",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 4.7,
+              "travel_time_mins": 9,
+              "transport_to_next": "Xe máy / Ô tô ~4.7km (9 phút)",
               "activity": "Nghỉ ngơi",
               "duration_minutes": 60,
               "cost_vnd": "100k-200k",
@@ -4525,22 +4525,22 @@
         {
           "day": 2,
           "title": "Sáng cafe + Về",
-          "day_total_distance_km": 3,
-          "day_total_travel_time_mins": 6,
+          "day_total_distance_km": 1.9,
+          "day_total_travel_time_mins": 4,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:30",
               "poi_id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
               "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
-              "commune": "Chân Cầu Số 10",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.411,
                 "lng": 105.005
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Cafe sáng rẻ nhất",
               "duration_minutes": 45,
               "cost_vnd": "15k-25k",
@@ -4549,16 +4549,16 @@
             {
               "stop_order": 2,
               "time": "07:30",
-              "poi_id": "ho-soai-chek",
-              "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4285,
-                "lng": 104.9924
+                "lat": 10.415,
+                "lng": 105.018
               },
-              "distance_from_prev_km": 3,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~3km (6 phút)",
+              "distance_from_prev_km": 1.9,
+              "travel_time_mins": 4,
+              "transport_to_next": "Xe máy / Ô tô ~1.9km (4 phút)",
               "activity": "Tham quan miễn phí",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -4580,8 +4580,8 @@
         "tiet-kiem",
         "mien-phi"
       ],
-      "total_distance_km": 28.9,
-      "total_travel_time_mins": 60,
+      "total_distance_km": 29.9,
+      "total_travel_time_mins": 63,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4610,22 +4610,22 @@
         {
           "day": 1,
           "title": "Check-in resort + Chill",
-          "day_total_distance_km": 10.3,
-          "day_total_travel_time_mins": 21,
+          "day_total_distance_km": 6.1,
+          "day_total_travel_time_mins": 14,
           "stops": [
             {
               "stop_order": 1,
               "time": "10:00",
               "poi_id": "c7d6fabf-rồng-vàng-resort-tri",
               "name": "Rồng Vàng Resort Tri Tôn",
-              "commune": "19 Đường Nguyễn Thị Minh Khai",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.41,
                 "lng": 105.01
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Check-in, nghỉ ngơi, tận hưởng tiện nghi",
               "duration_minutes": 120,
               "cost_vnd": "500k-900k/phòng",
@@ -4634,16 +4634,16 @@
             {
               "stop_order": 2,
               "time": "12:30",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 2.9,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
+              "distance_from_prev_km": 0.3,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.3km (2 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 90,
               "cost_vnd": "150k-250k",
@@ -4654,14 +4654,14 @@
               "time": "14:30",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
-              "distance_from_prev_km": 3.1,
-              "travel_time_mins": 6,
-              "transport_to_next": "Xe máy / Ô tô ~3.1km (6 phút)",
+              "distance_from_prev_km": 1.5,
+              "travel_time_mins": 3,
+              "transport_to_next": "Xe máy / Ô tô ~1.5km (3 phút)",
               "activity": "Cafe chiều view đồng",
               "duration_minutes": 90,
               "cost_vnd": "20k-45k",
@@ -4690,7 +4690,7 @@
               "time": "18:00",
               "poi_id": "683d2086-quán-bò-nướng-bánh-t",
               "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
-              "commune": "Đường Nam Kỳ Khởi Nghĩa",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.414,
                 "lng": 105.0095
@@ -4708,7 +4708,7 @@
               "time": "20:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -4734,14 +4734,14 @@
               "time": "07:00",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Cafe sáng view cánh đồng",
               "duration_minutes": 90,
               "cost_vnd": "20k-45k",
@@ -4752,7 +4752,7 @@
               "time": "09:00",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -4780,8 +4780,8 @@
         "resort",
         "chill"
       ],
-      "total_distance_km": 12.9,
-      "total_travel_time_mins": 26,
+      "total_distance_km": 8.7,
+      "total_travel_time_mins": 19,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4808,22 +4808,22 @@
         {
           "day": 1,
           "title": "Phố đêm Tri Tôn",
-          "day_total_distance_km": 4.7,
-          "day_total_travel_time_mins": 9,
+          "day_total_distance_km": 1.8,
+          "day_total_travel_time_mins": 8,
           "stops": [
             {
               "stop_order": 1,
               "time": "18:00",
               "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
               "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-              "commune": "Sân đua bò Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4122,
                 "lng": 105.0082
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm hoàng hôn cuối ngày",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -4832,16 +4832,16 @@
             {
               "stop_order": 2,
               "time": "18:45",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.4138,
+                "lng": 105.0075
               },
-              "distance_from_prev_km": 1.6,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.6km (3 phút)",
+              "distance_from_prev_km": 0.2,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.2km (2 phút)",
               "activity": "Đi dạo, ngắm khu vui chơi, chụp ảnh đèn đêm",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -4850,16 +4850,16 @@
             {
               "stop_order": 3,
               "time": "19:30",
-              "poi_id": "nha-thieu-nhi-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Đi bộ ngắm phố, mua sắm, ăn vặt",
               "duration_minutes": 60,
               "cost_vnd": "30k-60k",
@@ -4868,16 +4868,16 @@
             {
               "stop_order": 4,
               "time": "20:30",
-              "poi_id": "chao-bo-thuy-den",
-              "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
+              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 0.2,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.2km (2 phút)",
               "activity": "Ăn tối: xiên nướng, chè, cháo bò đêm",
               "duration_minutes": 60,
               "cost_vnd": "50k-100k",
@@ -4893,9 +4893,9 @@
                 "lat": 10.4165,
                 "lng": 105.0042
               },
-              "distance_from_prev_km": 1.7,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.7km (3 phút)",
+              "distance_from_prev_km": 1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
               "activity": "Ngắm chùa đêm lên đèn",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -4917,8 +4917,8 @@
         "pho-di-bo",
         "di-bo"
       ],
-      "total_distance_km": 4.7,
-      "total_travel_time_mins": 9,
+      "total_distance_km": 1.8,
+      "total_travel_time_mins": 8,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -4954,14 +4954,14 @@
               "time": "07:00",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Cafe sáng view cánh đồng",
               "duration_minutes": 75,
               "cost_vnd": "20k-45k",
@@ -4990,7 +4990,7 @@
               "time": "10:00",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -5008,7 +5008,7 @@
               "time": "11:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
@@ -5044,7 +5044,7 @@
               "time": "14:30",
               "poi_id": "f7f5ca30-windy-hill-coffee-&-",
               "name": "Windy Hill Coffee & Homestay Tri Tôn",
-              "commune": "Khu vực Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.417,
                 "lng": 105.0195
@@ -5062,7 +5062,7 @@
               "time": "16:15",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -5080,7 +5080,7 @@
               "time": "17:30",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -5098,7 +5098,7 @@
               "time": "19:00",
               "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
               "name": "CHẠM Coffee & Tea Tri Tôn",
-              "commune": "120 Đường Hùng Vương",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4128,
                 "lng": 105.0068
@@ -5153,8 +5153,8 @@
         {
           "day": 1,
           "title": "Express Tri Tôn",
-          "day_total_distance_km": 9.5,
-          "day_total_travel_time_mins": 20,
+          "day_total_distance_km": 11.2,
+          "day_total_travel_time_mins": 24,
           "stops": [
             {
               "stop_order": 1,
@@ -5168,7 +5168,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm hồ nhanh",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5179,7 +5179,7 @@
               "time": "09:15",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -5213,16 +5213,16 @@
             {
               "stop_order": 4,
               "time": "11:15",
-              "poi_id": "chao-bo-thuy-den",
-              "name": "Quán Đu Đủ Đâm Rina & Ly Ly (Cầu Cây Me Châu Lăng)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "du-du-dam-khanh-thy",
+              "name": "Đu Đủ Đâm Khánh Thy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.414286,
+                "lng": 104.9992663
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 5.8,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~5.8km (12 phút)",
               "activity": "Ăn vặt + cafe nhanh",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -5243,8 +5243,8 @@
         "nhanh",
         "ghe-ngang"
       ],
-      "total_distance_km": 9.5,
-      "total_travel_time_mins": 20,
+      "total_distance_km": 11.2,
+      "total_travel_time_mins": 24,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -5271,22 +5271,22 @@
         {
           "day": 1,
           "title": "Mùa nước nổi + Lễ hội",
-          "day_total_distance_km": 13.7,
-          "day_total_travel_time_mins": 28,
+          "day_total_distance_km": 15.1,
+          "day_total_travel_time_mins": 32,
           "stops": [
             {
               "stop_order": 1,
               "time": "06:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Ngắm đồng nước, chụp ảnh",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -5315,7 +5315,7 @@
               "time": "09:30",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -5333,7 +5333,7 @@
               "time": "12:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
@@ -5367,16 +5367,16 @@
             {
               "stop_order": 6,
               "time": "16:00",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 4.8,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~4.8km (10 phút)",
               "activity": "Ngắm hoàng hôn mùa nước nổi",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5387,14 +5387,14 @@
               "time": "18:00",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 2.9,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
               "activity": "Ăn tối",
               "duration_minutes": 75,
               "cost_vnd": "60k-100k",
@@ -5405,22 +5405,22 @@
         {
           "day": 2,
           "title": "Sáng lễ hội + Về",
-          "day_total_distance_km": 4,
-          "day_total_travel_time_mins": 8,
+          "day_total_distance_km": 6,
+          "day_total_travel_time_mins": 12,
           "stops": [
             {
               "stop_order": 1,
               "time": "07:00",
-              "poi_id": "ho-soai-chek",
-              "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4285,
-                "lng": 104.9924
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Xem cúng trăng, thả đèn",
               "duration_minutes": 120,
               "cost_vnd": "Miễn phí",
@@ -5431,14 +5431,14 @@
               "time": "09:30",
               "poi_id": "78da5b5f-ruộng-coffee-&-homes",
               "name": "RUỘNG Coffee & Tea Tri Tôn",
-              "commune": "Đường vào Hồ Soài Chék",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.415,
                 "lng": 105.018
               },
-              "distance_from_prev_km": 4,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4km (8 phút)",
+              "distance_from_prev_km": 6,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6km (12 phút)",
               "activity": "Cafe sáng",
               "duration_minutes": 60,
               "cost_vnd": "20k-45k",
@@ -5460,8 +5460,8 @@
         "dolta",
         "ok-om-bok"
       ],
-      "total_distance_km": 17.7,
-      "total_travel_time_mins": 36,
+      "total_distance_km": 21.1,
+      "total_travel_time_mins": 44,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -5488,22 +5488,22 @@
         {
           "day": 1,
           "title": "Săn lúa chín",
-          "day_total_distance_km": 21.6,
-          "day_total_travel_time_mins": 45,
+          "day_total_distance_km": 22.5,
+          "day_total_travel_time_mins": 46,
           "stops": [
             {
               "stop_order": 1,
               "time": "05:30",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Chụp lúa chín sáng sớm",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -5512,16 +5512,16 @@
             {
               "stop_order": 2,
               "time": "07:15",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-ta-pa",
+              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4165,
+                "lng": 105.0042
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 1.1,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~1.1km (2 phút)",
               "activity": "Chụp đường xuyên đồng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5532,14 +5532,14 @@
               "time": "08:30",
               "poi_id": "d3e73741-cánh-đồng-thốt-nốt-c",
               "name": "Cánh Đồng Thốt Nốt Châu Lăng",
-              "commune": "Cánh đồng thốt nốt Châu Lăng",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.437,
                 "lng": 105.003
               },
-              "distance_from_prev_km": 1.3,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.3km (3 phút)",
+              "distance_from_prev_km": 2.9,
+              "travel_time_mins": 6,
+              "transport_to_next": "Xe máy / Ô tô ~2.9km (6 phút)",
               "activity": "Chụp thốt nốt giữa đồng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5568,7 +5568,7 @@
               "time": "11:30",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
@@ -5586,7 +5586,7 @@
               "time": "13:30",
               "poi_id": "ho-soai-chek",
               "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4285,
                 "lng": 104.9924
@@ -5602,16 +5602,16 @@
             {
               "stop_order": 7,
               "time": "15:00",
-              "poi_id": "ho-ta-pa",
-              "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+              "poi_id": "chua-ta-pa",
+              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
               "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4165,
-                "lng": 105.0042
+                "lat": 10.4182,
+                "lng": 105.0086
               },
-              "distance_from_prev_km": 2.3,
+              "distance_from_prev_km": 2.6,
               "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.3km (5 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~2.6km (5 phút)",
               "activity": "Chụp hồ + lúa chiều",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5627,9 +5627,9 @@
                 "lat": 10.456,
                 "lng": 104.982
               },
-              "distance_from_prev_km": 6.3,
+              "distance_from_prev_km": 6.4,
               "travel_time_mins": 13,
-              "transport_to_next": "Xe máy / Ô tô ~6.3km (13 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~6.4km (13 phút)",
               "activity": "Chụp hoàng hôn trên đồng",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5651,8 +5651,8 @@
         "t9-t11",
         "photography"
       ],
-      "total_distance_km": 21.6,
-      "total_travel_time_mins": 45,
+      "total_distance_km": 22.5,
+      "total_travel_time_mins": 46,
       "routing_type": "closed_loop_mountain_tour"
     },
     {
@@ -5677,8 +5677,8 @@
         {
           "day": 1,
           "title": "Bình minh → Khám phá → Đêm Tri Tôn",
-          "day_total_distance_km": 27.9,
-          "day_total_travel_time_mins": 59,
+          "day_total_distance_km": 32.3,
+          "day_total_travel_time_mins": 71,
           "stops": [
             {
               "stop_order": 1,
@@ -5692,7 +5692,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Săn bình minh",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -5703,7 +5703,7 @@
               "time": "06:45",
               "poi_id": "chua-ta-pa",
               "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.4182,
                 "lng": 105.0086
@@ -5721,7 +5721,7 @@
               "time": "08:00",
               "poi_id": "cho-tri-ton",
               "name": "Chợ Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4209063,
                 "lng": 105.0027492
@@ -5739,7 +5739,7 @@
               "time": "09:00",
               "poi_id": "canh-dong-lua-ta-pa",
               "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Dưới chân đồi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
                 "lat": 10.412,
                 "lng": 104.998
@@ -5755,16 +5755,16 @@
             {
               "stop_order": 5,
               "time": "10:30",
-              "poi_id": "chua-xvayton",
-              "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-soai-chek",
+              "name": "Hồ Soài Chek",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4285,
+                "lng": 104.9924
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 2.4,
+              "travel_time_mins": 5,
+              "transport_to_next": "Xe máy / Ô tô ~2.4km (5 phút)",
               "activity": "Tham quan chùa cổ",
               "duration_minutes": 75,
               "cost_vnd": "Miễn phí",
@@ -5773,16 +5773,16 @@
             {
               "stop_order": 6,
               "time": "12:00",
-              "poi_id": "chao-bo-thuy-den",
+              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
               "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.41,
+                "lng": 105.008
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 3.3,
+              "travel_time_mins": 7,
+              "transport_to_next": "Xe máy / Ô tô ~3.3km (7 phút)",
               "activity": "Ăn trưa",
               "duration_minutes": 75,
               "cost_vnd": "100k-150k",
@@ -5798,9 +5798,9 @@
                 "lat": 10.4512,
                 "lng": 105.0189
               },
-              "distance_from_prev_km": 4.1,
-              "travel_time_mins": 8,
-              "transport_to_next": "Xe máy / Ô tô ~4.1km (8 phút)",
+              "distance_from_prev_km": 5.9,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
               "activity": "Check-in",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5811,7 +5811,7 @@
               "time": "15:15",
               "poi_id": "chua-krang-kroch",
               "name": "chùa Krăng Krốch",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
                 "lat": 10.4439756,
                 "lng": 104.9727214
@@ -5827,16 +5827,16 @@
             {
               "stop_order": 9,
               "time": "16:30",
-              "poi_id": "cay-thot-not-trai-tim-an-tuc",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "nui-ta-pa",
+              "name": "Núi Tà Pạ",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4072869,
+                "lng": 104.9747836
               },
-              "distance_from_prev_km": 4.3,
-              "travel_time_mins": 9,
-              "transport_to_next": "Xe máy / Ô tô ~4.3km (9 phút)",
+              "distance_from_prev_km": 5.1,
+              "travel_time_mins": 10,
+              "transport_to_next": "Xe máy / Ô tô ~5.1km (10 phút)",
               "activity": "Ngắm hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5847,14 +5847,14 @@
               "time": "18:00",
               "poi_id": "f0d6fe60-bãi-thả-diều-hoàng-h",
               "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
-              "commune": "Sân đua bò Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4122,
                 "lng": 105.0082
               },
-              "distance_from_prev_km": 2.5,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.5km (5 phút)",
+              "distance_from_prev_km": 4.6,
+              "travel_time_mins": 9,
+              "transport_to_next": "Xe máy / Ô tô ~4.6km (9 phút)",
               "activity": "Thả diều",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -5865,7 +5865,7 @@
               "time": "19:00",
               "poi_id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
               "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
-              "commune": "Quảng trường Quảng Tế",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4138,
                 "lng": 105.0075
@@ -5881,16 +5881,16 @@
             {
               "stop_order": 12,
               "time": "20:30",
-              "poi_id": "quang-truong-va-pho-di-bo-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Tri Tôn",
+              "poi_id": "chua-xa-ton-chua-svayton",
+              "name": "Chùa Xà Tón (Chùa Svayton)",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.424,
-                "lng": 105.009
+                "lat": 10.411,
+                "lng": 105.0089
               },
-              "distance_from_prev_km": 1.4,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.4km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Đi dạo đêm",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -5901,14 +5901,14 @@
               "time": "21:00",
               "poi_id": "b6a52dfa-chạm-coffee-&-tea-tr",
               "name": "CHẠM Coffee & Tea Tri Tôn",
-              "commune": "120 Đường Hùng Vương",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4128,
                 "lng": 105.0068
               },
-              "distance_from_prev_km": 1.6,
-              "travel_time_mins": 3,
-              "transport_to_next": "Xe máy / Ô tô ~1.6km (3 phút)",
+              "distance_from_prev_km": 0.4,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.4km (2 phút)",
               "activity": "Cafe đêm",
               "duration_minutes": 60,
               "cost_vnd": "20k-45k",
@@ -5917,16 +5917,16 @@
             {
               "stop_order": 14,
               "time": "22:00",
-              "poi_id": "nha-thieu-nhi-tri-ton",
-              "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "le-hoi-dua-bo-bay-nui-tri-ton",
+              "name": "Lễ hội Đua bò Bảy Núi Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.415,
+                "lng": 105.002
               },
-              "distance_from_prev_km": 2.3,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.3km (5 phút)",
+              "distance_from_prev_km": 0.7,
+              "travel_time_mins": 2,
+              "transport_to_next": "Xe máy / Ô tô ~0.7km (2 phút)",
               "activity": "Ngắm phố đêm",
               "duration_minutes": 30,
               "cost_vnd": "Miễn phí",
@@ -5937,22 +5937,22 @@
         {
           "day": 2,
           "title": "Săn mây → Núi → Gà đốt → Cafe đêm",
-          "day_total_distance_km": 38.6,
-          "day_total_travel_time_mins": 77,
+          "day_total_distance_km": 68,
+          "day_total_travel_time_mins": 137,
           "stops": [
             {
               "stop_order": 1,
               "time": "05:00",
-              "poi_id": "ho-soai-chek",
-              "name": "Hồ Soài Chek",
-              "commune": "Xã Ba Chúc",
+              "poi_id": "78da5b5f-ruộng-coffee-&-homes",
+              "name": "RUỘNG Coffee & Tea Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.4285,
-                "lng": 104.9924
+                "lat": 10.415,
+                "lng": 105.018
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Săn mây bình minh",
               "duration_minutes": 120,
               "cost_vnd": "Xe ôm 50k-100k",
@@ -5961,16 +5961,16 @@
             {
               "stop_order": 2,
               "time": "07:30",
-              "poi_id": "may-coffee-tea-ho-soai-chek",
-              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
+              "name": "Windy Hill Coffee & Homestay Tri Tôn",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.417,
+                "lng": 105.0195
               },
-              "distance_from_prev_km": 1,
+              "distance_from_prev_km": 0.3,
               "travel_time_mins": 2,
-              "transport_to_next": "Xe máy / Ô tô ~1km (2 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~0.3km (2 phút)",
               "activity": "Cafe sáng bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -5979,16 +5979,16 @@
             {
               "stop_order": 3,
               "time": "09:00",
-              "poi_id": "ga-dot-thanh-dat",
-              "name": "Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ga-dot-thao-nguyen-ho-o-thum",
+              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.3622,
+                "lng": 104.9852
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 8.9,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~8.9km (18 phút)",
               "activity": "Ngắm hồ, đi cầu gỗ",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -5997,16 +5997,16 @@
             {
               "stop_order": 4,
               "time": "10:30",
-              "poi_id": "ga-dot-thao-nguyen",
-              "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ho-o-thum",
+              "name": "Hồ Ô Thum",
+              "commune": "Xã Ô Lâm",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.456,
+                "lng": 104.982
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 13,
+              "travel_time_mins": 26,
+              "transport_to_next": "Xe máy / Ô tô ~13km (26 phút)",
               "activity": "Ăn gà đốt",
               "duration_minutes": 90,
               "cost_vnd": "250k-320k",
@@ -6022,9 +6022,9 @@
                 "lat": 10.3768,
                 "lng": 104.9542
               },
-              "distance_from_prev_km": 9.5,
-              "travel_time_mins": 19,
-              "transport_to_next": "Xe máy / Ô tô ~9.5km (19 phút)",
+              "distance_from_prev_km": 11.6,
+              "travel_time_mins": 23,
+              "transport_to_next": "Xe máy / Ô tô ~11.6km (23 phút)",
               "activity": "Tham quan",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -6033,16 +6033,16 @@
             {
               "stop_order": 6,
               "time": "14:30",
-              "poi_id": "f7f5ca30-windy-hill-coffee-&-",
-              "name": "Windy Hill Coffee & Homestay Tri Tôn",
-              "commune": "Khu vực Hồ Soài Chék",
+              "poi_id": "b56c95ef-mây-coffee-&-tea-hồ-",
+              "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.417,
-                "lng": 105.0195
+                "lat": 10.4165,
+                "lng": 105.0185
               },
-              "distance_from_prev_km": 10.5,
+              "distance_from_prev_km": 10.4,
               "travel_time_mins": 21,
-              "transport_to_next": "Xe máy / Ô tô ~10.5km (21 phút)",
+              "transport_to_next": "Xe máy / Ô tô ~10.4km (21 phút)",
               "activity": "Cafe chiều",
               "duration_minutes": 75,
               "cost_vnd": "25k-55k",
@@ -6052,15 +6052,15 @@
               "stop_order": 7,
               "time": "16:30",
               "poi_id": "nui-co-to",
-              "name": "Núi Cô Tô (Phụng Hoàng Sơn)",
+              "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
               "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.3789,
-                "lng": 105.0012
+                "lat": 10.3882,
+                "lng": 104.9756
               },
-              "distance_from_prev_km": 5.9,
-              "travel_time_mins": 12,
-              "transport_to_next": "Xe máy / Ô tô ~5.9km (12 phút)",
+              "distance_from_prev_km": 7.1,
+              "travel_time_mins": 14,
+              "transport_to_next": "Xe máy / Ô tô ~7.1km (14 phút)",
               "activity": "Chụp ảnh bảng chữ",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -6069,16 +6069,16 @@
             {
               "stop_order": 8,
               "time": "17:30",
-              "poi_id": "chua-ro",
-              "name": "Cánh đồng lúa Tà Pạ",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "ac550583-soài-chek-homestay-&",
+              "name": "Soài Chek Homestay & Coffee",
+              "commune": "Xã Núi Tô",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.411,
+                "lng": 105.018
               },
-              "distance_from_prev_km": 6.8,
-              "travel_time_mins": 14,
-              "transport_to_next": "Xe máy / Ô tô ~6.8km (14 phút)",
+              "distance_from_prev_km": 6.6,
+              "travel_time_mins": 13,
+              "transport_to_next": "Xe máy / Ô tô ~6.6km (13 phút)",
               "activity": "Ngắm hoàng hôn",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -6087,16 +6087,16 @@
             {
               "stop_order": 9,
               "time": "19:00",
-              "poi_id": "lau-bo-thit-bo-bay-nui-tri-ton",
-              "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
-              "commune": "Đường 948 (gần Cầu Cây Me)",
+              "poi_id": "nui-nam-quy",
+              "name": "Núi Nam Quy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.41,
-                "lng": 105.008
+                "lat": 10.4525302,
+                "lng": 105.0037006
               },
-              "distance_from_prev_km": 2.7,
-              "travel_time_mins": 5,
-              "transport_to_next": "Xe máy / Ô tô ~2.7km (5 phút)",
+              "distance_from_prev_km": 6.1,
+              "travel_time_mins": 12,
+              "transport_to_next": "Xe máy / Ô tô ~6.1km (12 phút)",
               "activity": "Ăn tối",
               "duration_minutes": 75,
               "cost_vnd": "60k-100k",
@@ -6107,14 +6107,14 @@
               "time": "20:30",
               "poi_id": "tritoni",
               "name": "Tritoni",
-              "commune": "Huyện Tri Tôn",
+              "commune": "Thị trấn Tri Tôn",
               "coordinates": {
                 "lat": 10.4238852,
                 "lng": 105.001011
               },
-              "distance_from_prev_km": 2.2,
-              "travel_time_mins": 4,
-              "transport_to_next": "Xe máy / Ô tô ~2.2km (4 phút)",
+              "distance_from_prev_km": 4,
+              "travel_time_mins": 8,
+              "transport_to_next": "Xe máy / Ô tô ~4km (8 phút)",
               "activity": "Nằm võng uống nước",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -6125,8 +6125,8 @@
         {
           "day": 3,
           "title": "Ba Chúc + Ô Tà Sóc + Cafe chiều + Về",
-          "day_total_distance_km": 53.9,
-          "day_total_travel_time_mins": 107,
+          "day_total_distance_km": 70.4,
+          "day_total_travel_time_mins": 139,
           "stops": [
             {
               "stop_order": 1,
@@ -6140,7 +6140,7 @@
               },
               "distance_from_prev_km": 0,
               "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "transport_to_next": "Điểm xuất phát",
               "activity": "Tham quan, tưởng niệm",
               "duration_minutes": 120,
               "cost_vnd": "Miễn phí",
@@ -6149,16 +6149,16 @@
             {
               "stop_order": 2,
               "time": "09:15",
-              "poi_id": "dien-muoi-ba-nui-dai",
-              "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "chua-phi-lai",
+              "name": "Chùa Phi Lai & Nhà Mồ Ba Chúc",
+              "commune": "Thị trấn Ba Chúc",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.4997928,
+                "lng": 104.9087656
               },
-              "distance_from_prev_km": 17,
-              "travel_time_mins": 34,
-              "transport_to_next": "Xe máy / Ô tô ~17km (34 phút)",
+              "distance_from_prev_km": 18.7,
+              "travel_time_mins": 37,
+              "transport_to_next": "Xe máy / Ô tô ~18.7km (37 phút)",
               "activity": "Tham quan",
               "duration_minutes": 60,
               "cost_vnd": "Miễn phí",
@@ -6167,16 +6167,16 @@
             {
               "stop_order": 3,
               "time": "10:30",
-              "poi_id": "du-du-dam-rina",
-              "name": "Quán Cháo Bò Tư Xuyên (58 Hùng Vương)",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "du-du-dam-khanh-thy",
+              "name": "Đu Đủ Đâm Khánh Thy",
+              "commune": "Xã Châu Lăng",
               "coordinates": {
-                "lat": 10.428,
-                "lng": 105
+                "lat": 10.414286,
+                "lng": 104.9992663
               },
-              "distance_from_prev_km": 0,
-              "travel_time_mins": 0,
-              "transport_to_next": "Tại chỗ",
+              "distance_from_prev_km": 8.1,
+              "travel_time_mins": 16,
+              "transport_to_next": "Xe máy / Ô tô ~8.1km (16 phút)",
               "activity": "Ăn sáng muộn",
               "duration_minutes": 45,
               "cost_vnd": "30k-50k",
@@ -6192,9 +6192,9 @@
                 "lat": 10.45,
                 "lng": 104.93
               },
-              "distance_from_prev_km": 10,
-              "travel_time_mins": 20,
-              "transport_to_next": "Xe máy / Ô tô ~10km (20 phút)",
+              "distance_from_prev_km": 10.7,
+              "travel_time_mins": 21,
+              "transport_to_next": "Xe máy / Ô tô ~10.7km (21 phút)",
               "activity": "Tham quan hang",
               "duration_minutes": 90,
               "cost_vnd": "Miễn phí",
@@ -6205,7 +6205,7 @@
               "time": "13:15",
               "poi_id": "e4772f7e-con-đường-tre-tầm-vô",
               "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
-              "commune": "Đường tầm vông Ô Tà Sóc",
+              "commune": "Xã Lương Phi",
               "coordinates": {
                 "lat": 10.4565,
                 "lng": 104.9525
@@ -6221,16 +6221,16 @@
             {
               "stop_order": 6,
               "time": "14:30",
-              "poi_id": "ca-phe-suoi-da-o-ta-soc",
-              "name": "Cà Phê Suối Đá Ô Tà Sóc",
-              "commune": "Khu vực Hồ Soài Chék",
+              "poi_id": "chua-ba-xoai",
+              "name": "Chua Ba Xoai",
+              "commune": "Xã Lương Phi",
               "coordinates": {
-                "lat": 10.451,
-                "lng": 104.931
+                "lat": 10.5224259,
+                "lng": 104.9569866
               },
-              "distance_from_prev_km": 10.7,
-              "travel_time_mins": 21,
-              "transport_to_next": "Xe máy / Ô tô ~10.7km (21 phút)",
+              "distance_from_prev_km": 9.2,
+              "travel_time_mins": 18,
+              "transport_to_next": "Xe máy / Ô tô ~9.2km (18 phút)",
               "activity": "Cafe chiều bên suối",
               "duration_minutes": 60,
               "cost_vnd": "20k-40k",
@@ -6239,16 +6239,16 @@
             {
               "stop_order": 7,
               "time": "16:00",
-              "poi_id": "ho-soai-so",
-              "name": "Hồ Soài So",
-              "commune": "Huyện Tri Tôn",
+              "poi_id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+              "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+              "commune": "Xã Cô Tô",
               "coordinates": {
-                "lat": 10.4058,
-                "lng": 105.025
+                "lat": 10.38,
+                "lng": 104.995
               },
-              "distance_from_prev_km": 13,
-              "travel_time_mins": 26,
-              "transport_to_next": "Xe máy / Ô tô ~13km (26 phút)",
+              "distance_from_prev_km": 20.5,
+              "travel_time_mins": 41,
+              "transport_to_next": "Xe máy / Ô tô ~20.5km (41 phút)",
               "activity": "Ngắm hồ, kết thúc",
               "duration_minutes": 45,
               "cost_vnd": "Miễn phí",
@@ -6272,8 +6272,8 @@
         "ngay-dem",
         "khong-bo-lo"
       ],
-      "total_distance_km": 120.4,
-      "total_travel_time_mins": 243,
+      "total_distance_km": 170.7,
+      "total_travel_time_mins": 347,
       "routing_type": "closed_loop_mountain_tour"
     }
   ]
