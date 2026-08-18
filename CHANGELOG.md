@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.9.0-GROUND-TRUTH-GPS-VERIFICATION] - 2026-08-18
+
+### 🗺️ Kiểm Chuẩn Toàn Diện Tọa Độ GPS & Địa Giới Thực Địa Google Maps
+
+#### 1. Chuẩn Hóa 100% Địa Giới & GPS Thực Địa Theo Google Maps
+- **Kiểm toán 14 Địa điểm Tier 1 & Toàn Bộ Hệ Thống**: Xác minh từng tọa độ GPS, khớp chuẩn xác với Google Maps (ví dụ: *Hồ Soài Chek chuẩn Xã Núi Tô, Hàng Thốt Nốt Trái Tim chuẩn Xã An Tức, Hồ Ô Thum chuẩn Xã Ô Lâm [10.3765, 104.9875]*).
+- **Smart Delta Sync Lập Tức**: Tự động PATCH cập nhật ngay 119 bản ghi `places` và 27 `preset_itineraries` lên Supabase PostgreSQL theo đúng chuẩn **RULE 01**, **RULE 02** và **Smart Delta Sync Protocol**.
+
+---
+
 ## [v81.8.0-DYNAMIC-CONTEXTUAL-SUGGESTION-ENGINE-V3.1] - 2026-08-18
 
 ### 🧠 Ra Mắt Động Cơ Sinh Gợi Ý Từ Khóa Động 100% (Dynamic Contextual Suggestion Engine v3.1)
