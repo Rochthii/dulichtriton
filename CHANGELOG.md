@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.2.0-ZERO-DUPLICATE-UNIQUE-PHOTOS-INGESTION] - 2026-08-18
+
+### 💎 Triệt Tiêu 100% Ảnh Dùng Chung — Ánh Xạ 1-to-1 Ảnh Riêng Biệt Độc Nhất Cho Từng Địa Điểm
+
+#### 1. Nguyên Tắc 0% Ảnh Trùng Lặp (Zero Duplicate Real Photos Mandate)
+- **Ánh xạ 1-to-1 độc nhất**: Mỗi địa điểm sở hữu một đường dẫn hình ảnh chất lượng cao riêng biệt, thể hiện chính xác thực thể của chính địa điểm đó (từ Hồ Tà Pạ, Chùa Tà Pạ, Cổng Trời Koh Kas, Núi Cô Tô, đến từng quán Gà Đốt Ô Thum, Quán Đu Đủ Đâm Rina, Quán Cháo Bò, Lò Bánh Bò Út Cột, RUỘNG Coffee, Tuyết Anh Homestay...).
+- **Đồng bộ toàn diện lên Database**: Đã cập nhật 87+ địa điểm có ảnh riêng độc nhất và đồng bộ ngay lên Supabase PostgreSQL qua **Smart Delta Sync**.
+
+---
+
 ## [v82.1.0-TIER2-REAL-PHOTO-INGESTION] - 2026-08-18
 
 ### 📸 Hoàn Tất Nạp & Đồng Bộ Hình Ảnh Chuyên Đề Cho 38+ Địa Điểm Tier 2
