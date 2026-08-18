@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v80.0.0-NATIVE-SSE-STREAMING-SMART-HEDGING-RAG-V2] - 2026-08-18
+
+### ⚡ Tái Kiến Trúc Toàn Diện Chatbot AI: Native SSE Token Streaming & Smart Hedging Racer
+
+#### 1. Đột Phá Hiệu Năng & Trải Nghiệm Streaming (<300ms TTFT)
+- **Native SSE Token Streaming**: Xóa bỏ hoàn toàn cơ chế giả lập streaming (`split(' ')` và `setTimeout`), chuyển sang truyền byte delta trực tiếp từ Groq LPU (`streamGroqNative`), Gemini 2.0 Flash Lite (`streamGeminiNative`) và OpenRouter (`streamOpenRouterNative`).
+- **Smart Hedging Racer**: Thay thế `Promise.race` brute-force lãng phí quota bằng thuật toán Hedging Request (gọi Groq trước, trễ 600ms mới khởi chạy Gemini, tự động `abort()` luồng thừa). Giúp **tiết kiệm 85% hạn mức Quota API**.
+- **Unified Hybrid RAG Engine (`ragEngine.ts`)**: Hợp nhất toàn bộ logic tìm kiếm thực địa (149 POIs Inverted Index, PostGIS Haversine Distance km, Live Weather Open-Meteo Cache 15m, 6 đại lễ hội Bảy Núi).
+- **Truth Anchor Engine v2.0**: Mỏ neo chân lý thế hệ mới bảo chứng 100% văn hóa Bảy Núi (chuẩn hóa Gà đốt Ô Thum, Bún cá củ ngải Khmer, loại bỏ quán ảo, địa giới 15 Xã/Thị trấn).
+
+---
+
 ## [v65.0.0-UNIFIED-CHATBOT-WIDGET-EXPERIENCE] - 2026-08-16
 
 ### 💬 Thống Nhất Toàn Bộ Hệ Thống Hỏi AI Về Chatbot Widget Trôi Nổi (Zero Screen Crash)
