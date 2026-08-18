@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.5.0-BATCH2-5-HERITAGE-FOOD-PLACES-REAL-PHOTOS] - 2026-08-18
+
+### 🛕 Hoàn Tất Đợt 2 (Batch 2): 5 Địa Điểm Di Tích & Ẩm Thực Cốt Lõi Với Ảnh Thật 100%
+
+#### 1. Nạp Bộ Sưu Tập Ảnh Thực Tế & Điểm Check-in Chi Tiết (Batch 2)
+- **Chùa Xvayton (Svayton)**: 4 ảnh tư liệu Wikimedia Commons (Chánh điện cổ hơn 300 năm, tượng Phật Thích Ca, khuôn viên tháp cổ, hồ sen) + 3 Check-in spots.
+- **Khu Di Tích Lịch Sử Đồi Tức Dụp**: 4 ảnh thực tế (Cửa Hang C7 trong lòng đá granite, bậc thang leo đồi, tượng đài chiến thắng) + 2 Check-in spots.
+- **Khu Chứng Tích Nhà Mồ Ba Chúc**: 4 ảnh tư liệu di tích (Nhà mồ hoa sen 8 cánh, chùa Phi Lai, khu trưng bày chứng tích) + 2 Check-in spots.
+- **Hồ Ô Thum & Cầu Gỗ Mộc Mạc**: 4 ảnh thực tế (Toàn cảnh mặt hồ thung lũng, cầu gỗ mộc chữ Y, chòi lá ven đồi, bến kayak) + 2 Check-in spots.
+- **Quán Gà Đốt Thảo Nguyên Ô Thum**: 4 ảnh thực tế (Mâm gà đốt lá chúc da giòn, thố gang đốt than hồng, vườn nho trĩu quả) + 2 Check-in spots.
+- **Đồng bộ hóa tức thì**: Đã PATCH trực tiếp lên bảng `places` trên Supabase PostgreSQL.
+
+---
+
 ## [v82.4.0-BATCH1-5-ICONIC-PLACES-REAL-PHOTOS] - 2026-08-18
 
 ### 💎 Hoàn Tất Đợt 1 (Batch 1): 5 Địa Điểm Kim Cương Với Ảnh Thật Chọn Lọc 100%
