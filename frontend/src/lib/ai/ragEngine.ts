@@ -18,6 +18,7 @@ import festivalsData from '@/data/tri_ton_festivals.json';
 import itinerariesData from '@/data/lichtrinh.json';
 import { generateEvidenceLinks } from '../evidenceGenerator';
 import { optimizeClosedLoopRoute, type SpatialPoi } from './spatialRouter';
+import { generateSmartSuggestions } from './contextualSuggestionEngine';
 
 export interface FormattedPoi {
   id: string;
@@ -477,7 +478,7 @@ export async function buildUnifiedRagContext(
   return {
     ragContext: fullRagContext,
     places: formattedPlaces,
-    suggestions: buildDynamicSuggestions(lower, timeWindow),
+    suggestions: generateSmartSuggestions({ query: userQuery, matchedPlaces: formattedPlaces }),
     weatherText,
     timeWindowText: timeWindowSnippet,
   };

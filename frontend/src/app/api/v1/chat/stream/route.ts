@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { streamAIResponse, buildUnifiedRagContext } from '@/lib/aiProvider';
+import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -224,11 +225,17 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // 4. Send Completion Event
+        // 4. Send Completion Event with 100% Dynamic Contextual Suggestions
+        const dynamicSuggestions = generateSmartSuggestions({
+          query: queryStr,
+          assistantAnswer: fullText,
+          matchedPlaces: ragResult.places,
+        });
+
         send({
           type: 'done',
           full_text: fullText,
-          suggestions: ragResult.suggestions,
+          suggestions: dynamicSuggestions,
           places: ragResult.places,
         });
 

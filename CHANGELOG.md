@@ -4,6 +4,16 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.8.0-DYNAMIC-CONTEXTUAL-SUGGESTION-ENGINE-V3.1] - 2026-08-18
+
+### 🧠 Ra Mắt Động Cơ Sinh Gợi Ý Từ Khóa Động 100% (Dynamic Contextual Suggestion Engine v3.1)
+
+#### 1. Đột Phá Phân Tích Thực Thể Thời Gian Thực (Real-Time Answer Entity Extraction)
+- **Tự động quét thực thể trong câu trả lời của AI**: Quét trực tiếp các POIs cụ thể (ví dụ: *Gà Đốt Thảo Nguyên Ô Thum, Chùa Xvayton, Vồ Hội Mẹ, Cổng Trời Koh Kas...*) vừa được AI phát ra để tự động sinh các câu hỏi đào sâu mang tính hành động cao (*"Đặt bàn trước tại [Tên Quán]"*, *"Góc chụp ảnh đẹp nhất tại [Tên Điểm]"*, *"Từ [Tên Điểm] đi tiếp sang đâu tiện đường?"*).
+- **Tích hợp sâu vào Stream SSE & JSON Query**: Cập nhật cả `chat/stream` và `chat/query`, triệt tiêu 100% các gợi ý tĩnh/cứng.
+
+---
+
 ## [v81.7.0-PERSISTENT-SMART-ITINERARY-REOPEN-UX] - 2026-08-18
 
 ### 🌟 Đột Phá UX: Cứ Mở Lại Chatbot Là Tự Động Hiện Bảng 27 Lịch Trình Khép Vòng

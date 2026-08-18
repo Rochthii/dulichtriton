@@ -4,6 +4,7 @@ import { calculateItineraryRoute } from '@/lib/routeEngine';
 import { generateEvidenceLinks } from '@/lib/evidenceGenerator';
 import { calculateItineraryCost } from '@/lib/costCalculator';
 import { generateAIResponse as generateProviderAIResponse } from '@/lib/aiProvider';
+import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 import transportData from '@/data/tri_ton_transportation.json';
 import festivalsData from '@/data/tri_ton_festivals.json';
 
@@ -633,32 +634,12 @@ export async function POST(req: NextRequest) {
     // Fetch context-aware videos (POI matched or Topic matched)
     const videos = await fetchContextAwareVideos(queryStr, places);
 
-    // Context-aware dynamic suggestions
-    let suggestions = [
-      'Đặc sản Gà Đốt Ô Thum ở đâu ngon?',
-      'Lộ trình tham quan 2 ngày 1 đêm Tri Tôn',
-      'Khung giờ chụp ảnh đẹp nhất Hồ Tà Pạ',
-    ];
-
-    if (lowerQuery.includes('ăn') || lowerQuery.includes('gà đốt') || lowerQuery.includes('cháo bò')) {
-      suggestions = [
-        'Quán Gà Đốt Ô Thum chuẩn vị nhất',
-        'Địa chỉ quán Cháo Bò lá trúc nổi tiếng',
-        'Quán Bún cá Khmer Tri Tôn',
-      ];
-    } else if (lowerQuery.includes('chùa') || lowerQuery.includes('khmer') || lowerQuery.includes('văn hóa')) {
-      suggestions = [
-        'Đường lên Chùa Tà Pạ',
-        'Cổng trời Chùa Koh Kas',
-        'Lễ hội Đua bò Khmer Tri Tôn diễn ra khi nào?',
-      ];
-    } else if (lowerQuery.includes('ở') || lowerQuery.includes('homestay') || lowerQuery.includes('khách sạn')) {
-      suggestions = [
-        'Homestay view núi Cô Tô đẹp nhất',
-        'Khách sạn trung tâm Thị trấn Tri Tôn',
-        'Khu cắm trại Hồ Ô Thum',
-      ];
-    }
+    // 100% Dynamic Context-aware suggestions based on query, AI answer and matched places
+    const suggestions = generateSmartSuggestions({
+      query: queryStr,
+      assistantAnswer: aiTextResponse,
+      matchedPlaces: formattedPlaces,
+    });
 
     // Audit log before returning
     logChatEvent({
