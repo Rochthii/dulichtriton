@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.7.0-PACKAGED-GMAPS-PHOTO-INGESTION-PROTOCOL] - 2026-08-18
+
+### 📦 Đóng Gói Toàn Diện Giao Thức Nạp Ảnh Google Maps & Internet (SOP Pipeline v1.0)
+
+#### 1. Đóng Gói Tài Liệu Quy Chuẩn Hệ Thống (Protocol Reference)
+- **Quy chuẩn kỹ thuật**: Đóng gói tại [`.agents/skills/triton_workflow_execution_standard/references/google_maps_photo_ingestion_protocol.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/.agents/skills/triton_workflow_execution_standard/references/google_maps_photo_ingestion_protocol.md).
+- **Phản biện 360 độ 4 cơ chế bóc tách**: Google Maps Payload Parser (`lh3.googleusercontent.com/p/...`), Headless Playwright Scraper, OpenGraph Article Scraper, và Wikimedia Commons API.
+
+#### 2. Đóng Gói Bộ Công Cụ Thực Thi Kỹ Thuật (CLI & API Tooling)
+- **CLI Tool Runner**: [`scripts/tools/gmaps_photo_ingestion_cli.js`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/scripts/tools/gmaps_photo_ingestion_cli.js) hỗ trợ nạp trực tiếp qua lệnh dòng lệnh `node scripts/tools/gmaps_photo_ingestion_cli.js <PLACE_ID> <URL>`.
+- **Admin API Endpoint**: [`frontend/src/app/api/v1/admin/scrape-images/route.ts`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/frontend/src/app/api/v1/admin/scrape-images/route.ts) phân giải redirect link ngắn `maps.app.goo.gl` và bóc tách ảnh tự động.
+
+---
+
 ## [v82.6.0-BATCH3-5-CHECKIN-CRAFT-PLACES-REAL-PHOTOS] - 2026-08-18
 
 ### 🌳 Hoàn Tất Đợt 3 (Batch 3): 5 Địa Điểm Check-in & Làng Nghề Trứ Danh Với Ảnh Thật 100%
