@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.4.0-BATCH1-5-ICONIC-PLACES-REAL-PHOTOS] - 2026-08-18
+
+### 💎 Hoàn Tất Đợt 1 (Batch 1): 5 Địa Điểm Kim Cương Với Ảnh Thật Chọn Lọc 100%
+
+#### 1. Chia Nhỏ & Nạp Chất Lượng Cao 5 Địa Điểm Hàng Đầu (Batch 1)
+- **Hồ Tà Pạ (Tuyệt Tình Cốc)**: 4 ảnh thực tế (Mặt hồ ngọc bích, vách đá granite, cây thốt nốt, mỏm đá ngắm thung lũng) + 3 Check-in spots.
+- **Chùa Tà Pạ (Chùa Núi)**: 4 ảnh tư liệu Wikimedia & Cloudinary (Chánh điện trên cao, cầu thang 240 bậc, tượng Phật lộ thiên) + 3 Check-in spots.
+- **Cánh Đồng Lúa Tà Pạ**: 4 ảnh thực tế (Thảm lúa ô vuông bàn cờ mùa chín vàng, hàng thốt nốt soi bóng) + 2 Check-in spots.
+- **Núi Cô Tô & Vồ Hội Mẹ**: 4 ảnh thực tế (Phụng Hoàng Sơn hùng vĩ, mỏm đá Vồ Hội Mẹ săn mây, vách núi khắc chữ TRI TÔN) + 2 Check-in spots.
+- **Cổng Trời Chùa Koh Kas**: 3 ảnh thực tế (Cổng gạch cổ Angkor giữa đồng lúa, nắng sớm chiếu xiên) + 2 Check-in spots.
+- **Đồng bộ hóa tức thì**: Đã PATCH trực tiếp lên bảng `places` trên Supabase PostgreSQL.
+
+---
+
 ## [v82.3.0-MULTI-PHOTOS-PER-PLACE-INGESTION] - 2026-08-18
 
 ### 📸 Nạp Bộ Sưu Tập Tối Thiểu 3 - 5 Ảnh Thực Tế Riêng Biệt Cho Từng Địa Điểm
