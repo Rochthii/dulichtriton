@@ -48,10 +48,10 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const filteredPhotos = (Array.isArray(place.photos) ? place.photos : [])
     .filter((p: any) => {
       const url = typeof p === 'string' ? p : p?.url;
-      return url && typeof url === 'string' && !url.includes('unsplash.com');
+      return url && typeof url === 'string' && url.trim().length > 0;
     });
 
-  const validImageUrl = place.image_url && !place.image_url.includes('unsplash.com')
+  const validImageUrl = place.image_url && typeof place.image_url === 'string' && place.image_url.trim().length > 0
     ? place.image_url
     : null;
 
@@ -62,7 +62,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const photos = useMemo(() => {
     return rawPhotos.map((p: any, idx: number) => {
       if (typeof p === 'string') {
-        const photoUrl = p && !p.includes('unsplash.com') ? p : defaultImg;
+        const photoUrl = p && p.trim() ? p : defaultImg;
         return {
           url: photoUrl,
           caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
@@ -70,7 +70,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           license: 'Verified Field Data'
         };
       }
-      const itemUrl = p.url && !p.url.includes('unsplash.com') ? p.url : (validImageUrl || defaultImg);
+      const itemUrl = p.url && p.url.trim() ? p.url : (validImageUrl || defaultImg);
       return {
         url: itemUrl,
         caption: p.caption || place.name,

@@ -4,6 +4,20 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.7.2-FIX-ARTICLE-IMAGE-DISPLAY-AND-STATIC-POI-SYNC] - 2026-08-18
+
+### 🖼️ Sửa Lỗi Hiển Thị Hình Ảnh Trên Bài Viết, Thẻ Địa Điểm & Gallery Thực Địa
+
+#### 1. Nguyên Nhân Gốc Rễ (Root Cause)
+- **Tầng Dữ Liệu Tĩnh**: Next.js SSG / ISR đọc từ file tĩnh `frontend/src/data/triton_pois_full.json`. Khi đồng bộ ảnh lên Supabase PostgreSQL, file tĩnh này chưa được cập nhật dữ liệu mới.
+- **Tầng Component Lọc Ảo**: `PlaceCard.tsx`, `PlaceDetailClient.tsx` và `CheckinMasonryGallery.tsx` có đoạn code kiểm tra `!url.includes('unsplash.com')` khiến hàng loạt ảnh hợp lệ bị chặn và thay thế bằng ảnh minh họa mặc định.
+
+#### 2. Giải Pháp Xử Lý Triệt Để
+- **Đồng Bộ Dữ Liệu Toàn Diện**: Đồng bộ 100% dữ liệu ảnh mới từ Supabase PostgreSQL về `frontend/src/data/triton_pois_full.json` (138/138 POIs có ảnh đại diện, 130/138 POIs có Album Gallery).
+- **Gỡ Bỏ Bộ Lọc Chặn**: Xóa bỏ điều kiện lọc bỏ `unsplash.com` trong `PlaceCard.tsx`, `PlaceDetailClient.tsx`, và `CheckinMasonryGallery.tsx`, đảm bảo tất cả ảnh Cloudinary, Wikimedia, Unsplash đều được hiển thị sắc nét.
+
+---
+
 ## [v82.7.1-FIX-CHATBOT-ID-LEAK-AND-BROKEN-MAPS-TIKTOK-LINKS] - 2026-08-18
 
 ### 🛡️ Sửa Lỗi Hiển Thị ID Kỹ Thuật & Hàn Gắn Link Google Maps / TikTok

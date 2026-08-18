@@ -38,7 +38,7 @@ export default function CheckinMasonryGallery({ spots, placeName }: CheckinMason
             {/* Image */}
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-200">
               <img
-                src={spot.photo_url && !spot.photo_url.includes('unsplash.com') ? spot.photo_url : 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1200,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg'}
+                src={spot.photo_url && spot.photo_url.trim() ? spot.photo_url : 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1200,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg'}
                 alt={spot.title}
                 className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 loading="lazy"

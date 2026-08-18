@@ -120,12 +120,12 @@ export default function PlaceCard({ place }: PlaceCardProps) {
   const fallbackImg = getCategoryFallbackImage(place.category, place.name);
   let resolvedCoverUrl = fallbackImg;
 
-  if (place.image_url && typeof place.image_url === 'string' && !place.image_url.includes('unsplash.com')) {
+  if (place.image_url && typeof place.image_url === 'string' && place.image_url.trim()) {
     resolvedCoverUrl = place.image_url;
   } else if (Array.isArray(place.photos) && place.photos.length > 0) {
     const p0 = place.photos[0];
     const pUrl = typeof p0 === 'string' ? p0 : p0?.url;
-    if (pUrl && typeof pUrl === 'string' && !pUrl.includes('unsplash.com')) {
+    if (pUrl && typeof pUrl === 'string' && pUrl.trim()) {
       resolvedCoverUrl = pUrl;
     }
   }
