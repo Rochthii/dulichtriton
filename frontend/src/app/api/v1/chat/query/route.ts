@@ -37,7 +37,7 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
 
      ### 2. Quán Gà Đốt Thảo Nguyên Hồ Ô Thum
      Đặc sản gà thả đồi ướp lá chúc đốt kín trong nồi thố thơm lừng ven hồ Ô Thum, xã Ô Lâm. Nên gọi đặt trước 30-45 phút trước khi đến.
-     [📍 Chỉ đường Google Maps](https://maps.google.com/?q=Quán+Gà+Đốt+Thảo+Nguyên,+Xã+Ô+Lâm,+An+Giang) • [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)`
+     [📍 Chỉ đường Google Maps](https://maps.google.com/?q=Quán+Gà+Đốt+Thảo+Nguyên,+Xã+Ô+Lâm,+An+Giang) • [▶ Xem TikTok Video](https://www.tiktok.com/tag/gadotothum)
 
 3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026 (Chỉ dùng các quán đã xác minh thực tế 100%)**:
    - **Gà Đốt Ô Thum & Tri Tôn**: Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt'). Luôn nhắc du khách nên gọi đặt trước 30-45 phút.
