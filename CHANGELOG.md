@@ -4,6 +4,22 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.7.1-FIX-CHATBOT-ID-LEAK-AND-BROKEN-MAPS-TIKTOK-LINKS] - 2026-08-18
+
+### 🛡️ Sửa Lỗi Hiển Thị ID Kỹ Thuật & Hàn Gắn Link Google Maps / TikTok
+
+#### 1. Loại Bỏ Triệt Để Hiện Tượng Lộ ID Kỹ Thuật (`[ID: tritoni]`)
+- **Tầng RAG Context**: Loại bỏ tiền tố `[ID: ${p.id}]` trong `frontend/src/lib/ai/ragEngine.ts`. Thay bằng định dạng tên địa danh in đậm `* **${p.name}** (Địa phận: ${p.commune}): ...`.
+- **Tầng System Prompt**: Thêm quy tắc nghiêm cấm in mã kỹ thuật trong `frontend/src/app/api/v1/chat/stream/route.ts` và `frontend/src/app/api/v1/chat/query/route.ts`.
+- **Tầng Frontend Sanitization**: Bổ sung bộ lọc regex `replace(/\[ID:\s*[^\]]+\]\s*/gi, '')` trong `frontend/src/components/FormattedChatMessage.tsx` để triệt tiêu hoàn toàn mã ID nếu LLM lỡ sinh ra.
+
+#### 2. Hàn Gắn Link Google Maps & TikTok Bị Ngắt Dòng / Vỡ Text (%20...)
+- **Tối ưu hóa Evidence URL**: Chuyển đổi định dạng URL Maps ngắn gọn, sạch sẽ `https://maps.google.com/?q=${encodedQuery}` và TikTok `https://www.tiktok.com/tag/${tag}` trong `frontend/src/lib/evidenceGenerator.ts`.
+- **Cơ chế Auto-Healing Markdown Links**: Thêm thuật toán ghép liền chuỗi markdown links bị LLM bẻ dòng `[label](url_head\nurl_tail)` thành `[label](url_headurl_tail)`.
+- **Bộ lọc Orphaned URL Fragments**: Tự động loại bỏ các dòng rác mẩu vụn chứa chuỗi mã hóa percent-encoding `%20...` và `%2...`.
+
+---
+
 ## [v82.7.0-PACKAGED-GMAPS-PHOTO-INGESTION-PROTOCOL] - 2026-08-18
 
 ### 📦 Đóng Gói Toàn Diện Giao Thức Nạp Ảnh Google Maps & Internet (SOP Pipeline v1.0)

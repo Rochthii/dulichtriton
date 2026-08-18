@@ -37,15 +37,15 @@ export function formatHashtag(name: string): string {
  */
 export function generateEvidenceLinks(name: string, commune?: string): EvidenceLinks {
   const cleanCommune = commune || 'Tri Tôn';
-  const encodedGmaps = encodeURIComponent(`${name} ${cleanCommune} An Giang`);
-  const encodedTiktok = encodeURIComponent(`${name} Tri Tôn`);
-
+  const cleanQuery = `${name}, ${cleanCommune}, An Giang`.trim();
+  const encodedQuery = encodeURIComponent(cleanQuery);
   const mainHashtag = formatHashtag(name);
+  const tagWithoutHash = mainHashtag.replace(/^#/, '');
   const hashtags = [mainHashtag, '#TriTon', '#AnGiang', '#DuLichTriTon'];
 
   return {
-    googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodedGmaps}`,
-    tiktokSearchUrl: `https://www.tiktok.com/search?q=${encodedTiktok}`,
+    googleMapsUrl: `https://maps.google.com/?q=${encodedQuery}`,
+    tiktokSearchUrl: `https://www.tiktok.com/tag/${tagWithoutHash}`,
     hashtags,
   };
 }

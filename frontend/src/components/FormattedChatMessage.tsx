@@ -388,8 +388,10 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
 
   // ── Render inline tokens (Bold + Markdown Links + Plain text) ──────────────
   const renderInlineFormatted = (text: string) => {
+    // Clean any lingering [ID: ...]
+    const cleanText = text.replace(/\[ID:\s*[^\]]+\]\s*/gi, '');
     const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
-    const parts = text.split(tokenRegex);
+    const parts = cleanText.split(tokenRegex);
 
     return parts.map((part, index) => {
       if (!part) return null;
@@ -398,10 +400,10 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
       const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
       if (linkMatch) {
         const label = linkMatch[1];
-        let url = linkMatch[2].trim();
+        let url = linkMatch[2].trim().replace(/\s+/g, '');
 
         try {
-          url = encodeURI(url);
+          url = encodeURI(decodeURI(url));
         } catch {
           // ignore
         }
@@ -425,7 +427,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1 px-2.5 py-0.5 my-0.5 rounded-full text-xs font-bold transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-full text-xs font-bold transition-all shadow-2xs active:scale-95 ${
               isTikTok
                 ? 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 hover:border-rose-300'
                 : isMaps
@@ -434,13 +436,13 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
             }`}
           >
             {isTikTok ? (
-              <Play className="w-3 h-3 text-rose-600 fill-rose-600 shrink-0" />
+              <Play className="w-3.5 h-3.5 text-rose-600 fill-rose-600 shrink-0" />
             ) : isMaps ? (
-              <Navigation className="w-3 h-3 text-emerald-700 shrink-0" />
+              <Navigation className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
             ) : (
-              <ExternalLink className="w-3 h-3 text-amber-700 shrink-0" />
+              <ExternalLink className="w-3.5 h-3.5 text-amber-700 shrink-0" />
             )}
-            <span>{label}</span>
+            <span className="truncate max-w-[200px]">{label}</span>
           </a>
         );
       }
@@ -459,7 +461,21 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
     });
   };
 
-  const lines = (content || '').split('\n');
+  // Pre-clean and heal broken multiline markdown links from LLM
+  let normalizedContent = (content || '')
+    .replace(/\[ID:\s*[^\]]+\]\s*/gi, '')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)\s]+)\s*\n\s*([^\)\s]+)\)/gi, '[$1]($2$3)')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]*)\n\s*([^\)]*)\)/gi, '[$1]($2$3)');
+
+  const rawLines = normalizedContent.split('\n');
+  const lines = rawLines.filter((l) => {
+    const t = l.trim();
+    if (!t) return true;
+    // Filter out leaked percent-encoded URL tail fragments
+    if (/^%[0-9A-Fa-f]{2}/.test(t) && t.length > 4 && !t.includes(' ')) return false;
+    if (/^%[0-9A-Fa-f]{2}.*\)$/.test(t)) return false;
+    return true;
+  });
 
   return (
     <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#26221B] font-body">

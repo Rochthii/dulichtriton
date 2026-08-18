@@ -383,7 +383,7 @@ export async function buildUnifiedRagContext(
     const distText = p.distance_km !== undefined ? ` (Cách bạn ~${p.distance_km}km)` : '';
     const tips = p.field_tips ? `\n  - Mẹo thực địa: ${p.field_tips}` : '';
     const desc = p.description ? `\n  - Chi tiết: ${p.description.slice(0, 250)}` : '';
-    return `* [ID: ${p.id}] ${p.name} (Địa phận: ${p.commune}${distText}): Thể loại ${p.category}, Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url})  •  [▶ Xem TikTok Video](${p.tiktok_search_url})`;
+    return `* **${p.name}** (Địa phận: ${p.commune}${distText}): Thể loại ${p.category}, Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url}) • [▶ Xem TikTok Video](${p.tiktok_search_url})`;
   });
 
   let transportSnippet = '';
