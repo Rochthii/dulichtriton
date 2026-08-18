@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.4.0-SMART-DELTA-SYNC-DATABASE-OPTIMIZATION] - 2026-08-18
+
+### ⚡ Cơ Chế Smart Delta Sync: Cập Nhật Gia Tăng Thông Minh Cho 160+ Địa Điểm Database
+
+#### 1. Triệt Tiêu Ghi Đè Toàn Bộ (Zero-Full-Overwrite) — Tiết Kiệm 90%+ Request & I/O
+- **Thuật toán So Sánh Trường (Field-Level Diff Engine)**: Tự động so sánh từng trường (`name`, `commune`, `coordinates`, `category`, `address`, `description`) giữa Master Cleaned Data và Database Supabase.
+- **Bỏ qua 100% bản ghi không đổi (Skip-Unchanged)**: Nếu bản ghi trong DB đã khớp 100%, hệ thống tự động bỏ qua, không tốn bất kỳ lượt gọi API hay tài nguyên I/O nào.
+- **Chỉ gửi PATCH cho bản ghi có thay đổi**: Đã kiểm toán 121 Master POIs $\rightarrow$ 109 bản ghi giữ nguyên, chỉ cập nhật 11 bản ghi có sai khác và thêm mới 1 địa điểm sạch.
+
+---
+
 ## [v81.3.0-SUPABASE-POSTGRESQL-INGESTION-GADOT-LUNCH] - 2026-08-18
 
 ### ⚡ Nạp & Đồng Bộ 100% 27 Lịch Trình Lên Supabase PostgreSQL & Ưu Tiên Gà Đốt Ô Thum Trưa
