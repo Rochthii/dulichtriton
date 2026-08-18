@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v81.7.0-PERSISTENT-SMART-ITINERARY-REOPEN-UX] - 2026-08-18
+
+### 🌟 Đột Phá UX: Cứ Mở Lại Chatbot Là Tự Động Hiện Bảng 27 Lịch Trình Khép Vòng
+
+#### 1. Cơ Chế Tự Động Khôi Phục Widget Lịch Trình (Session Re-Entry Itinerary Anchor)
+- **Tự động gắn lại bảng chọn lịch trình**: Mỗi khi du khách mở lại Chatbot (`ChatbotWidget.tsx` và `ChatbotPageClient.tsx`), hệ thống tự động kiểm tra và gắn ngay khối **"27 Lịch trình Khép Vòng Núi Tri Tôn"** ở đáy màn hình nếu chưa có, giúp người dùng không cần biết bấm nút "Xóa chat" vẫn chọn tour tức thì!
+- **Top Quick Chip Nổi Bật (`🧭 27 Lịch Trình`)**: Ghim nút gradient vàng-cam ở vị trí đầu tiên của thanh công cụ nhanh, bấm 1 chạm là gọi ngay bộ 27 lịch trình.
+- **Nút Shortcut La Bàn (Navigation)**: Đặt ngay cạnh ô gõ tin nhắn để mở nhanh khay lịch trình bất kỳ lúc nào.
+
+---
+
 ## [v81.6.0-POWERSHELL-TERMINAL-RULE-STANDARDS] - 2026-08-18
 
 ### 💻 Bổ Sung Quy Chuẩn Lệnh PowerShell Terminal (; Thay Vì &&)

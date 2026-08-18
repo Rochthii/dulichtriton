@@ -78,6 +78,17 @@ export default function ChatbotPageClient() {
       if (saved) {
         const parsed = JSON.parse(saved) as Message[];
         if (Array.isArray(parsed) && parsed.length > 0) {
+          const lastMsg = parsed[parsed.length - 1];
+          if (!lastMsg || (!lastMsg.showPresetPicker && !lastMsg.itinerary)) {
+            parsed.push({
+              id: Date.now().toString(),
+              sender: 'assistant',
+              text: 'Chào Bạn! Dưới đây là danh sách **27 Lịch trình Khép Vòng Núi Tri Tôn** đã được tối ưu sẵn cự ly Kilomet thực địa. Mời Bạn bấm chọn cung đường phù hợp:',
+              timestamp: getSafeTime(),
+              showPresetPicker: true,
+              suggestions: ['Gợi ý tour 1 ngày', 'Quán Gà Đốt Ô Thum', 'Chùa Xvayton'],
+            });
+          }
           setMessages(parsed);
         }
       }
@@ -106,12 +117,33 @@ export default function ChatbotPageClient() {
   }, [messages, isTyping, scrollToBottom]);
 
   const presets = [
+    '🧭 27 Lịch Trình',
     'Tour Kinh Điển 1 Ngày',
     'Gà Đốt Ô Thum Quán Chuẩn',
     'Cách Đi Hồ Tà Pạ',
     'Chùa Xvayton Có Gì Hay',
     'Top Homestay Núi Cô Tô'
   ];
+
+  const handleOpenPresetPicker = () => {
+    const pickerMsg: Message = {
+      id: Date.now().toString(),
+      sender: 'assistant',
+      text: 'Dưới đây là danh sách **27 Lịch trình Khép Vòng Núi Tri Tôn** đã được tối ưu sẵn cự ly Kilomet thực địa. Mời Bạn bấm chọn cung đường phù hợp:',
+      timestamp: getSafeTime(),
+      showPresetPicker: true,
+      suggestions: ['Gợi ý tour 1 ngày', 'Quán Gà Đốt Ô Thum', 'Chùa Xvayton'],
+    };
+    setMessages(prev => [...prev, pickerMsg]);
+  };
+
+  const handleChipClick = (preset: string) => {
+    if (preset === '🧭 27 Lịch Trình') {
+      handleOpenPresetPicker();
+    } else {
+      handleSend(preset);
+    }
+  };
 
   const handlePresetSelect = async (presetSlug: string) => {
     const userMsg: Message = {
@@ -446,8 +478,12 @@ export default function ChatbotPageClient() {
         {presets.map((preset, idx) => (
           <button
             key={idx}
-            onClick={() => handleSend(preset)}
-            className="px-3.5 py-1.5 rounded-full bg-[#FAF3E7] border border-[#26221B]/10 hover:border-[#0E8C7F] hover:text-[#0E8C7F] text-[#26221B] font-bold transition-all shadow-2xs active:scale-95 shrink-0 font-display"
+            onClick={() => handleChipClick(preset)}
+            className={`px-3.5 py-1.5 rounded-full font-bold transition-all shadow-2xs active:scale-95 shrink-0 font-display ${
+              preset === '🧭 27 Lịch Trình'
+                ? 'bg-gradient-to-r from-[#FFD37A] to-[#F0A32F] text-[#26221B] border border-[#F0A32F] shadow-xs'
+                : 'bg-[#FAF3E7] border border-[#26221B]/10 hover:border-[#0E8C7F] hover:text-[#0E8C7F] text-[#26221B]'
+            }`}
           >
             {preset}
           </button>
@@ -457,50 +493,51 @@ export default function ChatbotPageClient() {
       {/* ── MESSAGES CHAT STREAM ────────────────────────────────────────── */}
       <main
         ref={messagesContainerRef}
-        className="flex-1 p-3 sm:p-6 overflow-y-auto space-y-4 max-w-4xl w-full mx-auto"
+        className="flex-1 p-3.5 sm:p-6 overflow-y-auto space-y-4 max-w-4xl w-full mx-auto"
       >
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex gap-2.5 sm:gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}
+            className={`flex gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}
           >
             {/* Avatar */}
             <div
-              className={`w-8 h-8 rounded-2xl flex items-center justify-center shrink-0 shadow-xs ${
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-xs ${
                 msg.sender === 'user' ? 'bg-[#F0A32F]' : 'bg-[#0E8C7F]'
               }`}
             >
               {msg.sender === 'user' ? (
-                <User className="w-4 h-4 text-[#26221B]" />
+                <User className="w-4 h-4 sm:w-5 sm:h-5 text-[#26221B]" />
               ) : (
-                <Bot className="w-4 h-4 text-[#FFD37A]" />
+                <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFD37A]" />
               )}
             </div>
 
+            {/* Bubble Container */}
             <div
               className={`space-y-2 flex flex-col flex-1 min-w-0 ${
-                msg.itinerary ? 'w-full max-w-full' : 'max-w-[94%] sm:max-w-[85%]'
+                msg.itinerary ? 'w-full max-w-full' : 'max-w-[90%] sm:max-w-[85%]'
               } ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
             >
-              {/* Bubble Text */}
+              {/* Text Bubble */}
               <div
-                className={`w-full rounded-[22px] px-4 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
+                className={`w-full rounded-[24px] px-4 py-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
                   msg.sender === 'user'
                     ? 'bg-[#0E8C7F] text-white rounded-tr-none'
                     : 'bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8 rounded-tl-none'
                 }`}
               >
                 {msg.sender === 'user' ? (
-                  <p className="whitespace-pre-line font-medium text-white">{msg.text}</p>
+                  <p className="whitespace-pre-line font-medium">{msg.text}</p>
                 ) : msg.text.trim() === '' && !msg.itinerary ? (
-                  <div className="flex items-center gap-2 py-1">
+                  <div className="flex items-center gap-1.5 py-1">
                     <div className="flex items-center gap-1 text-[#0E8C7F]">
                       <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce [animation-delay:-0.3s]" />
                       <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce [animation-delay:-0.15s]" />
                       <span className="w-2 h-2 rounded-full bg-[#0E8C7F] animate-bounce" />
                     </div>
-                    <span className="text-xs font-medium text-[#6B6355]">
-                      {isLoadingItinerary ? 'Đang tải sơ đồ lịch trình...' : 'AI đang tra cứu thực địa...'}
+                    <span className="text-xs font-medium text-[#6B6355] ml-2">
+                      {isLoadingItinerary ? 'Đang chuẩn bị sơ đồ lịch trình...' : 'AI đang tra cứu thực địa...'}
                     </span>
                   </div>
                 ) : (
@@ -601,6 +638,13 @@ export default function ChatbotPageClient() {
       {/* ── BOTTOM INPUT BAR (Folk-Modern Safe Area) ─────────────────────── */}
       <footer className="p-3 sm:p-4 bg-[#FFFDF7] border-t border-[#26221B]/8 shrink-0 pb-safe">
         <div className="max-w-4xl mx-auto flex items-center gap-2">
+          <button
+            onClick={handleOpenPresetPicker}
+            title="Mở 27 Lịch trình Khép Vòng"
+            className="p-3 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group"
+          >
+            <Navigation className="w-4 h-4 text-[#0E8C7F] group-hover:text-[#26221B] rotate-45" />
+          </button>
           <input
             type="text"
             value={input}

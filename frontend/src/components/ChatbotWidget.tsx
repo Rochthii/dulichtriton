@@ -135,12 +135,25 @@ export default function ChatbotWidget() {
   }
 
   const presets = [
+    '🧭 27 Lịch Trình',
     'Tour 1 Ngày',
     'Gà Đốt Ô Thum',
     'Hồ Tà Pạ',
     'Chùa Xvayton',
     'Homestay Đẹp'
   ];
+
+  const handleOpenPresetPicker = () => {
+    const pickerMsg: Message = {
+      id: Date.now().toString(),
+      sender: 'assistant',
+      text: 'Dưới đây là danh sách **27 Lịch trình Khép Vòng Núi Tri Tôn** đã được tối ưu sẵn cự ly Kilomet thực địa. Mời Bạn bấm chọn cung đường phù hợp:',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      showPresetPicker: true,
+      suggestions: ['Gợi ý tour 1 ngày', 'Quán Gà Đốt Ô Thum', 'Chùa Xvayton'],
+    };
+    setMessages(prev => [...prev, pickerMsg]);
+  };
 
   const handlePresetSelect = async (presetSlug: string) => {
     const userMsg: Message = {
@@ -519,9 +532,35 @@ export default function ChatbotWidget() {
     };
   }, [isDragging, fabPos]);
 
+  const handleChipClick = (preset: string) => {
+    if (preset === '🧭 27 Lịch Trình') {
+      handleOpenPresetPicker();
+    } else {
+      handleSend(preset);
+    }
+  };
+
   const handleFabClick = () => {
     if (!dragRef.current.hasMoved) {
       setIsOpen(true);
+      // TỰ ĐỘNG BẢO ĐẢM KHỐI 27 LỊCH TRÌNH LUÔN HIỆN DIỆN TRƯỚC MẮT KHI MỞ CHAT LẠI
+      setMessages(prev => {
+        const lastMsg = prev[prev.length - 1];
+        if (!lastMsg || (!lastMsg.showPresetPicker && !lastMsg.itinerary)) {
+          return [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              sender: 'assistant',
+              text: 'Chào Bạn! Dưới đây là danh sách **27 Lịch trình Khép Vòng Núi Tri Tôn** đã được tối ưu sẵn cự ly Kilomet thực địa. Bạn có thể bấm chọn ngay để xem chi tiết:',
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              showPresetPicker: true,
+              suggestions: ['Gợi ý tour 1 ngày', 'Quán Gà Đốt Ô Thum', 'Chùa Xvayton'],
+            }
+          ];
+        }
+        return prev;
+      });
     }
   };
 
@@ -615,8 +654,12 @@ export default function ChatbotWidget() {
             {presets.map((preset, idx) => (
               <button
                 key={idx}
-                onClick={() => handleSend(preset)}
-                className="px-3.5 py-1 rounded-full bg-[#FAF3E7] border border-[#26221B]/10 hover:border-[#0E8C7F] hover:text-[#0E8C7F] text-[#26221B] font-bold transition-all shadow-2xs active:scale-95 font-display"
+                onClick={() => handleChipClick(preset)}
+                className={`px-3.5 py-1 rounded-full font-bold transition-all shadow-2xs active:scale-95 font-display ${
+                  preset === '🧭 27 Lịch Trình'
+                    ? 'bg-gradient-to-r from-[#FFD37A] to-[#F0A32F] text-[#26221B] border border-[#F0A32F] shadow-xs'
+                    : 'bg-[#FAF3E7] border border-[#26221B]/10 hover:border-[#0E8C7F] hover:text-[#0E8C7F] text-[#26221B]'
+                }`}
               >
                 {preset}
               </button>
@@ -731,6 +774,13 @@ export default function ChatbotWidget() {
 
           {/* Input Bar */}
           <div className="p-3 sm:p-3.5 bg-[#FFFDF7] border-t border-[#26221B]/8 flex items-center gap-2 shrink-0 pb-safe">
+            <button
+              onClick={handleOpenPresetPicker}
+              title="Mở 27 Lịch trình Khép Vòng"
+              className="p-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] hover:text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group"
+            >
+              <Navigation className="w-4 h-4 text-[#0E8C7F] group-hover:text-[#26221B] rotate-45" />
+            </button>
             <input
               type="text"
               value={input}
