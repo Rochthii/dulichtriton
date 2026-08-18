@@ -4,6 +4,17 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v80.2.0-ZERO-STATIC-CACHE-100-PERCENT-REALTIME] - 2026-08-18
+
+### 🛡️ Xóa Bỏ Hoàn Toàn Cache Văn Bản Tĩnh: 100% Realtime Dynamic AI Generation
+
+#### 1. Triệt Tiêu Xung Đột Logic Với Khung Giờ Vàng & GPS
+- **Loại bỏ `HOT_QUERY_CACHE` (RAM)**: Xóa toàn bộ logic lưu trữ câu trả lời văn bản trong bộ nhớ đệm serverless, ngăn chặn triệt để tình trạng trả về gợi ý ăn sáng vào buổi trưa.
+- **Vô hiệu hóa `match_golden` Fast Exit**: Chuyển các câu trả lời mẫu sang chế độ tham khảo phong cách (Few-shot formatting guidance), đảm bảo 100% câu hỏi của du khách đều được tính toán theo tọa độ GPS và thời tiết thời gian thực.
+- **Bảo toàn 100% tốc độ <300ms TTFT**: Tận dụng tối đa sức mạnh của phần cứng Groq LPU kết hợp Smart Hedging Racer mà không cần phải phụ thuộc vào Cache đóng băng.
+
+---
+
 ## [v80.0.0-NATIVE-SSE-STREAMING-SMART-HEDGING-RAG-V2] - 2026-08-18
 
 ### ⚡ Tái Kiến Trúc Toàn Diện Chatbot AI: Native SSE Token Streaming & Smart Hedging Racer

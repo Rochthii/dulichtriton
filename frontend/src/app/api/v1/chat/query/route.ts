@@ -340,70 +340,24 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // ── STEP 1: GOLDEN CACHE & DYNAMIC FEW-SHOT RETRIEVAL ──────────────────────
+    // ── STEP 1: EMBEDDING & DYNAMIC CONTEXT PREPARATION ──────────────────────
     let goldenFewShotsSnippet = '';
     const qEmbedding = await generateQueryEmbedding(queryStr);
 
     if (qEmbedding) {
-      // 1a. Check GOLDEN CACHE (thresh >= 0.88) -> Fast exit <30ms, Zero LLM cost
-      const { data: cacheHits, error: cacheErr } = await supabase.rpc('match_golden', {
-        query_embedding: qEmbedding,
-        thresh: 0.88,
-        match_count: 1
-      });
+      // Dynamic Few-shot context for style/formatting guidance (non-blocking)
+      try {
+        const { data: shotHits } = await supabase.rpc('match_golden', {
+          query_embedding: qEmbedding,
+          thresh: 0.70,
+          match_count: 2
+        });
 
-      if (!cacheErr && cacheHits && cacheHits.length > 0) {
-        const cacheHit = cacheHits[0];
-        console.log(`[RAG Golden Cache] 🎯 HIT ${cacheHit.id} (similarity: ${cacheHit.similarity})`);
-        
-        // Extract content from answer_json
-        const answerData = cacheHit.answer_json;
-        let responseText = '';
-        if (typeof answerData === 'string') {
-          responseText = answerData;
-        } else if (answerData?.content) {
-          responseText = typeof answerData.content === 'string' ? answerData.content : JSON.stringify(answerData.content, null, 2);
-        } else {
-          responseText = JSON.stringify(answerData, null, 2);
+        if (shotHits && shotHits.length > 0) {
+          goldenFewShotsSnippet = '\n\n[THAM KHẢO PHONG CÁCH TRẢ LỜI ĐỊNH DẠNG]:\n' +
+            shotHits.map((shot: any, i: number) => `Mẫu ${i + 1}: ${typeof shot.answer_json === 'string' ? shot.answer_json : JSON.stringify(shot.answer_json)}`).join('\n\n');
         }
-
-        const contextVideos = await fetchContextAwareVideos(queryStr);
-        // Also fetch places for Golden Cache hit so places array is populated
-        const { data: cachePlaces } = await supabase
-          .from('places')
-          .select('id, slug, name, commune, category, rating, image_url, source_url, is_verified, verified_at')
-          .limit(4);
-
-        logChatEvent({
-          session_id: sessionId,
-          query: queryStr,
-          provider_used: 'golden_cache_hit',
-          rag_method: 'vector_golden_cache',
-          places_count: cachePlaces ? cachePlaces.length : 0,
-          latency_ms: Date.now() - t0,
-          is_out_scope: false
-        });
-
-        return NextResponse.json({
-          text_response: responseText,
-          ui_components: cachePlaces && cachePlaces.length > 0 ? [{ type: 'place_grid', data: cachePlaces }] : [],
-          places: cachePlaces || [],
-          videos: contextVideos,
-          suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi']
-        });
-      }
-
-      // 1b. DYNAMIC FEW-SHOT RETRIEVAL (thresh >= 0.55, top-3) -> Inject into prompt for LLM format cloning
-      const { data: shotHits } = await supabase.rpc('match_golden', {
-        query_embedding: qEmbedding,
-        thresh: 0.55,
-        match_count: 3
-      });
-
-      if (shotHits && shotHits.length > 0) {
-        goldenFewShotsSnippet = '\n\nVÍ DỤ CÂU TRẢ LỜI MẪU CHUẨN ĐỊNH DẠNG (Hãy bắt chước định dạng và cấu trúc này):\n' +
-          shotHits.map((shot: any, i: number) => `Ví dụ ${i + 1} - Hỏi: "${shot.question}" -> Đáp: ${JSON.stringify(shot.answer_json)}`).join('\n\n');
-      }
+      } catch { /* non-blocking */ }
     }
 
     // High-Precision Hybrid RAG Retrieval Strategy

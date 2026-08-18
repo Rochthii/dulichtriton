@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { streamAIResponse, buildUnifiedRagContext, type FormattedPoi } from '@/lib/aiProvider';
+import { streamAIResponse, buildUnifiedRagContext } from '@/lib/aiProvider';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -8,9 +8,6 @@ export const dynamic = 'force-dynamic';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
 const supabase = createClient(supabaseUrl, supabaseKey);
-
-// In-Memory Hot Question Cache (0ms latency, zero quota usage)
-const HOT_QUERY_CACHE = new Map<string, { answer: string; places: FormattedPoi[]; suggestions: string[]; timestamp: number }>();
 
 interface Turn {
   role: 'user' | 'assistant';
@@ -172,27 +169,6 @@ export async function POST(req: NextRequest) {
         const lower = queryStr.toLowerCase();
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
-        // 0. Check Instant Hot Cache (<30ms)
-        const hotHit = HOT_QUERY_CACHE.get(cleanQ);
-        if (
-          hotHit &&
-          clientHistory.length === 0 &&
-          Date.now() - hotHit.timestamp < 60 * 60 * 1000
-        ) {
-          if (hotHit.places && hotHit.places.length > 0) {
-            send({ type: 'metadata', places: hotHit.places, suggestions: hotHit.suggestions, data: hotHit.places });
-          }
-          const words = hotHit.answer.split(' ');
-          for (let i = 0; i < words.length; i += 3) {
-            const chunk = words.slice(i, i + 3).join(' ') + ' ';
-            send({ type: 'token', token: chunk, delta: chunk });
-            await new Promise((r) => setTimeout(r, 10));
-          }
-          send({ type: 'done', full_text: hotHit.answer, suggestions: hotHit.suggestions, places: hotHit.places });
-          controller.close();
-          return;
-        }
-
         // 1. Unified Hybrid RAG Context Extraction (<10ms)
         const ragResult = await buildUnifiedRagContext(queryStr, userLat, userLng);
         send({
@@ -256,7 +232,7 @@ export async function POST(req: NextRequest) {
           places: ragResult.places,
         });
 
-        // 5. Save Conversation & Cache (Non-blocking)
+        // 5. Save Conversation Turn (Non-blocking)
         if (fullText.trim()) {
           const updatedHistory: Turn[] = [
             ...history,
@@ -264,19 +240,6 @@ export async function POST(req: NextRequest) {
             { role: 'assistant', content: fullText },
           ];
           void saveHistory(sessionId, updatedHistory);
-
-          if (
-            history.length === 0 &&
-            fullText.trim().length >= 80 &&
-            providerUsed !== 'local_expert_rag'
-          ) {
-            HOT_QUERY_CACHE.set(cleanQ, {
-              answer: fullText,
-              places: ragResult.places,
-              suggestions: ragResult.suggestions,
-              timestamp: Date.now(),
-            });
-          }
         }
 
         logChatEvent({
