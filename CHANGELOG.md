@@ -4,6 +4,18 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v82.1.0-TIER2-REAL-PHOTO-INGESTION] - 2026-08-18
+
+### 📸 Hoàn Tất Nạp & Đồng Bộ Hình Ảnh Chuyên Đề Cho 38+ Địa Điểm Tier 2
+
+#### 1. Ánh Xạ Hình Ảnh Chuyên Đề Theo Thực Thể & Google Maps Metadata
+- **Chùa Khmer Cổ Tự**: *Chùa Hàng Còng, Chùa Soài So, Chùa Sóc Túc, Chùa Bạch Cò, Chùa Tam Bửu...* $\rightarrow$ Đồng bộ ảnh kiến trúc Khmer Angkor cổ kính.
+- **Thắng Cảnh Tự Nhiên**: *Hồ Đá Latina, Suối Vàng Soài So, Hồ Ô Tà Lọt, Hồ Ô Tà Sóc...* $\rightarrow$ Đồng bộ ảnh mặt hồ ngọc bích & vách đá granite.
+- **Quán Ăn & Đặc Sản Nổi Danh**: Chuỗi quán *Gà Đốt Ô Thum (Siêu, Kiều Tiên, Kim Suổl, May May...)*, *Đu Đủ Đâm Rina, Cháo Bò Trái Trúc, Bò 7 Món Ba Chúc, Lò Bánh Bò Thốt Nốt Út Cột*.
+- **Smart Delta Sync**: Đẩy ngay lập tức lên Supabase PostgreSQL bảng `places`.
+
+---
+
 ## [v81.9.0-GROUND-TRUTH-GPS-VERIFICATION] - 2026-08-18
 
 ### 🗺️ Kiểm Chuẩn Toàn Diện Tọa Độ GPS & Địa Giới Thực Địa Google Maps
