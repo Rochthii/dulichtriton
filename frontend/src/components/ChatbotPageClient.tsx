@@ -145,11 +145,11 @@ export default function ChatbotPageClient() {
     }
   };
 
-  const handlePresetSelect = async (presetSlug: string) => {
+  const handlePresetSelect = async (presetSlug: string, presetTitle?: string) => {
     const userMsg: Message = {
       id: Date.now().toString(),
       sender: 'user',
-      text: `Xem lịch trình: ${presetSlug}`,
+      text: presetTitle ? `Xem lịch trình: ${presetTitle}` : `Xem lịch trình: ${presetSlug}`,
       timestamp: getSafeTime(),
     };
     setMessages(prev => [...prev, userMsg]);
@@ -182,7 +182,7 @@ export default function ChatbotPageClient() {
     } catch { /* fallback to standard query */ }
 
     setIsLoadingItinerary(false);
-    await handleSend(`Lên lịch trình ${presetSlug}`);
+    await handleSend(`Lên lịch trình ${presetTitle || presetSlug}`);
   };
 
   const handleSend = async (customText?: string) => {
