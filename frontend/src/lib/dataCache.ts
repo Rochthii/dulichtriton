@@ -288,22 +288,41 @@ export async function getCachedVideos(placeId: string = 'ALL', sort: string = 'r
 }
 
 /**
- * On-Demand Global Cache Purge (Triggered by Admin Actions)
+ * Surgical Single POI Cache Invalidation
+ * ONLY revalidates the exact detail page and its direct parent listing.
+ * Consumes exactly 1-2 Vercel ISR writes instead of wiping the entire site!
+ */
+export function invalidateSinglePlaceCache(slugOrId: string, category?: string): void {
+  try {
+    bumpDataVersion();
+    if (slugOrId && slugOrId.trim()) {
+      revalidatePath(`/places/${slugOrId.trim()}`);
+    }
+    revalidatePath('/places');
+
+    const cat = (category || '').toLowerCase();
+    if (cat.includes('food') || cat.includes('gastronomy') || cat.includes('ẩm thực') || cat.includes('quán')) {
+      revalidatePath('/food');
+    } else if (cat.includes('stay') || cat.includes('homestay') || cat.includes('hotel') || cat.includes('nghỉ')) {
+      revalidatePath('/stay');
+    } else if (cat.includes('culture') || cat.includes('temple') || cat.includes('chùa') || cat.includes('văn hóa') || cat.includes('lịch sử')) {
+      revalidatePath('/culture');
+    }
+  } catch (e) {
+    console.warn('[DataCache] Surgical POI Invalidation warning:', e);
+  }
+}
+
+/**
+ * On-Demand Global Cache Purge (Only called on full system deploy / migration)
  */
 export function invalidateAllPlacesCache(): void {
   try {
     bumpDataVersion();
     (revalidateTag as any)('places', { expire: 0 });
-    (revalidateTag as any)('food', { expire: 0 });
-    (revalidateTag as any)('stays', { expire: 0 });
-    (revalidateTag as any)('culture', { expire: 0 });
-    (revalidateTag as any)('videos', { expire: 0 });
-    revalidatePath('/', 'layout');
     revalidatePath('/places');
-    revalidatePath('/food');
-    revalidatePath('/stay');
-    revalidatePath('/culture');
   } catch (e) {
     console.warn('[DataCache] Invalidation warning:', e);
   }
 }
+

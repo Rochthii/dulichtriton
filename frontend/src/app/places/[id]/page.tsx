@@ -7,7 +7,7 @@ import { SITE_URL } from '@/lib/siteConfig';
 
 import type { Metadata } from 'next';
 
-export const revalidate = 86400; // Edge ISR Cache 24 hours — Saves 99% Vercel ISR Writes
+export const revalidate = false; // 100% Static SSG with On-Demand Admin Revalidation (0 ISR Writes on visitor traffic)
 
 /**
  * Dynamic OpenGraph & SEO Metadata for Social Sharing (Facebook, Zalo, Twitter)
