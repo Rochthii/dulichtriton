@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   Send, Bot, User, Trash2, ArrowLeft,
   MapPin, Navigation
@@ -44,13 +45,14 @@ function getSafeTime(): string {
 const defaultWelcome: Message = {
   id: '1',
   sender: 'assistant',
-  text: 'Xin chào! Tôi là Trợ Lý AI Du Lịch Tri Tôn 2026. Bạn cần tư vấn **lịch trình thực địa**, tìm **quán Gà Đốt Ô Thum ngon nhất**, hay khám phá **chùa Khmer** nào?',
+  text: 'Xin chào! Tôi là Trợ Lý AI Du Lịch Tri Tôn 2026. Bạn cần tư vấn **lịch trình thực địa**, tìm **quán Gà Đốt Ô Thum ngon nhất**, hay khám phá **chùa Khmer & Lễ hội Bảy Núi** nào?',
   timestamp: '08:00',
-  suggestions: ['Gợi ý tour 1 ngày', 'Gà Đốt Ô Thum quán nào ngon?', 'Cách đi Hồ Tà Pạ mùa nước xanh?', 'Chùa Xvayton có gì đặc sắc?'],
+  suggestions: ['Gợi ý tour 1 ngày', 'Lễ Hội Đua Bò Bảy Núi', 'Gà Đốt Ô Thum quán nào ngon?', 'Chùa Xvayton có gì đặc sắc?'],
   showPresetPicker: true,
 };
 
 export default function ChatbotPageClient() {
+  const searchParams = useSearchParams();
   const initialQueryHandledRef = useRef(false);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -415,6 +417,15 @@ export default function ChatbotPageClient() {
       setIsTyping(false);
     }
   };
+
+  useEffect(() => {
+    if (!isMounted) return;
+    const q = searchParams.get('q') || searchParams.get('query');
+    if (q && !initialQueryHandledRef.current) {
+      initialQueryHandledRef.current = true;
+      handleSend(q);
+    }
+  }, [isMounted, searchParams]);
 
   const handleClearHistory = () => {
     setMessages([{
