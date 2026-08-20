@@ -8,6 +8,8 @@ import { Download, Share2, AlertTriangle, Map, X, Check, MapPin, Clock, Bike, Co
 import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
 import { SITE_URL } from '@/lib/siteConfig';
 
+import { downloadItineraryPDF } from '@/lib/pdfExporter';
+
 interface ItineraryExportModalProps {
   onClose: () => void;
   itinerary?: ItineraryData | null;
@@ -82,41 +84,10 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
   };
 
   const handleDownloadPDF = async () => {
-    if (!pdfRef.current || !itinerary) return;
+    if (!itinerary) return;
     try {
       setIsExporting(true);
-      
-      const canvas = await html2canvas(pdfRef.current, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#FFFFFF',
-      });
-
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * pageWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      // First page
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Subsequent pages if long diagram
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save(`Lich-Trinh-Tri-Ton-${itinerary.slug || 'Chuan'}.pdf`);
+      await downloadItineraryPDF(itinerary);
       setExportSuccess(true);
       setTimeout(() => setExportSuccess(false), 3000);
     } catch (err) {

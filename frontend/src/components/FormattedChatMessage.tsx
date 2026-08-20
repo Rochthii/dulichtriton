@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import { 
   Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2, 
-  ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink, MapPin, Bike, Coins, PhoneCall
+  ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink, MapPin, Bike, Coins, PhoneCall,
+  Download, Loader2
 } from 'lucide-react';
 import type { ItineraryData } from './WireDiagramItinerary';
 import ItineraryExportModal from './ItineraryExportModal';
 import { resolveTikTokHashtag } from '@/lib/tiktok';
 import { SITE_URL } from '@/lib/siteConfig';
+import { downloadItineraryPDF } from '@/lib/pdfExporter';
 
 interface FormattedChatMessageProps {
   content: string;
@@ -21,6 +23,8 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
   const [showQRModal, setShowQRModal] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
+  const [pdfExported, setPdfExported] = useState(false);
 
   if (!content && !itinerary) return null;
 
@@ -48,6 +52,76 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
       setIsSaved(true);
     } catch (e) {
       console.warn('Failed to save itinerary:', e);
+    }
+  };
+
+  const handleDownloadPdfDirect = async () => {
+    if (isExportingPdf) return;
+    setIsExportingPdf(true);
+    try {
+      if (itinerary) {
+        await downloadItineraryPDF(itinerary);
+      } else {
+        const titleMatch = (content || '').match(/###?\s*🌟?\s*(.+)/);
+        const fallbackTitle = titleMatch ? titleMatch[1].trim() : 'Lịch Trình Du Lịch Tri Tôn';
+        const fallbackItin: ItineraryData = {
+          slug: 'lich-trinh-tri-ton',
+          emoji: '🧭',
+          title: fallbackTitle,
+          tagline: 'Cẩm nang lịch trình thực địa Tri Tôn, An Giang',
+          for_whom: 'Mọi lứa tuổi',
+          duration: '1 Ngày',
+          budget_range: '300k - 500k/người',
+          stops: [
+            {
+              order: 1,
+              name: 'Trung tâm Huyện Tri Tôn',
+              commune: 'Thị trấn Tri Tôn',
+              category: 'check-in',
+              time_start: '07:00',
+              time_end: '08:30',
+              duration_min: 90,
+              tip: 'Bắt đầu hành trình từ trung tâm thị trấn, thưởng thức bún cá hoặc cháo bò.',
+              travel_to_next_km: 2.5,
+              travel_to_next_min: 8,
+              cost_vnd: '35k - 50k',
+            },
+            {
+              order: 2,
+              name: 'Hồ Tà Pạ & Cánh Đồng Lúa Tà Pạ',
+              commune: 'Xã Núi Tô',
+              category: 'nature',
+              time_start: '08:45',
+              time_end: '11:00',
+              duration_min: 135,
+              tip: 'Mặt hồ trong xanh màu ngọc bích, cảnh quan bờ đá kỳ vĩ.',
+              travel_to_next_km: 4.0,
+              travel_to_next_min: 10,
+              cost_vnd: 'Miễn phí',
+            },
+            {
+              order: 3,
+              name: 'Khu Ẩm Thực Gà Đốt Ô Thum',
+              commune: 'Xã Ô Lâm',
+              category: 'food',
+              time_start: '11:30',
+              time_end: '13:30',
+              duration_min: 120,
+              tip: 'Thưởng thức món gà đốt lá chúc trứ danh Bảy Núi.',
+              travel_to_next_km: 0,
+              travel_to_next_min: 0,
+              cost_vnd: '250k - 350k/con',
+            },
+          ],
+        };
+        await downloadItineraryPDF(fallbackItin);
+      }
+      setPdfExported(true);
+      setTimeout(() => setPdfExported(false), 3000);
+    } catch (e) {
+      console.error('PDF download error:', e);
+    } finally {
+      setIsExportingPdf(false);
     }
   };
 
@@ -582,21 +656,36 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
           </button>
 
           <button
-            onClick={handlePrint}
-            title="Xuất File PDF Sơ Đồ Lịch Trình Kèm Mã QR Thực Địa"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#0E8C7F] hover:bg-[#0A6B61] text-white transition-all cursor-pointer shadow-xs active:scale-95"
+            onClick={handleDownloadPdfDirect}
+            disabled={isExportingPdf}
+            title="Tải Ngay File PDF Lịch Trình Kèm Link Google Maps Dẫn Đường Bấm Được Trực Tiếp"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#0E8C7F] hover:bg-[#0A6B61] text-white transition-all cursor-pointer shadow-xs active:scale-95 disabled:opacity-75 font-display"
           >
-            <Printer className="w-3.5 h-3.5 text-amber-300" />
-            <span>Xuất PDF Sơ Đồ & QR</span>
+            {isExportingPdf ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 text-[#FFD37A] animate-spin" />
+                <span>Đang Xuất PDF...</span>
+              </>
+            ) : pdfExported ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Đã Tải PDF Xong!</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-3.5 h-3.5 text-[#FFD37A]" />
+                <span>Tải PDF Kèm Link Maps</span>
+              </>
+            )}
           </button>
 
           {itinerary && (
             <button
               onClick={() => setShowExportModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition-all cursor-pointer shadow-xs active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#F0A32F] hover:bg-[#D98E20] text-[#26221B] transition-all cursor-pointer shadow-xs active:scale-95 font-display"
             >
               <QrCode className="w-3.5 h-3.5" />
-              <span>Tải Ảnh QR Lộ Trình</span>
+              <span>Tải Ảnh QR Sơ Đồ</span>
             </button>
           )}
         </div>

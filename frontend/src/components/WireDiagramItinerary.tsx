@@ -20,11 +20,15 @@ import {
   CheckCircle2,
   Printer,
   QrCode,
-  Info
+  Info,
+  Download,
+  Loader2,
+  Check
 } from 'lucide-react';
 import ItineraryExportModal from './ItineraryExportModal';
 import { getTikTokHashtagUrl } from '@/lib/tiktok';
 import localMasterPois from '@/data/triton_pois_full.json';
+import { downloadItineraryPDF } from '@/lib/pdfExporter';
 
 export interface ItineraryStop {
   order: number;
@@ -83,8 +87,6 @@ function getMapsUrl(name: string, commune: string): string {
 }
 
 function getPlaceSummary(stopName: string, stopDesc?: string): string {
-  if (stopDesc && stopDesc.trim().length > 15) return stopDesc;
-
   const normalized = stopName.toLowerCase().replace(/[()]/g, '').trim();
 
   // 1. Search directly in master 149 POIs
@@ -100,43 +102,36 @@ function getPlaceSummary(stopName: string, stopDesc?: string): string {
     );
   });
 
-  if (found && found.description) {
-    return found.description;
+  if (found) {
+    if (found.short_description && found.short_description.trim().length > 15) {
+      return found.short_description.trim();
+    }
+    if (found.description && found.description.trim().length > 15) {
+      return found.description.trim().slice(0, 160) + '…';
+    }
   }
 
-  // 2. Curated descriptive summaries for common tour stops
-  if (normalized.includes('tuyến tránh') || normalized.includes('đt941') || normalized.includes('đt948')) {
-    return 'Cung đường nhựa phẳng phiu uốn lượn tuyệt đẹp giữa cánh đồng lúa và dãy núi Thất Sơn, là điểm hóng gió, ngắm hoàng hôn đỏ rực và chụp ảnh thốt nốt lý tưởng.';
+  // 2. Fallback descriptions
+  if (/tà pạ/i.test(normalized)) {
+    return 'Thắng cảnh nổi tiếng bậc nhất Bảy Núi với hồ nước ngọc bích, cánh đồng lúa thanh bình và chùa Khmer uy nghiêm.';
   }
-  if (normalized.includes('chợ đêm') || normalized.includes('phố đi bộ') || normalized.includes('khu ẩm thực')) {
-    return 'Khu ẩm thực đêm sôi động nhất trung tâm Tri Tôn với hàng chục quầy xiên que nướng khói thơm nức, chè thốt nốt cốt dừa, lẩu bò và các món ăn vặt đường phố Khmer.';
+  if (/cô tô|tức dụp/i.test(normalized)) {
+    return 'Di tích lịch sử và danh thắng kỳ vĩ với hệ thống hang động tự nhiên cùng tầm nhìn ôm trọn đồng bằng.';
   }
-  if (normalized.includes('gà đốt') || normalized.includes('ô thum')) {
-    return 'Thưởng thức món đặc sản gà đồi ướp lá chúc nướng than giòn da thơm nức bên lòng hồ Ô Thum trong lành mát rượi.';
+  if (/ô thum/i.test(normalized)) {
+    return 'Thung lũng hồ xanh mát, trung tâm ẩm thực gà đốt lá chúc nức tiếng vùng Thất Sơn.';
   }
-  if (normalized.includes('tà pạ') || normalized.includes('tuyệt tình cốc')) {
-    return 'Hồ nước ngọt xanh ngọc bích nằm trên đỉnh đồi Tà Pạ, bao quanh bởi vách đá dựng đứng và rặng thốt nốt cổ thụ nhìn ra cánh đồng lúa Bảy Núi.';
+  if (/soài chek/i.test(normalized)) {
+    return 'Hồ thủy lợi thơ mộng dưới chân núi Cô Tô, điểm ngắm hoàng hôn ngũ sắc tuyệt mỹ.';
   }
-  if (normalized.includes('chùa xà tón') || normalized.includes('xatón') || normalized.includes('xvayton')) {
-    return 'Ngôi chùa Khmer cổ kính nhất An Giang (trên 300 năm tuổi), di tích kiến trúc nghệ thuật quốc gia lưu giữ bộ kinh lá buông quý giá.';
+  if (/chùa|xvayton|sà tón|ro/i.test(normalized)) {
+    return 'Ngôi chùa Khmer cổ kính lưu giữ kinh lá buông và di sản kiến trúc văn hóa độc đáo.';
   }
-  if (normalized.includes('hàng còng') || normalized.includes('kraing ta pốch')) {
-    return 'Con đường làng rợp bóng hai hàng cây còng cổ thụ đan vòm xanh mướt, tạo nên khung cảnh thanh bình như trong truyện cổ tích.';
-  }
-  if (normalized.includes('vồ hội') || normalized.includes('cô tô')) {
-    return 'Mỏm đá thần kỳ vươn ra không trung trên đỉnh núi Cô Tô, điểm săn mây bình minh và ngắm trọn vẹn toàn cảnh đồng lúa Tri Tôn.';
-  }
-  if (normalized.includes('tức dụp') || normalized.includes('2 triệu đô')) {
-    return 'Di tích lịch sử hào hùng với hệ thống hang đá tự nhiên kiên cố gắn liền với truyền thuyết kháng chiến oanh liệt của quân dân Bảy Núi.';
-  }
-  if (normalized.includes('thốt nốt trái tim') || normalized.includes('cụm trái tim')) {
-    return 'Cụm cây thốt nốt mọc tự nhiên kết thành hình trái tim độc đáo giữa cánh đồng lúa bát ngát, tọa độ sống ảo triệu view của giới trẻ.';
-  }
-  if (normalized.includes('soài so') || normalized.includes('suối vàng')) {
-    return 'Hồ nước nhân tạo lớn nhất vùng Bảy Núi nép mình dưới chân núi Cô Tô, không khí mát lành với dòng suối Bạc róc rách quanh năm.';
+  if (/chợ tri tôn/i.test(normalized)) {
+    return 'Chợ trung tâm sầm uất với các món điểm tâm bún cá, cháo bò, bánh bò thốt nốt đặc trưng.';
   }
 
-  return 'Điểm dừng chân trải nghiệm đặc sắc trong hành trình khám phá cảnh sắc và văn hóa bản địa Tri Tôn.';
+  return 'Điểm tham quan tiêu biểu trong hành trình khám phá Tri Tôn, An Giang.';
 }
 
 export default function WireDiagramItinerary({ itinerary }: WireDiagramItineraryProps) {
@@ -148,7 +143,24 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
 
   const [visibleStops, setVisibleStops] = useState<Record<number, boolean>>({});
   const [showExportModal, setShowExportModal] = useState(false);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const [downloadPdfSuccess, setDownloadPdfSuccess] = useState(false);
   const stopRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleDirectDownloadPDF = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
+    try {
+      await downloadItineraryPDF(itinerary);
+      setDownloadPdfSuccess(true);
+      setTimeout(() => setDownloadPdfSuccess(false), 3000);
+    } catch (err) {
+      console.error('Failed to download PDF:', err);
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -194,15 +206,40 @@ export default function WireDiagramItinerary({ itinerary }: WireDiagramItinerary
             </p>
           </div>
 
-          <button
-            onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F0A32F] hover:bg-[#D98E20] text-[#26221B] font-extrabold text-xs shadow-xs active:scale-95 transition-all cursor-pointer shrink-0 font-display"
-            title="Xuất Bản Đồ Sơ Đồ Lịch Trình PDF & Mã QR"
-          >
-            <Printer className="w-3.5 h-3.5 text-[#26221B]" />
-            <span className="hidden sm:inline">Xuất Sơ Đồ PDF/QR</span>
-            <span className="sm:hidden">Xuất PDF</span>
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={handleDirectDownloadPDF}
+              disabled={isDownloadingPdf}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFD37A] hover:bg-[#F0A32F] text-[#26221B] font-extrabold text-xs shadow-xs active:scale-95 transition-all cursor-pointer font-display disabled:opacity-75"
+              title="Tải Ngay File PDF Sơ Đồ Lịch Trình Kèm Link Maps Dẫn Đường"
+            >
+              {isDownloadingPdf ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 text-[#0E8C7F] animate-spin" />
+                  <span>Đang Tạo...</span>
+                </>
+              ) : downloadPdfSuccess ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-800" />
+                  <span>Đã Tải!</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5 text-[#0E8C7F]" />
+                  <span>Tải PDF Maps</span>
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={() => setShowExportModal(true)}
+              className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white font-extrabold text-xs shadow-xs active:scale-95 transition-all cursor-pointer font-display"
+              title="Mã QR Lộ Trình"
+            >
+              <QrCode className="w-3.5 h-3.5 text-[#FFD37A]" />
+              <span className="hidden sm:inline">QR</span>
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1 mt-2.5 pt-2 border-t border-white/15 text-[11px] sm:text-xs text-white/95 font-display">
