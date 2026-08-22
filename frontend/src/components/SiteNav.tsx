@@ -141,33 +141,21 @@ export default function SiteNav() {
           </Link>
         </div>
 
-        {/* Mobile Menu Button & Highlighted AI Button */}
-        <div className="flex md:hidden items-center gap-2 shrink-0">
+        {/* Mobile Action Controls: Language Toggle & Menu Button */}
+        <div className="flex md:hidden items-center gap-1.5 shrink-0">
           <button
             type="button"
             onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-extrabold rounded-full border border-slate-200 bg-slate-50 text-slate-800 shadow-2xs font-display"
+            className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-extrabold rounded-full border border-slate-200 bg-slate-50 text-slate-800 shadow-2xs font-display active:scale-95 transition-transform cursor-pointer"
+            title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
           >
+            <Globe className="h-3 w-3 text-[#0E8C7F]" />
             <span>{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
           </button>
 
           <button
-            type="button"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("triton:open-chat"));
-              }
-            }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] shadow-sm border border-amber-300 active:scale-95 transition-transform font-display cursor-pointer"
-            title="Hỏi Đáp Cùng Trợ Lý Du Lịch Tri Tôn AI"
-          >
-            <Bot className="h-4 w-4 text-slate-950 stroke-[2.5]" />
-            <span className="font-extrabold tracking-tight">{language === "vi" ? "Hỏi AI" : "Ask AI"}</span>
-          </button>
-
-          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0 border border-slate-200/60"
+            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0 border border-slate-200/60 cursor-pointer"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="h-5 w-5 text-slate-900" /> : <Menu className="h-5 w-5 text-slate-800" />}
