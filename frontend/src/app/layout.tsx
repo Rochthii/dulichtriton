@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { SITE_URL, SITE_CONFIG } from "@/lib/siteConfig";
 import SiteNav from "../components/SiteNav";
@@ -67,6 +68,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'googleb86c8a47cc2c384e',
+    other: {
+      'zalo-platform-site-verification': 'GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s',
+    },
   },
 };
 
@@ -178,6 +182,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
+        {/* Zalo Platform Domain Verification */}
+        <meta name="zalo-platform-site-verification" content="GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s" />
+        {/* Zalo Mini App JS SDK */}
+        <Script
+          src="https://zjs.zalo.me/zmp-sdk/2.42.0/zmp.min.js"
+          strategy="afterInteractive"
+        />
         {/* JSON-LD Global Structured Data */}
         <script
           type="application/ld+json"
