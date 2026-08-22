@@ -90,54 +90,26 @@ export default function SiteNav() {
           })}
         </nav>
 
-        {/* Right CTA Actions */}
-        <div className="hidden md:flex items-center gap-1.5 xl:gap-2 shrink-0">
+        {/* Right CTA Actions: Language Toggle & Emergency SOS */}
+        <div className="hidden md:flex items-center gap-2 shrink-0">
           {/* Language Switcher Toggle */}
           <button
             type="button"
             onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1 px-2.5 xl:px-3 py-1.5 xl:py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
+            className="flex items-center gap-1.5 px-3 py-1.5 xl:py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
             title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
           >
             <Globe className="h-3.5 w-3.5 text-[#0E8C7F]" />
             <span className="font-extrabold">{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("triton:open-chat"));
-              }
-            }}
-            className="flex items-center gap-1.5 px-3 xl:px-4 py-1.5 xl:py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
-            title={language === "vi" ? "Mở Trợ Lý AI Du Lịch Tri Tôn" : "Open Tri Ton AI Travel Assistant"}
-          >
-            <Bot className="h-3.5 w-3.5 xl:h-4 xl:w-4 text-slate-950 shrink-0" />
-            <span>{t("nav.aiAssistant")}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.dispatchEvent(new CustomEvent("open-pwa-install"));
-              }
-            }}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-full border border-emerald-200 transition-colors font-display whitespace-nowrap shrink-0 cursor-pointer"
-            title="Cài Đặt Ứng Dụng Du Lịch Tri Tôn Vào Điện Thoại"
-          >
-            <Smartphone className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
-            <span>{language === "vi" ? "Cài App" : "App"}</span>
-          </button>
-
           <Link
             href="/emergency"
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 xl:py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
             title={language === "vi" ? "Tổng Đài Hỗ Trợ & Cứu Hộ Khẩn Cấp Bảy Núi" : "Seven Mountains 24/7 Emergency Hotline"}
           >
             <PhoneCall className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-            <span className="hidden xl:inline">{language === "vi" ? "Cứu Hộ 24/7" : "SOS 24/7"}</span>
+            <span>{language === "vi" ? "Cứu Hộ 24/7" : "SOS 24/7"}</span>
           </Link>
         </div>
 
