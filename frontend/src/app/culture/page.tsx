@@ -389,8 +389,8 @@ export default function CulturePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-            {ALL_FESTIVALS.map((fest) => {
-              const isHighlight = fest.monthsActive.includes(currentMonth);
+            {festivals.map((fest: any) => {
+              const isHighlight = fest.monthsActive?.includes(currentMonth);
               return (
                 <div 
                   key={fest.id}
@@ -460,7 +460,7 @@ export default function CulturePage() {
                           Trải Nghiệm Nổi Bật:
                         </span>
                         <ul className="space-y-1 text-xs text-[#4A4336]">
-                          {fest.highlights.map((h, i) => (
+                          {fest.highlights?.map((h: string, i: number) => (
                             <li key={i} className="flex items-start gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#0E8C7F] shrink-0 mt-1.5" />
                               <span className="leading-tight">{h}</span>
@@ -512,7 +512,7 @@ export default function CulturePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
-            {KHMER_PAGODA_RULES.map((rule) => (
+            {pagodaRules.map((rule: any) => (
               <div
                 key={rule.id}
                 className={`p-3.5 sm:p-6 rounded-2xl sm:rounded-[24px] border shadow-2xs space-y-1.5 sm:space-y-3 bg-white ${rule.color}`}
@@ -551,7 +551,7 @@ export default function CulturePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            {heritageStories.map((h) => {
+            {heritageStories.map((h: any) => {
               return (
                 <div 
                   key={h.id}
@@ -575,7 +575,7 @@ export default function CulturePage() {
 
                     <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-3 flex items-center gap-1.5">
                       <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-md text-[#FFD37A] flex items-center justify-center border border-white/30 shrink-0">
-                        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                        <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFD37A]" />
                       </div>
                       <span className="text-[10px] sm:text-[11px] font-black text-white uppercase tracking-wider font-display truncate">
                         {h.tag}

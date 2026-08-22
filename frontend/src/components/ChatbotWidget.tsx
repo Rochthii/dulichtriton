@@ -41,7 +41,7 @@ const SESSION_KEY = 'triton_chat_session';
 const MAX_STORED_MESSAGES = 30;
 
 export default function ChatbotWidget() {
-  const { language, dict } = useLanguage();
+  const { language, dict, t } = useLanguage();
   const cb = dict.chatbot;
   const isEn = language === 'en';
 
