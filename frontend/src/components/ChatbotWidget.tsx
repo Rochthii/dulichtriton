@@ -172,11 +172,11 @@ export default function ChatbotWidget() {
     setMessages(prev => [...prev, pickerMsg]);
   };
 
-  const handlePresetSelect = async (presetSlug: string) => {
+  const handlePresetSelect = async (presetSlug: string, presetTitle?: string) => {
     const userMsg: Message = {
       id: Date.now().toString(),
       sender: 'user',
-      text: `Xem lịch trình: ${presetSlug}`,
+      text: presetTitle ? `Xem lịch trình: ${presetTitle}` : `Xem lịch trình: ${presetSlug}`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     setMessages(prev => [...prev, userMsg]);
@@ -209,7 +209,7 @@ export default function ChatbotWidget() {
     } catch { /* fallback */ }
 
     setIsLoadingItinerary(false);
-    await handleSend(`Lên lịch trình ${presetSlug}`);
+    await handleSend(`Lên lịch trình ${presetTitle || presetSlug}`);
   };
 
   const handleSend = async (customText?: string) => {

@@ -372,34 +372,34 @@ export default function CulturePage() {
         </section>
 
         {/* ── 3. LỊCH 6 ĐẠI LỄ HỘI 12 THÁNG BẢY NÚI ──────────────────────────── */}
-        <section id="le-hoi-section" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#26221B]/10 pb-4">
+        <section id="le-hoi-section" className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#26221B]/10 pb-3 sm:pb-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#F26B3A] uppercase tracking-wider font-display">
                 <Calendar className="w-4 h-4 text-[#F26B3A]" />
                 <span>Dòng Chảy Lễ Hội 4 Mùa Thất Sơn</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#26221B] font-display mt-1">
+              <h2 className="text-xl sm:text-3xl font-extrabold text-[#26221B] font-display mt-1">
                 Lịch 6 Đại Lễ Hội Truyền Thống Tri Tôn
               </h2>
             </div>
-            <span className="text-xs font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 px-4 py-1.5 rounded-full border border-[#0E8C7F]/20 w-fit">
+            <span className="text-xs font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full border border-[#0E8C7F]/20 w-fit">
               Diễn Ra Xuyên Suốt 12 Tháng
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {ALL_FESTIVALS.map((fest) => {
               const isHighlight = fest.monthsActive.includes(currentMonth);
               return (
                 <div 
                   key={fest.id}
-                  className={`group relative bg-[#FFFDF7] rounded-[26px] overflow-hidden border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between ${
+                  className={`group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[26px] overflow-hidden border shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between ${
                     isHighlight ? "border-2 border-[#F0A32F] ring-2 ring-[#F0A32F]/20" : "border-[#EBE1D0]"
                   }`}
                 >
-                  {/* 16:9 Photography Cover */}
-                  <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
+                  {/* Photography Cover */}
+                  <div className="relative aspect-[16/10] sm:aspect-video w-full overflow-hidden bg-slate-900">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={fest.image_url}
@@ -410,58 +410,58 @@ export default function CulturePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#151B34]/90 via-[#151B34]/30 to-transparent" />
                     
                     {/* Badges on Photo */}
-                    <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
-                      <span className={`px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider shadow-md backdrop-blur-md ${fest.tagColor}`}>
+                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex items-start justify-between gap-1">
+                      <span className={`px-2 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-full text-[9px] sm:text-[11px] font-black uppercase tracking-wider shadow-md backdrop-blur-md truncate ${fest.tagColor}`}>
                         {fest.tag}
                       </span>
                       {isHighlight && (
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-black text-amber-900 bg-[#FFD37A] shadow-sm animate-pulse">
+                        <span className="px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-full text-[8px] sm:text-[10px] font-black text-amber-900 bg-[#FFD37A] shadow-sm animate-pulse shrink-0">
                           🔥 TIÊU ĐIỂM
                         </span>
                       )}
                     </div>
 
                     {/* Season Title Bottom Left on Photo */}
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <span className="text-[11px] font-bold text-[#FFD37A] uppercase tracking-wide flex items-center gap-1 font-display">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        {fest.season_badge}
+                    <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3">
+                      <span className="text-[9px] sm:text-[11px] font-bold text-[#FFD37A] uppercase tracking-wide flex items-center gap-1 font-display truncate drop-shadow-sm">
+                        <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                        <span className="truncate">{fest.season_badge}</span>
                       </span>
                     </div>
                   </div>
 
                   {/* Card Content Body */}
-                  <div className="p-5 sm:p-6 space-y-3.5 flex-grow flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-[#D9822B]">
-                        <Clock className="w-3.5 h-3.5 text-[#D9822B]" />
-                        <span>{fest.time}</span>
+                  <div className="p-3 sm:p-6 space-y-2 sm:space-y-3.5 flex-grow flex flex-col justify-between">
+                    <div className="space-y-1.5 sm:space-y-3">
+                      <div className="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-[#D9822B]">
+                        <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D9822B] shrink-0" />
+                        <span className="line-clamp-1">{fest.time}</span>
                       </div>
 
-                      <h3 className="font-display text-lg sm:text-xl font-extrabold text-[#26221B] group-hover:text-[#0E8C7F] transition-colors leading-snug">
+                      <h3 className="font-display text-xs sm:text-xl font-extrabold text-[#26221B] group-hover:text-[#0E8C7F] transition-colors leading-snug line-clamp-2">
                         {fest.name}
                       </h3>
 
-                      <p className="text-xs text-[#6B6355] leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-[#6B6355] leading-relaxed line-clamp-2 sm:line-clamp-3">
                         {fest.desc}
                       </p>
 
                       {/* Location Badge */}
-                      <div className="p-2.5 rounded-2xl bg-[#FAF3E7] border border-[#EBE1D0] space-y-1">
-                        <div className="text-[11px] font-bold text-[#26221B] flex items-start gap-1.5">
-                          <MapPin className="w-3.5 h-3.5 text-[#F26B3A] shrink-0 mt-0.5" />
-                          <span className="leading-snug">{fest.location}</span>
+                      <div className="p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl bg-[#FAF3E7] border border-[#EBE1D0] space-y-0.5">
+                        <div className="text-[10px] sm:text-[11px] font-bold text-[#26221B] flex items-start gap-1">
+                          <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F26B3A] shrink-0 mt-0.5" />
+                          <span className="leading-snug line-clamp-1 sm:line-clamp-2">{fest.location}</span>
                         </div>
                       </div>
 
-                      {/* Highlights List */}
-                      <div className="space-y-1.5 pt-1">
+                      {/* Highlights List - Full on desktop, 1 bullet on mobile */}
+                      <div className="space-y-1 pt-0.5 hidden sm:block">
                         <span className="text-[10px] font-black uppercase text-[#0E8C7F] tracking-wider font-display">
                           Trải Nghiệm Nổi Bật:
                         </span>
                         <ul className="space-y-1 text-xs text-[#4A4336]">
                           {fest.highlights.map((h, i) => (
-                            <li key={i} className="flex items-start gap-2">
+                            <li key={i} className="flex items-start gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#0E8C7F] shrink-0 mt-1.5" />
                               <span className="leading-tight">{h}</span>
                             </li>
@@ -471,15 +471,16 @@ export default function CulturePage() {
                     </div>
 
                     {/* Card Bottom CTA */}
-                    <div className="pt-4 border-t border-[#EBE1D0]">
+                    <div className="pt-2 sm:pt-4 border-t border-[#EBE1D0] mt-1 sm:mt-0">
                       <button
                         type="button"
                         onClick={() => handleAskAi(fest.ai_query)}
-                        className="w-full py-2.5 px-4 rounded-xl bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm group-hover:shadow-md cursor-pointer active:scale-95"
+                        className="w-full py-2 sm:py-2.5 px-2 sm:px-4 rounded-xl bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-extrabold text-[10px] sm:text-xs transition-all flex items-center justify-center gap-1 sm:gap-2 shadow-xs group-hover:shadow-md font-display cursor-pointer active:scale-95"
                       >
-                        <MessageSquareText className="w-4 h-4 text-[#26221B]" />
-                        <span>{isEn ? "Ask AI Assistant About This Festival" : "Hỏi Trợ Lý AI Về Lễ Hội Này"}</span>
-                        <Sparkles className="w-3.5 h-3.5 text-[#26221B]" />
+                        <MessageSquareText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#26221B] shrink-0" />
+                        <span className="hidden sm:inline">{isEn ? "Ask AI Assistant About This Festival" : "Hỏi Trợ Lý AI Về Lễ Hội Này"}</span>
+                        <span className="sm:hidden">{isEn ? "Ask AI" : "Hỏi AI Lễ Hội"}</span>
+                        <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#26221B] shrink-0" />
                       </button>
                     </div>
                   </div>
@@ -490,8 +491,8 @@ export default function CulturePage() {
         </section>
 
         {/* ── 4. CẨM NANG 6 QUY CHUẨN BẤT BIẾN KHI VIẾNG 37 CHÙA NAM TÔNG KHMER ── */}
-        <section id="pagoda-rules" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-[#26221B]/10 pb-4">
+        <section id="pagoda-rules" className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 sm:gap-3 border-b border-[#26221B]/10 pb-3 sm:pb-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#0E8C7F] uppercase tracking-wider font-display">
                 <ShieldCheck className="w-4 h-4 text-[#0E8C7F]" />
@@ -504,28 +505,27 @@ export default function CulturePage() {
             
             <Link
               href="/culture/etiquette"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0E8C7F] hover:bg-[#085A52] text-white font-bold text-xs sm:text-sm transition-all shadow-xs shrink-0 active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#0E8C7F] hover:bg-[#085A52] text-white font-bold text-xs sm:text-sm transition-all shadow-xs shrink-0 active:scale-95"
             >
               <span>{isEn ? "In-Depth Guide & Greeting Protocols ➔" : "Xem Cẩm Nang Chi Tiết Chuyên Sâu ➔"}</span>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {pagodaRules.map((rule) => (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
+            {KHMER_PAGODA_RULES.map((rule) => (
               <div
                 key={rule.id}
-                className={`p-4 sm:p-6 rounded-2xl sm:rounded-[24px] border shadow-xs space-y-3 bg-white ${rule.color}`}
+                className={`p-3.5 sm:p-6 rounded-2xl sm:rounded-[24px] border shadow-2xs space-y-1.5 sm:space-y-3 bg-white ${rule.color}`}
               >
-                {/* Mobile Responsive Header: Never clips title text */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                  <h3 className="font-display font-extrabold text-sm sm:text-base text-[#26221B] leading-snug">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <h3 className="font-display font-extrabold text-xs sm:text-base text-[#26221B] line-clamp-2">
                     {rule.title}
                   </h3>
-                  <span className="self-start sm:self-auto px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border font-display shrink-0">
+                  <span className="px-2 py-0.5 rounded-md sm:rounded-full text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider border font-display w-fit shrink-0">
                     {rule.badge}
                   </span>
                 </div>
-                <p className="text-xs text-[#4A4336] leading-relaxed font-body">
+                <p className="text-[10px] sm:text-xs text-[#4A4336] leading-relaxed font-body line-clamp-3 sm:line-clamp-none">
                   {rule.desc}
                 </p>
               </div>
@@ -534,14 +534,14 @@ export default function CulturePage() {
         </section>
 
         {/* ── 5. BẢO VẬT QUỐC GIA & LÀNG NGHỀ TRĂM TUỔI ──────────────────────── */}
-        <section id="di-san-section" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#26221B]/10 pb-4">
+        <section id="di-san-section" className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#26221B]/10 pb-3 sm:pb-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#0E8C7F] uppercase tracking-wider font-display">
                 <Sparkles className="w-4 h-4 text-[#0E8C7F]" />
                 <span>Bảo Tồn Bản Sắc Dân Tộc & Di Sản Sống</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#26221B] font-display mt-1">
+              <h2 className="text-xl sm:text-3xl font-extrabold text-[#26221B] font-display mt-1">
                 Bảo Vật Quốc Gia & Tinh Hoa Làng Nghề
               </h2>
             </div>
@@ -550,15 +550,15 @@ export default function CulturePage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {heritageStories.map((h) => {
               return (
                 <div 
                   key={h.id}
-                  className="group relative bg-[#FFFDF7] rounded-[24px] overflow-hidden border border-[#EBE1D0] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[24px] overflow-hidden border border-[#EBE1D0] shadow-2xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   {/* Photo Header */}
-                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-slate-900">
+                  <div className="relative h-28 sm:h-44 w-full overflow-hidden bg-slate-900">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={h.image_url}
@@ -569,37 +569,37 @@ export default function CulturePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#151B34]/85 via-transparent to-transparent" />
                     
                     {/* Heritage Stamp */}
-                    <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-[#FFD37A] text-[#26221B] font-black text-[9px] uppercase tracking-wider shadow-sm font-display truncate">
+                    <div className="absolute top-2 sm:top-3 right-2 sm:right-3 px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-md sm:rounded-full bg-[#FFD37A] text-[#26221B] font-black text-[8px] sm:text-[9px] uppercase tracking-wider shadow-sm font-display truncate">
                       {h.stamp}
                     </div>
 
-                    <div className="absolute bottom-2.5 left-3 flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-md text-[#FFD37A] flex items-center justify-center border border-white/30 shrink-0">
-                        <Icon className="w-4 h-4" />
+                    <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-3 flex items-center gap-1.5">
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-white/20 backdrop-blur-md text-[#FFD37A] flex items-center justify-center border border-white/30 shrink-0">
+                        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </div>
-                      <span className="text-[11px] font-black text-white uppercase tracking-wider font-display truncate">
+                      <span className="text-[10px] sm:text-[11px] font-black text-white uppercase tracking-wider font-display truncate">
                         {h.tag}
                       </span>
                     </div>
                   </div>
 
                   {/* Body */}
-                  <div className="p-4 sm:p-5 space-y-2 flex-grow flex flex-col justify-between">
-                    <div className="space-y-1.5">
-                      <h3 className="font-display text-base font-extrabold text-[#26221B] group-hover:text-[#0E8C7F] transition-colors leading-tight">
+                  <div className="p-3 sm:p-5 space-y-1.5 sm:space-y-2 flex-grow flex flex-col justify-between">
+                    <div className="space-y-1">
+                      <h3 className="font-display text-xs sm:text-base font-extrabold text-[#26221B] group-hover:text-[#0E8C7F] transition-colors leading-tight line-clamp-1 sm:line-clamp-2">
                         {h.title}
                       </h3>
-                      <p className="text-[11px] font-bold text-[#D9822B]">
+                      <p className="text-[10px] sm:text-[11px] font-bold text-[#D9822B] truncate">
                         {h.subtitle}
                       </p>
-                      <p className="text-xs text-[#6B6355] leading-relaxed line-clamp-4">
+                      <p className="text-[10px] sm:text-xs text-[#6B6355] leading-relaxed line-clamp-2 sm:line-clamp-4">
                         {h.desc}
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#EBE1D0] mt-3">
-                      <div className="text-[11px] text-[#4A4336] flex items-center gap-1.5 font-medium truncate">
-                        <MapPin className="w-3.5 h-3.5 text-[#0E8C7F] shrink-0" />
+                    <div className="pt-2 sm:pt-3 border-t border-[#EBE1D0] mt-2 sm:mt-3">
+                      <div className="text-[10px] sm:text-[11px] text-[#4A4336] flex items-center gap-1 font-medium truncate">
+                        <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#0E8C7F] shrink-0" />
                         <span className="truncate">{h.location}</span>
                       </div>
                     </div>

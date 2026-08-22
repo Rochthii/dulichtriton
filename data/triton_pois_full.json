@@ -17,7 +17,7 @@
     "best_time": "Sáng sớm 6:00 - 8:30 hoặc chiều mát 15:30 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Cô Tô\", \"Trung tâm Thị trấn\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Tìm hiểu Lịch sử\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148093/tri_ton_places/ho-ta-pa/ho-ta-pa_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -86,8 +86,11 @@
     "opening_hours": "05:00–18:30",
     "field_tips": "nước xanh ngọc, vách đá; mở 05:00–18:30",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148093/tri_ton_places/ho-ta-pa/ho-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181667/tri_ton_places/ho-ta-pa/ho-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147895/tri_ton_places/ho-ta-pa/ho-ta-pa_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147897/tri_ton_places/ho-ta-pa/ho-ta-pa_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp"
     ]
   },
   {
@@ -108,7 +111,7 @@
     "best_time": "Chiều hoàng hôn hoặc sáng sớm",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143166/tri_ton_places/chua-ta-pa/chua-ta-pa_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -204,18 +207,20 @@
     "tiktok_search_query": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô) Tri Tôn An Giang",
     "field_tips": "view toàn cảnh thung lũng, 3 đường lên",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143166/tri_ton_places/chua-ta-pa/chua-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143167/tri_ton_places/chua-ta-pa/chua-ta-pa_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143170/tri_ton_places/chua-ta-pa/chua-ta-pa_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp"
     ],
     "checkin_spots": [
       {
         "title": "Mặt gương Hồ Tà Pạ & Vách đá hoa cương",
-        "photo_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1200,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+        "photo_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143166/tri_ton_places/chua-ta-pa/chua-ta-pa_01.webp",
         "tip": "Mặt nước trong vắt màu xanh ngọc bích in bóng mây trời và vách đá sừng sững."
       },
       {
         "title": "Chánh điện Chùa Núi Tà Pạ trên cao",
-        "photo_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1200,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+        "photo_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143167/tri_ton_places/chua-ta-pa/chua-ta-pa_02.webp",
         "tip": "Ngắm toàn cảnh cánh đồng lúa ô vuông bàn cờ trải dài dưới chân đồi."
       }
     ]
@@ -238,7 +243,7 @@
     "best_time": "Tháng 9 đến tháng 11 (mùa lúa chín)",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148104/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_01.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -313,8 +318,16 @@
     "field_tips": "mùa lúa chín T9–11",
     "slug": "canh-dong-lua-ta-pa",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148104/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148108/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148110/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181703/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181705/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181706/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181737/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_04.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181738/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_05.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181739/tri_ton_places/canh-dong-lua-ta-pa/canh-dong-lua-ta-pa_06.webp"
     ]
   },
   {
@@ -335,7 +348,7 @@
     "best_time": "Quanh năm, đặc biệt sáng sớm săn mây",
     "tags_json": "{\"clusters\": [\"Cụm Cô Tô\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\"], \"audiences\": [\"Phượt thủ\"], \"best_times\": [\"Hoàng hôn / Bình minh\", \"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148084/tri_ton_places/nui-co-to/nui-co-to_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -432,8 +445,13 @@
     "ticket_price": "100k/lượt",
     "field_tips": "săn mây Sân Tiên, Vồ Hội; xe ôm 50–100k/lượt",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148084/tri_ton_places/nui-co-to/nui-co-to_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181714/tri_ton_places/nui-co-to/nui-co-to_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181716/tri_ton_places/nui-co-to/nui-co-to_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148078/tri_ton_places/nui-co-to/nui-co-to_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181720/tri_ton_places/nui-co-to/nui-co-to_04.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181723/tri_ton_places/nui-co-to/nui-co-to_05.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181724/tri_ton_places/nui-co-to/nui-co-to_06.webp"
     ]
   },
   {
@@ -454,7 +472,7 @@
     "best_time": "Chiều muộn",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147908/tri_ton_places/ho-soai-chek/ho-soai-chek_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -536,8 +554,9 @@
     "tiktok_search_query": "Hồ Soài Chek Tri Tôn An Giang",
     "field_tips": "vắng, chill",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147908/tri_ton_places/ho-soai-chek/ho-soai-chek_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147910/tri_ton_places/ho-soai-chek/ho-soai-chek_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147912/tri_ton_places/ho-soai-chek/ho-soai-chek_03.webp"
     ]
   },
   {
@@ -558,7 +577,7 @@
     "best_time": "Buổi trưa - chiều để thưởng thức Gà đốt",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Gia đình\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148042/tri_ton_places/ho-o-thum/ho-o-thum_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -644,8 +663,9 @@
     "tourism_category": "Cảnh quan thiên nhiên",
     "slug": "ho-o-thum",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148042/tri_ton_places/ho-o-thum/ho-o-thum_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148044/tri_ton_places/ho-o-thum/ho-o-thum_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148045/tri_ton_places/ho-o-thum/ho-o-thum_03.webp"
     ]
   },
   {
@@ -666,7 +686,7 @@
     "best_time": "Sáng sớm",
     "tags_json": "{\"clusters\": [\"Trung tâm Thị trấn\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148159/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_01.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -741,8 +761,9 @@
     "field_tips": "chùa Khmer cổ nhất An Giang, kinh lá buông",
     "slug": "chua-xa-ton-chua-svayton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148159/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148162/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148163/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_03.webp"
     ]
   },
   {
@@ -763,7 +784,7 @@
     "best_time": "8:00 - 16:30 hằng ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ba Chúc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143268/tri_ton_places/nha-mo-ba-chuc/nha-mo-ba-chuc_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -860,8 +881,7 @@
     "opening_hours": "07:30–17:00",
     "field_tips": "07:30–17:00",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143268/tri_ton_places/nha-mo-ba-chuc/nha-mo-ba-chuc_01.webp"
     ]
   },
   {
@@ -882,7 +902,7 @@
     "best_time": "Cả ngày",
     "tags_json": "{\"clusters\": [\"Cụm Cô Tô\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Tìm hiểu Lịch sử\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"history\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143254/tri_ton_places/doi-tuc-dup/doi-tuc-dup_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -978,8 +998,9 @@
     "tiktok_search_query": "Khu Di Tích Lịch Sử Đồi Tức Dụp Tri Tôn An Giang",
     "field_tips": "review: đóng cửa từ lâu, tranh cãi vé 20k→260k → gọi điện trước khi đi",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143254/tri_ton_places/doi-tuc-dup/doi-tuc-dup_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143255/tri_ton_places/doi-tuc-dup/doi-tuc-dup_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143256/tri_ton_places/doi-tuc-dup/doi-tuc-dup_03.webp"
     ]
   },
   {
@@ -1000,7 +1021,7 @@
     "best_time": "Chiều 16:00 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.7,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143220/tri_ton_places/cay-thot-not-trai-tim/cay-thot-not-trai-tim_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -1095,8 +1116,9 @@
     "is_verified": true,
     "tiktok_search_query": "Hàng Thốt Nốt Trái Tim Ô Lâm Tri Tôn An Giang",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143220/tri_ton_places/cay-thot-not-trai-tim/cay-thot-not-trai-tim_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143224/tri_ton_places/cay-thot-not-trai-tim/cay-thot-not-trai-tim_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143227/tri_ton_places/cay-thot-not-trai-tim/cay-thot-not-trai-tim_03.webp"
     ]
   },
   {
@@ -1117,7 +1139,7 @@
     "best_time": "Nắng sớm hoặc chiều buồm",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Sống ảo / Check-in\", \"Tâm linh / Hành hương\", \"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Người lớn tuổi / Khách hành hương\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143453/tri_ton_places/cong-troi-chua-koh-kas/cong-troi-chua-koh-kas_01.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -1195,7 +1217,9 @@
     "field_tips": "Nên đến lúc sáng sớm 06:00–07:30 hoặc chiều tà 16:30–17:30 để chụp ảnh ngược sáng đẹp nhất. Giữ gìn vệ sinh và không dẫm đạp lúa của bà con.",
     "is_hot": true,
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143453/tri_ton_places/cong-troi-chua-koh-kas/cong-troi-chua-koh-kas_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143454/tri_ton_places/cong-troi-chua-koh-kas/cong-troi-chua-koh-kas_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143455/tri_ton_places/cong-troi-chua-koh-kas/cong-troi-chua-koh-kas_03.webp"
     ],
     "checkin_spots": [
       {
@@ -1425,7 +1449,7 @@
     "best_time": "Tháng 8 - tháng 9 Âm lịch hàng năm",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\", \"Mùa Lễ hội (Tháng 4, Tháng 9)\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"festival\"]}",
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -1499,8 +1523,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "le-hoi-dua-bo-bay-nui-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -1521,7 +1546,7 @@
     "best_time": "Sáng 07:00 - 10:00 hoặc chiều mát 15:30 - 17:30",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Mùa lúa chín (Tháng 8 - 11)\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -1599,8 +1624,7 @@
     "is_hot": true,
     "slug": "ca-phe-thot-not-ta-pa-view",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp"
     ]
   },
   {
@@ -1621,7 +1645,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Gia đình\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"gastronomy\"]}",
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148121/tri_ton_places/ca-phe-suoi-da-o-ta-soc/ca-phe-suoi-da-o-ta-soc_01.webp",
     "reviews": [
       {
         "platform": "facebook",
@@ -1699,8 +1723,9 @@
     "is_hot": true,
     "slug": "ca-phe-suoi-da-o-ta-soc",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148121/tri_ton_places/ca-phe-suoi-da-o-ta-soc/ca-phe-suoi-da-o-ta-soc_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148123/tri_ton_places/ca-phe-suoi-da-o-ta-soc/ca-phe-suoi-da-o-ta-soc_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148125/tri_ton_places/ca-phe-suoi-da-o-ta-soc/ca-phe-suoi-da-o-ta-soc_03.webp"
     ]
   },
   {
@@ -2203,7 +2228,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Ô Thum - Tà Sóc\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148133/tri_ton_places/ga-dot-thao-nguyen-ho-o-thum/ga-dot-thao-nguyen-ho-o-thum_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2278,8 +2303,9 @@
     "field_tips": "review chê gà khô cứng, phục vụ lâu",
     "slug": "ga-dot-thao-nguyen-ho-o-thum",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148133/tri_ton_places/ga-dot-thao-nguyen-ho-o-thum/ga-dot-thao-nguyen-ho-o-thum_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148138/tri_ton_places/ga-dot-thao-nguyen-ho-o-thum/ga-dot-thao-nguyen-ho-o-thum_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148143/tri_ton_places/ga-dot-thao-nguyen-ho-o-thum/ga-dot-thao-nguyen-ho-o-thum_03.webp"
     ]
   },
   {
@@ -2382,7 +2408,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Mọi lứa tuổi\", \"Khách hành hương\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"1 - 2 giờ\"], \"categories\": [\"culture\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -2456,8 +2482,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "dong-nhin-len-chu-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -3918,7 +3945,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Tà Pạ\", \"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [\"Giới trẻ / Cặp đôi\", \"Phượt thủ\"], \"best_times\": [\"Quanh năm\"], \"durations\": [\"Nửa ngày\"], \"categories\": [\"nature\"]}",
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148088/tri_ton_places/nui-ta-pa/nui-ta-pa_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4013,8 +4040,10 @@
     "commune": "Xã Núi Tô",
     "slug": "nui-ta-pa",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148088/tri_ton_places/nui-ta-pa/nui-ta-pa_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148090/tri_ton_places/nui-ta-pa/nui-ta-pa_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148091/tri_ton_places/nui-ta-pa/nui-ta-pa_03.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp"
     ]
   },
   {
@@ -4392,7 +4421,7 @@
     "best_time": "Ban ngày",
     "tags_json": "{\"clusters\": [\"Cụm Núi Cấm / Thất Sơn\"], \"experiences\": [\"Khám phá / Leo núi\", \"Khám phá Văn hóa\", \"Thưởng thức Ẩm thực\"], \"audiences\": [], \"best_times\": [\"Quanh năm\"], \"durations\": [], \"categories\": [\"general\"]}",
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -4466,8 +4495,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "cho-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5095,7 +5125,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5159,8 +5189,9 @@
     "ticket_price": "20.000đ - 45.000đ / ly",
     "is_hot": true,
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ],
     "slug": "ruong-coffee-tea-tri-ton"
   },
@@ -5182,7 +5213,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5247,8 +5278,9 @@
     "is_hot": true,
     "slug": "windy-hill-coffee-homestay-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5269,7 +5301,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5334,8 +5366,9 @@
     "is_hot": true,
     "slug": "cham-coffee-tea-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5356,7 +5389,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5420,8 +5453,9 @@
     "is_hot": true,
     "slug": "anpalm-cafe-tri-ton-thot-not-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5442,7 +5476,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5507,8 +5541,9 @@
     "is_hot": true,
     "slug": "tiem-ca-phe-nha-que-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5615,7 +5650,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5676,8 +5711,9 @@
     "night_hours": "07:00 - 22:00",
     "slug": "ny-coffee-tea-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -5785,7 +5821,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -5850,8 +5886,9 @@
     "is_hot": true,
     "slug": "quy-coffee-house-tri-ton-quys-coffee",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -6045,7 +6082,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6105,8 +6142,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "rong-vang-resort-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -6291,7 +6329,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.4,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6351,8 +6389,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "nha-nghi-khach-san-trieu-gia-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -6373,7 +6412,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.9,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6433,8 +6472,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "con-duong-tuyen-tranh-tri-ton-dt941-dt948",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -6455,7 +6495,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -6519,8 +6559,7 @@
     "is_hot": true,
     "slug": "con-duong-to-lua-ta-pa",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787181731/tri_ton_places/ho-ta-pa/ho-ta-pa_04.webp"
     ]
   },
   {
@@ -8387,7 +8426,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -8447,8 +8486,9 @@
     "commune": "Xã Châu Lăng",
     "slug": "quan-du-du-dam-ty-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -9059,7 +9099,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.7,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9119,8 +9159,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "quan-bo-nuong-trai-truc-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -9141,7 +9182,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143103/tri_ton_places/quan-bun-ca-cu-ngai-di-dom/quan-bun-ca-cu-ngai-di-dom_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9201,8 +9242,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "quan-bun-ca-cu-ngai-di-dom",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143103/tri_ton_places/quan-bun-ca-cu-ngai-di-dom/quan-bun-ca-cu-ngai-di-dom_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143105/tri_ton_places/quan-bun-ca-cu-ngai-di-dom/quan-bun-ca-cu-ngai-di-dom_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787143105/tri_ton_places/quan-bun-ca-cu-ngai-di-dom/quan-bun-ca-cu-ngai-di-dom_03.webp"
     ]
   },
   {
@@ -9305,7 +9347,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -9369,8 +9411,9 @@
     "is_hot": true,
     "slug": "tiem-banh-bo-thot-not-nuong-cho-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -10220,7 +10263,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148068/tri_ton_places/ho-da-latina/ho-da-latina_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10281,8 +10324,9 @@
     "field_tips": "data ghi Xã An Hảo → nghi thuộc Tịnh Biên, kiểm tra ranh giới",
     "slug": "ho-da-latina",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148068/tri_ton_places/ho-da-latina/ho-da-latina_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148069/tri_ton_places/ho-da-latina/ho-da-latina_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148072/tri_ton_places/ho-da-latina/ho-da-latina_03.webp"
     ]
   },
   {
@@ -10729,7 +10773,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147920/tri_ton_places/suoi-vang-soai-so/suoi-vang-soai-so_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -10793,8 +10837,9 @@
     "is_hot": true,
     "slug": "suoi-vang-soai-so",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147920/tri_ton_places/suoi-vang-soai-so/suoi-vang-soai-so_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147921/tri_ton_places/suoi-vang-soai-so/suoi-vang-soai-so_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147924/tri_ton_places/suoi-vang-soai-so/suoi-vang-soai-so_03.webp"
     ]
   },
   {
@@ -10983,7 +11028,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.8,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11043,8 +11088,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "bai-tha-dieu-hoang-hon-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -11065,7 +11111,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.5,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11125,8 +11171,9 @@
     "commune": "Thị trấn Tri Tôn",
     "slug": "cho-trung-tam-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -11147,7 +11194,7 @@
     "best_time": "Quanh năm",
     "tags_json": null,
     "rating": 4.6,
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "reviews": [
       {
         "platform": "google_maps",
@@ -11212,8 +11259,9 @@
     "is_hot": true,
     "slug": "khu-am-thuc-cho-dem-tri-ton",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -11229,12 +11277,13 @@
     "detailed_story": "Quảng Trường Trung Tâm Tri Tôn là trái tim sinh hoạt cộng đồng của người dân địa phương. Buổi tối, không khí mát mẻ đón gió núi, các gia đình và bạn trẻ tập trung dạo mát, trượt patin, thưởng thức trà thốt nốt và các món ăn đường phố.",
     "open_late": true,
     "night_hours": "17:00 - 23:00",
-    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
     "is_verified": true,
     "tiktok_search_query": "Quảng trường Tri Tôn An Giang",
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148114/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148118/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148119/tri_ton_places/le-hoi-dua-bo-bay-nui-tri-ton/le-hoi-dua-bo-bay-nui-tri-ton_03.webp"
     ]
   },
   {
@@ -11245,7 +11294,7 @@
     "category": "nature",
     "rating": 4.8,
     "reviews_count": 50,
-    "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147914/tri_ton_places/ho-soai-so/ho-soai-so_01.webp",
     "description": "Hồ nước ngọt thơ mộng nằm ngay dưới chân Núi Cô Tô, mặt nước phẳng lặng soi bóng vách đá hùng vĩ và hàng cây xanh mát, điểm cắm trại và ngắm hoàng hôn lý tưởng.",
     "detailed_story": "Khám Phá Hồ Soài So – Viên Ngọc Bích Thanh Bình Dưới Chân Núi Cô Tô\nNằm e ấp bên sườn phía Đông của ngọn Phụng Hoàng Sơn (Núi Cô Tô), Hồ Soài So là hồ nước nhân tạo lớn và nổi tiếng hàng đầu của vùng Thất Sơn – An Giang. Với cảnh sắc sơn thủy hữu tình, không khí trong lành và không gian tĩnh lặng, nơi đây là điểm dừng chân lý tưởng để dã ngoại, cắm trại và tìm lại sự thư thái cho tâm hồn.\n\n### 1. Vị trí,\n\n- **Quy mô & Nguồn gốc\n\n- **Vị trí:**** Thuộc xã Núi Tô, huyện Tri Tôn, tỉnh An Giang (cách trung tâm TP. Châu Đốc khoảng gần 50 km).\n\n- **Quy mô:** Hồ có diện tích mặt nước khoảng 5 ha với dung tích chứa lên tới hơn 400.000 m³, là một trong những hồ chứa nước ngọt nhân tạo lớn nhất vùng Bảy Núi.\n\n- **Nguồn gốc:** Hồ được xây dựng nhằm chặn dòng chảy tự nhiên của suối Vàng và suối Bạc từ trên đỉnh núi Cô Tô đổ xuống, phục vụ cung cấp nước tưới tiêu nông nghiệp và sinh hoạt cho người dân trong vùng.\n\n### 2. Cảnh quan thiên nhiên nổi bật\n\n- **Bức tranh sơn thủy hữu tình:** Nước hồ trong veo, phẳng lặng như một tấm gương khổng lồ soi bóng đỉnh núi Cô Tô sừng sững. Tiếng suối Bạc róc rách hòa cùng tiếng gió xào xạc qua các rặng cây tạo nên thanh âm bình yên của chốn rừng núi.\n\n- **Cây cầu ngắm cảnh ven hồ:** Chạy men theo mép hồ có chiếc cầu nhỏ – vị trí hoàn hảo để thu trọn toàn cảnh núi non bao la, những khóm hoa dại ven đường và cảm nhận từng làn gió núi mát rượi.\n\n- **Vườn cây ăn trái quanh hồ:** Dạo sâu vào khuôn viên quanh hồ, bạn sẽ bắt gặp những vườn xoài cổ thụ, vườn điều và vườn rau xanh mướt của bà con địa phương. Vào mùa thu hoạch, bạn có thể xin phép tham quan và mua trái cây tươi hái tại vườn.\n\n### 3. Thời điểm lý tưởng để ghé thăm\n\n- **Mùa nước nổi (Tháng 9 – Tháng 11):** Đây là thời điểm hồ đẹp nhất trong năm. Mực nước dâng cao, lòng hồ mở rộng mênh mông, trong xanh biếc và thi thoảng xuất hiện những chiếc thuyền con của người dân đánh cá, tạo nên nét đẹp đồng quê đậm chất Tây Nam Bộ.\n\n- **Thời gian trong ngày:- **Sáng sớm:** Đón ánh nắng ban mai tinh khôi khi sương sớm còn vương trên mặt hồ.\n\n- **Chiều tà (16h30 – 18h00):** Chiêm ngưỡng hoàng hôn nhuộm sắc vàng hồng rực rỡ trên mặt nước lấp lánh.\n\n### 4. Hoạt động trải nghiệm &\n\n- **Dã ngoại\n\nPicnic thư giãn cuối tuần:** Địa hình bằng phẳng rợp bóng mát dưới chân núi rất thích hợp để trải thảm dã ngoại cùng gia đình và bạn bè.\n\n- **Cắm trại qua đêm:** Tận hưởng đêm rừng thanh vắng, nghe tiếng côn trùng rả rích, ngắm bầu trời sao và đón bình minh thức giấc trên mặt hồ.\n\n- **Kết hợp tham quan:** Dễ dàng kết hợp viếng các ngôi chùa, miếu thanh tịnh quanh núi Cô Tô hoặc ghé thăm Khu du lịch Suối Vàng Soài So ngay cạnh.\n\n### 5. Lưu\n\n- **ý quan trọng cho chuyến đi\n\n- **An toàn:**** Lòng hồ sâu và nước khá lạnh, du khách tuyệt đối không tự ý tắm hồ nếu không có trang bị bảo hộ an toàn.\n\n- **Chuẩn bị cắm trại:** Nếu ở lại qua đêm, cần chuẩn bị đầy đủ lều trại, đèn chiếu sáng, thuốc chống muỗi/côn trùng và áo ấm (ban đêm nhiệt độ ven chân núi hạ khá thấp).\n\n- **Ý thức bảo vệ môi trường:** Sau khi vui chơi hoặc ăn uống, hãy gom sạch toàn bộ rác thải để giữ gìn cảnh quan tự nhiên trong lành, sạch đẹp.",
     "opening_hours": "Tự do tham quan",
@@ -11254,8 +11303,9 @@
     "maps_url": "https://www.google.com/maps/search/?api=1&query=H%E1%BB%93%20So%C3%A0i%20So%20Tri%20T%C3%B4n%20An%20Giang",
     "is_verified": true,
     "photos": [
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif",
-      "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg"
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147914/tri_ton_places/ho-soai-so/ho-soai-so_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147915/tri_ton_places/ho-soai-so/ho-soai-so_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787147917/tri_ton_places/ho-soai-so/ho-soai-so_03.webp"
     ],
     "latitude": 10.4058,
     "longitude": 105.025,
@@ -11508,8 +11558,13 @@
     "longitude": 104.9928,
     "rating": 4.8,
     "is_hot": true,
-    "image_url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
-    "description": "Quán gà đốt nổi tiếng bên trong khu du lịch Hồ Ô Thum, phục vụ nhanh nhẹn, chòi lá thoáng mát đón gió hồ, gà đốt da giòn tẩm ướp lá chúc đậm vị rất thích hợp cho gia đình và đoàn phượt."
+    "image_url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148152/tri_ton_places/quan-ga-dot-thanh-dat-o-thum/quan-ga-dot-thanh-dat-o-thum_01.webp",
+    "description": "Quán gà đốt nổi tiếng bên trong khu du lịch Hồ Ô Thum, phục vụ nhanh nhẹn, chòi lá thoáng mát đón gió hồ, gà đốt da giòn tẩm ướp lá chúc đậm vị rất thích hợp cho gia đình và đoàn phượt.",
+    "photos": [
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148152/tri_ton_places/quan-ga-dot-thanh-dat-o-thum/quan-ga-dot-thanh-dat-o-thum_01.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148156/tri_ton_places/quan-ga-dot-thanh-dat-o-thum/quan-ga-dot-thanh-dat-o-thum_02.webp",
+      "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148158/tri_ton_places/quan-ga-dot-thanh-dat-o-thum/quan-ga-dot-thanh-dat-o-thum_03.webp"
+    ]
   },
   {
     "id": "quan-ga-dot-oc-dao-ho-o-thum",

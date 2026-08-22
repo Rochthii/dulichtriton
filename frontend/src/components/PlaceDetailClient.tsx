@@ -34,10 +34,67 @@ interface PlaceDetailClientProps {
   nearbyPlaces?: Place[];
 }
 
-export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDetailClientProps) {
+export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = [] }: PlaceDetailClientProps) {
   const { language, dict, t } = useLanguage();
   const pld = dict.places.detail;
   const isEn = language === 'en';
+
+  const [place, setPlace] = useState<Place>(initialPlace);
+
+  // Client-Side Reactive SWR + Realtime Subscription (0 Vercel ISR Writes)
+  useEffect(() => {
+    setPlace(initialPlace);
+    let isMounted = true;
+
+    async function fetchReactivePlace() {
+      try {
+        const { data, error } = await supabase
+          .from('places')
+          .select('*')
+          .or(`id.eq.${initialPlace.id},slug.eq.${initialPlace.slug || initialPlace.id}`)
+          .eq('is_active', true)
+          .maybeSingle();
+
+        if (!error && data && isMounted) {
+          setPlace((prev) => ({
+            ...prev,
+            ...data,
+            photos: data.photos && Array.isArray(data.photos) && data.photos.length > 0 ? data.photos : prev.photos,
+            image_url: data.image_url || prev.image_url,
+            checkin_spots: data.checkin_spots || prev.checkin_spots,
+            detailed_story: data.detailed_story || prev.detailed_story,
+          }));
+        }
+      } catch (e) {
+        console.warn('[ReactiveSWR] Error fetching live POI:', e);
+      }
+    }
+
+    fetchReactivePlace();
+
+    // Supabase Realtime WebSocket listener: Auto-updates photo gallery if Admin uploads new photos
+    const channel = supabase
+      .channel(`poi-${initialPlace.id}`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'places', filter: `id=eq.${initialPlace.id}` },
+        (payload) => {
+          if (payload.new && isMounted) {
+            setPlace((prev) => ({
+              ...prev,
+              ...payload.new,
+              photos: payload.new.photos && Array.isArray(payload.new.photos) && payload.new.photos.length > 0 ? payload.new.photos : prev.photos,
+            }));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      isMounted = false;
+      void supabase.removeChannel(channel);
+    };
+  }, [initialPlace.id, initialPlace.slug]);
 
   const displayName = isEn && (place as any).name_en ? (place as any).name_en : place.name;
   const displayStory = isEn && (place as any).detailed_story_en ? (place as any).detailed_story_en : (place.detailed_story || place.description);
@@ -55,12 +112,10 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
 
   const defaultImg = getCategoryFallbackImage(place.category, place.name);
   const filteredPhotos = (Array.isArray(place.photos) ? place.photos : [])
-    .filter((p: any) => {
-      const url = typeof p === 'string' ? p : p?.url;
-      return url && typeof url === 'string' && url.trim().length > 0;
-    });
+    .map((p: any) => (typeof p === 'string' ? p : p?.url))
+    .filter((url: any) => typeof url === 'string' && url.trim().length > 0 && !url.includes('unsplash.com'));
 
-  const validImageUrl = place.image_url && typeof place.image_url === 'string' && place.image_url.trim().length > 0
+  const validImageUrl = place.image_url && typeof place.image_url === 'string' && place.image_url.trim().length > 0 && !place.image_url.includes('unsplash.com')
     ? place.image_url
     : null;
 
@@ -69,25 +124,16 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
     : [validImageUrl || defaultImg];
 
   const photos = useMemo(() => {
-    return rawPhotos.map((p: any, idx: number) => {
-      if (typeof p === 'string') {
-        const photoUrl = p && p.trim() ? p : defaultImg;
-        return {
-          url: photoUrl,
-          caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
-          source: 'Cổng thông tin Du lịch Tri Tôn',
-          license: 'Verified Field Data'
-        };
-      }
-      const itemUrl = p.url && p.url.trim() ? p.url : (validImageUrl || defaultImg);
+    return rawPhotos.map((photoUrl: string, idx: number) => {
+      const finalUrl = photoUrl && photoUrl.trim().length > 0 ? photoUrl.trim() : defaultImg;
       return {
-        url: itemUrl,
-        caption: p.caption || place.name,
-        source: p.source || 'Cổng thông tin Du lịch Tri Tôn',
-        license: p.license || 'Verified Field Data'
+        url: finalUrl,
+        caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
+        source: 'Cổng thông tin Du lịch Tri Tôn',
+        license: 'Verified Field Data'
       };
     });
-  }, [rawPhotos, validImageUrl, place.name, defaultImg]);
+  }, [rawPhotos, place.name, defaultImg]);
 
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -486,6 +532,9 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             alt={currentPhoto.caption || place.name}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
             loading="eager"
+            onError={(e) => {
+              e.currentTarget.src = defaultImg;
+            }}
           />
 
           {/* Bottom Gradient Scrim */}
@@ -538,6 +587,9 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
                   alt={`Thumbnail ${idx + 1}`}
                   className="w-full h-full object-cover"
                   loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = defaultImg;
+                  }}
                 />
               </button>
             ))}

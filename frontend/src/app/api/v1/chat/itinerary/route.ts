@@ -199,6 +199,9 @@ export async function GET(req: NextRequest) {
         for_whom:     ((i.audiences as string[]) || []).join(', '),
         duration:     String(i.duration || '1 ngày'),
         budget_range: String(i.total_cost_estimate_vnd || ''),
+        category:     String(i.category || ''),
+        experiences:  (i.experiences as string[]) || [],
+        best_season:  String(i.best_season || 'Quanh năm'),
         sort_order:   idx + 1,
       }));
       return NextResponse.json({ presets, source: 'lichtrinh.json' });

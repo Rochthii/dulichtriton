@@ -24,9 +24,16 @@ export const SITE_CONFIG = {
   icon: `${SITE_URL}/icon.png`,
   themeColor: '#0E8C7F',
   googleVerification: 'googleb86c8a47cc2c384e',
+  zaloVerification: 'GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s',
   social: {
     facebook: 'https://www.facebook.com/dulichtriton',
     tiktok: 'https://www.tiktok.com/@dulichtriton',
+  },
+  zalo: {
+    appId: process.env.NEXT_PUBLIC_ZALO_APP_ID || '1338932952469801162',
+    verification: 'GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s',
+    phone: process.env.NEXT_PUBLIC_ZALO_PHONE || '+84329812996',
+    appName: 'Du Lịch Tri Tôn AI',
   },
   geo: {
     region: 'VN-44', // An Giang

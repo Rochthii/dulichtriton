@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { clearServerCache } from '@/lib/serverCache';
-import { invalidateAllPlacesCache } from '@/lib/dataCache';
+import { invalidateSinglePlaceCache } from '@/lib/dataCache';
 
 export const dynamic = 'force-dynamic';
 
@@ -193,9 +193,9 @@ export async function POST(req: NextRequest) {
 
     logAudit('CREATE_POI', data.id, newRecord);
 
-    // On-Demand Global Cache Invalidation
+    // Surgical On-Demand Invalidation (Only for this POI and its category)
     clearServerCache();
-    invalidateAllPlacesCache();
+    invalidateSinglePlaceCache(data.slug || data.id, data.category || data.tourism_category);
 
     return NextResponse.json({ success: true, place: data });
   } catch (err: unknown) {
@@ -264,9 +264,9 @@ export async function PATCH(req: NextRequest) {
 
     logAudit('UPDATE_POI', id, updatePayload);
 
-    // On-Demand Global Cache Invalidation
+    // Surgical On-Demand Invalidation (Only for this POI and its category)
     clearServerCache();
-    invalidateAllPlacesCache();
+    invalidateSinglePlaceCache(data.slug || data.id, data.category || data.tourism_category);
 
     return NextResponse.json({ success: true, place: data });
   } catch (err: unknown) {
@@ -293,9 +293,9 @@ export async function DELETE(req: NextRequest) {
 
     logAudit('DEACTIVATE_POI', id, { deactivated_at: new Date().toISOString() });
 
-    // On-Demand Global Cache Invalidation
+    // Surgical On-Demand Invalidation (Only for the deactivated POI)
     clearServerCache();
-    invalidateAllPlacesCache();
+    invalidateSinglePlaceCache(id);
 
     return NextResponse.json({ success: true, id });
   } catch (err: unknown) {
