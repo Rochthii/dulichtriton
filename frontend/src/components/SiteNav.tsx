@@ -46,7 +46,7 @@ export default function SiteNav() {
         </Link>
 
         {/* Center Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 shrink-0">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-0">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href || (link.href === "/itinerary" && pathname === "/planner");
@@ -56,13 +56,13 @@ export default function SiteNav() {
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+                className={`flex items-center gap-1 xl:gap-1.5 px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F] border border-emerald-200 shadow-2xs font-black"
                     : "text-slate-600 hover:text-slate-950 hover:bg-slate-100/80 font-semibold"
                 }`}
               >
-                <Icon className={`h-4 w-4 shrink-0 ${isActive ? "text-[#0E8C7F]" : "text-slate-400"}`} />
+                <Icon className={`h-3.5 w-3.5 xl:h-4 xl:w-4 shrink-0 ${isActive ? "text-[#0E8C7F]" : "text-slate-400"}`} />
                 <span>{link.name}</span>
               </Link>
             );
@@ -78,7 +78,7 @@ export default function SiteNav() {
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                className={`px-2 py-1 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F]"
                     : "text-slate-600 hover:text-slate-950 hover:bg-slate-100"
@@ -91,12 +91,12 @@ export default function SiteNav() {
         </nav>
 
         {/* Right CTA Actions */}
-        <div className="hidden md:flex items-center gap-2 shrink-0">
+        <div className="hidden md:flex items-center gap-1.5 xl:gap-2 shrink-0">
           {/* Language Switcher Toggle */}
           <button
             type="button"
             onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
+            className="flex items-center gap-1 px-2.5 xl:px-3 py-1.5 xl:py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
             title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
           >
             <Globe className="h-3.5 w-3.5 text-[#0E8C7F]" />
@@ -110,10 +110,10 @@ export default function SiteNav() {
                 window.dispatchEvent(new CustomEvent("triton:open-chat"));
               }
             }}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 xl:px-4 py-1.5 xl:py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
             title={language === "vi" ? "Mở Trợ Lý AI Du Lịch Tri Tôn" : "Open Tri Ton AI Travel Assistant"}
           >
-            <Bot className="h-4 w-4 text-slate-950" />
+            <Bot className="h-3.5 w-3.5 xl:h-4 xl:w-4 text-slate-950 shrink-0" />
             <span>{t("nav.aiAssistant")}</span>
           </button>
 
