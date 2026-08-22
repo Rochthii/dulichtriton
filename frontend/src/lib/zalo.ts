@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ZALO MINI APP & OPEN PLATFORM SDK WRAPPER
  * ─────────────────────────────────────────────────────────────
  * Bộ tiện ích hỗ trợ tích hợp sâu Hệ sinh thái Zalo:
@@ -124,12 +124,13 @@ export async function shareToZalo(options: {
 }
 
 function fallbackShare(title: string, url: string): boolean {
+  if (typeof window === 'undefined') return false;
   if (navigator.share) {
     navigator.share({ title, url }).catch(() => {});
     return true;
   }
   // Mở popup Zalo Share web protocol
-  const zaloShareUrl = https://zalo.me/share?url=&title=;
+  const zaloShareUrl = `https://zalo.me/share?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
   window.open(zaloShareUrl, '_blank', 'noopener,noreferrer');
   return true;
 }
@@ -144,6 +145,6 @@ export function openZaloChatWithHost(phoneNumber: string, defaultMessage: string
   
   if (!cleanPhone) return;
 
-  const directUrl = https://zalo.me/;
+  const directUrl = `https://zalo.me/${cleanPhone}`;
   window.open(directUrl, '_blank', 'noopener,noreferrer');
 }
