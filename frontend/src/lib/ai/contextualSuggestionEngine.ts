@@ -42,6 +42,23 @@ export function generateSmartSuggestions(input: ContextualSuggestionInput): stri
     }
   };
 
+  const isEnglishQuery = /[a-zA-Z]/.test(queryLower) && (
+    queryLower.includes('where') ||
+    queryLower.includes('what') ||
+    queryLower.includes('how') ||
+    queryLower.includes('best') ||
+    queryLower.includes('tour') ||
+    queryLower.includes('food') ||
+    queryLower.includes('pagoda') ||
+    queryLower.includes('hotel') ||
+    queryLower.includes('chicken') ||
+    queryLower.includes('lake') ||
+    queryLower.includes('itinerary') ||
+    queryLower.includes('recommend') ||
+    queryLower.includes('temple') ||
+    queryLower.includes('sunset')
+  );
+
   // ── 1. DYNAMIC POI EXTRACTION TỪ CÂU TRẢ LỜI CỦA AI ────────────────────────
   if (input.matchedPlaces && input.matchedPlaces.length > 0) {
     for (const place of input.matchedPlaces.slice(0, 3)) {
@@ -49,25 +66,47 @@ export function generateSmartSuggestions(input: ContextualSuggestionInput): stri
       const pCat = place.category || '';
       
       // Nếu tên địa điểm có mặt trong câu trả lời của AI -> Sinh câu hỏi đào sâu về địa điểm đó
-      if (answerLower.includes(pName.toLowerCase())) {
-        if (pCat.includes('gastro') || pCat.includes('ẩm thực') || pName.toLowerCase().includes('quán') || pName.toLowerCase().includes('gà đốt')) {
-          add(
-            `Đặt bàn trước tại ${pName}`,
-            `Điểm check-in đẹp gần ${pName}`,
-            `Món ngon nổi tiếng nhất tại ${pName}`
-          );
-        } else if (pCat.includes('stay') || pName.toLowerCase().includes('homestay') || pName.toLowerCase().includes('khách sạn')) {
-          add(
-            `Giá phòng tham khảo tại ${pName}`,
-            `Quán ăn ngon gần ${pName}`,
-            `Thuê xe máy tại ${pName}`
-          );
+      if (answerLower.includes(pName.toLowerCase()) || (isEnglishQuery && answerLower.includes((pName || '').toLowerCase()))) {
+        if (isEnglishQuery) {
+          if (pCat.includes('gastro') || pCat.includes('food') || pName.toLowerCase().includes('quán') || pName.toLowerCase().includes('gà đốt')) {
+            add(
+              `Book a table at ${pName}`,
+              `Best photo spots near ${pName}`,
+              `Signature dishes at ${pName}`
+            );
+          } else if (pCat.includes('stay') || pName.toLowerCase().includes('homestay') || pName.toLowerCase().includes('khách sạn')) {
+            add(
+              `Room rates at ${pName}`,
+              `Nearby restaurants around ${pName}`,
+              `Motorbike rental at ${pName}`
+            );
+          } else {
+            add(
+              `Best photo angle at ${pName}`,
+              `How to get to ${pName}?`,
+              `Next attraction from ${pName}`
+            );
+          }
         } else {
-          add(
-            `Góc chụp ảnh đẹp nhất tại ${pName}`,
-            `Đường đi đến ${pName} có dễ không?`,
-            `Từ ${pName} đi đâu tiếp theo tiện đường?`
-          );
+          if (pCat.includes('gastro') || pCat.includes('ẩm thực') || pName.toLowerCase().includes('quán') || pName.toLowerCase().includes('gà đốt')) {
+            add(
+              `Đặt bàn trước tại ${pName}`,
+              `Điểm check-in đẹp gần ${pName}`,
+              `Món ngon nổi tiếng nhất tại ${pName}`
+            );
+          } else if (pCat.includes('stay') || pName.toLowerCase().includes('homestay') || pName.toLowerCase().includes('khách sạn')) {
+            add(
+              `Giá phòng tham khảo tại ${pName}`,
+              `Quán ăn ngon gần ${pName}`,
+              `Thuê xe máy tại ${pName}`
+            );
+          } else {
+            add(
+              `Góc chụp ảnh đẹp nhất tại ${pName}`,
+              `Đường đi đến ${pName} có dễ không?`,
+              `Từ ${pName} đi đâu tiếp theo tiện đường?`
+            );
+          }
         }
       }
     }

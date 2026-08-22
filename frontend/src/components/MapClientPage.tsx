@@ -12,6 +12,7 @@ import { getGoogleMapsUrl } from '@/lib/utils';
 import PageHeaderBanner from './PageHeaderBanner';
 import dynamic from 'next/dynamic';
 import ItineraryExportModal from './ItineraryExportModal';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 const MapComponent = dynamic(() => import('./MapComponent'), {
   ssr: false,
@@ -45,6 +46,10 @@ function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: num
 }
 
 export default function MapClientPage({ places }: MapClientPageProps) {
+  const { language, dict } = useLanguage();
+  const mp = dict.map;
+  const isEn = language === 'en';
+
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedCommune, setSelectedCommune] = useState<string>('all');
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(places[0] || null);

@@ -12,26 +12,38 @@ import {
   Bot,
   Menu,
   X,
+import {
+  Compass,
+  Utensils,
+  Hotel,
+  Calendar,
+  MapPin,
+  Bot,
+  Menu,
+  X,
   Sparkles,
   PhoneCall,
   Home,
   Shield,
   Smartphone,
+  Globe,
 } from "lucide-react";
 import AppLogo from "./AppLogo";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function SiteNav() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { name: "Trang Chủ", href: "/", icon: Home },
-    { name: "Khám Phá", href: "/places", icon: Compass },
-    { name: "Ẩm Thực", href: "/food", icon: Utensils },
-    { name: "Lưu Trú", href: "/stay", icon: Hotel },
-    { name: "Lễ Hội", href: "/culture", icon: Calendar },
-    { name: "Lịch Trình", href: "/itinerary", icon: Sparkles },
-    { name: "Bản Đồ", href: "/map", icon: MapPin },
+    { name: t("nav.home"), href: "/", icon: Home },
+    { name: t("nav.places"), href: "/places", icon: Compass },
+    { name: t("nav.food"), href: "/food", icon: Utensils },
+    { name: t("nav.stay"), href: "/stay", icon: Hotel },
+    { name: t("nav.culture"), href: "/culture", icon: Calendar },
+    { name: t("nav.itinerary"), href: "/itinerary", icon: Sparkles },
+    { name: t("nav.map"), href: "/map", icon: MapPin },
   ];
 
   return (
@@ -88,7 +100,18 @@ export default function SiteNav() {
         </nav>
 
         {/* Right CTA Actions */}
-        <div className="hidden md:flex items-center gap-2.5 shrink-0">
+        <div className="hidden md:flex items-center gap-2 shrink-0">
+          {/* Language Switcher Toggle */}
+          <button
+            type="button"
+            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
+            title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
+          >
+            <Globe className="h-3.5 w-3.5 text-[#0E8C7F]" />
+            <span className="font-extrabold">{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
+          </button>
+
           <button
             type="button"
             onClick={() => {
@@ -97,10 +120,10 @@ export default function SiteNav() {
               }
             }}
             className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
-            title="Mở Trợ Lý AI Du Lịch Tri Tôn"
+            title={language === "vi" ? "Mở Trợ Lý AI Du Lịch Tri Tôn" : "Open Tri Ton AI Travel Assistant"}
           >
             <Bot className="h-4 w-4 text-slate-950" />
-            <span>Trợ Lý AI</span>
+            <span>{t("nav.aiAssistant")}</span>
           </button>
 
           <button
@@ -114,21 +137,29 @@ export default function SiteNav() {
             title="Cài Đặt Ứng Dụng Du Lịch Tri Tôn Vào Điện Thoại"
           >
             <Smartphone className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
-            <span>Cài App</span>
+            <span>{language === "vi" ? "Cài App" : "App"}</span>
           </button>
 
           <Link
             href="/emergency"
             className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
-            title="Tổng Đài Hỗ Trợ & Cứu Hộ Khẩn Cấp Bảy Núi"
+            title={language === "vi" ? "Tổng Đài Hỗ Trợ & Cứu Hộ Khẩn Cấp Bảy Núi" : "Seven Mountains 24/7 Emergency Hotline"}
           >
             <PhoneCall className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-            <span className="hidden xl:inline">Cứu Hộ 24/7</span>
+            <span className="hidden xl:inline">{language === "vi" ? "Cứu Hộ 24/7" : "SOS 24/7"}</span>
           </Link>
         </div>
 
         {/* Mobile Menu Button & Highlighted AI Button */}
         <div className="flex md:hidden items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
+            className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-extrabold rounded-full border border-slate-200 bg-slate-50 text-slate-800 shadow-2xs font-display"
+          >
+            <span>{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
+          </button>
+
           <button
             type="button"
             onClick={() => {
@@ -140,7 +171,7 @@ export default function SiteNav() {
             title="Hỏi Đáp Cùng Trợ Lý Du Lịch Tri Tôn AI"
           >
             <Bot className="h-4 w-4 text-slate-950 stroke-[2.5]" />
-            <span className="font-extrabold tracking-tight">Hỏi AI</span>
+            <span className="font-extrabold tracking-tight">{language === "vi" ? "Hỏi AI" : "Ask AI"}</span>
           </button>
 
           <button
@@ -156,6 +187,34 @@ export default function SiteNav() {
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 shadow-xl">
+          {/* Language Switcher in Mobile Drawer */}
+          <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-100 mb-2">
+            <span className="text-xs font-bold text-slate-700 flex items-center gap-2">
+              <Globe className="h-4 w-4 text-[#0E8C7F]" />
+              {t("common.language")}
+            </span>
+            <div className="flex items-center gap-1 bg-slate-200/70 p-1 rounded-xl">
+              <button
+                type="button"
+                onClick={() => setLanguage("vi")}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  language === "vi" ? "bg-[#0E8C7F] text-white shadow-2xs" : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                🇻🇳 VI
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  language === "en" ? "bg-[#0E8C7F] text-white shadow-2xs" : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                🇬🇧 EN
+              </button>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -191,7 +250,7 @@ export default function SiteNav() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-emerald-600 text-white shadow-sm font-display cursor-pointer"
             >
               <Smartphone className="h-4 w-4 text-[#FFD37A]" />
-              <span>Cài Đặt App Tri Tôn Ra Màn Hình Chính</span>
+              <span>{language === "vi" ? "Cài Đặt App Tri Tôn Ra Màn Hình Chính" : "Install Tri Ton App to Home Screen"}</span>
             </button>
 
             <Link
@@ -200,7 +259,7 @@ export default function SiteNav() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-sm font-display"
             >
               <Bot className="h-4 w-4" />
-              <span>Hỏi Đáp Du Lịch Cùng Trợ Lý AI</span>
+              <span>{language === "vi" ? "Hỏi Đáp Du Lịch Cùng Trợ Lý AI" : "Ask Tri Ton AI Travel Assistant"}</span>
             </Link>
 
             <Link
@@ -209,7 +268,7 @@ export default function SiteNav() {
               className="flex items-center justify-center gap-2 py-2.5 rounded-2xl text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 font-display"
             >
               <PhoneCall className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-              <span>Tổng Đài Cứu Hộ Bảy Núi: 0296.3874.113</span>
+              <span>{language === "vi" ? "Tổng Đài Cứu Hộ Bảy Núi: 0296.3874.113" : "24/7 Emergency Hotline: 0296.3874.113"}</span>
             </Link>
           </div>
         </div>

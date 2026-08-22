@@ -6,6 +6,7 @@ import { MapPin, Star, Clock, Navigation, Play, Heart, ChevronRight, Award, Flam
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { parseTravelGuide, sanitizeDescription, getCategoryFallbackImage } from '@/lib/dataSanitizer';
 import { getOptimizedImageUrl } from '@/lib/imageOptimizer';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export interface PlacePhoto {
   url: string;
@@ -74,6 +75,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export default function PlaceCard({ place }: PlaceCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -105,6 +107,10 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     }
   };
 
+  const displayName = language === 'en' && (place as any).name_en ? (place as any).name_en : place.name;
+  const rawDescription = language === 'en' && (place as any).description_en ? (place as any).description_en : place.description;
+  const cleanDescription = sanitizeDescription(rawDescription, displayName, place.commune, place.category);
+
   const { maps, tiktok } = resolvePlaceExternalLinks({
     name: place.name,
     commune: place.commune,
@@ -114,8 +120,6 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     video_url: place.video_url,
     tiktok_videos: (place as any).tiktok_videos,
   });
-
-  const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);
 
   const fallbackImg = getCategoryFallbackImage(place.category, place.name);
   let resolvedCoverUrl = fallbackImg;
@@ -130,7 +134,10 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     }
   }
 
-  const categoryLabel = place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến';
+  const categoryLabel = language === 'en' && (place as any).category_en
+    ? (place as any).category_en
+    : (place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến');
+    
   const detailUrl = `/places/${place.slug || place.id}`;
 
   return (
@@ -141,7 +148,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={getOptimizedImageUrl(resolvedCoverUrl, { width: 800, dpr: 2, quality: 'best' })}
-            alt={place.name}
+            alt={displayName}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             loading="lazy"
             decoding="async"
@@ -173,12 +180,12 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             <button
               type="button"
               onClick={handleToggleLike}
-              className={`p-1.5 rounded-xl backdrop-blur-md transition-all ${
+              className={`p-1.5 rounded-xl backdrop-blur-md transition-all cursor-pointer ${
                 isLiked
                   ? 'bg-[#F26B3A] text-white shadow-xs'
                   : 'bg-white/80 text-[#26221B] hover:text-[#F26B3A]'
               }`}
-              title="Lưu địa điểm yêu thích"
+              title={language === 'en' ? 'Save to favorites' : 'Lưu địa điểm yêu thích'}
             >
               <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-white' : ''}`} />
             </button>
@@ -190,7 +197,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               {place.commune}
             </span>
             <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
-              {place.name}
+              {displayName}
             </h3>
           </div>
         </Link>
@@ -211,7 +218,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           href={detailUrl}
           className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
         >
-          <span>Xem chi tiết</span>
+          <span>{t('place.viewDetail')}</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </Link>
 
@@ -221,7 +228,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               href={tiktok.url}
               target="_blank"
               rel="noreferrer"
-              title="Xem Video TikTok"
+              title={language === 'en' ? 'Watch TikTok Video' : 'Xem Video TikTok'}
               className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
             >
               <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
@@ -234,7 +241,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
           >
             <Navigation className="w-3 h-3 text-emerald-600" />
-            <span>Chỉ đường</span>
+            <span>{language === 'en' ? 'Map' : 'Chỉ đường'}</span>
           </a>
         </div>
       </div>

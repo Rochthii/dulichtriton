@@ -24,8 +24,10 @@ export interface FormattedPoi {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   commune: string;
   category: string;
+  category_en?: string;
   rating: number;
   image_url: string;
   imageUrl?: string;
@@ -36,7 +38,9 @@ export interface FormattedPoi {
   price_level?: string;
   opening_hours?: string;
   description?: string;
+  description_en?: string;
   field_tips?: string;
+  field_tips_en?: string;
 }
 
 export interface RagContextResult {
@@ -324,9 +328,19 @@ export async function buildUnifiedRagContext(
   for (const token of tokens) {
     const hits = poisList.filter((p) => {
       const name = (p.name || '').toLowerCase();
+      const nameEn = (p.name_en || '').toLowerCase();
       const commune = (p.commune || '').toLowerCase();
       const category = (p.category || '').toLowerCase();
-      return name.includes(token) || commune.includes(token) || category.includes(token);
+      const categoryEn = (p.category_en || '').toLowerCase();
+      const descEn = (p.description_en || '').toLowerCase();
+      return (
+        name.includes(token) ||
+        nameEn.includes(token) ||
+        commune.includes(token) ||
+        category.includes(token) ||
+        categoryEn.includes(token) ||
+        descEn.includes(token)
+      );
     }).slice(0, 3);
 
     hits.forEach((p) => {
@@ -359,8 +373,10 @@ export async function buildUnifiedRagContext(
       id: p.id,
       slug: p.slug || p.id,
       name: p.name,
+      name_en: p.name_en || p.name,
       commune: p.commune || 'Tri Tôn',
       category: p.category || 'Địa điểm',
+      category_en: p.category_en || 'Destination',
       rating: p.rating || 4.8,
       image_url: imgUrl,
       imageUrl: imgUrl,
@@ -371,7 +387,9 @@ export async function buildUnifiedRagContext(
       price_level: p.price_level,
       opening_hours: p.opening_hours,
       description: p.description,
+      description_en: p.description_en || p.description,
       field_tips: p.field_tips,
+      field_tips_en: p.field_tips_en || p.field_tips,
     };
   });
 
@@ -383,7 +401,8 @@ export async function buildUnifiedRagContext(
     const distText = p.distance_km !== undefined ? ` (Cách bạn ~${p.distance_km}km)` : '';
     const tips = p.field_tips ? `\n  - Mẹo thực địa: ${p.field_tips}` : '';
     const desc = p.description ? `\n  - Chi tiết: ${p.description.slice(0, 250)}` : '';
-    return `* **${p.name}** (Địa phận: ${p.commune}${distText}): Thể loại ${p.category}, Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url}) • [▶ Xem TikTok Video](${p.tiktok_search_url})`;
+    const enAlias = p.name_en && p.name_en !== p.name ? ` | EN: ${p.name_en}` : '';
+    return `* **${p.name}**${enAlias} (Địa phận: ${p.commune}${distText}): Thể loại ${p.category} (${p.category_en}), Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url}) • [▶ Xem TikTok Video](${p.tiktok_search_url})`;
   });
 
   let transportSnippet = '';

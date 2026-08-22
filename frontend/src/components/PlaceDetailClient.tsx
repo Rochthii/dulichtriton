@@ -27,6 +27,7 @@ import { calculateRoadDistanceKm, estimateDriveMinutes } from '@/lib/routeOptimi
 import PoiWeatherWidget from '@/components/PoiWeatherWidget';
 import { supabase } from '@/lib/supabase';
 import { RichTextRenderer } from '@/components/RichTextRenderer';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface PlaceDetailClientProps {
   place: Place;
@@ -34,6 +35,14 @@ interface PlaceDetailClientProps {
 }
 
 export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDetailClientProps) {
+  const { language, dict, t } = useLanguage();
+  const pld = dict.places.detail;
+  const isEn = language === 'en';
+
+  const displayName = isEn && (place as any).name_en ? (place as any).name_en : place.name;
+  const displayStory = isEn && (place as any).detailed_story_en ? (place as any).detailed_story_en : (place.detailed_story || place.description);
+  const displayTips = isEn && (place as any).field_tips_en ? (place as any).field_tips_en : place.field_tips;
+
   const { maps, tiktok } = resolvePlaceExternalLinks({
     name: place.name,
     commune: place.commune,
@@ -120,10 +129,24 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
 
   // Parse Travel Guide, Check-in Spots, Dynamic Nearby Food
-  const guide = parseTravelGuide(place.travel_guide || (place as any).travel_guide_json);
-  const checkinSpotsList = parseCheckinSpots(place.checkin_spots || (place as any).checkin_spots_json, photos.map((p) => p.url));
-  const cleanDescription = sanitizeDescription(place.description, place.name, place.commune, place.category);
-  const cleanStory = place.detailed_story || place.description || '';
+  const guide = parseTravelGuide(
+    (language === 'en' && (place as any).travel_guide_json_en)
+      ? (place as any).travel_guide_json_en
+      : (place.travel_guide || (place as any).travel_guide_json)
+  );
+  const checkinSpotsList = parseCheckinSpots(
+    (language === 'en' && (place as any).checkin_spots_json_en)
+      ? (place as any).checkin_spots_json_en
+      : (place.checkin_spots || (place as any).checkin_spots_json),
+    photos.map((p) => p.url)
+  );
+  const cleanDescription = sanitizeDescription(
+    language === 'en' && (place as any).description_en ? (place as any).description_en : place.description,
+    displayName,
+    place.commune,
+    place.category
+  );
+  const cleanStory = displayStory || '';
   const cleanReviews = sanitizeReviews(place.review_samples || (place as any).reviews);
   const timeStatus = calculateTimeStatus(place.category, place.best_visit_time || (place as any).best_time);
 
@@ -362,21 +385,21 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B6355] hover:text-[#0E8C7F] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại Khám phá</span>
+          <span>{language === 'en' ? 'Back to Places' : 'Quay lại Khám phá'}</span>
         </Link>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowReportModal(true)}
-            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#A6503A] border border-[#26221B]/8 shadow-2xs transition-all"
-            title="Báo sai thông tin hoặc đóng cửa"
+            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#A6503A] border border-[#26221B]/8 shadow-2xs transition-all cursor-pointer"
+            title={language === 'en' ? 'Report incorrect information' : 'Báo sai thông tin hoặc đóng cửa'}
           >
             <Flag className="w-4 h-4" />
           </button>
           <button
             onClick={handleShare}
-            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#0E8C7F] border border-[#26221B]/8 shadow-2xs transition-all"
-            title="Chia sẻ liên kết"
+            className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#0E8C7F] border border-[#26221B]/8 shadow-2xs transition-all cursor-pointer"
+            title={language === 'en' ? 'Share place link' : 'Chia sẻ liên kết'}
           >
             <Share2 className="w-4 h-4" />
           </button>
@@ -390,7 +413,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             <div className="flex flex-wrap items-center gap-2">
               <span className="stamp-verified">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Đã Xác Minh Thực Địa</span>
+                <span>{language === 'en' ? 'Verified Field Location' : 'Đã Xác Minh Thực Địa'}</span>
               </span>
               <span className="px-3.5 py-1 rounded-full bg-[#0E8C7F]/10 text-[#0E8C7F] text-xs font-bold border border-[#0E8C7F]/20 font-display">
                 {place.commune}
@@ -405,7 +428,7 @@ export default function PlaceDetailClient({ place, nearbyPlaces = [] }: PlaceDet
             </div>
 
             <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-[#26221B] tracking-tight leading-tight">
-              {place.name}
+              {displayName}
             </h1>
 
             <p className="text-xs sm:text-sm text-[#6B6355] flex items-center gap-1.5 font-body">

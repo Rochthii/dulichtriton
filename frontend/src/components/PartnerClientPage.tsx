@@ -8,8 +8,13 @@ import {
 import PageHeaderBanner from './PageHeaderBanner';
 import { COMMUNES } from '@/lib/constants';
 import { supabase } from '@/lib/supabase';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function PartnerClientPage() {
+  const { language, dict } = useLanguage();
+  const pt = dict.partner;
+  const isEn = language === 'en';
+
   const [formData, setFormData] = useState({
     businessName: '',
     serviceType: 'food_and_restaurants',

@@ -130,7 +130,14 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
 
 8. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
+   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).
+
+9. **Hỗ Trợ Song Ngữ Quốc Tế (Bilingual English Support)**:
+   - Khi người dùng đặt câu hỏi bằng tiếng Anh (hoặc bất kỳ ngôn ngữ nào khác ngoài tiếng Việt), BẮT BUỘC trả lời hoàn toàn bằng tiếng Anh tự nhiên, mượt mà và chuẩn xác văn hóa Thất Sơn.
+   - Khi trả lời tiếng Anh:
+     • Giữ đúng chuẩn địa giới hành chính: *Chau Lang Commune*, *O Lam Commune*, *Nui To Commune*, *Tri Ton Town*, *Ba Chuc Town*.
+     • Ẩm thực: Giải thích chuẩn xác (*O Thum clay-pot kaffir lime leaf roasted chicken*, *Tri Ton beef porridge with kaffir lime*, *Khmer fish noodle soup with fingerroot [no fermented fish paste]*).
+     • Vẫn đính kèm link chuẩn: [📍 Google Maps Directions](https://maps.google.com/?q=...) • [▶ Watch TikTok](https://www.tiktok.com/tag/...).`;
 
 async function generateQueryEmbedding(text: string): Promise<number[] | null> {
   const geminiKeys = [

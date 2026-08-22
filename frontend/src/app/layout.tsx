@@ -8,6 +8,7 @@ import MobileBottomNav from "../components/MobileBottomNav";
 import SecurityConsoleShield from "../components/SecurityConsoleShield";
 import DeploymentAutoRecovery from "../components/DeploymentAutoRecovery";
 import InstallPwaBanner from "../components/InstallPwaBanner";
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 export const viewport: Viewport = {
   themeColor: "#0E8C7F",
@@ -185,14 +186,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-[#FAF3E7] text-[#26221B] antialiased font-body mobile-scroll-wrapper pb-16 sm:pb-0" suppressHydrationWarning>
-        <DeploymentAutoRecovery />
-        <SecurityConsoleShield />
-        <SiteNav />
-        <main className="flex-grow">{children}</main>
-        <SiteFooter />
-        <ChatbotWidget />
-        <MobileBottomNav />
-        <InstallPwaBanner />
+        <LanguageProvider>
+          <DeploymentAutoRecovery />
+          <SecurityConsoleShield />
+          <SiteNav />
+          <main className="flex-grow">{children}</main>
+          <SiteFooter />
+          <ChatbotWidget />
+          <MobileBottomNav />
+          <InstallPwaBanner />
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -9,32 +9,37 @@ import {
   Building, Scroll, Trees, Flame, Shield, Phone, HeartHandshake, Award, Coins
 } from 'lucide-react';
 import PageHeaderBanner from './PageHeaderBanner';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 type TabKey = 'overview' | 'geography' | 'culture' | 'food' | 'seasons' | 'transport' | 'etiquette';
 
 export default function GuideClientPage() {
+  const { language, dict } = useLanguage();
+  const gd = dict.guide;
+  const isEn = language === 'en';
+
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
 
   const tabs: { key: TabKey; label: string; icon: React.ElementType }[] = [
-    { key: 'overview',   label: 'Tổng Quan Tri Tôn', icon: Compass },
-    { key: 'geography',  label: 'Địa Lý & 15 Xã',    icon: Mountain },
-    { key: 'culture',    label: 'Văn Hóa & Lễ Hội',  icon: Landmark },
-    { key: 'food',       label: 'Bản Đồ Ẩm Thực',   icon: Utensils },
-    { key: 'seasons',    label: 'Khí Hậu & 2 Mùa',   icon: Sun },
-    { key: 'transport',  label: 'Đường Đi & Xe Cộ',  icon: Bus },
-    { key: 'etiquette',  label: 'Lưu Ý & Cứu Hộ',    icon: ShieldCheck },
+    { key: 'overview',   label: gd.tabs.overview, icon: Compass },
+    { key: 'geography',  label: gd.tabs.geography,    icon: Mountain },
+    { key: 'culture',    label: gd.tabs.culture,  icon: Landmark },
+    { key: 'food',       label: gd.tabs.food,   icon: Utensils },
+    { key: 'seasons',    label: gd.tabs.seasons,   icon: Sun },
+    { key: 'transport',  label: gd.tabs.transport,  icon: Bus },
+    { key: 'etiquette',  label: gd.tabs.etiquette,    icon: ShieldCheck },
   ];
 
   return (
     <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen">
       {/* Header Banner */}
       <PageHeaderBanner
-        badgeText="Bách Khoa Toàn Thư Du Lịch Tri Tôn 2026"
+        badgeText={gd.hero.badge}
         badgeIcon={BookOpen}
-        title="GIỚI THIỆU TỔNG QUAN VÙNG ĐẤT BẢY NÚI TRI TÔN"
-        subtitle="Cẩm nang toàn tập: Địa lý tự nhiên, 15 Xã & Thị trấn, lịch sử di sản Khmer cổ kính, bản đồ ẩm thực lá chúc trứ danh và kinh nghiệm thực địa chi tiết."
-        countLabel="Chuyên mục đang xem"
-        countValue={tabs.find(t => t.key === activeTab)?.label || 'Tổng Quan'}
+        title={gd.hero.title}
+        subtitle={gd.hero.subtitle}
+        countLabel={gd.hero.viewingCategory}
+        countValue={tabs.find(t => t.key === activeTab)?.label || gd.tabs.overview}
       />
 
       {/* ── INTERACTIVE TAB NAVIGATION BAR ──────────────────────────────── */}
@@ -69,13 +74,13 @@ export default function GuideClientPage() {
           <div className="bg-gradient-to-br from-[#0B6B60] via-[#0E8C7F] to-[#151B34] text-white rounded-[28px] p-6 sm:p-10 shadow-[0_10px_30px_rgba(38,34,27,0.14)] relative overflow-hidden border border-[#0E8C7F]/30">
             <div className="relative z-10 max-w-3xl space-y-4">
               <span className="text-xs font-bold text-[#FFD37A] uppercase tracking-widest block font-display">
-                Trái Tim Của Miền Thất Sơn Huyền Bí
+                {gd.overview.heroTag}
               </span>
               <h2 className="font-display text-2xl sm:text-4xl font-extrabold leading-tight text-[#FFFDF7]">
-                Tri Tôn — Vùng Đất Giao Thoa Kỳ Vĩ Giữa Núi Rừng, Đồng Bằng & Văn Hóa Khmer
+                {gd.overview.heroTitle}
               </h2>
               <p className="font-body text-xs sm:text-sm text-[#FAF3E7]/90 leading-relaxed">
-                Nằm ở phía Tây Nam tỉnh An Giang, giáp vương quốc Campuchia, Tri Tôn là vùng đất bán sơn địa hiếm có của Đồng bằng Sông Cửu Long. Nơi đây sở hữu cảnh sắc ngoạn mục với những hồ nước trên đỉnh đồi đá, các dãy núi granit sừng sững, cánh đồng thốt nốt bạt ngàn và nền văn hóa Phật giáo Nam tông Khmer hơn 500 năm lịch sử.
+                {gd.overview.heroDesc}
               </p>
             </div>
             <div className="absolute right-[-40px] bottom-[-40px] opacity-10 text-white pointer-events-none">
@@ -86,27 +91,27 @@ export default function GuideClientPage() {
           {/* 4 Key Statistics Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-[#FFFDF7] rounded-[22px] p-5 border border-[#26221B]/8 shadow-xs space-y-1">
-              <p className="text-xs font-bold text-[#6B6355] font-display">Diện Tích Tự Nhiên</p>
-              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">~600 km²</p>
-              <p className="font-body text-[11px] text-[#6B6355]">Lớn nhất tỉnh An Giang</p>
+              <p className="text-xs font-bold text-[#6B6355] font-display">{gd.overview.statAreaLabel}</p>
+              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">{gd.overview.statAreaVal}</p>
+              <p className="font-body text-[11px] text-[#6B6355]">{gd.overview.statAreaSub}</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[22px] p-5 border border-[#26221B]/8 shadow-xs space-y-1">
-              <p className="text-xs font-bold text-[#6B6355] font-display">Đơn Vị Hành Chính</p>
-              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">15 Đơn Vị</p>
-              <p className="font-body text-[11px] text-[#6B6355]">2 Thị Trấn & 13 Xã</p>
+              <p className="text-xs font-bold text-[#6B6355] font-display">{gd.overview.statAdminLabel}</p>
+              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">{gd.overview.statAdminVal}</p>
+              <p className="font-body text-[11px] text-[#6B6355]">{gd.overview.statAdminSub}</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[22px] p-5 border border-[#26221B]/8 shadow-xs space-y-1">
-              <p className="text-xs font-bold text-[#6B6355] font-display">Dân Cư & Dân Tộc</p>
-              <p className="font-display text-2xl font-extrabold text-[#D9822B]">&gt;34% Khmer</p>
-              <p className="font-body text-[11px] text-[#6B6355]">Cộng đồng Kinh - Khmer - Hoa</p>
+              <p className="text-xs font-bold text-[#6B6355] font-display">{gd.overview.statPopLabel}</p>
+              <p className="font-display text-2xl font-extrabold text-[#D9822B]">{gd.overview.statPopVal}</p>
+              <p className="font-body text-[11px] text-[#6B6355]">{gd.overview.statPopSub}</p>
             </div>
 
             <div className="bg-[#FFFDF7] rounded-[22px] p-5 border border-[#26221B]/8 shadow-xs space-y-1">
-              <p className="text-xs font-bold text-[#6B6355] font-display">Di Sản & Điểm Đến</p>
-              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">149 Điểm Đến</p>
-              <p className="font-body text-[11px] text-[#6B6355]">37 Chùa Khmer cổ kính</p>
+              <p className="text-xs font-bold text-[#6B6355] font-display">{gd.overview.statPoisLabel}</p>
+              <p className="font-display text-2xl font-extrabold text-[#0E8C7F]">{gd.overview.statPoisVal}</p>
+              <p className="font-body text-[11px] text-[#6B6355]">{gd.overview.statPoisSub}</p>
             </div>
           </div>
 
@@ -116,9 +121,9 @@ export default function GuideClientPage() {
               <div className="w-12 h-12 rounded-2xl bg-[#0E8C7F]/10 text-[#0E8C7F] flex items-center justify-center font-black">
                 <Mountain className="w-6 h-6" />
               </div>
-              <h3 className="font-display text-base font-bold text-[#26221B]">1. Thắng Cảnh Sơn Thủy</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">{gd.overview.pillar1Title}</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Hồ Tà Pạ (Tuyệt Tình Cốc), Đỉnh Núi Cô Tô 614m, Vồ Hội, Suối Bạc Soài So, Hồ Ô Thum thơ mộng, Hàng cây thốt nốt trái tim huyền thoại.
+                {gd.overview.pillar1Desc}
               </p>
             </div>
 
@@ -126,9 +131,9 @@ export default function GuideClientPage() {
               <div className="w-12 h-12 rounded-2xl bg-[#D9822B]/10 text-[#D9822B] flex items-center justify-center font-black">
                 <Landmark className="w-6 h-6" />
               </div>
-              <h3 className="font-display text-base font-bold text-[#26221B]">2. Di Sản & Lễ Hội Khmer</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">{gd.overview.pillar2Title}</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Lễ hội Đua Bò Bảy Núi rực lửa (Sene Dolta), Chùa Xvayton hơn 500 năm tuổi lưu giữ Kinh lá buông, Cổng trời Chùa Koh Kas nguy nga.
+                {gd.overview.pillar2Desc}
               </p>
             </div>
 
@@ -136,9 +141,9 @@ export default function GuideClientPage() {
               <div className="w-12 h-12 rounded-2xl bg-[#F26B3A]/10 text-[#F26B3A] flex items-center justify-center font-black">
                 <Utensils className="w-6 h-6" />
               </div>
-              <h3 className="font-display text-base font-bold text-[#26221B]">3. Ẩm Thực Bản Địa Độc Bản</h3>
+              <h3 className="font-display text-base font-bold text-[#26221B]">{gd.overview.pillar3Title}</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
-                Gà Đốt Ô Thum ướp lá chúc, Cháo Bò trái chúc thơm ngậy, Đu Đủ Đâm giòn cay, Bò nướng xiên, Bánh bò thốt nốt và nước thốt nốt ngọt lịm.
+                {gd.overview.pillar3Desc}
               </p>
             </div>
           </div>

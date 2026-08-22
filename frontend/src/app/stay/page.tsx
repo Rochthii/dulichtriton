@@ -5,6 +5,7 @@ import Link from "next/link";
 import localStaysJson from "@/data/tri_ton_stays.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 import { fetchWithCache } from "@/lib/fastCache";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import {
   Hotel,
   MapPin,
@@ -27,6 +28,7 @@ interface StayItem {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   category: string;
   subcategory?: string;
   tourism_category?: string;
@@ -39,7 +41,9 @@ interface StayItem {
   hotline?: string;
   price_level?: string;
   description?: string;
+  description_en?: string;
   detailed_story?: string;
+  detailed_story_en?: string;
   amenities?: string[];
   stay_type?: "homestay" | "hotel" | "camping" | "motel";
   is_hot?: boolean;
@@ -48,6 +52,10 @@ interface StayItem {
 type FilterGroup = "all" | "homestay_camping" | "hotel_resort" | "motel";
 
 export default function StayPage() {
+  const { language, dict } = useLanguage();
+  const st = dict.stay;
+  const isEn = language === 'en';
+
   const [stays, setStays] = useState<StayItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterGroup>("all");
@@ -173,13 +181,13 @@ export default function StayPage() {
           <div className="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
               <Hotel className="h-3.5 w-3.5" />
-              <span>12 Cơ Sở Lưu Trú Đã Xác Minh Thực Địa</span>
+              <span>{st.hero.badge}</span>
             </div>
             <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
-              Homestay, Khách Sạn & Cắm Trại Tri Tôn
+              {st.hero.title}
             </h1>
             <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-body">
-              Tra cứu thông tin chính xác 100%: Hotline đặt phòng 1 chạm, bảng giá thực tế, có dịch vụ cho thuê xe máy và view ngắm cảnh núi Cô Tô / Hồ Tà Pạ tuyệt đẹp.
+              {st.hero.subtitle}
             </p>
           </div>
         </section>
@@ -195,7 +203,7 @@ export default function StayPage() {
             }`}
           >
             <Compass className="w-4 h-4" />
-            <span>Tất Cả ({stays.length})</span>
+            <span>{st.filters.all} ({stays.length})</span>
           </button>
 
           <button
@@ -207,7 +215,7 @@ export default function StayPage() {
             }`}
           >
             <Tent className="w-4 h-4 text-emerald-500" />
-            <span>Homestay & Cắm Trại View Núi ({stays.filter(s => s.stay_type === "homestay" || s.stay_type === "camping").length})</span>
+            <span>{st.filters.homestay} ({stays.filter(s => s.stay_type === "homestay" || s.stay_type === "camping").length})</span>
           </button>
 
           <button
@@ -219,7 +227,7 @@ export default function StayPage() {
             }`}
           >
             <Building2 className="w-4 h-4 text-blue-500" />
-            <span>Khách Sạn & Resort Trung Tâm ({stays.filter(s => s.stay_type === "hotel").length})</span>
+            <span>{st.filters.hotel} ({stays.filter(s => s.stay_type === "hotel").length})</span>
           </button>
 
           <button
@@ -231,7 +239,7 @@ export default function StayPage() {
             }`}
           >
             <Hotel className="w-4 h-4 text-amber-500" />
-            <span>Nhà Nghỉ Tiện Lợi ({stays.filter(s => s.stay_type === "motel").length})</span>
+            <span>{st.filters.guesthouse} ({stays.filter(s => s.stay_type === "motel").length})</span>
           </button>
         </section>
 

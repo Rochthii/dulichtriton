@@ -10,12 +10,15 @@ import {
 import localMasterPois from "@/data/triton_pois_full.json";
 import { getOptimizedImageUrl } from "@/lib/imageOptimizer";
 import { fetchWithCache } from "@/lib/fastCache";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface FoodItem {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   category: string;
+  category_en?: string;
   tourism_category: string;
   commune: string;
   rating: number;
@@ -23,7 +26,9 @@ interface FoodItem {
   video_url?: string;
   hours: string;
   description?: string;
+  description_en?: string;
   detailed_story?: string;
+  detailed_story_en?: string;
   open_late?: boolean;
   night_hours?: string;
   phone?: string;
@@ -122,11 +127,25 @@ function getFoodPriceBadge(food: FoodItem): { priceText: string; note?: string }
 }
 
 export default function FoodPage() {
+  const { language, dict } = useLanguage();
+  const fd = dict.food;
+  const isEn = language === 'en';
+
   const [foods, setFoods] = useState<FoodItem[]>(getInitialFoodList);
   const [selectedCategory, setSelectedCategory] = useState<FoodSpecialtyCategory>('all');
   const [selectedCommune, setSelectedCommune] = useState("Tất cả");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const specialtyFilters = useMemo(() => [
+    { key: 'all' as FoodSpecialtyCategory, label: fd.filters.all, icon: '🍽️' },
+    { key: 'ga_dot' as FoodSpecialtyCategory, label: fd.filters.ga_dot, icon: '🍗' },
+    { key: 'bo_7_mon' as FoodSpecialtyCategory, label: fd.filters.bo_7_mon, icon: '🥩' },
+    { key: 'chao_bo' as FoodSpecialtyCategory, label: fd.filters.chao_bo, icon: '🍲' },
+    { key: 'banh_bo' as FoodSpecialtyCategory, label: fd.filters.banh_bo, icon: '🥞' },
+    { key: 'cafe' as FoodSpecialtyCategory, label: fd.filters.cafe, icon: '☕' },
+    { key: 'night' as FoodSpecialtyCategory, label: fd.filters.night, icon: '🌙' },
+  ], [fd.filters]);
 
   useEffect(() => {
     function processFoodData(json: any) {
@@ -267,13 +286,13 @@ export default function FoodPage() {
           <div className="relative z-10 max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
               <Utensils className="h-3.5 w-3.5" />
-              <span>Thiên Đường Ẩm Thực Bảy Núi</span>
+              <span>{fd.hero.badge}</span>
             </div>
             <h1 className="font-display text-2xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
-              Khám Phá Hương Vị Đặc Sản & Quán Ngon Tri Tôn
+              {fd.hero.title}
             </h1>
             <p className="text-xs md:text-sm text-white/85 leading-relaxed font-body">
-              Gà đốt lá chúc Ô Thum, Bò 7 món Ba Chúc, Cháo bò Tri Tôn, Bún cá củ ngải Châu Lăng, Bánh bò thốt nốt nướng và các quán cà phê ngắm cảnh mở muộn về đêm.
+              {fd.hero.subtitle}
             </p>
           </div>
         </section>
@@ -282,37 +301,35 @@ export default function FoodPage() {
         <section className="p-4 sm:p-6 rounded-[24px] bg-gradient-to-br from-amber-50/90 via-[#FFFDF7] to-emerald-50/60 border border-amber-300/60 shadow-xs space-y-3 font-body">
           <div className="flex items-center gap-2 text-xs font-bold text-amber-900 font-display">
             <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>Mẹo Thực Khách Bỏ Túi Khi Ăn Uống Tại Tri Tôn</span>
+            <span>{fd.rules.title}</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
             <div className="p-3.5 rounded-[18px] bg-white/90 border border-amber-200/60 space-y-1">
               <span className="font-bold text-[#F26B3A] flex items-center gap-1.5 font-display">
-                🍗 Đặt Gà Đốt Trước 35–45 Phút:
+                🍗 {isEn ? 'O Thum Roasted Chicken:' : 'Gà Đốt Ô Thum:'}
               </span>
               <p className="text-[#6B6355] leading-relaxed">
-                Gà đốt thả đồi nướng than củi tươi tại chỗ. Nên gọi hotline quán trước khi xuất phát để đến nơi có gà ăn ngay, tránh chờ lâu vào trưa cuối tuần.
+                {fd.rules.gaDotRule}
               </p>
             </div>
 
             <div className="p-3.5 rounded-[18px] bg-white/90 border border-amber-200/60 space-y-1">
               <span className="font-bold text-[#0E8C7F] flex items-center gap-1.5 font-display">
-                🍲 Giờ Vàng Ăn Sáng (06:00 – 10:00):
+                🍲 {isEn ? 'Tri Ton Beef Porridge & Fish Noodles:' : 'Cháo Bò Tri Tôn & Bún Cá:'}
               </span>
               <p className="text-[#6B6355] leading-relaxed">
-                Cháo bò Tri Tôn & Bún cá củ ngải bán ngon nhất vào sáng sớm. Đến sau 10:30 thường hết lòng non hoặc nước lèo nguội.
+                {fd.rules.chaoBoRule}
               </p>
             </div>
 
             <div className="p-3.5 rounded-[18px] bg-white/90 border border-amber-200/60 space-y-1">
               <span className="font-bold text-[#D9822B] flex items-center gap-1.5 font-display">
-                🥞 Bánh Bò Thốt Nốt Nóng Hổi:
+                🥞 {isEn ? 'Khmer Fish Noodles & Palm Sugar Cakes:' : 'Bún Cá Củ Ngải & Bánh Bò:'}
               </span>
               <p className="text-[#6B6355] leading-relaxed">
-                Lò bánh Út Cột, Út Dứt ra mẻ bánh bò nướng vàng ươm vào <strong className="text-amber-800">09:00 sáng</strong> và <strong className="text-amber-800">14:00 chiều</strong>. Mua tại lò thơm lừng nức mũi.
+                {fd.rules.bunCaRule}
               </p>
-            </div>
-          </div>
         </section>
 
         {/* 🌟 TOP 4 ĐẶC SẢN & QUÁN HOT NHẤT PHẢI THỬ 🌟 */}
@@ -424,10 +441,10 @@ export default function FoodPage() {
           <div className="space-y-2">
             <span className="text-xs font-bold text-[#6B6355] uppercase tracking-wider font-display flex items-center gap-1.5">
               <Utensils className="w-3.5 h-3.5 text-[#0E8C7F]" />
-              <span>Phân Loại Đặc Sản Bảy Núi:</span>
+              <span>{isEn ? 'Seven Mountains Cuisine Categories:' : 'Phân Loại Đặc Sản Bảy Núi:'}</span>
             </span>
             <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none font-display">
-              {SPECIALTY_FILTERS.map((cat) => {
+              {specialtyFilters.map((cat) => {
                 const count = (categoryCounts as any)[cat.key] || 0;
                 const isSelected = selectedCategory === cat.key;
                 return (
@@ -462,7 +479,7 @@ export default function FoodPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Tìm kiếm món ăn, quán gà đốt, cháo bò, quán cà phê..."
+                placeholder={fd.hero.searchPlaceholder}
                 className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus:outline-none focus:border-[#0E8C7F]"
               />
             </div>
@@ -470,7 +487,7 @@ export default function FoodPage() {
             {/* Communes Filter Horizontal Scroll */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none w-full md:w-auto">
               <span className="text-xs font-bold text-[#6B6355] whitespace-nowrap mr-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> Xã:
+                <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> {isEn ? 'Commune:' : 'Xã:'}
               </span>
               {communes.map((commune) => (
                 <button
@@ -482,7 +499,7 @@ export default function FoodPage() {
                       : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
                   }`}
                 >
-                  {commune}
+                  {commune === 'Tất cả' && isEn ? 'All' : commune}
                 </button>
               ))}
             </div>
@@ -494,9 +511,9 @@ export default function FoodPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Utensils className="w-5 h-5 text-[#0E8C7F]" />
-              <span>Danh Sách Quán Ăn & Đặc Sản ({filteredFoods.length} Địa Điểm)</span>
+              <span>{isEn ? `Restaurants & Specialties (${filteredFoods.length} Places)` : `Danh Sách Quán Ăn & Đặc Sản (${filteredFoods.length} Địa Điểm)`}</span>
             </h2>
-            <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
+            <span className="text-xs text-[#6B6355] font-medium font-mono">{isEn ? '100% Verified Field Data' : 'Dữ liệu thực địa 100%'}</span>
           </div>
 
           {loading ? (

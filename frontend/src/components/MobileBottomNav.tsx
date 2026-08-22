@@ -4,9 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Compass, Utensils, Bot, Map } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
+  const { language, t } = useLanguage();
 
   // Hide on admin routes or full-screen chatbot page to avoid double UI
   if (pathname?.startsWith("/admin") || pathname === "/chatbot") {
@@ -15,19 +17,19 @@ export default function MobileBottomNav() {
 
   const navItems = [
     {
-      label: "Trang chủ",
+      label: t("nav.home"),
       href: "/",
       icon: Home,
       isActive: pathname === "/"
     },
     {
-      label: "Khám phá",
+      label: t("nav.places"),
       href: "/places",
       icon: Compass,
       isActive: pathname.startsWith("/places")
     },
     {
-      label: "Ẩm thực",
+      label: t("nav.food"),
       href: "/food",
       icon: Utensils,
       isActive: pathname.startsWith("/food")
@@ -39,7 +41,7 @@ export default function MobileBottomNav() {
       isActive: pathname.startsWith("/chatbot")
     },
     {
-      label: "Bản đồ",
+      label: t("nav.map"),
       href: "/map",
       icon: Map,
       isActive: pathname.startsWith("/map")

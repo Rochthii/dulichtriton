@@ -12,6 +12,7 @@ import { sanitizeDescription, getCategoryFallbackImage } from "@/lib/dataSanitiz
 import heroImagesData from "@/data/hero_images.json";
 import FeedbackSection from "@/components/FeedbackSection";
 import SmartTripBuilderMini from "@/components/SmartTripBuilderMini";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import {
   Utensils,
   MapPin,
@@ -224,6 +225,10 @@ function getInitialPresets(): ItineraryCardItem[] {
 }
 
 export default function HomePage() {
+  const { language, dict } = useLanguage();
+  const hm = dict.home;
+  const isEn = language === 'en';
+
   const [activeTimeSlot, setActiveTimeSlot] = useState<TimeSlot>("morning");
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
   const [selectedClusterId, setSelectedClusterId] = useState<string | null>(null);
@@ -574,17 +579,20 @@ export default function HomePage() {
             {/* Verified Stamp Badge */}
             <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0E8C7F]/90 backdrop-blur-md text-[#FFD37A] text-xs font-bold border border-[#FFD37A]/30 shadow-md font-display">
               <Sparkles className="h-3.5 w-3.5 text-[#FFD37A]" />
-              <span>Cổng Thông Tin Du Lịch Thông Minh Tri Tôn 2026</span>
+              <span>{hm.hero.badge}</span>
             </div>
 
             {/* Main Title in Bricolage Grotesque */}
             <h1 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-[#FFFDF7] tracking-tight leading-tight drop-shadow-md">
-              Khám Phá Vẻ Đẹp <br className="hidden sm:inline" />
-              <span className="text-[#F0A32F] drop-shadow-lg">Huyền Bí Bảy Núi Tri Tôn</span>
+              {isEn ? (
+                <>Discover Tri Ton <br className="hidden sm:inline" /><span className="text-[#F0A32F] drop-shadow-lg">The Realm of Seven Mountains</span></>
+              ) : (
+                <>Khám Phá Vẻ Đẹp <br className="hidden sm:inline" /><span className="text-[#F0A32F] drop-shadow-lg">Huyền Bí Bảy Núi Tri Tôn</span></>
+              )}
             </h1>
 
             <p className="font-body text-xs sm:text-sm text-[#FAF3E7]/90 max-w-2xl mx-auto font-medium leading-relaxed drop-shadow-xs">
-              149 thắng cảnh đã xác minh thực tế • 35 lịch trình gợi ý • Bản đồ ẩm thực Gà Đốt Ô Thum & Di sản Chùa Khmer.
+              {hm.hero.subtitle}
             </p>
 
             {/* Smart Search Bar */}
@@ -594,31 +602,31 @@ export default function HomePage() {
 
             {/* Pain-Point Search Chips (Giải quyết điểm mù du khách) */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-              <span className="text-[11px] font-bold text-[#FAF3E7]/70 font-display">Tìm nhanh theo nhu cầu:</span>
+              <span className="text-[11px] font-bold text-[#FAF3E7]/70 font-display">{hm.hero.quickNeedsLabel}</span>
               <Link
                 href="/itinerary?slug=kinh-dien-1-ngay"
                 className="px-3 py-1 rounded-full bg-[#FAF3E7]/15 hover:bg-[#F0A32F] hover:text-[#26221B] text-[#FFFDF7] text-xs font-bold backdrop-blur-sm border border-white/20 transition-all active:scale-95"
               >
-                Sợ hết giờ
+                {hm.hero.quickChip1Day}
               </Link>
-              <button
-                type="button"
-                onClick={() => setActiveAudience("family")}
-                className="px-3 py-1 rounded-full bg-[#FAF3E7]/15 hover:bg-[#F0A32F] hover:text-[#26221B] text-[#FFFDF7] text-xs font-bold backdrop-blur-sm border border-white/20 transition-all active:scale-95"
-              >
-                Đi với người lớn tuổi
-              </button>
               <Link
                 href="/food"
                 className="px-3 py-1 rounded-full bg-[#FAF3E7]/15 hover:bg-[#F0A32F] hover:text-[#26221B] text-[#FFFDF7] text-xs font-bold backdrop-blur-sm border border-white/20 transition-all active:scale-95"
               >
-                Muốn ăn gà đốt Ô Thum
+                {hm.hero.quickChipChicken}
               </Link>
+              <button
+                type="button"
+                onClick={() => setActiveAudience("trekking")}
+                className="px-3 py-1 rounded-full bg-[#FAF3E7]/15 hover:bg-[#F0A32F] hover:text-[#26221B] text-[#FFFDF7] text-xs font-bold backdrop-blur-sm border border-white/20 transition-all active:scale-95"
+              >
+                {hm.hero.quickChipCoTo}
+              </button>
               <Link
                 href="/culture"
                 className="px-3 py-1 rounded-full bg-[#FAF3E7]/15 hover:bg-[#F0A32F] hover:text-[#26221B] text-[#FFFDF7] text-xs font-bold backdrop-blur-sm border border-white/20 transition-all active:scale-95"
               >
-                Viếng Chùa Xvayton
+                {hm.hero.quickChipPagodas}
               </Link>
             </div>
 

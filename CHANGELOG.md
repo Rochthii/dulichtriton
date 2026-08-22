@@ -4,6 +4,71 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v83.2.0-CULTURE-ETIQUETTE-DEEP-DIVE-AND-CHATBOT-INTEGRATION] - 2026-08-22
+
+### 🏛️ Trang Chuyên Sâu Quy Chuẩn Viếng 37 Chùa Khmer, Sơ Đồ Chào Sampheah SVG & Khắc Phục Tương Tác Chatbot
+
+#### 1. Khởi Tạo Trang Chuyên Sâu Độc Lập [`/culture/etiquette`](frontend/src/app/culture/etiquette/page.tsx)
+- **Cẩm Nang Toàn Tập 6 Quy Chuẩn**: Hướng dẫn chi tiết giới luật Phật giáo Nam Tông Theravada, nghi thức tiếp xúc chư tăng, trang phục và ứng xử chuẩn mực.
+- **Sơ Đồ Đồ Họa Vector SVG 3 Cấp Độ Chào Sampheah**:
+  - *Cấp 1 (Chong Trud)*: Ngang ngực, góc cúi 0°-10° (bạn bè, người bằng vai).
+  - *Cấp 2 (Chong Mork)*: Ngang mũi/miệng, góc cúi 30° (cha mẹ, thầy cô, bậc trưởng bối).
+  - *Cấp 3 (Chong Tngos)*: Ngang trán giữa chân mày, góc cúi 45°-60° (Chư Tăng & Đức Phật).
+- **Bảng Checklist Song Ngữ**: Danh mục 5 điều NÊN LÀM (DOs) & 5 điều TUYỆT ĐỐI TRÁNH (DON'Ts) được dịch chuẩn xác 100% trong `vi/culture.ts` và `en/culture.ts`.
+
+#### 2. Tinh Gọn Hero Banner & Tối Ưu Mobile 100%
+- **Hero Banner Gọn Gàng**: Giảm padding và kích thước tiêu đề trên `/culture`, giúp người dùng không phải cuộn trang nhiều để tiếp cận nội dung chính.
+- **Khắc Phục Lỗi Cắt Chữ Trên Màn Hình Nhỏ**: Thay đổi cấu trúc Flexbox và Responsive Typography của các thẻ quy chuẩn viếng chùa, tiêu đề và nhãn badge co giãn tự nhiên không bị chèn ép.
+
+#### 3. Khắc Phục Lỗi Kích Hoạt Chatbot Widget
+- **Kích Hoạt Trực Tiếp Bằng Event `triton:open-chat`**: Chuyển đổi các nút *"Hỏi Trợ Lý AI Về Lễ Hội Này"* từ thẻ `<Link href="/chatbot?q=...">` sang phát sự kiện trực tiếp mở Widget Chatbot nổi tại chỗ mà không làm reload/chuyển trang.
+- **Bắt Tham Số URL Tại `/chatbot`**: Nâng cấp `app/chatbot/page.tsx` với `Suspense` và `useSearchParams()` để chuyển hướng mượt mà khi người dùng truy cập trực tiếp bằng link URL.
+
+---
+
+## [v83.1.0-MODULAR-I18N-DICTIONARIES-AND-ZERO-HARDCODE] - 2026-08-22
+
+### 🧩 Module Hóa Toàn Diện Hệ Thống Từ Điển i18n & Triệt Tiêu 100% Hardcoded UI Text
+
+#### 1. Kiến Trúc Modular Dictionaries Theo Trang (12 Modules)
+- **Tách module độc lập**: Chia tách từ điển thành 12 module riêng biệt theo từng trang tại `frontend/src/lib/i18n/dictionaries/vi/` và `en/` (`common`, `home`, `places`, `food`, `stay`, `culture`, `itinerary`, `map`, `guide`, `emergency`, `partner`, `chatbot`).
+- **Tập trung quản lý 1 nơi**: Tiết kiệm token, dễ bảo trì, dễ mở rộng thêm ngôn ngữ mới mà không làm phình file mã nguồn.
+- **Type-Safe Aggregator**: Tự động tổng hợp qua `vi.ts` và `en.ts` với đầy đủ gợi ý TypeScript IDE.
+
+#### 2. Refactor Toàn Bộ Các Trang & Components
+- **SiteFooter.tsx**: Chuyển 100% liên kết điều hướng, bản quyền, thông tin liên hệ sang `dict.common.footer`.
+- **food/page.tsx**: Chuyển 100% bộ lọc đặc sản, quy tắc ẩm thực Bảy Núi, thực đơn chữ ký sang `dict.food`.
+- **culture/page.tsx**: Chuyển 100% di sản 37 chùa, 6 đại lễ hội, quy chuẩn viếng chùa sang `dict.culture`.
+- **stay/page.tsx**: Chuyển 100% bộ lọc homestay/khách sạn, tiện ích sang `dict.stay`.
+- **itinerary/page.tsx & ItineraryClientPage.tsx**: Chuyển 100% kịch bản tour, thời lượng sang `dict.itinerary`.
+- **map/page.tsx & MapClientPage.tsx**: Chuyển 100% lớp bản đồ, chú giải GIS sang `dict.map`.
+- **guide/page.tsx & GuideClientPage.tsx**: Chuyển 100% cẩm nang xe khách, cảnh báo đèo núi sang `dict.guide`.
+- **emergency/page.tsx**: Chuyển 100% danh bạ khẩn cấp SOS sang `dict.emergency`.
+- **partner/page.tsx & PartnerClientPage.tsx**: Chuyển 100% cổng đối tác, form đăng ký sang `dict.partner`.
+- **app/page.tsx**: Chuyển 100% Hero banner, phân loại danh thắng sang `dict.home`.
+
+---
+
+## [v83.0.0-BILINGUAL-VI-EN-PORTAL-SUPPORT] - 2026-08-22
+
+### 🌐 Ra Mắt Toàn Diện Nền Tảng Song Ngữ (Bilingual English - Vietnamese) 100% Free
+
+#### 1. Quản Lý Ngôn Ngữ UI & Bộ Từ Điển Type-Safe
+- **LanguageContext & useLanguage**: Lưu trạng thái vào `localStorage` & `cookie`, hỗ trợ chuyển đổi tức thì không reload trang.
+- **Language Switcher Toggle**: Tích hợp nút chuyển đổi `🇻🇳 VI` $\leftrightarrow$ `🇬🇧 EN` trên Header Desktop và Mobile Menu Drawer.
+- **Từ điển Type-Safe**: Xây dựng bộ từ điển chuẩn xác `vi.ts` và `en.ts`.
+
+#### 2. Dữ Liệu 138 POIs Song Ngữ & Chuẩn Văn Hóa Thất Sơn
+- **Làm giàu 100% dữ liệu tiếng Anh**: Tự động bổ sung `name_en`, `category_en`, `description_en`, `detailed_story_en`, `travel_guide_json_en`, `checkin_spots_json_en`, `highlights_json_en`, `field_tips_en`.
+- **Chuẩn hóa địa giới (RULE 02)**: Gọi chính xác *Nui To Commune*, *Chau Lang Commune*, *O Lam Commune*, *Tri Ton Town*, *Ba Chuc Town*.
+- **Chuẩn hóa ẩm thực & văn hóa (RULE 05)**: *O Thum Clay-Pot Kaffir Lime Roasted Chicken*, *Tri Ton Beef Porridge with Kaffir Lime*, *Khmer Fish Noodle Soup with Fingerroot*.
+
+#### 3. AI Chatbot RAG Engine Đa Ngôn Ngữ Tự Nhiên
+- **Dynamic Language Detection**: Tự động nhận diện câu hỏi tiếng Anh của du khách quốc tế và phản hồi 100% bằng tiếng Anh chuẩn xác.
+- **Bilingual Contextual Suggestions**: Sinh gợi ý thông minh bằng tiếng Anh.
+
+---
+
 ## [v82.7.2-FIX-ARTICLE-IMAGE-DISPLAY-AND-STATIC-POI-SYNC] - 2026-08-18
 
 ### 🖼️ Sửa Lỗi Hiển Thị Hình Ảnh Trên Bài Viết, Thẻ Địa Điểm & Gallery Thực Địa
