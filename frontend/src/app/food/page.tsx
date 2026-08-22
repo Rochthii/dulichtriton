@@ -330,6 +330,8 @@ export default function FoodPage() {
               <p className="text-[#6B6355] leading-relaxed">
                 {fd.rules.bunCaRule}
               </p>
+            </div>
+          </div>
         </section>
 
         {/* 🌟 TOP 4 ĐẶC SẢN & QUÁN HOT NHẤT PHẢI THỬ 🌟 */}
