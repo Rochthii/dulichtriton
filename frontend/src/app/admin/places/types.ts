@@ -4,6 +4,7 @@ export interface PlaceRecord {
   id: string;
   slug: string;
   name: string;
+  name_en?: string;
   commune: string;
   category: string;
   tourism_category?: string;
@@ -12,7 +13,12 @@ export interface PlaceRecord {
   photos?: string[];
   checkin_spots?: CheckinSpotItem[] | string;
   description: string;
+  short_description?: string;
   detailed_story?: string;
+  detailed_story_en?: string;
+  opening_hours?: string;
+  best_visit_time?: string;
+  field_tips_en?: string;
   phone?: string;
   open_late?: boolean;
   night_hours?: string;

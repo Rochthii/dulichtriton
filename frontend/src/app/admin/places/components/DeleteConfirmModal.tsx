@@ -5,20 +5,23 @@ import { AlertCircle, Trash2, X } from 'lucide-react';
 import { PlaceRecord } from '../types';
 
 interface DeleteConfirmModalProps {
-  place: PlaceRecord | null;
+  place?: PlaceRecord | null;
+  placeName?: string;
   onClose: () => void;
   onConfirm: () => void;
 }
 
 export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
   place,
+  placeName,
   onClose,
   onConfirm,
 }) => {
-  if (!place) return null;
+  const name = placeName || place?.name;
+  if (!name) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in font-body">
       <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
         <div className="flex items-center justify-between">
           <div className="p-3 rounded-2xl bg-red-50 text-red-600 border border-red-100">
@@ -34,16 +37,16 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
         </div>
 
         <div>
-          <h3 className="font-extrabold text-slate-800 text-base">
+          <h3 className="font-extrabold text-slate-800 text-base font-display">
             Xác Nhận Vô Hiệu Hóa Địa Điểm?
           </h3>
           <p className="text-xs text-slate-500 mt-1">
-            Bạn có chắc chắn muốn vô hiệu hóa địa điểm <strong className="text-slate-800 font-bold">"{place.name}"</strong>?
-            Địa điểm này sẽ bị ẩn khỏi giao diện khách du lịch nhưng dữ liệu vẫn được bảo lưu an toàn trong cơ sở dữ liệu.
+            Bạn có chắc chắn muốn vô hiệu hóa &quot;<strong className="text-slate-800">{name}</strong>&quot;?
+            Địa điểm sẽ bị ẩn khỏi cổng thông tin công khai và có thể khôi phục lại bất kỳ lúc nào.
           </p>
         </div>
 
-        <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-2 pt-2 font-display">
           <button
             type="button"
             onClick={onClose}
@@ -54,9 +57,10 @@ export const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
           <button
             type="button"
             onClick={onConfirm}
-            className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <Trash2 className="w-3.5 h-3.5" /> Xác Nhận Vô Hiệu Hóa
+            <Trash2 className="w-4 h-4" />
+            <span>Xác Nhận Ẩn</span>
           </button>
         </div>
       </div>

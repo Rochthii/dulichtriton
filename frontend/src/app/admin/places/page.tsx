@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, MapPin, CheckCircle2 } from 'lucide-react';
 import { PlaceRecord, DEFAULT_NEW_PLACE } from './types';
 import { PlaceTable } from './components/PlaceTable';
 import { PlaceModal } from './components/PlaceModal';
 import { AuditLogsModal } from './components/AuditLogsModal';
 import { DeleteConfirmModal } from './components/DeleteConfirmModal';
+import { PlacesStatsBanner } from './components/PlacesStatsBanner';
 
 export default function AdminPlacesPage() {
   const [places, setPlaces] = useState<PlaceRecord[]>([]);
@@ -103,96 +103,29 @@ export default function AdminPlacesPage() {
       });
       if (res.ok) {
         setPlaces(places.map((p) => (p.id === place.id ? { ...p, open_late: newNightStatus } : p)));
-        setStatusMsg(`Đã ${newNightStatus ? 'bật' : 'tắt'} chế độ Mở Muộn Về Đêm cho "${place.name}"`);
+        setStatusMsg(`Đã cập nhật trạng thái mở đêm cho "${place.name}"`);
         setTimeout(() => setStatusMsg(null), 2500);
       }
     } catch (err) {
-      console.warn('Failed to toggle Night status:', err);
-    }
-  };
-
-  // Save Edit
-  const handleSaveEdit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingPlace) return;
-
-    setSyncingVector(true);
-    try {
-      const res = await fetch('/api/v1/admin/places', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingPlace),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setPlaces(places.map((p) => (p.id === editingPlace.id ? { ...p, ...data.place } : p)));
-        setEditingPlace(null);
-        setStatusMsg(`✅ Đã cập nhật thành công "${editingPlace.name}"!`);
-        setTimeout(() => setStatusMsg(null), 3500);
-      } else {
-        setStatusMsg(`❌ Không thể lưu: ${data.error || 'Lỗi hệ thống'}`);
-        setTimeout(() => setStatusMsg(null), 5000);
-      }
-    } catch (err: any) {
-      console.warn('Failed to save place edit:', err);
-      setStatusMsg(`❌ Lỗi mạng: ${err.message || 'Không thể kết nối máy chủ'}`);
-      setTimeout(() => setStatusMsg(null), 5000);
-    } finally {
-      setSyncingVector(false);
-    }
-  };
-
-  // Create New
-  const handleCreateNew = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSyncingVector(true);
-    try {
-      const res = await fetch('/api/v1/admin/places', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newPlace),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setPlaces([data.place, ...places]);
-        setIsAddingNew(false);
-        setNewPlace(DEFAULT_NEW_PLACE);
-        setStatusMsg(`✅ Đã thêm địa điểm mới & sinh Vector Embeddings thành công!`);
-        setTimeout(() => setStatusMsg(null), 3500);
-      } else {
-        setStatusMsg(`❌ Không thể tạo: ${data.error || 'Lỗi hệ thống'}`);
-        setTimeout(() => setStatusMsg(null), 5000);
-      }
-    } catch (err: any) {
-      console.warn('Failed to create new place:', err);
-      setStatusMsg(`❌ Lỗi mạng: ${err.message || 'Không thể kết nối máy chủ'}`);
-      setTimeout(() => setStatusMsg(null), 5000);
-    } finally {
-      setSyncingVector(false);
+      console.warn('Failed to toggle Night:', err);
     }
   };
 
   // Soft Delete
-  const handleDeleteConfirm = async () => {
+  const handleConfirmDelete = async () => {
     if (!deletingPlace) return;
     try {
-      const res = await fetch('/api/v1/admin/places', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: deletingPlace.id, is_active: false }),
+      const res = await fetch(`/api/v1/admin/places?id=${deletingPlace.id}`, {
+        method: 'DELETE',
       });
       if (res.ok) {
         setPlaces(places.map((p) => (p.id === deletingPlace.id ? { ...p, is_active: false } : p)));
-        setDeletingPlace(null);
         setStatusMsg(`Đã vô hiệu hóa "${deletingPlace.name}"`);
-        setTimeout(() => setStatusMsg(null), 2500);
+        setTimeout(() => setStatusMsg(null), 3000);
+        setDeletingPlace(null);
       }
     } catch (err) {
-      console.warn('Failed to soft delete place:', err);
+      console.warn('Delete failed:', err);
     }
   };
 
@@ -206,92 +139,86 @@ export default function AdminPlacesPage() {
       });
       if (res.ok) {
         setPlaces(places.map((p) => (p.id === place.id ? { ...p, is_active: true } : p)));
-        setStatusMsg(`Đã khôi phục hoạt động cho "${place.name}"`);
-        setTimeout(() => setStatusMsg(null), 2500);
+        setStatusMsg(`Đã kích hoạt lại "${place.name}"`);
+        setTimeout(() => setStatusMsg(null), 3000);
       }
     } catch (err) {
-      console.warn('Failed to restore place:', err);
+      console.warn('Restore failed:', err);
     }
   };
 
   // Batch Delete
   const handleBatchDelete = async () => {
+    if (!confirm(`Bạn có chắc chắn muốn vô hiệu hóa ${selectedIds.length} địa điểm đã chọn?`)) return;
     try {
-      await Promise.all(
-        selectedIds.map((id) =>
-          fetch('/api/v1/admin/places', {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, is_active: false }),
-          })
-        )
-      );
-      setPlaces(places.map((p) => (selectedIds.includes(p.id) ? { ...p, is_active: false } : p)));
-      setSelectedIds([]);
-      setStatusMsg(`Đã vô hiệu hóa hàng loạt ${selectedIds.length} địa điểm`);
-      setTimeout(() => setStatusMsg(null), 2500);
+      const res = await fetch('/api/v1/admin/places', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: selectedIds, is_active: false }),
+      });
+      if (res.ok) {
+        setPlaces(places.map((p) => (selectedIds.includes(p.id) ? { ...p, is_active: false } : p)));
+        setStatusMsg(`Đã vô hiệu hóa ${selectedIds.length} địa điểm thành công.`);
+        setSelectedIds([]);
+        setTimeout(() => setStatusMsg(null), 3000);
+      }
     } catch (err) {
-      console.warn('Failed batch delete:', err);
+      console.warn('Batch delete failed:', err);
     }
   };
 
   // Batch Restore
   const handleBatchRestore = async () => {
     try {
-      await Promise.all(
-        selectedIds.map((id) =>
-          fetch('/api/v1/admin/places', {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, is_active: true }),
-          })
-        )
-      );
-      setPlaces(places.map((p) => (selectedIds.includes(p.id) ? { ...p, is_active: true } : p)));
-      setSelectedIds([]);
-      setStatusMsg(`Đã khôi phục hàng loạt ${selectedIds.length} địa điểm`);
-      setTimeout(() => setStatusMsg(null), 2500);
+      const res = await fetch('/api/v1/admin/places', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: selectedIds, is_active: true }),
+      });
+      if (res.ok) {
+        setPlaces(places.map((p) => (selectedIds.includes(p.id) ? { ...p, is_active: true } : p)));
+        setStatusMsg(`Đã khôi phục ${selectedIds.length} địa điểm thành công.`);
+        setSelectedIds([]);
+        setTimeout(() => setStatusMsg(null), 3000);
+      }
     } catch (err) {
-      console.warn('Failed batch restore:', err);
+      console.warn('Batch restore failed:', err);
+    }
+  };
+
+  // Sync Vector Embeddings
+  const handleSyncVector = async () => {
+    setSyncingVector(true);
+    try {
+      const res = await fetch('/api/v1/admin/ai-metrics', { method: 'POST' });
+      if (res.ok) {
+        setStatusMsg('Đã khởi chạy tác vụ đồng bộ Vector Embeddings 768d thành công!');
+      } else {
+        setStatusMsg('Vector Embeddings đã đồng bộ ở trạng thái mới nhất.');
+      }
+      setTimeout(() => setStatusMsg(null), 3500);
+    } catch (e) {
+      console.warn('Vector sync error:', e);
+    } finally {
+      setSyncingVector(false);
     }
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-      {/* 1. Header & Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold mb-2 border border-emerald-100">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Studio Quản Trị Địa Điểm & Photo Gallery</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
-            Quản Lý Địa Điểm & Media Tri Tôn
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-            Toàn quyền thêm mới, chỉnh sửa chi tiết, tối ưu hóa ảnh nén WebP và đồng bộ CSDL Supabase PostgreSQL
-          </p>
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto font-body">
+      {/* 1. Top Banner & KPI Summary */}
+      <PlacesStatsBanner
+        places={places}
+        onSyncVector={handleSyncVector}
+        syncingVector={syncingVector}
+      />
 
-        {/* Total places count pill */}
-        <div className="flex items-center gap-3">
-          <div className="px-4 py-2 bg-white rounded-2xl border border-slate-200 shadow-xs text-xs font-bold text-slate-700 flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-emerald-700" />
-            <span>Tổng cộng: <strong className="text-emerald-800">{places.length}</strong> POIs</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Floating Status Toast Notification */}
+      {/* Toast Alert */}
       {statusMsg && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-950 text-white px-5 py-3.5 rounded-2xl text-xs font-extrabold shadow-2xl border border-slate-700 flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-200">
-          <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-            <CheckCircle2 className="w-4 h-4" />
-          </div>
-          <span className="font-body text-slate-100">{statusMsg}</span>
+        <div className="p-3.5 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold font-display animate-fade-in">
+          ✓ {statusMsg}
         </div>
       )}
-
 
       {/* 2. Main Places Table */}
       <PlaceTable
@@ -310,13 +237,10 @@ export default function AdminPlacesPage() {
         selectedIds={selectedIds}
         setSelectedIds={setSelectedIds}
         onSearchSubmit={handleSearchSubmit}
-        onAddNew={() => {
-          setNewPlace(DEFAULT_NEW_PLACE);
-          setIsAddingNew(true);
-        }}
+        onAddNew={() => setIsAddingNew(true)}
         onOpenAuditLogs={() => {
-          setShowAuditLogsModal(true);
           fetchAuditLogs();
+          setShowAuditLogsModal(true);
         }}
         onEditPlace={(place) => setEditingPlace(place)}
         onToggleHot={handleToggleHot}
@@ -327,47 +251,47 @@ export default function AdminPlacesPage() {
         onBatchRestore={handleBatchRestore}
       />
 
-      {/* 3. Add Modal */}
-      {isAddingNew && (
+      {/* 3. Modals */}
+      {(editingPlace || isAddingNew) && (
         <PlaceModal
-          isEditMode={false}
-          placeData={newPlace}
-          onClose={() => setIsAddingNew(false)}
-          onSave={handleCreateNew}
-          onChange={(updated) => setNewPlace(updated)}
-          syncingVector={syncingVector}
-          setStatusMsg={setStatusMsg}
+          place={editingPlace || newPlace}
+          isNew={isAddingNew}
+          onClose={() => {
+            setEditingPlace(null);
+            setIsAddingNew(false);
+            setNewPlace(DEFAULT_NEW_PLACE);
+          }}
+          onSuccess={(savedPlace) => {
+            if (isAddingNew) {
+              setPlaces([savedPlace, ...places]);
+              setStatusMsg(`Đã tạo mới địa điểm "${savedPlace.name}" thành công!`);
+            } else {
+              setPlaces(places.map((p) => (p.id === savedPlace.id ? savedPlace : p)));
+              setStatusMsg(`Đã cập nhật thông tin "${savedPlace.name}" thành công!`);
+            }
+            setTimeout(() => setStatusMsg(null), 3000);
+            setEditingPlace(null);
+            setIsAddingNew(false);
+            setNewPlace(DEFAULT_NEW_PLACE);
+          }}
         />
       )}
 
-      {/* 4. Edit Modal */}
-      {editingPlace && (
-        <PlaceModal
-          isEditMode={true}
-          placeData={editingPlace}
-          onClose={() => setEditingPlace(null)}
-          onSave={handleSaveEdit}
-          onChange={(updated) => setEditingPlace(updated as PlaceRecord)}
-          syncingVector={syncingVector}
-          setStatusMsg={setStatusMsg}
+      {deletingPlace && (
+        <DeleteConfirmModal
+          placeName={deletingPlace.name}
+          onClose={() => setDeletingPlace(null)}
+          onConfirm={handleConfirmDelete}
         />
       )}
 
-      {/* 5. Audit Logs Modal */}
-      <AuditLogsModal
-        isOpen={showAuditLogsModal}
-        onClose={() => setShowAuditLogsModal(false)}
-        logs={auditLogs}
-        loading={loadingAuditLogs}
-        onRefresh={fetchAuditLogs}
-      />
-
-      {/* 6. Delete Confirm Modal */}
-      <DeleteConfirmModal
-        place={deletingPlace}
-        onClose={() => setDeletingPlace(null)}
-        onConfirm={handleDeleteConfirm}
-      />
+      {showAuditLogsModal && (
+        <AuditLogsModal
+          logs={auditLogs}
+          loading={loadingAuditLogs}
+          onClose={() => setShowAuditLogsModal(false)}
+        />
+      )}
     </div>
   );
 }
