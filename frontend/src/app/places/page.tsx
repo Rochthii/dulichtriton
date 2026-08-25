@@ -24,39 +24,52 @@ import {
   Award
 } from "lucide-react";
 
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+
 type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
 
-export const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: string[]; keywords: string[] }> = {
+export const CLUSTERS_MAP: Record<string, { name: string; name_en?: string; badge: string; badge_en?: string; communes: string[]; keywords: string[] }> = {
   "cluster-tapa": {
     name: "Cụm Tà Pạ & Núi Tô",
+    name_en: "Ta Pa & Mount To Cluster",
     badge: "Check-in Biểu Tượng",
+    badge_en: "Iconic Check-in",
     communes: ["Núi Tô", "Châu Lăng"],
     keywords: ["Tà Pạ", "Thốt Nốt", "Koh Kas", "Trái Tim", "Soài Chek", "Sân Cu"],
   },
   "cluster-othum": {
     name: "Cụm Ô Lâm & Hồ Ô Thum",
+    name_en: "O Lam & O Thum Lake Cluster",
     badge: "Ẩm Thực & Lịch Sử",
+    badge_en: "Cuisine & History",
     communes: ["Ô Lâm", "An Tức"],
     keywords: ["Ô Thum", "Tức Dụp", "Gà Đốt", "Kirivong", "Đồi Tức Dụp", "Vườn Nho"],
   },
   "cluster-coto": {
     name: "Cụm Cô Tô & Soài So",
+    name_en: "Mount Co To & Soai So Cluster",
     badge: "Trekking & Săn Mây",
+    badge_en: "Trekking & Clouds",
     communes: ["Cô Tô", "Tri Tôn", "Núi Tô"],
     keywords: ["Cô Tô", "Soài So", "Suối Vàng", "Vồ Hội", "Sân Tiên", "Phụng Hoàng Sơn", "Chùa Sà Lôn", "Xà Tón"],
   },
   "cluster-bachuc": {
     name: "Cụm Ba Chúc & Lương Phi",
+    name_en: "Ba Chuc & Luong Phi Cluster",
     badge: "Văn Hóa & Tâm Linh",
+    badge_en: "Culture & Spiritual",
     communes: ["Ba Chúc", "Lương Phi", "Lê Trì", "Lạc Quới", "Vĩnh Gia"],
     keywords: ["Ba Chúc", "Nhà Mồ", "Phi Lai", "Tam Bửu", "Núi Tượng", "Núi Dài", "Ô Tà Sóc"],
   },
 };
 
 function PlacesPageContent() {
+  const { language, dict } = useLanguage();
+  const isEn = language === "en";
+
   const searchParams = useSearchParams();
-  const initialCommune = searchParams.get("commune") || "Tất cả";
-  const initialCategory = searchParams.get("category") || "Tất cả";
+  const initialCommune = searchParams.get("commune") || (isEn ? "All Areas" : "Tất cả");
+  const initialCategory = searchParams.get("category") || (isEn ? "All Categories" : "Tất cả");
   const initialCluster = searchParams.get("cluster");
 
   const [activeCategory, setActiveCategory] = useState(initialCategory);
@@ -260,101 +273,106 @@ function PlacesPageContent() {
           <div className="relative z-10 max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
               <Compass className="h-3.5 w-3.5" />
-              <span>149 Tọa Độ Du Lịch Bảy Núi Đã Xác Minh</span>
+              <span>{isEn ? "149 Verified Seven Mountains Coordinates" : "149 Tọa Độ Du Lịch Bảy Núi Đã Xác Minh"}</span>
             </div>
             <h1 className="font-display text-2xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
-              Khám Phá Danh Thắng & Di Tích Tri Tôn
+              {dict.places?.header?.title || (isEn ? "Explore Tri Ton Scenic Wonders & Relics" : "Khám Phá Danh Thắng & Di Tích Tri Tôn")}
             </h1>
             <p className="text-xs md:text-sm text-white/85 leading-relaxed font-body">
-              Tra cứu đầy đủ 149 địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.
+              {dict.places?.header?.subtitle || (isEn ? "Comprehensive guide to 149 destinations: Mountain lakes, ancient Khmer pagodas, natural landmarks, culinary specialties, and scenic check-in coordinates." : "Tra cứu đầy đủ 149 địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.")}
             </p>
           </div>
         </section>
 
         {/* 🌟 TOP 4 KỲ QUAN & TỌA ĐỘ CHECK-IN HOT NHẤT (HOT SPOTLIGHT) 🌟 */}
-        {topSpotlightPlaces.length > 0 && !searchQuery && selectedCommune === "Tất cả" && activeCategory === "Tất cả" && activeAudience === "all" && (
+        {topSpotlightPlaces.length > 0 && !searchQuery && (selectedCommune === "Tất cả" || selectedCommune === "All Areas") && (activeCategory === "Tất cả" || activeCategory === "All Categories") && activeAudience === "all" && (
           <section className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-black text-[#F26B3A] uppercase tracking-wider font-display">
                   <Flame className="w-4 h-4 fill-[#F26B3A]" />
-                  <span>Điểm Đến Nổi Bật Nhất</span>
+                  <span>{isEn ? "Featured Destinations" : "Điểm Đến Nổi Bật Nhất"}</span>
                 </div>
                 <h2 className="text-xl md:text-2xl font-black text-[#26221B] font-display mt-0.5">
-                  Top Kỳ Quan & Tọa Độ Check-in Hot Nhất
+                  {isEn ? "Top Wonders & Hottest Check-in Coordinates" : "Top Kỳ Quan & Tọa Độ Check-in Hot Nhất"}
                 </h2>
               </div>
               <span className="text-xs font-bold text-[#0E8C7F] bg-[#0E8C7F]/10 px-3 py-1 rounded-full border border-[#0E8C7F]/20 hidden sm:inline-block">
-                Ưu Tiên Check-in
+                {isEn ? "Priority Check-in" : "Ưu Tiên Check-in"}
               </span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
-              {topSpotlightPlaces.map((hotPlace, pidx) => (
-                <div
-                  key={hotPlace.id}
-                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_2px_12px_rgba(240,163,47,0.10)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={getOptimizedImageUrl(hotPlace.image_url && !hotPlace.image_url.includes('unsplash.com') ? hotPlace.image_url : "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif", { width: 900, dpr: 2, quality: 'best' })}
-                        alt={hotPlace.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+              {topSpotlightPlaces.map((hotPlace, pidx) => {
+                const displayName = isEn && (hotPlace as any).name_en ? (hotPlace as any).name_en : hotPlace.name;
+                const displayDesc = isEn && (hotPlace as any).description_en ? (hotPlace as any).description_en : (hotPlace.description || (isEn ? "Iconic scenic coordinate in Tri Ton with stunning natural landscapes." : "Tọa độ danh thắng tiêu biểu tại Tri Tôn với khung cảnh thiên nhiên tuyệt đẹp."));
 
-                      <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1">
-                        <span className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[9px] sm:text-xs uppercase tracking-wider flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
-                          <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#26221B]" /> TOP #{pidx + 1}
+                return (
+                  <div
+                    key={hotPlace.id}
+                    className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_2px_12px_rgba(240,163,47,0.10)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getOptimizedImageUrl(hotPlace.image_url && !hotPlace.image_url.includes('unsplash.com') ? hotPlace.image_url : "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif", { width: 900, dpr: 2, quality: 'best' })}
+                          alt={displayName}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+
+                        <div className="absolute top-2 sm:top-3 left-2 sm:left-3 flex items-center gap-1">
+                          <span className="px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[9px] sm:text-xs uppercase tracking-wider flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
+                            <Award className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#26221B]" /> TOP #{pidx + 1}
+                          </span>
+                        </div>
+
+                        <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
+                          <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
+                          <span>{hotPlace.rating || 4.9}</span>
                         </span>
+
+                        <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 text-white space-y-0.5">
+                          <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
+                            {hotPlace.commune}
+                          </span>
+                          <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                            {displayName}
+                          </h3>
+                        </div>
                       </div>
 
-                      <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
-                        <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
-                        <span>{hotPlace.rating || 4.9}</span>
-                      </span>
-
-                      <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 text-white space-y-0.5">
-                        <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
-                          {hotPlace.commune}
-                        </span>
-                        <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
-                          {hotPlace.name}
-                        </h3>
+                      <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#6B6355]">
+                        <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                          {displayDesc}
+                        </p>
                       </div>
                     </div>
 
-                    <div className="p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#6B6355]">
-                      <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
-                        {hotPlace.description || "Tọa độ danh thắng tiêu biểu tại Tri Tôn với khung cảnh thiên nhiên tuyệt đẹp."}
-                      </p>
+                    <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-1.5 sm:gap-2">
+                      <Link
+                        href={`/places/${hotPlace.slug || hotPlace.id}`}
+                        className="text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
+                      >
+                        <span>{isEn ? "View details" : "Xem chi tiết"}</span>
+                        <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                      </Link>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotPlace.name + " " + hotPlace.commune + " Tri Tôn")}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
+                      >
+                        <Navigation className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600 shrink-0" />
+                        <span className="hidden sm:inline">{isEn ? "Directions" : "Chỉ đường"}</span>
+                      </a>
                     </div>
                   </div>
-
-                  <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-1.5 sm:gap-2">
-                    <Link
-                      href={`/places/${hotPlace.slug || hotPlace.id}`}
-                      className="text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
-                    >
-                      <span>Xem chi tiết</span>
-                      <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
-                    </Link>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotPlace.name + " " + hotPlace.commune + " Tri Tôn")}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
-                    >
-                      <Navigation className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600 shrink-0" />
-                      <span className="hidden sm:inline">Chỉ đường</span>
-                    </a>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}
@@ -368,7 +386,7 @@ function PlacesPageContent() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Tìm kiếm theo tên địa điểm, xã, câu chuyện sự tích..."
+                placeholder={dict.places?.header?.searchPlaceholder || (isEn ? "Search by place name, commune, or keyword..." : "Tìm kiếm theo tên địa điểm, xã, câu chuyện sự tích...")}
                 className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus:outline-none focus:border-[#0E8C7F]"
               />
             </div>
@@ -383,7 +401,7 @@ function PlacesPageContent() {
                 }`}
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
-                <span>Có Video TikTok</span>
+                <span>{isEn ? "With TikTok Video" : "Có Video TikTok"}</span>
               </button>
             </div>
           </div>
@@ -391,15 +409,15 @@ function PlacesPageContent() {
           {/* Quick Audience Chips */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             <span className="text-xs font-bold text-[#6B6355] whitespace-nowrap mr-1 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Chủ Đề:
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" /> {isEn ? "Themes:" : "Chủ Đề:"}
             </span>
             {[
-              { id: "all", label: "Tất Cả" },
-              { id: "night", label: "Tri Tôn Về Đêm 🌙" },
-              { id: "youth", label: "Giới Trẻ Check-in 📸" },
-              { id: "family", label: "Gia Đình & Nghỉ Dưỡng 👨‍👩‍👧" },
-              { id: "trekking", label: "Leo Núi Săn Mây 🏔️" },
-              { id: "spiritual", label: "Hành Hương Tâm Linh 🛕" },
+              { id: "all", label: isEn ? "All" : "Tất Cả" },
+              { id: "night", label: isEn ? "Nightlife & Evening 🌙" : "Tri Tôn Về Đêm 🌙" },
+              { id: "youth", label: isEn ? "Photo Check-in 📸" : "Giới Trẻ Check-in 📸" },
+              { id: "family", label: isEn ? "Family & Leisure 👨‍👩‍👧" : "Gia Đình & Nghỉ Dưỡng 👨‍👩‍👧" },
+              { id: "trekking", label: isEn ? "Trekking & Clouds 🏔️" : "Leo Núi Săn Mây 🏔️" },
+              { id: "spiritual", label: isEn ? "Spiritual Pilgrimage 🛕" : "Hành Hương Tâm Linh 🛕" },
             ].map((chip) => (
               <button
                 key={chip.id}
@@ -418,7 +436,7 @@ function PlacesPageContent() {
           {/* Communes Filter */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none border-t border-[#26221B]/5 pt-3">
             <span className="text-xs font-bold text-[#6B6355] whitespace-nowrap mr-1 flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> Khu Vực:
+              <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> {isEn ? "Area:" : "Khu Vực:"}
             </span>
             {communes.map((commune) => (
               <button
@@ -430,7 +448,7 @@ function PlacesPageContent() {
                     : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
                 }`}
               >
-                {commune}
+                {commune === "Tất cả" ? (isEn ? "All Areas" : "Tất cả") : commune}
               </button>
             ))}
           </div>
@@ -448,17 +466,17 @@ function PlacesPageContent() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-bold text-[#0E8C7F] uppercase tracking-wider font-display">
-                      Đang lọc theo cụm trọng điểm
+                      {isEn ? "Filtering by Key Cluster" : "Đang lọc theo cụm trọng điểm"}
                     </span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-[#F0A32F] text-[#26221B] font-display">
-                      {CLUSTERS_MAP[selectedClusterId].badge}
+                      {isEn && CLUSTERS_MAP[selectedClusterId].badge_en ? CLUSTERS_MAP[selectedClusterId].badge_en : CLUSTERS_MAP[selectedClusterId].badge}
                     </span>
                   </div>
                   <h3 className="text-sm sm:text-base font-extrabold text-[#26221B] font-display">
-                    {CLUSTERS_MAP[selectedClusterId].name} ({filteredPlaces.length} địa điểm)
+                    {isEn && CLUSTERS_MAP[selectedClusterId].name_en ? CLUSTERS_MAP[selectedClusterId].name_en : CLUSTERS_MAP[selectedClusterId].name} ({filteredPlaces.length} {isEn ? "destinations" : "địa điểm"})
                   </h3>
                   <p className="text-[11px] text-[#6B6355] font-body">
-                    Bao gồm các xã: {CLUSTERS_MAP[selectedClusterId].communes.join(", ")}
+                    {isEn ? "Including communes:" : "Bao gồm các xã:"} {CLUSTERS_MAP[selectedClusterId].communes.join(", ")}
                   </p>
                 </div>
               </div>
@@ -467,7 +485,7 @@ function PlacesPageContent() {
                 onClick={() => setSelectedClusterId(null)}
                 className="self-start sm:self-center inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 shadow-2xs transition-all cursor-pointer font-display"
               >
-                <span>✕ Xóa lọc cụm (Xem tất cả 149 điểm)</span>
+                <span>{isEn ? "✕ Clear cluster filter (View all 149 spots)" : "✕ Xóa lọc cụm (Xem tất cả 149 điểm)"}</span>
               </button>
             </div>
           )}
@@ -475,29 +493,37 @@ function PlacesPageContent() {
           <div className="flex items-center justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0E8C7F]" />
-              <span>Danh Sách 149 Địa Điểm Đã Xác Minh ({filteredPlaces.length} Địa Điểm)</span>
+              <span>
+                {isEn
+                  ? `List of 149 Verified Destinations (${filteredPlaces.length} Spots)`
+                  : `Danh Sách 149 Địa Điểm Đã Xác Minh (${filteredPlaces.length} Địa Điểm)`}
+              </span>
             </h2>
-            <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
+            <span className="text-xs text-[#6B6355] font-medium font-mono">
+              {isEn ? "100% Verified Field Data" : "Dữ liệu thực địa 100%"}
+            </span>
           </div>
 
           {loading ? (
             <div className="py-16 text-center text-[#6B6355] font-bold">
-              Đang tải danh mục 149 địa điểm du lịch Tri Tôn...
+              {isEn ? "Loading 149 Tri Ton tourism destinations..." : "Đang tải danh mục 149 địa điểm du lịch Tri Tôn..."}
             </div>
           ) : filteredPlaces.length === 0 ? (
             <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">
               <Compass className="w-8 h-8 text-[#6B6355]/40 mx-auto" />
-              <div className="font-bold text-sm text-[#26221B]">Không tìm thấy địa điểm nào phù hợp.</div>
+              <div className="font-bold text-sm text-[#26221B]">
+                {dict.places?.header?.noResults || (isEn ? "No destinations found matching the selected filters." : "Không tìm thấy địa điểm nào phù hợp.")}
+              </div>
               <button
                 onClick={() => {
-                  setSelectedCommune("Tất cả");
-                  setActiveCategory("Tất cả");
+                  setSelectedCommune(isEn ? "All Areas" : "Tất cả");
+                  setActiveCategory(isEn ? "All Categories" : "Tất cả");
                   setActiveAudience("all");
                   setSearchQuery("");
                 }}
                 className="px-4 py-2 rounded-xl bg-[#0E8C7F] text-white text-xs font-bold cursor-pointer"
               >
-                Xóa tất cả bộ lọc
+                {dict.places?.header?.clearFilters || (isEn ? "Clear all filters" : "Xóa tất cả bộ lọc")}
               </button>
             </div>
           ) : (
@@ -514,13 +540,18 @@ function PlacesPageContent() {
 }
 
 export default function PlacesPage() {
+  const { language } = useLanguage();
+  const isEn = language === "en";
+
   return (
     <Suspense
       fallback={
         <div className="min-h-screen bg-[#FAF3E7] flex items-center justify-center">
           <div className="text-center">
             <Sparkles className="w-8 h-8 text-[#0E8C7F] animate-spin mx-auto mb-2" />
-            <span className="text-xs font-bold text-[#6B6355]">Đang tải danh sách địa điểm...</span>
+            <span className="text-xs font-bold text-[#6B6355]">
+              {isEn ? "Loading destinations directory..." : "Đang tải danh sách địa điểm..."}
+            </span>
           </div>
         </div>
       }

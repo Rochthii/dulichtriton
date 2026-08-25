@@ -75,7 +75,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export default function PlaceCard({ place }: PlaceCardProps) {
   const [isLiked, setIsLiked] = useState(false);
-  const { language, t } = useLanguage();
+  const { language, dict } = useLanguage();
+  const isEn = language === 'en';
 
   useEffect(() => {
     try {
@@ -218,7 +219,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           href={detailUrl}
           className="text-xs sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-1 transition-colors font-display"
         >
-          <span>{t('place.viewDetail')}</span>
+          <span>{dict.common?.actions?.viewDetail || (isEn ? 'View Details' : 'Xem chi tiết')}</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </Link>
 
@@ -228,7 +229,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               href={tiktok.url}
               target="_blank"
               rel="noreferrer"
-              title={language === 'en' ? 'Watch TikTok Video' : 'Xem Video TikTok'}
+              title={isEn ? 'Watch TikTok Video' : 'Xem Video TikTok'}
               className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
             >
               <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
@@ -241,7 +242,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
           >
             <Navigation className="w-3 h-3 text-emerald-600" />
-            <span>{language === 'en' ? 'Map' : 'Chỉ đường'}</span>
+            <span>{dict.common?.actions?.directions || (isEn ? 'Directions' : 'Chỉ đường')}</span>
           </a>
         </div>
       </div>
