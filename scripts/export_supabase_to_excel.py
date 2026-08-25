@@ -13,6 +13,7 @@ import sys
 import json
 import urllib.request
 import urllib.parse
+import re
 from dotenv import load_dotenv
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -93,6 +94,22 @@ def autofit_columns(ws, max_len_cap=60):
             max_len = max(max_len, len(val_str))
         ws.column_dimensions[col_letter].width = min(max(max_len + 3, 12), max_len_cap)
 
+def strip_markdown(text: str) -> str:
+    """Làm sạch toàn bộ ký tự markdown, giữ lại văn bản tự nhiên chuẩn chỉ"""
+    if not text or not isinstance(text, str):
+        return ''
+    text = re.sub(r'^(?:#{1,6}\s+)', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    text = re.sub(r'__(.*?)__', r'\1', text)
+    text = re.sub(r'^\s*[\*\-\+]\s+', '• ', text, flags=re.MULTILINE)
+    text = re.sub(r'(?<!\w)\*([^\*\n]+)\*(?!\w)', r'\1', text)
+    text = re.sub(r'(?<!\w)_([^_\n]+)_(?!\w)', r'\1', text)
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+    text = re.sub(r'`([^`]+)`', r'\1', text)
+    text = re.sub(r'[ \t]+', ' ', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
 def build_places_sheet(wb, places: list):
     """Xây dựng Sheet 1: Danh sách địa điểm chi tiết"""
     ws = wb.active
@@ -137,9 +154,9 @@ def build_places_sheet(wb, places: list):
         hours = p.get('opening_hours', '')
         open_late = "Có (Đêm)" if p.get('open_late') else "Không"
         best_time = p.get('best_time', '')
-        desc = (p.get('description', '') or '').replace('\n', ' ')
-        story = (p.get('detailed_story', '') or '').replace('\n', ' ')
-        tips = (p.get('field_tips', '') or '').replace('\n', ' ')
+        desc = strip_markdown(p.get('description', '')).replace('\n', ' ')
+        story = strip_markdown(p.get('detailed_story', '')).replace('\n', ' ')
+        tips = strip_markdown(p.get('field_tips', '')).replace('\n', ' ')
         img = p.get('image_url', '')
         active = "Hoạt Động" if p.get('is_active', True) else "Tạm Ẩn"
         
