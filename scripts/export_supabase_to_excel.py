@@ -1,19 +1,21 @@
 """
-Script xuất bản toàn bộ Cơ sở dữ liệu Du Lịch Tri Tôn từ Supabase Cloud sang Microsoft Excel (.xlsx)
-Bao gồm:
-- Sheet 1: 161+ Địa Điểm Du Lịch Thực Địa (Places)
-- Sheet 2: Bảng Thống Kê Tổng Hợp 15 Xã & Thị Trấn (Communes Summary)
-- Sheet 3: Cơ Sở Tri Thức & RAG Ground Truth (Knowledge Base)
-- Sheet 4: Danh Mục Lịch Trình Mẫu Bảy Núi (Itineraries)
-- Sheet 5: Video & Check-in TikTok (Videos)
-- Sheet 6: Góp Ý & Nhật Ký Kiểm Tra (Feedbacks & Audits)
+Script xuất bản CSDL Du Lịch Tri Tôn sang Microsoft Excel (.xlsx) PHÂN NHÓM CHUYÊN NGHIỆP:
+- Sheet 1: 📑 Tổng Hợp Phân Nhóm (Gom chung từng khối: Chùa, Ẩm Thực, Danh Thắng, Check-in, Cà phê, Lưu trú)
+- Sheet 2: 🏛️ Chùa Khmer & Di Tích (Danh sách chuyên biệt)
+- Sheet 3: 🍲 Ẩm Thực & Quán Ăn (Danh sách chuyên biệt)
+- Sheet 4: 🏞️ Danh Thắng Núi & Hồ (Danh sách chuyên biệt)
+- Sheet 5: 📸 Điểm Check-in & Sống Ảo (Danh sách chuyên biệt)
+- Sheet 6: ☕ Cà Phê & Điểm Đến Đêm (Danh sách chuyên biệt)
+- Sheet 7: 🏡 Lưu Trú & Homestay (Danh sách chuyên biệt)
+- Sheet 8: 📊 Thống Kê 15 Xã & Thị Trấn (Pivot Summary)
+- Sheet 9: 🗺️ Lịch Trình Tour Mẫu (Itineraries)
 """
 import os
 import sys
 import json
+import re
 import urllib.request
 import urllib.parse
-import re
 from dotenv import load_dotenv
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -34,43 +36,74 @@ SUPABASE_URL = os.getenv('NEXT_PUBLIC_SUPABASE_URL', 'https://knmlbwsmfljlabhvqf
 SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY') or os.getenv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '')
 
 def fetch_supabase_table(table_name: str) -> list:
-    """Lấy toàn bộ dữ liệu từ bảng trên Supabase REST API"""
-    if not SUPABASE_KEY:
-        return []
-    url = f"{SUPABASE_URL}/rest/v1/{table_name}?select=*"
-    req = urllib.request.Request(
-        url,
-        headers={
-            'apikey': SUPABASE_KEY,
-            'Authorization': f'Bearer {SUPABASE_KEY}'
-        }
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=15) as res:
-            return json.loads(res.read().decode('utf-8'))
-    except Exception as e:
-        print(f"⚠️ Không thể tải bảng [{table_name}]: {e}")
-        return []
+    """Lấy toàn bộ dữ liệu từ bảng trên Supabase REST API với retry & fallback JSON"""
+    if SUPABASE_KEY:
+        url = f"{SUPABASE_URL}/rest/v1/{table_name}?select=*"
+        req = urllib.request.Request(
+            url,
+            headers={
+                'apikey': SUPABASE_KEY,
+                'Authorization': f'Bearer {SUPABASE_KEY}'
+            }
+        )
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=15) as res:
+                    data = json.loads(res.read().decode('utf-8'))
+                    if data:
+                        return data
+            except Exception as e:
+                print(f"⚠️ Thử tải Supabase lần {attempt+1}/3 thất bại: {e}")
 
-# Style definitions
-FONT_TITLE = Font(name='Segoe UI', size=14, bold=True, color='FFFFFF')
-FONT_HEADER = Font(name='Segoe UI', size=11, bold=True, color='FFFFFF')
-FONT_BOLD = Font(name='Segoe UI', size=10, bold=True, color='26221B')
-FONT_BODY = Font(name='Segoe UI', size=10, color='26221B')
-FONT_LINK = Font(name='Segoe UI', size=10, color='0E8C7F', underline='single')
+    # Fallback to local clean JSON if network unreachable
+    if table_name == 'places':
+        local_path = os.path.join(os.path.dirname(__file__), '..', 'frontend', 'src', 'data', 'triton_pois_full.json')
+        if os.path.exists(local_path):
+            print(f"📦 Đang nạp từ CSDL Master cục bộ: {local_path}")
+            with open(local_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    return []
 
-FILL_EMERALD_DARK = PatternFill(start_color='0E8C7F', end_color='0E8C7F', fill_type='solid')
-FILL_GOLDEN = PatternFill(start_color='D9822B', end_color='D9822B', fill_type='solid')
-FILL_INDIGO = PatternFill(start_color='1E293B', end_color='1E293B', fill_type='solid')
-FILL_TEAL = PatternFill(start_color='047857', end_color='047857', fill_type='solid')
+def strip_markdown(text: str) -> str:
+    """Làm sạch toàn bộ ký tự markdown"""
+    if not text or not isinstance(text, str):
+        return ''
+    text = re.sub(r'#{1,6}\s*', '', text)
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text, flags=re.DOTALL)
+    text = re.sub(r'__(.*?)__', r'\1', text, flags=re.DOTALL)
+    text = re.sub(r'^\s*[\*\-\+]\s+', '• ', text, flags=re.MULTILINE)
+    text = re.sub(r'(?<!\w)\*([^\*\n]+)\*(?!\w)', r'\1', text)
+    text = re.sub(r'(?<!\w)_([^_\n]+)_(?!\w)', r'\1', text)
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+    text = re.sub(r'`([^`]+)`', r'\1', text)
+    text = text.replace('**', '').replace('##', '').replace('###', '').replace('####', '')
+    text = re.sub(r'[ \t]+', ' ', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
+# Typography & Color Palettes
+FONT_GROUP_BANNER = Font(name='Segoe UI', size=13, bold=True, color='FFFFFF')
+FONT_HEADER = Font(name='Segoe UI', size=10, bold=True, color='FFFFFF')
+FONT_BOLD = Font(name='Segoe UI', size=9, bold=True, color='26221B')
+FONT_BODY = Font(name='Segoe UI', size=9, color='26221B')
+FONT_LINK = Font(name='Segoe UI', size=9, color='0E8C7F', underline='single')
+
+FILL_BANNER_CHUA = PatternFill(start_color='6366F1', end_color='6366F1', fill_type='solid') # Indigo
+FILL_BANNER_FOOD = PatternFill(start_color='D9822B', end_color='D9822B', fill_type='solid') # Amber
+FILL_BANNER_NATURE = PatternFill(start_color='0E8C7F', end_color='0E8C7F', fill_type='solid') # Emerald
+FILL_BANNER_CHECKIN = PatternFill(start_color='EC4899', end_color='EC4899', fill_type='solid') # Pink
+FILL_BANNER_CAFE = PatternFill(start_color='8B5CF6', end_color='8B5CF6', fill_type='solid') # Purple
+FILL_BANNER_STAY = PatternFill(start_color='0284C7', end_color='0284C7', fill_type='solid') # Sky Blue
+
+FILL_HEADER_DEFAULT = PatternFill(start_color='1E293B', end_color='1E293B', fill_type='solid') # Slate Dark
 FILL_ZEBRA = PatternFill(start_color='F8FAF8', end_color='F8FAF8', fill_type='solid')
 FILL_SUMMARY = PatternFill(start_color='FEF3C7', end_color='FEF3C7', fill_type='solid')
 
 BORDER_THIN = Border(
-    left=Side(style='thin', color='E5E7EB'),
-    right=Side(style='thin', color='E5E7EB'),
-    top=Side(style='thin', color='E5E7EB'),
-    bottom=Side(style='thin', color='E5E7EB')
+    left=Side(style='thin', color='E2E8F0'),
+    right=Side(style='thin', color='E2E8F0'),
+    top=Side(style='thin', color='E2E8F0'),
+    bottom=Side(style='thin', color='E2E8F0')
 )
 
 BORDER_TOTAL = Border(
@@ -82,8 +115,7 @@ ALIGN_CENTER = Alignment(horizontal='center', vertical='center', wrap_text=True)
 ALIGN_LEFT = Alignment(horizontal='left', vertical='center', wrap_text=True)
 ALIGN_RIGHT = Alignment(horizontal='right', vertical='center')
 
-def autofit_columns(ws, max_len_cap=60):
-    """Tự động căn chỉnh độ rộng cột thông minh"""
+def autofit_columns(ws, max_len_cap=55):
     for col in ws.columns:
         col_letter = get_column_letter(col[0].column)
         max_len = 0
@@ -92,106 +124,174 @@ def autofit_columns(ws, max_len_cap=60):
             if '\n' in val_str:
                 val_str = max(val_str.split('\n'), key=len)
             max_len = max(max_len, len(val_str))
-        ws.column_dimensions[col_letter].width = min(max(max_len + 3, 12), max_len_cap)
+        ws.column_dimensions[col_letter].width = min(max(max_len + 3, 11), max_len_cap)
 
-def strip_markdown(text: str) -> str:
-    """Làm sạch toàn bộ ký tự markdown, giữ lại văn bản tự nhiên chuẩn chỉ"""
-    if not text or not isinstance(text, str):
-        return ''
-    text = re.sub(r'^(?:#{1,6}\s+)', '', text, flags=re.MULTILINE)
-    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
-    text = re.sub(r'__(.*?)__', r'\1', text)
-    text = re.sub(r'^\s*[\*\-\+]\s+', '• ', text, flags=re.MULTILINE)
-    text = re.sub(r'(?<!\w)\*([^\*\n]+)\*(?!\w)', r'\1', text)
-    text = re.sub(r'(?<!\w)_([^_\n]+)_(?!\w)', r'\1', text)
-    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
-    text = re.sub(r'`([^`]+)`', r'\1', text)
-    text = re.sub(r'[ \t]+', ' ', text)
-    text = re.sub(r'\n{3,}', '\n\n', text)
-    return text.strip()
+def classify_places(places: list) -> dict:
+    """Phân loại 161 POIs thành 6 nhóm nghiệp vụ chuẩn"""
+    buckets = {
+        'chua': {'title': 'I. CHÙA KHMER & DI TÍCH LỊCH SỬ', 'icon': '🏛️', 'fill': FILL_BANNER_CHUA, 'items': []},
+        'food': {'title': 'II. ẨM THỰC & QUÁN ĂN ĐẶC SẢN', 'icon': '🍲', 'fill': FILL_BANNER_FOOD, 'items': []},
+        'nature': {'title': 'III. DANH THẮNG THIÊN NHIÊN, NÚI & HỒ NƯỚC', 'icon': '🏞️', 'fill': FILL_BANNER_NATURE, 'items': []},
+        'checkin': {'title': 'IV. ĐIỂM CHECK-IN & CẢNH QUAN NỔI BẬT', 'icon': '📸', 'fill': FILL_BANNER_CHECKIN, 'items': []},
+        'cafe': {'title': 'V. CÀ PHÊ VIEW ĐẸP & ĐIỂM ĐẾN VỀ ĐÊM', 'icon': '☕', 'fill': FILL_BANNER_CAFE, 'items': []},
+        'stay': {'title': 'VI. LƯU TRÚ, HOMESTAY & KHÁCH SẠN', 'icon': '🏡', 'fill': FILL_BANNER_STAY, 'items': []},
+    }
 
-def build_places_sheet(wb, places: list):
-    """Xây dựng Sheet 1: Danh sách địa điểm chi tiết"""
-    ws = wb.active
-    ws.title = "1. Địa Điểm (Places)"
-    ws.views.sheetView[0].showGridLines = True
+    for p in places:
+        name = (p.get('name') or '').lower()
+        cat = (p.get('category') or '').lower()
+        subcat = (p.get('subcategory') or '').lower()
+        tcat = (p.get('tourism_category') or '').lower()
 
-    headers = [
-        "STT", "Mã ID", "Tên Địa Điểm", "Tên Tiếng Anh (EN)", "Xã / Thị Trấn", 
-        "Phân Loại", "Phân Loại Phụ", "Đánh Giá (⭐)", "Vĩ Độ (Lat)", "Kinh Độ (Lng)", 
-        "Địa Chỉ Thực Địa", "Điện Thoại / Hotline", "Mức Giá", "Giờ Mở Cửa", "Mở Đêm", 
-        "Thời Điểm Đẹp Nhất", "Mô Tả Tổng Quan", "Sự Tích & Di Sản", "Mẹo Thực Địa", 
-        "Ảnh Đại Diện URL", "Trạng Thái", "Link Google Maps Dẫn Đường"
-    ]
+        if 'stay' in cat or 'hotel' in cat or 'homestay' in cat or 'lưu trú' in tcat or 'khách sạn' in name or 'nhà nghỉ' in name:
+            buckets['stay']['items'].append(p)
+        elif 'cafe' in subcat or 'cà phê' in name or 'coffee' in name or 'chợ đêm' in name:
+            buckets['cafe']['items'].append(p)
+        elif 'chùa' in name or 'wat ' in name or 'chưn-kôm' in name or 'svay ton' in name or 'di tích' in name or 'nhà mồ' in name or 'ô tà sóc' in name or 'tức dụp' in name or 'history' in cat or 'spiritual' in cat:
+            buckets['chua']['items'].append(p)
+        elif 'check-in' in cat or 'cổng trời' in name or 'thốt nốt trái tim' in name or 'cầu gỗ' in name or 'vồ hội' in name or 'cánh đồng lúa' in name:
+            buckets['checkin']['items'].append(p)
+        elif 'gà đốt' in name or 'cháo bò' in name or 'bún cá' in name or 'bò 7 món' in name or 'đu đủ đâm' in name or 'bánh bò' in name or 'quán' in name or 'lẩu' in name or 'food' in cat or 'gastronomy' in cat:
+            buckets['food']['items'].append(p)
+        else:
+            buckets['nature']['items'].append(p)
 
-    ws.row_dimensions[1].height = 28
-    for col_idx, text in enumerate(headers, 1):
-        cell = ws.cell(row=1, column=col_idx, value=text)
-        cell.font = FONT_HEADER
-        cell.fill = FILL_EMERALD_DARK
-        cell.alignment = ALIGN_CENTER
-        cell.border = BORDER_THIN
+    # Sort items within each bucket by Commune, then Name
+    for k in buckets:
+        buckets[k]['items'].sort(key=lambda x: (x.get('commune', '') or '', x.get('name', '') or ''))
 
-    # Sort places by Commune, then Name
-    sorted_places = sorted(places, key=lambda x: (x.get('commune', '') or '', x.get('name', '') or ''))
+    return buckets
 
-    for r_idx, p in enumerate(sorted_places, 2):
-        ws.row_dimensions[r_idx].height = 22
-        is_even = (r_idx % 2 == 0)
+TABLE_HEADERS = [
+    "STT", "Mã ID", "Tên Địa Điểm", "Tên Tiếng Anh (EN)", "Xã / Thị Trấn", 
+    "Phân Loại Phụ", "Đánh Giá (⭐)", "Tọa Độ GPS (Lat, Lng)", "Địa Chỉ Thực Địa", 
+    "Điện Thoại / Hotline", "Mức Giá", "Giờ Mở Cửa / Giờ Vàng", "Mô Tả Tổng Quan", 
+    "Sự Tích & Di Sản Thực Địa", "Mẹo Thực Địa", "Link Google Maps Dẫn Đường"
+]
+
+def write_place_rows(ws, places: list, start_row: int, base_stt: int = 1) -> int:
+    """Ghi danh sách địa điểm vào sheet"""
+    current_row = start_row
+    for idx, p in enumerate(places, base_stt):
+        ws.row_dimensions[current_row].height = 24
+        is_even = (idx % 2 == 0)
         row_fill = FILL_ZEBRA if is_even else None
 
         name = p.get('name', '')
         name_en = p.get('name_en', '')
         commune = p.get('commune', '')
-        cat = p.get('category', '')
         subcat = p.get('subcategory', '')
         rating = float(p.get('rating') or 4.8)
         lat = float(p['latitude']) if p.get('latitude') else None
         lng = float(p['longitude']) if p.get('longitude') else None
+        gps_str = f"{lat}, {lng}" if lat and lng else "Đang cập nhật"
         addr = p.get('address', '') or commune
         phone = p.get('phone') or p.get('hotline') or ''
         price = p.get('price_level', '')
-        hours = p.get('opening_hours', '')
-        open_late = "Có (Đêm)" if p.get('open_late') else "Không"
-        best_time = p.get('best_time', '')
+        hours = p.get('opening_hours', '') or p.get('best_time', '')
         desc = strip_markdown(p.get('description', '')).replace('\n', ' ')
         story = strip_markdown(p.get('detailed_story', '')).replace('\n', ' ')
         tips = strip_markdown(p.get('field_tips', '')).replace('\n', ' ')
-        img = p.get('image_url', '')
-        active = "Hoạt Động" if p.get('is_active', True) else "Tạm Ẩn"
         
         maps_link = f"https://www.google.com/maps/search/?api=1&query={lat},{lng}" if lat and lng else f"https://maps.google.com/?q={urllib.parse.quote(name)}+{urllib.parse.quote(commune)}+An+Giang"
 
         values = [
-            r_idx - 1, p.get('id', ''), name, name_en, commune,
-            cat, subcat, rating, lat, lng,
-            addr, phone, price, hours, open_late,
-            best_time, desc, story, tips,
-            img, active, maps_link
+            idx, p.get('id', ''), name, name_en, commune,
+            subcat, rating, gps_str, addr, phone,
+            price, hours, desc, story, tips, maps_link
         ]
 
         for c_idx, val in enumerate(values, 1):
-            cell = ws.cell(row=r_idx, column=c_idx, value=val)
+            cell = ws.cell(row=current_row, column=c_idx, value=val)
             cell.font = FONT_BODY
             cell.border = BORDER_THIN
             if row_fill:
                 cell.fill = row_fill
 
-            if c_idx == 1:
+            if c_idx in (1, 7, 8):
                 cell.alignment = ALIGN_CENTER
-            elif c_idx in (8, 9, 10):
-                cell.alignment = ALIGN_RIGHT
-            elif c_idx == 22:
+            elif c_idx == 16:
                 cell.font = FONT_LINK
                 cell.hyperlink = maps_link
 
-    ws.freeze_panes = 'C2'
-    ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{len(sorted_places)+1}"
+        current_row += 1
+    return current_row
+
+def build_grouped_master_sheet(wb, buckets: dict):
+    """Sheet 1: Toàn bộ địa điểm gom chung thành từng khối nhóm có banner lớn"""
+    ws = wb.active
+    ws.title = "1. 📑 Tổng Hợp Phân Nhóm"
+    ws.views.sheetView[0].showGridLines = True
+
+    current_row = 1
+
+    for k, b in buckets.items():
+        items = b['items']
+        if not items:
+            continue
+
+        # 🌟 GROUP BANNER ROW 🌟
+        ws.row_dimensions[current_row].height = 32
+        ws.merge_cells(start_row=current_row, start_column=1, end_row=current_row, end_column=len(TABLE_HEADERS))
+        banner_cell = ws.cell(row=current_row, column=1, value=f"{b['icon']} {b['title']} — TỔNG SỐ: {len(items)} ĐỊA ĐIỂM")
+        banner_cell.font = FONT_GROUP_BANNER
+        banner_cell.fill = b['fill']
+        banner_cell.alignment = Alignment(horizontal='left', vertical='center', indent=1)
+
+        current_row += 1
+
+        # Table Header Row
+        ws.row_dimensions[current_row].height = 24
+        for col_idx, text in enumerate(TABLE_HEADERS, 1):
+            cell = ws.cell(row=current_row, column=col_idx, value=text)
+            cell.font = FONT_HEADER
+            cell.fill = FILL_HEADER_DEFAULT
+            cell.alignment = ALIGN_CENTER
+            cell.border = BORDER_THIN
+
+        current_row += 1
+
+        # Place Rows
+        current_row = write_place_rows(ws, items, current_row, base_stt=1)
+
+        # Empty Spacer Row
+        current_row += 1
+
+    ws.freeze_panes = 'D2'
+    autofit_columns(ws)
+
+def build_single_category_sheet(wb, title: str, icon: str, banner_fill, items: list):
+    """Tạo sheet chuyên biệt riêng cho 1 nhóm địa điểm"""
+    ws = wb.create_sheet(title=title)
+    ws.views.sheetView[0].showGridLines = True
+
+    # 🌟 TOP BANNER 🌟
+    ws.row_dimensions[1].height = 32
+    ws.merge_cells(start_row=1, start_column=1, end_row=1, end_column=len(TABLE_HEADERS))
+    banner_cell = ws.cell(row=1, column=1, value=f"{icon} DANH SÁCH CHI TIẾT: {title.upper()} ({len(items)} ĐỊA ĐIỂM)")
+    banner_cell.font = FONT_GROUP_BANNER
+    banner_cell.fill = banner_fill
+    banner_cell.alignment = Alignment(horizontal='left', vertical='center', indent=1)
+
+    # Table Header Row
+    ws.row_dimensions[2].height = 24
+    for col_idx, text in enumerate(TABLE_HEADERS, 1):
+        cell = ws.cell(row=2, column=col_idx, value=text)
+        cell.font = FONT_HEADER
+        cell.fill = FILL_HEADER_DEFAULT
+        cell.alignment = ALIGN_CENTER
+        cell.border = BORDER_THIN
+
+    # Place Rows
+    write_place_rows(ws, items, start_row=3, base_stt=1)
+
+    ws.freeze_panes = 'D3'
+    ws.auto_filter.ref = f"A2:{get_column_letter(len(TABLE_HEADERS))}{len(items)+2}"
     autofit_columns(ws)
 
 def build_communes_sheet(wb, places: list):
-    """Xây dựng Sheet 2: Bảng Thống Kê Tổng Hợp 15 Xã & Thị Trấn"""
-    ws = wb.create_sheet(title="2. Thống Kê 15 Xã (Communes)")
+    """Sheet Thống Kê 15 Xã & Thị Trấn"""
+    ws = wb.create_sheet(title="📊 Thống Kê 15 Xã")
     ws.views.sheetView[0].showGridLines = True
 
     COMMUNES_ORDER = [
@@ -203,54 +303,49 @@ def build_communes_sheet(wb, places: list):
 
     headers = [
         "STT", "Tên Xã / Thị Trấn", "Tổng Địa Điểm", 
-        "Danh Thắng Núi/Hồ (Nature)", "Ẩm Thực Đặc Sản (Food)", 
-        "Chùa & Tâm Linh (Culture)", "Điểm Check-in (Photo)", 
-        "Lưu Trú & Khách Sạn (Stay)", "Điểm Mở Về Đêm (Night)", "Điểm Đánh Giá TB (⭐)"
+        "Chùa & Tâm Linh", "Ẩm Thực Đặc Sản", "Danh Thắng Núi/Hồ", 
+        "Điểm Check-in", "Cà Phê & Đêm", "Lưu Trú & Homestay", "Điểm Đánh Giá TB (⭐)"
     ]
 
     ws.row_dimensions[1].height = 28
     for col_idx, text in enumerate(headers, 1):
         cell = ws.cell(row=1, column=col_idx, value=text)
         cell.font = FONT_HEADER
-        cell.fill = FILL_GOLDEN
+        cell.fill = FILL_BANNER_FOOD
         cell.alignment = ALIGN_CENTER
         cell.border = BORDER_THIN
 
     # Aggregate
-    agg = {c: {'total': 0, 'nature': 0, 'food': 0, 'culture': 0, 'checkin': 0, 'stay': 0, 'night': 0, 'ratings': []} for c in COMMUNES_ORDER}
-    other_places = []
+    agg = {c: {'total': 0, 'chua': 0, 'food': 0, 'nature': 0, 'checkin': 0, 'cafe': 0, 'stay': 0, 'ratings': []} for c in COMMUNES_ORDER}
 
     for p in places:
         c = p.get('commune', '')
-        matched_commune = None
+        matched = "Thị trấn Tri Tôn"
         for std_c in COMMUNES_ORDER:
             if std_c.lower() in c.lower() or c.lower() in std_c.lower():
-                matched_commune = std_c
+                matched = std_c
                 break
-        
-        if not matched_commune:
-            matched_commune = "Thị trấn Tri Tôn"
 
+        name = (p.get('name') or '').lower()
         cat = (p.get('category') or '').lower()
         subcat = (p.get('subcategory') or '').lower()
-        
-        agg[matched_commune]['total'] += 1
-        if 'nature' in cat or 'mountain' in cat or 'lake' in cat:
-            agg[matched_commune]['nature'] += 1
-        elif 'food' in cat or 'gastronomy' in cat:
-            agg[matched_commune]['food'] += 1
-        elif 'culture' in cat or 'spiritual' in cat or 'temple' in cat:
-            agg[matched_commune]['culture'] += 1
-        elif 'check-in' in cat or 'photo' in cat:
-            agg[matched_commune]['checkin'] += 1
-        elif 'stay' in cat or 'hotel' in cat or 'homestay' in cat:
-            agg[matched_commune]['stay'] += 1
 
-        if p.get('open_late'):
-            agg[matched_commune]['night'] += 1
+        agg[matched]['total'] += 1
+        if 'chùa' in name or 'wat ' in name or 'di tích' in name or 'nhà mồ' in name or 'culture' in cat or 'spiritual' in cat:
+            agg[matched]['chua'] += 1
+        elif 'gà đốt' in name or 'cháo bò' in name or 'bún cá' in name or 'bò 7 món' in name or 'food' in cat or 'gastronomy' in cat:
+            agg[matched]['food'] += 1
+        elif 'cafe' in subcat or 'cà phê' in name or 'chợ đêm' in name:
+            agg[matched]['cafe'] += 1
+        elif 'stay' in cat or 'hotel' in cat or 'homestay' in cat or 'khách sạn' in name:
+            agg[matched]['stay'] += 1
+        elif 'check-in' in cat or 'cổng trời' in name or 'thốt nốt trái tim' in name:
+            agg[matched]['checkin'] += 1
+        else:
+            agg[matched]['nature'] += 1
 
         if p.get('rating'):
-            agg[matched_commune]['ratings'].append(float(p['rating']))
+            agg[matched]['ratings'].append(float(p['rating']))
 
     for r_idx, c_name in enumerate(COMMUNES_ORDER, 2):
         ws.row_dimensions[r_idx].height = 22
@@ -259,8 +354,8 @@ def build_communes_sheet(wb, places: list):
 
         values = [
             r_idx - 1, c_name, data['total'],
-            data['nature'], data['food'], data['culture'],
-            data['checkin'], data['stay'], data['night'], avg_rating
+            data['chua'], data['food'], data['nature'],
+            data['checkin'], data['cafe'], data['stay'], avg_rating
         ]
 
         for c_idx, val in enumerate(values, 1):
@@ -270,7 +365,7 @@ def build_communes_sheet(wb, places: list):
             if c_idx in (1, 3, 4, 5, 6, 7, 8, 9, 10):
                 cell.alignment = ALIGN_CENTER
 
-    # Total Summary Row
+    # Total Row
     tot_row = len(COMMUNES_ORDER) + 2
     ws.row_dimensions[tot_row].height = 24
     ws.cell(row=tot_row, column=1, value="")
@@ -295,70 +390,22 @@ def build_communes_sheet(wb, places: list):
 
     autofit_columns(ws)
 
-def build_knowledge_sheet(wb, kb_data: list):
-    """Xây dựng Sheet 3: Cơ sở tri thức & RAG Ground Truth"""
-    ws = wb.create_sheet(title="3. Tri Thức RAG (Knowledge)")
-    ws.views.sheetView[0].showGridLines = True
-
-    headers = [
-        "STT", "Mã KB", "Chủ Đề (Topic)", "Phân Loại", 
-        "Từ Khóa / Câu Hỏi Mẫu", "Nội Dung Trả Lời Chuẩn (Ground Truth)", 
-        "Nguồn Dữ Liệu Xác Minh", "Độ Ưu Tiên", "Ngày Cập Nhật"
-    ]
-
-    ws.row_dimensions[1].height = 28
-    for col_idx, text in enumerate(headers, 1):
-        cell = ws.cell(row=1, column=col_idx, value=text)
-        cell.font = FONT_HEADER
-        cell.fill = FILL_INDIGO
-        cell.alignment = ALIGN_CENTER
-        cell.border = BORDER_THIN
-
-    for r_idx, kb in enumerate(kb_data, 2):
-        ws.row_dimensions[r_idx].height = 24
-        is_even = (r_idx % 2 == 0)
-        row_fill = FILL_ZEBRA if is_even else None
-
-        values = [
-            r_idx - 1,
-            kb.get('id', ''),
-            kb.get('topic', '') or kb.get('category', ''),
-            kb.get('category', ''),
-            kb.get('keywords', '') or kb.get('question_pattern', ''),
-            kb.get('content', '') or kb.get('answer', ''),
-            kb.get('source', 'UBND Huyện Tri Tôn & Phòng VHTT'),
-            kb.get('priority', 1),
-            kb.get('updated_at', '')[:10] if kb.get('updated_at') else ''
-        ]
-
-        for c_idx, val in enumerate(values, 1):
-            cell = ws.cell(row=r_idx, column=c_idx, value=val)
-            cell.font = FONT_BODY
-            cell.border = BORDER_THIN
-            if row_fill:
-                cell.fill = row_fill
-            if c_idx in (1, 8, 9):
-                cell.alignment = ALIGN_CENTER
-
-    ws.auto_filter.ref = f"A1:{get_column_letter(len(headers))}{len(kb_data)+1}"
-    autofit_columns(ws)
-
 def build_itineraries_sheet(wb):
-    """Xây dựng Sheet 4: Danh mục Lịch trình mẫu khép vòng"""
-    ws = wb.create_sheet(title="4. Lịch Trình Mẫu (Itineraries)")
+    """Sheet Lịch Trình Tour Mẫu"""
+    ws = wb.create_sheet(title="🗺️ Lịch Trình Mẫu")
     ws.views.sheetView[0].showGridLines = True
 
     headers = [
         "Mã Tour", "Tên Lịch Trình", "Thời Lượng", "Đối Tượng Phù Hợp", 
         "Điểm Xuất Phát", "Lộ Trình Các Điểm Dừng (Stops Sequence)", 
-        "Dự Toán Chi Phí", "Lưu Ý Đường Đèo & Khung Giờ Vàng"
+        "Dự Toán Chi Phí", "Lưu Ý Cung Đường & Giờ Vàng"
     ]
 
     ws.row_dimensions[1].height = 28
     for col_idx, text in enumerate(headers, 1):
         cell = ws.cell(row=1, column=col_idx, value=text)
         cell.font = FONT_HEADER
-        cell.fill = FILL_TEAL
+        cell.fill = FILL_BANNER_NATURE
         cell.alignment = ALIGN_CENTER
         cell.border = BORDER_THIN
 
@@ -411,77 +458,59 @@ def build_itineraries_sheet(wb):
 
     autofit_columns(ws)
 
-def build_feedback_sheet(wb, feedbacks: list, audits: list):
-    """Xây dựng Sheet 5: Đóng góp & Nhật ký kiểm duyệt"""
-    ws = wb.create_sheet(title="5. Góp Ý (Feedback)")
-    ws.views.sheetView[0].showGridLines = True
-
-    headers = [
-        "STT", "Họ Tên Người Gửi", "Email Liên Hệ", "Chuyên Mục", 
-        "Đánh Giá (⭐)", "Nội Dung Đóng Góp / Báo Lỗi", "Thời Gian Gửi"
-    ]
-
-    ws.row_dimensions[1].height = 28
-    for col_idx, text in enumerate(headers, 1):
-        cell = ws.cell(row=1, column=col_idx, value=text)
-        cell.font = FONT_HEADER
-        cell.fill = FILL_INDIGO
-        cell.alignment = ALIGN_CENTER
-        cell.border = BORDER_THIN
-
-    for r_idx, fb in enumerate(feedbacks, 2):
-        ws.row_dimensions[r_idx].height = 24
-        values = [
-            r_idx - 1,
-            fb.get('name', ''),
-            fb.get('email', ''),
-            fb.get('category', 'Góp ý chung'),
-            fb.get('rating', 5),
-            fb.get('message', ''),
-            fb.get('created_at', '')[:19] if fb.get('created_at') else ''
-        ]
-        for c_idx, val in enumerate(values, 1):
-            cell = ws.cell(row=r_idx, column=c_idx, value=val)
-            cell.font = FONT_BODY
-            cell.border = BORDER_THIN
-            if c_idx in (1, 5, 7):
-                cell.alignment = ALIGN_CENTER
-
-    autofit_columns(ws)
-
 def main():
     print("================================================================================")
-    print("🚀 GIAO THỨC XUẤT BẢN MASTER DATABASE SUPABASE SANG MICROSOFT EXCEL (.XLSX)")
+    print("🚀 GIAO THỨC XUẤT BẢN FILE EXCEL PHÂN NHÓM CHUYÊN NGHIỆP TỪ SUPABASE CLOUD")
     print("================================================================================")
 
-    # 1. Fetch live data from Supabase
-    print("📡 Đang kết nối và tải dữ liệu thời gian thực từ Supabase Cloud...")
+    print("📡 Đang kết nối và tải dữ liệu từ Supabase Cloud...")
     places = fetch_supabase_table('places')
-    kb_data = fetch_supabase_table('knowledge_base')
-    feedbacks = fetch_supabase_table('feedbacks')
-    audits = fetch_supabase_table('audit_logs')
+    print(f"✓ Đã tải {len(places)} địa điểm.")
 
-    print(f"✓ Đã tải {len(places)} địa điểm thực địa.")
-    print(f"✓ Đã tải {len(kb_data)} bản ghi cơ sở tri thức RAG.")
-    print(f"✓ Đã tải {len(feedbacks)} phản hồi đóng góp cộng đồng.")
+    # Classify into 6 distinct buckets
+    buckets = classify_places(places)
 
-    # 2. Create Workbook
     wb = openpyxl.Workbook()
 
-    build_places_sheet(wb, places)
-    build_communes_sheet(wb, places)
-    build_knowledge_sheet(wb, kb_data)
-    build_itineraries_sheet(wb)
-    build_feedback_sheet(wb, feedbacks, audits)
+    # 1. Sheet 1: Master Grouped (Gom khối)
+    build_grouped_master_sheet(wb, buckets)
 
-    # 3. Save File
+    # 2. Dedicated Category Sheets
+    build_single_category_sheet(wb, "🏛️ Chùa & Di Tích", "🏛️", FILL_BANNER_CHUA, buckets['chua']['items'])
+    build_single_category_sheet(wb, "🍲 Ẩm Thực Đặc Sản", "🍲", FILL_BANNER_FOOD, buckets['food']['items'])
+    build_single_category_sheet(wb, "🏞️ Danh Thắng Núi Hồ", "🏞️", FILL_BANNER_NATURE, buckets['nature']['items'])
+    build_single_category_sheet(wb, "📸 Điểm Check-in", "📸", FILL_BANNER_CHECKIN, buckets['checkin']['items'])
+    build_single_category_sheet(wb, "☕ Cà Phê & Đêm", "☕", FILL_BANNER_CAFE, buckets['cafe']['items'])
+    build_single_category_sheet(wb, "🏡 Lưu Trú Homestay", "🏡", FILL_BANNER_STAY, buckets['stay']['items'])
+
+    # 3. Summary & Itinerary Sheets
+    build_communes_sheet(wb, places)
+    build_itineraries_sheet(wb)
+
     out_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
     os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, 'DU_LICH_TRI_TON_MASTER_DATABASE_2026.xlsx')
+    out_path_1 = os.path.join(out_dir, 'DU_LICH_TRI_TON_MASTER_DATABASE_2026.xlsx')
+    out_path_2 = os.path.join(out_dir, 'DU_LICH_TRI_TON_PHAN_NHOM_2026.xlsx')
     
-    wb.save(out_path)
-    print(f"\n✨ XUẤT BẢN THÀNH CÔNG: {out_path}")
-    print("================================================================================")
+    wb.save(out_path_1)
+    wb.save(out_path_2)
+    print(f"\n✨ XUẤT BẢN THÀNH CÔNG TẠI WORKSPACE:")
+    print(f"  1. {out_path_1}")
+    print(f"  2. {out_path_2}")
+
+    # Copy to Downloads
+    dst_dir = os.path.expanduser(r'~\Downloads')
+    import shutil
+    for src_p, name in [(out_path_2, 'DU_LICH_TRI_TON_PHAN_NHOM_2026.xlsx'), (out_path_1, 'DU_LICH_TRI_TON_MASTER_DATABASE_2026.xlsx')]:
+        dst_p = os.path.join(dst_dir, name)
+        try:
+            shutil.copy2(src_p, dst_p)
+            print(f"  ✓ Đã copy sang: {dst_p}")
+        except PermissionError:
+            print(f"  ⚠️ Tệp {name} đang được mở trong Excel, vui lòng đóng lại nếu muốn ghi đè!")
+        except Exception as e:
+            print(f"  ⚠️ Lỗi khi copy {name}: {e}")
+
     return 0
 
 if __name__ == '__main__':
