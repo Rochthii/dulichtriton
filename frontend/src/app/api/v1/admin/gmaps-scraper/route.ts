@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, serviceKey);
+const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", serviceKey || "placeholder");
 
 /**
  * API Chuyên Dụng: Tìm kiếm Địa Điểm Trên Google Maps + Bóc Tách Ảnh CDN + Đồng Bộ Supabase
