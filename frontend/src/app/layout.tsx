@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     default: "Du Lịch Tri Tôn AI — Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi",
     template: "%s | Du Lịch Tri Tôn AI"
   },
-  description: "Cẩm nang du lịch Tri Tôn, An Giang: 149 địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.",
+  description: "Cẩm nang du lịch Tri Tôn, An Giang: địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.",
   keywords: [
     'du lịch Tri Tôn', 'Tri Tôn An Giang', 'Bảy Núi', 'Hồ Tà Pạ', 'Tuyệt Tình Cốc',
     'Gà Đốt Ô Thum', 'chùa Khmer', 'Núi Cô Tô', 'Hồ Soài So', 'ẩm thực Bảy Núi',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   openGraph: {
     title: "Du Lịch Tri Tôn AI — Khám Phá Kỳ Quan Vùng Bảy Núi An Giang",
-    description: "Trợ lý AI hướng dẫn du lịch Tri Tôn, 149 điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.",
+    description: "Trợ lý AI hướng dẫn du lịch Tri Tôn, các điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.",
     url: SITE_URL,
     siteName: "Du Lịch Tri Tôn AI",
     images: [
@@ -84,7 +84,7 @@ const rootJsonLd = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'Du Lịch Tri Tôn AI',
-      description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với 149 địa điểm xác minh thực tế.',
+      description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với địa điểm xác minh thực tế.',
       inLanguage: 'vi-VN',
       potentialAction: {
         '@type': 'SearchAction',

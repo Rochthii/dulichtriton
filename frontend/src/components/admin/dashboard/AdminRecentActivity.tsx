@@ -34,39 +34,42 @@ export default function AdminRecentActivity({
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-[#0E8C7F]" />
             <h3 className="font-extrabold text-sm text-[#26221B]">
-              Phân Bố 149 Điểm Đến Theo 15 Xã & Thị Trấn
+              Phân Bố Điểm Đến Theo 15 Xã & Thị Trấn
             </h3>
           </div>
         </div>
 
         <div className="space-y-2.5 text-xs">
-          {(topCommunes.length > 0
-            ? topCommunes
-            : [
-                { name: 'Xã Núi Tô', count: 26 },
-                { name: 'Thị trấn Tri Tôn', count: 24 },
-                { name: 'Xã Châu Lăng', count: 21 },
-                { name: 'Xã Cô Tô', count: 18 },
-                { name: 'Xã Ô Lâm', count: 15 },
-                { name: 'Thị trấn Ba Chúc', count: 14 },
-              ]
-          ).map((c, idx) => {
-            const pct = Math.round((c.count / 149) * 100);
-            return (
-              <div key={idx} className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#26221B]">{c.name}</span>
-                  <span className="text-[#6B6355] font-mono">{c.count} POIs ({pct}%)</span>
+          {(() => {
+            const list = topCommunes.length > 0
+              ? topCommunes
+              : [
+                  { name: 'Xã Núi Tô', count: 26 },
+                  { name: 'Thị trấn Tri Tôn', count: 24 },
+                  { name: 'Xã Châu Lăng', count: 21 },
+                  { name: 'Xã Cô Tô', count: 18 },
+                  { name: 'Xã Ô Lâm', count: 15 },
+                  { name: 'Thị trấn Ba Chúc', count: 14 },
+                ];
+            const totalInList = list.reduce((acc, x) => acc + x.count, 0) || 1;
+            return list.map((c, idx) => {
+              const pct = Math.round((c.count / totalInList) * 100);
+              return (
+                <div key={idx} className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-[#26221B]">{c.name}</span>
+                    <span className="text-[#6B6355] font-mono">{c.count} POIs ({pct}%)</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full bg-[#FAF3E7] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[#0E8C7F]"
+                      style={{ width: `${pct * 3}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="w-full h-2 rounded-full bg-[#FAF3E7] overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-[#0E8C7F]"
-                    style={{ width: `${pct * 3}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            });
+          })()}
         </div>
       </section>
 

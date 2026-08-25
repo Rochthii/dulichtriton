@@ -65,7 +65,7 @@ Tài liệu quy chuẩn kỹ thuật và định hướng chiến lược tích 
 ### 🔹 Giai đoạn 1: Hoàn thiện Lõi Web-App tối ưu chuẩn Zalo (Độc lập 100%)
 1. Tối ưu giao diện Mobile Responsive tràn viền (--zmp-safe-top, --zmp-safe-bottom).
 2. Tích hợp bộ tiện ích rontend/src/lib/zalo.ts (GPS, Share, Chat với chủ quán).
-3. Đảm bảo toàn bộ 149 POI, Chatbot AI và Lộ trình chạy mượt mà 60fps trên trình duyệt Zalo.
+3. Đảm bảo toàn bộ Điểm Đến, Chatbot AI và Lộ trình chạy mượt mà 60fps trên trình duyệt Zalo.
 
 ### 🔹 Giai đoạn 2: Thiết lập Zalo Mini App Sandbox (Demo & Đồ án)
 1. Thêm số điện thoại của bạn, bạn bè và giảng viên/hội đồng vào danh sách **Tester** trên [mini.zalo.me](https://mini.zalo.me/).

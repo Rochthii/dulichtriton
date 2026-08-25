@@ -46,7 +46,7 @@ export default function AdminDashboardPage() {
             Bảng Điều Khiển Quản Trị (Admin Dashboard)
           </h1>
           <p className="text-xs text-[#6B6355] mt-0.5">
-            Quản trị 149 điểm đến, 27 tour lịch trình, cơ sở tri thức AI RAG và giám sát hạ tầng thực địa.
+            Quản trị các điểm đến, 27 tour lịch trình, cơ sở tri thức AI RAG và giám sát hạ tầng thực địa.
           </p>
         </div>
 

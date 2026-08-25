@@ -4,7 +4,7 @@
 - `uuid-ossp`, `vector`, `postgis`, `unaccent`, `pg_trgm`.
 
 ## 2. Core Tables:
-- `public.places`: 149 địa điểm xác minh (tên, xã, tọa độ `geometry(Point, 4326)`, `embedding vector(768)`).
+- `public.places`: địa điểm xác minh (tên, xã, tọa độ `geometry(Point, 4326)`, `embedding vector(768)`).
 - `public.videos`: Video TikTok/YouTube có tọa độ và POI link.
 - `public.chat_sessions` & `public.chat_messages`: Lưu phiên trò chuyện.
 - `public.semantic_chat_cache`: Đệm ngữ nghĩa cosine similarity >= 0.90.

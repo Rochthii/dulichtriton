@@ -22,7 +22,7 @@ export const commonVi = {
   footer: {
     brandTitle: 'DU LỊCH TRI TÔN AI',
     brandSubtitle: 'CỔNG THÔNG TIN DU LỊCH BẢN ĐỊA BẢY NÚI',
-    brandDesc: 'Nền tảng du lịch số thông minh hỗ trợ 149 địa điểm xác minh thực tế, bản đồ GIS, 27 lịch trình khép vòng và cẩm nang văn hóa Khmer Thất Sơn.',
+    brandDesc: 'Nền tảng du lịch số thông minh hỗ trợ địa điểm xác minh thực tế, bản đồ GIS, 27 lịch trình khép vòng và cẩm nang văn hóa Khmer Thất Sơn.',
     quickLinks: 'Liên Kết Nhanh',
     tourismCategories: 'Chuyên Mục Du Lịch',
     contactSupport: 'Hỗ Trợ & Cứu Hộ',

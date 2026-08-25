@@ -27,7 +27,7 @@ export default function PlacesGrid({
           <span>
             {isEn
               ? `List of 149 Verified Destinations (${places.length} Spots)`
-              : `Danh Sách 149 Địa Điểm Đã Xác Minh (${places.length} Địa Điểm)`}
+              : `Danh Sách Địa Điểm Đã Xác Minh (${places.length} Địa Điểm)`}
           </span>
         </h2>
         <span className="text-xs text-[#6B6355] font-medium font-mono">
@@ -37,7 +37,7 @@ export default function PlacesGrid({
 
       {loading ? (
         <div className="py-16 text-center text-[#6B6355] font-bold font-body">
-          {isEn ? "Loading 149 Tri Ton tourism destinations..." : "Đang tải danh mục 149 địa điểm du lịch Tri Tôn..."}
+          {isEn ? "Loading 149 Tri Ton tourism destinations..." : "Đang tải danh mục địa điểm du lịch Tri Tôn..."}
         </div>
       ) : places.length === 0 ? (
         <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3 font-body">

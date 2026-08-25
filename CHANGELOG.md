@@ -19,9 +19,9 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - `/admin/knowledge-base`: Phân rã thành `KnowledgeStatsBar.tsx`, `KnowledgeTable.tsx`, `KnowledgeModal.tsx`.
 
 #### 2. Xây Dựng Bộ Test Suites Chuyên Sâu 360 Độ & Telemetry Đo Kiểm Mạng
-- **Bộ Kiểm Thử Địa Giới & Văn Hóa (`test_geography_and_cultural_rules.py`)**: Quét tự động 138/149 POIs, đảm bảo 100% thuộc 15 xã/thị trấn chuẩn Tri Tôn (Rule 02), 0% vi phạm từ cấm văn hóa ẩm thực (Rule 05), 100% tọa độ GPS thực địa (Rule 01).
+- **Bộ Kiểm Thử Địa Giới & Văn Hóa (`test_geography_and_cultural_rules.py`)**: Quét tự động 138/Danh Mục Điểm Đến, đảm bảo 100% thuộc 15 xã/thị trấn chuẩn Tri Tôn (Rule 02), 0% vi phạm từ cấm văn hóa ẩm thực (Rule 05), 100% tọa độ GPS thực địa (Rule 01).
 - **Bộ Kiểm Thử Từ Điển Modular i18n (`test_modular_i18n_dictionaries.py`)**: Xác thực cấu trúc 12 module từ điển con và master aggregators `vi.ts`, `en.ts` (100% PASS).
-- **Bộ Kiểm Thử Toàn Vẹn Song Ngữ (`test_bilingual_data_integrity.py`)**: Kiểm tra 100% bản dịch tiếng Anh của 138/149 POIs.
+- **Bộ Kiểm Thử Toàn Vẹn Song Ngữ (`test_bilingual_data_integrity.py`)**: Kiểm tra 100% bản dịch tiếng Anh của 138/Danh Mục Điểm Đến.
 - **Bộ Đo Kiểm 20 API Endpoints & Độ Trễ (`test_api_endpoints_comprehensive.py`)**: Đo kiểm tự động độ trễ (ms), dung lượng payload (KB), và HTTP Status của 20 APIs công khai & quản trị (100% PASS, độ trễ 13ms - 84ms).
 - **Bộ Kiểm Thử Chu Trình CRUD State Machine (`test_admin_crud_state_machine.py`)**: Đo kiểm chu trình Thêm $\rightarrow$ Sửa $\rightarrow$ Gắn cờ $\rightarrow$ Xóa mềm $\rightarrow$ Khôi phục $\rightarrow$ Tiếp nhận góp ý $\rightarrow$ Duyệt video TikTok.
 - **Bộ Đo Kiểm Chịu Tải & An Toàn (`test_network_resilience_and_telemetry.py`)**: Đo kiểm chịu tải đồng thời (15 workers, thông lượng 138.6 RPS, p50 median 43.0ms), vẽ biểu đồ phân bổ độ trễ ASCII, kiểm tra kháng lỗi SQLi, XSS, Unicode.
@@ -328,7 +328,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 #### 1. Tự Động Hóa Sắp Xếp Sơ Đồ Khép Vòng Cho 100% Câu Hỏi Lịch Trình Tùy Biến
 - **Nearest-Neighbor Loop Algorithm (`spatialRouter.ts`)**: Tự động giải bài toán chuỗi chặng khép vòng ngắn nhất cho bất kỳ tập hợp điểm đến nào du khách yêu cầu, triệt tiêu 100% hiện tượng quay đầu ngược đường.
-- **Tích hợp RAG Context Engine (`ragEngine.ts`)**: Tự động nhận diện câu hỏi lịch trình (Preset Tour hoặc Custom Ad-hoc Tour), tính toán cự ly từng chặng (km) và thời gian lái xe (phút) dựa trên tọa độ GPS thực tế của 149 POIs.
+- **Tích hợp RAG Context Engine (`ragEngine.ts`)**: Tự động nhận diện câu hỏi lịch trình (Preset Tour hoặc Custom Ad-hoc Tour), tính toán cự ly từng chặng (km) và thời gian lái xe (phút) dựa trên tọa độ GPS thực tế của Danh Mục Điểm Đến.
 - **Thử nghiệm thực tế xuất sắc**:
   - *Case 1 (1 Ngày Kinh Điển)*: Cung đường khép vòng ~16.8km (Núi Tô $\rightarrow$ Ô Lâm $\rightarrow$ An Tức $\rightarrow$ TT. Tri Tôn).
   - *Case 2 (3 Tiếng Chiều Quanh Núi Tô)*: Sắp xếp Ruộng Coffee $\rightarrow$ Windy Hill $\rightarrow$ Khép vòng TT. Tri Tôn (~12km).
@@ -381,7 +381,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 - **Native SSE Token Streaming**: Xóa bỏ hoàn toàn cơ chế giả lập streaming (`split(' ')` và `setTimeout`), chuyển sang truyền byte delta trực tiếp từ Groq LPU (`streamGroqNative`), Gemini 2.0 Flash Lite (`streamGeminiNative`) và OpenRouter (`streamOpenRouterNative`).
 - **Smart Hedging Racer**: Thay thế `Promise.race` brute-force lãng phí quota bằng thuật toán Hedging Request (gọi Groq trước, trễ 600ms mới khởi chạy Gemini, tự động `abort()` luồng thừa). Giúp **tiết kiệm 85% hạn mức Quota API**.
 - **Time-Aware Golden Window Recommendation**: Tự động nhận diện khung giờ vàng thực tế theo múi giờ Việt Nam (Sáng: Cháo Bò/Bún Cá; Trưa: Gà Đốt Ô Thum; Chiều: Hoàng hôn Tà Pạ/Cây Trâm; Tối: Bò 7 Món/Cà phê chill mở muộn).
-- **Unified Hybrid RAG Engine (`ragEngine.ts`)**: Hợp nhất toàn bộ logic tìm kiếm thực địa (149 POIs Inverted Index, PostGIS Haversine Distance km, Live Weather Open-Meteo Cache 15m, 6 đại lễ hội Bảy Núi).
+- **Unified Hybrid RAG Engine (`ragEngine.ts`)**: Hợp nhất toàn bộ logic tìm kiếm thực địa (Danh Mục Điểm Đến Inverted Index, PostGIS Haversine Distance km, Live Weather Open-Meteo Cache 15m, 6 đại lễ hội Bảy Núi).
 - **Truth Anchor Engine v2.0**: Mỏ neo chân lý thế hệ mới bảo chứng 100% văn hóa Bảy Núi (chuẩn hóa Gà đốt Ô Thum, Bún cá củ ngải Khmer, loại bỏ quán ảo, địa giới 15 Xã/Thị trấn).
 
 ---
@@ -439,7 +439,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 #### 2. Giải Pháp Toàn Diện (Zero Black Screen Fallback)
 - **Bổ sung `src/app/global-error.tsx`**: Bắt giữ toàn bộ lỗi ở cấp độ gốc (Root Layout), hiển thị giao diện thông báo đồng bộ dữ liệu kèm nút **Thử Lại Ngay** & **Trang Chủ**.
 - **Bổ sung `src/app/error.tsx`**: Bắt giữ lỗi cục bộ trên từng route mà không làm sập toàn bộ ứng dụng.
-- **Bổ sung `src/app/not-found.tsx`**: Xử lý các đường dẫn 404 bằng giao diện Folk-Modern Bảy Núi thân thiện, hướng dẫn du khách quay về trang chủ hoặc khám phá 149 địa điểm.
+- **Bổ sung `src/app/not-found.tsx`**: Xử lý các đường dẫn 404 bằng giao diện Folk-Modern Bảy Núi thân thiện, hướng dẫn du khách quay về trang chủ hoặc khám phá địa điểm.
 
 ---
 
@@ -500,11 +500,11 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 - Toàn bộ giao diện Trang Chủ, Header, Khám Phá, Ẩm Thực, Lịch Trình đã hiển thị tiếng Việt dấu thanh chuẩn sắc nét.
 
 #### 2. Kích Hoạt Hệ Thống SEO & GEO (Generative Engine Optimization) Toàn Diện
-- **Tự động sinh `sitemap.xml`**: Bao gồm đầy đủ 149 địa điểm thực địa đã xác minh và các trang chủ lực.
+- **Tự động sinh `sitemap.xml`**: Bao gồm đầy đủ địa điểm thực địa đã xác minh và các trang chủ lực.
 - **Cấu hình `robots.txt`**: Mở quyền cho các AI Bot hàng đầu (GPTBot, Google-Extended/Gemini, Claude, Perplexity, Cohere, YouBot) đọc và trích dẫn dữ liệu.
 - **Dữ liệu có cấu trúc Schema.org (JSON-LD)**: Bổ sung các schema `WebSite`, `Organization`, `TouristDestination`, `FAQPage` cho trang chủ và `TouristAttraction`, `GeoCoordinates`, `BreadcrumbList` cho từng trang chi tiết `/places/[id]`.
 - **Tệp tin chuẩn GEO `public/llms.txt`**: Cung cấp tài liệu tổng quan và hướng dẫn trích dẫn cho các mô hình ngôn ngữ lớn (LLMs).
-- **API Endpoint GEO `/api/v1/llms-context`**: Cung cấp API dữ liệu JSON sạch của 149 địa điểm phục vụ cho AI Tra cứu và Tổng hợp dữ liệu.
+- **API Endpoint GEO `/api/v1/llms-context`**: Cung cấp API dữ liệu JSON sạch của địa điểm phục vụ cho AI Tra cứu và Tổng hợp dữ liệu.
 - **Đồng bộ Domain**: Chuyển đổi toàn bộ liên kết nội bộ, thẻ canonical và openGraph sang tên miền chính thức `dulichtriton.com`.
 
 ---
@@ -642,7 +642,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 #### 1. Kiến Trúc Bản Đồ Tối Ưu Chi Phí & Trải Nghiệm (Hybrid Map Architecture)
 - **Định Vị GPS Live**: Tích hợp nút `📍 Bật GPS Quét Điểm Gần Tôi` với chấm phát xung xanh dương trực quan.
 - **Bộ Lọc Bán Kính Radar**: Chọn quét `3 km` (Đi bộ/Xe đạp), `5 km` (Xe máy gần), `10 km` (Cụm xã) hoặc `Tất cả Tri Tôn`.
-- **Tính Khoảng Cách Thực Tế (Haversine Formula)**: Tự động tính khoảng cách $d$ (km) và thời gian đi xe máy từ vị trí của du khách đến 149 địa điểm.
+- **Tính Khoảng Cách Thực Tế (Haversine Formula)**: Tự động tính khoảng cách $d$ (km) và thời gian đi xe máy từ vị trí của du khách đến địa điểm.
 - **Chỉ Đường Google Maps 1 Chạm**: Nút bấm `📍 Mở App Google Maps Dẫn Đường` kích hoạt trực tiếp ứng dụng Google Maps trên điện thoại để có giọng nói dẫn đường tiếng Việt và điều hướng an toàn.
 
 ---
@@ -960,7 +960,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 - **Thẻ Góp Ý Xanh Ngọc Bích (`FeedbackSection.tsx`)**: Tái thiết kế từ khối lớn chiếm diện tích thành Card xanh mint ngọc bích (`#0E8C7F`) nhỏ gọn xinh xắn, tiết kiệm 65% diện tích.
 
 ### 🔍 Tìm Kiếm Thông Minh Chuẩn YouTube & Đối Soát Tiếng Việt 0ms
-- **Instant In-Memory Search (0ms)**: Khớp dữ liệu tức thì từ 149 POIs trong RAM không phụ thuộc mạng di động, đồng thời đồng bộ ngầm với Supabase Backend.
+- **Instant In-Memory Search (0ms)**: Khớp dữ liệu tức thì từ Danh Mục Điểm Đến trong RAM không phụ thuộc mạng di động, đồng thời đồng bộ ngầm với Supabase Backend.
 - **Chuẩn Hóa Tiếng Việt Không Dấu (`removeVietnameseTones`)**: Gõ không dấu tự do (`ga dot`, `ta pa`, `co to`, `svay ton`, `du du dam`) đều trả về kết quả chính xác 100%.
 - **Dự Đoán Từ Khóa Kiểu YouTube (Predictive Search Queries)**: Hiển thị cụm từ dự đoán theo thời gian thực kèm nút mũi tên chèn nhanh `↖` (Insert Query) và in đậm phần từ khóa gợi ý.
 - **Lịch Sử Tra Cứu Gần Đây (Recent Searches)**: Lưu 5 địa điểm du khách vừa tìm kiếm vào `localStorage` kèm nút 1 chạm tra lại và nút xóa lịch sử.
@@ -1062,7 +1062,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
   - Cho phép quản trị viên kéo thả trực quan vị trí bất kỳ chặng dừng nào trong tour với biểu tượng `GripVertical`, hiệu ứng mờ nhạt và viền sáng khi thả.
   - Hỗ trợ phím di chuyển nhanh Lên/Xuống (`ArrowUp`/`ArrowDown`) để thao tác thuận tiện trên mọi thiết bị.
 - **Tính Năng Tự Động Đo Khoảng Cách GPS Thực Địa (Automated Haversine & Travel Time)**:
-  - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của 149 địa điểm Tri Tôn trong cơ sở dữ liệu.
+  - Tự động so khớp tên chặng dừng với tọa độ GPS thực tế của địa điểm Tri Tôn trong cơ sở dữ liệu.
   - Sử dụng công thức Haversine kết hợp hệ số uốn lượn đường đèo Bảy Núi ($1.25\times$) để tính toán chính xác quãng đường (km) và thời gian di chuyển (phút) giữa từng chặng dừng.
   - Nút bấm **"⚡ Tự Động Đo GPS & Quãng Đường"** tự động tính tổng quãng đường tour `total_distance_km` và hiển thị chi tiết thẻ kết nối chặng `➔ ~X km (Y phút di chuyển)`.
 ### 🤖 Khắc Phục & Chuẩn Hóa Sơ Đồ Lịch Trình Tự Động Trong Chatbot (/chatbot & ChatbotWidget)
@@ -1210,7 +1210,7 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
     - **P2 (Deduplication)**: Hợp nhất hoàn toàn các POI bị trùng lặp danh tính (Hồ Tà Pạ, Chùa Tà Pạ, Núi Cô Tô, Hồ Soài So, Hồ Soài Chek, Đồi Tức Dụp, Hàng thốt nốt trái tim, Cổng Trời Chùa Koh Kas, Nhà mồ Ba Chúc) thành các bản ghi chuẩn duy nhất.
     - **P3 (Loại Bỏ POI Rác)**: Xóa vĩnh viễn các điểm không phải du lịch (`thanh bình 70k`, `Nhà Nghi Tú Trinh`, `Nha Nhgi 200k`, `Ngã 3 quẹo vào`, `Mầm non lương an trà`, `Trung tâm Y tế huyện Tri Tôn`).
     - **P4 (Chuẩn Hóa Hình Ảnh & Video)**: Gán ảnh độ phân giải cao theo đúng danh mục thực địa, chuẩn hóa link tìm kiếm TikTok động.
-    - **P5 & P7 (Đồng Bộ 3 Định Dạng)**: Đồng bộ 149 POIs chất lượng cao đã xác thực ra `triton_pois_full.json`, `tri_ton_master_cleaned.csv` (utf-8-sig) và `triton_pois_map.geojson`.
+    - **P5 & P7 (Đồng Bộ 3 Định Dạng)**: Đồng bộ Danh Mục Điểm Đến chất lượng cao đã xác thực ra `triton_pois_full.json`, `tri_ton_master_cleaned.csv` (utf-8-sig) và `triton_pois_map.geojson`.
   - **Nâng Cấp Toàn Diện UI/UX/FE Trang Chi Tiết Địa Điểm (`PlaceDetailClient.tsx`)**:
     - **Hero Visual Photo Showcase**: Bổ sung phòng tranh ảnh thực địa tỷ lệ 16:9 / 21:9 chuẩn điện ảnh, dải thumbnail mượt mà, ghi rõ nguồn ảnh và tem dấu "Góc Nhìn Thực Địa".
     - **Hotline & Đặt Chỗ 1-Chạm**: Tích hợp thẻ nhắc nhở và nút gọi hotline đặt bàn trước 30-45 phút cho các quán đặc sản (Gà Đốt Ô Thum, Cháo Bò) và Homestay/Cà phê.

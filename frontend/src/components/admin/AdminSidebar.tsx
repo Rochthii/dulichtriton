@@ -41,9 +41,9 @@ const NAV_GROUPS: NavGroup[] = [
       },
       {
         href: '/admin/places',
-        label: 'Quản Lý 149 Điểm Đến',
+        label: 'Quản Lý Điểm Đến',
         icon: MapPin,
-        badge: '149 POIs',
+        badge: 'Danh Mục Điểm Đến',
       },
       {
         href: '/admin/itineraries',

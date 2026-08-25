@@ -71,7 +71,7 @@ export default function AdminClientPage({ initialPlaces }: AdminClientPageProps)
             </h1>
             
             <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
-              Nhật ký hành động bất biến mã hóa an toàn `{'{WHO, WHAT, WHEN, FROM_WHERE}'}` và quản lý CSDL Supabase 149 địa điểm.
+              Nhật ký hành động bất biến mã hóa an toàn `{'{WHO, WHAT, WHEN, FROM_WHERE}'}` và quản lý CSDL Supabase địa điểm.
             </p>
           </div>
 

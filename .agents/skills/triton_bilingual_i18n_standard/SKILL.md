@@ -30,7 +30,7 @@ frontend/src/lib/i18n/
     ├── vi/                          # 🇻🇳 12 Module Từ Điển Tiếng Việt
     │   ├── common.ts                # Header, Footer, Actions, Badges, Units, Search
     │   ├── home.ts                  # Hero Banner, 4 Cụm Thắng Cảnh, Pain-Point Chips, Sections
-    │   ├── places.ts                # Danh mục 149 POIs, 15 Xã & Thị trấn, Chi tiết địa điểm
+    │   ├── places.ts                # Danh mục Danh Mục Điểm Đến, 15 Xã & Thị trấn, Chi tiết địa điểm
     │   ├── food.ts                  # Đặc sản Bảy Núi, Quy chuẩn ẩm thực, Menu chữ ký
     │   ├── stay.ts                  # Homestay, Khách sạn, Tiện ích, Hướng dẫn đặt phòng
     │   ├── culture.ts               # 37 Chùa Khmer, 6 Đại lễ hội, Quy chuẩn viếng, Di sản, Sampheah

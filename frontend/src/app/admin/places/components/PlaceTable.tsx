@@ -118,7 +118,7 @@ export const PlaceTable: React.FC<PlaceTableProps> = ({
         {loading ? (
           <div className="py-20 text-center">
             <RefreshCw className="w-8 h-8 animate-spin text-slate-400 mx-auto mb-2" />
-            <p className="text-xs font-bold text-slate-500">Đang tải 149 địa điểm thực địa...</p>
+            <p className="text-xs font-bold text-slate-500">Đang tải địa điểm thực địa...</p>
           </div>
         ) : filteredPlaces.length === 0 ? (
           <div className="py-20 text-center text-slate-400 text-xs">

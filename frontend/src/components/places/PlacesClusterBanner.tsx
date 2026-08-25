@@ -57,7 +57,7 @@ export default function PlacesClusterBanner({
         onClick={onClear}
         className="self-start sm:self-center inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 shadow-2xs transition-all cursor-pointer font-display"
       >
-        <span>{isEn ? "✕ Clear cluster filter (View all 149 spots)" : "✕ Xóa lọc cụm (Xem tất cả 149 điểm)"}</span>
+        <span>{isEn ? "✕ Clear cluster filter (View all Verified spots)" : "✕ Xóa lọc cụm (Xem tất cả 149 điểm)"}</span>
       </button>
     </div>
   );

@@ -6,7 +6,7 @@
  * Phân luồng câu hỏi theo 4 Luồng Tối Ưu (Quad-Path Hybrid Architecture):
  * 1. SOS_EMERGENCY: Cứu hộ khẩn cấp (< 30ms)
  * 2. CACHED_HOT: Câu hỏi phổ biến trong RAM (< 50ms)
- * 3. LOCAL_POI_FAST: 80% tra cứu 149 POIs & văn hóa qua Groq LPU (< 250ms)
+ * 3. LOCAL_POI_FAST: 80% tra cứu Danh Mục Điểm Đến & văn hóa qua Groq LPU (< 250ms)
  * 4. REALTIME_GROUNDED_SEARCH: 20% tin tức/thời tiết qua Gemini Google Search
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -87,7 +87,7 @@ Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hã
     }
   }
 
-  // ── LUỒNG 3: TRA CỨU TĨNH 149 POIS, ẨM THỰC, LỊCH TRÌNH (>95%) ─────────
+  // ── LUỒNG 3: TRA CỨU TĨNH Điểm ĐếnS, ẨM THỰC, LỊCH TRÌNH (>95%) ─────────
   // Mọi câu hỏi còn lại (kể cả "hôm nay", "bây giờ", "có mở không"...) → Groq LPU + WeatherCache
   return {
     intent: 'LOCAL_POI_FAST',

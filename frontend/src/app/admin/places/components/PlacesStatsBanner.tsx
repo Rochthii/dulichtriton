@@ -26,10 +26,10 @@ export function PlacesStatsBanner({
         <div>
           <div className="flex items-center gap-2 text-xs font-bold text-[#0E8C7F] uppercase tracking-wider font-display">
             <MapPin className="w-4 h-4 text-[#0E8C7F]" />
-            <span>Master 149 Verified Coordinates</span>
+            <span>Master Verified Coordinates</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-[#26221B] font-display mt-1">
-            Quản Lý 149 Địa Điểm Du Lịch Thực Địa Tri Tôn
+            Quản Lý Địa Điểm Du Lịch Thực Địa Tri Tôn
           </h1>
           <p className="text-xs text-[#6B6355] mt-0.5">
             Cập nhật tọa độ GPS, hình ảnh CDN, câu chuyện văn hóa, giờ mở cửa và tiện ích.

@@ -441,7 +441,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
             </div>
 
             <div class="footer-bar">
-              <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin 149 địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>
+              <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>
               Truy cập trực tuyến: <em>${SITE_URL.replace(/^https?:\/\//, '')}</em>
             </div>
           </div>

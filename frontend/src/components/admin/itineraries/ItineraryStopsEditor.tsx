@@ -147,7 +147,7 @@ export default function ItineraryStopsEditor({
           }}
           className="w-full sm:flex-1 p-2 rounded-xl bg-white border border-[#26221B]/10 text-xs focus:outline-none focus:border-[#0E8C7F]"
         >
-          <option value="">-- Chọn điểm đến từ 149 POIs xác minh --</option>
+          <option value="">-- Chọn điểm đến từ Danh Mục Điểm Đến xác minh --</option>
           {places.map((p) => (
             <option key={p.id} value={p.id}>
               {p.name} ({p.commune || 'Tri Tôn'})

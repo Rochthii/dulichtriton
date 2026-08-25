@@ -5,7 +5,7 @@
  * 
  * Features:
  * 1. Time-Aware Golden Window Recommendation (Khung giờ vàng ẩm thực & danh thắng)
- * 2. Instant In-Memory RAM Entity Matching (149 Verified POIs) < 1ms
+ * 2. Instant In-Memory RAM Entity Matching (Verified POIs) < 1ms
  * 3. Spatial GPS Proximity Distance Matrix (PostGIS Haversine formula)
  * 4. Live Weather Context (Open-Meteo Cache 15m)
  * 5. 6 Major Festivals & Transportation Routing Mastery

@@ -10,11 +10,11 @@ import {
 export default function AdminQuickActions() {
   const actions = [
     {
-      title: 'Quản Lý 149 Điểm Đến',
+      title: 'Quản Lý Điểm Đến',
       desc: 'Thêm mới, sửa tọa độ, upload ảnh CDN, cập nhật câu chuyện sự tích.',
       href: '/admin/places',
       icon: MapPin,
-      badge: '149 POIs',
+      badge: 'Danh Mục Điểm Đến',
       color: 'hover:border-[#0E8C7F]/50',
     },
     {

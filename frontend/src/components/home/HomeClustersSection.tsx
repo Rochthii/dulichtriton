@@ -101,7 +101,7 @@ export default function HomeClustersSection({
           prefetch={true}
           className="text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] flex items-center gap-1 transition-colors font-display"
         >
-          <span>{isEn ? "View all 149 spots" : "Xem tất cả 149 điểm"}</span>
+          <span>{isEn ? "View all Verified spots" : "Xem tất cả 149 điểm"}</span>
           <ChevronRight className="w-4 h-4" />
         </Link>
       </div>

@@ -18,7 +18,7 @@ const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PU
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 /**
- * 1. Master Places Cache (All 149 Verified POIs)
+ * 1. Master Places Cache (All Verified POIs)
  * Tag: 'places'
  */
 export const getCachedAllPlaces = unstable_cache(

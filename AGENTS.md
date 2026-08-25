@@ -11,7 +11,7 @@ Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa | 149 Địa điểm x
 
 ## 🛠️ Kiến Trúc & Tài Liệu Kỹ Thuật (Architecture & Tech Stack):
 - **Tech Stack**: Next.js 16 (React 19) | Supabase PostgreSQL + PostGIS + pgvector | Groq + Gemini + OpenRouter
-- **Master Data**: `data/tri_ton_master_cleaned.csv` (149 bản ghi đã xác minh 100%)
+- **Master Data**: `data/tri_ton_master_cleaned.csv` (các bản ghi đã xác minh 100%)
 - **Changelog**: [`CHANGELOG.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/CHANGELOG.md)
 - **Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_workflow_execution_standard/SKILL.md)
 - **Bilingual i18n Skill**: [`.agents/skills/triton_bilingual_i18n_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_bilingual_i18n_standard/SKILL.md)

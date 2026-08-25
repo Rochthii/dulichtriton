@@ -37,7 +37,7 @@
 ## Capabilities Matrix
 | Skill | Source |
 |---|---|
-| Place lookup | Master DB (149 spots) |
+| Place lookup | Master DB (Verified spots) |
 | Route planning | GIS coordinates + Google Maps |
 | Video discovery | TikTokVideoService keyword matching |
 | Festival info | Master DB events_and_culture category |

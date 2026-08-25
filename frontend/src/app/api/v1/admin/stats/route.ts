@@ -74,8 +74,8 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       stats: {
-        totalPlaces: placesRes.count || places.length || 149,
-        activePlaces: places.length || 149,
+        totalPlaces: placesRes.count || places.length || 0,
+        activePlaces: places.length || 0,
         nightSpotsCount: nightSpotsCount || 10,
         hotSpotsCount: hotSpotsCount || 15,
         totalTours: 35,

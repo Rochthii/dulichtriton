@@ -18,7 +18,7 @@ export const SITE_CONFIG = {
   name: 'Du Lịch Tri Tôn AI — Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi',
   shortName: 'Du Lịch Tri Tôn',
   tagline: 'Khám Phá Kỳ Quan Vùng Bảy Núi An Giang',
-  description: 'Cẩm nang du lịch Tri Tôn, An Giang: 149 địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.',
+  description: 'Cẩm nang du lịch Tri Tôn, An Giang: địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.',
   url: SITE_URL,
   ogImage: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif',
   icon: `${SITE_URL}/icon.png`,

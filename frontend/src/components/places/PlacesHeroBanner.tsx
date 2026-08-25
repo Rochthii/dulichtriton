@@ -19,7 +19,7 @@ export default function PlacesHeroBanner() {
           {dict.places?.header?.title || (isEn ? "Explore Tri Ton Scenic Wonders & Relics" : "Khám Phá Danh Thắng & Di Tích Tri Tôn")}
         </h1>
         <p className="text-xs md:text-sm text-white/85 leading-relaxed font-body">
-          {dict.places?.header?.subtitle || (isEn ? "Comprehensive guide to 149 destinations: Mountain lakes, ancient Khmer pagodas, natural landmarks, culinary specialties, and scenic check-in coordinates." : "Tra cứu đầy đủ 149 địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.")}
+          {dict.places?.header?.subtitle || (isEn ? "Comprehensive guide to 149 destinations: Mountain lakes, ancient Khmer pagodas, natural landmarks, culinary specialties, and scenic check-in coordinates." : "Tra cứu đầy đủ địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.")}
         </p>
       </div>
     </section>

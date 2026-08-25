@@ -25,7 +25,7 @@ export default function AdminMetricCards({ stats }: AdminMetricCardsProps) {
   const cards = [
     {
       label: 'Tổng Địa Điểm Thực Địa',
-      value: stats ? `${stats.activePlaces || stats.totalPlaces || 149} POIs` : '149 POIs',
+      value: stats ? `${stats.activePlaces || stats.totalPlaces || 0} POIs` : 'Đang tải...',
       sub: `${stats?.hotSpotsCount || 24} Điểm Hot • ${stats?.nightSpotsCount || 18} Điểm đêm`,
       icon: MapPin,
       color: 'bg-emerald-50 text-[#0E8C7F] border-emerald-200/60',
