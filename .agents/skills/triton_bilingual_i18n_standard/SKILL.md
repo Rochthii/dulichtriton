@@ -3,7 +3,7 @@ name: triton-bilingual-i18n-standard
 description: Production standards, architectural protocols, modular dictionary patterns, and developer workflows for bilingual (Vietnamese & English) localized tourism systems with zero hardcoded text, type-safe Next.js dictionaries, and bilingual AI RAG engines.
 ---
 
-# DU LỊCH TRI TÔN — BILINGUAL i18n & MODULAR DICTIONARY STANDARD (v1.0)
+# DU LỊCH TRI TÔN — BILINGUAL i18n & MODULAR DICTIONARY STANDARD (v2.0)
 
 ## 📌 Tổng Quan (Overview)
 Kỹ năng quy chuẩn toàn diện về kiến trúc đa ngôn ngữ (Bilingual English - Vietnamese), quản lý từ điển module hóa theo trang (Modular Dictionaries), làm sạch 100% hardcode và cơ chế phản hồi AI RAG đa ngữ cho Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa.
@@ -30,10 +30,10 @@ frontend/src/lib/i18n/
     ├── vi/                          # 🇻🇳 12 Module Từ Điển Tiếng Việt
     │   ├── common.ts                # Header, Footer, Actions, Badges, Units, Search
     │   ├── home.ts                  # Hero Banner, 4 Cụm Thắng Cảnh, Pain-Point Chips, Sections
-    │   ├── places.ts                # Danh mục Danh Mục Điểm Đến, 15 Xã & Thị trấn, Chi tiết địa điểm
+    │   ├── places.ts                # Danh mục Điểm Đến Thực Địa, 15 Xã & Thị trấn, Chi tiết địa điểm
     │   ├── food.ts                  # Đặc sản Bảy Núi, Quy chuẩn ẩm thực, Menu chữ ký
     │   ├── stay.ts                  # Homestay, Khách sạn, Tiện ích, Hướng dẫn đặt phòng
-    │   ├── culture.ts               # 37 Chùa Khmer, 6 Đại lễ hội, Quy chuẩn viếng, Di sản, Sampheah
+    │   ├── culture.ts               # Chùa Khmer, 6 Đại lễ hội, Quy chuẩn viếng, Di sản, Sampheah
     │   ├── itinerary.ts             # 27 Tour khép vòng, Bộ lọc thời lượng, Xuất lịch trình
     │   ├── map.ts                   # Lớp bản đồ GIS, Định vị GPS thực địa, Chú giải
     │   ├── guide.ts                 # Tuyến xe khách, Thuê xe máy, Cảnh báo an toàn đèo dốc
@@ -63,7 +63,7 @@ frontend/src/lib/i18n/
   ```
 
 ### 2. Chuẩn Hóa Dữ Liệu POIs Song Ngữ (Database & Schema)
-Mọi bản ghi địa điểm (138+ POIs) bắt buộc phải có đầy đủ trường tiếng Anh song song:
+Mọi bản ghi địa điểm trong CSDL bắt buộc phải có đầy đủ trường tiếng Anh song song:
 - `name` $\rightarrow$ `name_en`
 - `category` $\rightarrow$ `category_en`
 - `description` $\rightarrow$ `description_en`
@@ -98,11 +98,3 @@ Sau mọi thao tác chỉnh sửa từ điển hoặc dữ liệu, **bắt buộ
 ```powershell
 python tests/test_modular_i18n_dictionaries.py ; python tests/test_bilingual_data_integrity.py
 ```
-- `test_modular_i18n_dictionaries.py`: Kiểm tra sự tồn tại và khớp key 1-1 giữa 12 tệp `vi/` và `en/`.
-- `test_bilingual_data_integrity.py`: Kiểm tra 100% POIs trong `triton_pois_full.json` có trường tiếng Anh.
-
----
-
-## 💻 Quy Chuẩn Shell Windows PowerShell:
-- **Tuyệt đối KHÔNG dùng `&&`**: PowerShell sẽ báo lỗi cú pháp.
-- **BẮT BUỘC chỉ dùng dấu chấm phẩy `;`**: Khi nối chuỗi lệnh: `git add . ; git commit -m "..." ; git push origin ...`.
