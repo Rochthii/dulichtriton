@@ -66,12 +66,19 @@ export default function MapClientPage({ places }: MapClientPageProps) {
     'all',
     'Thị trấn Tri Tôn',
     'Thị trấn Ba Chúc',
-    'Xã Núi Tô',
     'Xã Châu Lăng',
-    'Xã An Tức',
-    'Xã Ô Lâm',
     'Xã Lương Phi',
-    'Xã Cô Tô'
+    'Xã Lê Trì',
+    'Xã Lạc Quới',
+    'Xã Vĩnh Gia',
+    'Xã Vĩnh Phước',
+    'Xã Ô Lâm',
+    'Xã An Tức',
+    'Xã Cô Tô',
+    'Xã Tân Tuyến',
+    'Xã Tà Đảnh',
+    'Xã Núi Tô',
+    'Xã Lương An Trà'
   ];
 
   const categories = [

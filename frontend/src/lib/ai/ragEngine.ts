@@ -353,14 +353,34 @@ export async function buildUnifiedRagContext(
     poisList.slice(0, 4).forEach((p) => matchedMap.set(p.id, p));
   }
 
-  let selectedPlaces = Array.from(matchedMap.values()).slice(0, 6);
+  // 5. Intelligent Landmark Origin & Spatial Proximity Matrix
+  let selectedPlaces: any[] = Array.from(matchedMap.values()).slice(0, 6);
+  let originLandmarkName = '';
+  let refLat = userLat;
+  let refLng = userLng;
 
-  // 5. Spatial Proximity Ranking (if user coordinates provided)
-  if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
+  if (!refLat || !refLng) {
+    // Try to extract origin landmark from user query (e.g., "đang ở Chùa Tà Pạ", "từ Hồ Ô Thum", "gần Đồi Tức Dụp")
+    const originMatch = lower.match(/(?:đang ở|từ|quanh|gần|tại)\s+([a-zA-ZÀ-ỹ0-9\s]+?)(?:,|\?|\.|\s+có|\s+quanh|\s+ăn|\s+quán|\s+chơi|\s+đi|\s+thì|$)/i);
+    if (originMatch && originMatch[1]) {
+      const qLandmark = originMatch[1].trim().toLowerCase();
+      const foundOrigin = poisList.find((p) => {
+        const pName = (p.name || '').toLowerCase();
+        return pName.includes(qLandmark) || qLandmark.includes(pName);
+      });
+      if (foundOrigin && foundOrigin.latitude && foundOrigin.longitude) {
+        refLat = Number(foundOrigin.latitude);
+        refLng = Number(foundOrigin.longitude);
+        originLandmarkName = foundOrigin.name;
+      }
+    }
+  }
+
+  if (refLat && refLng && !isNaN(refLat) && !isNaN(refLng)) {
     selectedPlaces = selectedPlaces.map((p) => {
       const lat = Number(p.latitude) || 10.4128;
       const lng = Number(p.longitude) || 105.0068;
-      const dist = calculateDistanceKm(userLat, userLng, lat, lng);
+      const dist = calculateDistanceKm(refLat, refLng, lat, lng);
       return { ...p, distance_km: dist };
     }).sort((a, b) => (a.distance_km || 0) - (b.distance_km || 0));
   }
@@ -398,7 +418,9 @@ export async function buildUnifiedRagContext(
 
   // 8. Build Text Context for LLM
   const ragLines = formattedPlaces.map((p) => {
-    const distText = p.distance_km !== undefined ? ` (Cách bạn ~${p.distance_km}km)` : '';
+    const distText = p.distance_km !== undefined 
+      ? (originLandmarkName ? ` (Cách ${originLandmarkName} ~${p.distance_km}km)` : ` (Cách bạn ~${p.distance_km}km)`) 
+      : '';
     const tips = p.field_tips ? `\n  - Mẹo thực địa: ${p.field_tips}` : '';
     const desc = p.description ? `\n  - Chi tiết: ${p.description.slice(0, 250)}` : '';
     const enAlias = p.name_en && p.name_en !== p.name ? ` | EN: ${p.name_en}` : '';
