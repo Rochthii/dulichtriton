@@ -16,6 +16,7 @@
 ## 🛠️ Danh Mục Kỹ Năng Hệ Thống (Standard Skills):
 - **Workflow Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_workflow_execution_standard/SKILL.md)
 - **Bilingual i18n Standard Skill**: [`.agents/skills/triton_bilingual_i18n_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_bilingual_i18n_standard/SKILL.md)
+- **File Management & Maintenance Skill**: [`.agents/skills/triton_codebase_file_management_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_codebase_file_management_standard/SKILL.md)
 - **Zalo Integration Skill**: [`.agents/skills/triton_zalo_ecosystem_integration/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_zalo_ecosystem_integration/SKILL.md)
 
 ## ⚡ Tiêu Chuẩn Đồng Bộ Database (Smart Delta Sync Protocol):
