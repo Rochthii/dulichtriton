@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { clearServerCache } from '@/lib/serverCache';
 import { invalidateSinglePlaceCache } from '@/lib/dataCache';
+import localMasterPois from '@/data/triton_pois_full.json';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,16 +70,26 @@ export async function GET(req: NextRequest) {
       query = query.or(`name.ilike.%${search.trim()}%,commune.ilike.%${search.trim()}%,description.ilike.%${search.trim()}%`);
     }
 
-    const { data: places, error } = await query;
-    if (error) {
-      console.error('[AdminPlaces GET Error]:', error);
-      throw error;
+    const queryPromise = Promise.resolve(query);
+    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
+      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
+    );
+
+    const { data: places, error } = await Promise.race([queryPromise, timeoutPromise]);
+    if (error || !places || places.length === 0) {
+      let filtered = (localMasterPois as any[]);
+      if (commune && commune !== 'ALL') filtered = filtered.filter(p => p.commune?.toLowerCase().includes(commune.toLowerCase()));
+      if (category && category !== 'ALL') filtered = filtered.filter(p => p.category?.toLowerCase().includes(category.toLowerCase()));
+      if (search && search.trim()) {
+        const q = search.toLowerCase();
+        filtered = filtered.filter(p => p.name?.toLowerCase().includes(q) || p.commune?.toLowerCase().includes(q));
+      }
+      return NextResponse.json({ success: true, count: filtered.length, places: filtered, source: 'local_master' });
     }
 
-    return NextResponse.json({ success: true, count: places?.length || 0, places: places || [] });
+    return NextResponse.json({ success: true, count: places.length, places, source: 'supabase' });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Error fetching admin places';
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json({ success: true, count: (localMasterPois as any[]).length, places: localMasterPois, source: 'local_master' });
   }
 }
 

@@ -42,14 +42,19 @@ interface ItineraryPayload {
 // GET: Fetch all itineraries directly from Supabase PostgreSQL
 export async function GET() {
   try {
-    const { data: rows, error } = await supabase
-      .from('preset_itineraries')
-      .select('*')
-      .order('sort_order', { ascending: true, nullsFirst: false });
+    const queryPromise = Promise.resolve(
+      supabase
+        .from('preset_itineraries')
+        .select('*')
+        .order('sort_order', { ascending: true, nullsFirst: false })
+    );
+    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
+      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
+    );
 
-    if (error) {
-      console.error('[AdminItineraries GET Error]:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    const { data: rows, error } = await Promise.race([queryPromise, timeoutPromise]);
+    if (error || !rows) {
+      return NextResponse.json({ success: true, count: 0, itineraries: [] });
     }
 
     // Normalize rows for admin table

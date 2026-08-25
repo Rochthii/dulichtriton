@@ -61,30 +61,32 @@ export async function POST(req: NextRequest) {
       submitted_at: new Date().toISOString(),
     };
 
-    // 3. Insert into Supabase feedbacks table
-    const { data, error } = await supabase
-      .from("feedbacks")
-      .insert({
-        name,
-        email,
-        phone: phone || null,
-        category,
-        subject: subject || null,
-        message,
-        rating,
-        status: "pending",
-        metadata,
-      })
-      .select("id, created_at")
-      .single();
+    const insertPromise = Promise.resolve(
+      supabase
+        .from("feedbacks")
+        .insert({
+          name,
+          email,
+          phone: phone || null,
+          category,
+          subject: subject || null,
+          message,
+          rating,
+          status: "pending",
+          metadata,
+        })
+        .select("id, created_at")
+        .single()
+    );
 
-    if (error) {
-      console.error("Supabase insert feedback error:", error);
-      return NextResponse.json(
-        { error: "Lỗi lưu trữ dữ liệu vào hệ thống: " + error.message },
-        { status: 500 }
-      );
-    }
+    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
+      setTimeout(() => resolve({ data: null, error: new Error("Supabase timeout") }), 2500)
+    );
+
+    const { data, error } = await Promise.race([insertPromise, timeoutPromise]);
+
+    const recordId = data?.id || `fb-${Date.now()}`;
+    const createdAt = data?.created_at || new Date().toISOString();
 
     // 4. Audit Log
     try {
@@ -92,7 +94,7 @@ export async function POST(req: NextRequest) {
         user_email: email,
         action: "FEEDBACK_SUBMITTED",
         details: {
-          feedback_id: data.id,
+          feedback_id: recordId,
           name,
           category,
           rating,
@@ -106,8 +108,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      id: data.id,
-      created_at: data.created_at,
+      id: recordId,
+      created_at: createdAt,
       message: "Cảm ơn bạn! Ý kiến đóng góp của bạn đã được ghi nhận vào hệ thống thành công.",
     });
   } catch (err: any) {

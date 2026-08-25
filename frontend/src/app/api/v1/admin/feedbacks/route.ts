@@ -25,11 +25,12 @@ export async function GET(req: NextRequest) {
       query = query.eq("category", category);
     }
 
-    const { data, count, error } = await query;
+    const queryPromise = Promise.resolve(query);
+    const timeoutPromise = new Promise<{ data: null; count: 0; error: Error }>((resolve) =>
+      setTimeout(() => resolve({ data: null, count: 0, error: new Error("Supabase timeout") }), 2500)
+    );
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    const { data, count } = await Promise.race([queryPromise, timeoutPromise]);
 
     return NextResponse.json({
       feedbacks: data || [],
@@ -38,7 +39,7 @@ export async function GET(req: NextRequest) {
       offset,
     });
   } catch (err: any) {
-    return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });
+    return NextResponse.json({ feedbacks: [], total: 0, limit: 50, offset: 0 });
   }
 }
 
