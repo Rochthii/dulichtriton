@@ -603,14 +603,14 @@ export default function ChatbotWidget() {
           <button
             type="button"
             className="p-3.5 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] text-[#26221B] shadow-[0_6px_24px_rgba(240,163,47,0.45)] hover:shadow-[0_8px_30px_rgba(240,163,47,0.6)] border-2 border-white/80 active:scale-95 transition-transform duration-200 flex items-center gap-2 group font-display"
-            aria-label="Mở Trợ lý AI Du Lịch Tri Tôn"
+            aria-label={isEn ? "Open Tri Ton AI Travel Assistant" : "Mở Trợ lý AI Du Lịch Tri Tôn"}
           >
             <div className="relative">
               <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#26221B]" />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#0E8C7F] rounded-full border-2 border-white animate-ping" />
             </div>
             <span className="hidden sm:inline-block font-black text-xs text-[#26221B] pr-0.5">
-              Trợ Lý AI
+              {isEn ? 'AI Assistant' : 'Trợ Lý AI'}
             </span>
             {unreadCount > 0 && (
               <span className="absolute -top-1.5 -left-1.5 bg-[#F26B3A] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">

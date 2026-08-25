@@ -84,5 +84,71 @@ export const homeEn = {
     food: 'Roasted Chicken & Specialties',
     stay: 'Mountain View Homestays',
     checkin: 'Photo Spots',
-  }
+  },
+  weather: {
+    todayTip: "Today's Tip:",
+    humidity: 'Humidity',
+    wind: 'Wind',
+    location: 'Tri Ton, An Giang',
+    loading: 'Updating Tri Ton field weather...',
+    sunshineCond: 'Pleasant Sunshine',
+    sunshineAdv: 'Ideal weather for cloud hunting on Mount Co To and visiting the emerald Ta Pa Lake.',
+    rainCond: 'Seven Mountains Showers',
+    rainAdv: 'Perfect for visiting Xvayton Pagoda, watching rain at a cozy café, or savoring hot Tri Ton beef hotpot.',
+    cloudyCond: 'Cool & Overcast',
+    cloudyAdv: 'Breezy climate, great for cycling along Ta Pa fields and checking in at Koh Kas Heaven Gate.',
+    hotCond: 'Sunny Summer Noon',
+    hotAdv: 'Best to explore early morning; at noon rest at shady thatched huts by O Thum Lake for Clay-Pot Roasted Chicken.',
+    fallbackCond: 'Sunny Seven Mountains',
+    fallbackAdv: 'Favorable climate to explore scenic routes and Tri Ton authentic cuisine.',
+  },
+  smartTripMini: {
+    title: 'Find Your Perfect Itinerary',
+    durations: {
+      halfDay: 'Half Day',
+      oneDay: '1 Day',
+      twoDays: '2D1N',
+      threeDays: '3D2N',
+    },
+    budgets: {
+      budget: 'Budget',
+      comfort: 'Comfortable',
+      luxury: 'Relaxing',
+    },
+    tourSuggestPrefix: 'Suggested Tour • ~',
+    perPerson: '/person',
+  },
+  timeSlotsSection: {
+    badge: 'CUSTOM EXPERIENCE RECOMMENDATIONS',
+    title: 'Ideal Destinations by Time Slot & Audience',
+    audiences: {
+      all: 'All',
+      youth: '📸 Photo Check-in',
+      family: '👨‍👩‍👧‍👦 Family',
+      trekking: '🥾 Trekking & Clouds',
+      spiritual: '🙏 Spiritual',
+    },
+    slots: {
+      morning: {
+        mobileLabel: 'Morning',
+        desktopLabel: 'Early Morning (06:00 - 08:30)',
+        desc: 'Cloud Hunting & Ta Pa Lake',
+      },
+      noon: {
+        mobileLabel: 'Noon',
+        desktopLabel: 'Noon (11:00 - 13:30)',
+        desc: 'O Thum Roasted Chicken',
+      },
+      afternoon: {
+        mobileLabel: 'Afternoon',
+        desktopLabel: 'Late Afternoon (15:30 - 17:30)',
+        desc: 'Koh Kas Heaven Gate',
+      },
+      evening: {
+        mobileLabel: 'Evening',
+        desktopLabel: 'Evening (18:00 - 21:00)',
+        desc: 'Night Market & Town',
+      },
+    },
+  },
 };

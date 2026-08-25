@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CloudSun, Sun, CloudRain, Wind, Droplets, Compass, Sparkles, MapPin } from 'lucide-react';
+import { CloudSun, Sun, CloudRain, Wind, Droplets, Sparkles, MapPin } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface WeatherData {
   temperature: number;
@@ -9,11 +10,14 @@ interface WeatherData {
   weatherCode: number;
   windSpeed: number;
   isRainy: boolean;
-  conditionText: string;
-  advice: string;
+  conditionKey: 'sunshine' | 'rain' | 'cloudy' | 'hot' | 'fallback';
 }
 
 export default function TriTonWeatherWidget() {
+  const { language, dict } = useLanguage();
+  const wt = dict.home.weather;
+  const isEn = language === 'en';
+
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -34,18 +38,14 @@ export default function TriTonWeatherWidget() {
         const wind = Math.round(cur.wind_speed_10m || 8);
         const rain = (cur.precipitation || 0) > 0 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(code);
 
-        let cond = 'Nắng ấm trong lành';
-        let adv = 'Thời tiết rất lý tưởng để săn mây Đỉnh Cô Tô và check-in Hồ Tà Pạ ngọc bích.';
+        let condKey: WeatherData['conditionKey'] = 'sunshine';
 
         if (rain) {
-          cond = 'Có mưa rào Bảy Núi';
-          adv = 'Nên ghé Chùa Xvayton chiêm bái, quán cafe ngắm mưa hoặc ăn lẩu bò Tri Tôn nóng hổi.';
+          condKey = 'rain';
         } else if (code >= 1 && code <= 3) {
-          cond = 'Trời râm mát nhiều mây';
-          adv = 'Khí hậu mát mẻ, thích hợp đạp xe quanh cánh đồng Tà Pạ và ngắm Cổng trời Koh Kas.';
+          condKey = 'cloudy';
         } else if (temp >= 33) {
-          cond = 'Nắng gắt trưa hè';
-          adv = 'Nên tham quan buổi sáng sớm, trưa ghé các chòi lá râm mát bờ Hồ Ô Thum thưởng thức Gà Đốt.';
+          condKey = 'hot';
         }
 
         setWeather({
@@ -54,8 +54,7 @@ export default function TriTonWeatherWidget() {
           weatherCode: code,
           windSpeed: wind,
           isRainy: rain,
-          conditionText: cond,
-          advice: adv,
+          conditionKey: condKey,
         });
       } catch (err) {
         // Fallback default pleasant Tri Tôn climate
@@ -65,8 +64,7 @@ export default function TriTonWeatherWidget() {
           weatherCode: 1,
           windSpeed: 9,
           isRainy: false,
-          conditionText: 'Nắng ấm Bảy Núi',
-          advice: 'Khí hậu thuận lợi để trải nghiệm các cung đường danh thắng và ẩm thực Tri Tôn.',
+          conditionKey: 'fallback',
         });
       } finally {
         setLoading(false);
@@ -81,13 +79,35 @@ export default function TriTonWeatherWidget() {
       <div className="w-full bg-[#FFFDF7] rounded-[22px] p-4 border border-[#26221B]/8 shadow-xs flex items-center justify-between text-xs text-[#6B6355] animate-pulse font-body">
         <div className="flex items-center gap-2">
           <CloudSun className="w-5 h-5 text-[#F0A32F]" />
-          <span>Đang cập nhật thời tiết thực địa Tri Tôn...</span>
+          <span>{wt?.loading || 'Đang cập nhật thời tiết thực địa Tri Tôn...'}</span>
         </div>
       </div>
     );
   }
 
   const WeatherIcon = weather.isRainy ? CloudRain : weather.weatherCode === 0 ? Sun : CloudSun;
+
+  const conditionText =
+    weather.conditionKey === 'rain'
+      ? wt?.rainCond || 'Có mưa rào Bảy Núi'
+      : weather.conditionKey === 'cloudy'
+      ? wt?.cloudyCond || 'Trời râm mát nhiều mây'
+      : weather.conditionKey === 'hot'
+      ? wt?.hotCond || 'Nắng gắt trưa hè'
+      : weather.conditionKey === 'fallback'
+      ? wt?.fallbackCond || 'Nắng ấm Bảy Núi'
+      : wt?.sunshineCond || 'Nắng ấm trong lành';
+
+  const adviceText =
+    weather.conditionKey === 'rain'
+      ? wt?.rainAdv || 'Nên ghé Chùa Xvayton chiêm bái, quán cafe ngắm mưa hoặc ăn lẩu bò Tri Tôn nóng hổi.'
+      : weather.conditionKey === 'cloudy'
+      ? wt?.cloudyAdv || 'Khí hậu mát mẻ, thích hợp đạp xe quanh cánh đồng Tà Pạ và ngắm Cổng trời Koh Kas.'
+      : weather.conditionKey === 'hot'
+      ? wt?.hotAdv || 'Nên tham quan buổi sáng sớm, trưa ghé các chòi lá râm mát bờ Hồ Ô Thum thưởng thức Gà Đốt.'
+      : weather.conditionKey === 'fallback'
+      ? wt?.fallbackAdv || 'Khí hậu thuận lợi để trải nghiệm các cung đường danh thắng và ẩm thực Tri Tôn.'
+      : wt?.sunshineAdv || 'Thời tiết rất lý tưởng để săn mây Đỉnh Cô Tô và check-in Hồ Tà Pạ ngọc bích.';
 
   return (
     <div className="w-full bg-[#FFFDF7] rounded-[24px] p-4 sm:p-5 border border-[#26221B]/8 shadow-[0_2px_10px_rgba(38,34,27,0.08)] flex flex-col md:flex-row md:items-center justify-between gap-4 font-body">
@@ -100,21 +120,21 @@ export default function TriTonWeatherWidget() {
           <div className="flex items-center gap-1.5 font-display">
             <span className="font-extrabold text-2xl text-[#26221B]">{weather.temperature}°C</span>
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#FAF3E7] text-[#0E8C7F] border border-[#0E8C7F]/20">
-              {weather.conditionText}
+              {conditionText}
             </span>
           </div>
           <div className="flex items-center gap-3 mt-1 text-[11px] text-[#6B6355]">
             <span className="flex items-center gap-1">
               <Droplets className="w-3 h-3 text-[#0E8C7F]" />
-              <span>Ẩm: {weather.humidity}%</span>
+              <span>{wt?.humidity || 'Ẩm'}: {weather.humidity}%</span>
             </span>
             <span className="flex items-center gap-1">
               <Wind className="w-3 h-3 text-[#6B6355]" />
-              <span>Gió: {weather.windSpeed} km/h</span>
+              <span>{wt?.wind || 'Gió'}: {weather.windSpeed} km/h</span>
             </span>
             <span className="flex items-center gap-1 text-[#D9822B] font-medium hidden sm:inline-flex">
               <MapPin className="w-3 h-3 text-[#F0A32F]" />
-              <span>Tri Tôn, An Giang</span>
+              <span>{wt?.location || 'Tri Tôn, An Giang'}</span>
             </span>
           </div>
         </div>
@@ -124,8 +144,8 @@ export default function TriTonWeatherWidget() {
       <div className="flex-1 bg-[#FAF3E7] rounded-[18px] p-3 sm:p-3.5 border border-[#26221B]/6 flex items-start gap-2.5">
         <Sparkles className="w-4 h-4 text-[#F0A32F] shrink-0 mt-0.5" />
         <p className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
-          <strong className="font-display font-bold text-[#0E8C7F] mr-1">Gợi ý hôm nay:</strong>
-          {weather.advice}
+          <strong className="font-display font-bold text-[#0E8C7F] mr-1">{wt?.todayTip || 'Gợi ý hôm nay:'}</strong>
+          {adviceText}
         </p>
       </div>
     </div>

@@ -235,13 +235,15 @@ export default function HomePage() {
   const [allMasterPlaces, setAllMasterPlaces] = useState<any[]>(() => localMasterPois as any[]);
   const [hotPlaces, setHotPlaces] = useState<PlaceItem[]>(() => getInitialHotPlaces());
   const [liveFoods, setLiveFoods] = useState<FoodItem[]>(() => getInitialFoods());
-  const [liveClusters, setLiveClusters] = useState<ClusterItem[]>(() => {
-    return CLUSTER_DEFS.map((def) => {
+  const liveClusters = useMemo(() => {
+    const list = dict.home?.clustersList || CLUSTER_DEFS;
+    return list.map((def: any) => {
+      const origDef = CLUSTER_DEFS.find((d) => d.id === def.id) || def;
       const matched = (localMasterPois as any[]).filter((p: any) => {
         const com = (p.commune || "").toLowerCase();
         const name = (p.name || "").toLowerCase();
-        const matchCom = def.communeFilters.some((f) => com.includes(f.toLowerCase()));
-        const matchKey = def.nameKeywords.some((k) => name.includes(k.toLowerCase()));
+        const matchCom = origDef.communeFilters?.some((f: string) => com.includes(f.toLowerCase()));
+        const matchKey = origDef.nameKeywords?.some((k: string) => name.includes(k.toLowerCase()));
         return matchCom || matchKey;
       });
       return {
@@ -250,12 +252,12 @@ export default function HomePage() {
         commune: def.commune,
         badge: def.badge,
         desc: def.desc,
-        img: def.fallbackImg,
+        img: def.fallbackImg || origDef.fallbackImg,
         link: def.link,
         placeCount: matched.length > 0 ? matched.length : 12,
       };
     });
-  });
+  }, [dict.home]);
   const [topPresets, setTopPresets] = useState<ItineraryCardItem[]>(() => getInitialPresets());
   const [loading, setLoading] = useState(false);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
@@ -688,21 +690,21 @@ export default function HomePage() {
             <div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#0E8C7F] uppercase tracking-wider mb-1 font-display">
                 <Users className="w-4 h-4" />
-                <span>Gợi Ý Trải Nghiệm Tùy Chỉnh</span>
+                <span>{dict.home.timeSlotsSection?.badge || (isEn ? "Custom Experience Recommendations" : "Gợi Ý Trải Nghiệm Tùy Chỉnh")}</span>
               </div>
               <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#26221B] tracking-tight">
-                Điểm Đến Lý Tưởng Theo Khung Giờ & Đối Tượng
+                {dict.home.timeSlotsSection?.title || (isEn ? "Ideal Destinations by Time Slot & Audience" : "Điểm Đến Lý Tưởng Theo Khung Giờ & Đối Tượng")}
               </h2>
             </div>
 
             {/* Persona Chips */}
             <div className="flex flex-wrap items-center gap-1.5 font-display">
               {[
-                { key: "all", label: "Tất Cả" },
-                { key: "youth", label: "📸 Sống Ảo" },
-                { key: "family", label: "👨‍👩‍👧‍👦 Gia Đình" },
-                { key: "trekking", label: "🥾 Săn Mây" },
-                { key: "spiritual", label: "🙏 Tâm Linh" },
+                { key: "all", label: dict.home.timeSlotsSection?.audiences?.all || (isEn ? "All" : "Tất Cả") },
+                { key: "youth", label: dict.home.timeSlotsSection?.audiences?.youth || (isEn ? "📸 Photo Check-in" : "📸 Sống Ảo") },
+                { key: "family", label: dict.home.timeSlotsSection?.audiences?.family || (isEn ? "👨‍👩‍👧‍👦 Family" : "👨‍👩‍👧‍👦 Gia Đình") },
+                { key: "trekking", label: dict.home.timeSlotsSection?.audiences?.trekking || (isEn ? "🥾 Trekking & Clouds" : "🥾 Săn Mây") },
+                { key: "spiritual", label: dict.home.timeSlotsSection?.audiences?.spiritual || (isEn ? "🙏 Spiritual" : "🙏 Tâm Linh") },
               ].map((aud) => (
                 <button
                   key={aud.key}
@@ -722,10 +724,34 @@ export default function HomePage() {
           {/* Time Slots Filter Tabs - Compact & Sleek */}
           <div className="grid grid-cols-4 gap-1 sm:gap-2 bg-[#FFFDF7] p-1 sm:p-1.5 rounded-2xl sm:rounded-[22px] border border-[#26221B]/8 shadow-xs font-display">
             {[
-              { key: "morning", mobileLabel: "Sáng sớm", desktopLabel: "Sáng sớm (06:00 - 08:30)", icon: Sunrise, desc: "Săn mây & Hồ Tà Pạ" },
-              { key: "noon", mobileLabel: "Buổi trưa", desktopLabel: "Buổi trưa (11:00 - 13:30)", icon: Sun, desc: "Gà Đốt Ô Thum" },
-              { key: "afternoon", mobileLabel: "Chiều tà", desktopLabel: "Chiều tà (15:30 - 17:30)", icon: Sunset, desc: "Cổng trời Koh Kas" },
-              { key: "evening", mobileLabel: "Buổi tối", desktopLabel: "Buổi tối (18:00 - 21:00)", icon: Moon, desc: "Chợ đêm & Phố" },
+              {
+                key: "morning",
+                mobileLabel: dict.home.timeSlotsSection?.slots?.morning?.mobileLabel || (isEn ? "Morning" : "Sáng sớm"),
+                desktopLabel: dict.home.timeSlotsSection?.slots?.morning?.desktopLabel || (isEn ? "Early Morning (06:00 - 08:30)" : "Sáng sớm (06:00 - 08:30)"),
+                icon: Sunrise,
+                desc: dict.home.timeSlotsSection?.slots?.morning?.desc || (isEn ? "Cloud Hunting & Ta Pa Lake" : "Săn mây & Hồ Tà Pạ"),
+              },
+              {
+                key: "noon",
+                mobileLabel: dict.home.timeSlotsSection?.slots?.noon?.mobileLabel || (isEn ? "Noon" : "Buổi trưa"),
+                desktopLabel: dict.home.timeSlotsSection?.slots?.noon?.desktopLabel || (isEn ? "Noon (11:00 - 13:30)" : "Buổi trưa (11:00 - 13:30)"),
+                icon: Sun,
+                desc: dict.home.timeSlotsSection?.slots?.noon?.desc || (isEn ? "O Thum Roasted Chicken" : "Gà Đốt Ô Thum"),
+              },
+              {
+                key: "afternoon",
+                mobileLabel: dict.home.timeSlotsSection?.slots?.afternoon?.mobileLabel || (isEn ? "Afternoon" : "Chiều tà"),
+                desktopLabel: dict.home.timeSlotsSection?.slots?.afternoon?.desktopLabel || (isEn ? "Late Afternoon (15:30 - 17:30)" : "Chiều tà (15:30 - 17:30)"),
+                icon: Sunset,
+                desc: dict.home.timeSlotsSection?.slots?.afternoon?.desc || (isEn ? "Koh Kas Heaven Gate" : "Cổng trời Koh Kas"),
+              },
+              {
+                key: "evening",
+                mobileLabel: dict.home.timeSlotsSection?.slots?.evening?.mobileLabel || (isEn ? "Evening" : "Buổi tối"),
+                desktopLabel: dict.home.timeSlotsSection?.slots?.evening?.desktopLabel || (isEn ? "Evening (18:00 - 21:00)" : "Buổi tối (18:00 - 21:00)"),
+                icon: Moon,
+                desc: dict.home.timeSlotsSection?.slots?.evening?.desc || (isEn ? "Night Market & Town" : "Chợ đêm & Phố"),
+              },
             ].map((slot) => {
               const Icon = slot.icon;
               const isActive = activeTimeSlot === slot.key;
@@ -839,10 +865,10 @@ export default function HomePage() {
             <div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#F0A32F] uppercase tracking-wider mb-1 font-display">
                 <Mountain className="w-4 h-4" />
-                <span>Quy Hoạch Địa Lý Du Lịch</span>
+                <span>{isEn ? "Geographic Tourism Clusters" : "Quy Hoạch Địa Lý Du Lịch"}</span>
               </div>
               <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#26221B] tracking-tight">
-                4 Cụm Thắng Cảnh Trọng Điểm Bảy Núi
+                {isEn ? "4 Key Scenic Clusters of Seven Mountains" : "4 Cụm Thắng Cảnh Trọng Điểm Bảy Núi"}
               </h2>
             </div>
             <Link
@@ -850,7 +876,7 @@ export default function HomePage() {
               prefetch={true}
               className="text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] flex items-center gap-1 transition-colors font-display"
             >
-              <span>Xem tất cả 149 điểm</span>
+              <span>{isEn ? "View all 149 spots" : "Xem tất cả 149 điểm"}</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -895,7 +921,7 @@ export default function HomePage() {
                         {cluster.badge}
                       </span>
                       <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[11px] font-bold bg-[#151B34]/90 text-[#FFD37A] border border-[#FFD37A]/30 font-display">
-                        {cluster.placeCount} điểm
+                        {cluster.placeCount} {isEn ? "spots" : "điểm"}
                       </span>
                     </div>
 
@@ -917,7 +943,11 @@ export default function HomePage() {
                     </p>
 
                     <div className="pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[10px] sm:text-xs font-bold text-[#0E8C7F] font-display">
-                      <span>{isSelected ? "⚡ Đang lọc xem danh sách" : `Lọc xem (${cluster.placeCount} điểm)`}</span>
+                      <span>
+                        {isSelected
+                          ? (isEn ? "⚡ Active Filter View" : "⚡ Đang lọc xem danh sách")
+                          : (isEn ? `Filter view (${cluster.placeCount} spots)` : `Lọc xem (${cluster.placeCount} điểm)`)}
+                      </span>
                       <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isSelected ? "rotate-90 text-[#0E8C7F]" : "group-hover:translate-x-1"}`} />
                     </div>
                   </div>
@@ -936,9 +966,9 @@ export default function HomePage() {
                   </span>
                   <div>
                     <h3 className="font-display font-extrabold text-base sm:text-lg text-[#26221B]">
-                      Điểm Đến Thuộc: {activeCluster.name}
+                      {isEn ? "Destinations in: " : "Điểm Đến Thuộc: "} {activeCluster.name}
                     </h3>
-                    <p className="text-xs text-[#6B6355] font-body">{activeCluster.commune} • {activeClusterSpots.length} địa điểm tiêu biểu</p>
+                    <p className="text-xs text-[#6B6355] font-body">{activeCluster.commune} • {activeClusterSpots.length} {isEn ? "typical locations" : "địa điểm tiêu biểu"}</p>
                   </div>
                 </div>
 
@@ -948,14 +978,14 @@ export default function HomePage() {
                     prefetch={true}
                     className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-[#0E8C7F] text-white text-xs font-bold hover:bg-[#0B6B60] transition-colors shadow-xs"
                   >
-                    <span>Xem tất cả điểm cụm này</span>
+                    <span>{isEn ? "View all spots in this cluster" : "Xem tất cả điểm cụm này"}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                   <button
                     onClick={() => setSelectedClusterId(null)}
                     className="px-3 py-2 rounded-full bg-[#FAF3E7] hover:bg-[#26221B]/10 text-[#6B6355] hover:text-[#26221B] text-xs font-bold cursor-pointer"
                   >
-                    Đóng
+                    {isEn ? "Close" : "Đóng"}
                   </button>
                 </div>
               </div>
@@ -987,7 +1017,7 @@ export default function HomePage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-[#26221B]/80 via-transparent to-transparent" />
                         <div className="absolute bottom-2 left-2 right-2 text-white">
                           <h4 className="font-display text-xs sm:text-sm font-bold line-clamp-1 drop-shadow-sm text-[#FFFDF7] group-hover:text-[#FFD37A] transition-colors">
-                            {spot.name}
+                            {isEn && spot.name_en ? spot.name_en : spot.name}
                           </h4>
                           <p className="text-[10px] text-[#FAF3E7]/80 truncate">{spot.commune}</p>
                         </div>
@@ -995,14 +1025,14 @@ export default function HomePage() {
 
                       <div className="p-2.5 sm:p-3 space-y-2 flex-1 flex flex-col justify-between font-body">
                         <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed">
-                          {spot.description}
+                          {isEn && spot.description_en ? spot.description_en : spot.description}
                         </p>
                         <div className="flex items-center gap-1 pt-1 font-display">
                           <Link
                             href={`/places/${spot.slug}`}
                             className="flex-1 text-center py-1.5 rounded-xl bg-white hover:bg-[#0E8C7F] hover:text-white text-[#0E8C7F] text-[10px] sm:text-xs font-bold transition-all border border-[#0E8C7F]/20"
                           >
-                            Chi Tiết
+                            {isEn ? "Details" : "Chi Tiết"}
                           </Link>
                           <a
                             href={maps.url}
@@ -1011,7 +1041,7 @@ export default function HomePage() {
                             className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 rounded-xl bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white text-[10px] sm:text-xs font-bold transition-all"
                           >
                             <Navigation className="w-3 h-3" />
-                            <span>Chỉ Đường</span>
+                            <span>{isEn ? "Directions" : "Chỉ Đường"}</span>
                           </a>
                         </div>
                       </div>
@@ -1029,17 +1059,17 @@ export default function HomePage() {
             <div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#0E8C7F] uppercase tracking-wider mb-1 font-display">
                 <Compass className="w-4 h-4" />
-                <span>Hành Trình Gợi Ý Tối Ưu</span>
+                <span>{isEn ? "Optimized Suggested Itineraries" : "Hành Trình Gợi Ý Tối Ưu"}</span>
               </div>
               <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#26221B] tracking-tight">
-                Lịch Trình Thực Địa Phổ Biến Nhất
+                {isEn ? "Most Popular Field Itineraries" : "Lịch Trình Thực Địa Phổ Biến Nhất"}
               </h2>
             </div>
             <Link
               href="/planner"
               className="text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] flex items-center gap-1 transition-colors font-display"
             >
-              <span>Xem 35 lịch trình</span>
+              <span>{isEn ? "View all 35 itineraries" : "Xem 35 lịch trình"}</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -1073,8 +1103,8 @@ export default function HomePage() {
                 <div className="pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-[#26221B]/6 flex items-center justify-between text-[10px] sm:text-xs text-[#6B6355] font-display">
                   <span className="truncate max-w-[80px] sm:max-w-[130px]">{itin.for_whom}</span>
                   <span className="text-[#0E8C7F] font-bold flex items-center gap-1">
-                    <span>Xem tour</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>{isEn ? "View tour" : "Xem tour"}</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </Link>
@@ -1091,13 +1121,15 @@ export default function HomePage() {
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#A6503A] text-white text-[11px] font-bold uppercase tracking-wider font-display">
                 <Shield className="w-3.5 h-3.5" />
-                <span>Tổng Đài Cứu Hộ & An Ninh Du Khách 24/7</span>
+                <span>{isEn ? "24/7 Tourist Rescue & Security Hotline" : "Tổng Đài Cứu Hộ & An Ninh Du Khách 24/7"}</span>
               </div>
               <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#FFFDF7]">
-                Đồng Hành An Toàn Trên Mọi Cung Đường Bảy Núi
+                {isEn ? "Safe Travel Companion on All Seven Mountains Routes" : "Đồng Hành An Toàn Trên Mọi Cung Đường Bảy Núi"}
               </h2>
               <p className="text-xs text-white/80 leading-relaxed">
-                Khi gặp sự cố hỏng xe giữa đèo, lạc đường hoặc cần trợ giúp y tế khẩn cấp, vui lòng liên hệ ngay đường dây nóng chính thức của Công an & Trung tâm Y tế Tri Tôn.
+                {isEn
+                  ? "If you encounter vehicle breakdowns on mountain passes, get lost, or require urgent medical assistance, contact official local hotlines immediately."
+                  : "Khi gặp sự cố hỏng xe giữa đèo, lạc đường hoặc cần trợ giúp y tế khẩn cấp, vui lòng liên hệ ngay đường dây nóng chính thức của Công an & Trung tâm Y tế Tri Tôn."}
               </p>
             </div>
 
@@ -1107,7 +1139,7 @@ export default function HomePage() {
                 className="p-3.5 rounded-[20px] bg-white/10 hover:bg-[#F0A32F] hover:text-[#26221B] border border-white/15 text-center transition-all tap-bounce"
               >
                 <Phone className="w-5 h-5 mx-auto mb-1 text-[#FFD37A]" />
-                <span className="text-[11px] block text-white/70">Công An Tri Tôn</span>
+                <span className="text-[11px] block text-white/70">{isEn ? "Tri Ton Police" : "Công An Tri Tôn"}</span>
                 <strong className="text-xs block text-[#FFFDF7]">0296.3874.113</strong>
               </a>
 
@@ -1116,7 +1148,7 @@ export default function HomePage() {
                 className="p-3.5 rounded-[20px] bg-white/10 hover:bg-[#0E8C7F] hover:text-white border border-white/15 text-center transition-all tap-bounce"
               >
                 <HeartHandshake className="w-5 h-5 mx-auto mb-1 text-[#FFD37A]" />
-                <span className="text-[11px] block text-white/70">Cấp Cứu Y Tế</span>
+                <span className="text-[11px] block text-white/70">{isEn ? "Emergency Medical" : "Cấp Cứu Y Tế"}</span>
                 <strong className="text-xs block text-[#FFFDF7]">0296.3874.115</strong>
               </a>
             </div>

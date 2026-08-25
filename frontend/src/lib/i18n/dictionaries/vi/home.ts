@@ -84,5 +84,71 @@ export const homeVi = {
     food: 'Gà Đốt & Đặc Sản',
     stay: 'Homestay View Núi',
     checkin: 'Góc Sống Ảo',
-  }
+  },
+  weather: {
+    todayTip: 'Gợi ý hôm nay:',
+    humidity: 'Ẩm',
+    wind: 'Gió',
+    location: 'Tri Tôn, An Giang',
+    loading: 'Đang cập nhật thời tiết thực địa Tri Tôn...',
+    sunshineCond: 'Nắng ấm trong lành',
+    sunshineAdv: 'Thời tiết rất lý tưởng để săn mây Đỉnh Cô Tô và check-in Hồ Tà Pạ ngọc bích.',
+    rainCond: 'Có mưa rào Bảy Núi',
+    rainAdv: 'Nên ghé Chùa Xvayton chiêm bái, quán cafe ngắm mưa hoặc ăn lẩu bò Tri Tôn nóng hổi.',
+    cloudyCond: 'Trời râm mát nhiều mây',
+    cloudyAdv: 'Khí hậu mát mẻ, thích hợp đạp xe quanh cánh đồng Tà Pạ và ngắm Cổng trời Koh Kas.',
+    hotCond: 'Nắng gắt trưa hè',
+    hotAdv: 'Nên tham quan buổi sáng sớm, trưa ghé các chòi lá râm mát bờ Hồ Ô Thum thưởng thức Gà Đốt.',
+    fallbackCond: 'Nắng ấm Bảy Núi',
+    fallbackAdv: 'Khí hậu thuận lợi để trải nghiệm các cung đường danh thắng và ẩm thực Tri Tôn.',
+  },
+  smartTripMini: {
+    title: 'Tìm Nhanh Lịch Trình Phù Hợp',
+    durations: {
+      halfDay: 'Nửa Ngày',
+      oneDay: '1 Ngày',
+      twoDays: '2N1Đ',
+      threeDays: '3N2Đ',
+    },
+    budgets: {
+      budget: 'Tiết Kiệm',
+      comfort: 'Thoải Mái',
+      luxury: 'Nghỉ Dưỡng',
+    },
+    tourSuggestPrefix: 'Tour gợi ý • ~',
+    perPerson: '/người',
+  },
+  timeSlotsSection: {
+    badge: 'Gợi Ý Trải Nghiệm Tùy Chỉnh',
+    title: 'Điểm Đến Lý Tưởng Theo Khung Giờ & Đối Tượng',
+    audiences: {
+      all: 'Tất Cả',
+      youth: '📸 Sống Ảo',
+      family: '👨‍👩‍👧‍👦 Gia Đình',
+      trekking: '🥾 Săn Mây',
+      spiritual: '🙏 Tâm Linh',
+    },
+    slots: {
+      morning: {
+        mobileLabel: 'Sáng sớm',
+        desktopLabel: 'Sáng sớm (06:00 - 08:30)',
+        desc: 'Săn mây & Hồ Tà Pạ',
+      },
+      noon: {
+        mobileLabel: 'Buổi trưa',
+        desktopLabel: 'Buổi trưa (11:00 - 13:30)',
+        desc: 'Gà Đốt Ô Thum',
+      },
+      afternoon: {
+        mobileLabel: 'Chiều tà',
+        desktopLabel: 'Chiều tà (15:30 - 17:30)',
+        desc: 'Cổng trời Koh Kas',
+      },
+      evening: {
+        mobileLabel: 'Buổi tối',
+        desktopLabel: 'Buổi tối (18:00 - 21:00)',
+        desc: 'Chợ đêm & Phố',
+      },
+    },
+  },
 };
