@@ -8,6 +8,27 @@ export function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const userAgent = req.headers.get('user-agent');
 
+  const isAdminMutation =
+    pathname.startsWith('/api/v1/admin/') &&
+    !pathname.startsWith('/api/v1/admin/auth/') &&
+    ['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method);
+
+  if (isAdminMutation && process.env.ADMIN_MUTATIONS_ENABLED !== 'true') {
+    return new NextResponse(
+      JSON.stringify({
+        error: 'Admin mutations are temporarily disabled.',
+        message: 'Các thao tác quản trị đang tạm khóa để bảo trì hệ thống.',
+      }),
+      {
+        status: 503,
+        headers: {
+          'Cache-Control': 'no-store',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
+
   // 1. Block Suspicious Scraper Bots on API routes (anti-scraping)
   if (pathname.startsWith('/api/') && !pathname.startsWith('/api/v1/admin')) {
     if (isSuspiciousBot(userAgent)) {
