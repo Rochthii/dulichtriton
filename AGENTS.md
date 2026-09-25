@@ -1,6 +1,19 @@
 # AGENTS.md — Tri Tôn Tourism Chatbot AI System
 
-Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa | 149 Địa điểm xác minh | 15 Xã & Thị trấn.
+Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa.
+
+> Số lượng POI canonical, địa giới hành chính và trạng thái production chỉ được xác nhận bằng nguồn đã duyệt tại [Current State Audit](docs/technical-spec/CURRENT_STATE_AUDIT.md), Decision Gates và canonical manifest.
+
+## Evidence Operating Model
+
+- Trục trách nhiệm: chỉ cung cấp thông tin du lịch/SOS có nguồn và trạng thái xác minh rõ; không để request không được ủy quyền làm thay đổi dữ liệu, tri thức AI hoặc cấu hình.
+- Trước khi code, đọc [ACTIVE_TASK.md](ACTIVE_TASK.md), [Execution Board](docs/13_TWO_STREAM_EXECUTION_BOARD.md), rồi dependency trực tiếp của task.
+- Phân biệt `DESIGNED`, `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `DISPUTED`, `RETIRED`; code tồn tại hoặc build pass không đủ để claim `VERIFIED`.
+- Với auth/RLS/sync/AI integrity, kiểm tra negative business effect: không chỉ status code mà cả DB, storage, cache, audit và external side effect có liên quan.
+- Sau task thực chất, cập nhật evidence liên quan, task board, evaluation matrix và changelog; không nâng claim khi thiếu bằng chứng.
+- Mỗi task ghi luồng A/B, AI route đề xuất, AI thực dùng và evidence. Chọn theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- Session focus theo [ACTIVE_TASK.md](ACTIVE_TASK.md); không tự chuyển luồng do task khẩn hoặc completion history của luồng kia.
+- Bàn giao bằng 4–6 gạch đầu dòng theo [Task Completion Handoff](.agents/skills/task-completion-handoff/SKILL.md), không thêm câu hỏi xã giao.
 
 ## 📜 5 Quy Tắc Bắt Buộc (Rules Directory):
 - [RULE 01: Production Real, No Mock](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/refresh_app_context/.agents/rules/01_production_real_no_mock.md)

@@ -4,6 +4,12 @@ Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của 
 
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Security
+- P01-000/P01-003..008: admin mutation kill-switch, bcrypt credential verifier, opaque server-side session issuance, production/local cookie rules, and `/auth/me` session verification; local evidence only, production rollout remains pending.
+- P02-000/P02-013..016: `admin_users` lockdown and chat session/log anonymous access migrations with PostgreSQL assertions; production chat-session policy rollout remains gated on an authorized application path.
+
 ## [v84.0.0-DMS-DATABASE-OPTIMIZATION-TELEMETRY-TESTING-AND-PROXIMITY-ENGINE] - 2026-08-25
 
 ### 🚀 Tái Cấu Trúc Toàn Diện Phân Hệ Quản Trị DMS, Tối Ưu Database PostGIS/pgvector, Bộ Test Telemetry 360 Độ & Động Cơ Định Vị Proximity

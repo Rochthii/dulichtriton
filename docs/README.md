@@ -4,6 +4,13 @@ Hệ thống Website Du lịch thông minh kết hợp Chatbot AI và Video tr�
 
 ## Danh mục tài liệu
 
+### Remediation & evidence
+
+- [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md)
+- [Two-stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md)
+- [Atomic Task Template](ATOMIC_TASK_TEMPLATE.md)
+- [Technical Evidence System](technical-spec/README.md)
+
 1. [01. Tổng quan dự án](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/01_Project_Overview.md) — Mục tiêu, bối cảnh, phạm vi & đối tượng sử dụng.
 2. [02. Kiến trúc hệ thống](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/02_System_Architecture.md) — Sơ đồ khối & các lớp thành phần.
 3. [03. Use Cases](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/03_Use_Cases.md) — Phân rã 8 module chức năng chính.
