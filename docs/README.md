@@ -4,13 +4,6 @@ Hệ thống Website Du lịch thông minh kết hợp Chatbot AI và Video tr�
 
 ## Danh mục tài liệu
 
-### Remediation & evidence
-
-- [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md)
-- [Two-stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md)
-- [Atomic Task Template](ATOMIC_TASK_TEMPLATE.md)
-- [Technical Evidence System](technical-spec/README.md)
-
 1. [01. Tổng quan dự án](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/01_Project_Overview.md) — Mục tiêu, bối cảnh, phạm vi & đối tượng sử dụng.
 2. [02. Kiến trúc hệ thống](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/02_System_Architecture.md) — Sơ đồ khối & các lớp thành phần.
 3. [03. Use Cases](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/03_Use_Cases.md) — Phân rã 8 module chức năng chính.
@@ -31,3 +24,7 @@ Hệ thống Website Du lịch thông minh kết hợp Chatbot AI và Video tr�
 18. [MVP Scope & Checklist](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/mvp_scope_and_checklist.md) — Danh mục phạm vi chức năng, tiêu chí hoàn thiện & checklist phát triển cho bản phát hành MVP đầu tiên.
 19. [Tech Stack & Architecture](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/tech_stack_architecture.md) — Phân tích chi tiết bộ công nghệ tối ưu nhất (Next.js 14, Supabase pgvector, FastAPI Python 3.11, Gemini AI, Leaflet GIS).
 20. [AI Workflow & Orchestration](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/ai_workflow.md) — Quy trình 9 bước xử lý AI, luồng RAG Retriever/Reranker, AI Orchestrator Multi-LLM & Cấu trúc Modular AI Services.
+21. [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md) — Sổ kiểm soát task nguyên tử cho bảo mật, dữ liệu, AI, privacy, vận hành và release gate.
+22. [Atomic Task Template](ATOMIC_TASK_TEMPLATE.md) — Mẫu issue bắt buộc: một task, một thay đổi hoặc kiểm chứng.
+23. [Two-stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md) — Authority điều phối hằng ngày: hai luồng, WIP tối đa hai task và thứ tự deploy.
+24. [Technical Evidence System](technical-spec/README.md) — Current-state audit, evaluation matrix, threat model và security invariants; nguồn authority cho claim/evidence.

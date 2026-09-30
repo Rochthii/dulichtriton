@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
   const response = {
     meta: {
       source: SITE_URL,
-      description: 'Verified travel data for Tri Tôn, An Giang, Vietnam — Danh Mục Điểm Đến, field-researched 2025–2026',
+      description: 'Verified travel data for Tri Tôn, An Giang, Vietnam — 149 POIs, field-researched 2025–2026',
       license: `Public — citation permitted with attribution to ${SITE_URL}`,
       total_results: places.length,
       total_pois: masterPois.length,

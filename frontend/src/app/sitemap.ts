@@ -1,9 +1,28 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/siteConfig';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const masterPois = require('@/data/triton_pois_full.json') as any[];
+import canonicalPlacesData from '@/data/places.canonical.json';
 
 const BASE_URL = SITE_URL;
+
+export interface CanonicalPlaceItem {
+  canonical_id: string;
+  name?: string;
+  verified_at?: string;
+  verification_status?: string;
+  is_verified?: boolean;
+}
+
+export interface CanonicalPlacesArtifact {
+  source_manifest: {
+    manifest_name: string;
+    manifest_version: string;
+    schema_version: string;
+    manifest_sha256?: string;
+    overall_sha256?: string;
+  };
+  total_count: number;
+  places: CanonicalPlaceItem[];
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -24,20 +43,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/emergency`,     lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
   ];
 
-  // 2. Dynamic routes: 149 verified POI detail pages
+  // 2. Dynamic routes: Generated strictly from verified canonical places
+  const artifact = canonicalPlacesData as unknown as CanonicalPlacesArtifact;
+  const verifiedPlaces = Array.isArray(artifact?.places) ? artifact.places : [];
+
   const seen = new Set<string>();
   const poiRoutes: MetadataRoute.Sitemap = [];
 
-  for (const p of masterPois) {
-    const slug = (p.slug || p.id || '').trim();
-    if (!slug || seen.has(slug)) continue;
-    seen.add(slug);
+  for (const place of verifiedPlaces) {
+    const canonicalId = (place.canonical_id || '').trim();
+    if (!canonicalId || seen.has(canonicalId)) continue;
+    seen.add(canonicalId);
+
+    // Fail closed: enforce verified status if present in artifact
+    if (place.verification_status && place.verification_status !== 'VERIFIED') {
+      continue;
+    }
+
+    const lastModifiedDate = place.verified_at ? new Date(place.verified_at) : now;
 
     poiRoutes.push({
-      url: `${BASE_URL}/places/${slug}`,
-      lastModified: now,
+      url: `${BASE_URL}/places/${canonicalId}`,
+      lastModified: Number.isNaN(lastModifiedDate.getTime()) ? now : lastModifiedDate,
       changeFrequency: 'weekly',
-      priority: p.rating >= 4.7 ? 0.95 : p.rating >= 4.5 ? 0.85 : 0.75,
+      priority: 0.85,
     });
   }
 

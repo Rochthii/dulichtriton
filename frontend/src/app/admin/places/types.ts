@@ -4,7 +4,6 @@ export interface PlaceRecord {
   id: string;
   slug: string;
   name: string;
-  name_en?: string;
   commune: string;
   category: string;
   tourism_category?: string;
@@ -13,12 +12,7 @@ export interface PlaceRecord {
   photos?: string[];
   checkin_spots?: CheckinSpotItem[] | string;
   description: string;
-  short_description?: string;
   detailed_story?: string;
-  detailed_story_en?: string;
-  opening_hours?: string;
-  best_visit_time?: string;
-  field_tips_en?: string;
   phone?: string;
   open_late?: boolean;
   night_hours?: string;
@@ -27,6 +21,11 @@ export interface PlaceRecord {
   video_url?: string;
   is_hot?: boolean;
   is_active?: boolean;
+  verification_status?: 'UNVERIFIED' | 'IN_REVIEW' | 'VERIFIED' | 'REJECTED' | 'EXPIRED';
+  is_verified?: boolean;
+  verified_at?: string;
+  source_url?: string;
+  review_id?: string;
   latitude?: number;
   longitude?: number;
   address?: string;
@@ -69,8 +68,8 @@ export const DEFAULT_NEW_PLACE: Partial<PlaceRecord> = {
   category: 'Danh thắng check-in',
   tourism_category: 'Địa Điểm Tham Quan',
   rating: 4.8,
-  image_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-  photos: ['https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop'],
+  image_url: '',
+  photos: [],
   description: '',
   detailed_story: '',
   phone: '',
@@ -83,4 +82,6 @@ export const DEFAULT_NEW_PLACE: Partial<PlaceRecord> = {
   longitude: 105.01,
   is_hot: false,
   is_active: true,
+  verification_status: 'UNVERIFIED',
+  is_verified: false,
 };

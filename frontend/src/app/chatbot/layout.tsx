@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Trợ Lý AI Du Lịch Tri Tôn — Người Bạn Đồng Hành Bảy Núi',
-    description: 'Hỏi đáp thông minh về địa điểm, quán ăn ngon và đường đi phượt an toàn tại Tri Tôn, An Giang.',
+    description: 'Hỏi đáp thông minh về 149 địa điểm, quán ăn ngon và đường đi phượt an toàn tại Tri Tôn, An Giang.',
     url: `${SITE_URL}/chatbot`,
     siteName: 'Du Lịch Tri Tôn AI',
     locale: 'vi_VN',

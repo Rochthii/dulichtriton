@@ -121,19 +121,24 @@ Lễ Sene Dolta (lễ cúng ông bà) diễn ra từ ngày 29/8 đến 1/9 âm l
     {
         "id": "KB004",
         "topic": "la_chuc_ga_dot",
-        "title": "Văn Hóa Ẩm Thực Lá Chúc & Bí Quyết Gà Đốt Ô Thum Authentic",
+        "title": "Văn Hóa Ẩm Thực Lá Chúc & Bí Quyết Gà Đốt Ô Thum Bản Địa",
         "category": "food_culture",
-        "summary": "Cây chúc Bảy Núi với hương thơm cay nồng đặc trưng là linh hồn ẩm thực Tri Tôn, tạo nên thương hiệu Gà đốt Ô Thum nổi tiếng khắp Việt Nam.",
+        "summary": "Cây chúc Bảy Núi (Citrus hystrix - Krut) với hương thơm the cay nồng nàn là linh hồn ẩm thực Tri Tôn, tạo nên nghệ thuật Gà đốt Ô Thum trong thố đất lót muối hột trứ danh khắp cả nước.",
         "related_pois": ["FD006", "FD009", "PL004"],
-        "content": """# Đặc Sản Lá Chúc & Bí Quyết Gà Đốt Ô Thum Authentic
+        "content": """# Đặc Sản Trái Trúc & Bí Quyết Gà Đốt Ô Thum Bản Địa
 
-## 1. Cây Chúc Bảy Núi — Gia Vị Độc Bản
-Cây chúc (Citrus hystrix) là loài cây ăn quả họ cam chanh bản địa Bảy Núi. Lá chúc có hình đồng tiền kép, mùi thơm tinh dầu nồng nàn hơn lá chanh thông thường gấp nhiều lần, là gia vị không thể thiếu trong món gà đốt, cháo bò và bún cá Khmer.
+## 1. Cây Trúc Bảy Núi (Trái Chúc — Citrus hystrix — Krut) — Cổ Thụ Thất Sơn
+Cây trúc (tiếng Khmer gọi là Krut) là loài cây thân gỗ có gai họ cam chanh bản địa lâu đời tại vùng đồi núi Thất Sơn (Tri Tôn).
+- **Lá hình số 8 đặc trưng**: Phiến lá kép với cuống lá có cánh rộng nở như phiến lá, chứa hàm lượng tinh dầu thơm nồng gắt gấp nhiều lần chanh thông thường.
+- **Trái trúc vỏ xù xì**: Vỏ dày sần sùi nhiều tinh dầu, nước cốt chua thanh gắt nhưng ngọt hậu, là linh hồn gia vị trong món gà đốt, cháo bò và chén muối ớt chấm.
+- **Quy chuẩn bản địa**: Tuyệt đối không gọi là 'chanh rừng' hay đánh đồng với chanh thường, chanh Thái lai tạp.
 
-## 2. Bí Quyết Gà Đốt Ô Thum Chuẩn Vị
-- **Chọn gà**: Dùng gà thả vườn hoặc gà đồi thịt chắc, ngấm gia vị.
-- **Ướp gia vị**: Gà được ướp với sả, tỏi, ớt, mật thốt nốt và lá chúc xắt nhỏ.
-- **Kỹ thuật đốt**: Đặt lót một lớp lá chúc dày dưới đáy nồi đất hoặc nồi gang. Đốt cháy bằng than lửa hồng trong 35-45 phút. Tinh dầu lá chúc thấm sâu vào từng thớ thịt gà vàng ươm, giòn da thơm lừng."""
+## 2. Bí Quyết Gà Đốt Ô Thum Chuẩn Bản Địa (Hồ Ô Thum — Xã Ô Lâm)
+Món ăn bắt nguồn từ đồng bào Khmer quanh hồ Ô Thum, xã Ô Lâm:
+- **Chọn gà**: Dùng gà đồi hoặc gà thả vườn Bảy Núi (1.2kg – 1.5kg), thịt săn chắc, da mỏng ít mỡ.
+- **Ướp gia vị**: Gà ướp với sả băm, tỏi khô, ớt hiểm, mật ong rừng hoặc đường thốt nốt nguyên chất và lá trúc xắt chỉ nhuyễn.
+- **Kỹ thuật đốt thố đất lót muối hột**: Rải lớp muối hột dày 1-2cm dưới đáy thố đất hoặc nồi gang, phủ kín bằng sả cây đập dập và cành lá trúc tươi. Đặt gà lên trên, đậy kín nắp và ủ than củi hồng trong 35-45 phút. Hơi nóng từ muối hột và tinh dầu lá trúc xông chín gà, da vàng ươm cánh gián giòn ráo, thịt mọng nước ngọt ngào.
+- **Phản bác sai lệch**: Tuyệt đối không phải gà chiên dầu giòn và không phải gà nướng vỉ than hoa thông thường."""
     },
     {
         "id": "KB005",
@@ -258,20 +263,23 @@ Vùng Thất Sơn bao gồm 7 ngọn núi tiêu biểu mang dấu ấn tâm linh
     {
         "id": "KB011",
         "topic": "am_thuc_cho_dem",
-        "title": "Văn Hóa Ẩm Thực Chợ Đêm Tri Tôn & Các Món Ăn Vặt Đặc Trưng",
+        "title": "Văn Hóa Ẩm Thực Chợ Đêm Tri Tôn & Các Món Đặc Trưng Bản Địa",
         "category": "food_culture",
-        "summary": "Khám phá ẩm thực phong phú tại Chợ Tri Tôn với Cháo bò lá chúc, Bún nước lèo cá lóc, Bánh bò thốt nốt nướng và Bún mắm Khmer nóng hổi.",
+        "summary": "Khám phá ẩm thực phong phú tại Tri Tôn với Cháo bò trái chúc, Bún cá củ ngải Khmer, Bánh bò thốt nốt nướng than và Đu đủ đâm giòn cay chuẩn vị.",
         "related_pois": ["FD009", "FD013", "FD016", "FD017"],
         "content": """# Thiên Đường Ẩm Thực Chợ Đêm & Đường Phố Tri Tôn
 
-## 1. Cháo Bò Lá Chúc Thưởng Thức Sáng Sớm
-Cháo bò Tri Tôn có vị ngọt sánh đậm đà từ lòng bò tươi, huyết bò nướng và nêm chút tinh dầu lá chúc xắt nhỏ cùng nước tắc chua thanh. Quán Cháo bò Thủy Mộc hoặc Cháo bò Tri Tôn là điểm ăn sáng nổi tiếng.
+## 1. Cháo Bò Trái Chúc Thưởng Thức Sáng Sớm
+Cháo bò Tri Tôn có vị ngọt sánh đậm đà từ thịt và lòng bò tươi Bảy Núi, nấu nhừ cùng gạo thơm rang nhẹ, nêm chút lá chúc xắt nhuyễn và vắt nước cốt trái chúc tươi chua thanh dịu mát, chấm kèm chén mắm ruốc sả ớt đậm đà.
 
-## 2. Bún Nước Lèo Cá Lóc Khmer
-Nước dùng đậm đà thơm mùi mắm bồ hóc đặc trưng, ăn kèm thịt cá lóc đồng tươi ngọt, bông điên điển, bắp chuối bào và rau muống chẻ.
+## 2. Bún Cá Củ Ngải Khmer Bản Địa (Tuyệt Đối Không Có Bún Nước Lèo Mắm)
+Tri Tôn tuyệt đối không có bún nước lèo nấu mắm bồ hóc nồng đục. Món bún cá Khmer bản địa trứ danh là **Bún Cá Củ Ngải**:
+- **Nước dùng thanh tao**: Ninh từ xương cá lóc đồng cùng củ ngải bún (Fingerroot) đập dập và nghệ tươi, tạo sắc vàng ươm tự nhiên, vị thanh ngọt mát lành tốt cho đường ruột.
+- **Thịt cá vàng ươm**: Cá lóc đồng luộc gỡ thịt nạc, xào nhẹ với nghệ tươi cho săn chắc thơm phức.
+- **Rau ăn kèm đồng nội**: Bông điên điển vàng rực mùa nước nổi, rau nhút non giòn, bắp chuối bào và rau muống chẻ.
 
-## 3. Bánh Bò Thốt Nốt Nướng Cốt Dừa
-Chiếc bánh bò màu vàng ươm tỏa hương thơm dịu nhẹ của đường thốt nốt thắng, nướng cháy xèo trên than hồng béo ngậy vị dừa dầm."""
+## 3. Bánh Bò Thốt Nốt Nướng Than Cốt Dừa
+Chiếc bánh bò màu vàng óng ả tỏa hương thơm nồng dịu của đường thốt nốt nguyên chất, nướng cháy xèo trên than hồng béo ngậy vị cốt dừa bùi béo."""
     },
     {
         "id": "KB012",

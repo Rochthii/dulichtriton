@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TritonPoiVerificationReviewTemplate",
+  "description": "Standard POI Verification Review Template for Tri Ton Tourism Clean Master Data Governance (P03-009)",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "review_id",
+    "target_poi",
+    "source",
+    "evidence",
+    "reviewer",
+    "lifecycle",
+    "field_level_provenance"
+  ],
+  "properties": {
+    "review_id": {
+      "type": "string",
+      "pattern": "^PVR-[A-Z0-9_-]+$",
+      "description": "Unique verification review ticket identifier, e.g. PVR-CHUA-XA-TON-2026"
+    },
+    "target_poi": {
+      "type": "object",
+      "required": ["canonical_id", "canonical_name", "commune", "coordinates", "category"],
+      "properties": {
+        "canonical_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "Canonical slug ID without UUID prefix or accents"
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Official recognized Vietnamese/Khmer name of the POI"
+        },
+        "commune": {
+          "type": "string",
+          "enum": [
+            "Thị trấn Tri Tôn",
+            "Thị trấn Ba Chúc",
+            "Xã Châu Lăng",
+            "Xã Lương Phi",
+            "Xã Vĩnh Phước",
+            "Xã Lương An Trà",
+            "Xã Lạc Quới",
+            "Xã Lê Trì",
+            "Xã Ô Lâm",
+            "Xã An Tức",
+            "Xã Cô Tô",
+            "Xã Tân Tuyến",
+            "Xã Tà Đảnh",
+            "Xã Vĩnh Gia",
+            "Xã Núi Tô"
+          ],
+          "description": "Administrative unit strictly matching 15 Tri Ton communes per RULE 02"
+        },
+        "coordinates": {
+          "type": "object",
+          "required": ["latitude", "longitude"],
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": 10.30,
+              "maximum": 10.55,
+              "description": "WGS84 latitude strictly inside Tri Ton bounding box"
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": 104.80,
+              "maximum": 105.15,
+              "description": "WGS84 longitude strictly inside Tri Ton bounding box"
+            }
+          }
+        },
+        "category": {
+          "type": "string",
+          "enum": ["culture", "nature", "food", "stay", "experience", "historical"],
+          "description": "Primary domain taxonomy category"
+        },
+        "cross_border_flag": {
+          "type": "string",
+          "enum": ["NONE", "CROSS_BORDER_ATTRACTION"],
+          "default": "NONE",
+          "description": "Flag for border-adjacent attractions (e.g. Hồ Đá Latina)"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["type", "title", "issuing_authority", "source_url"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "GOVERNMENT_DECISION",
+            "FIELD_SURVEY",
+            "OFFICIAL_PORTAL",
+            "SATELLITE_GEO",
+            "HERITAGE_REGISTRY"
+          ],
+          "description": "Classification of the primary authoritative origin"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 5,
+          "description": "Name or title of official legal document, portal, or survey protocol"
+        },
+        "issuing_authority": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Government body, academic institute, or registered organization"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "HTTPS URL or archive record link where source can be retrieved"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "reference_number",
+        "legal_classification",
+        "gps_audit_status",
+        "field_notes"
+      ],
+      "properties": {
+        "reference_number": {
+          "type": "string",
+          "description": "Official legal document number, decision code, or survey log ID"
+        },
+        "legal_classification": {
+          "type": "string",
+          "enum": [
+            "SPECIAL_NATIONAL_HERITAGE",
+            "NATIONAL_HERITAGE",
+            "PROVINCIAL_HERITAGE",
+            "LOCAL_MUNICIPAL_RECORD",
+            "VERIFIED_COMMERCIAL_ESTABLISHMENT",
+            "NATURAL_LANDMARK"
+          ],
+          "description": "Formal legal tier classification"
+        },
+        "gps_audit_status": {
+          "type": "string",
+          "enum": ["AUDITED_IN_BOUNDS", "CROSS_BORDER_CONFIRMED"],
+          "description": "Geospatial boundary verification verdict"
+        },
+        "photos_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "caption", "verified"],
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "caption": { "type": "string" },
+              "verified": { "type": "boolean" }
+            }
+          },
+          "description": "Locally verified photographic evidence"
+        },
+        "field_notes": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Detailed ground truth audit trail notes by the reviewer"
+        }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "required": ["name", "role", "organization", "signature_hash"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "description": "Full name of human domain expert or certified engineer"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Professional position, e.g. Local Domain Expert, GIS Engineer"
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Organization or project governance committee"
+        },
+        "signature_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 cryptographic review audit stamp"
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": [
+        "verification_status",
+        "verified_at",
+        "expires_at",
+        "freshness_cycle_days"
+      ],
+      "properties": {
+        "verification_status": {
+          "type": "string",
+          "enum": ["UNVERIFIED", "IN_REVIEW", "VERIFIED", "REJECTED", "EXPIRED"],
+          "description": "Current lifecycle status"
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of formal verification approval"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when this record must be re-audited"
+        },
+        "freshness_cycle_days": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 730,
+          "description": "Audit validity duration in days (e.g. 365 for heritage, 180 for dining)"
+        }
+      }
+    },
+    "field_level_provenance": {
+      "type": "object",
+      "required": ["name_verified", "coordinates_verified", "commune_verified", "category_verified"],
+      "properties": {
+        "name_verified": { "type": "boolean" },
+        "coordinates_verified": { "type": "boolean" },
+        "commune_verified": { "type": "boolean" },
+        "category_verified": { "type": "boolean" },
+        "phone_verified": { "type": "boolean" },
+        "cultural_claims_verified": { "type": "boolean" }
+      },
+      "description": "Granular confirmation for individual core attributes"
+    }
+  }
+}

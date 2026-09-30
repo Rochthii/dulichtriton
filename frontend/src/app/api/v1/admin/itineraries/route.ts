@@ -1,7 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
+import { sanitizeFilterTerm } from '@/lib/postgrestFilterSanitizer';
 
 export const dynamic = 'force-dynamic';
+
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
+
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
+  void Promise.resolve(
+    supabase.from('audit_logs').insert({
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
+      action,
+      resource_type: 'preset_itineraries',
+      resource_id: resourceId,
+      details,
+    })
+  ).catch(e => console.warn('[AuditLog] Error:', e));
+}
 
 interface StopItem {
   time?: string;
@@ -39,22 +69,25 @@ interface ItineraryPayload {
   sort_order?: number;
 }
 
-// GET: Fetch all itineraries directly from Supabase PostgreSQL
-export async function GET() {
-  try {
-    const queryPromise = Promise.resolve(
-      supabase
-        .from('preset_itineraries')
-        .select('*')
-        .order('sort_order', { ascending: true, nullsFirst: false })
-    );
-    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
-      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
-    );
+// GET: Fetch all itineraries directly from Supabase PostgreSQL (Requires Admin Session)
+export async function GET(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
 
-    const { data: rows, error } = await Promise.race([queryPromise, timeoutPromise]);
-    if (error || !rows) {
-      return NextResponse.json({ success: true, count: 0, itineraries: [] });
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
+  try {
+    const { data: rows, error } = await supabase
+      .from('preset_itineraries')
+      .select('*')
+      .order('sort_order', { ascending: true, nullsFirst: false });
+
+    if (error) {
+      console.error('[AdminItineraries GET Error]:', error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     // Normalize rows for admin table
@@ -92,8 +125,20 @@ export async function GET() {
   }
 }
 
-// POST: Add a new itinerary to Supabase
+// POST: Add a new itinerary to Supabase (Requires Admin Session & Kill-switch Check)
 export async function POST(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body: ItineraryPayload = await req.json();
     const {
@@ -147,15 +192,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Audit log
-    void Promise.resolve(
-      supabase.from('audit_logs').insert({
-        action: 'CREATE_ITINERARY',
-        target_table: 'preset_itineraries',
-        target_id: data.id,
-        changes: newRecord,
-        created_at: new Date().toISOString(),
-      })
-    ).catch(() => {});
+    logAudit('CREATE_ITINERARY', data.id, newRecord, auth.principal);
 
     const mapped = {
       itinerary_id: data.id,
@@ -172,8 +209,20 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PATCH: Update existing itinerary in Supabase
+// PATCH: Update existing itinerary in Supabase (Requires Admin Session & Kill-switch Check)
 export async function PATCH(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body: ItineraryPayload = await req.json();
     const {
@@ -200,6 +249,11 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: 'Thiếu mã itinerary_id' }, { status: 400 });
     }
 
+    const cleanTargetId = sanitizeFilterTerm(targetId);
+    if (!cleanTargetId) {
+      return NextResponse.json({ error: 'Mã itinerary_id không hợp lệ' }, { status: 400 });
+    }
+
     const updatePayload: Record<string, any> = {};
     if (title !== undefined) updatePayload.title = title.trim();
     if (duration !== undefined) updatePayload.duration = duration.trim();
@@ -218,7 +272,7 @@ export async function PATCH(req: NextRequest) {
     const { data, error } = await supabase
       .from('preset_itineraries')
       .update(updatePayload)
-      .or(`id.eq.${targetId},slug.eq.${targetId}`)
+      .or(`id.eq.${cleanTargetId},slug.eq.${cleanTargetId}`)
       .select()
       .single();
 
@@ -228,15 +282,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     // Audit log
-    void Promise.resolve(
-      supabase.from('audit_logs').insert({
-        action: 'UPDATE_ITINERARY',
-        target_table: 'preset_itineraries',
-        target_id: targetId,
-        changes: updatePayload,
-        created_at: new Date().toISOString(),
-      })
-    ).catch(() => {});
+    logAudit('UPDATE_ITINERARY', targetId, updatePayload, auth.principal);
 
     const mapped = {
       itinerary_id: data.id,
@@ -253,8 +299,20 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-// DELETE: Remove itinerary in Supabase
+// DELETE: Remove itinerary in Supabase (Requires Admin Session & Kill-switch Check)
 export async function DELETE(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const itinerary_id = searchParams.get('id');
@@ -263,25 +321,22 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Thiếu mã itinerary_id' }, { status: 400 });
     }
 
+    const cleanId = sanitizeFilterTerm(itinerary_id);
+    if (!cleanId) {
+      return NextResponse.json({ error: 'Mã itinerary_id không hợp lệ' }, { status: 400 });
+    }
+
     const { error } = await supabase
       .from('preset_itineraries')
       .delete()
-      .or(`id.eq.${itinerary_id},slug.eq.${itinerary_id}`);
+      .or(`id.eq.${cleanId},slug.eq.${cleanId}`);
 
     if (error) {
       console.error('[AdminItineraries DELETE Error]:', error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    void Promise.resolve(
-      supabase.from('audit_logs').insert({
-        action: 'DELETE_ITINERARY',
-        target_table: 'preset_itineraries',
-        target_id: itinerary_id,
-        changes: { deleted_at: new Date().toISOString() },
-        created_at: new Date().toISOString(),
-      })
-    ).catch(() => {});
+    logAudit('DELETE_ITINERARY', itinerary_id, { deleted_at: new Date().toISOString() }, auth.principal);
 
     return NextResponse.json({ success: true, deleted_id: itinerary_id });
   } catch (err: unknown) {

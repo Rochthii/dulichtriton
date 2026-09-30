@@ -1,11 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
+
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
+  void Promise.resolve(
+    supabase.from('audit_logs').insert({
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
+      action,
+      resource_type: 'video_discoveries',
+      resource_id: resourceId,
+      details,
+    })
+  ).catch(e => console.warn('[AuditLog] Error:', e));
+}
 
 // Verified Real TikTok Video Library for Tri Ton POIs
 const DISCOVERED_TIKTOK_POOL: Array<{
@@ -74,11 +99,21 @@ const DISCOVERED_TIKTOK_POOL: Array<{
 ];
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { targetKeyword = 'Tri Tôn', limit = 3 } = body;
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
 
-    console.log(`[AI TikTok Scanner] Target: "${targetKeyword}", limit: ${limit}`);
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
+  try {
+    const body = await req.json().catch(() => ({}));
+    const { targetKeyword = 'Tri Tôn', limit = 3 } = body;
 
     // Filter target pool matching location or keyword
     const matchedPool = DISCOVERED_TIKTOK_POOL.filter(item => {
@@ -98,14 +133,20 @@ export async function POST(req: NextRequest) {
     for (const item of candidateList) {
       try {
         // Fetch real oEmbed info if available
-        const oembedRes = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(item.url)}`);
         let thumbnail = '/images/tiktok/ho_ta_pa.jpg';
         let authorName = item.author;
 
-        if (oembedRes.ok) {
-          const oembedData = await oembedRes.json();
-          if (oembedData.thumbnail_url) thumbnail = oembedData.thumbnail_url;
-          if (oembedData.author_name) authorName = oembedData.author_name;
+        try {
+          const oembedRes = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(item.url)}`, {
+            signal: AbortSignal.timeout(3000),
+          });
+          if (oembedRes.ok) {
+            const oembedData = await oembedRes.json();
+            if (oembedData.thumbnail_url) thumbnail = oembedData.thumbnail_url;
+            if (oembedData.author_name) authorName = oembedData.author_name;
+          }
+        } catch {
+          // oEmbed fallback if TikTok network is unavailable
         }
 
         const externalId = item.url.match(/video\/(\d+)/)?.[1] || `ai_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
@@ -139,16 +180,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Record Audit Log
-    void Promise.resolve(
-      supabase.from('audit_logs').insert({
-        user_name: 'AI_TikTok_Crawler',
-        user_role: 'SYSTEM',
-        action: 'AI_SCAN_TIKTOK',
-        resource_type: 'video_discoveries',
-        details: { targetKeyword, count: importedVideos.length },
-      })
-    ).catch(() => {});
+    // Record Audit Log with authenticated principal
+    logAudit('AI_SCAN_TIKTOK', 'batch_scan', { targetKeyword, count: importedVideos.length }, auth.principal);
 
     return NextResponse.json({
       success: true,

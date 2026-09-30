@@ -34,7 +34,7 @@ export default function NotFound() {
             className="flex-1 py-2.5 px-4 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white text-xs font-bold font-display flex items-center justify-center gap-1.5 transition-all cursor-pointer active:scale-95"
           >
             <Search className="w-3.5 h-3.5" />
-            <span>Khám Phá Điểm Đến</span>
+            <span>Xem 149 Điểm</span>
           </Link>
         </div>
       </div>

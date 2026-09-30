@@ -1,0 +1,17 @@
+{
+  "backup_type": "PRE_SYNC_SNAPSHOT",
+  "gate_approval": "GATE_G2",
+  "lead_auditor": "Chăm Rốch Thi",
+  "timestamp": "2026-09-29T07:23:15.031Z",
+  "canonical_manifest_sha256": "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb",
+  "places": {
+    "count": 137,
+    "sha256": "ed2504b4290a6d68f3fcb642ca29e749f0bfde9c386726b6c4613f1980e66ee1",
+    "file": "data/backups/snapshot_places_2026-09-29T07-23-14-982Z.json"
+  },
+  "itineraries": {
+    "count": 27,
+    "sha256": "78ff8afbe710f03c0ff86032a3d24444d85ec42e660934578854b1d291cfd77d",
+    "file": "data/backups/snapshot_itineraries_2026-09-29T07-23-14-982Z.json"
+  }
+}

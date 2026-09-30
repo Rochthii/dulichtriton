@@ -1,21 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession } from '@/lib/adminSessionGuard';
+import { requireSupabaseServerClient } from '@/lib/serverSupabase';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
-
-// GET: Fetch real feedback / correction reports from audit_logs
+// GET: Fetch real feedback / correction reports from audit_logs (Admin only)
 export async function GET(req: NextRequest) {
   try {
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
+    const supabase = requireSupabaseServerClient();
     const { searchParams } = new URL(req.url);
-    const limit = parseInt(searchParams.get('limit') || '50', 10);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '50', 10), 200);
 
     const { data: logs, error } = await supabase
       .from('audit_logs')
-      .select('*')
+      .select('id, user_name, user_role, action, resource_type, resource_id, details, created_at')
       .or('action.ilike.%CORRECTION%,action.ilike.%FEEDBACK%,action.ilike.%REPORT%')
       .order('created_at', { ascending: false })
       .limit(limit);
@@ -47,8 +48,8 @@ export async function POST(req: NextRequest) {
     }
 
     const feedbackPayload = {
-      place_id,
-      place_name,
+      place_id: place_id || null,
+      place_name: place_name || null,
       issue_type: issue_type || 'Thông tin chung',
       comment: comment || 'Báo cáo từ du khách',
       reporter_name: reporter_name || 'Du khách ẩn danh',
@@ -57,11 +58,14 @@ export async function POST(req: NextRequest) {
       reported_at: new Date().toISOString(),
     };
 
+    const supabase = requireSupabaseServerClient();
     const { data, error } = await supabase.from('audit_logs').insert({
+      user_name: reporter_name || 'Du khách ẩn danh',
+      user_role: 'PUBLIC_USER',
       action: 'POI_CORRECTION_REPORTED',
-      target_table: 'places',
-      target_id: place_id || null,
-      changes: feedbackPayload,
+      resource_type: 'places',
+      resource_id: place_id ? String(place_id) : 'UNKNOWN',
+      details: feedbackPayload,
       created_at: new Date().toISOString(),
     }).select().single();
 
@@ -77,15 +81,20 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PATCH: Approve / Dismiss / Resolve feedback ticket
+// PATCH: Approve / Dismiss / Resolve feedback ticket (Admin only)
 export async function PATCH(req: NextRequest) {
   try {
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
     const body = await req.json();
     const { log_id, status, notes } = body;
 
     if (!log_id || !status) {
       return NextResponse.json({ error: 'Thiếu log_id hoặc status' }, { status: 400 });
     }
+
+    const supabase = requireSupabaseServerClient();
 
     // Fetch existing log
     const { data: log, error: fetchErr } = await supabase
@@ -98,18 +107,19 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: 'Không tìm thấy báo cáo' }, { status: 404 });
     }
 
-    const currentChanges = (log.changes as Record<string, unknown>) || {};
-    const updatedChanges = {
-      ...currentChanges,
+    const currentDetails = (log.details as Record<string, unknown>) || {};
+    const updatedDetails = {
+      ...currentDetails,
       status,
       resolved_at: new Date().toISOString(),
+      resolved_by: auth.principal.fullName || auth.principal.email,
       admin_notes: notes || '',
     };
 
     const { data, error } = await supabase
       .from('audit_logs')
       .update({
-        changes: updatedChanges,
+        details: updatedDetails,
       })
       .eq('id', log_id)
       .select()

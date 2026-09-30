@@ -16,7 +16,7 @@ export default function AdminLoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !password.trim() || isLoading) return;
+    if (!email.trim() || !password || isLoading) return;
 
     setIsLoading(true);
     setErrorMsg(null);
@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/v1/admin/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password: password.trim() }),
+        body: JSON.stringify({ email: email.trim(), password }),
       });
 
       const data = await res.json();

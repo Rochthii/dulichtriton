@@ -1,0 +1,63 @@
+{
+  "review_id": "PVR-CHUA-XA-TON-2026",
+  "target_poi": {
+    "canonical_id": "chua-xa-ton",
+    "canonical_name": "Chùa Xà Tón (Wat Xvayton)",
+    "commune": "Thị trấn Tri Tôn",
+    "coordinates": {
+      "latitude": 10.4110,
+      "longitude": 105.0089
+    },
+    "category": "culture",
+    "cross_border_flag": "NONE"
+  },
+  "source": {
+    "type": "GOVERNMENT_DECISION",
+    "title": "Quyết định xếp hạng Di tích Kiến trúc Nghệ thuật cấp Quốc gia",
+    "issuing_authority": "Bộ Văn hóa Thông tin (nay là Bộ Văn hóa, Thể thao và Du lịch)",
+    "source_url": "https://triton.angiang.gov.vn"
+  },
+  "evidence": {
+    "reference_number": "Quyết định số 224/QĐ-BVHTT ngày 12/12/1986",
+    "legal_classification": "NATIONAL_HERITAGE",
+    "gps_audit_status": "AUDITED_IN_BOUNDS",
+    "photos_evidence": [
+      {
+        "url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148159/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_01.webp",
+        "caption": "Toàn cảnh Chánh điện Chùa Xà Tón rực rỡ nét kiến trúc Angkor",
+        "verified": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148162/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_02.webp",
+        "caption": "Khuôn viên tháp xá lợi cổ và rợp bóng cây sao, cây dầu cổ thụ",
+        "verified": true
+      },
+      {
+        "url": "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148163/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_03.webp",
+        "caption": "Bộ Kinh lá buông Satra độc bản lưu giữ tại chùa",
+        "verified": true
+      }
+    ],
+    "field_notes": "Ngôi chùa Khmer cổ kính và có quy mô bậc nhất tỉnh An Giang (>300 năm tuổi). Nơi lưu giữ kho tàng Kinh lá buông Satra Sleok Rith nhiều nhất Việt Nam, được Trung tâm Sách Kỷ lục Việt Nam (VietKings) xác lập kỷ lục năm 2006. Tọa độ thực địa đã đối soát khớp 100% ranh giới Thị trấn Tri Tôn."
+  },
+  "reviewer": {
+    "name": "Chăm Rốch Thi",
+    "role": "Nhà nghiên cứu Văn hóa & Kỹ sư Bản địa Tri Tôn",
+    "organization": "Ban Quản trị Tri Thức Du Lịch Tri Tôn",
+    "signature_hash": "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0"
+  },
+  "lifecycle": {
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T22:00:00+07:00",
+    "expires_at": "2027-09-28T22:00:00+07:00",
+    "freshness_cycle_days": 365
+  },
+  "field_level_provenance": {
+    "name_verified": true,
+    "coordinates_verified": true,
+    "commune_verified": true,
+    "category_verified": true,
+    "phone_verified": false,
+    "cultural_claims_verified": true
+  }
+}

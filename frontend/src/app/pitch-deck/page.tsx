@@ -120,7 +120,7 @@ export default function PitchDeckPage() {
               </h1>
 
               <p className="text-slate-600 text-base sm:text-lg max-w-3xl leading-relaxed">
-                Nền tảng du lịch AI thực chiến đầu tiên tại An Giang: Kết nối các di tích lịch sử, chùa tháp Khmer, ẩm thực Gà Đốt Ô Thum và mạng lưới 50+ hộ kinh doanh bản địa.
+                Nền tảng du lịch AI thực chiến đầu tiên tại An Giang: Kết nối 149 di tích lịch sử, chùa tháp Khmer, ẩm thực Gà Đốt Ô Thum và mạng lưới 50+ hộ kinh doanh bản địa.
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
@@ -242,7 +242,7 @@ export default function PitchDeckPage() {
                   </div>
                   <h3 className="font-heading font-bold text-lg text-[#0A6B61]">3. Địa Phương & Xã Hội</h3>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    • Số hóa chuẩn xác <strong>các di tích & chùa Khmer</strong>.<br />
+                    • Số hóa chuẩn xác <strong>149 di tích & chùa Khmer</strong>.<br />
                     • <strong>Danh bạ cứu hộ 24/7</strong> bảo vệ an toàn cho du khách.<br />
                     • Thúc đẩy tiêu thụ nông sản & đặc sản OCOP Bảy Núi.
                   </p>
@@ -318,10 +318,10 @@ export default function PitchDeckPage() {
                 <div className="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-6 space-y-3 shadow-sm">
                   <div className="flex justify-between items-center">
                     <h3 className="font-heading font-bold text-lg text-[#0A6B61]">📍 CSDL Thực Địa Độc Quyền</h3>
-                    <span className="text-xs font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">Danh Mục Điểm Đến</span>
+                    <span className="text-xs font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">149 POIs</span>
                   </div>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    • <strong>địa điểm</strong> phủ khắp các xã/thị trấn (không dùng từ 'Huyện Tri Tôn').<br />
+                    • <strong>149 địa điểm</strong> phủ khắp các xã/thị trấn (không dùng từ 'Huyện Tri Tôn').<br />
                     • <strong>40+ quán đặc sản</strong> Gà Đốt Ô Thum, Cháo bò Châu Lăng, Bún cá củ ngải Dì Dom.<br />
                     • <strong>5 Đại lễ hội & Bảo vật Kinh lá buông</strong> Chùa Xvayton.<br />
                     • <strong>Danh bạ cứu hộ 24/7</strong> kết nối trực tiếp Công An, Y Tế, Cứu hộ xe máy.

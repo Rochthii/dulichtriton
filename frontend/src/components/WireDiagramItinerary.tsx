@@ -89,7 +89,7 @@ function getMapsUrl(name: string, commune: string): string {
 function getPlaceSummary(stopName: string, stopDesc?: string): string {
   const normalized = stopName.toLowerCase().replace(/[()]/g, '').trim();
 
-  // 1. Search directly in master Danh Mục Điểm Đến
+  // 1. Search directly in master 149 POIs
   const found = (localMasterPois as any[]).find((p) => {
     const pName = p.name.toLowerCase();
     const pId = p.id.toLowerCase();

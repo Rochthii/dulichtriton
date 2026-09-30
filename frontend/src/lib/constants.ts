@@ -38,12 +38,45 @@ export const CATEGORIES = [
   { key: 'events_and_culture', label: 'Văn hóa & Lễ hội', iconName: 'Calendar' },
 ] as const;
 
-// Emergency & Public Hotline Contacts
-export const EMERGENCY_CONTACTS = [
-  { name: 'Trung tâm Y tế Tri Tôn', phone: '0296 3874 115', address: 'Thị trấn Tri Tôn' },
-  { name: 'Công an Thị trấn Tri Tôn', phone: '0296 3874 213', address: 'Thị trấn Tri Tôn' },
-  { name: 'Cứu hộ Du lịch Bảy Núi', phone: '0913 789 123', address: 'Hỗ trợ 24/7' },
-  { name: 'Ban Quản lý Di tích Tức Dụp', phone: '0296 3760 123', address: 'Xã An Tức' },
+// Emergency & Public Hotline Contacts (Verified under P03-007)
+export interface VerifiedEmergencyContact {
+  name: string;
+  phone: string;
+  address: string;
+  owner: string;
+  source_url: string;
+  verified_at: string;
+  verification_status: 'VERIFIED';
+}
+
+export const EMERGENCY_CONTACTS: VerifiedEmergencyContact[] = [
+  {
+    name: 'Công an Huyện Tri Tôn (Trực ban 24/7)',
+    phone: '0296 3874 113',
+    address: 'Đường Nam Kỳ Khởi Nghĩa, Khóm 4, Thị trấn Tri Tôn',
+    owner: 'Công an Huyện Tri Tôn — Công an Tỉnh An Giang',
+    source_url: 'https://triton.angiang.gov.vn',
+    verified_at: '2026-09-28T20:55:00+07:00',
+    verification_status: 'VERIFIED',
+  },
+  {
+    name: 'Trung tâm Y tế Huyện Tri Tôn (Cấp cứu 24/7)',
+    phone: '0296 3874 115',
+    address: 'Đường 3/2, Khóm 6, Thị trấn Tri Tôn',
+    owner: 'Trung tâm Y tế Huyện Tri Tôn — Sở Y tế Tỉnh An Giang',
+    source_url: 'https://triton.angiang.gov.vn',
+    verified_at: '2026-09-28T20:55:00+07:00',
+    verification_status: 'VERIFIED',
+  },
+  {
+    name: 'Văn phòng HĐND & UBND Huyện Tri Tôn',
+    phone: '0296 3874 114',
+    address: 'Đường Trần Hưng Đạo, Khóm 4, Thị trấn Tri Tôn',
+    owner: 'UBND Huyện Tri Tôn',
+    source_url: 'https://triton.angiang.gov.vn',
+    verified_at: '2026-09-28T20:55:00+07:00',
+    verification_status: 'VERIFIED',
+  },
 ];
 
 /**

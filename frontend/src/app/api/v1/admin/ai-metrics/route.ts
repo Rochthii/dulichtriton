@@ -1,15 +1,17 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 import { getAIProviderMetrics } from '@/lib/aiProvider';
+import { verifyAdminSession } from '@/lib/adminSessionGuard';
+import { requireSupabaseServerClient } from '@/lib/serverSupabase';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseAnonKey || "placeholder");
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
+    const supabase = requireSupabaseServerClient();
+
     // 1. Get memory metrics from Centralized AI Provider
     const providerMetrics = getAIProviderMetrics();
 
@@ -40,7 +42,7 @@ export async function GET() {
     }
 
     // 3. Fetch average latency from chat_logs
-    let avgLatencyMs = 350;
+    let avgLatencyMs = 0;
     try {
       const { data: logs } = await supabase
         .from('chat_logs')

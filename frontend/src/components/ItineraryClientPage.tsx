@@ -16,7 +16,6 @@ import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
 import WireDiagramItinerary from './WireDiagramItinerary';
 import { optimizeRouteTSP, OptimizablePlace, OptimizedRouteResult } from '@/lib/routeOptimizer';
 import { supabase } from '@/lib/supabase';
-import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface PresetSummary {
   slug: string;
@@ -42,10 +41,6 @@ type DurationFilter = 'all' | '1-day' | 'evening' | '2-day' | '3-day';
 type PlannerTab = 'presets' | 'optimizer';
 
 export default function ItineraryClientPage() {
-  const { language, dict } = useLanguage();
-  const it = dict.itinerary;
-  const isEn = language === 'en';
-
   const [activeTab, setActiveTab] = useState<PlannerTab>('presets');
   const [presets, setPresets] = useState<PresetSummary[]>([]);
   const [selectedSlug, setSelectedSlug] = useState<string>('');

@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TritonCanonicalPoiRecordSchema",
+  "description": "Canonical Schema for Verified Points of Interest in Tri Ton Tourism System (P03-011)",
+  "version": "1.0.0",
+  "type": "object",
+  "required": [
+    "canonical_id",
+    "name",
+    "commune",
+    "coordinates",
+    "category",
+    "verification_status",
+    "is_verified"
+  ],
+  "properties": {
+    "canonical_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Standardized canonical slug without accents or UUID prefix"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Official recognized Vietnamese name"
+    },
+    "alt_names": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Vernacular, Khmer or historical alternative names"
+    },
+    "commune": {
+      "type": "string",
+      "enum": [
+        "Thị trấn Tri Tôn",
+        "Thị trấn Ba Chúc",
+        "Xã Châu Lăng",
+        "Xã Lương Phi",
+        "Xã Vĩnh Phước",
+        "Xã Lương An Trà",
+        "Xã Lạc Quới",
+        "Xã Lê Trì",
+        "Xã Ô Lâm",
+        "Xã An Tức",
+        "Xã Cô Tô",
+        "Xã Tân Tuyến",
+        "Xã Tà Đảnh",
+        "Xã Vĩnh Gia",
+        "Xã Núi Tô"
+      ],
+      "description": "Commune strictly matching 15 Tri Ton administrative units per RULE 02"
+    },
+    "district": {
+      "type": "string",
+      "default": "Tri Tôn"
+    },
+    "province": {
+      "type": "string",
+      "default": "An Giang"
+    },
+    "address": {
+      "type": "string",
+      "description": "Detailed street address or village location"
+    },
+    "coordinates": {
+      "type": "object",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": 10.30,
+          "maximum": 10.55,
+          "description": "WGS84 latitude inside Tri Ton bounding box"
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": 104.80,
+          "maximum": 105.15,
+          "description": "WGS84 longitude inside Tri Ton bounding box"
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": ["culture", "nature", "food", "stay", "experience", "historical"],
+      "description": "Primary domain category"
+    },
+    "tourism_category": {
+      "type": "string",
+      "description": "Display-level tourism classification"
+    },
+    "description": {
+      "type": "string",
+      "description": "Verified cultural and practical description"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["UNVERIFIED", "IN_REVIEW", "VERIFIED", "REJECTED", "EXPIRED"],
+      "description": "Formal governance verification status (Core pillar of P03-011)"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "description": "Boolean flag for fast binary indexing and backward-compatible RLS queries"
+    },
+    "review_id": {
+      "type": "string",
+      "pattern": "^PVR-[A-Z0-9_-]+$",
+      "description": "Mandatory foreign reference to the verified audit record when verification_status is VERIFIED"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of formal verification sign-off (ISO 8601)"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the verification audit expires (ISO 8601)"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Authoritative URL of the source evidence"
+    },
+    "photos": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "default": [],
+      "description": "Verified image URLs (no stock mock photos)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Operational active state"
+    }
+  }
+}

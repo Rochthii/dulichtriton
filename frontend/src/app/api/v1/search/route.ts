@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import localMasterPois from '@/data/triton_pois_full.json';
 import { getOrSetServerCache, EDGE_CACHE_HEADERS } from '@/lib/serverCache';
+import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
+import { buildSafeOrIlikeFilter } from '@/lib/postgrestFilterSanitizer';
+import { resolveVerificationMetadata } from '@/lib/placeVerificationGuard';
 
 export const dynamic = 'force-dynamic';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
 
 export function removeVietnameseTones(str: string): string {
   if (!str) return '';
@@ -64,24 +62,36 @@ export async function GET(req: NextRequest) {
     const data = await getOrSetServerCache(
       cacheKey,
       async () => {
-        // Query Supabase with broad search
-        const { data: dbData, error } = await supabase
-          .from('places')
-          .select('id, slug, name, category, tourism_category, commune, rating, image_url, description, is_hot')
-          .or([
-            `name.ilike.%${q}%`,
-            `commune.ilike.%${q}%`,
-            `category.ilike.%${q}%`,
-            `tourism_category.ilike.%${q}%`,
-            `description.ilike.%${q}%`,
-            `address.ilike.%${q}%`,
-          ].join(','))
-          .eq('is_active', true)
-          .order('rating', { ascending: false })
-          .limit(20);
+        let dbData: any[] | null = null;
+        const supabase = getSupabaseServerClient() || getSupabaseAnonServerClient();
+
+        if (supabase) {
+          // Query Supabase with broad search using safe PostgREST filter
+          const safeOrFilter = buildSafeOrIlikeFilter(
+            ['name', 'commune', 'category', 'tourism_category', 'description', 'address'],
+            q
+          );
+
+          let reqQuery = supabase
+            .from('places')
+            .select('id, slug, name, category, tourism_category, commune, rating, image_url, description, is_hot, is_verified, verification_status, verified_at')
+            .eq('is_active', true)
+            .order('rating', { ascending: false })
+            .limit(20);
+
+          if (safeOrFilter) {
+            reqQuery = reqQuery.or(safeOrFilter);
+          }
+
+          const { data, error } = await reqQuery;
+
+          if (!error && data) {
+            dbData = data;
+          }
+        }
 
         // Merge DB data with local master POIs to guarantee unaccented search coverage
-        const pool: any[] = (!error && dbData && dbData.length > 0) ? dbData : (localMasterPois as any[]);
+        const pool: any[] = (dbData && dbData.length > 0) ? dbData : (localMasterPois as any[]);
         
         // Match both with original and unaccented terms
         const filtered = pool.filter((p) => {
@@ -109,7 +119,14 @@ export async function GET(req: NextRequest) {
           if (removeVietnameseTones(item.commune || '').includes(qClean)) score += 25;
           if (item.is_hot) score += 15;
           if (item.rating && Number(item.rating) >= 4.8) score += 10;
-          return { ...item, _score: score };
+          const vMeta = resolveVerificationMetadata(item);
+          return {
+            ...item,
+            is_verified: vMeta.is_verified,
+            verification_status: vMeta.verification_status,
+            verified_at: vMeta.verified_at,
+            _score: score,
+          };
         }).sort((a: any, b: any) => b._score - a._score);
 
         // Group results
@@ -119,34 +136,25 @@ export async function GET(req: NextRequest) {
           if (grouped[group].length < 4) grouped[group].push(item);
         }
 
-        // Flatten preserving group order, max 10 total
-        const results = [
-          ...grouped.place,
-          ...grouped.food,
-          ...grouped.stay,
-          ...grouped.culture,
-        ].slice(0, 10).map((item) => ({
-          id: item.id,
-          slug: item.slug || item.id,
-          name: item.name,
-          category: item.tourism_category || item.category || 'Địa điểm',
-          commune: item.commune,
-          rating: item.rating ? Number(item.rating) : 4.8,
-          image_url: item.image_url,
-          group: getGroup(item.tourism_category || item.category || ''),
-          is_hot: Boolean(item.is_hot),
-        }));
-
-        return { results, query: q, total: results.length };
+        return {
+          total: scored.length,
+          topMatch: scored[0] || null,
+          grouped,
+          all: scored.slice(0, 12),
+        };
       },
-      3600 // 1 hour cache
+      300 // 5 minute server-side cache
     );
 
-    return NextResponse.json(data, {
-      headers: EDGE_CACHE_HEADERS,
-    });
-  } catch (err) {
-    console.error('[/api/v1/search] Error:', err);
-    return NextResponse.json({ error: 'Search failed', results: [] }, { status: 500 });
+    return NextResponse.json(
+      { success: true, query: q, ...data },
+      { headers: EDGE_CACHE_HEADERS }
+    );
+  } catch (err: unknown) {
+    console.error('[API /search Error]:', err);
+    return NextResponse.json(
+      { success: false, query: q, error: 'Lỗi tìm kiếm nội bộ' },
+      { status: 500 }
+    );
   }
 }

@@ -1,18 +1,18 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * UNIFIED HYBRID RAG ENGINE v2.1 (Time-Aware Golden Window Grounding)
+ * UNIFIED HYBRID RAG ENGINE v2.2 (Canonical Verified Grounding Gate)
  * Du Lịch Tri Tôn AI Assistant System
  * 
  * Features:
  * 1. Time-Aware Golden Window Recommendation (Khung giờ vàng ẩm thực & danh thắng)
- * 2. Instant In-Memory RAM Entity Matching (Verified POIs) < 1ms
+ * 2. Fail-Closed In-Memory Canonical POI Ingestion (Strictly VERIFIED Only)
  * 3. Spatial GPS Proximity Distance Matrix (PostGIS Haversine formula)
  * 4. Live Weather Context (Open-Meteo Cache 15m)
  * 5. 6 Major Festivals & Transportation Routing Mastery
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import masterPois from '@/data/triton_pois_full.json';
+import canonicalPlacesData from '@/data/places.canonical.json';
 import transportData from '@/data/tri_ton_transportation.json';
 import festivalsData from '@/data/tri_ton_festivals.json';
 import itinerariesData from '@/data/lichtrinh.json';
@@ -20,14 +20,126 @@ import { generateEvidenceLinks } from '../evidenceGenerator';
 import { optimizeClosedLoopRoute, type SpatialPoi } from './spatialRouter';
 import { generateSmartSuggestions } from './contextualSuggestionEngine';
 
+export interface IngestedRagPlace {
+  id: string;
+  slug: string;
+  name: string;
+  commune: string;
+  category: string;
+  subcategory?: string;
+  rating: number;
+  latitude: number;
+  longitude: number;
+  image_url: string;
+  source_url?: string;
+  description?: string;
+  verification_status: 'VERIFIED';
+  is_verified: true;
+  review_id?: string;
+  verified_at?: string;
+  alt_names?: string[];
+  field_tips?: string;
+  price_level?: string;
+  opening_hours?: string;
+}
+
+export interface IngestOptions {
+  strict?: boolean; // if true, throw error on any unverified record
+}
+
+/**
+ * Fail-Closed RAG Ingest Gate:
+ * Strictly accepts ONLY canonical records with verification_status === 'VERIFIED' and is_verified === true.
+ * Rejects unverified, pending, rejected, expired or mock items.
+ */
+export function ingestCanonicalPlacesForRag(
+  rawCandidates: unknown[],
+  options: IngestOptions = {}
+): IngestedRagPlace[] {
+  if (!Array.isArray(rawCandidates)) {
+    if (options.strict) {
+      throw new Error('Invalid candidates input: must be an array');
+    }
+    return [];
+  }
+
+  const verifiedPlaces: IngestedRagPlace[] = [];
+
+  for (const item of rawCandidates) {
+    if (!item || typeof item !== 'object') {
+      if (options.strict) throw new Error('Candidate item must be a non-null object');
+      continue;
+    }
+
+    const p = item as Record<string, any>;
+    const canonicalId = p.canonical_id || p.id || p.slug;
+
+    // Fail-Closed Gate: Strictly enforce VERIFIED verification_status and is_verified === true
+    if (p.verification_status !== 'VERIFIED' || p.is_verified !== true) {
+      if (options.strict) {
+        throw new Error(
+          `Unverified place rejected from RAG ingest: "${canonicalId || 'unknown'}" has status "${p.verification_status}" and is_verified=${p.is_verified}`
+        );
+      }
+      continue;
+    }
+
+    if (!canonicalId || !p.name) {
+      if (options.strict) {
+        throw new Error('Place missing required canonical_id or name');
+      }
+      continue;
+    }
+
+    const lat = typeof p.coordinates?.latitude === 'number'
+      ? p.coordinates.latitude
+      : Number(p.latitude) || 10.4128;
+    const lng = typeof p.coordinates?.longitude === 'number'
+      ? p.coordinates.longitude
+      : Number(p.longitude) || 105.0068;
+
+    const img = Array.isArray(p.photos) && p.photos.length > 0
+      ? p.photos[0]
+      : p.image_url || p.imageUrl || '';
+
+    verifiedPlaces.push({
+      id: canonicalId,
+      slug: canonicalId,
+      name: p.name,
+      commune: p.commune || 'Thị trấn Tri Tôn',
+      category: p.category || p.tourism_category || 'Địa điểm',
+      subcategory: p.subcategory || undefined,
+      rating: typeof p.rating === 'number' ? p.rating : 4.8,
+      latitude: lat,
+      longitude: lng,
+      image_url: img,
+      source_url: p.source_url,
+      description: p.description,
+      verification_status: 'VERIFIED',
+      is_verified: true,
+      review_id: p.review_id,
+      verified_at: p.verified_at,
+      alt_names: Array.isArray(p.alt_names) ? p.alt_names : [],
+      field_tips: p.field_tips,
+      price_level: p.price_level,
+      opening_hours: p.opening_hours,
+    });
+  }
+
+  return verifiedPlaces;
+}
+
+export function getActiveRagPlaces(): IngestedRagPlace[] {
+  const artifact = canonicalPlacesData as unknown as { places?: unknown[] };
+  return ingestCanonicalPlacesForRag(artifact?.places || []);
+}
+
 export interface FormattedPoi {
   id: string;
   slug: string;
   name: string;
-  name_en?: string;
   commune: string;
   category: string;
-  category_en?: string;
   rating: number;
   image_url: string;
   imageUrl?: string;
@@ -38,9 +150,7 @@ export interface FormattedPoi {
   price_level?: string;
   opening_hours?: string;
   description?: string;
-  description_en?: string;
   field_tips?: string;
-  field_tips_en?: string;
 }
 
 export interface RagContextResult {
@@ -254,7 +364,7 @@ export async function buildUnifiedRagContext(
   const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
   const matchedMap = new Map<string, any>();
-  const poisList = masterPois as any[];
+  const poisList = getActiveRagPlaces();
   const timeWindow = getCurrentTimeWindowInfo();
 
   // 1. Time-Aware Priority Injection (Nếu câu hỏi mang tính chung chung hoặc hỏi ăn uống theo giờ)
@@ -328,19 +438,9 @@ export async function buildUnifiedRagContext(
   for (const token of tokens) {
     const hits = poisList.filter((p) => {
       const name = (p.name || '').toLowerCase();
-      const nameEn = (p.name_en || '').toLowerCase();
       const commune = (p.commune || '').toLowerCase();
       const category = (p.category || '').toLowerCase();
-      const categoryEn = (p.category_en || '').toLowerCase();
-      const descEn = (p.description_en || '').toLowerCase();
-      return (
-        name.includes(token) ||
-        nameEn.includes(token) ||
-        commune.includes(token) ||
-        category.includes(token) ||
-        categoryEn.includes(token) ||
-        descEn.includes(token)
-      );
+      return name.includes(token) || commune.includes(token) || category.includes(token);
     }).slice(0, 3);
 
     hits.forEach((p) => {
@@ -353,34 +453,14 @@ export async function buildUnifiedRagContext(
     poisList.slice(0, 4).forEach((p) => matchedMap.set(p.id, p));
   }
 
-  // 5. Intelligent Landmark Origin & Spatial Proximity Matrix
-  let selectedPlaces: any[] = Array.from(matchedMap.values()).slice(0, 6);
-  let originLandmarkName = '';
-  let refLat = userLat;
-  let refLng = userLng;
+  let selectedPlaces = Array.from(matchedMap.values()).slice(0, 6);
 
-  if (!refLat || !refLng) {
-    // Try to extract origin landmark from user query (e.g., "đang ở Chùa Tà Pạ", "từ Hồ Ô Thum", "gần Đồi Tức Dụp")
-    const originMatch = lower.match(/(?:đang ở|từ|quanh|gần|tại)\s+([a-zA-ZÀ-ỹ0-9\s]+?)(?:,|\?|\.|\s+có|\s+quanh|\s+ăn|\s+quán|\s+chơi|\s+đi|\s+thì|$)/i);
-    if (originMatch && originMatch[1]) {
-      const qLandmark = originMatch[1].trim().toLowerCase();
-      const foundOrigin = poisList.find((p) => {
-        const pName = (p.name || '').toLowerCase();
-        return pName.includes(qLandmark) || qLandmark.includes(pName);
-      });
-      if (foundOrigin && foundOrigin.latitude && foundOrigin.longitude) {
-        refLat = Number(foundOrigin.latitude);
-        refLng = Number(foundOrigin.longitude);
-        originLandmarkName = foundOrigin.name;
-      }
-    }
-  }
-
-  if (refLat && refLng && !isNaN(refLat) && !isNaN(refLng)) {
+  // 5. Spatial Proximity Ranking (if user coordinates provided)
+  if (userLat && userLng && !isNaN(userLat) && !isNaN(userLng)) {
     selectedPlaces = selectedPlaces.map((p) => {
       const lat = Number(p.latitude) || 10.4128;
       const lng = Number(p.longitude) || 105.0068;
-      const dist = calculateDistanceKm(refLat, refLng, lat, lng);
+      const dist = calculateDistanceKm(userLat, userLng, lat, lng);
       return { ...p, distance_km: dist };
     }).sort((a, b) => (a.distance_km || 0) - (b.distance_km || 0));
   }
@@ -393,10 +473,8 @@ export async function buildUnifiedRagContext(
       id: p.id,
       slug: p.slug || p.id,
       name: p.name,
-      name_en: p.name_en || p.name,
       commune: p.commune || 'Tri Tôn',
       category: p.category || 'Địa điểm',
-      category_en: p.category_en || 'Destination',
       rating: p.rating || 4.8,
       image_url: imgUrl,
       imageUrl: imgUrl,
@@ -407,9 +485,7 @@ export async function buildUnifiedRagContext(
       price_level: p.price_level,
       opening_hours: p.opening_hours,
       description: p.description,
-      description_en: p.description_en || p.description,
       field_tips: p.field_tips,
-      field_tips_en: p.field_tips_en || p.field_tips,
     };
   });
 
@@ -418,13 +494,10 @@ export async function buildUnifiedRagContext(
 
   // 8. Build Text Context for LLM
   const ragLines = formattedPlaces.map((p) => {
-    const distText = p.distance_km !== undefined 
-      ? (originLandmarkName ? ` (Cách ${originLandmarkName} ~${p.distance_km}km)` : ` (Cách bạn ~${p.distance_km}km)`) 
-      : '';
+    const distText = p.distance_km !== undefined ? ` (Cách bạn ~${p.distance_km}km)` : '';
     const tips = p.field_tips ? `\n  - Mẹo thực địa: ${p.field_tips}` : '';
     const desc = p.description ? `\n  - Chi tiết: ${p.description.slice(0, 250)}` : '';
-    const enAlias = p.name_en && p.name_en !== p.name ? ` | EN: ${p.name_en}` : '';
-    return `* **${p.name}**${enAlias} (Địa phận: ${p.commune}${distText}): Thể loại ${p.category} (${p.category_en}), Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url}) • [▶ Xem TikTok Video](${p.tiktok_search_url})`;
+    return `* **${p.name}** (Địa phận: ${p.commune}${distText}): Thể loại ${p.category}, Đánh giá: ${p.rating}/5.${tips}${desc}\n  [📍 Chỉ đường Google Maps](${p.source_url}) • [▶ Xem TikTok Video](${p.tiktok_search_url})`;
   });
 
   let transportSnippet = '';
@@ -506,7 +579,7 @@ export async function buildUnifiedRagContext(
   ]);
 
   const fullRagContext = [
-    ragLines.length > 0 ? `CSDL 149 ĐỊA ĐIỂM TRI TÔN XÁC MINH PHÙ HỢP:\n${ragLines.join('\n\n')}` : '',
+    ragLines.length > 0 ? `CSDL ĐỊA ĐIỂM TRI TÔN CANONICAL XÁC MINH (VERIFIED GROUNDING):\n${ragLines.join('\n\n')}` : '',
     timeWindowSnippet,
     itinerarySnippet,
     transportSnippet,

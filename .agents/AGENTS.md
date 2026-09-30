@@ -13,12 +13,6 @@
 3. `[LIÊN KẾT & CONTEXT LIÊN QUAN]` (Link file:///, commit)
 4. `[HỎI & GỢI Ý BƯỚC TIẾP THEO]` (Luôn đặt 2-3 câu hỏi gợi ý)
 
-## 🛠️ Danh Mục Kỹ Năng Hệ Thống (Standard Skills):
-- **Workflow Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_workflow_execution_standard/SKILL.md)
-- **Bilingual i18n Standard Skill**: [`.agents/skills/triton_bilingual_i18n_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_bilingual_i18n_standard/SKILL.md)
-- **File Management & Maintenance Skill**: [`.agents/skills/triton_codebase_file_management_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_codebase_file_management_standard/SKILL.md)
-- **Zalo Integration Skill**: [`.agents/skills/triton_zalo_ecosystem_integration/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_zalo_ecosystem_integration/SKILL.md)
-
 ## ⚡ Tiêu Chuẩn Đồng Bộ Database (Smart Delta Sync Protocol):
 - Mọi chỉnh sửa dữ liệu Master **bắt buộc phải push ngay lên Supabase PostgreSQL**.
 - **Tuyệt đối cấm ghi đè mù quáng**: Phải chạy qua `scripts/sync/smart_delta_sync.js` để chỉ PATCH những trường/bản ghi thay đổi, bỏ qua 100% bản ghi đã khớp.

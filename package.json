@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm --prefix frontend run dev",
+    "generate:places": "node scripts/generate_static_frontend_places.mjs",
     "build": "npm --prefix frontend install && npm --prefix frontend run build",
     "start": "npm --prefix frontend run start"
   }

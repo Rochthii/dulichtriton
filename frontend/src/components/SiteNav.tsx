@@ -17,24 +17,21 @@ import {
   Home,
   Shield,
   Smartphone,
-  Globe,
 } from "lucide-react";
 import AppLogo from "./AppLogo";
-import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function SiteNav() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { name: t("nav.home"), href: "/", icon: Home },
-    { name: t("nav.places"), href: "/places", icon: Compass },
-    { name: t("nav.food"), href: "/food", icon: Utensils },
-    { name: t("nav.stay"), href: "/stay", icon: Hotel },
-    { name: t("nav.culture"), href: "/culture", icon: Calendar },
-    { name: t("nav.itinerary"), href: "/itinerary", icon: Sparkles },
-    { name: t("nav.map"), href: "/map", icon: MapPin },
+    { name: "Trang Chủ", href: "/", icon: Home },
+    { name: "Khám Phá", href: "/places", icon: Compass },
+    { name: "Ẩm Thực", href: "/food", icon: Utensils },
+    { name: "Lưu Trú", href: "/stay", icon: Hotel },
+    { name: "Lễ Hội", href: "/culture", icon: Calendar },
+    { name: "Lịch Trình", href: "/itinerary", icon: Sparkles },
+    { name: "Bản Đồ", href: "/map", icon: MapPin },
   ];
 
   return (
@@ -46,7 +43,7 @@ export default function SiteNav() {
         </Link>
 
         {/* Center Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-0">
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 shrink-0">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = pathname === link.href || (link.href === "/itinerary" && pathname === "/planner");
@@ -56,13 +53,13 @@ export default function SiteNav() {
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`flex items-center gap-1 xl:gap-1.5 px-2 xl:px-3 py-1.5 xl:py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F] border border-emerald-200 shadow-2xs font-black"
                     : "text-slate-600 hover:text-slate-950 hover:bg-slate-100/80 font-semibold"
                 }`}
               >
-                <Icon className={`h-3.5 w-3.5 xl:h-4 xl:w-4 shrink-0 ${isActive ? "text-[#0E8C7F]" : "text-slate-400"}`} />
+                <Icon className={`h-4 w-4 shrink-0 ${isActive ? "text-[#0E8C7F]" : "text-slate-400"}`} />
                 <span>{link.name}</span>
               </Link>
             );
@@ -78,7 +75,7 @@ export default function SiteNav() {
                 key={link.href}
                 href={link.href}
                 prefetch={true}
-                className={`px-2 py-1 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                   isActive
                     ? "bg-emerald-50 text-[#0E8C7F]"
                     : "text-slate-600 hover:text-slate-950 hover:bg-slate-100"
@@ -90,44 +87,65 @@ export default function SiteNav() {
           })}
         </nav>
 
-        {/* Right CTA Actions: Language Toggle & Emergency SOS */}
-        <div className="hidden md:flex items-center gap-2 shrink-0">
-          {/* Language Switcher Toggle */}
+        {/* Right CTA Actions */}
+        <div className="hidden md:flex items-center gap-2.5 shrink-0">
           <button
             type="button"
-            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1.5 px-3 py-1.5 xl:py-2 text-xs font-bold rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-all font-display whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:border-[#0E8C7F]"
-            title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("triton:open-chat"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] hover:shadow-md hover:brightness-105 transition-all shadow-xs active:scale-95 font-display whitespace-nowrap shrink-0 cursor-pointer"
+            title="Mở Trợ Lý AI Du Lịch Tri Tôn"
           >
-            <Globe className="h-3.5 w-3.5 text-[#0E8C7F]" />
-            <span className="font-extrabold">{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
+            <Bot className="h-4 w-4 text-slate-950" />
+            <span>Trợ Lý AI</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open-pwa-install"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-full border border-emerald-200 transition-colors font-display whitespace-nowrap shrink-0 cursor-pointer"
+            title="Cài Đặt Ứng Dụng Du Lịch Tri Tôn Vào Điện Thoại"
+          >
+            <Smartphone className="h-3.5 w-3.5 text-emerald-700 shrink-0" />
+            <span>Cài App</span>
           </button>
 
           <Link
             href="/emergency"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 xl:py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
-            title={language === "vi" ? "Tổng Đài Hỗ Trợ & Cứu Hộ Khẩn Cấp Bảy Núi" : "Seven Mountains 24/7 Emergency Hotline"}
+            className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-full border border-rose-200 transition-colors font-display whitespace-nowrap shrink-0"
+            title="Tổng Đài Hỗ Trợ & Cứu Hộ Khẩn Cấp Bảy Núi"
           >
             <PhoneCall className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-            <span>{language === "vi" ? "Cứu Hộ 24/7" : "SOS 24/7"}</span>
+            <span className="hidden xl:inline">Cứu Hộ 24/7</span>
           </Link>
         </div>
 
-        {/* Mobile Action Controls: Language Toggle & Menu Button */}
-        <div className="flex md:hidden items-center gap-1.5 shrink-0">
+        {/* Mobile Menu Button & Highlighted AI Button */}
+        <div className="flex md:hidden items-center gap-2 shrink-0">
           <button
             type="button"
-            onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-            className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-extrabold rounded-full border border-slate-200 bg-slate-50 text-slate-800 shadow-2xs font-display active:scale-95 transition-transform cursor-pointer"
-            title={language === "vi" ? "Switch to English" : "Chuyển sang Tiếng Việt"}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("triton:open-chat"));
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black text-slate-950 bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] shadow-sm border border-amber-300 active:scale-95 transition-transform font-display cursor-pointer"
+            title="Hỏi Đáp Cùng Trợ Lý Du Lịch Tri Tôn AI"
           >
-            <Globe className="h-3 w-3 text-[#0E8C7F]" />
-            <span>{language === "vi" ? "🇬🇧 EN" : "🇻🇳 VI"}</span>
+            <Bot className="h-4 w-4 text-slate-950 stroke-[2.5]" />
+            <span className="font-extrabold tracking-tight">Hỏi AI</span>
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0 border border-slate-200/60 cursor-pointer"
+            className="p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-transform focus:outline-none shrink-0 border border-slate-200/60"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="h-5 w-5 text-slate-900" /> : <Menu className="h-5 w-5 text-slate-800" />}
@@ -138,34 +156,6 @@ export default function SiteNav() {
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/98 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 shadow-xl">
-          {/* Language Switcher in Mobile Drawer */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-100 mb-2">
-            <span className="text-xs font-bold text-slate-700 flex items-center gap-2">
-              <Globe className="h-4 w-4 text-[#0E8C7F]" />
-              {t("common.language")}
-            </span>
-            <div className="flex items-center gap-1 bg-slate-200/70 p-1 rounded-xl">
-              <button
-                type="button"
-                onClick={() => setLanguage("vi")}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
-                  language === "vi" ? "bg-[#0E8C7F] text-white shadow-2xs" : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                🇻🇳 VI
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage("en")}
-                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
-                  language === "en" ? "bg-[#0E8C7F] text-white shadow-2xs" : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                🇬🇧 EN
-              </button>
-            </div>
-          </div>
-
           <div className="grid grid-cols-2 gap-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -201,7 +191,7 @@ export default function SiteNav() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-emerald-600 text-white shadow-sm font-display cursor-pointer"
             >
               <Smartphone className="h-4 w-4 text-[#FFD37A]" />
-              <span>{language === "vi" ? "Cài Đặt App Tri Tôn Ra Màn Hình Chính" : "Install Tri Ton App to Home Screen"}</span>
+              <span>Cài Đặt App Tri Tôn Ra Màn Hình Chính</span>
             </button>
 
             <Link
@@ -210,7 +200,7 @@ export default function SiteNav() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-sm font-display"
             >
               <Bot className="h-4 w-4" />
-              <span>{language === "vi" ? "Hỏi Đáp Du Lịch Cùng Trợ Lý AI" : "Ask Tri Ton AI Travel Assistant"}</span>
+              <span>Hỏi Đáp Du Lịch Cùng Trợ Lý AI</span>
             </Link>
 
             <Link
@@ -219,7 +209,7 @@ export default function SiteNav() {
               className="flex items-center justify-center gap-2 py-2.5 rounded-2xl text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 font-display"
             >
               <PhoneCall className="h-3.5 w-3.5 text-rose-600 shrink-0" />
-              <span>{language === "vi" ? "Tổng Đài Cứu Hộ Bảy Núi: 0296.3874.113" : "24/7 Emergency Hotline: 0296.3874.113"}</span>
+              <span>Tổng Đài Cứu Hộ Bảy Núi: 0296.3874.113</span>
             </Link>
           </div>
         </div>

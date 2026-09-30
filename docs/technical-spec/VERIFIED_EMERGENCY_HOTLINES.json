@@ -1,0 +1,50 @@
+[
+  {
+    "hotline_id": "HOTLINE-001",
+    "name": "Công an Huyện Tri Tôn (Trực ban Khẩn cấp 24/7)",
+    "phone": "0296 3874 113",
+    "phone_display": "0296.3874.113",
+    "category": "security_and_rescue",
+    "owner": "Công an Huyện Tri Tôn — Công an Tỉnh An Giang",
+    "address": "Đường Nam Kỳ Khởi Nghĩa, Khóm 4, Thị trấn Tri Tôn, Huyện Tri Tôn, Tỉnh An Giang",
+    "service_scope": "Tiếp nhận tin báo an ninh trật tự, tai nạn giao thông, sự cố trên đèo núi, cứu nạn cứu hộ khẩn cấp 24/7 toàn địa bàn Huyện Tri Tôn.",
+    "source_url": "https://triton.angiang.gov.vn",
+    "source_name": "Cổng thông tin điện tử UBND Huyện Tri Tôn & Danh bạ Công an Tỉnh An Giang",
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T20:55:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "notes": "Đầu mối khẩn cấp trực ban 24/7 chính thức của toàn Huyện Tri Tôn. Đã xác thực thực địa và thông báo công khai của cơ quan nhà nước."
+  },
+  {
+    "hotline_id": "HOTLINE-002",
+    "name": "Trung tâm Y tế Huyện Tri Tôn (Trực Cấp Cứu 24/7)",
+    "phone": "0296 3874 115",
+    "phone_display": "0296.3874.115",
+    "category": "medical_emergency",
+    "owner": "Trung tâm Y tế Huyện Tri Tôn — Sở Y tế Tỉnh An Giang",
+    "address": "Đường 3/2, Khóm 6, Thị trấn Tri Tôn, Huyện Tri Tôn, Tỉnh An Giang",
+    "service_scope": "Cấp cứu y tế, sơ cứu chấn thương du lịch/đèo núi, vận chuyển bệnh nhân cấp cứu 24/7.",
+    "source_url": "https://triton.angiang.gov.vn",
+    "source_name": "Cổng thông tin điện tử UBND Huyện Tri Tôn & Sở Y tế An Giang",
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T20:55:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "notes": "Đơn vị y tế công lập cao nhất tại địa bàn Huyện Tri Tôn, có đội xe cứu thương trực 24/7."
+  },
+  {
+    "hotline_id": "HOTLINE-003",
+    "name": "Văn phòng HĐND & UBND Huyện Tri Tôn (Đường dây nóng phản ánh)",
+    "phone": "0296 3874 114",
+    "phone_display": "0296.3874.114",
+    "category": "governance_and_support",
+    "owner": "Văn phòng HĐND & UBND Huyện Tri Tôn",
+    "address": "Đường Trần Hưng Đạo, Khóm 4, Thị trấn Tri Tôn, Huyện Tri Tôn, Tỉnh An Giang",
+    "service_scope": "Tiếp nhận phản ánh du lịch, hỗ trợ hành chính và phối hợp liên ngành giờ hành chính.",
+    "source_url": "https://triton.angiang.gov.vn",
+    "source_name": "Cổng thông tin điện tử UBND Huyện Tri Tôn",
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T20:55:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "notes": "Đường dây nóng hành chính chính thức của huyện."
+  }
+]

@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import path from 'path';
 import fs from 'fs';
 import type { ItineraryData } from '@/components/WireDiagramItinerary';
+import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
 
 export const dynamic = 'force-dynamic';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-);
+function getSupabase() {
+  return getSupabaseServerClient() || getSupabaseAnonServerClient();
+}
 
 // ── Category inference for lichtrinh.json stops ─────────────────────────────
 type StopCategory = 'check-in' | 'food' | 'spiritual' | 'nature' | 'history';
@@ -65,13 +64,16 @@ async function getPlacesMap(): Promise<Map<string, PlaceInfo>> {
   const now = Date.now();
   if (!placesCache || now - lastPlacesFetch > 300000) {
     try {
-      const { data } = await supabase
-        .from('places')
-        .select('id, name, commune, category, rating, image_url')
-        .eq('is_verified', true);
-      if (Array.isArray(data)) {
-        placesCache = data;
-        lastPlacesFetch = now;
+      const supabase = getSupabase();
+      if (supabase) {
+        const { data } = await supabase
+          .from('places')
+          .select('id, name, commune, category, rating, image_url')
+          .eq('is_verified', true);
+        if (Array.isArray(data)) {
+          placesCache = data;
+          lastPlacesFetch = now;
+        }
       }
     } catch { /* ignore fallback */ }
   }
@@ -210,14 +212,17 @@ export async function GET(req: NextRequest) {
     }
 
     // FALLBACK: Supabase DB nếu file bị lỗi
-    const { data: dbData, error } = await supabase
-      .from('preset_itineraries')
-      .select('slug, emoji, title, tagline, for_whom, duration, budget_range, sort_order')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true });
+    const supabase = getSupabase();
+    if (supabase) {
+      const { data: dbData, error } = await supabase
+        .from('preset_itineraries')
+        .select('slug, emoji, title, tagline, for_whom, duration, budget_range, sort_order')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
 
-    if (!error && dbData && dbData.length > 0) {
-      return NextResponse.json({ presets: dbData, source: 'db_fallback' });
+      if (!error && dbData && dbData.length > 0) {
+        return NextResponse.json({ presets: dbData, source: 'db_fallback' });
+      }
     }
 
     return NextResponse.json({ presets: [] });
@@ -235,29 +240,32 @@ export async function GET(req: NextRequest) {
   }
 
   // FALLBACK: Supabase DB chỉ khi JSON không tìm thấy slug (lịch trình cũ/extra)
-  const { data: dbRow } = await supabase
-    .from('preset_itineraries')
-    .select('*')
-    .eq('slug', slug)
-    .eq('is_active', true)
-    .single();
+  const supabase = getSupabase();
+  if (supabase) {
+    const { data: dbRow } = await supabase
+      .from('preset_itineraries')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .single();
 
-  if (dbRow) {
-    const itinerary: ItineraryData = {
-      slug:         dbRow.slug,
-      emoji:        dbRow.emoji,
-      title:        dbRow.title,
-      tagline:      dbRow.tagline,
-      for_whom:     dbRow.for_whom,
-      duration:     dbRow.duration,
-      budget_range: dbRow.budget_range || '',
-      stops:        Array.isArray(dbRow.stops) ? dbRow.stops : JSON.parse(dbRow.stops || '[]'),
-    };
-    return NextResponse.json({
-      itinerary,
-      stops_count: itinerary.stops.length,
-      source: 'db_fallback',
-    });
+    if (dbRow) {
+      const itinerary: ItineraryData = {
+        slug:         dbRow.slug,
+        emoji:        dbRow.emoji,
+        title:        dbRow.title,
+        tagline:      dbRow.tagline,
+        for_whom:     dbRow.for_whom,
+        duration:     dbRow.duration,
+        budget_range: dbRow.budget_range || '',
+        stops:        Array.isArray(dbRow.stops) ? dbRow.stops : JSON.parse(dbRow.stops || '[]'),
+      };
+      return NextResponse.json({
+        itinerary,
+        stops_count: itinerary.stops.length,
+        source: 'db_fallback',
+      });
+    }
   }
 
   return NextResponse.json({ error: 'Lịch trình không tồn tại' }, { status: 404 });

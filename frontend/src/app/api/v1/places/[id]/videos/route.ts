@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
 
 export const dynamic = 'force-dynamic';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-);
 
 export async function GET(
   request: NextRequest,
@@ -19,6 +14,11 @@ export async function GET(
   }
 
   try {
+    const supabase = getSupabaseServerClient() || getSupabaseAnonServerClient();
+    if (!supabase) {
+      return NextResponse.json({ videos: [], total: 0 }, { status: 200 });
+    }
+
     // Query video_discoveries table filtered by matched_poi_id with 3s timeout race
     const queryPromise = Promise.resolve(
       supabase

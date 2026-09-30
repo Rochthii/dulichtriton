@@ -1,9 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
+import { buildSafeOrIlikeFilter } from '@/lib/postgrestFilterSanitizer';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", serviceKey || "placeholder");
+export const dynamic = 'force-dynamic';
+
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
+
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
+  void Promise.resolve(
+    supabase.from('audit_logs').insert({
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
+      action,
+      resource_type: 'custom_knowledge_base',
+      resource_id: resourceId,
+      details,
+    })
+  ).catch(e => console.warn('[AuditLog] Error:', e));
+}
 
 export interface KnowledgeItem {
   id: string;
@@ -18,8 +46,16 @@ export interface KnowledgeItem {
   updated_at: string;
 }
 
-// GET: Lấy danh sách tri thức có phân trang & tìm kiếm
+// GET: Lấy danh sách tri thức có phân trang & tìm kiếm (Requires Admin Session)
 export async function GET(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get('q')?.trim() || '';
@@ -40,28 +76,46 @@ export async function GET(req: NextRequest) {
       query = query.eq('is_active', true);
     }
 
-    if (search) {
-      query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+    if (search && search.trim()) {
+      const searchFilter = buildSafeOrIlikeFilter(['title', 'content'], search);
+      if (searchFilter) {
+        query = query.or(searchFilter);
+      }
     }
 
-    const queryPromise = Promise.resolve(query);
-    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
-      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
-    );
+    const { data, error } = await query;
 
-    const { data } = await Promise.race([queryPromise, timeoutPromise]);
+    if (error) {
+      console.error('[Admin Knowledge Base API] Fetch error:', error);
+      return NextResponse.json({ success: false, error: error.message, data: [] }, { status: 500 });
+    }
+
     return NextResponse.json({
       success: true,
       data: data || [],
       total: data?.length || 0,
     });
-  } catch (err: any) {
-    return NextResponse.json({ success: true, data: [], total: 0 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error fetching knowledge base';
+    console.error('[Admin Knowledge Base API] Exception:', msg);
+    return NextResponse.json({ success: false, error: msg, data: [] }, { status: 500 });
   }
 }
 
-// POST: Tạo mới tri thức & ghi Audit Log
+// POST: Tạo mới tri thức & ghi Audit Log (Requires Admin Session & Kill-switch Check)
 export async function POST(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const { title, category, keywords, content, is_active, priority, author } = body;
@@ -86,7 +140,7 @@ export async function POST(req: NextRequest) {
       content: content.trim(),
       is_active: is_active ?? true,
       priority: Number(priority) || 5,
-      author: author?.trim() || 'Admin',
+      author: author?.trim() || auth.principal?.fullName || 'Admin',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -102,22 +156,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 
-    // Ghi Audit Log bất biến
-    try {
-      await supabase.from('audit_logs').insert([
-        {
-          action: 'CREATE_KNOWLEDGE_BASE',
-          target_table: 'custom_knowledge_base',
-          target_id: data.id,
-          changes: { new: data },
-          created_at: new Date().toISOString(),
-        },
-      ]);
-    } catch { /* non-blocking audit */ }
+    logAudit('CREATE_KNOWLEDGE_BASE', data.id, newRecord, auth.principal);
 
     return NextResponse.json({ success: true, data }, { status: 201 });
-  } catch (err: any) {
-    console.error('[Admin Knowledge Base API] Insert exception:', err);
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error creating knowledge item';
+    console.error('[Admin Knowledge Base API] Insert exception:', msg);
+    return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }

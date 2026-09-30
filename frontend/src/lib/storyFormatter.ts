@@ -4,7 +4,7 @@
  * and glued text blocks into perfectly aligned, structured Markdown.
  */
 
-export function formatDetailedStory(text?: string | null, _placeName?: string): string {
+export function formatDetailedStory(text?: string | null): string {
   if (!text || typeof text !== 'string') return '';
 
   let formatted = text.trim();

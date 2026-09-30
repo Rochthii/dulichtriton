@@ -1,0 +1,137 @@
+[
+  {
+    "claim_id": "CUL-CLAIM-001",
+    "topic": "trai_truc_bay_nui",
+    "canonical_name": "Trái Trúc Bảy Núi (Trái Chúc)",
+    "scientific_name": "Citrus hystrix",
+    "khmer_name": "Krut (ក្រូចសើច)",
+    "local_vernacular": [
+      "Trái Trúc",
+      "Trái Chúc",
+      "Cây Trúc",
+      "Cây Chúc Thất Sơn"
+    ],
+    "geographic_origin": {
+      "region": "Vùng Bảy Núi (Thất Sơn), Huyện Tri Tôn, Tỉnh An Giang",
+      "core_communes": [
+        "Xã Ô Lâm",
+        "Xã Cô Tô",
+        "Xã Núi Tô",
+        "Xã Châu Lăng",
+        "Xã An Tức"
+      ],
+      "terrain": "Vùng bán sơn địa, chân đồi núi sỏi đá khô cằn thích nghi đặc thù"
+    },
+    "botanical_and_sensory_traits": {
+      "leaf_shape": "Lá hình số 8 đặc trưng (phiến lá kép với cuống lá có cánh rộng tương đương phiến lá)",
+      "fruit_skin": "Vỏ sần sùi, xù xì, dày, chứa hàm lượng túi tinh dầu cô đặc gấp nhiều lần chanh thông thường",
+      "aroma_profile": "Mùi thơm the nồng nàn, ấm gắt, hậu vị the mát sâu thẳm, không bị đắng hoặc biến tính khi tiếp xúc nhiệt than",
+      "juice_traits": "Nước cốt có vị chua gắt sâu nhưng hậu vị thanh sạch, dồi dào acid citric tự nhiên và hương tinh dầu"
+    },
+    "culinary_applications": [
+      "Lá trúc bánh tẻ xắt chỉ nhuyễn là linh hồn ướp món Gà Đốt Ô Thum",
+      "Nước cốt trái trúc tươi vắt vào chén muối hột ớt hiểm đâm lá trúc chấm gà đốt và lòng bò",
+      "Lá trúc xắt nhuyễn nêm vào cháo bò Bảy Núi dậy mùi the nồng thơm phức",
+      "Lá trúc non ăn kèm gỏi đu đủ đâm Khmer (Bok Lahong) và bò xào lá trúc"
+    ],
+    "prohibited_misconceptions": [
+      "KHÔNG ĐƯỢC gọi là 'chanh rừng' hoang dã vô danh hoặc gán ghép là 'chanh Thái du nhập lai bừa bãi'",
+      "KHÔNG ĐƯỢC đánh đồng với chanh ta (Citrus aurantifolia) hay chanh giấy thông thường",
+      "KHÔNG ĐƯỢC thay thế bằng lá chanh thường trong các món gà đốt hay cháo bò Bảy Núi vì làm mất 100% hương vị bản địa"
+    ],
+    "verification_source": {
+      "citation_title": "Đề án Bảo tồn và Phát huy Giá trị Di sản Cây Trúc & Văn hóa Ẩm thực Bảy Núi",
+      "issuing_authority": "Sở Khoa học và Công nghệ Tỉnh An Giang & UBND Huyện Tri Tôn",
+      "legal_or_academic_reference": "Nghiên cứu đặc tính hình thái và hóa thực vật học loài Citrus hystrix vùng Bảy Núi - Viện Cây ăn quả Miền Nam (SOFRI) & Cục Sở hữu trí tuệ",
+      "verification_url": "https://triton.angiang.gov.vn"
+    },
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T21:15:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "reviewer_role": "Nhà nghiên cứu & Kỹ sư bản địa Tri Tôn"
+  },
+  {
+    "claim_id": "CUL-CLAIM-002",
+    "topic": "ga_dot_o_thum",
+    "canonical_name": "Gà Đốt Lá Chúc Ô Thum",
+    "culinary_tradition": "Nghệ thuật ẩm thực dân gian Khmer vùng Hồ Ô Thum (Bảy Núi)",
+    "geographic_origin": {
+      "region": "Khu vực Hồ Ô Thum, Xã Ô Lâm, Huyện Tri Tôn, Tỉnh An Giang",
+      "core_locations": [
+        "Hồ Ô Thum",
+        "Xã Ô Lâm",
+        "Tuyến chân núi Cô Tô (Phụng Hoàng Sơn)"
+      ]
+    },
+    "ingredient_standards": {
+      "chicken_type": "Gà đồi / gà thả vườn bản địa Bảy Núi, trọng lượng sống chuẩn từ 1.2kg – 1.5kg, thịt săn chắc cơ, da mỏng ít mỡ dưới da",
+      "marinade": "Lá trúc xắt chỉ nhuyễn, sả cây đập dập băm mịn, tỏi khô, ớt hiểm, mật ong rừng hoặc đường thốt nốt nguyên chất Bảy Núi, muối hột"
+    },
+    "cooking_technique": {
+      "vessel": "Thố đất nung truyền thống hoặc nồi gang dày chuyên dụng giữ nhiệt",
+      "base_bed": "Rải một lớp muối hột dày 1-2cm dưới đáy thố, xếp kín lớp sả cây đập dập và cành lá trúc tươi che kín đáy",
+      "thermal_process": "Đốt chậm kín thố bằng than củi hồng ủ nhiệt trên dưới liên tục từ 35–45 phút; nhiệt lượng từ muối hột và tinh dầu sả, lá trúc bốc hơi xông chín thịt gà từ trong ra ngoài hoàn toàn không ngập dầu mỡ",
+      "finished_quality": "Lớp da vàng ươm cánh gián óng ánh giòn ráo, thớ thịt ngọt mềm mọng nước tự nhiên, quyện mùi khói thố đất nồng ấm và hương tinh dầu lá trúc ngạt ngào"
+    },
+    "serving_etiquette": {
+      "condiment": "Chén muối hột giã ớt hiểm và lá trúc tươi băm nhỏ, vắt trực tiếp nước cốt trái trúc tươi Bảy Núi",
+      "side_dishes": [
+        "Gỏi đu đủ đâm Khmer (Bok Lahong)",
+        "Cơm chiên tỏi đường thốt nốt",
+        "Xôi chiên phồng giòn rụm",
+        "Rau rừng Bảy Núi tươi non"
+      ],
+      "beverage": "Nước thốt nốt tươi ướp lạnh thanh mát"
+    },
+    "prohibited_misconceptions": [
+      "TUYỆT ĐỐI KHÔNG PHẢI là gà chiên ngập dầu giòn rụm công nghiệp",
+      "TUYỆT ĐỐI KHÔNG PHẢI là gà nướng vỉ than hoa thông thường",
+      "KHÔNG ĐƯỢC ướp bột ngũ vị hương hay phụ gia công nghiệp làm át hương tinh dầu lá trúc Bảy Núi",
+      "KHÔNG ĐƯỢC dùng gà công nghiệp bở thịt nhiều mỡ"
+    ],
+    "verification_source": {
+      "citation_title": "Đề án Xây dựng và Bảo hộ Nhãn hiệu Chứng nhận Ẩm thực Gà Đốt Ô Thum Tri Tôn",
+      "issuing_authority": "Phòng Văn hóa và Thông tin Huyện Tri Tôn & UBND Huyện Tri Tôn",
+      "legal_or_academic_reference": "Quy chế bảo hộ quyền sở hữu trí tuệ thương hiệu địa phương và Bản sắc ẩm thực dân tộc Khmer Tri Tôn",
+      "verification_url": "https://triton.angiang.gov.vn"
+    },
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T21:15:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "reviewer_role": "Nhà nghiên cứu & Kỹ sư bản địa Tri Tôn"
+  },
+  {
+    "claim_id": "CUL-CLAIM-003",
+    "topic": "bun_ca_cu_ngai_khmer",
+    "canonical_name": "Bún Cá Củ Ngải Bảy Núi",
+    "culinary_tradition": "Ẩm thực truyền thống của đồng bào Khmer vùng Tri Tôn - Châu Lăng",
+    "geographic_origin": {
+      "region": "Huyện Tri Tôn, Tỉnh An Giang (tiêu biểu tại Xã Châu Lăng và Thị trấn Tri Tôn)",
+      "core_communes": [
+        "Xã Châu Lăng",
+        "Thị trấn Tri Tôn",
+        "Xã Cô Tô"
+      ]
+    },
+    "core_identity": {
+      "key_ingredients": "Cá lóc đồng luộc gỡ xương xào thơm với nghệ vàng tươi, nước dùng ninh từ xương cá cùng củ ngải bún (Fingerroot) đập dập",
+      "broth_color": "Màu vàng óng tự nhiên của nghệ tươi và củ ngải bún, nước dùng trong veo, vị ngọt thanh mát dịu nhẹ dạ dày",
+      "side_vegetables": "Bông điên điển vàng mùa nước nổi, rau nhút non, bắp chuối bào mỏng, giá sống và các loại rau thơm đồng nội"
+    },
+    "prohibited_misconceptions": [
+      "TRI TÔN TUYỆT ĐỐI KHÔNG CÓ BÚN NƯỚC LÈO, KHÔNG NẤU MẮM",
+      "TUYỆT ĐỐI KHÔNG dùng mắm bồ hóc nặng mùi làm đục nước như bún nước lèo các tỉnh duyên hải miền Tây",
+      "Tên gọi chuẩn bản địa bắt buộc là 'Bún Cá Củ Ngải' hoặc 'Bún Cá Khmer Bảy Núi'"
+    ],
+    "verification_source": {
+      "citation_title": "Văn hóa Ẩm thực Dân gian Khmer Nam Bộ vùng Bảy Núi An Giang",
+      "issuing_authority": "Hội Văn nghệ Dân gian Tỉnh An Giang & Sở Văn hóa, Thể thao và Du lịch An Giang",
+      "legal_or_academic_reference": "Nghiên cứu Củ Ngải Bún và Dược tính trong văn hóa ẩm thực đồng bào Khmer Tri Tôn",
+      "verification_url": "https://angiang.gov.vn"
+    },
+    "verification_status": "VERIFIED",
+    "verified_at": "2026-09-28T21:15:00+07:00",
+    "verified_by": "Chăm Rốch Thi",
+    "reviewer_role": "Nhà nghiên cứu & Kỹ sư bản địa Tri Tôn"
+  }
+]

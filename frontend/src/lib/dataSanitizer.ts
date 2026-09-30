@@ -326,9 +326,9 @@ export function getFoodSignatureMenu(name: string = ''): FoodMenuItem[] {
   if (n.includes('gà đốt') || n.includes('ô thum')) {
     return [
       {
-        categoryName: '⭐ Món Chính Chữ Ký (Nướng Than Nồi Đất)',
+        categoryName: '⭐ Món Chính Chữ Ký (Đốt Thố Đất Lót Muối Hột)',
         items: [
-          { name: 'Gà Đốt Lá Chúc Ô Thum', price: '~280.000đ – 350.000đ / con', note: 'Gà thả đồi 1.3kg – 1.6kg ướp lá chúc, nướng than 35-45p', isSignature: true },
+          { name: 'Gà Đốt Lá Chúc Ô Thum', price: '~280.000đ – 350.000đ / con', note: 'Gà đồi 1.2kg – 1.5kg ướp lá chúc, đốt thố đất lót muối hột sả cây 35-45p', isSignature: true },
         ]
       },
       {

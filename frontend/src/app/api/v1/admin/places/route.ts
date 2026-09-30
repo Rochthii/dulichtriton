@@ -2,19 +2,32 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { clearServerCache } from '@/lib/serverCache';
 import { invalidateSinglePlaceCache } from '@/lib/dataCache';
-import localMasterPois from '@/data/triton_pois_full.json';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
+import { buildSafeOrIlikeFilter } from '@/lib/postgrestFilterSanitizer';
+import { resolveVerificationMetadata } from '@/lib/placeVerificationGuard';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
 
-function logAudit(action: string, resourceId: string, details: Record<string, unknown>) {
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
   void Promise.resolve(
     supabase.from('audit_logs').insert({
-      user_name: 'Admin_Manager',
-      user_role: 'ADMIN',
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
       action,
       resource_type: 'places',
       resource_id: resourceId,
@@ -45,8 +58,16 @@ async function generateEmbedding(text: string): Promise<number[] | null> {
   }
 }
 
-// GET: Fetch places with commune, category & keyword search
+// GET: Fetch places with commune, category & keyword search (Requires Admin Session)
 export async function GET(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const commune = searchParams.get('commune');
@@ -63,33 +84,29 @@ export async function GET(req: NextRequest) {
     }
 
     if (category && category !== 'ALL') {
-      query = query.or(`category.ilike.%${category}%,tourism_category.ilike.%${category}%`);
+      const catFilter = buildSafeOrIlikeFilter(['category', 'tourism_category'], category);
+      if (catFilter) {
+        query = query.or(catFilter);
+      }
     }
 
     if (search && search.trim()) {
-      query = query.or(`name.ilike.%${search.trim()}%,commune.ilike.%${search.trim()}%,description.ilike.%${search.trim()}%`);
-    }
-
-    const queryPromise = Promise.resolve(query);
-    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
-      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
-    );
-
-    const { data: places, error } = await Promise.race([queryPromise, timeoutPromise]);
-    if (error || !places || places.length === 0) {
-      let filtered = (localMasterPois as any[]);
-      if (commune && commune !== 'ALL') filtered = filtered.filter(p => p.commune?.toLowerCase().includes(commune.toLowerCase()));
-      if (category && category !== 'ALL') filtered = filtered.filter(p => p.category?.toLowerCase().includes(category.toLowerCase()));
-      if (search && search.trim()) {
-        const q = search.toLowerCase();
-        filtered = filtered.filter(p => p.name?.toLowerCase().includes(q) || p.commune?.toLowerCase().includes(q));
+      const searchFilter = buildSafeOrIlikeFilter(['name', 'commune', 'description'], search);
+      if (searchFilter) {
+        query = query.or(searchFilter);
       }
-      return NextResponse.json({ success: true, count: filtered.length, places: filtered, source: 'local_master' });
     }
 
-    return NextResponse.json({ success: true, count: places.length, places, source: 'supabase' });
+    const { data: places, error } = await query;
+    if (error) {
+      console.error('[AdminPlaces GET Error]:', error);
+      throw error;
+    }
+
+    return NextResponse.json({ success: true, count: places?.length || 0, places: places || [] });
   } catch (err: unknown) {
-    return NextResponse.json({ success: true, count: (localMasterPois as any[]).length, places: localMasterPois, source: 'local_master' });
+    const msg = err instanceof Error ? err.message : 'Error fetching admin places';
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
@@ -130,14 +147,27 @@ function normalizeCheckinSpots(spots: unknown): any[] {
   return [];
 }
 
-// POST: Create a new POI record
+// POST: Create a new POI record (Requires Admin Session)
 export async function POST(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const { 
       name, commune, category, tourism_category, rating, image_url, photos, checkin_spots,
       description, detailed_story, phone, open_late, night_hours,
-      golden_time_windows, price_level, video_url, is_hot, latitude, longitude, address 
+      golden_time_windows, price_level, video_url, is_hot, latitude, longitude, address,
+      is_verified, verification_status, verified_at
     } = body;
 
     if (!name || !commune) {
@@ -153,7 +183,15 @@ export async function POST(req: NextRequest) {
       .replace(/^-+|-+$/g, '');
 
     const resolvedPhotos = normalizePhotos(photos, image_url);
-    const resolvedCover = image_url || resolvedPhotos[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop';
+    const resolvedCover = (image_url && typeof image_url === 'string' && image_url.trim())
+      ? image_url.trim()
+      : (resolvedPhotos[0] || null);
+
+    const vMeta = resolveVerificationMetadata({
+      is_verified,
+      verification_status,
+      verified_at,
+    });
 
     const newRecord: Record<string, unknown> = {
       id: `${slug}-${Date.now().toString(36)}`,
@@ -181,7 +219,9 @@ export async function POST(req: NextRequest) {
       address: address || `${commune.trim()}, Tri Tôn, An Giang`,
       is_hot: Boolean(is_hot),
       is_active: true,
-      is_verified: true,
+      is_verified: vMeta.is_verified,
+      verification_status: vMeta.verification_status,
+      verified_at: vMeta.verified_at,
     };
 
     // Generate Vector Embedding automatically
@@ -202,7 +242,7 @@ export async function POST(req: NextRequest) {
       throw error;
     }
 
-    logAudit('CREATE_POI', data.id, newRecord);
+    logAudit('CREATE_POI', data.id, newRecord, auth.principal);
 
     // Surgical On-Demand Invalidation (Only for this POI and its category)
     clearServerCache();
@@ -215,14 +255,27 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PATCH: Update an existing POI record
+// PATCH: Update an existing POI record (Requires Admin Session)
 export async function PATCH(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const { 
       id, is_hot, is_active, name, commune, category, tourism_category, rating, 
       image_url, photos, checkin_spots, description, detailed_story, phone, open_late, night_hours,
-      golden_time_windows, price_level, video_url, latitude, longitude, address 
+      golden_time_windows, price_level, video_url, latitude, longitude, address,
+      is_verified, verification_status, verified_at
     } = body;
 
     if (!id) {
@@ -252,6 +305,17 @@ export async function PATCH(req: NextRequest) {
     if (longitude !== undefined && longitude !== null && longitude !== '') updatePayload.longitude = Number(longitude);
     if (address !== undefined) updatePayload.address = address;
 
+    if (is_verified !== undefined || verification_status !== undefined) {
+      const vMeta = resolveVerificationMetadata({
+        is_verified,
+        verification_status,
+        verified_at,
+      });
+      updatePayload.is_verified = vMeta.is_verified;
+      updatePayload.verification_status = vMeta.verification_status;
+      updatePayload.verified_at = vMeta.verified_at;
+    }
+
     // Regenerate Vector Embedding if text changed
     if (name || description || detailed_story || commune) {
       const textToEmbed = `${name || ''} - ${commune || ''} - ${tourism_category || category || ''}. ${description || ''}\n${detailed_story || ''}`;
@@ -273,7 +337,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: 'Database update error: ' + error.message }, { status: 400 });
     }
 
-    logAudit('UPDATE_POI', id, updatePayload);
+    logAudit('UPDATE_POI', id, updatePayload, auth.principal);
 
     // Surgical On-Demand Invalidation (Only for this POI and its category)
     clearServerCache();
@@ -286,8 +350,20 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-// DELETE: Remove a POI record
+// DELETE: Remove a POI record (Requires Admin Session)
 export async function DELETE(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -302,7 +378,7 @@ export async function DELETE(req: NextRequest) {
       throw error;
     }
 
-    logAudit('DEACTIVATE_POI', id, { deactivated_at: new Date().toISOString() });
+    logAudit('DEACTIVATE_POI', id, { deactivated_at: new Date().toISOString() }, auth.principal);
 
     // Surgical On-Demand Invalidation (Only for the deactivated POI)
     clearServerCache();

@@ -1,0 +1,39 @@
+{
+  "manifest_name": "Tri Ton Tourism Official Canonical Dataset Manifest",
+  "manifest_version": "1.0.0",
+  "schema_version": "CANONICAL-POI-SCHEMA-V1",
+  "generated_at": "2026-09-28T22:20:00+07:00",
+  "authority": "Hội đồng Quản trị Dữ liệu Du Lịch Tri Tôn",
+  "lead_auditor": "Chăm Rốch Thi",
+  "dataset_scope": {
+    "geographic_boundary": "Tri Ton District, An Giang Province",
+    "commune_count": 15,
+    "bounding_box": {
+      "latitude": [
+        10.3,
+        10.55
+      ],
+      "longitude": [
+        104.8,
+        105.15
+      ]
+    }
+  },
+  "total_verified_count": 1,
+  "overall_sha256": "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb",
+  "places": [
+    {
+      "canonical_id": "chua-xa-ton",
+      "name": "Chùa Xà Tón (Wat Xvayton)",
+      "commune": "Thị trấn Tri Tôn",
+      "category": "culture",
+      "verification_status": "VERIFIED",
+      "review_id": "PVR-CHUA-XA-TON-2026",
+      "verified_at": "2026-09-28T22:00:00+07:00",
+      "source_url": "https://triton.angiang.gov.vn",
+      "file_name": "chua-xa-ton.json",
+      "sha256": "5398587c7e5c2e4e300e8460af8253e5ea433af1026558bced647d5c4b186e7f",
+      "size_bytes": 1544
+    }
+  ]
+}

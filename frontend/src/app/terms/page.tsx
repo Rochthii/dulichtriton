@@ -50,7 +50,7 @@ export default function TermsPage() {
               <h2>1. Giới Thiệu Về Nền Tảng & Mục Đích Phục Vụ</h2>
             </div>
             <p>
-              Cổng thông tin <strong>Du Lịch Tri Tôn AI Platform</strong> là nền tảng phi thương mại hướng tới cộng đồng du khách và người dân bản địa, cung cấp dữ liệu số hóa thực địa về địa điểm danh thắng, chùa Khmer, ẩm thực đặc sản (Gà đốt Ô Thum, Cháo bò Tri Tôn, v.v.), cơ sở lưu trú và cẩm nang di chuyển tại vùng đất Bảy Núi (Thất Sơn), tỉnh An Giang.
+              Cổng thông tin <strong>Du Lịch Tri Tôn AI Platform</strong> là nền tảng phi thương mại hướng tới cộng đồng du khách và người dân bản địa, cung cấp dữ liệu số hóa thực địa về 149 địa điểm danh thắng, chùa Khmer, ẩm thực đặc sản (Gà đốt Ô Thum, Cháo bò Tri Tôn, v.v.), cơ sở lưu trú và cẩm nang di chuyển tại vùng đất Bảy Núi (Thất Sơn), tỉnh An Giang.
             </p>
             <p>
               Nền tảng được nghiên cứu, kiến trúc và phát triển bởi tác giả <strong>Chăm Rốch Thi</strong> (Cham Roch Thi) với định hướng tôn vinh bản sắc văn hóa Khmer - Kinh - Hoa và hỗ trợ quảng bá du lịch bền vững.

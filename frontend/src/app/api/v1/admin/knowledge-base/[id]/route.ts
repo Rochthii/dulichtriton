@@ -1,15 +1,90 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", serviceKey || "placeholder");
+export const dynamic = 'force-dynamic';
 
-// PUT: Cập nhật tri thức & ghi Audit Log
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
+
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
+  void Promise.resolve(
+    supabase.from('audit_logs').insert({
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
+      action,
+      resource_type: 'custom_knowledge_base',
+      resource_id: resourceId,
+      details,
+    })
+  ).catch(e => console.warn('[AuditLog] Error:', e));
+}
+
+// GET: Lấy chi tiết một mục tri thức (Requires Admin Session)
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
+  try {
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json({ success: false, error: 'Thiếu ID tri thức' }, { status: 400 });
+    }
+
+    const { data, error } = await supabase
+      .from('custom_knowledge_base')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      return NextResponse.json({ success: false, error: error.message }, { status: error.code === 'PGRST116' ? 404 : 500 });
+    }
+
+    return NextResponse.json({ success: true, data });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error fetching knowledge item';
+    return NextResponse.json({ success: false, error: msg }, { status: 500 });
+  }
+}
+
+// PUT / PATCH: Cập nhật tri thức & ghi Audit Log (Requires Admin Session & Kill-switch Check)
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { id } = await params;
     if (!id) {
@@ -50,31 +125,35 @@ export async function PUT(
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 
-    // Ghi Audit Log
-    try {
-      await supabase.from('audit_logs').insert([
-        {
-          action: 'UPDATE_KNOWLEDGE_BASE',
-          target_table: 'custom_knowledge_base',
-          target_id: id,
-          changes: updates,
-          created_at: new Date().toISOString(),
-        },
-      ]);
-    } catch { /* non-blocking */ }
+    logAudit('UPDATE_KNOWLEDGE_BASE', id, updates, auth.principal);
 
     return NextResponse.json({ success: true, data });
-  } catch (err: any) {
-    console.error('[Admin Knowledge Base API] Update exception:', err);
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error updating knowledge item';
+    console.error('[Admin Knowledge Base API] Update exception:', msg);
+    return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }
 
-// DELETE: Xóa tri thức & ghi Audit Log
+export const PATCH = PUT;
+
+// DELETE: Xóa tri thức & ghi Audit Log (Requires Admin Session & Kill-switch Check)
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { id } = await params;
     if (!id) {
@@ -93,22 +172,12 @@ export async function DELETE(
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 
-    // Ghi Audit Log
-    try {
-      await supabase.from('audit_logs').insert([
-        {
-          action: 'DELETE_KNOWLEDGE_BASE',
-          target_table: 'custom_knowledge_base',
-          target_id: id,
-          changes: { deleted: data },
-          created_at: new Date().toISOString(),
-        },
-      ]);
-    } catch { /* non-blocking */ }
+    logAudit('DELETE_KNOWLEDGE_BASE', id, { deleted: data }, auth.principal);
 
     return NextResponse.json({ success: true, data });
-  } catch (err: any) {
-    console.error('[Admin Knowledge Base API] Delete exception:', err);
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Error deleting knowledge item';
+    console.error('[Admin Knowledge Base API] Delete exception:', msg);
+    return NextResponse.json({ success: false, error: msg }, { status: 500 });
   }
 }

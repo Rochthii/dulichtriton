@@ -2,17 +2,23 @@ import fs from 'fs';
 import path from 'path';
 
 function loadLocalEnvIfNode() {
-  if (process.env.NODE_ENV === 'production' || typeof process === 'undefined' || !process.cwd) return;
+  if (typeof process === 'undefined' || !process.cwd) return;
   try {
-    const envPath = path.join(process.cwd(), '.env.local');
-    if (fs.existsSync(envPath)) {
-      const content = fs.readFileSync(envPath, 'utf8');
-      for (const line of content.split('\n')) {
-        const match = line.match(/^([^=]+)=(.*)$/);
-        if (match) {
-          const k = match[1].trim();
-          const v = match[2].trim().replace(/^['"]|['"]$/g, '');
-          if (!process.env[k]) process.env[k] = v;
+    const paths = [
+      path.resolve(process.cwd(), '.env.local'),
+      path.resolve(process.cwd(), 'frontend', '.env.local'),
+      path.resolve(process.cwd(), '..', 'frontend', '.env.local'),
+    ];
+    for (const p of paths) {
+      if (fs.existsSync(/*turbopackIgnore: true*/ p)) {
+        const content = fs.readFileSync(/*turbopackIgnore: true*/ p, 'utf8');
+        for (const line of content.split('\n')) {
+          const match = line.match(/^([^=]+)=(.*)$/);
+          if (match) {
+            const k = match[1].trim();
+            const v = match[2].trim().replace(/^['"]|['"]$/g, '');
+            if (!process.env[k]) process.env[k] = v;
+          }
         }
       }
     }

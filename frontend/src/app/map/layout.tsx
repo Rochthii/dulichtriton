@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'Bản Đồ Du Lịch Số GIS Tri Tôn — Định Vị GPS Thực Địa',
-  description: 'Bản đồ tương tác GIS thông minh địa điểm Tri Tôn, An Giang: Phân loại theo 15 xã/thị trấn, lọc danh lam thắng cảnh, quán gà đốt, chùa Khmer, homestay và chỉ đường GPS.',
+  title: 'Bản Đồ Du Lịch Số GIS Tri Tôn — Định Vị GPS 149 Điểm Đến Thực Địa',
+  description: 'Bản đồ tương tác GIS thông minh 149 địa điểm Tri Tôn, An Giang: Phân loại theo 15 xã/thị trấn, lọc danh lam thắng cảnh, quán gà đốt, chùa Khmer, homestay và chỉ đường GPS.',
   keywords: [
     'bản đồ du lịch tri tôn', 'bản đồ tri tôn gis', 'định vị du lịch tri tôn',
     'bản đồ thất sơn', 'tọa độ hồ tà pạ', 'chỉ đường tri tôn', 'gps bảy núi'
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Bản Đồ Số Du Lịch Tri Tôn',
-    description: 'Định vị GPS các điểm tham quan và ẩm thực đặc sản Bảy Núi, An Giang.',
+    description: 'Định vị GPS 149 điểm tham quan và ẩm thực đặc sản Bảy Núi, An Giang.',
   },
 };
 

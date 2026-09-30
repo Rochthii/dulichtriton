@@ -1,0 +1,1372 @@
+[
+  {
+    "id": "ho-o-thum",
+    "name": "Hồ Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "nature",
+    "subcategory": "Hồ nước nhân tạo",
+    "latitude": 10.3765,
+    "longitude": 104.9875,
+    "address": "Xã Ô Lâm, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "nha-thieu-nhi",
+    "name": "Nhà Thiếu Nhi Huyện Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "culture",
+    "subcategory": "Trung tâm Văn hóa & Vui chơi",
+    "latitude": 10.4230431,
+    "longitude": 105.0014886,
+    "address": "Số 89 Đường Trần Hưng Đạo, Khóm 1, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "cong-troi-chua-koh-kas",
+    "name": "Cổng Trời Chùa Koh Kas (Cổng Thời Gian)",
+    "commune": "Xã Châu Lăng",
+    "category": "spiritual",
+    "subcategory": "photospot",
+    "latitude": 10.4512,
+    "longitude": 105.0189,
+    "address": "Xã Châu Lăng, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "9eaf1e8f-biển-hiệu-ở-đây-khôn",
+    "name": "Biển Hiệu Ở Đây Không Có Gì Ngoài Ký Ức",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "Góc ảnh Việt phục cổ trang",
+    "latitude": 10.4062,
+    "longitude": 105.0232,
+    "address": "Đường Nam Kỳ Khởi Nghĩa, Khóm 2, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "tho-mo-muc-cave-hang-tho-mo-muc",
+    "name": "Tho Mo Muc Cave (Hang Tho Mo Muc)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "attraction",
+    "latitude": 10.374438,
+    "longitude": 104.9655284,
+    "address": "Tho Mo Muc Cave (Hang Tho Mo Muc), Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-co-to",
+    "name": "Núi Cô Tô (Phụng Hoàng Sơn) & Đỉnh Vồ Hội",
+    "commune": "Xã Cô Tô",
+    "category": "nature",
+    "subcategory": "mountain",
+    "latitude": 10.3758,
+    "longitude": 104.9958,
+    "address": "Xã Cô Tô & Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "lau-bo-thit-bo-bay-nui-tri-ton",
+    "name": "Quán Cháo Bò & Lòng Bò Thủy Đen (Cầu Cây Me)",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "restaurant_area",
+    "latitude": 10.41,
+    "longitude": 105.008,
+    "address": "Đường 948 (gần Cầu Cây Me), Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "d1bd3ece-quy-coffee-house-tri",
+    "name": "Quy Coffee House Tri Tôn (Quý's Coffee)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": "Quán Cà Phê",
+    "latitude": 10.413,
+    "longitude": 105.007,
+    "address": "34 Đường Nguyễn Trãi, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "c7d6fabf-rồng-vàng-resort-tri",
+    "name": "Rồng Vàng Resort Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "Resort",
+    "latitude": 10.41,
+    "longitude": 105.01,
+    "address": "19 Đường Nguyễn Thị Minh Khai, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-ta-phot",
+    "name": "Chùa Tà Phôt",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "spiritual",
+    "subcategory": "worship",
+    "latitude": 10.4061797,
+    "longitude": 104.9643239,
+    "address": "Chùa Tà Phôt, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "c2a08fb2-quán-bánh-canh-lò-rè",
+    "name": "Quán Bánh Canh Lò Rèn (>30 năm)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Bánh canh",
+    "latitude": 10.4135,
+    "longitude": 105.0072,
+    "address": "114 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-krang-kroch",
+    "name": "chùa Krăng Krốch",
+    "commune": "Xã Châu Lăng",
+    "category": "spiritual",
+    "subcategory": "temple",
+    "latitude": 10.4439756,
+    "longitude": 104.9727214,
+    "address": "chùa Krăng Krốch, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "3ef4f129-quán-cà-phê-&-điểm-c",
+    "name": "Quán Cà Phê & Điểm Check-in Bờ Hồ Ô Tà Lọt",
+    "commune": "Xã An Tức",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.478,
+    "longitude": 104.962,
+    "address": "Khu vực Hồ Ô Tà Lọt, Xã An Hảo, Tri Tôn, An Giang"
+  },
+  {
+    "id": "dua-bo-bay-nui",
+    "name": "Lễ Hội Đua Bò Bảy Núi Tri Tôn (Di Sản Quốc Gia)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "artwork",
+    "latitude": 10.408,
+    "longitude": 104.992,
+    "address": "Sân Đua Bò Hồ Soài Chek (Xã Núi Tô) & TT. Tri Tôn, An Giang"
+  },
+  {
+    "id": "6739ba72-quán-đu-đủ-đâm-ly-ly",
+    "name": "Quán Đu Đủ Đâm Ly Ly",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "Đặc sản Khmer",
+    "latitude": 10.4385,
+    "longitude": 105.0035,
+    "address": "Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "6ffa8a7b-cầu-gỗ-mộc-mạc-hồ-ô-",
+    "name": "Cầu Gỗ Mộc Mạc Hồ Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "nature",
+    "subcategory": "Điểm check-in sống ảo",
+    "latitude": 10.377,
+    "longitude": 104.987,
+    "address": "Lòng hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ho-ta-pa",
+    "name": "Hồ Tà Pạ (Tuyệt Tình Cốc Bảy Núi)",
+    "commune": "Xã Núi Tô",
+    "category": "nature",
+    "subcategory": "lake",
+    "latitude": 10.4165,
+    "longitude": 105.0042,
+    "address": "Đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "6c77d0e8-quán-cháo-bò-trái-tr",
+    "name": "Quán Cháo Bò Tư Xuyên (58 Hùng Vương)",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "gastronomy",
+    "subcategory": "Cháo bò",
+    "latitude": 10.495,
+    "longitude": 104.908,
+    "address": "58 Đường Hùng Vương, Khóm 4, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "159c4012-quán-đu-đủ-đâm-rina-",
+    "name": "Quán Đu Đủ Đâm RiNa Khmer",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "Đặc sản Khmer",
+    "latitude": 10.438,
+    "longitude": 105.003,
+    "address": "Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-sa-lon",
+    "name": "Núi Sà Lôn",
+    "commune": "Xã Lương Phi",
+    "category": "nature",
+    "subcategory": "peak",
+    "latitude": 10.4386816,
+    "longitude": 104.9624942,
+    "address": "Núi Sà Lôn, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "8b5a9b10-quán-bánh-xèo-tép-bô",
+    "name": "Quán Bánh Xèo Tép Bông Điên Điển Cầu Số 10",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Bánh xèo miền Tây",
+    "latitude": 10.4115,
+    "longitude": 105.0055,
+    "address": "Khu vực Cầu Số 10, Khóm 6, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "442b77de-an-sơn-trà-quán",
+    "name": "An Sơn Trà Quán",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": "Quán Cà Phê",
+    "latitude": 10.406,
+    "longitude": 105.023,
+    "address": "Đường lên Hồ Soài So, Khóm 1, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "f229bec5-quán-bò-nướng-trái-t",
+    "name": "Quán Bò Nướng Trái Trúc Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Bò nướng Bảy Núi",
+    "latitude": 10.4126,
+    "longitude": 105.0066,
+    "address": "88 Đường Hùng Vương, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "814684e1-chùa-soài-so-khmer",
+    "name": "Chùa Soài So Khmer",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "spiritual",
+    "subcategory": "Chùa Khmer",
+    "latitude": 10.406,
+    "longitude": 105.024,
+    "address": "Chân núi Cô Tô, Khóm 1, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "d3e73741-cánh-đồng-thốt-nốt-c",
+    "name": "Cánh Đồng Thốt Nốt Châu Lăng",
+    "commune": "Xã Châu Lăng",
+    "category": "nature",
+    "subcategory": "Cánh đồng",
+    "latitude": 10.437,
+    "longitude": 105.003,
+    "address": "Cánh đồng thốt nốt Châu Lăng, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-nam-quy",
+    "name": "Núi Nam Quy",
+    "commune": "Xã Châu Lăng",
+    "category": "nature",
+    "subcategory": "peak",
+    "latitude": 10.4525302,
+    "longitude": 105.0037006,
+    "address": "Núi Nam Quy, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ho-o-ta-soc",
+    "name": "Hồ Ô Tà Sóc & Căn Cứ Lịch Sử Núi Dài",
+    "commune": "Xã Lương Phi",
+    "category": "nature",
+    "subcategory": "water",
+    "latitude": 10.452,
+    "longitude": 104.932,
+    "address": "Sườn Núi Dài (Ngọa Long Sơn), Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "9764c175-vườn-nho-nông-trại-ô",
+    "name": "Quán Gà Đốt & Vườn Nho Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Nông trại",
+    "latitude": 10.3782,
+    "longitude": 104.9912,
+    "address": "Vườn nho nông trại Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "a6ed9173-quán-đu-đủ-đâm-ty-tr",
+    "name": "Quán Đu Đủ Đâm Ty Tri Tôn",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "Đặc sản Khmer",
+    "latitude": 10.4375,
+    "longitude": 105.0025,
+    "address": "Sóc Phnôm Pi, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "cee4075f-lang-lang-coffee-&-t",
+    "name": "Lang Lang Coffee & Tea",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.412,
+    "longitude": 105.008,
+    "address": "78 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "b6a52dfa-chạm-coffee-&-tea-tr",
+    "name": "CHẠM Coffee & Tea Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4128,
+    "longitude": 105.0068,
+    "address": "120 Đường Hùng Vương, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "64fcb54d-quán-bún-cá-dook-tri",
+    "name": "Quán Bún Cá Củ Ngải Chị Tuôch (Che Tuôch)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Bún cá Khmer",
+    "latitude": 10.4125,
+    "longitude": 105.0065,
+    "address": "Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "ca-phe-thuy-moc-tri-ton",
+    "name": "Cà Phê Thủy Mộc Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": "cafe",
+    "latitude": 10.4208,
+    "longitude": 105.0015,
+    "address": "111 Nguyễn Thị Minh Khai, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "24a1fc67-gà-đốt-vương-ngọc-ô-",
+    "name": "Gà Đốt Vương Ngọc Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Gà Đốt Ô Thum",
+    "latitude": 10.377,
+    "longitude": 104.992,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-nuoc",
+    "name": "Núi Nước",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "place",
+    "latitude": 10.492604,
+    "longitude": 104.8905659,
+    "address": "Núi Nước, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "3383c54e-con-đường-vòm-còng-c",
+    "name": "Con Đường Vòm Còng Châu Lăng",
+    "commune": "Xã Châu Lăng",
+    "category": "culture",
+    "subcategory": "Con đường nhiếp ảnh",
+    "latitude": 10.4355,
+    "longitude": 105.0015,
+    "address": "Tuyến đường Hàng Còng, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "c4fb60f7-nghệ-thuật-viết-kinh",
+    "name": "Nghệ Thuật Viết Kinh Lá Buông Chùa Xà Tón",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "spiritual",
+    "subcategory": "Di sản Quốc gia",
+    "latitude": 10.4132,
+    "longitude": 105.0088,
+    "address": "Chùa Xà Tón, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "bfa8bcbf-tiệm-cà-phê-nhà-quê",
+    "name": "Tiệm Cà Phê Nhà Quê Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": "Quán Cà Phê",
+    "latitude": 10.411,
+    "longitude": 105.005,
+    "address": "Chân Cầu Số 10, Khóm 6, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "san-dua-bo-nuoc-chua-ro",
+    "name": "Sân Đua Bò Nước & Bừa Ruộng Truyền Thống Chùa Rô",
+    "commune": "Xã Châu Lăng",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.4485,
+    "longitude": 104.9721,
+    "address": "Ấp Vĩnh Thượng, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "2ac3fb9a-con-đường-thốt-nốt-ô",
+    "name": "Con Đường Thốt Nốt Ô Lâm - Cô Tô",
+    "commune": "Xã Cô Tô",
+    "category": "culture",
+    "subcategory": "Con đường nhiếp ảnh",
+    "latitude": 10.38,
+    "longitude": 104.995,
+    "address": "Tuyến đường liên xã Ô Lâm - Núi Tô, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "khu-trung-bay-toi-ac-chien-tranh-cua-poltpot",
+    "name": "Khu Trưng bày Tội ác Chiến tranh của Poltpot",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "culture",
+    "subcategory": "museum",
+    "latitude": 10.4992052,
+    "longitude": 104.9083512,
+    "address": "TL. 955B"
+  },
+  {
+    "id": "e4772f7e-con-đường-tre-tầm-vô",
+    "name": "Con Đường Tre Tầm Vông Ô Tà Sóc",
+    "commune": "Xã Lương Phi",
+    "category": "history",
+    "subcategory": "Con đường nhiếp ảnh",
+    "latitude": 10.4565,
+    "longitude": 104.9525,
+    "address": "Đường tầm vông Ô Tà Sóc, Ấp Ninh Phước, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "8f6a436c-quán-kiều-tiên-gà-đố",
+    "name": "Quán Kiều Tiên Gà Đốt Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Gà Đốt Ô Thum",
+    "latitude": 10.3775,
+    "longitude": 104.9925,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ho-soai-chek",
+    "name": "Hồ Soài Chek",
+    "commune": "Xã Núi Tô",
+    "category": "nature",
+    "subcategory": "lake",
+    "latitude": 10.4285,
+    "longitude": 104.9924,
+    "address": "Xã Ba Chúc, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "khu-di-tich-o-ta-soc",
+    "name": "Khu di tích Ô Tà Sóc",
+    "commune": "Xã Lương Phi",
+    "category": "history",
+    "subcategory": "historic_site",
+    "latitude": 10.45,
+    "longitude": 104.93,
+    "address": "Xã Lương Phi, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "e5e1c51e-núi-dài-(ngọa-long-s",
+    "name": "Núi Dài (Ngọa Long Sơn)",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "history",
+    "subcategory": null,
+    "latitude": 10.45,
+    "longitude": 104.94,
+    "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "dec77a0e-gà-đốt-ô-thum-kim-su",
+    "name": "Gà Đốt Ô Thum Kim Suổl",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Gà Đốt Ô Thum",
+    "latitude": 10.379,
+    "longitude": 104.993,
+    "address": "Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "a810d441-cây-thốt-nốt-cô-độc-",
+    "name": "Cây Thốt Nốt Cô Độc Châu Lăng",
+    "commune": "Xã Châu Lăng",
+    "category": "culture",
+    "subcategory": "Điểm check-in độc đáo",
+    "latitude": 10.439,
+    "longitude": 105.0035,
+    "address": "Cây thốt nốt cô độc, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "1c3216be-căn-nhà-gỗ-vintage-n",
+    "name": "Căn Nhà Gỗ Vintage Nhà Quê",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "Góc chụp Đà Lạt",
+    "latitude": 10.4112,
+    "longitude": 105.0052,
+    "address": "Căn nhà gỗ Vintage, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-oc-dao-ho-o-thum",
+    "name": "Gà Đốt Ốc Đảo Quán Hồ Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.3855,
+    "longitude": 104.9755,
+    "address": "Khu vực ốc đảo Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-ta-pa",
+    "name": "Núi Tà Pạ",
+    "commune": "Xã Núi Tô",
+    "category": "nature",
+    "subcategory": "peak",
+    "latitude": 10.4072869,
+    "longitude": 104.9747836,
+    "address": "Núi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "dong-nhin-len-chu-tri-ton",
+    "name": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "culture",
+    "subcategory": "artwork",
+    "latitude": 10.4016818,
+    "longitude": 105.0014948,
+    "address": "ĐỒNG NHÌN LÊN CHỮ TRI TÔN, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "cho-tri-ton",
+    "name": "Chợ Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "place",
+    "latitude": 10.4209063,
+    "longitude": 105.0027492,
+    "address": "Chợ Tri Tôn, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nui-dai",
+    "name": "Núi Dài",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "peak",
+    "latitude": 10.4759134,
+    "longitude": 104.942797,
+    "address": "Núi Dài, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ba-chuc",
+    "name": "Ba Chúc",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "nature",
+    "subcategory": null,
+    "latitude": 10.4943318,
+    "longitude": 104.9089828,
+    "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "97e67ffb-con-đường-tơ-lụa-soà",
+    "name": "Con Đường Tơ Lụa Soài Chék",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "culture",
+    "subcategory": "Con đường tơ lụa",
+    "latitude": 10.4162,
+    "longitude": 105.0188,
+    "address": "Cung đường ven hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "28310684-khu-di-tích-căn-cứ-ô",
+    "name": "Khu Di Tích Căn Cứ Ô Tà Sóc",
+    "commune": "Xã Lương Phi",
+    "category": "history",
+    "subcategory": null,
+    "latitude": 10.456,
+    "longitude": 104.952,
+    "address": "Ấp Ninh Phước, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "an-tra",
+    "name": "An trà",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "place",
+    "latitude": 10.402894,
+    "longitude": 104.8985373,
+    "address": "An trà, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "30e73939-lò-bánh-bò-thốt-nốt-",
+    "name": "Lò Bánh Bò Thốt Nốt Nướng Út Cột",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Đặc sản mua quà",
+    "latitude": 10.436,
+    "longitude": 105.004,
+    "address": "Tỉnh Lộ 941, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "39c60a82-rừng-tầm-vông-ô-tà-s",
+    "name": "Rừng Tầm Vông Ô Tà Sóc",
+    "commune": "Xã Lương Phi",
+    "category": "nature",
+    "subcategory": null,
+    "latitude": 10.457,
+    "longitude": 104.953,
+    "address": "Rừng tầm vông Ô Tà Sóc, Ấp Ninh Phước, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "dac-san-ga-dot-o-thum-tri-ton",
+    "name": "Đặc sản Gà đốt Ô Thum Tri Tôn",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.457,
+    "longitude": 104.983,
+    "address": "Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-phi-lai",
+    "name": "Chùa Phi Lai Ba Chúc (Phi Lai Cổ Tự)",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "spiritual",
+    "subcategory": "temple",
+    "latitude": 10.5012,
+    "longitude": 104.908,
+    "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "3dadd505-tiệm-bánh-bò-thốt-nố",
+    "name": "Tiệm Bánh Bò Thốt Nốt Nướng Chợ Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.412,
+    "longitude": 105.006,
+    "address": "Khu ẩm thực Chợ Tri Tôn, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "tuong-dai-vo-van-kiet",
+    "name": "Công Viên & Bia Tưởng Niệm Cố Thủ Tướng Võ Văn Kiệt",
+    "commune": "Xã Lạc Quới",
+    "category": "history",
+    "subcategory": "monument",
+    "latitude": 10.468,
+    "longitude": 104.912,
+    "address": "Kênh T5 (Kênh Ông Kiệt), Xã Lạc Quới, Tri Tôn, An Giang"
+  },
+  {
+    "id": "b4e743c8-hồ-ô-tà-lọt",
+    "name": "Hồ Ô Tà Lọt",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "Hồ nước",
+    "latitude": 10.478,
+    "longitude": 104.962,
+    "address": "Khu vực Hồ Ô Tà Lọt, Dưới chân Núi Dài, Xã An Hảo, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ho-soai-so",
+    "name": "Hồ Soài So",
+    "commune": "Xã Cô Tô",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.42,
+    "longitude": 105,
+    "address": "Xã Cô Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "6669ffb7-suối-vàng-soài-so",
+    "name": "Suối Vàng Soài So",
+    "commune": "Xã Cô Tô",
+    "category": "nature",
+    "subcategory": "Suối sinh thái",
+    "latitude": 10.4055,
+    "longitude": 105.0255,
+    "address": "Khu vực Suối Vàng Soài So, Khóm 1, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "tuong-dai-chien-thang-vinh-thong",
+    "name": "Tượng đài Chiến thắng Vĩnh Thông",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "history",
+    "subcategory": "monument",
+    "latitude": 10.5074791,
+    "longitude": 104.8879034,
+    "address": "Tượng đài Chiến thắng Vĩnh Thông, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-tro-poang-trao",
+    "name": "Chùa Tro Poáng Trao",
+    "commune": "Xã Châu Lăng",
+    "category": "spiritual",
+    "subcategory": "worship",
+    "latitude": 10.3929734,
+    "longitude": 104.9516478,
+    "address": "Chùa Tro Poáng Trao, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nha-hang-an",
+    "name": "NHÀ HÀNG ĂN",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4260962,
+    "longitude": 105.0033933,
+    "address": "Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "tinh-tam",
+    "name": "Tinh Tam",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4265201,
+    "longitude": 105.0017687,
+    "address": "Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nha-tro-quoc-tien",
+    "name": "Nhà Trọ Quốc tiến",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.4107275,
+    "longitude": 104.9037236,
+    "address": "Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "683d2086-quán-bò-nướng-bánh-t",
+    "name": "Quán Bò Nướng Bánh Tráng Tư Liêm",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.414,
+    "longitude": 105.0095,
+    "address": "Đường Nam Kỳ Khởi Nghĩa, Khóm 2, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "1370b402-nhà-hàng-gà-đốt-ô-th",
+    "name": "Nhà hàng Gà Đốt Ô Thum Siêu Bó",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.3775,
+    "longitude": 104.9921,
+    "address": "Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "0c1d5e83-chùa-xà-tón-(wat-xva",
+    "name": "Chùa Xà Tón (Wat Xvayton)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "spiritual",
+    "subcategory": null,
+    "latitude": 10.4132,
+    "longitude": 105.0088,
+    "address": "Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "le-hoi-dua-bo-bay-nui-tri-ton",
+    "name": "Lễ hội Đua bò Bảy Núi Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "cultural_event",
+    "latitude": 10.415,
+    "longitude": 105.002,
+    "address": "Chùa Tà Pạ / Sân đua bò Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-tri-hai-o-thum",
+    "name": "Gà Đốt Trí Hải Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Quán gà đốt Ô Thum",
+    "latitude": 10.39,
+    "longitude": 104.98,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "4425a57d-cung-đường-biên-giới",
+    "name": "Cung Đường Biên Giới Kênh Vĩnh Tế (Ba Chúc)",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "culture",
+    "subcategory": "Cung đường biên giới",
+    "latitude": 10.498,
+    "longitude": 104.901,
+    "address": "Tuyến đường biên giới kênh Vĩnh Tế, Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "f7f5ca30-windy-hill-coffee-&-",
+    "name": "Windy Hill Coffee & Homestay Tri Tôn",
+    "commune": "Xã Núi Tô",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.417,
+    "longitude": 105.0195,
+    "address": "Khu vực Hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "dinh-than-cau-dai",
+    "name": "Đình Thần Cầu Dài (Xã Vĩnh Gia)",
+    "commune": "Xã Vĩnh Gia",
+    "category": "culture",
+    "subcategory": "worship",
+    "latitude": 10.495,
+    "longitude": 104.92,
+    "address": "Tỉnh lộ ĐT955A (gần Cầu Dài), Xã Vĩnh Gia, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-thanh-dat-o-thum",
+    "name": "Gà Đốt Thành Đạt Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.393,
+    "longitude": 104.983,
+    "address": "Đường ven Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "e13b2eab-quán-đu-đủ-đâm-&-cán",
+    "name": "Quán Đu Đủ Đâm & Cánh Gà Nướng Rô",
+    "commune": "Xã Châu Lăng",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.436,
+    "longitude": 104.984,
+    "address": "Tỉnh lộ 941, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "du-du-dam-khanh-thy",
+    "name": "Đu Đủ Đâm Khánh Thy",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "restaurant",
+    "latitude": 10.414286,
+    "longitude": 104.9992663,
+    "address": "30/4"
+  },
+  {
+    "id": "quan-ga-dot-danh-hay-o-thum",
+    "name": "Gà Đốt Danh Hây Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Quán gà đốt Ô Thum",
+    "latitude": 10.394,
+    "longitude": 104.984,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ca-phe-suoi-da-o-ta-soc",
+    "name": "Cà Phê Suối Đá Ô Tà Sóc",
+    "commune": "Xã Lương Phi",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.451,
+    "longitude": 104.931,
+    "address": "Khu di tích Ô Tà Sóc, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "118f63fc-quán-siêu-gà-đốt-ô-t",
+    "name": "Quán Siêu Gà Đốt Ô Thum (Chau Siêu)",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Gà Đốt Ô Thum",
+    "latitude": 10.3785,
+    "longitude": 104.9915,
+    "address": "Tỉnh lộ 955B, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "6fd80811-chợ-trung-tâm-tri-tô",
+    "name": "Chợ Trung Tâm Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4125,
+    "longitude": 105.0068,
+    "address": "Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "d2759ee4-ny-coffee-&-tea-tri-",
+    "name": "NY Coffee & Tea Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.414,
+    "longitude": 105.006,
+    "address": "66 Đường Trần Phú, Khóm 2, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "436c0b0d-quán-bò-7-món-ba-chú",
+    "name": "Quán Bò 7 Món Ba Chúc & Bò Nướng Trái Chúc",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.502,
+    "longitude": 104.91,
+    "address": "Khu phố An Bình, Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "78da5b5f-ruộng-coffee-&-homes",
+    "name": "RUỘNG Coffee & Tea Tri Tôn",
+    "commune": "Xã Núi Tô",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.415,
+    "longitude": 105.018,
+    "address": "Đường vào Hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ho-latina",
+    "name": "hồ latina",
+    "commune": "Xã Châu Lăng",
+    "category": "nature",
+    "subcategory": "camp_site",
+    "latitude": 10.4240344,
+    "longitude": 104.9999364,
+    "address": "hồ latina, Xã An Hảo (Ranh giới giáp TX. Tịnh Biên), Tri Tôn, An Giang"
+  },
+  {
+    "id": "833d6714-nấc-thang-thiên-đườn",
+    "name": "Nấc Thang Thiên Đường Kiều Tiên Ô Thum",
+    "commune": "Xã Cô Tô",
+    "category": "culture",
+    "subcategory": "Tiểu cảnh check-in",
+    "latitude": 10.3776,
+    "longitude": 104.9926,
+    "address": "Khuôn viên Kiều Tiên Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "30ac578e-vườn-mãng-cầu-núi-tô",
+    "name": "Vườn Mãng Cầu Ta Núi Tô",
+    "commune": "Xã Núi Tô",
+    "category": "nature",
+    "subcategory": "Nông trại",
+    "latitude": 10.408,
+    "longitude": 105.021,
+    "address": "Vườn mãng cầu sườn Núi Tô, Ấp Tô Thuận, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "diem-dung-chan-duoi-nui-quan-an",
+    "name": "ĐIỂM DỪNG CHÂN DƯỚI NÚI, QUÁN ĂN",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "artwork",
+    "latitude": 10.392403,
+    "longitude": 104.9990182,
+    "address": "ĐIỂM DỪNG CHÂN DƯỚI NÚI, QUÁN ĂN, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "lang-gom-dat-nung-o-lam",
+    "name": "Làng Nghề Gốm Đất Nung & Bếp Cà Ràng Cổ Truyền Ô Lâm",
+    "commune": "Xã Ô Lâm",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.375,
+    "longitude": 104.992,
+    "address": "Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ec52a58c-gà-đốt-ô-thum-thảo-n",
+    "name": "Gà Đốt Ô Thum Thảo Nguyên",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.378,
+    "longitude": 104.991,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "7440fc2d-tuyết-anh-homestay-&",
+    "name": "Tuyết Anh Homestay & Coffee",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.411,
+    "longitude": 105.0095,
+    "address": "86 Đường Nguyễn Thị Minh Khai, Khóm 4, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nha-trung-bay-van-hoa-khmer-tri-ton",
+    "name": "Nhà Trưng Bày Văn Hóa Dân Tộc Khmer Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.4285,
+    "longitude": 104.998,
+    "address": "Trung tâm Văn hóa Thể thao, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-tam-buu",
+    "name": "Chùa Tam Bửu Ba Chúc (Tổ Đình Tứ Ân Hiếu Nghĩa)",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "spiritual",
+    "subcategory": "temple",
+    "latitude": 10.5015,
+    "longitude": 104.9085,
+    "address": "Thị trấn Ba Chúc, Tri Tôn, An Giang (dưới chân Núi Tượng)"
+  },
+  {
+    "id": "4fc712e3-cầu-gỗ-giữa-đồng-lúa",
+    "name": "Cầu Gỗ Giữa Đồng Lúa Ruộng Coffee",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Điểm check-in sống ảo",
+    "latitude": 10.4152,
+    "longitude": 105.0182,
+    "address": "Sân vườn Ruộng Coffee, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-sau-bup-o-thum",
+    "name": "Quán Gà Đốt Sáu Búp Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4558,
+    "longitude": 104.9815,
+    "address": "Đường vào Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "9616e5e5-con-đường-tơ-lụa-tà-",
+    "name": "Con Đường Tơ Lụa Tà Pạ",
+    "commune": "Xã Núi Tô",
+    "category": "culture",
+    "subcategory": "Con đường tơ lụa",
+    "latitude": 10.4185,
+    "longitude": 105.0095,
+    "address": "Tuyến đường lúa Tà Pạ, Ấp Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "d8731ae3-cầu-khỉ-giữa-cánh-đồ",
+    "name": "Cầu Khỉ Giữa Cánh Đồng Thốt Nốt",
+    "commune": "Xã Cô Tô",
+    "category": "culture",
+    "subcategory": "Điểm check-in mộc mạc",
+    "latitude": 10.388,
+    "longitude": 104.986,
+    "address": "Cánh đồng thốt nốt An Tức, Ấp Ninh Hòa, Xã An Tức, Tri Tôn, An Giang"
+  },
+  {
+    "id": "a8b28369-cánh-đồng-lúa-ba-chú",
+    "name": "Cánh Đồng Lúa Ba Chúc",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "nature",
+    "subcategory": "Cánh đồng",
+    "latitude": 10.493,
+    "longitude": 104.905,
+    "address": "Cánh đồng lúa Ba Chúc, Ấp An Bình, Thị trấn Ba Chúc, Tri Tôn, An Giang"
+  },
+  {
+    "id": "tritoni",
+    "name": "Tritoni Coffee & Tea (Cà Phê Tritoni)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "cafe",
+    "latitude": 10.4238852,
+    "longitude": 105.001011,
+    "address": "92 Trần Hưng Đạo, Khóm 4, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "b56c95ef-mây-coffee-&-tea-hồ-",
+    "name": "Mây Coffee & Tea Hồ Soài Chék (Mây Sơn Garden)",
+    "commune": "Xã Núi Tô",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4165,
+    "longitude": 105.0185,
+    "address": "Ven bờ Hồ Soài Chék, Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "5169fbf9-đá-vồ-hội-đổ-(mỏm-đá",
+    "name": "Đá Vồ Hội Đổ (Mỏm Đá Sống Ảo)",
+    "commune": "Xã Cô Tô",
+    "category": "nature",
+    "subcategory": "Tọa độ săn ảnh đỉnh núi",
+    "latitude": 10.4015,
+    "longitude": 105.0165,
+    "address": "Đá Vồ Hội Đổ, Đỉnh Núi Cô Tô, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ea5a3976-lò-bánh-bò-thốt-nốt-",
+    "name": "Lò Bánh Bò Thốt Nốt Út Dứt",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Đặc sản mua quà",
+    "latitude": 10.4365,
+    "longitude": 105.0045,
+    "address": "Tỉnh Lộ 941, Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "fefbce27-lò-đường-thốt-nốt-ng",
+    "name": "Lò Đường Thốt Nốt Nguyên Chất Châu Lăng - Út Huệ",
+    "commune": "Xã Châu Lăng",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.435,
+    "longitude": 104.985,
+    "address": "Tỉnh lộ ĐT948 (Cách Cầu Cây Me 300m), Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ac550583-soài-chek-homestay-&",
+    "name": "Soài Chek Homestay & Coffee",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.411,
+    "longitude": 105.018,
+    "address": "Ấp Kè Sen, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "ca-phe-thot-not-ta-pa-view",
+    "name": "Cà Phê Thốt Nốt Tà Pạ View",
+    "commune": "Xã Núi Tô",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.415,
+    "longitude": 105.003,
+    "address": "Chân đồi Tà Pạ, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "9fd79384-anpalm-cafe-tri-tôn",
+    "name": "Anpalm Cafe Tri Tôn (Thốt Nốt Tri Tôn)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": "Quán Cà Phê",
+    "latitude": 10.4125,
+    "longitude": 105.0075,
+    "address": "56 Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-7-nui-o-thum",
+    "name": "Gà Đốt 7 Núi Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.392,
+    "longitude": 104.982,
+    "address": "Khu ẩm thực Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "b62d0291-nhà-nghi-&-khách-sạn",
+    "name": "Nhà Nghỉ & Khách Sạn Triệu Gia Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "stay",
+    "subcategory": null,
+    "latitude": 10.415,
+    "longitude": 105.008,
+    "address": "Đường Trần Hưng Đạo, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "canh-dong-lua-ta-pa",
+    "name": "Cánh đồng lúa Tà Pạ",
+    "commune": "Xã Núi Tô",
+    "category": "nature",
+    "subcategory": "field",
+    "latitude": 10.412,
+    "longitude": 104.998,
+    "address": "Dưới chân đồi Tà Pạ, Xã Núi Tô, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "2f0b8880-quán-bún-nước-lèo-tr",
+    "name": "Quán Bún Cá Củ Ngải Khmer (Num Banh Chok) — Cô Tuôk & Dì Pâu",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.4228,
+    "longitude": 105.0022,
+    "address": "Đường Trần Hưng Đạo (kế Thế Giới Di Động) & Chợ Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-ta-pa",
+    "name": "Chùa Tà Pạ (Chùa Chưn-Kôm Núi Tô)",
+    "commune": "Xã Núi Tô",
+    "category": "spiritual",
+    "subcategory": "temple",
+    "latitude": 10.4182,
+    "longitude": 105.0086,
+    "address": "Đồi Tà Pạ, Xã Núi Tô, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-bo-leo-nui",
+    "name": "Quán Bò leo núi",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "artwork",
+    "latitude": 10.4252424,
+    "longitude": 105.003305,
+    "address": "Quán Bò leo núi, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "3c55a285-tiệm-bánh-kẹp-thốt-n",
+    "name": "Tiệm Bánh Kẹp Thốt Nốt & Bánh Cốt Dừa Chùa Cũ",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "gastronomy",
+    "subcategory": "Ẩm thực",
+    "latitude": 10.413,
+    "longitude": 105.0085,
+    "address": "Trước cổng Chùa Xvayton, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "c24278f3-con-đường-tuyến-trán",
+    "name": "Con Đường Tuyến Tránh Tri Tôn (ĐT941 - ĐT948)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "Cung đường ngắm núi Cô Tô chill nhất An Giang",
+    "latitude": 10.419,
+    "longitude": 105.012,
+    "address": "Tuyến đường tránh ĐT941 - ĐT948, Khóm 6, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quan-ga-dot-may-may-o-thum",
+    "name": "Gà Đốt Ô Thum Mây Mây",
+    "commune": "Xã Ô Lâm",
+    "category": "food",
+    "subcategory": "Quán gà đốt Ô Thum",
+    "latitude": 10.391,
+    "longitude": 104.981,
+    "address": "Bờ Hồ Ô Thum, Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "quang-truong-va-pho-di-bo-tri-ton",
+    "name": "Quảng Trường & Phố Đi Bộ Trung Tâm Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "check-in",
+    "subcategory": null,
+    "latitude": 10.424,
+    "longitude": 105.009,
+    "address": "Đường Trần Hưng Đạo & Đường 3/2, Thị trấn Tri Tôn, An Giang"
+  },
+  {
+    "id": "f0d6fe60-bãi-thả-diều-hoàng-h",
+    "name": "Bãi Thả Diều Hoàng Hôn Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "Tọa độ chill hoàng hôn",
+    "latitude": 10.4122,
+    "longitude": 105.0082,
+    "address": "Sân đua bò Tri Tôn, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "chua-xa-ton-chua-svayton",
+    "name": "Chùa Xà Tón (Chùa Svayton)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "spiritual",
+    "subcategory": "temple",
+    "latitude": 10.411,
+    "longitude": 105.0089,
+    "address": "Thị trấn Tri Tôn, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "drink-hammock-chill",
+    "name": "Drink & Hammock Chill",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "food",
+    "subcategory": null,
+    "latitude": 10.4356018,
+    "longitude": 105.1207555,
+    "address": "Huyện Tri Tôn, tỉnh An Giang"
+  },
+  {
+    "id": "5c6c0c5c-chùa-mới-ô-lâm",
+    "name": "Chùa Mới Ô Lâm",
+    "commune": "Xã Ô Lâm",
+    "category": "spiritual",
+    "subcategory": "Chùa Khmer",
+    "latitude": 10.379,
+    "longitude": 104.993,
+    "address": "Ấp Phước Lộc, Xã Ô Lâm, Tri Tôn, An Giang"
+  },
+  {
+    "id": "df20bed8-chùa-hàng-còng-(krăn",
+    "name": "Chùa Hàng Còng (Krăng Krốch)",
+    "commune": "Xã Châu Lăng",
+    "category": "spiritual",
+    "subcategory": "Chùa Khmer cổ",
+    "latitude": 10.4442726,
+    "longitude": 104.9729531,
+    "address": "Ấp An Hòa, Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "b1d52ac4-khu-ẩm-thực-chợ-đêm-",
+    "name": "Khu Ẩm Thực Chợ Đêm Tri Tôn",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "general",
+    "subcategory": "Chợ",
+    "latitude": 10.4138,
+    "longitude": 105.0075,
+    "address": "Quảng trường Quảng Tế, Khóm 3, Thị trấn Tri Tôn, Tri Tôn, An Giang"
+  },
+  {
+    "id": "lang-nghe-tho-cam-chau-lang",
+    "name": "Làng Nghề Dệt Thổ Cẩm Khmer Truyền Thống Châu Lăng",
+    "commune": "Xã Châu Lăng",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.4412,
+    "longitude": 104.975,
+    "address": "Xã Châu Lăng, Tri Tôn, An Giang"
+  },
+  {
+    "id": "san-dua-bo-ta-pa-soai-chek",
+    "name": "Sân Đua Bò Thể Thao Tà Pạ - Soài Chek (Nơi Thi Đấu Chính Thức)",
+    "commune": "Xã Núi Tô",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.4215,
+    "longitude": 105.0085,
+    "address": "Khu Thể Thao Tà Pạ - Soài Chek, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "san-dua-bo-chua-ta-miet",
+    "name": "Chùa Tà Miệt (Cái Nôi Khởi Nguồn Hội Đua Bò Bảy Núi)",
+    "commune": "Xã Lương Phi",
+    "category": "culture",
+    "subcategory": null,
+    "latitude": 10.4623,
+    "longitude": 104.9255,
+    "address": "Gần Chùa Tà Miệt, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "f424d6ea-cung-đường-ven-vách-",
+    "name": "Cung Đường Ven Vách Đá Núi Dài (Lương Phi)",
+    "commune": "Thị trấn Tri Tôn",
+    "category": "nature",
+    "subcategory": "Cung đường phượt ngắm núi",
+    "latitude": 10.458,
+    "longitude": 104.945,
+    "address": "Tuyến đường ven núi Lương Phi - Lê Trì, Xã Lương Phi, Tri Tôn, An Giang"
+  },
+  {
+    "id": "nha-mo-ba-chuc",
+    "name": "Khu Chứng Tích Lịch Sử Nhà Mồ Ba Chúc",
+    "commune": "Thị trấn Ba Chúc",
+    "category": "history",
+    "subcategory": "monument",
+    "latitude": 10.4995,
+    "longitude": 104.8988,
+    "address": "Thị trấn Ba Chúc, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "cay-thot-not-trai-tim",
+    "name": "Hàng Thốt Nốt Trái Tim Ô Lâm",
+    "commune": "Xã Ô Lâm",
+    "category": "check-in",
+    "subcategory": "photospot",
+    "latitude": 10.3685,
+    "longitude": 104.9785,
+    "address": "Xã An Tức, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "3adb5c32-đá-vồ-hội-mẹ-cô-tô",
+    "name": "Đá Vồ Hội Mẹ Cô Tô",
+    "commune": "Xã Cô Tô",
+    "category": "nature",
+    "subcategory": "Săn mây",
+    "latitude": 10.401,
+    "longitude": 105.016,
+    "address": "Đỉnh Núi Cô Tô, Ấp Tô Thuận, Xã Núi Tô, Tri Tôn, An Giang"
+  },
+  {
+    "id": "doi-tuc-dup",
+    "name": "Khu Di Tích Lịch Sử Đồi Tức Dụp",
+    "commune": "Xã An Tức",
+    "category": "nature",
+    "subcategory": "historic_site",
+    "latitude": 10.3768,
+    "longitude": 104.9542,
+    "address": "Xã An Tức, huyện Tri Tôn, An Giang"
+  },
+  {
+    "id": "ga-dot-thao-nguyen-ho-o-thum",
+    "name": "Gà Đốt Thảo Nguyên & Vườn Nho Hồ Ô Thum",
+    "commune": "Xã Ô Lâm",
+    "category": "gastronomy",
+    "subcategory": "artwork",
+    "latitude": 10.376,
+    "longitude": 104.988,
+    "address": "Khu du lịch Hồ Ô Thum, Xã Ô Lâm, Tri Tôn, An Giang"
+  }
+]

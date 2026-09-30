@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { Place } from '@/components/PlaceCard';
+import { sanitizeFilterTerm } from './postgrestFilterSanitizer';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const masterPois = require('@/data/triton_pois_full.json') as any[];
 
@@ -104,7 +105,10 @@ export async function getPlacesFiltered(commune?: string, category?: string): Pr
     }
 
     if (category && category !== 'Tất cả') {
-      query = query.or(`category.eq.${category},tourism_category.eq.${category}`);
+      const cleanCategory = sanitizeFilterTerm(category);
+      if (cleanCategory) {
+        query = query.or(`category.eq.${cleanCategory},tourism_category.eq.${cleanCategory}`);
+      }
     }
 
     const { data, error } = await query;

@@ -1,17 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession, AdminPrincipal } from '@/lib/adminSessionGuard';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceRoleKey) return null;
+  return createClient(supabaseUrl, serviceRoleKey);
+}
 
-function logAudit(action: string, resourceId: string, details: Record<string, unknown>) {
+function logAudit(
+  action: string,
+  resourceId: string,
+  details: Record<string, unknown>,
+  principal?: AdminPrincipal,
+) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+
   void Promise.resolve(
     supabase.from('audit_logs').insert({
-      user_name: 'Admin_Manager',
-      user_role: 'ADMIN',
+      user_name: principal ? (principal.fullName || principal.email) : 'Admin_Manager',
+      user_role: principal?.role || 'ADMIN',
       action,
       resource_type: 'video_discoveries',
       resource_id: resourceId,
@@ -20,7 +32,16 @@ function logAudit(action: string, resourceId: string, details: Record<string, un
   ).catch(e => console.warn('[AuditLog] Error:', e));
 }
 
+// GET: Fetch video discoveries (Requires Admin Session)
 export async function GET(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
@@ -34,19 +55,33 @@ export async function GET(req: NextRequest) {
       query = query.eq('verification_status', status);
     }
 
-    const queryPromise = Promise.resolve(query);
-    const timeoutPromise = new Promise<{ data: null; error: Error }>((resolve) =>
-      setTimeout(() => resolve({ data: null, error: new Error('Supabase timeout') }), 2500)
-    );
+    const { data: videos, error } = await query;
+    if (error) {
+      console.error('[AdminVideos GET Error]:', error);
+      throw error;
+    }
 
-    const { data: videos } = await Promise.race([queryPromise, timeoutPromise]);
     return NextResponse.json({ success: true, videos: videos || [] });
   } catch (err: unknown) {
-    return NextResponse.json({ success: true, videos: [] });
+    const msg = err instanceof Error ? err.message : 'Error fetching admin videos';
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
+// POST: Create or import video record (Requires Admin Session & Kill-switch Check)
 export async function POST(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const {
@@ -117,7 +152,7 @@ export async function POST(req: NextRequest) {
       throw error;
     }
 
-    logAudit('IMPORT_TIKTOK_VIDEO', data?.id || externalId, { title, matched_location });
+    logAudit('IMPORT_TIKTOK_VIDEO', data?.id || externalId, { title, matched_location }, auth.principal);
 
     return NextResponse.json({ success: true, video: data });
   } catch (err: unknown) {
@@ -126,7 +161,20 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// PATCH: Update an existing video record (Requires Admin Session & Kill-switch Check)
 export async function PATCH(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const { id, verification_status, matched_poi_id, matched_location } = body;
@@ -152,7 +200,7 @@ export async function PATCH(req: NextRequest) {
       throw error;
     }
 
-    logAudit('UPDATE_VIDEO_STATUS', id, { verification_status, matched_poi_id });
+    logAudit('UPDATE_VIDEO_STATUS', id, { verification_status, matched_poi_id }, auth.principal);
 
     return NextResponse.json({ success: true, video: data });
   } catch (err: unknown) {
@@ -161,7 +209,20 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
+// DELETE: Remove a video record (Requires Admin Session & Kill-switch Check)
 export async function DELETE(req: NextRequest) {
+  const auth = await verifyAdminSession(req);
+  if (!auth.authenticated) return auth.response;
+
+  if (process.env.ADMIN_MUTATIONS_ENABLED === 'false') {
+    return NextResponse.json({ error: 'Admin mutations are temporarily disabled' }, { status: 503 });
+  }
+
+  const supabase = getSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+  }
+
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
@@ -176,7 +237,7 @@ export async function DELETE(req: NextRequest) {
       throw error;
     }
 
-    logAudit('DELETE_VIDEO', id, { deleted_at: new Date().toISOString() });
+    logAudit('DELETE_VIDEO', id, { deleted_at: new Date().toISOString() }, auth.principal);
 
     return NextResponse.json({ success: true, message: 'Video deleted' });
   } catch (err: unknown) {

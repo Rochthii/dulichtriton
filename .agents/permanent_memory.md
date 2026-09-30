@@ -24,7 +24,7 @@
 - Bánh bò thốt nốt nướng / hấp, Nước thốt nốt tươi ướp lạnh, Bánh cống, Bò nướng bảy món
 
 [SYSTEM ARCHITECTURE (v28.0.0 - 2026-08-15)]
-- Master Data: Verified POIs in data/triton_pois_full.json & Supabase PostgreSQL
+- Master Data: 149 Verified POIs in data/triton_pois_full.json & Supabase PostgreSQL
 - Cache Architecture:
   1. Next.js Single Master Data Cache (master-places-all-v3, master-food-places-v3, master-stays-places-v3, master-culture-places-v3, master-videos-triton-v3) with 24h safety net (revalidate: 86400).
   2. Zero Cache Dilution: 100% In-Memory / Client-Side filtering via useMemo.

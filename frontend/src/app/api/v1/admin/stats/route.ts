@@ -1,20 +1,21 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyAdminSession } from '@/lib/adminSessionGuard';
+import { requireSupabaseServerClient } from '@/lib/serverSupabase';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const [placesRes, videosRes, chatLogsRes, feedbackRes, auditRes, allPlacesRes] = await Promise.all([
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
+    const supabase = requireSupabaseServerClient();
+
+    const [placesRes, videosRes, chatLogsRes, auditRes, allPlacesRes] = await Promise.all([
       supabase.from('places').select('id', { count: 'exact', head: true }).eq('is_active', true),
       supabase.from('video_discoveries').select('id', { count: 'exact', head: true }),
       supabase.from('chat_logs').select('id', { count: 'exact', head: true }),
-      supabase.from('feedbacks').select('id', { count: 'exact', head: true }),
-      supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(10),
+      supabase.from('audit_logs').select('id, user_name, user_role, action, resource_type, resource_id, created_at').order('created_at', { ascending: false }).limit(10),
       supabase.from('places').select('id, name, commune, category, tourism_category, rating, is_hot, open_late, image_url').eq('is_active', true),
     ]);
 
@@ -49,7 +50,7 @@ export async function GET() {
 
     // Top 6 Hot POIs
     const topHotPlaces = places
-      .filter((p) => p.is_hot || p.rating >= 4.7)
+      .filter((p) => p.is_hot || (p.rating && p.rating >= 4.7))
       .slice(0, 6)
       .map((p) => ({
         id: p.id,
@@ -68,20 +69,18 @@ export async function GET() {
       .limit(50);
 
     const totalLatency = (recentLogs || []).reduce((acc, curr) => acc + (curr.latency_ms || 0), 0);
-    const avgLatencyMs = recentLogs && recentLogs.length > 0 ? Math.round(totalLatency / recentLogs.length) : 840;
+    const avgLatencyMs = recentLogs && recentLogs.length > 0 ? Math.round(totalLatency / recentLogs.length) : 0;
     const outOfScopeCount = (recentLogs || []).filter((l) => l.is_out_scope).length;
 
     return NextResponse.json({
       success: true,
       stats: {
-        totalPlaces: placesRes.count || places.length || 0,
-        activePlaces: places.length || 0,
-        nightSpotsCount: nightSpotsCount || 10,
-        hotSpotsCount: hotSpotsCount || 15,
-        totalTours: 35,
-        totalVideos: videosRes.count || 8,
-        totalAiInteractions: chatLogsRes.count || 142,
-        totalFeedbacks: feedbackRes.count || 18,
+        totalPlaces: placesRes.count ?? places.length,
+        activePlaces: places.length,
+        nightSpotsCount,
+        hotSpotsCount,
+        totalVideos: videosRes.count ?? 0,
+        totalAiInteractions: chatLogsRes.count ?? 0,
         avgLatencyMs,
         outOfScopeCount,
         topCommunes,

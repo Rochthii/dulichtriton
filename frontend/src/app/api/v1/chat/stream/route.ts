@@ -1,14 +1,12 @@
 import { NextRequest } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { streamAIResponse, buildUnifiedRagContext } from '@/lib/aiProvider';
 import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
+import { getSupabaseServerClient } from '@/lib/serverSupabase';
+import { validateChatQuery } from '@/lib/chatQueryGuard';
+import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseKey || "placeholder");
 
 interface Turn {
   role: 'user' | 'assistant';
@@ -35,19 +33,15 @@ QUY TẮC CỐT LÕI:
 
 4. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).
-
-5. **Hỗ Trợ Song Ngữ Quốc Tế (Bilingual English Support)**:
-   - Khi người dùng đặt câu hỏi bằng tiếng Anh (hoặc bất kỳ ngôn ngữ nào khác ngoài tiếng Việt), BẮT BUỘC trả lời hoàn toàn bằng tiếng Anh tự nhiên, mượt mà và chuẩn xác văn hóa.
-   - Khi trả lời tiếng Anh:
-     • Giữ đúng chuẩn địa giới hành chính: *Chau Lang Commune*, *O Lam Commune*, *Nui To Commune*, *Tri Ton Town*, *Ba Chuc Town*.
-     • Ẩm thực: Giải thích chuẩn xác (*O Thum clay-pot kaffir lime leaf roasted chicken*, *Tri Ton beef porridge with kaffir lime*, *Khmer fish noodle soup with fingerroot [no fermented fish paste]*).
-     • Vẫn đính kèm link chuẩn: [📍 Google Maps Directions](https://maps.google.com/?q=...) • [▶ Watch TikTok](https://www.tiktok.com/tag/...).`;
+   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
 async function loadHistory(sessionId: string): Promise<Turn[]> {
+  if (sessionId === 'anonymous') return [];
   try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return [];
     const { data } = await supabase
-      .from('conversations')
+      .from('chat_sessions')
       .select('turns')
       .eq('session_id', sessionId)
       .maybeSingle();
@@ -58,8 +52,11 @@ async function loadHistory(sessionId: string): Promise<Turn[]> {
 }
 
 async function saveHistory(sessionId: string, turns: Turn[]): Promise<void> {
+  if (sessionId === 'anonymous') return;
   try {
-    await supabase.from('conversations').upsert(
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return;
+    await supabase.from('chat_sessions').upsert(
       {
         session_id: sessionId,
         turns: turns.slice(-10),
@@ -81,6 +78,8 @@ function logChatEvent(payload: {
   is_out_scope?: boolean;
 }): void {
   try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return;
     void supabase.from('chat_logs').insert({
       ...payload,
       created_at: new Date().toISOString(),
@@ -137,22 +136,48 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const queryStr = (
-    (body.query as string) ||
-    (body.question as string) ||
-    (body.message as string) ||
-    (body.prompt as string) ||
-    ''
-  ).trim();
-
-  if (!queryStr) {
-    return new Response(JSON.stringify({ error: 'Missing query' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  const rawQuery = body.query ?? body.question ?? body.message ?? body.prompt;
+  const validation = validateChatQuery(rawQuery);
+  if (!validation.isValid) {
+    return new Response(
+      JSON.stringify({
+        error: validation.error,
+        code: validation.code,
+        max_length: validation.maxLength,
+        current_length: validation.currentLength,
+      }),
+      {
+        status: validation.status,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 
+  const queryStr = validation.sanitizedQuery;
+
   const sessionId = (body.session_id as string)?.trim() || 'anonymous';
+
+  // Verify session ownership before reading chat history (P04-005)
+  const ownership = await verifySessionOwnership({
+    sessionId,
+    req,
+    body,
+    supabase: getSupabaseServerClient(),
+  });
+
+  if (!ownership.isOwner) {
+    return new Response(
+      JSON.stringify({
+        error: 'Truy cập lịch sử hội thoại bị từ chối do không có quyền sở hữu phiên.',
+        code: ownership.error || 'INVALID_SESSION_OWNERSHIP',
+      }),
+      {
+        status: ownership.status || 403,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
   const userLat = typeof body.latitude === 'number' ? body.latitude : (typeof body.user_lat === 'number' ? body.user_lat : undefined);
   const userLng = typeof body.longitude === 'number' ? body.longitude : (typeof body.user_lng === 'number' ? body.user_lng : undefined);
 
@@ -278,13 +303,20 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  const responseHeaders = new Headers({
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    'Connection': 'keep-alive',
+    'X-Accel-Buffering': 'no',
+  });
+
+  if (ownership.token) {
+    responseHeaders.set(SESSION_TOKEN_HEADER, ownership.token);
+    responseHeaders.set('Set-Cookie', `${SESSION_TOKEN_COOKIE}=${ownership.token}; Path=/; HttpOnly; SameSite=Lax`);
+  }
+
   return new Response(readable, {
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      'Cache-Control': 'no-cache, no-transform',
-      'Connection': 'keep-alive',
-      'X-Accel-Buffering': 'no',
-    },
+    headers: responseHeaders,
   });
 }
 

@@ -2,18 +2,19 @@
 
 Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa.
 
-> Số lượng POI canonical, địa giới hành chính và trạng thái production chỉ được xác nhận bằng nguồn đã duyệt tại [Current State Audit](docs/technical-spec/CURRENT_STATE_AUDIT.md), Decision Gates và canonical manifest.
+> **Claim guardrail:** số lượng POI canonical, địa giới hành chính và trạng thái production chưa được suy diễn từ tài liệu cũ. Chỉ [Current State Audit](docs/technical-spec/CURRENT_STATE_AUDIT.md), Decision Gates và canonical manifest đã phê duyệt mới được quyền xác nhận chúng.
 
 ## Evidence Operating Model
 
-- Trục trách nhiệm: chỉ cung cấp thông tin du lịch/SOS có nguồn và trạng thái xác minh rõ; không để request không được ủy quyền làm thay đổi dữ liệu, tri thức AI hoặc cấu hình.
-- Trước khi code, đọc [ACTIVE_TASK.md](ACTIVE_TASK.md), [Execution Board](docs/13_TWO_STREAM_EXECUTION_BOARD.md), rồi dependency trực tiếp của task.
-- Phân biệt `DESIGNED`, `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `DISPUTED`, `RETIRED`; code tồn tại hoặc build pass không đủ để claim `VERIFIED`.
-- Với auth/RLS/sync/AI integrity, kiểm tra negative business effect: không chỉ status code mà cả DB, storage, cache, audit và external side effect có liên quan.
-- Sau task thực chất, cập nhật evidence liên quan, task board, evaluation matrix và changelog; không nâng claim khi thiếu bằng chứng.
-- Mỗi task ghi luồng A/B, AI route đề xuất, AI thực dùng và evidence. Chọn theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- Session focus theo [ACTIVE_TASK.md](ACTIVE_TASK.md); không tự chuyển luồng do task khẩn hoặc completion history của luồng kia.
-- Bàn giao bằng 4–6 gạch đầu dòng theo [Task Completion Handoff](.agents/skills/task-completion-handoff/SKILL.md), không thêm câu hỏi xã giao.
+- Trục trách nhiệm của hệ thống: chỉ cung cấp thông tin du lịch/SOS có nguồn và trạng thái xác minh rõ ràng; không để request không được ủy quyền làm thay đổi dữ liệu, tri thức AI hoặc cấu hình.
+- Trước khi làm việc, đọc [ACTIVE_TASK.md](ACTIVE_TASK.md), sau đó [Execution Board](docs/13_TWO_STREAM_EXECUTION_BOARD.md), rồi chỉ đọc dependency trực tiếp của task.
+- Phân biệt tuyệt đối `DESIGNED`, `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `DISPUTED` và `RETIRED`. Code tồn tại hoặc build pass không đủ để dùng nhãn `VERIFIED`.
+- Mọi thay đổi rủi ro cao phải nêu business effect và negative test: không chỉ “API trả 403”, mà phải chứng minh không có persistent mutation ở bảng, storage, cache, audit log hoặc external side effect liên quan.
+- Ưu tiên enforcement point hội tụ (server-side guard, RLS, shared fetch validator, canonical ingest gate) thay vì blacklist UI/endpoint. Threat model phải xét bypass qua nhiều request hoặc nhiều boundary.
+- Sau một task có thay đổi thực chất, cập nhật evidence phù hợp: task board, evaluation matrix, changelog và tài liệu kiến trúc/claim chịu tác động. Không cập nhật claim khi chưa có bằng chứng.
+- Mỗi task phải ghi luồng `A` hoặc `B`, AI route đề xuất, AI thực dùng và evidence tại completion record. Chọn theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md), không dùng model mạnh nhất theo mặc định.
+- Luồng session do người dùng chọn trong mục `Session focus` của [ACTIVE_TASK.md](ACTIVE_TASK.md) là chỉ thị hiện hành; task khẩn hoặc completion history của luồng kia không tự chuyển hướng session.
+- Khi bàn giao sau mỗi task, dùng format gọn trong [Task Completion Handoff](.agents/skills/task-completion-handoff/SKILL.md): đã làm, kiểm chứng, blocker nếu có, task tiếp theo và AI route; không thêm câu hỏi xã giao.
 
 ## 📜 5 Quy Tắc Bắt Buộc (Rules Directory):
 - [RULE 01: Production Real, No Mock](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/refresh_app_context/.agents/rules/01_production_real_no_mock.md)
@@ -24,12 +25,8 @@ Hệ thống Trợ lý Du Lịch Tri Tôn AI bản địa.
 
 ## 🛠️ Kiến Trúc & Tài Liệu Kỹ Thuật (Architecture & Tech Stack):
 - **Tech Stack**: Next.js 16 (React 19) | Supabase PostgreSQL + PostGIS + pgvector | Groq + Gemini + OpenRouter
-- **Master Data**: `data/tri_ton_master_cleaned.csv` (các bản ghi đã xác minh 100%)
+- **Master Data**: `data/tri_ton_master_cleaned.csv` (149 bản ghi đã xác minh 100%)
 - **Changelog**: [`CHANGELOG.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/CHANGELOG.md)
-- **Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_workflow_execution_standard/SKILL.md)
-- **Bilingual i18n Skill**: [`.agents/skills/triton_bilingual_i18n_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_bilingual_i18n_standard/SKILL.md)
-- **File Management & Maintenance Skill**: [`.agents/skills/triton_codebase_file_management_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_codebase_file_management_standard/SKILL.md)
-- **Zalo Integration Skill**: [`.agents/skills/triton_zalo_ecosystem_integration/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/populate_runtime_context/.agents/skills/triton_zalo_ecosystem_integration/SKILL.md)
-- **Zalo Strategy Doc**: [`docs/ZALO_ECOSYSTEM_INTEGRATION_STRATEGY.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/inject_dynamic_context/docs/ZALO_ECOSYSTEM_INTEGRATION_STRATEGY.md)
-- **Smart Delta Sync Protocol**: [`.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/inject_dynamic_context/.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md)
+- **Standard Skill**: [`.agents/skills/triton_workflow_execution_standard/SKILL.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/.agents/skills/triton_workflow_execution_standard/SKILL.md)
+- **Smart Delta Sync Protocol**: [`.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md`](file:///C:/Users/Admin/.gemini/antigravity/worktrees/dulichtriton/critique_chatbot_architecture_performance/.agents/skills/triton_workflow_execution_standard/references/smart_delta_sync_protocol.md)
 - **PowerShell Rule**: Tuyệt đối **KHÔNG dùng `&&`**, BẮT BUỘC **dùng dấu chấm phẩy `;`** khi nối chuỗi lệnh trên Windows PowerShell.

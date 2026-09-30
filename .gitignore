@@ -63,3 +63,7 @@ Desktop.ini
 # 5. Temporary & Crawler Outputs
 tourism_crawler/__pycache__/
 tourism_crawler/export/*.tmp
+output_curated_sheet/
+output_pilot/
+data/backups/test_tmp_*/
+

@@ -20,7 +20,6 @@ import {
   Clock,
   ExternalLink
 } from "lucide-react";
-import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface EmergencyContact {
   id: string;
@@ -40,10 +39,6 @@ interface EmergencyContact {
 }
 
 export default function EmergencyPage() {
-  const { language, dict } = useLanguage();
-  const em = dict.emergency;
-  const isEn = language === 'en';
-
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [copiedPhone, setCopiedPhone] = useState<string | null>(null);
 
@@ -55,15 +50,186 @@ export default function EmergencyPage() {
     setTimeout(() => setCopiedPhone(null), 2000);
   };
 
-  const emergencyContacts = (em.contactsList || []) as EmergencyContact[];
+  const emergencyContacts: EmergencyContact[] = [
+    // --- 1. Y TẾ & CẤP CỨU ---
+    {
+      id: "med-1",
+      name: "Trung Tâm Y Tế Huyện Tri Tôn (Trực Cấp Cứu 24/7)",
+      category: "medical",
+      tag: "Cấp Cứu Đa Khoa 24/7",
+      phone: "0296.3874.254",
+      backupPhone: "0296.3772.332",
+      hotline: "0967.871.919",
+      address: "Số 72 Nguyễn Trãi, Khóm 4, Thị trấn Tri Tôn, An Giang",
+      hours: "Trực cấp cứu 24/24 tất cả các ngày",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trung+Tâm+Y+Tế+Tri+Tôn+72+Nguyễn+Trãi",
+      notes: "Đội ngũ bác sĩ trực cấp cứu, xe cứu thương chuyên dụng sẵn sàng hỗ trợ bệnh nhân trên toàn địa bàn Tri Tôn.",
+      accentBg: "bg-teal-50",
+      accentText: "text-teal-700",
+      borderColor: "border-teal-300"
+    },
+    {
+      id: "med-2",
+      name: "Trạm Y Tế Xã Ba Chúc (Cụm Chùa Tam Bửu & Phi Lai)",
+      category: "medical",
+      tag: "Sơ Cấp Cứu Khu Vực Ba Chúc",
+      phone: "0296.3872.174",
+      address: "Đường Ngô Tự Lợi, Ấp An Hòa A, Xã Ba Chúc, Tri Tôn, An Giang",
+      hours: "07:00 - 17:00 (Trực y tế khẩn cấp 24/24)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trạm+Y+Tế+Xã+Ba+Chúc+Tri+Tôn",
+      notes: "Điểm tiếp nhận sơ cứu nhanh cho du khách tham quan khu di tích Nhà Mồ Ba Chúc và quần thể Chùa Tam Bửu.",
+      accentBg: "bg-teal-50",
+      accentText: "text-teal-700",
+      borderColor: "border-teal-300"
+    },
+    {
+      id: "med-3",
+      name: "Trạm Y Tế Xã Ô Lâm (Khu Vực Hồ Ô Thum)",
+      category: "medical",
+      tag: "Trạm Y Tế Khu Du Lịch",
+      phone: "0296.3874.254",
+      address: "Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
+      hours: "07:30 - 17:00 (Hotline cấp cứu liên thông TTYT)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trạm+Y+Tế+Xã+Ô+Lâm+Tri+Tôn",
+      notes: "Hỗ trợ y tế cho du khách tại thủ phủ ẩm thực Gà Đốt Hồ Ô Thum và các đồi lân cận.",
+      accentBg: "bg-teal-50",
+      accentText: "text-teal-700",
+      borderColor: "border-teal-300"
+    },
+
+    // --- 2. AN NINH & CÔNG AN ---
+    {
+      id: "pol-1",
+      name: "Công An Huyện Tri Tôn (Trực Ban An Ninh 24/24)",
+      category: "police",
+      tag: "An Ninh & Trật Tự 24/24",
+      phone: "0296.3874.257",
+      backupPhone: "0296.3874.236",
+      hotline: "113",
+      address: "Số 86 Trần Hưng Đạo, Khóm 4, Thị trấn Tri Tôn, An Giang",
+      hours: "Trực ban 24/24h tiếp nhận phản ánh an ninh",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Huyện+Tri+Tôn+86+Trần+Hưng+Đạo",
+      notes: "Tiếp nhận tin báo tội phạm, trộm cắp, hỗ trợ tìm kiếm tài sản thất lạc, giải quyết va chạm giao thông khẩn cấp.",
+      accentBg: "bg-rose-50",
+      accentText: "text-rose-700",
+      borderColor: "border-rose-300"
+    },
+    {
+      id: "pol-2",
+      name: "Công An Xã Ba Chúc",
+      category: "police",
+      tag: "An Ninh Cụm Di Tích",
+      phone: "0296.3872.174",
+      hotline: "113",
+      address: "Ấp An Thạnh, Xã Ba Chúc, Tri Tôn, An Giang",
+      hours: "Trực ban 24/24h",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Xã+Ba+Chúc+Tri+Tôn",
+      notes: "Phụ trách an ninh trật tự khu vực biên giới và các điểm du lịch tâm linh Ba Chúc.",
+      accentBg: "bg-rose-50",
+      accentText: "text-rose-700",
+      borderColor: "border-rose-300"
+    },
+    {
+      id: "pol-3",
+      name: "Công An Thị Trấn Tri Tôn",
+      category: "police",
+      tag: "Trật Tự Khu Trung Tâm",
+      phone: "0296.3874.236",
+      address: "Đường 3 Tháng 2, Khóm 5, Thị trấn Tri Tôn, An Giang",
+      hours: "Trực ban 24/24h",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Thị+Trấn+Tri+Tôn",
+      notes: "Hỗ trợ trật tự tại Quảng trường, Chợ Tri Tôn và các khu phố ẩm thực đêm.",
+      accentBg: "bg-rose-50",
+      accentText: "text-rose-700",
+      borderColor: "border-rose-300"
+    },
+
+    // --- 3. CỨU HỘ & PCCC & KIỂM LÂM ---
+    {
+      id: "res-1",
+      name: "Đội Cảnh Sát PCCC & CNCH Khu Vực Bảy Núi",
+      category: "rescue",
+      tag: "Cứu Hộ & Phòng Cháy 24/7",
+      phone: "114",
+      backupPhone: "0296.3852.114",
+      address: "Địa bàn phụ trách: Huyện Tri Tôn & Thị xã Tịnh Biên, An Giang",
+      hours: "Trực chiến 24/24h (Xe chữa cháy & cứu nạn chuyên dụng)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Phòng+Cảnh+Sát+PCCC+Công+An+Tỉnh+An+Giang",
+      notes: "Cứu hộ tai nạn đuối nước, sạt lở đồi núi mùa mưa bão, xử lý sự cố cháy rừng và cứu nạn khẩn cấp.",
+      accentBg: "bg-amber-50",
+      accentText: "text-amber-800",
+      borderColor: "border-amber-300"
+    },
+    {
+      id: "res-2",
+      name: "Hạt Kiểm Lâm Tri Tôn (Cứu Hộ Rừng & Lạc Rừng Bảy Núi)",
+      category: "rescue",
+      tag: "Bảo Vệ Rừng & Cứu Nạn Núi",
+      phone: "0296.3874.120",
+      address: "Thị trấn Tri Tôn, Huyện Tri Tôn, An Giang",
+      hours: "07:30 - 17:00 (Trực ban phòng cháy rừng mùa khô 24/24)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Hạt+Kiểm+Lâm+Tri+Tôn+An+Giang",
+      notes: "Hỗ trợ định vị cứu hộ khi du khách đi lạc trong rừng Núi Cô Tô, Núi Dài, Núi Tà Pạ hoặc phát hiện cháy rừng.",
+      accentBg: "bg-emerald-50",
+      accentText: "text-emerald-800",
+      borderColor: "border-emerald-300"
+    },
+
+    // --- 4. CỨU HỘ GIAO THÔNG & VÁ XE PHƯỢT ---
+    {
+      id: "veh-1",
+      name: "Đội Cứu Hộ Xe Máy & Vá Xe Lưu Động Bảy Núi (Tà Pạ - Ô Thum - Cô Tô)",
+      category: "vehicle",
+      tag: "Cứu Hộ Phượt Lưu Động",
+      phone: "0918.423.473",
+      backupPhone: "0974.654.891",
+      address: "Hỗ trợ lưu động dọc Tỉnh lộ 948, 955B và các cung đèo dốc Tri Tôn",
+      hours: "06:00 - 22:00 hằng ngày",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sửa+Xe+Máy+Tri+Tôn+An+Giang",
+      notes: "Cứu hộ thủng lốp, đứt xích, hỏng bugi, hết xăng dọc đường vắng giữa cánh đồng hoặc triền dốc hồ nước.",
+      accentBg: "bg-indigo-50",
+      accentText: "text-indigo-800",
+      borderColor: "border-indigo-300"
+    },
+
+    // --- 5. HÀNH CHÍNH & THÔNG TIN ---
+    {
+      id: "gov-1",
+      name: "Ủy Ban Nhân Dân Huyện Tri Tôn",
+      category: "gov",
+      tag: "Cơ Quan Quản Lý Nhà Nước",
+      phone: "0296.3874.351",
+      address: "Số 152 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
+      hours: "07:30 - 17:00 (Thứ Hai đến Thứ Sáu)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=UBND+Huyện+Tri+Tôn+152+Trần+Hưng+Đạo",
+      notes: "Cơ quan hành chính nhà nước cao nhất huyện, tiếp nhận phản ánh dịch vụ du lịch và quản lý địa bàn.",
+      accentBg: "bg-slate-50",
+      accentText: "text-slate-800",
+      borderColor: "border-slate-300"
+    },
+    {
+      id: "gov-2",
+      name: "Ủy Ban Nhân Dân Thị Trấn Tri Tôn",
+      category: "gov",
+      tag: "Chính Quyền Đô Thị",
+      phone: "0296.3874.265",
+      address: "Đường 3 Tháng 2, Khóm 5, Thị trấn Tri Tôn, An Giang",
+      hours: "07:30 - 17:00 (Thứ Hai đến Thứ Sáu)",
+      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=UBND+Thị+Trấn+Tri+Tôn",
+      notes: "Phụ trách công tác quản lý đô thị, chợ trung tâm và các lễ hội trên địa bàn thị trấn.",
+      accentBg: "bg-slate-50",
+      accentText: "text-slate-800",
+      borderColor: "border-slate-300"
+    }
+  ];
 
   const categories = [
-    { id: "all", label: em.hero.filterAll || "Tất Cả", icon: LifeBuoy, count: emergencyContacts.length },
-    { id: "medical", label: isEn ? "Medical" : "Cấp Cứu Y Tế", icon: Ambulance, count: emergencyContacts.filter(c => c.category === "medical").length },
-    { id: "police", label: isEn ? "Police & Security" : "Công An & An Ninh", icon: ShieldAlert, count: emergencyContacts.filter(c => c.category === "police").length },
-    { id: "rescue", label: isEn ? "Fire & Rescue" : "Cứu Hộ & PCCC", icon: Flame, count: emergencyContacts.filter(c => c.category === "rescue").length },
-    { id: "vehicle", label: isEn ? "Roadside Repair" : "Vá Xe Phượt", icon: Wrench, count: emergencyContacts.filter(c => c.category === "vehicle").length },
-    { id: "gov", label: isEn ? "Government" : "UBND Huyện", icon: Building2, count: emergencyContacts.filter(c => c.category === "gov").length }
+    { id: "all", label: "Tất Cả", icon: LifeBuoy, count: emergencyContacts.length },
+    { id: "medical", label: "Cấp Cứu Y Tế", icon: Ambulance, count: emergencyContacts.filter(c => c.category === "medical").length },
+    { id: "police", label: "Công An & An Ninh", icon: ShieldAlert, count: emergencyContacts.filter(c => c.category === "police").length },
+    { id: "rescue", label: "Cứu Hộ & PCCC", icon: Flame, count: emergencyContacts.filter(c => c.category === "rescue").length },
+    { id: "vehicle", label: "Vá Xe Phượt", icon: Wrench, count: emergencyContacts.filter(c => c.category === "vehicle").length },
+    { id: "gov", label: "UBND Huyện", icon: Building2, count: emergencyContacts.filter(c => c.category === "gov").length }
   ];
 
   const filteredContacts = activeCategory === "all"
@@ -79,17 +245,13 @@ export default function EmergencyPage() {
           <div className="relative z-10 space-y-2 sm:space-y-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-600/90 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider font-display shadow-sm">
               <PhoneCall className="h-3 w-3 sm:h-3.5 sm:w-3.5 animate-bounce" />
-              <span>{em.hero.badge}</span>
+              <span>Tổng Đài Cứu Hộ Khẩn Cấp 24/7</span>
             </div>
             <h1 className="font-display text-xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
-              {isEn ? (
-                <>Tri Ton <span className="text-[#FFD37A]">Emergency Directory</span></>
-              ) : (
-                <>Danh Bạ Khẩn Cấp <span className="text-[#FFD37A]">Tri Tôn</span></>
-              )}
+              Danh Bạ Khẩn Cấp <span className="text-[#FFD37A]">Tri Tôn</span>
             </h1>
             <p className="font-body text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
-              {em.hero.subtitle}
+              Thông tin liên hệ trực tiếp, đã xác minh 100% tới Y tế, Công an, Cứu hộ Bảy Núi và đội sửa xe lưu động khi cần trợ giúp.
             </p>
           </div>
 

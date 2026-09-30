@@ -1,0 +1,46 @@
+{
+  "source_manifest": {
+    "manifest_name": "Tri Ton Tourism Official Canonical Dataset Manifest",
+    "manifest_version": "1.0.0",
+    "schema_version": "CANONICAL-POI-SCHEMA-V1",
+    "manifest_sha256": "d87581689e5e6191be4cd40b5802d04362eac0feb0ca186741ce02c7f865cc1f",
+    "overall_sha256": "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb"
+  },
+  "generated_at": "2026-09-28T22:20:00+07:00",
+  "total_count": 1,
+  "generator": "scripts/generate_static_frontend_places.mjs",
+  "places": [
+    {
+      "canonical_id": "chua-xa-ton",
+      "name": "Chùa Xà Tón (Wat Xvayton)",
+      "alt_names": [
+        "Wat Xvayton",
+        "Chùa Svayton",
+        "Chùa Xà Tón Tri Tôn"
+      ],
+      "commune": "Thị trấn Tri Tôn",
+      "district": "Tri Tôn",
+      "province": "An Giang",
+      "address": "Đường Nam Kỳ Khởi Nghĩa, Khóm 3, Thị trấn Tri Tôn, Huyện Tri Tôn, Tỉnh An Giang",
+      "coordinates": {
+        "latitude": 10.411,
+        "longitude": 105.0089
+      },
+      "category": "culture",
+      "tourism_category": "Di Tích Lịch Sử & Kiến Trúc Nghệ Thuật",
+      "description": "Ngôi chùa Khmer cổ kính và có quy mô bậc nhất tỉnh An Giang (>300 năm tuổi). Nơi lưu giữ kho tàng Kinh lá buông Satra Sleok Rith nhiều nhất Việt Nam, được công nhận Di tích Quốc gia năm 1986 và Kỷ lục VietKings năm 2006.",
+      "verification_status": "VERIFIED",
+      "is_verified": true,
+      "review_id": "PVR-CHUA-XA-TON-2026",
+      "verified_at": "2026-09-28T22:00:00+07:00",
+      "expires_at": "2027-09-28T22:00:00+07:00",
+      "source_url": "https://triton.angiang.gov.vn",
+      "photos": [
+        "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148159/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_01.webp",
+        "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148162/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_02.webp",
+        "https://res.cloudinary.com/dhjesnejt/image/upload/v1787148163/tri_ton_places/chua-xa-ton-chua-svayton/chua-xa-ton-chua-svayton_03.webp"
+      ],
+      "is_active": true
+    }
+  ]
+}

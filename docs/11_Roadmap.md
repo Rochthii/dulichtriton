@@ -1,6 +1,8 @@
 # 11. LỘ TRÌNH TRIỂN KHAI (ROADMAP)
 
-> **Trạng thái:** roadmap lịch sử, không phải authority cho production readiness, POI count, địa giới hoặc runtime. Điều phối remediation hiện hành: [Two-stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md); task chi tiết: [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md).
+> **Trạng thái:** roadmap lịch sử. Không dùng tài liệu này làm authority cho production readiness, số lượng POI, địa giới hành chính hoặc kiến trúc runtime. Điều phối remediation đang hiệu lực: [13_TWO_STREAM_EXECUTION_BOARD.md](13_TWO_STREAM_EXECUTION_BOARD.md); chi tiết task: [12_PRODUCTION_REMEDIATION_PLAN.md](12_PRODUCTION_REMEDIATION_PLAN.md).
+>
+> Các phase bên dưới được giữ để bảo toàn bối cảnh phát triển; chỉ được cập nhật sau khi Decision Gates G1/G2 trong remediation plan được chốt.
 
 ## Giai đoạn 1: Khảo sát & Master Data (Đã hoàn thành ✅)
 * Thu thập & chuẩn hóa CSDL 82 địa điểm master (`data/tri_ton_master_cleaned.csv`).

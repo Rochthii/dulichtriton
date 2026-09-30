@@ -12,6 +12,7 @@ import WireDiagramItinerary, { type ItineraryData } from '@/components/WireDiagr
 import ItineraryPresetPicker from '@/components/ItineraryPresetPicker';
 import AppLogo from '@/components/AppLogo';
 import { getGoogleMapsUrl } from '@/lib/utils';
+import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
 
 interface EmbeddedSpot {
   type?: string;
@@ -62,17 +63,33 @@ export default function ChatbotPageClient() {
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
+  const sessionTokenRef = useRef<string>('');
+
+  const updateSessionToken = (token?: string | null) => {
+    if (token && typeof token === 'string' && token.trim()) {
+      sessionTokenRef.current = token.trim();
+      try {
+        localStorage.setItem('triton_chat_page_session_token', token.trim());
+      } catch { /* ignore */ }
+    }
+  };
 
   useEffect(() => {
     setIsMounted(true);
     const KEY = 'triton_chat_page_session_id';
     const stored = localStorage.getItem(KEY);
-    if (stored) {
+    if (stored && isValidSessionId(stored)) {
       sessionIdRef.current = stored;
     } else {
-      const newId = 'page_session_' + Math.random().toString(36).substring(2, 9);
+      const newId = generateSessionId();
       localStorage.setItem(KEY, newId);
       sessionIdRef.current = newId;
+    }
+
+    const TOKEN_KEY = 'triton_chat_page_session_token';
+    const storedToken = localStorage.getItem(TOKEN_KEY);
+    if (storedToken) {
+      sessionTokenRef.current = storedToken;
     }
 
     try {
@@ -295,17 +312,24 @@ export default function ChatbotPageClient() {
     try {
       const res = await fetch('/api/v1/chat/stream', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+        },
         body: JSON.stringify({
           question: textToSend,
           query: textToSend,
           session_id: sessionIdRef.current,
+          session_token: sessionTokenRef.current || undefined,
           history: messages.slice(-6).map(m => ({
             sender: m.sender,
             text: m.text,
           })),
         }),
       });
+
+      const tokenHeader = res.headers?.get('x-chat-session-token');
+      if (tokenHeader) updateSessionToken(tokenHeader);
 
       if (!res.ok || !res.body) {
         throw new Error('API request failed');
@@ -379,12 +403,19 @@ export default function ChatbotPageClient() {
       try {
         const fallbackRes = await fetch('/api/v1/chat/query', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          },
           body: JSON.stringify({
             question: textToSend,
             session_id: sessionIdRef.current,
+            session_token: sessionTokenRef.current || undefined,
           }),
         });
+
+        const fbToken = fallbackRes.headers?.get('x-chat-session-token');
+        if (fbToken) updateSessionToken(fbToken);
 
         if (fallbackRes.ok) {
           const data = await fallbackRes.json();
@@ -467,7 +498,7 @@ export default function ChatbotPageClient() {
               <span className="w-2 h-2 rounded-full bg-[#FFD37A] animate-ping" />
             </h1>
             <p className="text-[10px] sm:text-xs text-[#FAF3E7]/80 mt-1 font-medium font-body">
-              Địa Điểm Đã Xác Minh • 35 Lịch Trình Gợi Ý
+              149 Địa Điểm Đã Xác Minh • 35 Lịch Trình Gợi Ý
             </p>
           </div>
         </div>

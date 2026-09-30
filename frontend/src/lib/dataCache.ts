@@ -6,24 +6,27 @@
  * 1. Single Master Cache Key per domain (no cache dilution by query params).
  * 2. Revalidation Safety Net: 86400s (24h) fallback while on-demand revalidateTag is instant.
  * 3. Separation of Concerns: No private/user data stored in shared public cache.
+ * 4. Fail-closed: Never fall back to anon key when service role is missing.
  */
 
 import { unstable_cache, revalidateTag, revalidatePath } from 'next/cache';
-import { createClient } from '@supabase/supabase-js';
 import localMasterPois from '@/data/triton_pois_full.json';
 import { bumpDataVersion } from '@/lib/serverCache';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { getSupabaseServerClient } from '@/lib/serverSupabase';
 
 /**
- * 1. Master Places Cache (All Verified POIs)
+ * 1. Master Places Cache (All 149 Verified POIs)
  * Tag: 'places'
  */
 export const getCachedAllPlaces = unstable_cache(
   async () => {
     try {
+      const supabase = getSupabaseServerClient();
+      if (!supabase) {
+        console.warn('[DataCache] Supabase server client not configured, falling back to local master');
+        return localMasterPois as any[];
+      }
+
       const { data, error } = await supabase
         .from('places')
         .select('id, slug, name, category, tourism_category, commune, rating, photos, image_url, description, detailed_story, phone, open_late, night_hours, golden_time_windows, price_level, is_hot, is_active, video_url, latitude, longitude, address, opening_hours')
@@ -64,15 +67,20 @@ export const getCachedAllPlaces = unstable_cache(
 export const getCachedAllFoodPlaces = unstable_cache(
   async () => {
     try {
-      const { data: foodPlaces, error } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, open_late, night_hours, phone, is_hot')
-        .or('category.eq.gastronomy,category.eq.food,category.ilike.%Ẩm thực%,category.ilike.%Nhà hàng%,category.ilike.%Quán%,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Quán%,id.ilike.AT%,id.ilike.CF%,id.ilike.DS%')
-        .eq('is_active', true)
-        .order('rating', { ascending: false });
+      const supabase = getSupabaseServerClient();
+      if (!supabase) {
+        console.warn('[DataCache] Supabase server client not configured, falling back to local master');
+      } else {
+        const { data: foodPlaces, error } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, open_late, night_hours, phone, is_hot')
+          .or('category.eq.gastronomy,category.eq.food,category.ilike.%Ẩm thực%,category.ilike.%Nhà hàng%,category.ilike.%Quán%,tourism_category.ilike.%Ẩm thực%,tourism_category.ilike.%Quán%,id.ilike.AT%,id.ilike.CF%,id.ilike.DS%')
+          .eq('is_active', true)
+          .order('rating', { ascending: false });
 
-      if (!error && foodPlaces && foodPlaces.length > 0) {
-        return foodPlaces;
+        if (!error && foodPlaces && foodPlaces.length > 0) {
+          return foodPlaces;
+        }
       }
     } catch (e) {
       console.warn('[DataCache] Food fetch error, using local fallback:', e);
@@ -116,15 +124,20 @@ export async function getCachedFoodPlaces(commune: string = 'ALL', nightOnly: bo
 export const getCachedAllStayPlaces = unstable_cache(
   async () => {
     try {
-      const { data: stays, error } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, phone, is_hot')
-        .or('category.ilike.%Homestay%,category.ilike.%Khách sạn%,category.ilike.%Nhà nghỉ%,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách sạn%,id.ilike.KS%,id.ilike.HS%')
-        .eq('is_active', true)
-        .order('rating', { ascending: false });
+      const supabase = getSupabaseServerClient();
+      if (!supabase) {
+        console.warn('[DataCache] Supabase server client not configured, falling back to local master');
+      } else {
+        const { data: stays, error } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, phone, is_hot')
+          .or('category.ilike.%Homestay%,category.ilike.%Khách sạn%,category.ilike.%Nhà nghỉ%,tourism_category.ilike.%Homestay%,tourism_category.ilike.%Khách sạn%,id.ilike.KS%,id.ilike.HS%')
+          .eq('is_active', true)
+          .order('rating', { ascending: false });
 
-      if (!error && stays && stays.length > 0) {
-        return stays;
+        if (!error && stays && stays.length > 0) {
+          return stays;
+        }
       }
     } catch (e) {
       console.warn('[DataCache] Stays fetch error, using local fallback:', e);
@@ -179,15 +192,20 @@ export async function getCachedStayPlaces(commune: string = 'ALL', limit: number
 export const getCachedAllCulturePlaces = unstable_cache(
   async () => {
     try {
-      const { data: cultureItems, error } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, is_hot')
-        .or('category.ilike.%Chùa%,category.ilike.%Văn hóa%,category.ilike.%Di tích%,category.ilike.%Di sản%,category.eq.spiritual,category.eq.culture,category.eq.history,tourism_category.ilike.%Tâm linh%,tourism_category.ilike.%Văn hóa%,tourism_category.ilike.%Lễ hội%,id.ilike.CH%,id.ilike.DT%')
-        .eq('is_active', true)
-        .order('rating', { ascending: false });
+      const supabase = getSupabaseServerClient();
+      if (!supabase) {
+        console.warn('[DataCache] Supabase server client not configured, falling back to local master');
+      } else {
+        const { data: cultureItems, error } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, tourism_category, rating, image_url, description, price_level, video_url, address, opening_hours, is_hot')
+          .or('category.ilike.%Chùa%,category.ilike.%Văn hóa%,category.ilike.%Di tích%,category.ilike.%Di sản%,category.eq.spiritual,category.eq.culture,category.eq.history,tourism_category.ilike.%Tâm linh%,tourism_category.ilike.%Văn hóa%,tourism_category.ilike.%Lễ hội%,id.ilike.CH%,id.ilike.DT%')
+          .eq('is_active', true)
+          .order('rating', { ascending: false });
 
-      if (!error && cultureItems && cultureItems.length > 0) {
-        return cultureItems;
+        if (!error && cultureItems && cultureItems.length > 0) {
+          return cultureItems;
+        }
       }
     } catch (e) {
       console.warn('[DataCache] Culture fetch error, using local fallback:', e);
@@ -230,6 +248,11 @@ export async function getCachedCulturePlaces(commune: string = 'ALL', limit: num
 export const getCachedAllVideos = unstable_cache(
   async () => {
     try {
+      const supabase = getSupabaseServerClient();
+      if (!supabase) {
+        console.warn('[DataCache] Supabase server client not configured');
+        return [];
+      }
       const { data: dbData, error } = await supabase
         .from('video_discoveries')
         .select(
@@ -325,4 +348,3 @@ export function invalidateAllPlacesCache(): void {
     console.warn('[DataCache] Invalidation warning:', e);
   }
 }
-

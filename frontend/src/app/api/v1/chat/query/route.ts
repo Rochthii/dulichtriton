@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { calculateItineraryRoute } from '@/lib/routeEngine';
 import { generateEvidenceLinks } from '@/lib/evidenceGenerator';
 import { calculateItineraryCost } from '@/lib/costCalculator';
@@ -7,15 +6,20 @@ import { generateAIResponse as generateProviderAIResponse } from '@/lib/aiProvid
 import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 import transportData from '@/data/tri_ton_transportation.json';
 import festivalsData from '@/data/tri_ton_festivals.json';
+import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
+import { validateChatQuery } from '@/lib/chatQueryGuard';
+import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
+import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
+import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
+import { resolveVerificationMetadata } from '@/lib/placeVerificationGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
 export const dynamic = 'force-dynamic';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-
-const supabase = createClient(supabaseUrl || "https://placeholder.supabase.co", supabaseAnonKey || "placeholder");
+function getSupabase() {
+  return getSupabaseServerClient() || getSupabaseAnonServerClient();
+}
 
 const SYSTEM_PROMPT = `Bạn là Trợ lý Du Lịch Tri Tôn AI chuyên sâu về du lịch, ẩm thực, di sản văn hóa Khmer và thắng cảnh Tri Tôn, An Giang.
 Xưng hô bắt buộc: Tự xưng "Tôi" và gọi người dùng là "Bạn".
@@ -130,70 +134,44 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
 
 8. **Phạm vi hỗ trợ**:
    - Nếu câu hỏi hoàn toàn ngoài phạm vi Tri Tôn/An Giang: "Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này."
-   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).
+   - Tuyệt đối không dùng cụm từ "Huyện Tri Tôn" (dùng Xã hoặc Thị trấn cụ thể như Xã Núi Tô, Xã Ô Lâm, Xã Châu Lăng, Xã Cô Tô, Xã Lương Phi, Thị trấn Tri Tôn).`;
 
-9. **Hỗ Trợ Song Ngữ Quốc Tế (Bilingual English Support)**:
-   - Khi người dùng đặt câu hỏi bằng tiếng Anh (hoặc bất kỳ ngôn ngữ nào khác ngoài tiếng Việt), BẮT BUỘC trả lời hoàn toàn bằng tiếng Anh tự nhiên, mượt mà và chuẩn xác văn hóa Thất Sơn.
-   - Khi trả lời tiếng Anh:
-     • Giữ đúng chuẩn địa giới hành chính: *Chau Lang Commune*, *O Lam Commune*, *Nui To Commune*, *Tri Ton Town*, *Ba Chuc Town*.
-     • Ẩm thực: Giải thích chuẩn xác (*O Thum clay-pot kaffir lime leaf roasted chicken*, *Tri Ton beef porridge with kaffir lime*, *Khmer fish noodle soup with fingerroot [no fermented fish paste]*).
-     • Vẫn đính kèm link chuẩn: [📍 Google Maps Directions](https://maps.google.com/?q=...) • [▶ Watch TikTok](https://www.tiktok.com/tag/...).`;
-
-async function generateQueryEmbedding(text: string): Promise<number[] | null> {
-  const geminiKeys = [
-    process.env.GEMINI_API_KEY,
-    process.env.GEMINI_API_KEY_2,
-    process.env.GEMINI_API_KEY_3,
-    process.env.GEMINI_API_KEY_4,
-  ].filter(Boolean) as string[];
-  for (const key of geminiKeys) {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${key}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'models/gemini-embedding-001',
-            content: { parts: [{ text }] },
-            outputDimensionality: 768,
-          }),
-          signal: AbortSignal.timeout(3500),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        const vector = data?.embedding?.values;
-        if (Array.isArray(vector) && vector.length > 0) return vector;
-      }
-    } catch {
-      // fallback silently
-    }
-  }
-  return null;
-}
 
 // ── Conversation Memory Helpers ─────────────────────────────────────────────
 interface Turn { role: 'user' | 'assistant'; content: string }
 
 async function loadHistory(sessionId: string): Promise<Turn[]> {
-  const { data } = await supabase
-    .from('chat_sessions')
-    .select('turns')
-    .eq('session_id', sessionId)
-    .single();
-  if (!data) return [];
-  const turns = data.turns as Turn[];
-  // Keep last 6 turns (3 exchanges) to avoid token bloat
-  return turns.slice(-6);
+  if (sessionId === 'anonymous') return [];
+  const supabase = getSupabase();
+  if (!supabase) return [];
+  try {
+    const { data } = await supabase
+      .from('chat_sessions')
+      .select('turns')
+      .eq('session_id', sessionId)
+      .maybeSingle();
+    if (!data) return [];
+    const turns = data.turns as Turn[];
+    // Keep last 6 turns (3 exchanges) to avoid token bloat
+    return turns.slice(-6);
+  } catch {
+    return [];
+  }
 }
 
 async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
-  // Keep max 20 turns in DB; trim oldest when exceeded
-  const trimmed = history.slice(-20);
-  await supabase
-    .from('chat_sessions')
-    .upsert({ session_id: sessionId, turns: trimmed }, { onConflict: 'session_id' });
+  if (sessionId === 'anonymous') return;
+  const supabase = getSupabase();
+  if (!supabase) return;
+  try {
+    // Keep max 20 turns in DB; trim oldest when exceeded
+    const trimmed = history.slice(-20);
+    await supabase
+      .from('chat_sessions')
+      .upsert({ session_id: sessionId, turns: trimmed }, { onConflict: 'session_id' });
+  } catch (e) {
+    console.warn('[Memory] saveHistory failed:', e);
+  }
 }
 
 // ── Observability ────────────────────────────────────────────────────────────
@@ -202,6 +180,8 @@ function logChatEvent(entry: {
   provider_used?: string; rag_method?: string; places_count?: number;
   latency_ms?: number; is_out_scope?: boolean;
 }): void {
+  const supabase = getSupabase();
+  if (!supabase) return;
   void Promise.resolve(supabase.from('chat_logs').insert(entry))
     .then(({ error }) => { if (error) console.warn('[ChatLog] Insert failed:', error.message); })
     .catch((e: unknown) => console.warn('[ChatLog] Error:', e));
@@ -254,6 +234,8 @@ function checkIsOutOfScope(queryStr: string, history: Turn[]): boolean {
 
 // ── Context-Aware Video Discovery Helper ────────────────────────────────────
 async function fetchContextAwareVideos(queryStr: string, matchedPlaces: Record<string, unknown>[] = []) {
+  const supabase = getSupabase();
+  if (!supabase) return [];
   const lower = queryStr.toLowerCase();
   const matchedIds = matchedPlaces.map(p => p.id as string).filter(Boolean);
 
@@ -318,18 +300,44 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    if (!body.query || typeof body.query !== 'string' || !body.query.trim()) {
+    const validation = validateChatQuery(body?.query);
+    if (!validation.isValid) {
       return NextResponse.json(
-        { error: 'Missing or invalid query parameter' },
-        { status: 400 }
+        {
+          error: validation.error,
+          code: validation.code,
+          max_length: validation.maxLength,
+          current_length: validation.currentLength,
+        },
+        { status: validation.status }
       );
     }
 
-    const queryStr  = body.query.trim();
+    const queryStr  = validation.sanitizedQuery;
     // session_id: frontend gửi kèm; fallback sang 'anonymous' cho widget
     const sessionId = (typeof body.session_id === 'string' && body.session_id.trim())
       ? body.session_id.trim()
       : 'anonymous';
+
+    const supabase = getSupabase();
+
+    // Verify session ownership before reading chat history (P04-005)
+    const ownership = await verifySessionOwnership({
+      sessionId,
+      req,
+      body,
+      supabase,
+    });
+
+    if (!ownership.isOwner) {
+      return NextResponse.json(
+        {
+          error: 'Truy cập lịch sử hội thoại bị từ chối do không có quyền sở hữu phiên.',
+          code: ownership.error || 'INVALID_SESSION_OWNERSHIP',
+        },
+        { status: ownership.status || 403 }
+      );
+    }
 
     const t0 = Date.now(); // latency tracking
 
@@ -341,12 +349,21 @@ export async function POST(req: NextRequest) {
 
     if (checkIsOutOfScope(queryStr, history)) {
       logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true, latency_ms: Date.now() - t0 });
-      return NextResponse.json({
+      const oosRes = NextResponse.json({
         text_response: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.',
         ui_components: [],
         videos: [],
         suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
       });
+      if (ownership.token) {
+        oosRes.headers.set(SESSION_TOKEN_HEADER, ownership.token);
+        oosRes.cookies.set(SESSION_TOKEN_COOKIE, ownership.token, {
+          path: '/',
+          httpOnly: true,
+          sameSite: 'lax',
+        });
+      }
+      return oosRes;
     }
 
     // ── STEP 1: EMBEDDING & DYNAMIC CONTEXT PREPARATION ──────────────────────
@@ -356,15 +373,17 @@ export async function POST(req: NextRequest) {
     if (qEmbedding) {
       // Dynamic Few-shot context for style/formatting guidance (non-blocking)
       try {
-        const { data: shotHits } = await supabase.rpc('match_golden', {
-          query_embedding: qEmbedding,
-          thresh: 0.70,
-          match_count: 2
-        });
+        if (supabase) {
+          const { data: shotHits } = await supabase.rpc('match_golden', {
+            query_embedding: qEmbedding,
+            thresh: 0.70,
+            match_count: 2
+          });
 
-        if (shotHits && shotHits.length > 0) {
-          goldenFewShotsSnippet = '\n\n[THAM KHẢO PHONG CÁCH TRẢ LỜI ĐỊNH DẠNG]:\n' +
-            shotHits.map((shot: any, i: number) => `Mẫu ${i + 1}: ${typeof shot.answer_json === 'string' ? shot.answer_json : JSON.stringify(shot.answer_json)}`).join('\n\n');
+          if (shotHits && shotHits.length > 0) {
+            goldenFewShotsSnippet = '\n\n[THAM KHẢO PHONG CÁCH TRẢ LỜI ĐỊNH DẠNG]:\n' +
+              shotHits.map((shot: any, i: number) => `Mẫu ${i + 1}: ${typeof shot.answer_json === 'string' ? shot.answer_json : JSON.stringify(shot.answer_json)}`).join('\n\n');
+          }
         }
       } catch { /* non-blocking */ }
     }
@@ -438,7 +457,7 @@ export async function POST(req: NextRequest) {
       targetPoiIds.push("HG002", "PL001", "PL004");
     }
 
-    if (targetPoiIds.length > 0) {
+    if (targetPoiIds.length > 0 && supabase) {
       const { data: clusteredPlaces } = await supabase
         .from('places')
         .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
@@ -448,57 +467,19 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 1. Extract N-grams (2-word & 3-word phrases) for precision POI matching
-    const stopWords = ['ở', 'đâu', 'có', 'gì', 'đẹp', 'nào', 'ngon', 'mấy', 'giờ', 'bao', 'nhiêu', 'cho', 'mình', 'với', 'thì', 'lên', 'ăn', 'đi', 'muốn', 'ngắm', 'chỗ', 'hãy', 'bạn', 'tối', 'sáng', 'thế', 'nào', 'từ', 'vé', 'quán', 'thích'];
-    const rawTokens = lowerQuery.replace(/[?,.!]/g, '').split(/\s+/).filter(Boolean);
-    const filteredTokens = rawTokens.filter((w: string) => !stopWords.includes(w));
-
-    const nGramPhrases: string[] = [];
-    // 2-word bigrams
-    for (let i = 0; i < filteredTokens.length - 1; i++) {
-      nGramPhrases.push(`${filteredTokens[i]} ${filteredTokens[i+1]}`);
-    }
-    // 3-word trigrams
-    for (let i = 0; i < filteredTokens.length - 2; i++) {
-      nGramPhrases.push(`${filteredTokens[i]} ${filteredTokens[i+1]} ${filteredTokens[i+2]}`);
-    }
-
-    // Query DB for n-gram matches first (Highest Priority)
-    for (const phrase of nGramPhrases) {
-      if (phrase.length < 3) continue;
-      const { data: phraseMatches } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
-        .or(`name.ilike.%${phrase}%,category.ilike.%${phrase}%,commune.ilike.%${phrase}%`)
-        .limit(4);
-      if (phraseMatches) {
-        phraseMatches.forEach(p => {
-          if (!placesMap.has(p.id)) placesMap.set(p.id, p);
-        });
-      }
-    }
-
-    // Fallback: Individual tokens matching
-    if (placesMap.size < 2 && filteredTokens.length > 0) {
-      for (const token of filteredTokens) {
-        if (token.length < 2) continue;
-        const { data: tokenMatches } = await supabase
-          .from('places')
-          .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
-          .or(`name.ilike.%${token}%,category.ilike.%${token}%,commune.ilike.%${token}%`)
-          .limit(4);
-        if (tokenMatches) {
-          tokenMatches.forEach(p => {
-            if (!placesMap.has(p.id)) placesMap.set(p.id, p);
-          });
-        }
-      }
+    // 1. Precision POI matching via single bounded token search (P04-007)
+    if (supabase) {
+      const tokenMatches = await executeBoundedTokenSearch(supabase, lowerQuery, { maxTerms: 6, limit: 8 });
+      tokenMatches.forEach((p: any) => {
+        if (!placesMap.has(p.id)) placesMap.set(p.id, p);
+      });
     }
 
     let kbSnippet = '';
     // Hybrid Vector Search (pgvector RPC match_places & match_kb)
-    const queryVector = await generateQueryEmbedding(queryStr);
-    if (queryVector) {
+    // P04-006: Reuse the single embedding generated at STEP 1
+    const queryVector = qEmbedding;
+    if (queryVector && supabase) {
       const { data: vectorMatches } = await supabase.rpc('match_places', {
         query_embedding: queryVector,
         match_threshold: 0.35,
@@ -524,7 +505,7 @@ export async function POST(req: NextRequest) {
 
     // 2. PostGIS Geo Proximity Spatial Router (Search nearby POIs by distance)
     const isNearbyQuery = lowerQuery.includes('gần') || lowerQuery.includes('xung quanh') || lowerQuery.includes('khoảng cách') || lowerQuery.includes('bao xa');
-    if (isNearbyQuery) {
+    if (isNearbyQuery && supabase) {
       // Default to Tri Tôn Town Center coordinates if query doesn't specify origin
       const originLat = 10.4128;
       const originLng = 105.0068;
@@ -583,6 +564,7 @@ export async function POST(req: NextRequest) {
 
       places.forEach((p) => {
         const evidence = generateEvidenceLinks(p.name, p.commune);
+        const vMeta = resolveVerificationMetadata(p);
         formattedPlaces.push({
           id: p.id,
           slug: p.slug || p.id,
@@ -594,24 +576,45 @@ export async function POST(req: NextRequest) {
           source_url: evidence.googleMapsUrl,
           tiktok_search_url: evidence.tiktokSearchUrl,
           hashtags: evidence.hashtags,
-          is_verified: p.is_verified ?? true,
-          verified_at: p.verified_at,
+          is_verified: vMeta.is_verified,
+          verification_status: vMeta.verification_status,
+          verified_at: vMeta.verified_at,
           distance_km: p.distance_km ? Number(p.distance_km.toFixed(1)) : undefined,
         });
       });
     } else {
       // Fetch top 3 hot places as fallback context
-      const { data: hotPlaces } = await supabase
-        .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, golden_time_windows, price_level, opening_hours, description, source_url, is_verified, verified_at')
-        .eq('is_hot', true)
-        .limit(3);
+      if (supabase) {
+        const { data: hotPlaces } = await supabase
+          .from('places')
+          .select('id, slug, name, commune, category, rating, image_url, golden_time_windows, price_level, opening_hours, description, source_url, is_verified, verification_status, verified_at')
+          .eq('is_hot', true)
+          .limit(3);
 
-      if (hotPlaces) {
-        ragContext = hotPlaces
-          .map((p) => `- [ID: ${p.id}] ${p.name} (Thuộc Xã/Thị trấn ${p.commune}): Thể loại ${p.category}. Nguồn xác minh: ${p.source_url || 'https://maps.google.com'}. Mô tả: ${p.description || ''}`)
-          .join('\n');
-        hotPlaces.forEach((p) => formattedPlaces.push(p));
+        if (hotPlaces) {
+          ragContext = hotPlaces
+            .map((p) => `- [ID: ${p.id}] ${p.name} (Thuộc Xã/Thị trấn ${p.commune}): Thể loại ${p.category}. Nguồn xác minh: ${p.source_url || 'https://maps.google.com'}. Mô tả: ${p.description || ''}`)
+            .join('\n');
+          hotPlaces.forEach((p) => {
+            const evidence = generateEvidenceLinks(p.name, p.commune);
+            const vMeta = resolveVerificationMetadata(p);
+            formattedPlaces.push({
+              id: p.id,
+              slug: p.slug || p.id,
+              name: p.name,
+              commune: p.commune,
+              category: p.category,
+              rating: p.rating,
+              image_url: p.image_url,
+              source_url: evidence.googleMapsUrl,
+              tiktok_search_url: evidence.tiktokSearchUrl,
+              hashtags: evidence.hashtags,
+              is_verified: vMeta.is_verified,
+              verification_status: vMeta.verification_status,
+              verified_at: vMeta.verified_at,
+            });
+          });
+        }
       }
     }
 
@@ -661,13 +664,24 @@ export async function POST(req: NextRequest) {
       is_out_scope: false,
     });
 
-    return NextResponse.json({
+    const mainRes = NextResponse.json({
       text_response: aiTextResponse,
       ui_components: formattedPlaces.length > 0 ? [{ type: 'place_grid', data: formattedPlaces }] : [],
       places: formattedPlaces,
       videos: videos || [],
       suggestions,
     });
+
+    if (ownership.token) {
+      mainRes.headers.set(SESSION_TOKEN_HEADER, ownership.token);
+      mainRes.cookies.set(SESSION_TOKEN_COOKIE, ownership.token, {
+        path: '/',
+        httpOnly: true,
+        sameSite: 'lax',
+      });
+    }
+
+    return mainRes;
   } catch (error: unknown) {
     console.error('[ChatProxy] Error:', error);
     return NextResponse.json(

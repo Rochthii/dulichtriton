@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { SITE_URL, SITE_CONFIG } from "@/lib/siteConfig";
 import SiteNav from "../components/SiteNav";
@@ -9,7 +8,6 @@ import MobileBottomNav from "../components/MobileBottomNav";
 import SecurityConsoleShield from "../components/SecurityConsoleShield";
 import DeploymentAutoRecovery from "../components/DeploymentAutoRecovery";
 import InstallPwaBanner from "../components/InstallPwaBanner";
-import { LanguageProvider } from "@/lib/i18n/LanguageContext";
 
 export const viewport: Viewport = {
   themeColor: "#0E8C7F",
@@ -24,7 +22,7 @@ export const metadata: Metadata = {
     default: "Du Lịch Tri Tôn AI — Nền Tảng Du Lịch Thông Minh Vùng Bảy Núi",
     template: "%s | Du Lịch Tri Tôn AI"
   },
-  description: "Cẩm nang du lịch Tri Tôn, An Giang: địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.",
+  description: "Cẩm nang du lịch Tri Tôn, An Giang: 149 địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thông minh.",
   keywords: [
     'du lịch Tri Tôn', 'Tri Tôn An Giang', 'Bảy Núi', 'Hồ Tà Pạ', 'Tuyệt Tình Cốc',
     'Gà Đốt Ô Thum', 'chùa Khmer', 'Núi Cô Tô', 'Hồ Soài So', 'ẩm thực Bảy Núi',
@@ -37,7 +35,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   openGraph: {
     title: "Du Lịch Tri Tôn AI — Khám Phá Kỳ Quan Vùng Bảy Núi An Giang",
-    description: "Trợ lý AI hướng dẫn du lịch Tri Tôn, các điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.",
+    description: "Trợ lý AI hướng dẫn du lịch Tri Tôn, 149 điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.",
     url: SITE_URL,
     siteName: "Du Lịch Tri Tôn AI",
     images: [
@@ -69,9 +67,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'googleb86c8a47cc2c384e',
-    other: {
-      'zalo-platform-site-verification': 'GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s',
-    },
   },
 };
 
@@ -84,7 +79,7 @@ const rootJsonLd = {
       '@id': `${SITE_URL}/#website`,
       url: SITE_URL,
       name: 'Du Lịch Tri Tôn AI',
-      description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với địa điểm xác minh thực tế.',
+      description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với 149 địa điểm xác minh thực tế.',
       inLanguage: 'vi-VN',
       potentialAction: {
         '@type': 'SearchAction',
@@ -183,13 +178,6 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-        {/* Zalo Platform Domain Verification */}
-        <meta name="zalo-platform-site-verification" content="GTM26R7vLqPN-FyGZjfH5KZtsX2aWG19CZ8s" />
-        {/* Zalo Mini App JS SDK */}
-        <Script
-          src="https://zjs.zalo.me/zmp-sdk/2.42.0/zmp.min.js"
-          strategy="afterInteractive"
-        />
         {/* JSON-LD Global Structured Data */}
         <script
           type="application/ld+json"
@@ -197,16 +185,14 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-[#FAF3E7] text-[#26221B] antialiased font-body mobile-scroll-wrapper pb-16 sm:pb-0" suppressHydrationWarning>
-        <LanguageProvider>
-          <DeploymentAutoRecovery />
-          <SecurityConsoleShield />
-          <SiteNav />
-          <main className="flex-grow">{children}</main>
-          <SiteFooter />
-          <ChatbotWidget />
-          <MobileBottomNav />
-          <InstallPwaBanner />
-        </LanguageProvider>
+        <DeploymentAutoRecovery />
+        <SecurityConsoleShield />
+        <SiteNav />
+        <main className="flex-grow">{children}</main>
+        <SiteFooter />
+        <ChatbotWidget />
+        <MobileBottomNav />
+        <InstallPwaBanner />
       </body>
     </html>
   );

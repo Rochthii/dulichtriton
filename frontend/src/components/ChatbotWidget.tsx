@@ -12,7 +12,7 @@ import FormattedChatMessage from './FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from './WireDiagramItinerary';
 import ItineraryPresetPicker from './ItineraryPresetPicker';
 import AppLogo from './AppLogo';
-import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
 
 interface EmbeddedSpot {
   type?: string;
@@ -40,19 +40,16 @@ interface Message {
 const SESSION_KEY = 'triton_chat_session';
 const MAX_STORED_MESSAGES = 30;
 
-export default function ChatbotWidget() {
-  const { language, dict, t } = useLanguage();
-  const cb = dict.chatbot;
-  const isEn = language === 'en';
+const defaultWelcome: Message = {
+  id: '1',
+  sender: 'assistant',
+  text: 'Xin chào! Tôi là Trợ lý AI Du Lịch Tri Tôn. Bạn cần gợi ý **lịch trình**, tìm **đặc sản Bảy Núi**, hay khám phá **chùa Khmer** nào đó?',
+  timestamp: '08:00',
+  suggestions: ['Gợi ý tour 1 ngày', 'Ăn Gà Đốt ở đâu ngon?', 'Chùa Khmer nào đẹp nhất?'],
+  showPresetPicker: true,
+};
 
-  const defaultWelcome: Message = {
-    id: '1',
-    sender: 'assistant',
-    text: cb.welcomeMessage,
-    timestamp: '08:00',
-    suggestions: cb.welcomeSuggestions,
-    showPresetPicker: true,
-  };
+export default function ChatbotWidget() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -65,20 +62,36 @@ export default function ChatbotWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const sessionIdRef = useRef<string>('');
+  const sessionTokenRef = useRef<string>('');
   // CƠ CHẾC: Pre-ping ref — track để debounce và tránh fire nhiều lần
   const prePingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hasPingedRef = useRef<boolean>(false);
+
+  const updateSessionToken = (token?: string | null) => {
+    if (token && typeof token === 'string' && token.trim()) {
+      sessionTokenRef.current = token.trim();
+      try {
+        localStorage.setItem('triton_widget_session_token', token.trim());
+      } catch { /* ignore */ }
+    }
+  };
 
   useEffect(() => {
     setIsMounted(true);
     const KEY = 'triton_widget_session_id';
     const stored = localStorage.getItem(KEY);
-    if (stored) {
+    if (stored && isValidSessionId(stored)) {
       sessionIdRef.current = stored;
     } else {
-      const newId = 'session_' + Math.random().toString(36).substring(2, 9);
+      const newId = generateSessionId();
       localStorage.setItem(KEY, newId);
       sessionIdRef.current = newId;
+    }
+
+    const TOKEN_KEY = 'triton_widget_session_token';
+    const storedToken = localStorage.getItem(TOKEN_KEY);
+    if (storedToken) {
+      sessionTokenRef.current = storedToken;
     }
 
     try {
@@ -130,28 +143,15 @@ export default function ChatbotWidget() {
 
   useEffect(() => {
     if (isOpen) {
-      scrollToBottom('auto');
-    }
-  }, [isOpen, scrollToBottom]);
-
-  useEffect(() => {
-    if (isOpen) {
-      scrollToBottom('smooth');
+      scrollToBottom();
     }
   }, [messages, isTyping, isOpen, scrollToBottom]);
 
-  if (pathname?.startsWith('/admin') || pathname === '/chatbot') {
+  if (pathname === '/chatbot') {
     return null;
   }
 
-  const presets = language === 'en' ? [
-    '🧭 27 Loop Tours',
-    '1-Day Tour',
-    'O Thum Chicken',
-    'Ta Pa Lake',
-    'Xvayton Pagoda',
-    'Best Homestays'
-  ] : [
+  const presets = [
     '🧭 27 Lịch Trình',
     'Tour 1 Ngày',
     'Gà Đốt Ô Thum',
@@ -320,11 +320,15 @@ export default function ChatbotWidget() {
     try {
       const res = await fetch('/api/v1/chat/stream', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+        },
         body: JSON.stringify({
           question: textToSend,
           query: textToSend,
           session_id: sessionIdRef.current,
+          session_token: sessionTokenRef.current || undefined,
           history: messages
             .slice(-6)
             .map(m => ({
@@ -333,6 +337,9 @@ export default function ChatbotWidget() {
             })),
         }),
       });
+
+      const tokenHeader = res.headers?.get('x-chat-session-token');
+      if (tokenHeader) updateSessionToken(tokenHeader);
 
 
       if (!res.ok || !res.body) {
@@ -407,12 +414,19 @@ export default function ChatbotWidget() {
       try {
         const fallbackRes = await fetch('/api/v1/chat/query', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          },
           body: JSON.stringify({
             question: textToSend,
             session_id: sessionIdRef.current,
+            session_token: sessionTokenRef.current || undefined,
           }),
         });
+
+        const fbToken = fallbackRes.headers?.get('x-chat-session-token');
+        if (fbToken) updateSessionToken(fbToken);
 
         if (fallbackRes.ok) {
           const data = await fallbackRes.json();
@@ -603,14 +617,14 @@ export default function ChatbotWidget() {
           <button
             type="button"
             className="p-3.5 sm:px-4 sm:py-3 rounded-full bg-gradient-to-r from-[#FFD37A] via-[#F0A32F] to-[#D98E20] text-[#26221B] shadow-[0_6px_24px_rgba(240,163,47,0.45)] hover:shadow-[0_8px_30px_rgba(240,163,47,0.6)] border-2 border-white/80 active:scale-95 transition-transform duration-200 flex items-center gap-2 group font-display"
-            aria-label={isEn ? "Open Tri Ton AI Travel Assistant" : "Mở Trợ lý AI Du Lịch Tri Tôn"}
+            aria-label="Mở Trợ lý AI Du Lịch Tri Tôn"
           >
             <div className="relative">
               <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#26221B]" />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#0E8C7F] rounded-full border-2 border-white animate-ping" />
             </div>
             <span className="hidden sm:inline-block font-black text-xs text-[#26221B] pr-0.5">
-              {isEn ? 'AI Assistant' : 'Trợ Lý AI'}
+              Trợ Lý AI
             </span>
             {unreadCount > 0 && (
               <span className="absolute -top-1.5 -left-1.5 bg-[#F26B3A] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
@@ -644,23 +658,23 @@ export default function ChatbotWidget() {
               <AppLogo size="sm" variant="emblem" />
               <div>
                 <h3 className="font-display font-bold text-sm sm:text-base leading-none flex items-center gap-2 text-[#FFFDF7]">
-                  {t('chatbot.headerTitle')}
+                  Trợ Lý AI Tri Tôn
                   <span className="w-2 h-2 rounded-full bg-[#FFD37A] animate-ping" />
                 </h3>
                 <p className="text-[10px] sm:text-xs text-[#FAF3E7]/80 mt-1 font-body">
-                  {language === 'en' ? 'Itinerary • Cuisine • Pagodas • 24/7' : 'Lịch trình • Ẩm thực • Địa điểm • 24/7'}
+                  Lịch trình • Ẩm thực • Địa điểm • 24/7
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-1">
-              <button onClick={handleClearHistory} title={language === 'en' ? 'Clear history' : 'Xóa lịch sử'} className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95 cursor-pointer">
+              <button onClick={handleClearHistory} title="Xóa lịch sử" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95">
                 <Trash2 className="w-4 h-4" />
               </button>
-              <button onClick={() => setIsExpanded(!isExpanded)} title={isExpanded ? (language === 'en' ? 'Minimize' : 'Thu nhỏ') : (language === 'en' ? 'Expand' : 'Mở rộng')} className="hidden sm:block p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors cursor-pointer">
+              <button onClick={() => setIsExpanded(!isExpanded)} title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'} className="hidden sm:block p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors">
                 {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
-              <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors ml-1 active:scale-95 cursor-pointer">
+              <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors ml-1 active:scale-95">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -793,8 +807,8 @@ export default function ChatbotWidget() {
           <div className="p-3 sm:p-3.5 bg-[#FFFDF7] border-t border-[#26221B]/8 flex items-center gap-2 shrink-0 pb-safe">
             <button
               onClick={handleOpenPresetPicker}
-              title={language === 'en' ? 'Open 27 Closed-Loop Tours' : 'Mở 27 Lịch trình Khép Vòng'}
-              className="p-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] hover:text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group cursor-pointer"
+              title="Mở 27 Lịch trình Khép Vòng"
+              className="p-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] hover:text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group"
             >
               <Navigation className="w-4 h-4 text-[#0E8C7F] group-hover:text-[#26221B] rotate-45" />
             </button>
@@ -816,16 +830,16 @@ export default function ChatbotWidget() {
                 }
               }}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder={language === 'en' ? 'Ask about Ta Pa Lake, O Thum roasted chicken, Khmer pagodas...' : 'Hỏi AI về Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer...'}
+              placeholder="Hỏi AI về Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer..."
               className="flex-1 px-4 py-2.5 rounded-full border border-[#26221B]/15 text-xs sm:text-sm text-[#26221B] focus:outline-none focus:border-[#0E8C7F] focus:ring-2 focus:ring-[#0E8C7F]/20 bg-[#FAF3E7] font-body"
             />
             <button
               onClick={() => handleSend()}
               disabled={isTyping || isLoadingItinerary || !input.trim()}
-              className="p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] disabled:opacity-50 disabled:cursor-not-allowed text-[#26221B] hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[44px] min-h-[44px] shadow-xs active:scale-95 font-display cursor-pointer"
+              className="p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] disabled:opacity-50 disabled:cursor-not-allowed text-[#26221B] hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[44px] min-h-[44px] shadow-xs active:scale-95 font-display"
             >
               <Send className="w-4 h-4 text-[#26221B]" />
-              <span className="hidden sm:inline">{t('chatbot.send')}</span>
+              <span className="hidden sm:inline">Gửi</span>
             </button>
           </div>
         </div>

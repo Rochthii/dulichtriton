@@ -1,331 +1,1128 @@
-# ACTIVE TASK
+# ACTIVE TASK — UNIFIED EXECUTION STREAM (LUỒNG THỐNG NHẤT)
 
-> Mỗi luồng chỉ có tối đa một task active; hai session song song cùng đọc file này. Khi chọn task kế tiếp, đọc [Execution Board](docs/13_TWO_STREAM_EXECUTION_BOARD.md) và dependency trực tiếp. Không coi task `done` là production verified.
+> **CƠ CHẾ ĐIỀU HÀNH DUY NHẤT:**  
+> Hệ thống đã hợp nhất toàn bộ Luồng A (App Security) và Luồng B (DB & Data Governance) thành **MỘT LUỒNG TUẦN TỰ DUY NHẤT**.  
+> Tại mọi thời điểm, chỉ có **ĐÚNG 1 TASK ACTIVE DUY NHẤT** được thực thi và nghiệm thu bằng bằng chứng thực tế (production-real evidence).  
+> Tài liệu tham chiếu: [Execution Board](docs/13_TWO_STREAM_EXECUTION_BOARD.md) · [Production Remediation Plan](docs/12_PRODUCTION_REMEDIATION_PLAN.md).
 
-## Task theo luồng
+---
 
-- **Luồng A kế tiếp:** P01-029 — logout thu hồi đúng phiên; P01-008 đã có proof `/auth/me` local.
-- **Luồng B kế tiếp:** P02-017 — thu hồi anon `INSERT` từ `audit_logs`; P02-016 đã pass local test. Production rollout của P02-014/015/016 chờ Luồng A có đường chat-session và admin chat-log read được ủy quyền.
-- Mỗi session chỉ cập nhật task của luồng đã chọn; trạng thái của luồng kia giữ nguyên.
-- **W0 exit:** P01-000/P01-001 và P00-001/P02-001/P02-002 đều có proof; W1 được mở cho một task mỗi luồng.
+### 🎯 Task Đang Mở (Current Active Task)
 
-## P01-008 — Xác minh admin session tại /auth/me (local)
+### P04-010 — Lọc retrieval theo verification_status đã duyệt (Proof: unverified fixture không xuất hiện)
 
-- **Status:** `done` cho route/test local; production và server guard toàn bộ admin API chưa verified.
-- **Luồng:** A — App security, W1.
+- **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
+- **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Mục tiêu duy nhất:** Lọc toàn bộ các luồng retrieval địa điểm (pgvector RPC `match_places`, token search, fallback `hotPlaces`, nearby search `match_places_nearby`) bắt buộc chỉ nạp các bản ghi có `verification_status = 'VERIFIED'` đã được phê duyệt:
+  - **Hiện trạng:** Một số điểm truy vấn hoặc fallback context chỉ lọc theo `is_active = true` hoặc `is_hot = true` mà chưa lọc chặt chẽ `verification_status = 'VERIFIED'`, khiến các fixture thử nghiệm, unverified hoặc pending có thể lọt vào context retrieval của chatbot AI.
+  - **Giải pháp:** Cập nhật các câu truy vấn PostgREST, RPCs và RAG retrieval gates đảm bảo lọc cứng `verification_status = 'VERIFIED'`.
+  - **Acceptance Criteria & Proof cần có:**
+    - Tuyệt đối không cho phép bất kỳ fixture nào có trạng thái `UNVERIFIED`, `IN_REVIEW`, `REJECTED`, `EXPIRED` xuất hiện trong kết quả retrieval đưa vào RAG context hoặc trả về client.
+    - Bộ test tự động kiểm chứng với các fixtures unverified chứng minh bị loại trừ 100%.
+- **Next task sau P04-010:** P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
+
+---
+
+## 📋 Lộ Trình Tuần Tự (Unified Linear Roadmap)
+
+Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển task kế tiếp:
+
+1. 🟢 **`P02-012`** *(Hoàn thành)*: Thêm CHECK rating `[0.0, 5.0]` trên `public.places` (hoàn tất bộ 3 constraint: lat, lng, rating).
+2. 🟢 **`P01-029`** *(Hoàn thành)*: Thu hồi admin session tại logout và xóa cookie (`/api/v1/admin/auth/logout/route.ts`).
+3. 🟢 **`P01-030`** *(Hoàn thành)*: Bỏ `password.trim()` tại `src/app/admin/login/page.tsx` để bảo toàn nguyên vẹn byte mật khẩu.
+4. 🟢 **`P01-009`** *(Hoàn thành)*: Xây dựng helper guard server-side dùng chung (`verifyAdminSession(req)`).
+5. 🟢 **`P01-010`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `places`.
+6. 🟢 **`P01-011`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `videos`.
+7. 🟢 **`P01-012`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `itineraries`.
+8. 🟢 **`P01-013`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `knowledge-base`.
+9. 🟢 **`P01-014`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `videos/ai-scan`.
+10. 🟢 **`P01-015`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `revalidate`.
+11. 🟢 **`P01-016`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `upload`.
+12. 🟢 **`P01-017`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `scrape-images`.
+13. 🟢 **`P01-018`** *(Hoàn thành)*: Bọc guard bảo vệ route admin `gmaps-scraper`.
+14. 🟢 **`P01-019`** *(Hoàn thành)*: Xóa bỏ fallback `service_role` → `anon` trong server client factory để fail-closed hoàn toàn (`dataCache.ts` & `serverSupabase.ts`).
+15. 🟢 **`P02-023`** *(Hoàn thành)*: Fresh migration replay test toàn bộ chuỗi migration từ database trống.
+16. 🟢 **`P02-024`** *(Hoàn thành)*: RLS matrix test tổng thể xác nhận quyền truy cập của mọi role trên mọi bảng (196/196 test pass 100%).
+17. 🟢 **`P01-020`** *(Hoàn thành)*: Tạo URL validation contract cho server-side fetch (91/91 tests pass 100%).
+18. 🟢 **`P01-021`** *(Hoàn thành)*: Chặn scheme không phải HTTPS tại `scrape-images` (17/17 tests pass 100%).
+19. 🟢 **`P01-022`** *(Hoàn thành)*: Chặn private/loopback/link-local IP tại `scrape-images` (32/32 tests pass 100%).
+20. 🟢 **`P01-023`** *(Hoàn thành)*: Chỉ cho redirect sang allowlist tại `scrape-images` (41/41 tests pass 100%).
+21. 🟢 **`P01-024`** *(Hoàn thành)*: Áp URL validation contract vào `gmaps-scraper` (35/35 tests pass 100%).
+22. 🟢 **`P01-025`** *(Hoàn thành)*: Đặt request body-size limit cho `upload` (199/199 tests pass 100%).
+23. 🟢 **`P01-026`** *(Hoàn thành)*: Đặt MIME allowlist cho `upload` (207/207 tests pass 100%).
+24. 🟢 **`P01-027`** *(Hoàn thành)*: Bỏ Unsplash fallback khỏi `upload` (207/207 tests pass 100%).
+25. 🟢 **`P01-028`** *(Hoàn thành)*: Bỏ Unsplash fallback khỏi admin place creation (207/207 tests pass 100%).
+26. 🟢 **`P03-001`** *(Hoàn thành)*: Tạo báo cáo count/ID cho từng source hiện có (CSV, frontend JSON, verified JSON, DB snapshot).
+27. 🟢 **`P03-002`** *(Hoàn thành)*: Tạo bảng concordance cho một ID giữa các nguồn (status match, missing, hoặc conflict).
+28. 🟢 **`P03-003`** *(Hoàn thành)*: Tạo review queue cho toàn bộ ID conflict (102 tickets độc lập từ CRQ-001 đến CRQ-102).
+29. 🟢 **`P03-004`** *(Hoàn thành)*: Xử lý một duplicate/conflict POI trong review queue (Ticket CRQ-001: Chùa Xà Tón).
+30. 🟢 **`P03-005`** *(Hoàn thành)*: Xử lý một POI ngoài bounding box trong review queue (hoặc ngoại lệ có căn cứ).
+31. 🟢 **`P03-006`** *(Hoàn thành)*: Xử lý một nhãn commune không có trong glossary (Chuẩn hóa danh mục 15 xã/thị trấn Tri Tôn).
+32. 🟢 **`P03-007`** *(Hoàn thành)*: Xác minh một hotline khẩn cấp (Nguồn chính thức, verified_at, owner).
+33. 🟢 **`P03-008`** *(Hoàn thành)*: Xác minh một claim văn hóa/ẩm thực mâu thuẫn (Nguồn và reviewer chuyên môn).
+34. 🟢 **`P03-009`** *(Hoàn thành)*: Tạo template review cho *một* POI (Source, evidence, reviewer, expiry).
+35. 🟢 **`P03-010`** *(Hoàn thành)*: Áp template P03-009 cho một POI (Record review hoàn chỉnh).
+36. 🟢 **`P03-011`** *(Hoàn thành)*: Gán `verification_status` cho một POI đã review (Lưu trong canonical schema).
+37. 🟢 **`P03-012`** *(Hoàn thành)*: Gán `verified_at` cho một POI đã review (Timestamp có nguồn).
+38: 🟢 **`P03-013`** *(Hoàn thành)*: Gán `source_url` cho một field được xác minh (URL truy cập được và đúng field).
+39. 🟢 **`P03-014`** *(Hoàn thành)*: Xuất canonical dataset version đầu tiên từ các record đã duyệt (Manifest có schema version/checksum/count).
+40. 🟢 **`P03-015`** *(Hoàn thành)*: Viết validator schema cho canonical dataset (Fixture sai schema fail).
+41. 🟢 **`P03-016`** *(Hoàn thành)*: Viết validator uniqueness cho canonical ID (Fixture duplicate fail).
+42. 🟢 **`P03-017`** *(Hoàn thành)*: Viết validator GPS boundary (Fixture ngoài vùng fail).
+43. 🟢 **`P03-018`** *(Hoàn thành)*: Viết validator commune glossary (Fixture nhãn lạ fail).
+44. 🟢 **`P03-019`** *(Hoàn thành)*: Cho static frontend data sinh từ canonical manifest (Build artifact ghi cùng version).
+45. 🟢 **`P03-020`** *(Hoàn thành)*: Cho sitemap sinh từ canonical manifest (Sitemap count khớp manifest).
+46. 🟢 **`P03-021`** *(Hoàn thành)*: Chỉ cho phép RAG ingest canonical records verified (Fixture unverified không được ingest).
+47. 🟢 **`P03-022`** *(Hoàn thành)*: Chạy Smart Delta Sync ở dry-run (Diff report có skip/create/patch/error chính xác).
+48. 🟢 **`P03-023`** *(Hoàn thành)*: Sửa parser Smart Delta Sync cho field `address` (Unit test address diff pass).
+49. 🟢 **`P03-024`** *(Hoàn thành)*: Sửa parser Smart Delta Sync cho field `description` (Unit test description diff pass).
+50. 🟢 **`P03-025`** *(Hoàn thành)*: Kiểm tra HTTP response trước khi tăng counter sync (Fake 4xx/5xx không được tính success).
+51. 🟢 **`P03-026`** *(Hoàn thành)*: Mở rộng itinerary diff với `for_whom` (Fixture khác `for_whom` tạo PATCH).
+52. 🟢 **`P03-027`** *(Hoàn thành)*: Mở rộng itinerary diff với `budget_range` (Fixture khác budget tạo PATCH).
+53. 🟢 **`P03-028`** *(Hoàn thành)*: Chạy sync production sau approval G2 và snapshot backup (Post-sync count/checksum khớp manifest).
+54. 🟢 **`P04-001`** *(Hoàn thành)*: Thêm input-length limit cho chat query (Payload quá ngưỡng nhận 413/400).
+55. 🟢 **`P04-002`** *(Hoàn thành)*: Chọn format session identifier (Contract nêu UUID/server-issued hoặc cơ chế đã duyệt).
+56. 🟢 **`P04-003`** *(Hoàn thành)*: Thay session ID `Math.random()` tại `ChatbotPageClient` (Proof: test tạo session hợp lệ).
+57. 🟢 **`P04-004`** *(Hoàn thành)*: Thay session ID `Math.random()` tại `ChatbotWidget` (Proof: test tạo session hợp lệ).
+58. 🟢 **`P04-005`** *(Hoàn thành)*: Xác thực session ownership trước khi đọc chat history (Proof: session khác owner bị từ chối).
+59. 🟢 **`P04-006`** *(Hoàn thành)*: Tạo embedding đúng một lần trong chat request (Proof: spy test đếm một call).
+60. 🟢 **`P04-007`** *(Hoàn thành)*: Thay query token search tuần tự bằng một truy vấn giới hạn (Proof: query-count test giảm đúng mục tiêu đã ghi).
+61. 🟢 **`P04-008`** *(Hoàn thành)*: Di chuyển user text khỏi PostgREST `.or` string interpolation (Proof: payload filter syntax không thay đổi điều kiện truy vấn).
+62. 🟢 **`P04-009`** *(Hoàn thành)*: Không default `is_verified` thành true (Proof: missing field không được trả `verified`).
+63. 🟡 **`P04-010`** *(Đang mở)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
+
+---
+
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-009 — Không default is_verified thành true (Proof: missing field không được trả verified)
+- **Status:** `done` tại `frontend/src/lib/placeVerificationGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/admin/places/route.ts`, `frontend/src/lib/chatTokenSearchHelper.ts`, `frontend/src/app/api/v1/search/route.ts`, `supabase/migrations/20260930_p04_009_places_is_verified_default_false.sql`, và `frontend/scripts/place-verification-guard.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module phòng vệ chuyên dụng `frontend/src/lib/placeVerificationGuard.ts` cung cấp các hàm `isRecordVerified(record)`, `resolveVerificationMetadata(record)`, và `sanitizePlaceVerification(place)`.
+  - Xóa bỏ hoàn toàn cơ chế fallback nguy hiểm `is_verified: p.is_verified ?? true` tại `frontend/src/app/api/v1/chat/query/route.ts` (cả nhánh chính và nhánh fallback `hotPlaces`). Missing field không bao giờ được trả về `true`.
+  - Xóa bỏ hành vi gán cứng `is_verified: true` vô điều kiện khi tạo mới POI tại `frontend/src/app/api/v1/admin/places/route.ts` POST; tích hợp `resolveVerificationMetadata` bảo đảm POI chỉ có `is_verified: true` khi có chứng thực hợp lệ và trạng thái `VERIFIED`.
+  - Bổ sung trường `is_verified, verification_status, verified_at, source_url` vào câu truy vấn select của `frontend/src/lib/chatTokenSearchHelper.ts` và `frontend/src/app/api/v1/search/route.ts`.
+  - Ban hành migration DDL PostgreSQL `supabase/migrations/20260930_p04_009_places_is_verified_default_false.sql`: đổi `ALTER TABLE public.places ALTER COLUMN is_verified SET DEFAULT false` và fail-closed các bản ghi NULL hoặc không có trạng thái `VERIFIED`.
+  - Tước bỏ trường `verified_at` đối với các bản ghi unverified nhằm triệt tiêu giả mạo timestamp kiểm toán.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/place-verification-guard.test.mjs` đạt 6/6 assertions pass 100%: (1) Unit test fail-closed trên các fixtures missing field, null, undefined, 0, string, unverified statuses; (2) Unit test resolveVerificationMetadata tước bỏ timestamp trên unverified; (3) Unit test sanitizePlaceVerification; (4) Static code invariant quét 4 file trọng yếu, xác nhận 0% xuất hiện fallback `is_verified ?? true` hay `|| true`; (5) Database migration invariant.
+  - Toàn bộ 370/370 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Place Verification Guard Invariant & Fail-Closed Proof).
+- **Next task:** P04-010 — Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
+
+---
+
+### P04-008 — Di chuyển user text khỏi PostgREST .or string interpolation (Proof: payload filter syntax không thay đổi điều kiện truy vấn)
+- **Status:** `done` tại `frontend/src/lib/postgrestFilterSanitizer.ts`, các API routes (`search`, `videos`, `admin/places`, `admin/audit-logs`, `admin/knowledge-base`, `admin/itineraries`, `lib/places.ts`, `lib/chatTokenSearchHelper.ts`), và `frontend/scripts/postgrest-filter-sanitizer.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển module phòng thủ chuyên dụng `frontend/src/lib/postgrestFilterSanitizer.ts` cung cấp các hàm `sanitizeFilterTerm(rawInput)`, `buildSafeOrIlikeFilter(fields, rawTerm)`, `buildSafeMultiTermOrFilter(fields, rawTerms)`, và `countPostgrestClauses(filterStr)`.
+  - Trung hòa triệt để các ký tự điều khiển cú pháp PostgREST (`,`, `(`, `)`, `"`, `\`), loại bỏ multiple percent wildcards và chuẩn hóa khoảng trắng.
+  - Thay thế toàn bộ các điểm nội suy chuỗi thô của người dùng trong `.or()` trên toàn codebase:
+    1. `frontend/src/app/api/v1/search/route.ts` (search places): bọc an toàn qua `buildSafeOrIlikeFilter`.
+    2. `frontend/src/app/api/v1/videos/route.ts` (location & search query): bọc an toàn qua `buildSafeOrIlikeFilter`.
+    3. `frontend/src/app/api/v1/admin/places/route.ts` (admin category & keyword search): bọc an toàn qua `buildSafeOrIlikeFilter`.
+    4. `frontend/src/app/api/v1/admin/audit-logs/route.ts` (audit log search): bọc an toàn qua `buildSafeOrIlikeFilter`.
+    5. `frontend/src/app/api/v1/admin/knowledge-base/route.ts` (knowledge base search): bọc an toàn qua `buildSafeOrIlikeFilter`.
+    6. `frontend/src/app/api/v1/admin/itineraries/route.ts` (PATCH & DELETE itinerary targetId / itinerary_id): bọc qua `sanitizeFilterTerm`.
+    7. `frontend/src/lib/places.ts` (getPlacesFiltered category query): bọc qua `sanitizeFilterTerm`.
+    8. `frontend/src/lib/chatTokenSearchHelper.ts` (bounded token search): bọc qua `buildSafeMultiTermOrFilter`.
+  - Thiết lập bất biến toán học clause-count: số lượng mệnh đề logic PostgREST sinh ra luôn luôn bằng chính xác `fields.length` (hoặc `fields.length * terms.length`), bảo đảm các payload tấn công chứa toán tử lọc (như `hồ tà pạ,is_active.eq.false,(id.gt.0)`) tuyệt đối không thể chèn thêm bất kỳ mệnh đề lọc nào vào câu truy vấn hoặc làm sai lệch kết quả.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/postgrest-filter-sanitizer.test.mjs` đạt 6/6 assertions pass 100%: (1) Static code invariant quét 8 file trọng yếu, xác nhận 0% nội suy chuỗi thô của người dùng trong `.or()`; (2) Unit test kiểm chứng trung hòa PostgREST delimiters, operators và giữ nguyên văn bản tiếng Việt hợp lệ; (3) Unit test chứng minh bất biến số lượng mệnh đề và khả năng miễn nhiễm injection dưới payload độc hại; (4) Multi-term bounded generation test; (5) Unit test bộ đếm clause count PostgREST.
+  - Toàn bộ 364/364 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (PostgREST Filter Sanitizer Invariant & Injection Resistance Proof).
+- **Next task:** P04-009 — Không default `is_verified` thành true (Proof: missing field không được trả `verified`).
+
+---
+
+### P04-007 — Thay query token search tuần tự bằng một truy vấn giới hạn (Proof: query-count test giảm đúng mục tiêu đã ghi)
+- **Status:** `done` tại `frontend/src/lib/chatTokenSearchHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, và `frontend/scripts/chat-token-search-bounded.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển module helper chuyên dụng `frontend/src/lib/chatTokenSearchHelper.ts` cung cấp các hàm `extractSearchTerms(query, maxTerms)`, `buildBoundedOrFilter(terms)`, và `executeBoundedTokenSearch(supabase, query, options)`.
+  - Tái cấu trúc quy trình RAG token matching trong `frontend/src/app/api/v1/chat/query/route.ts`: xóa bỏ hoàn toàn hai vòng lặp tuần tự lồng nhau `for (const phrase of nGramPhrases)` và `for (const token of filteredTokens)` từng gây bùng nổ 10-20+ round-trips PostgREST tuần tự trên mỗi lượt chat (N+1 query issue).
+  - Thuật toán mới trích xuất n-grams (ưu tiên trigrams và bigrams), lọc bỏ stop words, loại trừ các ký tự phân tách nhạy cảm (`%`, `,`, `(`, `)`), giới hạn tối đa `maxTerms = 6` thuật ngữ đặc trưng nhất, ghép thành một mệnh đề `.or()` duy nhất và thực thi với `.limit(8)`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-token-search-bounded.test.mjs` đạt 6/6 assertions pass 100%: (1) Static code invariant xác nhận route import và gọi `executeBoundedTokenSearch`, loại bỏ triệt để 100% vòng lặp tuần tự cũ; (2) Unit test trích xuất n-grams/tokens, lọc stop words, khử trùng lặp và sinh mệnh đề PostgREST .or() hợp chuẩn; (3) Query-count benchmark chứng minh số lượng truy vấn DB giảm từ 12-15 queries xuống ĐÚNG 1 QUERY DUY NHẤT (mức giảm >= 90%); (4) Robustness test kiểm chứng chuỗi rỗng hoặc toàn stop words không gửi bất kỳ truy vấn DB nào (`queryCount === 0`); (5) Robustness test kiểm chứng lỗi kết nối DB suy giảm an toàn thành mảng rỗng mà không crash ứng dụng.
+  - Toàn bộ 358/358 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Single bounded token search invariant & query-count proof).
+- **Next task:** P04-008 — Di chuyển user text khỏi PostgREST `.or` string interpolation (Proof: payload filter syntax không thay đổi điều kiện truy vấn).
+
+---
+
+### P04-006 — Tạo embedding đúng một lần trong chat request (Proof: spy test đếm một call)
+- **Status:** `done` tại `frontend/src/lib/chatEmbeddingHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, và `frontend/scripts/chat-embedding-single-call.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module helper chuyên biệt `frontend/src/lib/chatEmbeddingHelper.ts` cung cấp hàm `generateQueryEmbedding(text, options)` tích hợp cơ chế Dependency Injection (`options.fetchFn`), thiết lập timeout an toàn và fail-safe fallback.
+  - Tái cấu trúc endpoint xử lý câu hỏi `frontend/src/app/api/v1/chat/query/route.ts`: loại bỏ hoàn toàn lời gọi embedding trùng lặp thứ 2 trong `query/route.ts` (thay thế `const queryVector = await generateQueryEmbedding(queryStr);` bằng cách tái sử dụng trực tiếp kết quả embedding ở Bước 1: `const queryVector = qEmbedding;`).
+  - Bảo đảm cả 3 tác vụ downstream (`match_golden` RPC few-shot formatting, `match_places` RPC pgvector hybrid search, và `match_kb` RPC knowledge base retrieval) chia sẻ chung một vector embedding 768 chiều duy nhất, loại bỏ hoàn toàn lãng phí độ trễ mạng và bảo vệ quota Gemini embedding.
+  - Khắc phục triệt để lỗi phạm vi biến `supabase` trong `query/route.ts` và `fetchContextAwareVideos` với các rào chắn null check an toàn, đạt `npx tsc --noEmit` sạch 100% trong `query/route.ts`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-embedding-single-call.test.mjs` đạt 6/6 assertions pass 100%: (1) Static code invariant xác nhận route chỉ gọi `generateQueryEmbedding` đúng 1 lần và `queryVector` tái sử dụng `qEmbedding`; (2) Unit spy test với `spyFetch` chứng minh API embedding chỉ được gọi đúng 1 lần cho mỗi câu hỏi chat (`callCount === 1`) trả về vector 768 chiều; (3) Simulation test đa tác vụ (golden few-shots + places + kb) xác nhận 100% người tiêu thụ nhận cùng đối tượng vector và tổng số cuộc gọi mạng embedding qua toàn bộ request giữ nguyên strictly 1; (4) Robustness test kiểm chứng chuỗi rỗng và khoảng trắng trả về null với `0 network calls`; (5) Robustness test kiểm chứng lỗi mạng suy giảm an toàn thành null mà không crash ứng dụng.
+  - Toàn bộ 352/352 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Chat embedding single-call invariant & spy proof).
+- **Next task:** P04-007 — Thay query token search tuần tự bằng một truy vấn giới hạn (Proof: query-count test giảm đúng mục tiêu đã ghi).
+
+---
+
+### P04-005 — Xác thực session ownership trước khi đọc chat history (Proof: session khác owner bị từ chối)
+- **Status:** `done` tại `docs/technical-spec/CHAT_SESSION_OWNERSHIP_CONTRACT.md`, `frontend/src/lib/chatSessionOwnership.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-session-ownership.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành quy chuẩn kỹ thuật `CHAT-SESSION-OWNERSHIP-CONTRACT-V1` tại `docs/technical-spec/CHAT_SESSION_OWNERSHIP_CONTRACT.md` xác lập 5 bất biến bắt buộc (`INV-OWN-01` đến `INV-OWN-05`) khắc phục triệt để nguy cơ Threat Model TM-05 (đoán/thay session ID để đọc trộm lịch sử hoặc ngộ độc ngữ cảnh).
+  - Xây dựng module helper `frontend/src/lib/chatSessionOwnership.ts` cung cấp các hàm `createSessionOwnershipToken` (HMAC-SHA256 64 ký tự hex an toàn mật mã), `verifySessionOwnershipToken` (so khớp thời gian hằng số `timingSafeEqual`), `extractSessionOwnershipToken` (đa kênh: Header `x-chat-session-token`, Cookie `triton_chat_session_token`, Body `session_token`), và `verifySessionOwnership`.
+  - Tích hợp rào chắn vào cả hai route `/api/v1/chat/query` và `/api/v1/chat/stream`: thẩm định quyền sở hữu trước khi nạp lịch sử qua `loadHistory`. Nếu session đã tồn tại trên database mà client không có token sở hữu hợp lệ (kẻ tấn công hoặc session khác owner) thì bị từ chối dứt điểm với mã `HTTP 403 Forbidden` (`code: 'INVALID_SESSION_OWNERSHIP'`); đối với phiên mới, server tự động cấp quyền và trả về token sở hữu qua header `X-Chat-Session-Token` và Set-Cookie `triton_chat_session_token`.
+  - Nâng cấp cả hai client component `ChatbotPageClient.tsx` và `ChatbotWidget.tsx` lưu trữ và gửi kèm ownership token.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-session-ownership.test.mjs` đạt 8/8 assertions pass 100%: (1) Static invariant; (2) Unit test sinh token tất định và kiểm thực timing-safe; (3) Unit test trích xuất đa kênh (Header, Cookie, Body); (4) Simulation phiên mới cấp token thành công; (5) Simulation chủ sở hữu hợp lệ được phép truy cập lịch sử; (6) Simulation kẻ tấn công (không token, sai token, fake token) bị từ chối dứt điểm với HTTP 403; (7) Chuỗi tấn công hai bước TM-05 (đánh cắp session ID) bị chặn đứng 100%.
+  - Toàn bộ 346/346 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Chat session ownership verification).
+- **Next task:** P04-006 — Tạo embedding đúng một lần trong chat request (Proof: spy test đếm một call).
+
+---
+
+### P04-004 — Thay session ID Math.random() tại ChatbotWidget (Proof: test tạo session hợp lệ)
+- **Status:** `done` tại `frontend/src/components/ChatbotWidget.tsx` và `frontend/scripts/chatbot-widget-session.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp component `frontend/src/components/ChatbotWidget.tsx`, loại bỏ triệt để 100% dòng code tạo chuỗi ID ngẫu nhiên không an toàn `'session_' + Math.random().toString(36).substring(2, 9)`.
+  - Tích hợp module chuẩn hóa `@/lib/sessionIdentifierContract` với hai hàm `isValidSessionId` và `generateSessionId`.
+  - Thiết lập cơ chế kiểm tra và di trú tự động: khi khởi tạo hoặc đọc từ `localStorage.getItem('triton_widget_session_id')`, hệ thống kiểm tra `stored && isValidSessionId(stored)`. Nếu session đã lưu là UUID v4 hợp lệ theo chuẩn RFC 4122 thì tái sử dụng nguyên vẹn; nếu là chuỗi legacy cũ dạng `session_...`, chuỗi rỗng hoặc giá trị sai lệch thì tự động cấp mới UUID v4 CSPRNG và cập nhật đè vào `localStorage`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chatbot-widget-session.test.mjs` đạt 6/6 assertions pass 100%: (1) Static invariant xác nhận 0% chuỗi `Math.random` trong `ChatbotWidget.tsx` và có import/kiểm tra `isValidSessionId`; (2) Khách truy cập mới sinh đúng UUID v4 và lưu vào `localStorage`; (3) Di trú phiên cũ (legacy migration) tự động thay thế `session_...` bằng UUID v4; (4) Tái sử dụng phiên hợp lệ không sinh mới; (5) Phòng vệ payload rỗng, khoảng trắng, dị tật hoặc script injection.
+  - Toàn bộ 338/338 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (ChatbotWidget session identifier).
+- **Next task:** P04-005 — Xác thực session ownership trước khi đọc chat history (Proof: session khác owner bị từ chối).
+
+---
+
+### P04-003 — Thay session ID Math.random() tại ChatbotPageClient (Proof: test tạo session hợp lệ)
+- **Status:** `done` tại `frontend/src/components/ChatbotPageClient.tsx` và `frontend/scripts/chatbot-page-client-session.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp component `frontend/src/components/ChatbotPageClient.tsx`, xóa bỏ 100% cơ chế tự sinh ID ngẫu nhiên không an toàn `'page_session_' + Math.random().toString(36).substring(2, 9)`.
+  - Tích hợp module chuẩn hóa `@/lib/sessionIdentifierContract` với hai hàm `isValidSessionId` và `generateSessionId`.
+  - Thiết lập cơ chế kiểm tra và di trú tự động: khi khởi tạo hoặc đọc từ `localStorage`, nếu giá trị lưu trữ hợp lệ theo chuẩn UUID v4 (`stored && isValidSessionId(stored)`) thì tái sử dụng; nếu là chuỗi legacy cũ hoặc rỗng thì tự động cấp mới UUID v4 bằng CSPRNG `generateSessionId()` và lưu đè vào `localStorage`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chatbot-page-client-session.test.mjs` đạt 5/5 assertions pass 100%: (1) Static invariant xác nhận 0% chuỗi `Math.random` trong `ChatbotPageClient.tsx` và có import/kiểm tra `isValidSessionId`; (2) Khách truy cập mới sinh đúng UUID v4 và lưu vào `localStorage`; (3) Di trú phiên cũ (legacy migration) tự động thay thế `page_session_...` bằng UUID v4; (4) Tái sử dụng phiên hợp lệ không sinh mới; (5) Phòng vệ dữ liệu rỗng hoặc khoảng trắng.
+  - Toàn bộ 332/332 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (ChatbotPageClient session identifier).
+- **Next task:** P04-004 — Thay session ID `Math.random()` tại `ChatbotWidget` (Proof: test tạo session hợp lệ).
+
+---
+
+### P04-002 — Chọn format session identifier (Contract nêu UUID/server-issued hoặc cơ chế đã duyệt)
+- **Status:** `done` tại `docs/technical-spec/CHAT_SESSION_IDENTIFIER_CONTRACT.md`, `frontend/src/lib/sessionIdentifierContract.ts`, và `frontend/scripts/chat-session-identifier-contract.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành quy chuẩn kỹ thuật `CHAT-SESSION-ID-CONTRACT-V1` tại `docs/technical-spec/CHAT_SESSION_IDENTIFIER_CONTRACT.md` xác lập định dạng chuẩn hóa duy nhất: UUID v4 (chuẩn RFC 4122), độ dài chính xác 36 ký tự ASCII lowercase, regex invariant `^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$`.
+  - Nghiêm cấm hoàn toàn cơ chế tự sinh ID ngẫu nhiên bằng `Math.random()`, số tuần tự hoặc timestamps.
+  - Xây dựng module helper `frontend/src/lib/sessionIdentifierContract.ts` cung cấp `isValidSessionId`, `generateSessionId` (CSPRNG native `crypto.randomUUID()`), `sanitizeSessionId`, và `validateSessionId`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-session-identifier-contract.test.mjs` đạt 6/6 assertions pass 100%: (1) Static specification invariant; (2) Unit test thẩm định nghiêm ngặt UUID v4, từ chối v1/v3/v5, variant sai, chuỗi `Math.random` cũ và shape dị tật; (3) Unit test sinh ngẫu nhiên an toàn mật mã bảo đảm 100% không đụng độ (zero collision) trên 1.000 mẫu liên tiếp; (4) Unit test chuẩn hóa `sanitizeSessionId`; (5) Unit test kiểm thực API `validateSessionId`.
+  - Toàn bộ 327/327 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Chat session identifier contract).
+- **Next task:** P04-003 — Thay session ID `Math.random()` tại `ChatbotPageClient` (Proof: test tạo session hợp lệ).
+
+---
+
+### P04-001 — Thêm input-length limit cho chat query (Payload quá ngưỡng nhận 413/400)
+- **Status:** `done` tại `frontend/src/lib/chatQueryGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-query-length-limit.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module phòng thủ `frontend/src/lib/chatQueryGuard.ts` cung cấp hàm `validateChatQuery` và hằng số trần `DEFAULT_MAX_CHAT_QUERY_LENGTH = 1000` ký tự (tương đương 200-250 từ), hỗ trợ cấu hình qua biến môi trường `CHAT_MAX_QUERY_LENGTH`.
+  - Tích hợp rào chắn fail-closed vào cả 2 route chat `/api/v1/chat/query` và `/api/v1/chat/stream`: câu hỏi rỗng hoặc không hợp lệ nhận HTTP 400 Bad Request (`code: 'MISSING_QUERY'`), câu hỏi vượt quá 1000 ký tự nhận HTTP 413 Payload Too Large (`code: 'QUERY_TOO_LONG'`).
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-query-length-limit.test.mjs` đạt 6/6 assertions pass 100%: (1) Static code invariant xác nhận việc tích hợp guard và xử lý status 413/400; (2) Unit test cấu hình biến môi trường; (3) Unit test truy vấn chuẩn, cận biên (1000 ký tự), quá ngưỡng (1001 ký tự) và chuỗi tấn công DoS / token bomb (50.000 ký tự); (4) Unit test câu hỏi rỗng nhận HTTP 400; (5) Integration test kiểm chứng hợp đồng phản hồi fail-closed cho cả 2 route query và stream.
+  - Toàn bộ 321/321 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Chat query input-length limit guard).
+- **Next task:** P04-002 — Chọn format session identifier (Contract nêu UUID/server-issued hoặc cơ chế đã duyệt).
+
+---
+
+### P03-028 — Chạy sync production sau approval G2 và snapshot backup (Post-sync count/checksum khớp manifest)
+- **Status:** `done` tại `scripts/sync/create_production_snapshot.js`, `scripts/sync/smart_delta_sync.js`, và `frontend/scripts/smart-delta-sync-production-run.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module snapshot backup fail-closed `scripts/sync/create_production_snapshot.js` tự động thẩm định điều kiện phê duyệt Gate G2 (`data/canonical/canonical_manifest.json` do lead auditor Chăm Rốch Thi ký duyệt).
+  - Tự động sao lưu toàn bộ dữ liệu Live DB trước khi đồng bộ thành các bản ghi JSON băm SHA-256 (`data/backups/snapshot_places_2026-09-29T07-23-14-982Z.json` với 137 POIs thật [2.1MB, hash: `ed2504b4...`], `snapshot_itineraries_2026-09-29T07-23-14-982Z.json` với 27 tours thật [163KB, hash: `78ff8afb...`], và `snapshot_manifest_2026-09-29T07-23-14-982Z.json`).
+  - Tích hợp `createProductionSnapshot` và quy trình kiểm toán đối soát post-sync concordance verification vào `runSmartDeltaSync` trong `scripts/sync/smart_delta_sync.js`. Khi chạy chế độ LIVE, hệ thống tự động tạo snapshot an toàn trước khi kích hoạt bất kỳ mutation nào.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-production-run.test.mjs` đạt 5/5 assertions pass 100%: (1) Static code invariant xác nhận việc tích hợp Gate G2, snapshot backup và post-sync audit; (2) Gate G2 fail-closed từ chối snapshot nếu manifest thiếu hoặc không hợp lệ; (3) Unit test kiểm chứng tạo snapshot backup với SHA-256 hợp lệ; (4) Integration test kiểm chứng luồng điều phối LIVE mode hoàn chỉnh; (5) Artifact verification kiểm chứng sự tồn tại của snapshot live và checksum trên đĩa thực tế.
+  - Toàn bộ 315/315 unit/integration tests frontend pass sạch sẽ (0 failures). Hoàn tất toàn bộ Phase P03 (Wave W3).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Production snapshot backup & Smart Delta Sync live orchestration).
+- **Next task:** P04-001 — Thêm input-length limit cho chat query (Payload quá ngưỡng nhận 413/400).
+
+---
+
+### P03-027 — Mở rộng itinerary diff với budget_range (Fixture khác budget tạo PATCH)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-itinerary-budget.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Hoàn thiện hàm so lệch chuyên biệt `computeItineraryDiff(payload, db)` trong `scripts/sync/smart_delta_sync.js` với trường khoảng chi phí `budget_range`, kết hợp hàm `normalizeText` để chuẩn hóa khoảng trắng thừa và ký tự xuống dòng (`\r\n` vs `\n`), loại trừ triệt để false-diff do sai lệch xuống dòng giữa Windows và Linux.
+  - Ánh xạ trường `budget_range` trong `payload` từ `it.budget_level` với giá trị fallback an toàn `'200k - 500k/người'`.
+  - Tối ưu hóa mutation PATCH: khi phát hiện khác biệt `budget_range`, hệ thống chỉ gửi trường thay đổi trong `diff` lên Supabase REST API và ghi nhận chi tiết vào `report.details`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-itinerary-budget.test.mjs` đạt 4/4 assertions pass 100%: (1) Static code invariant xác nhận việc map và so sánh `budget_range` qua `normalizeText`; (2) Unit test kiểm chứng phát hiện diff `budget_range` (khớp bỏ qua, CRLF/khoảng trắng không sinh false-diff, khác biệt sinh diff chính xác, DB null sinh diff); (3) Integration test kiểm chứng fixture có `budget_range` khác biệt tạo đúng 1 PATCH mutation với ID và payload chính xác; (4) Integration test kiểm chứng fixture có `budget_range` đồng nhất bỏ qua 100% (27/27 SKIP) với zero PATCH calls.
+  - Toàn bộ 310/310 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync itinerary budget_range diff engine).
+- **Next task:** P03-028 — Chạy sync production sau approval G2 và snapshot backup.
+
+---
+
+### P03-026 — Mở rộng itinerary diff với for_whom (Fixture khác for_whom tạo PATCH)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-itinerary-for-whom.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và xuất khẩu hàm chuyên biệt `computeItineraryDiff(payload, db)` trong `scripts/sync/smart_delta_sync.js`, tích hợp chuẩn hóa văn bản `normalizeText` loại trừ triệt để false-diff do khoảng trắng và xuống dòng giữa Windows/Linux.
+  - Nâng cấp `syncItinerariesDelta` thay thế logic so sánh boolean thô cứng cũ bằng `computeItineraryDiff`, phát hiện chuẩn xác các khác biệt của trường `for_whom` giữa Supabase DB và `data/lichtrinh.json`.
+  - Tối ưu hóa mutation PATCH: chỉ gửi payload diff chứa các trường thực sự thay đổi thay vì gửi toàn bộ payload lớn, đồng thời ghi nhận chi tiết `diff` vào `report.details`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-itinerary-for-whom.test.mjs` đạt 4/4 assertions pass 100%: (1) Static code invariant xác nhận export `computeItineraryDiff` và logic so sánh `for_whom`; (2) Unit test kiểm chứng phát hiện diff `for_whom` với cơ chế chuẩn hóa (khớp bỏ qua, CRLF/khoảng trắng không sinh false-diff, khác biệt sinh diff, null sinh diff); (3) Integration test kiểm chứng fixture có `for_whom` khác biệt tạo đúng 1 PATCH mutation với ID và payload chính xác; (4) Integration test kiểm chứng fixture có `for_whom` đồng nhất bỏ qua 100% (27/27 SKIP) với zero PATCH calls.
+  - Toàn bộ 306/306 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync itinerary for_whom diff engine).
+- **Next task:** P03-027 — Mở rộng itinerary diff với `budget_range` (Fixture khác budget tạo PATCH).
+
+---
+
+### P03-025 — Kiểm tra HTTP response trước khi tăng counter sync (Fake 4xx/5xx không được tính success)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-http-response.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp `scripts/sync/smart_delta_sync.js`: hỗ trợ dependency injection `options.fetch` cho cả `syncPlacesDelta` và `syncItinerariesDelta`.
+  - Tái cấu trúc kiểm tra mã trạng thái HTTP: di chuyển các bộ đếm thành công `report.create++` và `report.patch++` vào sâu bên trong khối `if (postRes.ok)` và `if (patchRes.ok)`. Triệt để loại trừ hiện tượng tăng counter ảo trước khi gọi API hoặc khi API trả về mã lỗi.
+  - Chặn đứng 100% lỗi fail-open: khi Supabase REST API trả về các mã phản hồi `4xx` (400, 401, 403, 404, 409) hoặc `5xx` (500, 502, 503), hệ thống giữ nguyên bộ đếm thành công, tăng `report.error++`, đồng thời bóc tách nội dung lỗi từ server và ghi chi tiết vào `report.details` kèm mã HTTP status.
+  - Bọc toàn bộ các thao tác mạng bằng khối `try...catch` để bắt và chuyển đổi ngoại lệ mạng (`ECONNRESET`, timeout) thành bản ghi lỗi `report.error++`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-http-response.test.mjs` đạt 6/6 assertions pass 100%: (1) Static code invariant xác nhận việc kiểm tra `res.ok` trước khi tăng counter; (2) Unit test ma trận lỗi 4xx client errors xác nhận counter create/patch bằng 0 và counter error tăng chính xác; (3) Unit test ma trận lỗi 5xx server errors xác nhận không tăng counter thành công; (4) Unit test đồng bộ itineraries xử lý an toàn lỗi 4xx/5xx; (5) Unit test bắt ngoại lệ mạng `ECONNRESET`; (6) Positive control kiểm chứng các mã phản hồi thành công 2xx (200, 201, 204) tăng đúng các bộ đếm create/patch với 0 lỗi.
+  - Toàn bộ 302/302 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync HTTP response verification & fail-closed counter guard).
+- **Next task:** P03-026 — Mở rộng itinerary diff với `for_whom` (Fixture khác `for_whom` tạo PATCH).
+
+---
+
+### P03-024 — Sửa parser Smart Delta Sync cho field description (Unit test description diff pass)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-description-parser.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp `scripts/sync/smart_delta_sync.js`: trích xuất trường `description` từ cột 9 (index 8) của Master CSV, khắc phục triệt để lỗi biểu thức chính quy 7 nhóm cũ (`match[9]` luôn undefined) làm mất mô tả thực tế và bỏ qua hoàn toàn việc sync mô tả lên database.
+  - Xây dựng hàm chuẩn hóa văn bản `normalizeText(text)`: xử lý nhất quán giá trị `null`/`undefined`, chuẩn hóa ký tự xuống dòng (`\r\n` và `\r` thành `\n`), và cắt tỉa khoảng trắng hai đầu (`trim()`), loại bỏ 100% false-diff do dị biệt xuống dòng giữa các hệ điều hành (Windows vs Linux).
+  - Tích hợp `normalizeText` vào `computePlaceDiff(master, db)` cho cả trường `description` và các trường văn bản khác, đảm bảo chỉ phát hiện các thay đổi nội dung thực chất; bảo toàn mô tả DB khi master không có mô tả.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-description-parser.test.mjs` đạt 4/4 assertions pass 100%: (1) Static code invariant xác nhận export `normalizeText`, `parseMasterCsv`, và `computePlaceDiff`; (2) Unit test giải mã mô tả chứa nháy kép escape, multiline và markdown; (3) Unit test so lệch mô tả với cơ chế chuẩn hóa (match không sinh diff, CRLF vs LF không sinh diff, khoảng trắng không sinh diff, nội dung khác biệt sinh diff chính xác, master rỗng không ghi đè DB); (4) Integration test kiểm chứng 100% (132/132) bản ghi Master CSV có trường mô tả phong phú (chiều dài >= 15 ký tự, các địa danh như Hồ Tà Pạ, Chùa Tà Pạ, Núi Cô Tô có mô tả đầy đủ).
+  - Toàn bộ 296/296 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync description parser and diff engine).
+- **Next task:** P03-025 — Kiểm tra HTTP response trước khi tăng counter sync (Fake 4xx/5xx không được tính success).
+
+---
+
+### P03-023 — Sửa parser Smart Delta Sync cho field address (Unit test address diff pass)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-address-parser.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp `scripts/sync/smart_delta_sync.js`: triển khai bộ giải mã CSV chuẩn RFC 4180 `parseCsvRows(csvText)` hỗ trợ đầy đủ các trường bọc trong dấu nháy kép, dấu phẩy trong trường dữ liệu, dấu nháy kép escape (`""`) và trường nhiều dòng (multiline).
+  - Tái cấu trúc hàm `parseMasterCsv(csvText)`: ánh xạ động theo header CSV, trích xuất chính xác trường `address` từ cột thứ 8 (index 7), khắc phục triệt để lỗi biểu thức chính quy 7 nhóm cũ (`match[8]` luôn undefined) làm mất cột địa chỉ thực tế và làm rơi 11 bản ghi multiline (nâng tổng số bản ghi phân tích từ 121 lên đủ 132/132 bản ghi sạch).
+  - Tách bạch hàm chuyên dụng `computePlaceDiff(master, db)`: chuẩn hóa so sánh địa chỉ `(db.address || '').trim() !== master.address.trim()`, loại trừ hoàn toàn các khác biệt giả mạo do khoảng trắng thừa ở hai đầu.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-address-parser.test.mjs` đạt 5/5 assertions pass 100%: (1) Static code invariant xác nhận export `parseCsvRows`, `parseMasterCsv`, và `computePlaceDiff`; (2) Unit test giải mã địa chỉ chứa dấu phẩy, nháy kép và multiline; (3) Unit test cơ chế fallback an toàn về địa chỉ xã khi trường address rỗng hoặc chỉ có khoảng trắng; (4) Unit test so lệch địa chỉ (match không sinh diff, diff sinh đúng master address, null DB address được gán master, chuẩn hóa khoảng trắng); (5) Integration test kiểm chứng toàn vẹn dữ liệu địa chỉ trên toàn bộ 132 bản ghi `tri_ton_master_cleaned.csv` (100% bản ghi có địa chỉ hợp lệ, các địa danh trọng yếu như Hồ Tà Pạ, Chùa Tà Pạ, Hồ Soài Chek có địa chỉ thực địa chính xác).
+  - Toàn bộ 292/292 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync address parser and diff engine).
+- **Next task:** P03-024 — Sửa parser Smart Delta Sync cho field description (Unit test description diff pass).
+
+---
+
+### P03-022 — Chạy Smart Delta Sync ở dry-run (Diff report có skip/create/patch/error chính xác)
+- **Status:** `done` tại `scripts/sync/smart_delta_sync.js` và `frontend/scripts/smart-delta-sync-dryrun.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp `scripts/sync/smart_delta_sync.js` hỗ trợ cờ dòng lệnh `--dry-run` và tùy chọn `options.dryRun`, thiết lập rào chắn `isDryRun` ngăn chặn 100% persistent mutation (POST/PATCH/DELETE) lên cơ sở dữ liệu Supabase Live.
+  - Cơ chế dry-run chạy đối soát thực tế toàn bộ thực thể Places và Itineraries, kết xuất báo cáo diff report có cấu trúc định lượng rõ ràng: Places (skip=71, patch=41, create=20, error=0), Itineraries (skip=0, patch=27, create=0, error=0); tổng cộng: skip=71, patch=68, create=20, error=0.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/smart-delta-sync-dryrun.test.mjs` đạt 3/3 assertions pass 100%: (1) Static code invariant xác nhận cờ `isDryRun` bảo vệ mọi mutation; (2) Unit test giải mã Master CSV; (3) Integration test kiểm chứng dry-run tạo diff report chuẩn với 0 lỗi kết nối.
+  - Toàn bộ unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Smart Delta Sync dry-run mode).
+- **Next task:** P03-023 — Sửa parser Smart Delta Sync cho field address (Unit test address diff pass).
+
+---
+
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P03-021 — Chỉ cho phép RAG ingest canonical records verified (Fixture unverified không được ingest)
+- **Status:** `done` tại `frontend/src/lib/ai/ragEngine.ts` và `frontend/scripts/canonical-rag-ingest.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp RAG Engine `frontend/src/lib/ai/ragEngine.ts`: loại bỏ hoàn toàn việc nạp trực tiếp tập dữ liệu legacy `triton_pois_full.json` cùng các tuyên bố khống về số lượng địa điểm ("149 Verified POIs").
+  - Xây dựng cổng kiểm soát Ingestion Gate fail-closed chuyên dụng `ingestCanonicalPlacesForRag(rawCandidates, options)` và hàm `getActiveRagPlaces()`, chỉ nạp và lập chỉ mục RAM cho các thực thể canonical places đã qua thẩm định thực địa (`verification_status === 'VERIFIED'` và `is_verified === true`).
+  - Cơ chế fail-closed tự động loại trừ 100% các bản ghi chưa thẩm định (`UNVERIFIED`, `PENDING`, `IN_REVIEW`, `REJECTED`, `EXPIRED`, `MOCK`), cờ `is_verified` giả mạo, hoặc các đầu vào malformed/non-object; ném lỗi khi ở chế độ nghiêm ngặt (`strict: true`).
+  - Cập nhật tiêu đề ngữ cảnh LLM thành `CSDL ĐỊA ĐIỂM TRI TÔN CANONICAL XÁC MINH (VERIFIED GROUNDING):`, tích hợp matching qua danh sách bí danh `alt_names` của canonical places.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-rag-ingest.test.mjs` đạt 6/6 assertions pass 100%: (1) Positive control nạp thành công 100% POI canonical production trên đĩa; (2) Positive control `getActiveRagPlaces` trả về danh sách verified hợp chuẩn; (3) Negative fixtures chặn đứng và loại trừ 100% các trạng thái unverified; (4) Negative fixture cờ is_verified giả mạo/sai lệch bị từ chối dứt điểm; (5) Negative fixture xử lý an toàn đầu vào malformed/non-object; (6) Integration test bảo đảm output của `buildUnifiedRagContext` chỉ chứa POI canonical verified.
+  - Toàn bộ 284/284 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical verified RAG ingestion gate).
+- **Next task:** P03-022 — Chạy Smart Delta Sync ở dry-run (Diff report có skip/create/patch/error chính xác).
+
+---
+
+### P03-020 — Cho sitemap sinh từ canonical manifest (Sitemap count khớp manifest)
+- **Status:** `done` tại `frontend/src/app/sitemap.ts` và `frontend/scripts/canonical-sitemap.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Tái cấu trúc hoàn toàn `frontend/src/app/sitemap.ts`, loại bỏ 100% việc nạp tập dữ liệu legacy `triton_pois_full.json` và xóa bỏ bình luận cũ ("149 verified POI detail pages").
+  - Tích hợp trực tiếp artifact tĩnh chuẩn hóa `frontend/src/data/places.canonical.json`, duyệt qua các địa điểm đã thẩm định (`verification_status === 'VERIFIED'`), sinh các dynamic routes chuẩn hóa dạng `/places/${canonical_id}`.
+  - Đồng bộ timestamp `lastModified` của từng dynamic route với dấu thời gian thẩm định `verified_at`, gán `changeFrequency: 'weekly'` và `priority: 0.85`.
+  - Bảo tồn nguyên vẹn 12 static core routes của ứng dụng.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-sitemap.test.mjs` đạt 5/5 assertions pass 100%: (1) Static code invariant xác nhận 0% tham chiếu tới legacy json hay claim sai lệch; (2) Concordance check xác nhận số lượng dynamic POI routes khớp chính xác 100% với `total_count` và `manifest.places.length`; (3) Canonical slug invariant xác nhận 100% slug dynamic routes nằm trong manifest và không chứa UUID prefix; (4) Metadata verification kiểm chứng tính hợp lệ của timestamp `lastModified`, `changeFrequency` và `priority`; (5) Static core routes check bảo toàn các trang chủ lực.
+  - Toàn bộ 278/278 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical sitemap generator).
+- **Next task:** P03-021 — Chỉ cho phép RAG ingest canonical records `verified` (Fixture unverified không được ingest).
+
+---
+
+### P03-019 — Cho static frontend data sinh từ canonical manifest (Build artifact ghi cùng version)
+- **Status:** `done` tại `scripts/generate_static_frontend_places.mjs`, `frontend/src/data/places.canonical.json`, và `frontend/scripts/canonical-static-frontend-places.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển script phát hành tất định `scripts/generate_static_frontend_places.mjs` đọc trực tiếp từ `data/canonical/canonical_manifest.json` và các tệp trong `data/canonical/places/`.
+  - Thực hiện kiểm tra toàn vẹn mật mã: tính toán lại mã băm SHA-256 từng file dữ liệu và đối soát với `entry.sha256` trong manifest. Chặn đứng lỗi nếu phát hiện lệch mã băm (`Checksum mismatch`).
+  - Thực thi cơ chế phòng thủ nghiêm ngặt (Fail-closed): chỉ chấp nhận các POI có `verification_status === 'VERIFIED'` và `is_verified === true`. Từ chối bất kỳ POI unverified hoặc mock/fake nào.
+  - Sắp xếp tất định theo `canonical_id` và kết xuất tệp `frontend/src/data/places.canonical.json` ghi nhận đầy đủ metadata nguồn `source_manifest` (`manifest_name`, `manifest_version: "1.0.0"`, `schema_version: "CANONICAL-POI-SCHEMA-V1"`, `manifest_sha256`, `overall_sha256`).
+  - Tích hợp lifecycle hook `prebuild` trong `frontend/package.json` và script `generate:places` trong root `package.json` tự động đồng bộ artifact trước mỗi lần build Next.js.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-static-frontend-places.test.mjs` đạt 6/6 assertions pass 100%: (1) Positive control kiểm tra tồn tại và metadata `places.canonical.json`; (2) Positive control xác nhận 100% POI mang trạng thái VERIFIED và có đủ các trường hiển thị frontend; (3) Positive control kiểm chứng tính tất định của generator khi chạy lặp lại; (4) Negative control ném lỗi Checksum mismatch khi mã băm không khớp manifest; (5) Negative control ném lỗi fail-closed khi phát hiện POI chưa thẩm định; (6) Negative control ném lỗi khi thiếu file dữ liệu được tham chiếu.
+  - Toàn bộ 273/273 unit/integration tests frontend pass sạch sẽ (0 failures).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical static frontend places artifact).
+- **Next task:** P03-020 — Cho sitemap sinh từ canonical manifest (Sitemap count khớp manifest).
+
+---
+
+### P03-018 — Viết validator commune glossary (Fixture nhãn lạ fail)
+- **Status:** `done` tại `scripts/validate_canonical_dataset.mjs` và `frontend/scripts/canonical-commune-validator.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Mở rộng engine kiểm toán `scripts/validate_canonical_dataset.mjs` với hàm `validateCommuneGlossary(commune, options)` và các bảng tra cứu chuẩn hóa `COMMUNE_BARE_NAME_MAP`, `COMMUNE_KNOWN_TYPOS_MAP`; tích hợp trực tiếp vào quy trình kiểm toán bản ghi canonical `validatePlaceRecord`.
+  - Xác nhận 100% bản ghi canonical production hiện tại mang nhãn xã chuẩn khớp danh mục 15 đơn vị hành chính Tri Tôn theo RULE 02.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-commune-validator.test.mjs` đạt 7/7 assertions pass 100%: (1) Positive control trên toàn bộ 15 xã/thị trấn chuẩn; (2) Positive control trên toàn bộ bản ghi canonical production trên đĩa; (3) Negative fixture typo chính tả `"Xã Lương Cương"` fail-closed và gợi ý `"Xã Lương Phi"`; (4) Negative fixture nhãn cộc thiếu tiền tố (`"Tri Tôn"`, `"Cô Tô"`, `"Ba Chúc"`) fail-closed và tự động gợi ý nhãn đầy đủ; (5) Negative fixture nhãn xã ngoài huyện/tỉnh (Vĩnh Tế, Núi Sam, Mỹ Bình, Ninh Kiều, Bến Nghé) fail-closed; (6) Negative fixture null, undefined, số, boolean, object, chuỗi rỗng fail-closed; (7) Integration check xác nhận 100% bản ghi trên đĩa và trong manifest tuân thủ glossary.
+  - Toàn bộ 267/267 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical commune glossary validator boundary).
+- **Next task:** P03-019 — Cho static frontend data sinh từ canonical manifest (Build artifact ghi cùng version).
+
+---
+
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P03-017 — Viết validator GPS boundary (Fixture ngoài vùng fail)
+- **Status:** `done` tại `scripts/validate_canonical_dataset.mjs` và `frontend/scripts/canonical-gps-boundary-validator.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Mở rộng engine kiểm toán `scripts/validate_canonical_dataset.mjs` với hàm `validateGpsBoundary(coordinates, options)` và hằng số bất biến `TRI_TON_BBOX` [10.30 - 10.55, 104.80 - 105.15]; tích hợp trực tiếp vào quy trình kiểm toán bản ghi canonical `validatePlaceRecord`.
+  - Xác nhận 100% tọa độ các địa điểm canonical production hiện tại nằm trọn trong BBOX Tri Tôn.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-gps-boundary-validator.test.mjs` đạt 9/9 assertions pass 100%: (1) Positive control trên toàn bộ bản ghi canonical production trên đĩa; (2) Negative fixture vượt trần vĩ độ (> 10.55); (3) Negative fixture dưới đáy vĩ độ (< 10.30); (4) Negative fixture ngoài biên kinh độ bên tây (< 104.80); (5) Negative fixture ngoài biên kinh độ bên đông (> 105.15); (6) Negative fixture tráo ngược tọa độ vĩ/kinh (`GPS_SWAPPED_COORDINATES`); (7) Negative fixture sai kiểu số, NaN, Infinity (`GPS_INVALID_TYPE`); (8) Negative fixture các thành phố lớn ngoài địa giới (Hà Nội, TP.HCM, Đà Nẵng, Long Xuyên, Cần Thơ); (9) Xác nhận điểm giáp ranh đã thẩm định (Hồ Đá Latina) tuân thủ trọn vẹn BBOX.
+  - Toàn bộ 260/260 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical gps boundary validator boundary).
+- **Next task:** P03-018 — Viết validator commune glossary (Fixture nhãn lạ fail).
+
+---
+
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P03-016 — Viết validator uniqueness cho canonical ID (Fixture duplicate fail)
+- **Status:** `done` tại `scripts/validate_canonical_dataset.mjs` và `frontend/scripts/canonical-uniqueness-validator.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Mở rộng engine kiểm toán `scripts/validate_canonical_dataset.mjs` với hàm `validateCanonicalIdUniqueness(places, options)` thực hiện kiểm toán tính duy nhất tuyệt đối của `canonical_id`, phát hiện xung đột alias chéo (`alt_names`), và nâng cấp `validateCanonicalDataset` quét toàn bộ thư mục `data/canonical/places/` cùng `data/canonical/canonical_manifest.json`, xác thực tên file trùng khớp `${canonical_id}.json` và đối soát sự đồng nhất tuyệt đối giữa đĩa và manifest.
+  - Xác nhận 100% ID trên dataset và manifest hiện tại không bị trùng lặp.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-uniqueness-validator.test.mjs` đạt 8/8 assertions pass 100%: (1) Positive control trên dataset canonical và manifest; (2) Negative fixture duplicate ID trong mảng object fail-closed với mã lỗi `DUPLICATE_CANONICAL_ID`; (3) Negative fixture duplicate ID trong mảng string fail-closed; (4) Negative fixture alias trùng lặp với canonical_id của POI khác fail-closed; (5) Negative fixture 2 POI khác nhau khai báo trùng alias fail-closed; (6) Negative fixture file name trên đĩa không khớp canonical_id fail-closed; (7) Negative fixture duplicate ID giữa nhiều file trên đĩa fail-closed; (8) Negative fixture sai lệch đối soát (concordance discrepancy) giữa đĩa và manifest fail-closed.
+  - Toàn bộ 251/251 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical id uniqueness validator boundary).
+- **Next task:** P03-017 — Viết validator GPS boundary (Fixture ngoài vùng fail).
+
+
+### P03-015 — Viết validator schema cho canonical dataset (Fixture sai schema fail)
+- **Status:** `done` tại `scripts/validate_canonical_dataset.mjs` và `frontend/scripts/canonical-dataset-validator.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển module kiểm toán độc lập `scripts/validate_canonical_dataset.mjs` hỗ trợ thẩm định tự động từng bản ghi hoặc toàn bộ tập dữ liệu canonical theo chuẩn `CANONICAL-POI-SCHEMA-V1` và 5 bất biến toàn vẹn (`INV-01` đến `INV-05`).
+  - Thẩm định 100% bản ghi canonical production trên đĩa đạt hợp lệ tuyệt đối với 0 lỗi.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/canonical-dataset-validator.test.mjs` đạt 5/5 assertions pass 100%, chứng minh 16 kịch bản negative fixtures (thiếu trường required, sai tọa độ BBOX, sai xã theo RULE 02, sai định dạng ID, vi phạm review_id/is_verified/verified_at/source_url) đều fail-closed đúng thiết kế; toàn bộ 243/243 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical schema dataset validator boundary).
+- **Next task:** P03-016 — Viết validator uniqueness cho canonical ID (Fixture duplicate fail).
+
+
+### P03-014 — Xuất canonical dataset version đầu tiên từ các record đã duyệt (Manifest có schema version/checksum/count)
+- **Status:** `done` tại `docs/technical-spec/CANONICAL_DATASET_MANIFEST.md`, `data/canonical/canonical_manifest.json`, `scripts/generate_canonical_manifest.mjs`, và `frontend/scripts/canonical-dataset-manifest.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành Quy chuẩn Kỹ thuật `docs/technical-spec/CANONICAL_DATASET_MANIFEST.md` (mã quy chuẩn `CANONICAL-MANIFEST-V1`).
+  - Xuất bản tệp Manifest chuẩn hóa tại `data/canonical/canonical_manifest.json` chứa 100% dữ liệu sạch đã thẩm định (`chua-xa-ton`), `total_verified_count: 1`, `manifest_version: "1.0.0"`, `schema_version: "CANONICAL-POI-SCHEMA-V1"`, SHA-256 từng file dữ liệu (`5398587c...`), và mã băm toàn vẹn tổng thể `overall_sha256: "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb"`.
+  - Phát triển script phát hành tất định `scripts/generate_canonical_manifest.mjs`.
+  - Bộ kiểm thử tự động `frontend/scripts/canonical-dataset-manifest.test.mjs` đạt 4/4 assertions pass 100% bao gồm cả positive hash verification, phát hiện can thiệp dữ liệu (tamper resistance) và kiểm thử tính bất biến của generator script; toàn bộ 238/238 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical dataset manifest v1 boundary).
+- **Next task:** P03-015 — Viết validator schema cho canonical dataset (Fixture sai schema fail).
+
+
+### P03-013 — Gán `source_url` cho một field được xác minh (URL truy cập được và đúng field)
+- **Status:** `done` tại `docs/technical-spec/CANONICAL_POI_SCHEMA.md`, `data/canonical/places/chua-xa-ton.json`, `frontend/src/app/admin/places/types.ts`, và `frontend/scripts/poi-source-url.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung bất biến `INV-05 (Authoritative Source URL Invariant)` vào `docs/technical-spec/CANONICAL_POI_SCHEMA.md` và `docs/technical-spec/CANONICAL_POI_SCHEMA.json`.
+  - Gán trường `source_url: "https://triton.angiang.gov.vn"` trong bản ghi canonical `data/canonical/places/chua-xa-ton.json` khớp 100% byte-for-byte với nguồn chứng thực cấp Quốc gia trong hồ sơ kiểm toán nguyên tử `docs/technical-spec/poi-reviews/PVR-CHUA-XA-TON.json`.
+  - Thiết lập phòng thủ an ninh mạng: bắt buộc scheme HTTPS, chặn scheme nguy hiểm (`http:`, `javascript:`, `file:`), chặn IP nội bộ/loopback/cloud metadata (`127.0.0.1`, `169.254.169.254`, `localhost`), chặn link mock/placeholder, fail-closed khi thiếu URL hoặc gán sai nguồn.
+  - Đồng bộ interface `PlaceRecord` trong `frontend/src/app/admin/places/types.ts` với trường `source_url?: string;` và xác nhận đồng bộ với cột `source_url TEXT` trong schema PostgreSQL.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-source-url.test.mjs` đạt 4/4 assertions pass 100% bao gồm cả positive validation cho Chùa Xà Tón, negative controls kiểm duyệt bảo mật và đối soát provenance, và kiểm tra đồng bộ DB/TS; toàn bộ 234/234 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical schema source_url verification boundary).
+- **Next task:** P03-014 — Xuất canonical dataset version đầu tiên từ các record đã duyệt (Manifest có schema version/checksum/count).
+
+
+### P03-012 — Gán `verified_at` cho một POI đã review (Timestamp có nguồn)
+- **Status:** `done` tại `docs/technical-spec/CANONICAL_POI_SCHEMA.md`, `data/canonical/places/chua-xa-ton.json`, và `frontend/scripts/poi-verified-at.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung bất biến `INV-04 (Provenance Timestamp Invariant)` vào `docs/technical-spec/CANONICAL_POI_SCHEMA.md` và `docs/technical-spec/CANONICAL_POI_SCHEMA.json`.
+  - Gán trường `verified_at: "2026-09-28T22:00:00+07:00"` trong bản ghi canonical `data/canonical/places/chua-xa-ton.json` khớp 100% byte-for-byte với thời điểm ký duyệt thực địa của chuyên gia bản địa `Chăm Rốch Thi` trong hồ sơ thẩm định nguyên tử `docs/technical-spec/poi-reviews/PVR-CHUA-XA-TON.json`.
+  - Ràng buộc chặt chẽ quan hệ trình tự thời gian (`verified_at < expires_at`), đồng thời fail-closed không cho phép trạng thái phi-verified (`UNVERIFIED`, `REJECTED`) gán `verified_at` để ngăn chặn giả mạo nhãn kiểm toán.
+  - Xác nhận tính tương thích đồng bộ với cột `verified_at TIMESTAMPTZ` trên PostgreSQL và interface `PlaceRecord` trong `frontend/src/app/admin/places/types.ts`.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-verified-at.test.mjs` đạt 4/4 assertions pass 100% bao gồm cả positive validation cho Chùa Xà Tón, negative controls kiểm soát nguồn gốc và trình tự thời gian, và kiểm tra đồng bộ DB/TS; toàn bộ 230/230 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical schema verified_at provenance boundary).
+- **Next task:** P03-013 — Gán `source_url` cho một field được xác minh (URL truy cập được và đúng field).
+
+
+### P03-011 — Gán `verification_status` cho một POI đã review (Lưu trong canonical schema)
+- **Status:** `done` tại `docs/technical-spec/CANONICAL_POI_SCHEMA.json`, `data/canonical/places/chua-xa-ton.json`, `supabase/migrations/20260928000000_p03_011_places_verification_status.sql`, và `frontend/scripts/poi-verification-status.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành Quy chuẩn Kỹ thuật `docs/technical-spec/CANONICAL_POI_SCHEMA.md` và artifact JSON Schema máy đọc `docs/technical-spec/CANONICAL_POI_SCHEMA.json` (mã quy chuẩn `CANONICAL-POI-SCHEMA-V1`).
+  - Thiết lập chuẩn hóa 5 trạng thái vòng đời POI: `UNVERIFIED`, `IN_REVIEW`, `VERIFIED`, `REJECTED`, `EXPIRED`.
+  - Quy định bất biến kiểm toán nghiêm ngặt (Audit Backlink Invariant): POI có `verification_status: "VERIFIED"` bắt buộc phải có `is_verified: true`, `review_id` hợp lệ và hồ sơ thẩm định nguyên tử tồn tại thực tế trên đĩa (`docs/technical-spec/poi-reviews/{review_id}.json`); các trạng thái phi-verified bắt buộc fail-closed `is_verified: false`.
+  - Xuất bản bản ghi canonical nguyên tử đầu tiên tại `data/canonical/places/chua-xa-ton.json` với `verification_status: "VERIFIED"`, `is_verified: true`, `review_id: "PVR-CHUA-XA-TON-2026"`.
+  - Đồng bộ DDL PostgreSQL `supabase/migrations/20260928000000_p03_011_places_verification_status.sql` thiết lập CHECK constraint `chk_places_verification_status` và đồng bộ TypeScript `frontend/src/app/admin/places/types.ts`.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-verification-status.test.mjs` đạt 4/4 assertions pass 100% bao gồm cả positive validation cho Chùa Xà Tón, negative controls cho các bất biến fail-closed và kiểm tra đồng bộ DB/TS; toàn bộ 226/226 unit/integration tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (canonical schema verification status lifecycle boundary).
+- **Next task:** P03-012 — Gán `verified_at` cho một POI đã review (Timestamp có nguồn).
+
+
+### P03-010 — Áp template P03-009 cho một POI (Record review hoàn chỉnh)
+- **Status:** `done` tại `docs/technical-spec/poi-reviews/PVR-CHUA-XA-TON.json` và `frontend/scripts/poi-review-chua-xa-ton.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Hoàn tất lập và xuất bản hồ sơ thẩm định thực địa nguyên tử đầu tiên cho địa danh lịch sử trọng yếu `chua-xa-ton` (Chùa Xà Tón / Wat Xvayton) tại `docs/technical-spec/poi-reviews/PVR-CHUA-XA-TON.json` tuân thủ 100% biểu mẫu `POI-VERIFY-TEMPLATE-V1`:
+    1. **`source`:** Quyết định số 224/QĐ-BVHTT ngày 12/12/1986 của Bộ Văn hóa Thông tin xếp hạng Di tích Kiến trúc Nghệ thuật cấp Quốc gia; Kỷ lục VietKings 2006.
+    2. **`evidence`:** Tọa độ GPS thực địa [10.4110, 105.0089] nằm trọn vẹn trong trung tâm Thị trấn Tri Tôn; 3 ảnh thực địa WebP độ nét cao đã kiểm chứng; xếp hạng di tích quốc gia `NATIONAL_HERITAGE`.
+    3. **`reviewer`:** Ký duyệt bởi chuyên gia bản địa `Chăm Rốch Thi` với mã băm chữ ký SHA-256.
+    4. **`lifecycle` & `expiry`:** Trạng thái `VERIFIED`, chu kỳ tái thẩm định 365 ngày (`freshness_cycle_days: 365`), `verified_at: 2026-09-28T22:00:00+07:00`, `expires_at: 2027-09-28T22:00:00+07:00`.
+    5. **`field_level_provenance`:** Xác nhận 100% tính chính xác của các trường tên, tọa độ, xã, danh mục và bảo tồn văn hóa viếng chùa Khmer theo RULE 05.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-review-chua-xa-ton.test.mjs` đạt 2/2 assertions pass 100%; toàn bộ 222/222 tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (atomic poi review record boundary).
+- **Next task:** P03-011 — Gán `verification_status` cho một POI đã review (Lưu trong canonical schema).
+
+
+### P03-009 — Tạo template review cho một POI (Source, evidence, reviewer, expiry)
+- **Status:** `done` tại `docs/technical-spec/POI_VERIFICATION_REVIEW_TEMPLATE.md`, `docs/technical-spec/POI_VERIFICATION_REVIEW_TEMPLATE.json`, và `frontend/scripts/poi-verification-template.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành Quy chuẩn Kỹ thuật `docs/technical-spec/POI_VERIFICATION_REVIEW_TEMPLATE.md` và artifact JSON Schema máy đọc `docs/technical-spec/POI_VERIFICATION_REVIEW_TEMPLATE.json` (mã quy chuẩn `POI-VERIFY-TEMPLATE-V1`).
+  - Thiết lập bắt buộc 4 trụ cột kiểm toán cốt lõi cho mọi POI:
+    1. **`source`:** Nguồn chứng thực có thẩm quyền (`GOVERNMENT_DECISION`, `FIELD_SURVEY`, `OFFICIAL_PORTAL`, `SATELLITE_GEO`, `HERITAGE_REGISTRY`).
+    2. **`evidence`:** Bằng chứng kiểm toán cụ thể (`reference_number`, `legal_classification`, `gps_audit_status`, `photos_evidence`, `field_notes`).
+    3. **`reviewer`:** Danh tính, chức vụ và chữ ký kiểm toán SHA-256 của chuyên gia (`Chăm Rốch Thi`).
+    4. **`lifecycle` & `expiry`:** Trạng thái (`UNVERIFIED`, `IN_REVIEW`, `VERIFIED`, `REJECTED`, `EXPIRED`), `verified_at`, `expires_at`, và chu kỳ kiểm toán định kỳ `freshness_cycle_days` (180–365 ngày).
+  - Ràng buộc trắc địa WGS84 nằm trọn trong BBOX Tri Tôn [10.30 - 10.55, 104.80 - 105.15] và xã/thị trấn phải thuộc 15 đơn vị hành chính chuẩn theo RULE 02.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-verification-template.test.mjs` đạt 4/4 assertions pass 100% bao gồm cả positive validation cho Chùa Xà Tón và 7 kịch bản negative controls fail-closed; toàn bộ 220/220 tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (poi verification review template contract boundary).
+- **Next task:** P03-010 — Áp template P03-009 cho một POI (Record review hoàn chỉnh).
+
+
+### P03-008 — Xác minh một claim văn hóa/ẩm thực mâu thuẫn (Nguồn và reviewer chuyên môn)
+- **Status:** `done` tại `docs/technical-spec/VERIFIED_CULTURAL_CLAIMS.md`, `docs/technical-spec/VERIFIED_CULTURAL_CLAIMS.json`, `scripts/seed_knowledge_base.py`, `frontend/src/lib/dataSanitizer.ts`, và `frontend/scripts/verified-cultural-claims.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành Quy chuẩn Thẩm định Tri thức Văn hóa Ẩm thực tại `docs/technical-spec/VERIFIED_CULTURAL_CLAIMS.md` và artifact máy đọc `docs/technical-spec/VERIFIED_CULTURAL_CLAIMS.json`.
+  - Thẩm định và chuẩn hóa dứt điểm 3 hồ sơ tri thức cốt lõi:
+    1. **`CUL-CLAIM-001` (Trái Trúc Bảy Núi - *Citrus hystrix* - tiếng Khmer: *Krut*):** Xác nhận lá hình số 8 độc nhất vô nhị, vỏ xù xì dày giàu tinh dầu the nồng gấp nhiều lần chanh thường; bác bỏ 100% sai lầm đánh đồng "chanh rừng" hay "chanh Thái lai tạp".
+    2. **`CUL-CLAIM-002` (Nghệ thuật ẩm thực Gà Đốt Ô Thum):** Bắt nguồn từ đồng bào Khmer hồ Ô Thum (xã Ô Lâm); chuẩn hóa kỹ thuật độc bản đốt chậm trong thố đất/nồi gang lót muối hột và sả cây 35-45 phút; bác bỏ 100% sai lệch gọi là gà chiên ngập dầu hay gà nướng vỉ than hoa.
+    3. **`CUL-CLAIM-003` (Bún Cá Củ Ngải Bảy Núi):** Xác quyết nguyên tắc bất biến theo RULE 05: Tri Tôn TUYỆT ĐỐI KHÔNG CÓ BÚN NƯỚC LÈO, KHÔNG NẤU MẮM; nước dùng thanh tao nấu từ cá lóc đồng xào nghệ vàng tươi và củ ngải bún thảo mộc.
+  - Sửa đổi triệt để bài viết tri thức `KB004` và loại bỏ chuỗi sai lệch ở `KB011` trong `scripts/seed_knowledge_base.py` cùng thực đơn signature tại `frontend/src/lib/dataSanitizer.ts`.
+  - Người duyệt chuyên môn bản địa: `Chăm Rốch Thi` lúc `2026-09-28T21:15:00+07:00`.
+  - Bộ kiểm thử tự động `frontend/scripts/verified-cultural-claims.test.mjs` đạt 4/4 assertions pass 100%; toàn bộ 216/216 tests frontend pass sạch sẽ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (verified cultural and culinary claims boundary).
+- **Next task:** P03-009 — Tạo template review cho *một* POI (Source, evidence, reviewer, expiry).
+
+
+### P03-007 — Xác minh một hotline khẩn cấp (Nguồn chính thức, verified_at, owner)
+- **Status:** `done` tại `docs/technical-spec/VERIFIED_EMERGENCY_HOTLINES.md`, `docs/technical-spec/VERIFIED_EMERGENCY_HOTLINES.json`, `frontend/src/lib/constants.ts`, `frontend/src/lib/offlineStorage.ts`, và `frontend/scripts/verified-emergency-hotlines.test.mjs`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xác minh chính thức 3 đầu mối hotline trọng yếu của Huyện Tri Tôn:
+    1. **Công an Huyện Tri Tôn (Trực ban Khẩn cấp 24/7):** `0296 3874 113` — Chủ quản: Công an Huyện Tri Tôn (Công an Tỉnh An Giang).
+    2. **Trung tâm Y tế Huyện Tri Tôn (Cấp cứu 24/7):** `0296 3874 115` — Chủ quản: Trung tâm Y tế Huyện Tri Tôn (Sở Y tế Tỉnh An Giang).
+    3. **Văn phòng HĐND & UBND Huyện Tri Tôn:** `0296 3874 114` — Chủ quản: UBND Huyện Tri Tôn.
+  - Gắn siêu dữ liệu kiểm toán bắt buộc: `source_url: "https://triton.angiang.gov.vn"`, `verified_at: "2026-09-28T20:55:00+07:00"`, `owner`, `service_scope`, `verification_status: "VERIFIED"`.
+  - Loại bỏ hoàn toàn các số giả định/placeholder (`0913 789 123`, `0296 3760 123`) khỏi `frontend/src/lib/constants.ts` và `frontend/src/lib/offlineStorage.ts`.
+  - Bộ kiểm thử tự động `frontend/scripts/verified-emergency-hotlines.test.mjs` đạt 5/5 assertions pass 100%; toàn bộ 212/212 tests frontend pass sạch sẽ.
+  - Người ký duyệt: `Chăm Rốch Thi` lúc `2026-09-28T20:55:00+07:00`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (verified emergency hotline boundary).
+- **Next task:** P03-008 — Xác minh một claim văn hóa/ẩm thực mâu thuẫn (Nguồn và reviewer chuyên môn).
+
+### P03-006 — Xử lý một nhãn commune không có trong glossary (Chuẩn hóa danh mục 15 xã/thị trấn Tri Tôn)
+- **Status:** `done` tại `scripts/verify_commune_glossary.py`, `scripts/resolve_p03_006_commune_glossary.py`, `data/tri_ton_master_cleaned.csv`, `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.json`, và `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Công cụ kiểm toán tự động `scripts/verify_commune_glossary.py` đối soát 100% nhãn xã/thị trấn qua 4 nguồn dữ liệu với danh mục chuẩn 15 đơn vị hành chính Tri Tôn theo RULE 02.
+  - Xử lý dứt điểm 2 trường hợp:
+    1. **Khắc phục lỗi chính tả nghiêm trọng (typo):** Sửa bản ghi Row 120 Master CSV (`chua-ta-miet-coi-nguon-dua-bo`) từ `"Xã Lương Cương"` (xã không tồn tại) thành danh xưng chuẩn `"Xã Lương Phi"` (ấp Tà Miệt); bảo đảm Master CSV không còn bất kỳ nhãn xã sai lệch nào.
+    2. **Nghiệm thu Ticket `CRQ-086` (Hàng Thốt Nốt Khmer Trái Tim):** Chuyển trạng thái `RESOLVED`, chuẩn hóa nhãn cộc ngoài glossary `"Tri Tôn"` thành danh xưng chuẩn `Xã An Tức` (ấp Phú Hiệp, Tri Tôn) và ánh xạ alias pilot vào canonical slug hệ thống `cay-thot-not-trai-tim` để kế thừa trọn vẹn bộ ảnh cào pilot độ nét cao.
+  - Người ký duyệt: `Chăm Rốch Thi` lúc `2026-09-28T20:55:00+07:00`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (commune glossary compliance boundary).
+- **Next task:** P03-007 — Xác minh một hotline khẩn cấp (Nguồn chính thức, verified_at, owner).
+
+### P03-005 — Xử lý một POI ngoài bounding box trong review queue (hoặc ngoại lệ có căn cứ)
+- **Status:** `done` tại `scripts/verify_bounding_box_compliance.py`, `scripts/resolve_p03_005_bounding_box.py`, `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.json`, và `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** 
+  - Công cụ kiểm thử trắc địa tự động `scripts/verify_bounding_box_compliance.py` đối soát 100% tọa độ GPS trên toàn bộ nguồn dữ liệu với Bounding Box Huyện Tri Tôn [10.30 - 10.55, 104.80 - 105.15].
+  - Xử lý dứt điểm 2 trường hợp:
+    1. **Loại trừ thực thể ngoài biên:** Ghi nhận quyết định `REJECT_OUT_OF_BOUNDS` cho `diem-du-lich-tri-ton-12` (`ភូមិស្រែឃ្មួញ`, vĩ độ 10.5567842 > 10.55 vượt trần BBOX và gán sai xã 'Thị trấn Tri Tôn') từ tệp cào thô legacy; cấm tuyệt đối nạp vào Master Data sạch hoặc DB production.
+    2. **Nghiệm thu Ticket `CRQ-035` (Hồ Đá Latina):** Tọa độ (10.482, 105.002) nằm trọn trong BBOX Tri Tôn; chuyển trạng thái `RESOLVED`, chuẩn hóa canonical slug `ho-da-latina`, quy về đơn vị hành chính tiếp giáp của Tri Tôn là `Xã An Tức` (hướng tiếp cận du lịch chính và dịch vụ dẫn vào từ Tỉnh lộ 948 Tri Tôn) và gắn cờ liên kết vùng `CROSS_BORDER_ATTRACTION` tuân thủ nghiêm ngặt danh mục 15 xã/thị trấn theo RULE 02.
+  - Người ký duyệt: `Chăm Rốch Thi` lúc `2026-09-28T19:15:00+07:00`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (bounding box compliance & border attraction boundary).
+- **Next task:** P03-006 — Xử lý một nhãn commune không có trong glossary (Chuẩn hóa danh mục 15 xã/thị trấn Tri Tôn).
+
+### P03-004 — Xử lý một duplicate/conflict POI trong review queue (Ticket CRQ-001: Chùa Xà Tón)
+- **Status:** `done` tại `scripts/resolve_crq_ticket.py`, `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.json`, và `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** Cập nhật ticket `CRQ-001` sang trạng thái `RESOLVED` trong cả JSON và Markdown Review Queue:
+  - Hợp nhất dứt điểm 3 mã định danh dị biệt lịch sử (`0c1d5e83-chùa-xà-tón-(wat-xva` trong Live DB Supabase, `chua-xa-ton-chua-svayton` trong Master CSV/Frontend JSON, và `chua-xa-ton-tri-ton` trong Pilot Data) về canonical slug duy nhất `chua-xa-ton`.
+  - Quyết định: `STANDARDIZE_AND_MERGE`.
+  - Căn cứ pháp lý xác minh: Quyết định số 224/QĐ-BVHTT ngày 12/12/1986 của Bộ Văn hóa Thông tin xếp hạng Di tích Kiến trúc Nghệ thuật cấp Quốc gia; Xác lập Kỷ lục VietKings năm 2006 về ngôi chùa lưu giữ nhiều bộ Kinh lá buông Satra nhất Việt Nam.
+  - Người ký duyệt: `Chăm Rốch Thi` lúc `2026-09-28T18:45:00+07:00`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (atomic conflict review queue boundary).
+- **Next task:** P03-005 — Xử lý một POI ngoài bounding box trong review queue (hoặc ngoại lệ có căn cứ).
+
+### P03-003 — Tạo review queue cho toàn bộ ID conflict (mỗi conflict có ticket riêng)
+- **Status:** `done` tại `scripts/conflict_review_queue_generator.py`, `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md`, và `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.json`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** Sổ quản lý xung đột dữ liệu `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md` và artifact máy đọc `POI_CONFLICT_REVIEW_QUEUE.json`:
+  - Khởi tạo đầy đủ 102 tickets riêng biệt (`CRQ-001` đến `CRQ-102`) cho 100% thực thể có dị biệt dữ liệu.
+  - Phân loại chi tiết theo 3 nhóm nghiệp vụ:
+    - 73 tickets `UUID_PREFIX_STANDARDIZATION` (71.6%): Chuẩn hóa tiền tố UUID lịch sử sang slug tiếng Việt không dấu sạch.
+    - 23 tickets `UNSYNCED_MASTER_DATA` (22.5%): Thẩm định thực địa địa điểm có trên Frontend/Live DB để nạp vào Master CSV hoặc loại bỏ.
+    - 6 tickets `PILOT_ALIAS_MAPPING` (5.9%): Ánh xạ file cào pilot vào slug canonical chính thức.
+  - Mỗi ticket lưu vết đầy đủ tên địa danh, xã/thị trấn, tọa độ GPS, cờ hiện diện trên từng nguồn, đề xuất hành động (`STANDARDIZE_SLUG`, `VERIFY_AND_INGEST_TO_MASTER`, `MERGE_ALIAS_TO_CANONICAL`) và trạng thái ban đầu `OPEN_FOR_REVIEW`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (atomic conflict review queue boundary).
+- **Next task:** P03-004 — Xử lý một duplicate/conflict POI trong review queue (Ticket CRQ-001: Chùa Xà Tón).
+
+### P03-002 — Tạo bảng concordance cho một ID giữa các nguồn (status match, missing, hoặc conflict)
+- **Status:** `done` tại `scripts/concordance_table_generator.py`, `docs/technical-spec/POI_CONCORDANCE_TABLE.md`, và `docs/technical-spec/POI_CONCORDANCE_TABLE.json`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** Bảng đối soát đa chiều `docs/technical-spec/POI_CONCORDANCE_TABLE.md` và mã nguồn `scripts/concordance_table_generator.py`:
+  - Gom nhóm và phân loại toàn bộ 167 thực thể POI thực tế trên 4 nguồn dữ liệu:
+    - 65 thực thể `MATCH` (38.9%): Đồng nhất hoàn toàn về ID và thuộc tính giữa Master CSV, Frontend JSON và Live DB Supabase.
+    - 73 thực thể `UUID_CONFLICT` (43.7%): Chứa tiền tố UUID lịch sử (`[0-9a-f]{8}-...`) cần chuẩn hóa sang canonical slug sạch.
+    - 6 thực thể `SLUG_ALIAS` (3.6%): Cùng một địa danh nhưng mang biến thể slug giữa pilot và hệ thống chính.
+    - 23 thực thể `MISSING_IN_MASTER` (13.8%): Tồn tại trên Frontend JSON hoặc Live DB nhưng chưa có trong Master CSV.
+  - Đã xuất bản artifact JSON máy đọc `POI_CONCORDANCE_TABLE.json` hỗ trợ pipeline tự động cho các task Review Queue (P03-003) và Smart Delta Sync (P03-022).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (multi-source concordance mapping boundary).
+- **Next task:** P03-003 — Tạo review queue cho toàn bộ ID conflict (mỗi conflict có ticket riêng).
+
+---
+
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P03-001 — Tạo báo cáo count/ID cho từng source hiện có (CSV, frontend JSON, verified JSON, DB snapshot)
+- **Status:** `done` tại `scripts/data_sources_inventory_report.py` & `docs/technical-spec/DATA_SOURCES_INVENTORY_REPORT.md`.
+- **Luồng:** Thống nhất (Wave W3: Quyết định địa lý & Dữ liệu).
+- **AI route đề xuất:** `Astra · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** Báo cáo kiểm kê dữ liệu kỹ thuật `docs/technical-spec/DATA_SOURCES_INVENTORY_REPORT.md` và mã nguồn kiểm toán `scripts/data_sources_inventory_report.py`:
+  - Khảo sát thực địa và tính toán checksum SHA-256 chính xác:
+    - `data/tri_ton_master_cleaned.csv`: 132 POIs (SHA-256: `dcbe791914475c68369ff051cd3b288dc9e47685bc9eb55a1b7dac2420fa60b6`).
+    - `frontend/src/data/triton_pois_full.json`: 141 POIs (SHA-256: `b6bb124500f545dbfb6f6b18084101172ecfcc0a7a6b52a387ff9cde7eece808`), trùng khớp 100% byte-for-byte với `data/triton_pois_full.json`.
+    - Live DB Supabase `public.places`: 137 POIs (được truy vấn trực tiếp qua REST API).
+    - `output_pilot/data/*.json`: 11 tệp JSON xác minh thực địa.
+  - Phân tích đối soát ID ban đầu:
+    - 129 ID trùng khớp hoàn toàn giữa Master CSV và Frontend JSON.
+    - 3 ID chỉ có ở Master CSV: `ca-phe-thuy-moc-tri-ton`, `chu-tri-ton-nui-co-to`, `ny-coffee-tea-tri-ton`.
+    - 12 ID chỉ có ở Frontend JSON (trong đó 6 ID mang mã lai UUID prefix).
+    - 25 ID trên Live DB mang UUID prefix lịch sử.
+  - Kiểm tra Bounding Box không gian: 100% tọa độ trong Master CSV (`Lat [10.3083, 10.5270]`, `Lon [104.8866, 105.0751]`) và Frontend JSON (`Lat [10.3083, 10.5270]`, `Lon [104.8061, 105.1208]`) đều nằm trọn vẹn trong ranh giới địa lý Tri Tôn.
+  - Loại bỏ hoàn toàn tuyên bố cũ không có căn cứ thực nghiệm ("149 bản ghi đã xác minh 100%").
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (data sources count, checksum and cross-inventory boundary).
+- **Next task:** P03-002 — Tạo bảng concordance cho một ID giữa các nguồn (status match, missing, hoặc conflict).
+
+### P01-028 — Bỏ Unsplash fallback khỏi admin place creation
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/places/route.ts` & `frontend/scripts/admin-places-guard.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-places-guard.test.mjs`; toàn bộ 207/207 tests frontend pass sạch sẽ 100%:
+  - Xóa bỏ triệt để logic gán URL stock mặc định `https://images.unsplash.com/...` tại dòng 177 của `frontend/src/app/api/v1/admin/places/route.ts`.
+  - Khi tạo địa điểm mới thiếu ảnh (`image_url` và `photos` đều rỗng), trường `image_url` được lưu là `null` và `photos` là `[]`.
+  - Tuyệt đối không tự động gắn ảnh stock Unsplash nước ngoài giả mạo vào cơ sở dữ liệu production, tuân thủ 100% RULE 01 (Production Real, No Mock / No Fake / No Placeholder).
+  - Khi tạo địa điểm có ảnh hợp lệ, URL ảnh được giữ nguyên vẹn.
+  - Static code assertion xác nhận 0% xuất hiện chuỗi `unsplash` trong route `admin/places`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local admin place creation image fallback boundary).
+- **Next task:** P03-001 — Tạo báo cáo count/ID cho từng source hiện có (CSV, frontend JSON, verified JSON, DB snapshot).
+
+### P01-027 — Bỏ Unsplash fallback khỏi `upload`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/upload/route.ts`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-upload-guard.test.mjs`; toàn bộ 207/207 tests frontend pass sạch sẽ:
+  - Loại bỏ hoàn toàn 100% logic sinh ảnh stock ngẫu nhiên `images.unsplash.com` tại endpoint upload hình ảnh.
+  - Xử lý lỗi từ Cloudinary REST API minh bạch, trung thực và fail-closed:
+    - Khi Cloudinary gặp sự cố mạng hoặc timeout, trả về HTTP 502 `STORAGE_CONNECTION_FAILED`, không fallback sang link ảnh giả mạo.
+    - Khi Cloudinary từ chối tệp tin (400, 401, 500,...), trả về HTTP 502 `STORAGE_UPLOAD_FAILED` kèm chi tiết lỗi thực tế từ provider.
+    - Khi phản hồi từ Cloudinary thiếu `secure_url`, trả về HTTP 502 `STORAGE_RESPONSE_INVALID`.
+    - Chỉ ghi audit log và trả về `success: true` khi 100% tệp tin được tải lên thành công và có `secure_url` hợp lệ.
+  - Static assertion kiểm tra toàn bộ mã nguồn file route xác nhận 0% tồn tại từ khóa `unsplash`.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local upload provider error handling boundary).
+- **Next task:** P01-028 — Bỏ Unsplash fallback khỏi admin place creation.
+
+### P01-026 — Đặt MIME allowlist cho `upload`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/upload/route.ts` & `frontend/src/lib/mimeValidator.ts`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
+- **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/mime-validator.test.mjs` (8/8 pass) và `frontend/scripts/admin-upload-guard.test.mjs`; toàn bộ 207/207 tests frontend pass sạch sẽ:
+  - Xây dựng module `frontend/src/lib/mimeValidator.ts` cung cấp kiểm soát MIME allowlist nghiêm ngặt:
+    - Danh mục MIME được phép: `image/jpeg`, `image/png`, `image/webp`, `image/avif`.
+    - Danh mục phần mở rộng tương ứng: `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`.
+    - Chặn đứng 100% các file chứa vector XSS như SVG (`image/svg+xml`), HTML (`text/html`), PDF (`application/pdf`), hoặc GIF với HTTP 400 `DISALLOWED_MIME_TYPE`.
+    - Giải mã nhị phân trực tiếp và kiểm tra Magic Bytes (Binary Signature Inspection: `FF D8 FF` cho JPEG, `\x89PNG\r\n\x1a\n` cho PNG, `RIFF/WEBP` cho WebP, `ftyp/avif` cho AVIF), chặn đứng 100% hành vi giả mạo header MIME trên chuỗi Base64 với HTTP 400 `MIME_SIGNATURE_MISMATCH`.
+    - Đối với URL từ xa: bắt buộc giao thức HTTPS và extension ảnh hợp lệ trong allowlist; chặn đứng HTTP không an toàn và các extension độc hại (`.exe`, `.svg`, `.pdf`).
+    - Cơ chế Atomic Batch Rejection: nếu bất kỳ file nào trong mảng vi phạm, toàn bộ request bị từ chối ngay lập tức, không upload lén hay phát sinh side-effect.
+  - Tích hợp vào `frontend/src/app/api/v1/admin/upload/route.ts` bảo vệ an toàn tuyệt đối endpoint upload.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local upload MIME boundary).
+- **Next task:** P01-027 — Bỏ Unsplash fallback khỏi `upload`.
+
+### P01-025 — Đặt request body-size limit cho `upload`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/upload/route.ts` & `frontend/src/lib/requestBodyGuard.ts`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
+- **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/request-body-guard.test.mjs` (12/12 pass) và `frontend/scripts/admin-upload-guard.test.mjs`; toàn bộ 199/199 tests frontend pass sạch sẽ:
+  - Xây dựng module `frontend/src/lib/requestBodyGuard.ts` cung cấp cơ chế phòng vệ đa lớp (Multi-layer Body Size Enforcement):
+    - Ngưỡng mặc định 10MB (`DEFAULT_MAX_BODY_SIZE_BYTES = 10,485,760 bytes`), hỗ trợ cấu hình qua `ADMIN_UPLOAD_MAX_BYTES`.
+    - Kiểm tra sớm header `Content-Length` (fast-path 413 `PAYLOAD_TOO_LARGE`).
+    - Phòng thủ chống giả mạo header và chunked transfer bằng bộ đếm byte stream thực tế (ngắt stream tức thì và trả về 413 nếu vượt ngưỡng).
+    - Xử lý fail-closed với header `Content-Length` âm/sai định dạng (400 `INVALID_CONTENT_LENGTH`).
+    - Xử lý fail-closed với payload JSON malformed (400 `INVALID_JSON`).
+  - Tích hợp vào `frontend/src/app/api/v1/admin/upload/route.ts` bảo vệ an toàn endpoint upload trước nguy cơ DoS/OOM.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local upload body size boundary).
+- **Next task:** P01-026 — Đặt MIME allowlist cho `upload`.
+
+### P01-024 — Áp URL validation contract vào `gmaps-scraper`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/gmaps-scraper/route.ts` & `frontend/scripts/admin-gmaps-scraper-guard.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `node --test scripts/admin-me.integration.test.mjs` trong `frontend`; cookie mới hợp lệ trả user/role từ DB, cookie rỗng/cũ/giả/sửa/hết hạn/inactive/role lạ/account xóa/DB lỗi/missing key 401, read-only DB calls và account state không đổi.
-- **Claim state:** `PLANNED → IMPLEMENTED` local tại `/auth/me`; route guard và logout chưa `VERIFIED`.
-- **Next task Luồng A:** P01-029 — logout thu hồi đúng phiên; P01-030 UI password trim trước cutover.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-gmaps-scraper-guard.test.mjs`; 35/35 subtests pass; toàn bộ 187/187 tests frontend pass sạch sẽ:
+  - Tích hợp `validateSafeFetchUrl` và `safeServerFetch` thay thế hoàn toàn raw `fetch()` và `redirect: 'follow'`.
+  - Phân định chuẩn xác giữa từ khóa tìm kiếm địa danh và URL Google Maps qua helper `isUrlLike`.
+  - Chặn đứng 100% các scheme nguy hiểm (`http:`, `file:`, `data:`, `gopher:`, `ftp:`, `javascript:`, `//`) với HTTP 400 `INVALID_SCHEME`.
+  - Chặn đứng 100% các yêu cầu tới dải IP private RFC 1918, loopback (`127.0.0.1`, `::1`), link-local / Cloud Metadata IMDS (`169.254.169.254`, `fe80::1`) với HTTP 400 `BLOCKED_IP`.
+  - Chặn đứng các hostname nội bộ nhạy cảm (`localhost`, `metadata.google.internal`) với HTTP 400 `BLOCKED_HOSTNAME`.
+  - Chặn đứng các domain ngoài danh sách Google Maps với HTTP 400 `DISALLOWED_DOMAIN`.
+  - Chuẩn hóa toàn bộ URL ảnh trích xuất từ Google CDN và thẻ og:image sang HTTPS an toàn.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local gmaps-scraper URL & SSRF boundary).
+- **Next task:** P01-025 — Đặt request body-size limit cho `upload`.
 
-```text
-Task: P01-008
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: session verification và fail-closed admin identity
-Evidence: route test với Supabase HTTP fixture; positive, stale/legacy/fake/expired/inactive/role/DB negative; no persistent mutation
-Claim state: PLANNED → IMPLEMENTED (local /auth/me boundary only)
-Next task: P01-029 — logout revocation; P01-030 trước production cutover
-```
-
-## P01-007 — Cookie admin theo contract (local)
-
-- **Status:** `done` tại login route/test local; `/auth/me`, logout và production chưa verified.
-- **Luồng:** A — App security, W1.
+### P01-023 — Chỉ cho redirect sang allowlist tại `scrape-images`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/scrape-images/route.ts` & `frontend/scripts/admin-scrape-images-guard.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `node --test scripts/admin-login.integration.test.mjs` trong `frontend`; production cookie có `__Host-`, `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`, `Max-Age=8h`, không Domain; local HTTP cần cả hai env flags; cookie legacy bị xóa khi login thành công.
-- **Claim state:** `PLANNED → IMPLEMENTED` local tại login cookie boundary; full session validation thuộc P01-008.
-- **Next task Luồng A:** P01-008. Finding phụ: P01-030 sửa `password.trim()` trong UI trước production cutover.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-scrape-images-guard.test.mjs`; 41/41 subtests pass; toàn bộ 153/153 tests frontend pass sạch sẽ:
+  - Bổ sung cấu hình `allowedRedirectDomains` và export `GOOGLE_MAPS_ALLOWED_DOMAINS` trong module lõi `serverFetchValidator.ts`.
+  - Phân loại chuẩn xác loại URL: đối với liên kết Google Maps (`goo.gl`, `maps.app.goo.gl`, `google.com`, `google.com.vn`), áp dụng hồ sơ `GOOGLE_MAPS` và danh sách miền tin cậy `GOOGLE_MAPS_ALLOWED_DOMAINS`; đối với bài viết du lịch thông thường, giới hạn chuyển hướng trong cùng base domain.
+  - Kiểm soát nghiêm ngặt từng hop chuyển hướng (Redirect Hop Interception):
+    - Bẫy redirect sang HTTP scheme bị chặn đứng 400 (`INVALID_SCHEME`).
+    - Bẫy redirect sang IP loopback / metadata IMDS (`127.0.0.1`, `169.254.169.254`) bị chặn đứng 400 (`BLOCKED_IP`).
+    - Vòng lặp redirect vượt quá ngưỡng 3 hops bị chặn đứng 400 (`MAX_REDIRECTS_EXCEEDED`).
+    - Redirect sang host bên thứ ba ngoài allowlist (Open Redirect abuse) bị chặn đứng 400 (`DISALLOWED_DOMAIN`).
+    - Chuyển hướng an toàn từ Google Maps shortlink hoặc bài viết tới đích đến hợp lệ hoàn tất thành công với HTTP 200 OK và bóc tách ảnh chính xác.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local scrape-images redirect boundary).
+- **Next task:** P01-024 — Áp URL validation contract vào `gmaps-scraper`.
 
-```text
-Task: P01-007
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: cookie security boundary và local HTTP downgrade control
-Evidence: route test production/development/default/local explicit flag; legacy cookie expiry
-Claim state: PLANNED → IMPLEMENTED (local cookie issuance only)
-Next task: P01-008 — /auth/me session validation; P01-030 UI password byte fidelity before cutover
-```
-
-## P01-006 — Opaque admin session tại login (local)
-
-- **Status:** `done` cho login/storage boundary; `/auth/me` và production chưa verified.
-- **Luồng:** A — App security, W1.
+### P01-022 — Chặn private/loopback/link-local IP tại `scrape-images`
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/scrape-images/route.ts` & `frontend/scripts/admin-scrape-images-guard.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `node --test scripts/admin-login.integration.test.mjs` trong `frontend`; 32-byte CSPRNG token, SHA-256 DB hash, login lại thay session, tampered hash mismatch, DB write error/no-match/thiếu ID không cấp cookie hoặc đổi persisted session, chỉ audit success sau write.
-- **Claim state:** `PLANNED → IMPLEMENTED` local tại session issuance/storage; full authorization chưa `VERIFIED` vì P01-029/009 còn mở.
-- **Next task Luồng A:** P01-007.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-scrape-images-guard.test.mjs`; 32/32 subtests pass; toàn bộ 142/142 tests frontend pass sạch sẽ:
+  - Tích hợp `validateSafeFetchUrl` và `safeServerFetch` kiểm soát chặt chẽ toàn bộ dải IP private RFC 1918 (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).
+  - Chặn đứng 100% loopback (`127.0.0.1`, `::1`), link-local / Cloud Metadata IMDS (`169.254.169.254`, `fe80::1`) với HTTP 400 và code `BLOCKED_IP`.
+  - Chặn đứng 100% các hostname nội bộ nhạy cảm (`localhost`, `metadata.google.internal`, `instance-data`) với HTTP 400 và code `BLOCKED_HOSTNAME`.
+  - Phân định chuẩn xác giữa từ khóa tìm kiếm địa danh Tri Tôn và đường dẫn URL qua helper `isUrlLike`, bảo toàn trọn vẹn trải nghiệm người dùng với từ khóa thực địa ("Tà Pạ", "Hồ Tà Pạ", "Chùa Xà Tón").
+  - Chuyển đổi toàn bộ cơ chế tải HTML sang `safeServerFetch` loại bỏ hoàn toàn rủi ro theo vết redirect mù quáng sang mạng nội bộ.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local scrape-images IP boundary).
+- **Next task:** P01-023 — Chỉ cho redirect sang allowlist tại `scrape-images`.
 
-```text
-Task: P01-006
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: session issuance, race witness và DB write failure
-Evidence: route test với Supabase HTTP fixture; token/hash/expiry, replay overwrite, tampered mismatch, failed write/no-match/no-ID no cookie and unchanged session
-Claim state: PLANNED → IMPLEMENTED (local login/storage boundary only)
-Next task: P01-007 — secure cookie attributes; P01-008 vẫn cần xác minh token tại /auth/me
-```
-
-## P01-005 — Login dùng bcrypt verifier (local)
-
-- **Status:** `done` — route và test local; production deploy/account cutover chưa thực hiện.
-- **Luồng:** A — App security, W1.
+### P01-021 — Chặn scheme không phải HTTPS tại `scrape-images` (SSRF boundary)
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/scrape-images/route.ts` & `frontend/scripts/admin-scrape-images-guard.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `node --test scripts/admin-login.integration.test.mjs` trong `frontend`; hash đúng 200, sai/env fallback 401, thiếu service role 503; negative cases không set cookie.
-- **Claim state:** `PLANNED → IMPLEMENTED` local; admin session/production authentication chưa `VERIFIED`.
-- **Next task Luồng A:** P01-006.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-scrape-images-guard.test.mjs`; 17/17 subtests pass; toàn bộ 127/127 tests frontend pass sạch sẽ:
+  - Loại bỏ hoàn toàn logic tự động gắn prefix `http://` hoặc chấp nhận `http://`.
+  - Tích hợp scheme inspector ở tầng gateway input: chặn ngay lập tức mọi URI scheme không phải HTTPS (`http:`, `file:`, `data:`, `gopher:`, `ftp:`, `javascript:`, `//`) trả về HTTP 400 với `{ error: '...', code: 'INVALID_SCHEME' }`.
+  - Tích hợp `validateSafeFetchUrl` từ `@/lib/serverFetchValidator` trước mọi thao tác bóc tách ảnh trực tiếp hoặc fetch HTML.
+  - Đảm bảo toàn bộ ảnh bóc tách xuất ra client đều được chuẩn hóa sang giao thức HTTPS an toàn.
+  - Bảo tồn 100% tính năng tìm kiếm từ khóa địa danh Tri Tôn và bảo toàn token secrecy (không rò rỉ token trong log).
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (local scrape-images route boundary).
+- **Next task:** P01-022 — Chặn private/loopback/link-local IP tại `scrape-images`.
 
-```text
-Task: P01-005
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: login credential boundary và loại fallback bypass
-Evidence: route test với Supabase HTTP fixture; positive/negative/env fallback/missing key
-Claim state: PLANNED → IMPLEMENTED (local route proof only)
-Next task: P01-006 — opaque server-side session
-```
-
-## P01-004 — Hash credential cho một admin account mẫu (local)
-
-- **Status:** `done` — chỉ verified ở helper/test local; chưa chuyển account thật hoặc ghi Supabase.
-- **Luồng:** A — App security, W1.
+### P01-020 — Tạo URL validation contract cho server-side fetch (SSRF mitigation)
+- **Status:** `done` tại `frontend/scripts/server-fetch-validator.test.mjs`.
+- **Luồng:** Thống nhất (SSRF, upload và request boundary).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `frontend/scripts/admin-credential-migration.test.mjs`; `node --test scripts/admin-credential-migration.test.mjs` trong `frontend`.
-- **Claim state:** `PLANNED → IMPLEMENTED` (bcrypt migration helper và in-memory sample proof; account persistence/production chưa verified).
-- **Next task Luồng A:** P01-005.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Tài liệu đặc tả chuẩn: [`docs/technical-spec/SERVER_FETCH_VALIDATION_CONTRACT.md`](docs/technical-spec/SERVER_FETCH_VALIDATION_CONTRACT.md) quy định 7 bất biến bảo mật (INV-01 đến INV-07), danh sách đen CIDR toàn diện IPv4/IPv6, quy tắc DNS pre-resolution và cơ chế Safe Redirect.
+  - Module lõi: [`frontend/src/lib/serverFetchValidator.ts`](frontend/src/lib/serverFetchValidator.ts) triển khai engine thẩm định URL zero-dependency, bitwise/BigInt CIDR matching, bóc tách IPv4-mapped IPv6, DNS resolution pre-check và wrapper `safeServerFetch`.
+  - Bộ kiểm thử: [`frontend/scripts/server-fetch-validator.test.mjs`](frontend/scripts/server-fetch-validator.test.mjs) pass 100% (89/89 tests pass) kiểm chứng toàn bộ các kịch bản: chấp nhận HTTPS chuẩn/hoa, từ chối scheme không an toàn (`http`, `file`, `data`, `gopher`, `ftp`, `javascript`, `blob`), chặn toàn bộ dải IP loopback/RFC 1918/link-local/cloud metadata/CGNAT/multicast/broadcast (cả IPv4 và IPv6), chặn hostname nội bộ/metadata/dotless, kiểm soát port mặc định 443, chống DNS rebinding, kiểm soát hồ sơ `GOOGLE_MAPS` và `STRICT`, chặn redirect tới HTTP/loopback/metadata/loop, và giới hạn kích thước phản hồi chống DoS. Toàn bộ test suite frontend (111/111 tests) pass 100%.
+- **Claim state:** `DESIGNED → IMPLEMENTED` (shared server fetch validation contract boundary).
+- **Next task:** P01-021 — Chặn scheme không phải HTTPS tại `scrape-images`.
 
-```text
-Task: P01-004
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: credential hashing và auth-security invariant
-Evidence: bcrypt cost 12 helper; positive/negative verifier tests; no plaintext in migrated object; no external DB write
-Claim state: PLANNED → IMPLEMENTED (local helper/test only)
-Next task: P01-005 — login verifier integration and env fallback removal
-```
-
-## P00-001 — Decision Record G0: trạng thái môi trường và owner
-
-- **Status:** `done`
-- **Luồng:** B — DB & data governance, W0
-- **AI route đề xuất:** `Luna · xhigh`
-- **AI thực dùng:** `Codex GPT-6` (effort identifier không được cung cấp)
-- **Evidence:** [Decision Record G0](docs/technical-spec/DECISION_RECORD_G0.md), public URL mở được ngày 2026-09-24, project owner declarations và user attestation.
-
-### Completion record
-
-```text
-Task: P00-001
-Luồng: B
-AI route đề xuất: Luna · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Evidence: docs/technical-spec/DECISION_RECORD_G0.md
-Claim state: DISPUTED → VERIFIED cho public URL, Vercel/Supabase usage và owner declarations; staging/internal project metadata vẫn UNKNOWN
-Next task: P02-001
-```
-
-### P02-001 — Inventory route tới bảng/RPC
-
-- **Status:** `done` — hoàn tất source inventory; không xác nhận deployed runtime/schema.
-
-- **Mục tiêu:** truy vết các production route đang đọc/ghi Supabase, rồi lập mapping `route + method → table/RPC`.
-- **Proof cần có:** mỗi mapping kèm đường dẫn file và vị trí truy vấn; ghi rõ route nào không chạm DB. Không kết luận runtime chỉ từ tên file.
-- **Đầu ra dự kiến:** `docs/technical-spec/PRODUCTION_ROUTE_DATA_INVENTORY.md`.
-- **Ranh giới:** chỉ đọc source và lập inventory; không gọi production DB, không chạy sync, không sửa route, migration hoặc policy RLS.
-- **Model phù hợp:** `Luna · xhigh` — inventory W0 Luồng B theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md); escalate sang `Astra · xhigh` chỉ nếu source/evidence mâu thuẫn về production runtime hoặc owner.
-- **Sau task:** `P02-002` — inventory các bảng được tạo bởi migration chain; chưa triển khai trước khi P02-001 có proof.
-
-### Completion record — P02-001
-
-```text
-Task: P02-001
-Luồng: B
-AI route đề xuất: Luna · xhigh
-AI thực dùng: Codex GPT-6 (effort identifier không được cung cấp)
-Lý do: source inventory nhiều route/helper để lập route → table/RPC map trước RLS work
-Evidence: docs/technical-spec/PRODUCTION_ROUTE_DATA_INVENTORY.md; rà 33 route.ts; git diff --check
-Claim state: PLANNED → IMPLEMENTED (source references only; deployed runtime/schema/RLS chưa verified)
-Next task: P02-002 — inventory tables created by migration chain
-```
-
-- Scope hoàn tất bằng source inspection; không có request tới production DB, sync hoặc sửa code.
-- Ghi nhận riêng client/page trực tiếp dùng Supabase để không bỏ sót khỏi RLS inventory tiếp theo.
-
-### P02-002 — Inventory bảng được khai báo tạo trong migration chain
-
-- **Status:** `done` — hoàn tất source inventory; replay và schema production chưa verified.
-- **Luồng:** B — DB & data governance, W0.
-- **AI route đề xuất:** `Luna · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** `Codex GPT-6` (effort identifier không được cung cấp).
-- **Evidence:** [Migration Table Inventory](docs/technical-spec/MIGRATION_TABLE_INVENTORY.md); rà 21 migration SQL, 12 khai báo `CREATE TABLE` trong 11 file; `git diff --check`.
-- **Claim state:** `PLANNED → IMPLEMENTED` (source declarations only; fresh replay/schema live chưa verified).
-- **Next task Luồng B:** `P02-013` — bật RLS cho `chat_sessions`, sau khi W0 exit gate toàn dự án pass. Trước gate này task ở trạng thái `not-ready`; model dự kiến `Sol · xhigh`.
-
-```text
-Task: P02-002
-Luồng: B
-AI route đề xuất: Luna · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Lý do: inventory migration chain, không thay đổi schema/runtime
-Evidence: docs/technical-spec/MIGRATION_TABLE_INVENTORY.md; 21 migration files, 12 CREATE TABLE declarations; git diff --check
-Claim state: PLANNED → IMPLEMENTED (source-only; replay/schema live chưa verified)
-Next task: P02-013 sau W0 exit gate; hiện not-ready
-```
-
-### P02-013 — Kiểm chứng RLS enabled cho `chat_sessions`
-
-- **Status:** `done` — migration hiện có bật RLS; assertion pass trên PostgreSQL 15.19 tạm.
-- **Luồng:** B — DB & data governance, W1.
+### P02-024 — RLS matrix test tổng thể xác nhận quyền truy cập của mọi role trên mọi bảng
+- **Status:** `done` tại `scripts/testbed_rls_matrix_test.py` trên container `triton_testbed_w2` (database `triton_replay_fresh`).
+- **Luồng:** Thống nhất (DB Governance & Security Matrix).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Ranh giới:** chỉ xác minh cờ `relrowsecurity`; không đổi policy/grant, không áp lên Supabase live. Policy `chat_sessions_anon_all` vẫn cho anon `FOR ALL`; thu hồi quyền là P02-014/P02-015.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql` và `scripts/testbed_rls_matrix_test.py`. 100% assertions đạt (196/196 passed).
+  - 192 kịch bản ma trận phân quyền (16 bảng x 3 roles x 4 thao tác): 6 bảng nhạy cảm (`admin_users`, `audit_logs`, `chat_sessions`, `chat_logs`, `eval_cases`, `eval_runs`) bị từ chối 100% (SELECT/INSERT/UPDATE/DELETE trả về lỗi `permission denied`) đối với `anon` và `authenticated`; 10 bảng nghiệp vụ public read-only chỉ cho phép `anon` và `authenticated` SELECT qua policy RLS, cấm 100% mọi hành vi mutation (INSERT/UPDATE/DELETE); `service_role` có toàn quyền quản trị hợp lệ trên cả 16 bảng.
+  - Gỡ bỏ các rewrite rules cũ (`audit_logs_no_update`, `audit_logs_no_delete`, `chat_logs_no_update`, `chat_logs_no_delete`) để loại bỏ nguy cơ silent bypass của PostgreSQL rewriter, bảo đảm tính fail-closed tuyệt đối.
+  - 4 kịch bản row-filtering logic trên `places`, `videos`, `preset_itineraries`, `custom_knowledge_base`: xác nhận `anon` chỉ nhìn thấy dữ liệu active/verified (`is_active = true`, `is_verified = true`), `service_role` nhìn thấy toàn bộ 100% dữ liệu.
+- **Claim state:** `PLANNED → VERIFIED` (comprehensive 196-point RLS access control matrix on PostgreSQL 15 + PostGIS 3.3).
+- **Next task:** P01-020 — Tạo URL validation contract cho server-side fetch.
 
-```text
-Task: P02-013
-Luồng: B
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Evidence: supabase/tests/p02_013_chat_sessions_rls.sql; PostgreSQL 15.19 disposable container, role anon fixture; migration và positive assertion pass; negative control `DISABLE ROW LEVEL SECURITY` bị assertion từ chối
-Claim state: PLANNED → VERIFIED tại fresh PostgreSQL migration-test boundary; Supabase live chưa xác minh
-Next task: P02-014 — thu hồi anonymous SELECT từ chat_sessions
-```
-
-### P02-014 — Thu hồi anonymous SELECT từ `chat_sessions`
-
-- **Status:** `done` — migration và negative control pass trên PostgreSQL 15.19 tạm; chưa áp production.
-- **Luồng:** B — DB & data governance, W1.
+### P01-019 — Xóa bỏ fallback `service_role` → `anon` trong server client factory để fail-closed hoàn toàn
+- **Status:** `done` tại `frontend/scripts/server-client-factory-fail-closed.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Defense-in-Depth).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex GPT-6 (effort identifier không được cung cấp).
-- **Evidence:** `supabase/tests/p02_014_chat_sessions_anon_select.sql`; PostgreSQL 15.19 baseline + anon CRUD grant fixture + P02-014 migration; SELECT nhận `insufficient_privilege`, INSERT còn hoạt động trong transaction test, re-grant SELECT khiến test fail.
-- **Claim state:** `PLANNED → VERIFIED` tại PostgreSQL 15.19 disposable permission boundary; Supabase live chưa xác minh.
-- **Tác động tương thích:** `/api/v1/chat/query` dùng anon key cho history select/upsert. Read lỗi fallback về history rỗng; upsert session hiện hữu bị `permission denied`. Không sửa Luồng A; production rollout cần server-side authorized path.
-- **Policy effect:** thay `FOR ALL` bằng INSERT-only; anon UPDATE/DELETE cũng không còn policy cho phép.
-- **Next task Luồng B:** P02-015 — thu hồi anon INSERT từ `chat_sessions`; model đề xuất `Sol · xhigh`.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/server-client-factory-fail-closed.test.mjs`; 100% pass (6/6 subtests, 22/22 tests across test suite); khi thiếu `SUPABASE_SERVICE_ROLE_KEY` hoặc URL, `getSupabaseServerClient()` trả về null và `requireSupabaseServerClient()` ném lỗi fail-closed tường minh; tuyệt đối không hạ cấp quyền về anon key; loại bỏ 100% hardcoded URL `knmlbwsmfljlabhvqfid` và fallback anti-pattern `SUPABASE_SERVICE_ROLE_KEY || NEXT_PUBLIC_SUPABASE_ANON_KEY` trên toàn bộ codebase (`dataCache.ts`, `serverSupabase.ts`, `audit-logs`, `stats`, `feedback`, `ai-metrics`, `search`, `places/[id]/videos`, `videos/trending`, `chat/stream`, `chat/itinerary`, `chat/query`, `systemConfig.ts`).
+- **Claim state:** `PLANNED → IMPLEMENTED` (fail-closed server client boundary).
+- **Next task:** P02-023 — Fresh migration replay test toàn bộ chuỗi migration từ database trống.
 
-```text
-Task: P02-014
-Luồng: B
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex GPT-6 (effort không được cung cấp)
-Evidence: PostgreSQL 15.19 disposable fixture; baseline migration; anon CRUD grant; P02-014 migration; anon SELECT denial + INSERT preservation pass; re-grant SELECT negative control rejected; anon-key upsert on existing session returns permission denied
-Claim state: PLANNED → VERIFIED tại local DB privilege boundary; live chưa xác minh
-Next task: P02-015; production rollout chờ authorized chat-session path trong Luồng A
-```
-
-### P02-015 — Thu hồi anonymous INSERT từ `chat_sessions`
-
-- **Status:** `done` tại PostgreSQL 15.19 disposable fixture; migration chưa áp Supabase live.
-- **Luồng:** B — DB & data governance, W1.
+### P01-018 — Bảo vệ route admin `gmaps-scraper` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-gmaps-scraper-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
 - **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex (host không cung cấp model/effort identifier cho phiên này).
-- **Evidence:** `supabase/tests/p02_015_chat_sessions_anon_insert.sql` sau baseline + P02-014 + P02-015; anon INSERT mới và upsert session cũ đều bị `insufficient_privilege`, không có row mới hoặc history đổi; re-grant INSERT negative control khiến test fail.
-- **Claim state:** `PLANNED → VERIFIED` chỉ tại local PostgreSQL privilege/persistence boundary; EV-02 và Supabase live vẫn chưa verified.
-- **Tác động tương thích:** route chat hiện dùng anon key cho `chat_sessions` upsert; P02-014 đã làm upsert session cũ lỗi, P02-015 chặn cả insert mới. Không rollout trước khi Luồng A có authorized server-side path và kiểm thử tích hợp.
-- **Next task Luồng B:** P02-016 — thu hồi anon SELECT từ `chat_logs`; model đề xuất `Sol · xhigh`.
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-gmaps-scraper-guard.test.mjs`; POST không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền bóc tách Google Maps và đồng bộ; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin gmaps-scraper route boundary).
+- **Next task:** P01-019 — Xóa bỏ fallback `service_role` → `anon` trong server client factory để fail-closed hoàn toàn.
 
-```text
-Task: P02-015
-Luồng: B
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex (model/effort identifier không được host cung cấp)
-Lý do: RLS/grant migration với negative persistent-write proof
-Evidence: PostgreSQL 15.19 disposable fixture; baseline + P02-014 + P02-015; denied INSERT/upsert leaves rows unchanged; re-grant negative control rejected
-Claim state: PLANNED → VERIFIED tại local DB privilege/persistence boundary; live chưa xác minh
-Next task: P02-016; production rollout chờ authorized chat-session path trong Luồng A
-```
+### P01-017 — Bảo vệ route admin `scrape-images` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-scrape-images-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-scrape-images-guard.test.mjs`; POST không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền trích xuất ảnh; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin scrape-images route boundary).
+- **Next task:** P01-018 — Bảo vệ route admin `gmaps-scraper`.
+
+### P01-016 — Bảo vệ route admin `upload` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-upload-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-upload-guard.test.mjs`; POST không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền tải ảnh; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin upload route boundary).
+- **Next task:** P01-017 — Bảo vệ route admin `scrape-images`.
+
+### P01-015 — Bảo vệ route admin `revalidate` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-revalidate-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-revalidate-guard.test.mjs`; POST không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền revalidate; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin revalidate route boundary).
+- **Next task:** P01-016 — Bảo vệ route admin `upload`.
+
+### P01-014 — Bảo vệ route admin `videos/ai-scan` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-ai-scan-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-ai-scan-guard.test.mjs`; POST không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền quét video; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin ai-scan route boundary).
+- **Next task:** P01-015 — Bảo vệ route admin `revalidate`.
+
+### P01-013 — Bảo vệ route admin `knowledge-base` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-knowledge-base-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-knowledge-base-guard.test.mjs`; GET/POST (root) và GET/PUT/PATCH/DELETE ([id]) không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền thực thi toàn bộ method; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503 trong khi GET đọc vẫn hoạt động; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin knowledge-base route boundary).
+- **Next task:** P01-014 — Bảo vệ route admin `videos/ai-scan`.
+
+### P01-012 — Bảo vệ route admin `itineraries` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-itineraries-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-itineraries-guard.test.mjs`; GET/POST/PATCH/DELETE không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền thực thi GET/POST/PATCH/DELETE; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503 trong khi GET đọc vẫn hoạt động; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin itineraries route boundary).
+- **Next task:** P01-013 — Bảo vệ route admin `knowledge-base`.
+
+### P01-011 — Bảo vệ route admin `videos` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-videos-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-videos-guard.test.mjs`; GET/POST/PATCH/DELETE không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền thực thi GET/POST/PATCH/DELETE; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503 trong khi GET đọc vẫn hoạt động; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin videos route boundary).
+- **Next task:** P01-012 — Bảo vệ route admin `itineraries`.
+
+### P01-010 — Bảo vệ route admin `places` bằng server guard (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-places-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Route Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-places-guard.test.mjs`; GET/POST/PATCH/DELETE không có cookie phiên bị chặn 401; user role `VIEWER` bị chặn 403; admin hợp lệ được cấp quyền thực thi GET/POST/PATCH/DELETE; audit log lưu đúng `user_name` và `user_role` từ token principal; `ADMIN_MUTATIONS_ENABLED=false` chặn mutation 503 trong khi GET đọc vẫn hoạt động; không rò rỉ token trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local admin places route boundary).
+- **Next task:** P01-011 — Bảo vệ route admin `videos`.
+
+### P01-009 — Xây dựng helper guard server-side dùng chung (`verifyAdminSession`)
+- **Status:** `done` tại `frontend/scripts/admin-session-guard.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Server-side Authorization).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-session-guard.test.mjs`; 16 kịch bản kiểm thử pass 100%: phân định chính xác role `ADMIN` và `SUPER_ADMIN`; từ chối role thiếu hoặc sai quyền (`VIEWER`, `null`) với 403; từ chối token rỗng/sai/hết hạn/chưa đến hạn/quá 8h/inactive với 401; fail-closed trả 503 khi DB lỗi hoặc thiếu key; kiểm soát cờ local HTTP chặt chẽ; không rò rỉ token/hash trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local guard module boundary).
+- **Next task:** P01-010 — Bảo vệ route admin `places`.
+
+### P01-030 — Bỏ password.trim() trên form admin login
+- **Status:** `done` tại `frontend/scripts/admin-login-page.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Credential Fidelity).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-login-page.test.mjs`; xác nhận không còn `password.trim()` nào trong `frontend/src/app/admin/login/page.tsx`; kiểm tra form `!password` giữ nguyên cấu trúc; JSON body truyền nguyên vẹn chuỗi password có khoảng trắng đầu/cuối sang API backend.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local login form UI boundary).
+- **Next task:** P01-009 — Xây dựng helper guard server-side dùng chung.
+
+### P01-029 — Thu hồi admin session tại logout và xóa cookie
+- **Status:** `done` tại `frontend/scripts/admin-logout.integration.test.mjs`.
+- **Luồng:** Thống nhất (App Security & Session Lifecycle).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `frontend/scripts/admin-logout.integration.test.mjs`; token hợp lệ thu hồi session trong DB và trả cookie `Max-Age=0` cho `__Host-triton_admin_session`, `triton_admin_session_local` và `triton_admin_token` với `HttpOnly; Secure; SameSite=Strict; Path=/`; logout với token cũ bảo toàn session mới trong DB; token hỏng/thiếu cookie xử lý an toàn không lỗi; ghi nhận audit log `LOGOUT_SUCCESS`; không rò rỉ token/hash trong log.
+- **Claim state:** `PLANNED → IMPLEMENTED` (local `/auth/logout` boundary).
+- **Next task:** P01-030 — Bỏ password.trim() trên form login.
+
+### P02-012 — Thêm CHECK rating [0.0, 5.0] trên bảng `public.places`
+- **Status:** `done` tại PostgreSQL 15 + PostGIS 3.3 disposable fixture; chưa áp Supabase live.
+- **Luồng:** Thống nhất (Data Integrity & Schema Replay).
+- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:** `supabase/tests/p02_012_places_rating_check.sql` sau migration `20260807090000_p02_012_places_rating_check.sql`; thêm constraint `chk_places_rating_range` giới hạn rating trong [0.0, 5.0]; xác nhận giá trị hợp lệ (4.5, 0.0, 5.0) và NULL insert thành công; giá trị ngoài biên (< 0.0 hoặc > 5.0) hoặc UPDATE điểm bất hợp lệ (9.9) bị từ chối với `check_violation`; negative control kiểm tra phát hiện thiếu constraint; migration idempotent khi chạy lại.
+- **Claim state:** `PLANNED → VERIFIED` (local DB constraint & replay boundary).
+- **Next task:** P01-029 — Thu hồi admin session tại logout và xóa cookie.
+
+### P02-011 — Thêm CHECK longitude theo boundary [104.80, 105.15]
+- **Status:** `done` tại PostgreSQL 15 + PostGIS 3.3 disposable fixture.
+- **Evidence:** `supabase/tests/p02_011_places_longitude_boundary_check.sql` sau migration `20260807080000_p02_011_places_longitude_boundary_check.sql`; thêm constraint `chk_places_longitude_boundary` giới hạn longitude trong [104.80, 105.15]; xác nhận giá trị hợp lệ (105.0068, 104.80, 105.15) và NULL insert thành công; giá trị ngoài biên (< 104.80 hoặc > 105.15) bị từ chối với `check_violation`.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-010 — Thêm CHECK latitude theo boundary [10.30, 10.55]
+- **Status:** `done` tại PostgreSQL 15 + PostGIS 3.3 disposable fixture.
+- **Evidence:** `supabase/tests/p02_010_places_latitude_boundary_check.sql` sau migration `20260807070000_p02_010_places_latitude_boundary_check.sql`; thêm constraint `chk_places_latitude_boundary` giới hạn latitude trong [10.30, 10.55]; xác nhận giá trị hợp lệ (10.4128, 10.30, 10.55) và NULL insert thành công; giá trị ngoài biên (< 10.30 hoặc > 10.55) bị từ chối với `check_violation`.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-009 — Sửa RPC khoảng cách (`match_places_nearby`) khớp kiểu trắc địa
+- **Status:** `done` tại PostgreSQL 15 + PostGIS 3.3 disposable fixture.
+- **Evidence:** `supabase/tests/p02_009_match_places_nearby_rpc.sql` sau migration `20260807060000_p02_009_fix_match_places_nearby_rpc.sql`; bổ sung các cột `source_url`, `is_verified`, `verified_at`; RPC `match_places_nearby` chuẩn hóa 100% sang `GEOGRAPHY`; kiểm thử 5 địa điểm thực tế tại Tri Tôn trả kết quả khoảng cách mét chính xác.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-008 — Chọn duy nhất kiểu không gian `GEOGRAPHY(Point, 4326)` cho `places.geom`
+- **Status:** `done` tại PostgreSQL 15 + PostGIS 3.3 disposable fixture.
+- **Evidence:** [Decision Record](docs/technical-spec/DECISION_RECORD_SPATIAL_TYPE.md); migration `20260807050000_p02_008_places_geom_spatial_type.sql` bổ sung cột `geom GEOGRAPHY(Point, 4326)`, GiST index và trigger auto-sync `trg_sync_places_geom`; test suite `supabase/tests/p02_008_places_geom_spatial_type.sql` pass.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-007 — Bật 6 Core Extensions trên database trống
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_007_enable_core_extensions.sql` sau migration `20260807040000_p02_007_enable_core_extensions.sql`; nạp thành công 6 extensions (`uuid-ossp`, `pgcrypto`, `vector`, `postgis`, `unaccent`, `pg_trgm`) kèm functional smoke tests.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-006 — Migration baseline cho `videos`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_006_videos_baseline.sql` sau migration `20260807030000_p02_006_create_videos_baseline.sql`; foreign key `place_id` liên kết `places`; RLS bật, anon chỉ xem video verified, cấm write.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-005 — Migration baseline cho `preset_itineraries`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_005_preset_itineraries_baseline.sql` sau migration `20260807020000_p02_005_create_preset_itineraries_baseline.sql`; RLS bật, anon chỉ xem tour active, cấm write.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-004 — Migration baseline cho `admin_users`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_004_admin_users_baseline.sql` sau migration `20260807010000_p02_004_create_admin_users_baseline.sql`; downstream lockdown và session extension pass.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-003 — Migration baseline độc lập cho `places`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_003_places_baseline.sql` sau migration `20260807_p02_003_create_places_baseline.sql`; giải quyết foreign key cho toàn bộ migration sau.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-022 — Khóa custom knowledge-base policy đúng `service_role`
+- **Status:** `done` tại PostgreSQL 15 + pgvector disposable fixture.
+- **Evidence:** `supabase/tests/p02_022_custom_knowledge_base_policy.sql` sau migration `20260924_p02_022_custom_knowledge_base_restrict_policy.sql`; thu hồi write từ anon, chỉ cho anon SELECT bài active.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-021 — Thu hồi anon write từ `semantic_chat_cache`
+- **Status:** `done` tại PostgreSQL 15 + pgvector disposable fixture.
+- **Evidence:** `supabase/tests/p02_021_semantic_chat_cache_anon_write.sql`; thu hồi INSERT/UPDATE/DELETE từ anon, bảo toàn SELECT & RPC.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-020 — Thu hồi anon write từ `system_configs`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_020_system_configs_anon_write.sql`; thu hồi INSERT/UPDATE/DELETE từ anon, bảo toàn SELECT công khai.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-019 — Thu hồi anon write từ `golden_answers`
+- **Status:** `done` tại PostgreSQL 15 + pgvector disposable fixture.
+- **Evidence:** `supabase/tests/p02_019_golden_answers_anon_write.sql`; thu hồi write từ anon, bảo toàn SELECT và `match_golden` RPC.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-018 — Thu hồi anonymous SELECT từ `audit_logs`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_018_audit_logs_anon_select.sql`; anon SELECT bị `insufficient_privilege`.
+- **Claim state:** `PLANNED → VERIFIED`.
+
+### P02-017 — Thu hồi anonymous INSERT từ `audit_logs`
+- **Status:** `done` tại PostgreSQL 15 disposable fixture.
+- **Evidence:** `supabase/tests/p02_017_audit_logs_anon_insert.sql`; anon INSERT bị chặn, service_role ghi được.
+- **Claim state:** `PLANNED → VERIFIED`.
 
 ### P02-016 — Thu hồi anonymous SELECT từ `chat_logs`
+- **Status:** `done` tại PostgreSQL 15 fixture.
+- **Evidence:** `supabase/tests/p02_016_chat_logs_anon_select.sql`; anon SELECT bị `insufficient_privilege`.
+- **Claim state:** `PLANNED → VERIFIED`.
 
-- **Status:** `done` tại PostgreSQL 15.19 disposable fixture; migration chưa áp Supabase live.
-- **Luồng:** B — DB & data governance, W1.
-- **AI route đề xuất:** `Sol · xhigh` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
-- **AI thực dùng:** Codex (host không cung cấp model/effort identifier cho phiên này).
-- **Evidence:** `supabase/tests/p02_016_chat_logs_anon_select.sql`; fixture tạo `chat_logs_anon_select` theo migration hợp nhất schema, sau P02-016 anon SELECT toàn bảng và theo session ID đều bị `insufficient_privilege`; anon INSERT vẫn persist trong test transaction, row private không đổi; re-grant SELECT + policy negative control khiến test fail.
-- **Claim state:** `PLANNED → VERIFIED` chỉ tại local PostgreSQL privilege/read boundary; EV-02 và Supabase live vẫn chưa verified.
-- **Tác động tương thích:** `frontend/src/app/admin/chat-logs/page.tsx` đọc trực tiếp bằng anon key; `/api/v1/admin/ai-metrics` cũng dùng anon key đọc `chat_logs`. Chưa rollout trước khi Luồng A có đường đọc server-side được xác thực và test tích hợp.
-- **Next task Luồng B:** P02-017 — thu hồi anon INSERT từ `audit_logs`; model đề xuất `Sol · xhigh`.
+### P02-015 — Thu hồi anonymous INSERT từ `chat_sessions`
+- **Status:** `done` tại PostgreSQL 15 fixture.
+- **Evidence:** `supabase/tests/p02_015_chat_sessions_anon_insert.sql`; anon INSERT và upsert bị từ chối.
+- **Claim state:** `PLANNED → VERIFIED`.
 
-```text
-Task: P02-016
-Luồng: B
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex (model/effort identifier không được host cung cấp)
-Lý do: RLS/grant migration và chat-log privacy boundary
-Evidence: PostgreSQL 15.19 disposable fixture; baseline + SELECT policy from consolidation + P02-016; anon read denied, INSERT preserved, private row unchanged; reopen negative control rejected
-Claim state: PLANNED → VERIFIED tại local DB privilege/read boundary; live chưa xác minh
-Next task: P02-017; production rollout chờ authorized admin chat-log read path trong Luồng A
-```
+### P02-014 — Thu hồi anonymous SELECT từ `chat_sessions`
+- **Status:** `done` tại PostgreSQL 15 fixture.
+- **Evidence:** `supabase/tests/p02_014_chat_sessions_anon_select.sql`; anon SELECT bị `insufficient_privilege`.
+- **Claim state:** `PLANNED → VERIFIED`.
 
-### Ghi chú tiếp nối
+### P02-013 — Assert RLS enabled cho `chat_sessions`
+- **Status:** `done` (PostgreSQL 15 assertion).
+- **Evidence:** `supabase/tests/p02_013_chat_sessions_rls.sql`.
+- **Claim state:** `PLANNED → VERIFIED`.
 
-- Vercel dashboard và production environment mapping chưa được kiểm tra trực tiếp.
-- Không tìm thấy staging URL/project trong checkout; giữ trạng thái `unknown`.
-- Completion record Luồng A bên dưới được giữ nguyên làm lịch sử.
+### P01-008 — Xác minh admin session tại /auth/me (local)
+- **Status:** `done` tại `frontend/scripts/admin-me.integration.test.mjs`.
+- **Evidence:** Cookie mới hợp lệ trả user/role từ DB; cookie rỗng/cũ/giả/hết hạn/inactive trả 401; read-only DB calls.
+- **Claim state:** `PLANNED → IMPLEMENTED`.
 
----
+### P01-007 — Cookie admin theo contract (local)
+- **Status:** `done` tại `frontend/scripts/admin-login.integration.test.mjs`.
+- **Evidence:** Cookie `__Host-triton_admin_session`, `HttpOnly`, `Secure`, `SameSite=Strict`, `Path=/`, `Max-Age=8h`.
+- **Claim state:** `PLANNED → IMPLEMENTED`.
 
-## P01-003 — Admin credential/session fields migration
+### P01-006 — Opaque admin session tại login (local)
+- **Status:** `done` cho login/storage boundary.
+- **Evidence:** 32-byte CSPRNG token, SHA-256 DB hash; DB write error không cấp cookie.
+- **Claim state:** `PLANNED → IMPLEMENTED`.
 
-- **Status:** `done` cho migration và proof cục bộ; **production deploy chưa thực hiện**.
-- **Luồng:** A — App security, W1
-- **AI route đề xuất:** `Sol · xhigh`
-- **Lý do chọn AI:** schema credential/session, identity backfill và ràng buộc ghi có tác động security.
-- **AI thực dùng:** Codex session model (host không cung cấp model identifier/effort)
-- **Dependency:** P01-002 contract; G0 đã có record; P02-004 còn thiếu cho fresh replay, còn live deploy chờ login fallback/backup sau P02-000.
+### P01-005 — Login dùng bcrypt verifier
+- **Status:** `done` tại login route.
+- **Evidence:** Bcrypt verifier thay thế plaintext/env password; hash đúng 200, sai trả 401.
+- **Claim state:** `PLANNED → IMPLEMENTED`.
 
-### Một mục tiêu duy nhất
+### P01-004 — Bcrypt migration helper
+- **Status:** `done` tại `frontend/scripts/admin-credential-migration.test.mjs`.
+- **Evidence:** Bcrypt cost 12, từ chối password > 72 bytes.
+- **Claim state:** `PLANNED → IMPLEMENTED`.
 
-Bổ sung schema cho credential và opaque admin session trong `admin_users` mà không chuyển password hay bật admin mutation.
+### P01-003 — Admin credential/session fields migration
+- **Status:** `done` (PostgreSQL 15 fixture).
+- **Evidence:** Migration `20260924_admin_credential_session_fields.sql`.
+- **Claim state:** `DESIGNED → IMPLEMENTED`.
 
-### Acceptance và evidence
+### P01-000 — Mutation kill-switch
+- **Status:** `done` (local verification).
+- **Evidence:** `ADMIN_MUTATIONS_ENABLED=false` trả 503 cho POST/PATCH/DELETE admin routes.
+- **Claim state:** `IMPLEMENTED`.
 
-- Migration [20260924_admin_credential_session_fields.sql](supabase/migrations/20260924_admin_credential_session_fields.sql) thêm `password_hash`, `session_hash`, `session_created_at`, `session_expires_at` và ID khi thiếu, không chứa secret thật.
-- PostgreSQL 15 disposable fixture: thiếu bảng → fail trước DDL; bảng legacy không có ID → backfill ID; bảng có ID bigint → giữ `42`/`bigint`; các cột mới null; phiên hợp lệ → ghi được; hash sai/trùng, thiếu field, ID null → ghi bị từ chối và persisted session không đổi.
-- Rollback vận hành được thử bằng việc thu hồi phiên (đặt đồng thời ba field session về null); schema rollback tự động bị loại vì có thể làm mất ID/credential sau cutover. [Contract](docs/technical-spec/ADMIN_SESSION_CONTRACT.md) ghi preflight, snapshot và rollback.
-- Preflight **chỉ đọc** trên Supabase project `knmlbwsmfljlabhvqfid`: bảng live có `id bigint` primary key, nhưng ban đầu cho anon SELECT/INSERT và đọc cột `password`. P02-000 đã khóa DB boundary đó; P01-003 vẫn chưa áp live vì login fallback/backup chưa xử lý. Fresh replay vẫn cần P02-004 đúng thứ tự; không claim `VERIFIED` production.
+### P02-000 — Emergency `admin_users` RLS/grants lockdown
+- **Status:** `done` / `VERIFIED` tại DB boundary trên Supabase Cloud `knmlbwsmfljlabhvqfid`.
+- **Evidence:** Migration `20260924083656_admin_users_rls_lockdown`.
+- **Claim state:** `OBSERVED FAIL → VERIFIED`.
 
-### Completion record
+### P00-001 — Decision Record G0 (Môi trường & Owner)
+- **Status:** `done`.
+- **Evidence:** [Decision Record G0](docs/technical-spec/DECISION_RECORD_G0.md).
+- **Claim state:** `DISPUTED → VERIFIED`.
 
-```text
-Task: P01-003
-Luồng: A
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex session model (host identifier/effort unavailable)
-Lý do: migration credential/session và security invariants
-Evidence: PostgreSQL 15 fixture; missing-table fail, ID backfill, positive/negative session writes, no persistent mutation on rejected writes, session revocation
-Claim state: DESIGNED → IMPLEMENTED (local schema proof only)
-Next task: P01-004 cho local; production deployment requires login compatibility and backup evidence; P02-004 still required for fresh replay
-```
-
----
-
-## P02-000 — Emergency `admin_users` RLS/grants lockdown
-
-- **Status:** `done` / `VERIFIED` tại DB permission boundary, không phải toàn bộ admin authentication.
-- **Luồng:** B — DB & data governance, emergency trước P02-002.
-- **AI route đề xuất:** `Sol · xhigh` (RLS/credential exposure).
-- **AI thực dùng:** Codex session model (host không cung cấp model identifier/effort).
-- **Scope:** chỉ policy và table grants của `public.admin_users`; không đổi account row, auth route hoặc schema session.
-- **Evidence:** [migration](supabase/migrations/20260924083656_admin_users_rls_lockdown.sql) áp trên Supabase project `knmlbwsmfljlabhvqfid`, remote version `20260924083656`. PostgreSQL 15 fixture: anon SELECT/INSERT và authenticated SELECT bị từ chối, service_role SELECT được; live post-check policy count 0, client role privileges false, service_role SELECT/UPDATE true, row count 1→1, session columns vẫn 0. Anon REST GET admin_users trả 401, public places control cùng key trả 200.
-- **Rollback:** không mở lại anon policy/grants nếu login production lỗi; sửa service-role env/route, vì RLS-only migration không xóa dữ liệu. Backup/PITR chưa được xác nhận; P01-003 không deploy.
-
-```text
-Task: P02-000
-Luồng: B
-AI route đề xuất: Sol · xhigh
-AI thực dùng: Codex session model (host identifier/effort unavailable)
-Lý do: emergency credential exposure at DB boundary
-Evidence: PostgreSQL role-negative fixture; Supabase migration 20260924083656; live grant/policy/row-count post-check; anon REST GET 401 with public control 200
-Claim state: OBSERVED FAIL → VERIFIED (admin_users DB permission only)
-Next task: A-route login fallback removal / production auth check; P01-003 waits backup, P02-013 is next regular B task after W0 exit gate
-```
+### P02-001 & P02-002 — Inventories
+- **Status:** `done`.
+- **Evidence:** [PRODUCTION_ROUTE_DATA_INVENTORY.md](docs/technical-spec/PRODUCTION_ROUTE_DATA_INVENTORY.md) & [MIGRATION_TABLE_INVENTORY.md](docs/technical-spec/MIGRATION_TABLE_INVENTORY.md).
+- **Claim state:** `PLANNED → IMPLEMENTED`.

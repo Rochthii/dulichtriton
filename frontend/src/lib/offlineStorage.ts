@@ -23,9 +23,9 @@ export interface OfflinePlaceRecord {
 const CACHE_KEY = 'triton_offline_mountain_cache';
 
 export const EMERGENCY_CONTACTS = [
-  { name: 'Công An Tri Tôn (Trực ban 24/7)', phone: '0296.3874.113' },
-  { name: 'Cấp Cứu Y Tế Trung Tâm Tri Tôn', phone: '0296.3874.115' },
-  { name: 'Đội Cứu Hộ Đèo Núi Cô Tô', phone: '0296.3874.222' },
+  { name: 'Công An Huyện Tri Tôn (Trực ban 24/7)', phone: '0296.3874.113', owner: 'Công an Huyện Tri Tôn', source_url: 'https://triton.angiang.gov.vn' },
+  { name: 'Cấp Cứu Y Tế Trung Tâm Tri Tôn', phone: '0296.3874.115', owner: 'Trung tâm Y tế Huyện Tri Tôn', source_url: 'https://triton.angiang.gov.vn' },
+  { name: 'UBND Huyện Tri Tôn (Đường dây nóng)', phone: '0296.3874.114', owner: 'UBND Huyện Tri Tôn', source_url: 'https://triton.angiang.gov.vn' },
 ];
 
 /**

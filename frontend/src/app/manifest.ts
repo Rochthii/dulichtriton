@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Du Lịch Tri Tôn - Cẩm Nang & Bản Đồ AI Bảy Núi',
     short_name: 'Du Lịch Tri Tôn',
-    description: 'Nền tảng du lịch thông minh, các điểm thực tế, 35 lịch trình và Trợ lý AI Bảy Núi An Giang.',
+    description: 'Nền tảng du lịch thông minh, 149 điểm thực tế, 35 lịch trình và Trợ lý AI Bảy Núi An Giang.',
     start_url: '/',
     display: 'standalone',
     background_color: '#FAF3E7',

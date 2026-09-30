@@ -10,11 +10,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://knmlbwsmfljlabhvqfid.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
 
 interface CacheEntry {
   value: string;
@@ -40,16 +36,19 @@ export async function getDynamicSystemConfig(
   }
 
   try {
-    const { data, error } = await supabase
-      .from('system_configs')
-      .select('value')
-      .eq('key', configKey)
-      .single();
+    const supabase = getSupabaseServerClient() || getSupabaseAnonServerClient();
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('system_configs')
+        .select('value')
+        .eq('key', configKey)
+        .single();
 
-    if (!error && data?.value) {
-      const valStr = typeof data.value === 'string' ? data.value : JSON.stringify(data.value);
-      configCache.set(configKey, { value: valStr, fetchedAt: now });
-      return valStr;
+      if (!error && data?.value) {
+        const valStr = typeof data.value === 'string' ? data.value : JSON.stringify(data.value);
+        configCache.set(configKey, { value: valStr, fetchedAt: now });
+        return valStr;
+      }
     }
   } catch (e) {
     console.warn(`[SystemConfig] Failed to fetch '${configKey}':`, e);

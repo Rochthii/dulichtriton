@@ -50,7 +50,7 @@
 
 ## Unique Differentiators (Điểm Khác Biệt Độc Bản)
 1. Phong cách thiết kế **"Folk-Modern Bảy Núi"** độc bản, nhận diện đặc trưng Tri Tôn, An Giang.
-2. địa điểm sạch xác minh thực địa kèm tem dấu "ĐÃ XÁC MINH THỰC ĐỊA".
+2. 149 địa điểm sạch xác minh thực địa kèm tem dấu "ĐÃ XÁC MINH THỰC ĐỊA".
 3. Trợ lý AI tích hợp **Google Search Grounding** tìm kiếm thông tin thời gian thực 0đ trên Internet.
 4. Hệ thống **Single Master Cache** 0ms tiết kiệm 99% tài nguyên Database.
 5. Lịch trình Metro-line tự vẽ & Thẻ lịch trình Ticket-stub dạng vé độc đáo có thể xuất PDF & QR.

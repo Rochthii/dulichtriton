@@ -15,15 +15,15 @@ interface AuditLog {
 }
 
 interface AuditLogsModalProps {
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose: () => void;
   logs: AuditLog[];
   loading: boolean;
-  onRefresh?: () => void;
+  onRefresh: () => void;
 }
 
 export const AuditLogsModal: React.FC<AuditLogsModalProps> = ({
-  isOpen = true,
+  isOpen,
   onClose,
   logs,
   loading,
@@ -32,7 +32,7 @@ export const AuditLogsModal: React.FC<AuditLogsModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in font-body">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
       <div className="bg-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 max-h-[85vh] flex flex-col justify-between">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -41,26 +41,22 @@ export const AuditLogsModal: React.FC<AuditLogsModalProps> = ({
               <Database className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-slate-800 text-base font-display">
-                Nhật Ký Kiểm Toán Hệ Thống (Audit Logs)
-              </h3>
+              <h3 className="font-extrabold text-slate-800 text-lg">Nhật Ký Kiểm Toán (Immutable Audit Logs)</h3>
               <p className="text-xs text-slate-500 font-medium">
-                Ghi nhận chi tiết mọi thao tác Thêm, Sửa, Xóa và Đồng bộ dữ liệu
+                Ghi vết toàn bộ hành động Quản trị viên (Ai làm gì, vào thời điểm nào)
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {onRefresh && (
-              <button
-                type="button"
-                onClick={onRefresh}
-                disabled={loading}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all cursor-pointer"
-                title="Làm mới nhật ký"
-              >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={onRefresh}
+              disabled={loading}
+              className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 transition-all cursor-pointer"
+              title="Làm mới nhật ký"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            </button>
             <button
               onClick={onClose}
               type="button"
@@ -71,48 +67,54 @@ export const AuditLogsModal: React.FC<AuditLogsModalProps> = ({
           </div>
         </div>
 
-        {/* Content Table */}
-        <div className="py-4 overflow-y-auto max-h-[50vh]">
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto py-4 space-y-3">
           {loading ? (
-            <div className="py-12 text-center text-slate-400 text-xs font-medium">
-              <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-slate-300" />
-              Đang tải nhật ký kiểm toán...
+            <div className="text-center py-12">
+              <RefreshCw className="w-8 h-8 animate-spin text-slate-400 mx-auto mb-2" />
+              <p className="text-xs text-slate-500 font-bold">Đang tải nhật ký kiểm toán...</p>
             </div>
           ) : logs.length === 0 ? (
-            <div className="py-12 text-center text-slate-400 text-xs font-medium">
-              Chưa có bản ghi kiểm toán nào được tạo.
+            <div className="text-center py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+              <FileText className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+              <p className="text-xs text-slate-500">Chưa có bản ghi nhật ký kiểm toán nào.</p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-100">
-              {logs.map((log) => (
-                <div key={log.id} className="py-3 flex items-start justify-between gap-4 text-xs">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-800 font-display">{log.user_name || 'Admin'}</span>
-                      <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-mono text-[10px]">
-                        {log.action}
-                      </span>
-                    </div>
-                    <p className="text-slate-500 text-[11px]">
-                      Loại tài nguyên: <strong className="text-slate-700">{log.resource_type}</strong>
-                      {log.resource_id && ` (ID: ${log.resource_id})`}
-                    </p>
+            logs.map((log) => (
+              <div
+                key={log.id}
+                className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs flex items-start justify-between gap-4"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-slate-800">{log.user_name}</span>
+                    <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {log.action}
+                    </span>
+                    <span className="text-slate-400 text-[11px]">
+                      {new Date(log.created_at).toLocaleString('vi-VN')}
+                    </span>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-mono shrink-0">
-                    {new Date(log.created_at).toLocaleString('vi-VN')}
-                  </span>
+                  <p className="text-slate-600 font-medium">
+                    Tài nguyên: <code className="bg-slate-200/70 px-1 py-0.5 rounded text-[11px]">{log.resource_type}</code> / {log.resource_id}
+                  </p>
+                  {log.details && (
+                    <div className="text-[11px] text-slate-500 font-mono bg-white p-2 rounded-xl border border-slate-200 mt-1 max-h-24 overflow-y-auto">
+                      {JSON.stringify(log.details)}
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end pt-4 border-t border-slate-100 font-display">
+        <div className="pt-3 border-t border-slate-100 text-right">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all cursor-pointer"
           >
             Đóng
           </button>
