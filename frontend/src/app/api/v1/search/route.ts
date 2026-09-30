@@ -3,7 +3,7 @@ import localMasterPois from '@/data/triton_pois_full.json';
 import { getOrSetServerCache, EDGE_CACHE_HEADERS } from '@/lib/serverCache';
 import { getSupabaseServerClient, getSupabaseAnonServerClient } from '@/lib/serverSupabase';
 import { buildSafeOrIlikeFilter } from '@/lib/postgrestFilterSanitizer';
-import { resolveVerificationMetadata } from '@/lib/placeVerificationGuard';
+import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
 
 export const dynamic = 'force-dynamic';
 
@@ -76,6 +76,8 @@ export async function GET(req: NextRequest) {
             .from('places')
             .select('id, slug, name, category, tourism_category, commune, rating, image_url, description, is_hot, is_verified, verification_status, verified_at')
             .eq('is_active', true)
+            .eq('is_verified', true)
+            .eq('verification_status', 'VERIFIED')
             .order('rating', { ascending: false })
             .limit(20);
 
@@ -90,8 +92,9 @@ export async function GET(req: NextRequest) {
           }
         }
 
-        // Merge DB data with local master POIs to guarantee unaccented search coverage
-        const pool: any[] = (dbData && dbData.length > 0) ? dbData : (localMasterPois as any[]);
+        // Merge DB data with local master POIs, enforcing VERIFIED only on the search pool (P04-010)
+        const rawPool: any[] = (dbData && dbData.length > 0) ? dbData : (localMasterPois as any[]);
+        const pool: any[] = filterVerifiedRetrievalPlaces(rawPool);
         
         // Match both with original and unaccented terms
         const filtered = pool.filter((p) => {

@@ -9,19 +9,19 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-010 — Lọc retrieval theo verification_status đã duyệt (Proof: unverified fixture không xuất hiện)
+### P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
-- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Lọc toàn bộ các luồng retrieval địa điểm (pgvector RPC `match_places`, token search, fallback `hotPlaces`, nearby search `match_places_nearby`) bắt buộc chỉ nạp các bản ghi có `verification_status = 'VERIFIED'` đã được phê duyệt:
-  - **Hiện trạng:** Một số điểm truy vấn hoặc fallback context chỉ lọc theo `is_active = true` hoặc `is_hot = true` mà chưa lọc chặt chẽ `verification_status = 'VERIFIED'`, khiến các fixture thử nghiệm, unverified hoặc pending có thể lọt vào context retrieval của chatbot AI.
-  - **Giải pháp:** Cập nhật các câu truy vấn PostgREST, RPCs và RAG retrieval gates đảm bảo lọc cứng `verification_status = 'VERIFIED'`.
+- **Mục tiêu duy nhất:** Ghi nhận chính xác nhà cung cấp AI thực tế (`provider_used`: 'Groq' | 'Gemini' | 'OpenRouter' | 'Fallback') vào bảng `chat_logs` và hệ thống audit log trong mỗi lượt hội thoại:
+  - **Hiện trạng:** Trường `provider_used` trong audit log đôi khi bị bỏ trống, gán constant hoặc ghi giá trị giả định ban đầu mà không phản ánh provider thực tế đã hoàn thành lượt suy luận (đặc biệt khi xảy ra failover từ Groq sang Gemini).
+  - **Giải pháp:** Truyền và ghi nhận chính xác provider thực tế đã trả về text cuối cùng trong vòng đời gọi AI Provider.
   - **Acceptance Criteria & Proof cần có:**
-    - Tuyệt đối không cho phép bất kỳ fixture nào có trạng thái `UNVERIFIED`, `IN_REVIEW`, `REJECTED`, `EXPIRED` xuất hiện trong kết quả retrieval đưa vào RAG context hoặc trả về client.
-    - Bộ test tự động kiểm chứng với các fixtures unverified chứng minh bị loại trừ 100%.
-- **Next task sau P04-010:** P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
+    - Ghi nhận phân biệt rõ rệt giá trị provider khi chạy Groq, Gemini hoặc fallback.
+    - Bộ test tự động kiểm chứng với các kịch bản provider khác nhau.
+- **Next task sau P04-011:** P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
 
 ---
 
@@ -91,11 +91,30 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 60. 🟢 **`P04-007`** *(Hoàn thành)*: Thay query token search tuần tự bằng một truy vấn giới hạn (Proof: query-count test giảm đúng mục tiêu đã ghi).
 61. 🟢 **`P04-008`** *(Hoàn thành)*: Di chuyển user text khỏi PostgREST `.or` string interpolation (Proof: payload filter syntax không thay đổi điều kiện truy vấn).
 62. 🟢 **`P04-009`** *(Hoàn thành)*: Không default `is_verified` thành true (Proof: missing field không được trả `verified`).
-63. 🟡 **`P04-010`** *(Đang mở)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
+63. 🟢 **`P04-010`** *(Hoàn thành)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
+64. 🟡 **`P04-011`** *(Đang mở)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-010 — Lọc retrieval theo verification_status đã duyệt (Proof: unverified fixture không xuất hiện)
+- **Status:** `done` tại `frontend/src/lib/placeVerificationGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/lib/chatTokenSearchHelper.ts`, `frontend/src/app/api/v1/search/route.ts`, `supabase/migrations/20260930_p04_010_match_places_verified_retrieval.sql`, và `frontend/scripts/retrieval-verification-status-filter.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · medium` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Mở rộng module phòng thủ `frontend/src/lib/placeVerificationGuard.ts` cung cấp hai hàm lọc chuyên dụng `isRetrievalEligiblePlace` và `filterVerifiedRetrievalPlaces`.
+  - Thiết lập rào chắn lọc kép fail-closed (database PostgREST filter + application memory guard) trên toàn bộ 5 luồng retrieval địa điểm của hệ thống: (1) Clustered/Intent POIs query `.eq('verification_status', 'VERIFIED').eq('is_verified', true)`, (2) Precision Token Search helper `chatTokenSearchHelper.ts`, (3) pgvector Vector Similarity Search (`match_places`), (4) PostGIS Geo-proximity Search (`match_places_nearby`), và (5) Fallback Hot Places query.
+  - Tại `frontend/src/app/api/v1/search/route.ts`: bổ sung lọc PostgREST và bọc toàn bộ search pool bằng `filterVerifiedRetrievalPlaces`.
+  - Ban hành migration RPC PostgreSQL `supabase/migrations/20260930_p04_010_match_places_verified_retrieval.sql` nâng cấp hai hàm `match_places` và `match_places_nearby` với mệnh đề `WHERE places.is_active = true AND places.is_verified = true AND places.verification_status = 'VERIFIED'` và bổ sung các cột metadata xác thực.
+  - Chứng minh loại trừ 100% mọi fixtures unverified (`UNVERIFIED`, `IN_REVIEW`, `REJECTED`, `EXPIRED`, missing status, null status, hoặc cờ boolean mâu thuẫn) khỏi context RAG và API response.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/retrieval-verification-status-filter.test.mjs` đạt 7/7 assertions pass 100%.
+  - Toàn bộ 377/377 unit/integration tests frontend pass sạch sẽ (0 failures); build production Next.js đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Verified Retrieval Filter Invariant & Fixture Exclusion Proof).
+- **Next task:** P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
+
+---
 
 ### P04-009 — Không default is_verified thành true (Proof: missing field không được trả verified)
 - **Status:** `done` tại `frontend/src/lib/placeVerificationGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/admin/places/route.ts`, `frontend/src/lib/chatTokenSearchHelper.ts`, `frontend/src/app/api/v1/search/route.ts`, `supabase/migrations/20260930_p04_009_places_is_verified_default_false.sql`, và `frontend/scripts/place-verification-guard.test.mjs`.

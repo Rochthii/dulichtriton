@@ -6,6 +6,7 @@
  */
 
 import { buildSafeMultiTermOrFilter } from '@/lib/postgrestFilterSanitizer';
+import { filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
 
 export const STOP_WORDS = new Set([
   'ở', 'đâu', 'có', 'gì', 'đẹp', 'nào', 'ngon', 'mấy', 'giờ', 'bao', 'nhiêu',
@@ -103,6 +104,8 @@ export async function executeBoundedTokenSearch(
     const { data, error } = await supabase
       .from('places')
       .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours, is_verified, verification_status, verified_at, source_url')
+      .eq('is_verified', true)
+      .eq('verification_status', 'VERIFIED')
       .or(orFilter)
       .limit(limit);
 
@@ -111,7 +114,7 @@ export async function executeBoundedTokenSearch(
       return [];
     }
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data) ? filterVerifiedRetrievalPlaces(data) : [];
   } catch (err) {
     console.warn('[TokenSearch] Unexpected query error:', err);
     return [];

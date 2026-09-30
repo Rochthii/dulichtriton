@@ -11,7 +11,7 @@ import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
 import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
 import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
-import { resolveVerificationMetadata } from '@/lib/placeVerificationGuard';
+import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -460,17 +460,19 @@ export async function POST(req: NextRequest) {
     if (targetPoiIds.length > 0 && supabase) {
       const { data: clusteredPlaces } = await supabase
         .from('places')
-        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours')
-        .in('id', targetPoiIds);
+        .select('id, slug, name, commune, category, rating, image_url, description, golden_time_windows, price_level, opening_hours, is_verified, verification_status, verified_at, source_url')
+        .in('id', targetPoiIds)
+        .eq('is_verified', true)
+        .eq('verification_status', 'VERIFIED');
       if (clusteredPlaces) {
-        clusteredPlaces.forEach(p => placesMap.set(p.id, p));
+        filterVerifiedRetrievalPlaces(clusteredPlaces).forEach(p => placesMap.set(p.id, p));
       }
     }
 
-    // 1. Precision POI matching via single bounded token search (P04-007)
+    // 1. Precision POI matching via single bounded token search (P04-007, P04-010)
     if (supabase) {
       const tokenMatches = await executeBoundedTokenSearch(supabase, lowerQuery, { maxTerms: 6, limit: 8 });
-      tokenMatches.forEach((p: any) => {
+      filterVerifiedRetrievalPlaces(tokenMatches).forEach((p: any) => {
         if (!placesMap.has(p.id)) placesMap.set(p.id, p);
       });
     }
@@ -486,7 +488,7 @@ export async function POST(req: NextRequest) {
         match_count: 5,
       });
       if (vectorMatches) {
-        vectorMatches.forEach((p: any) => {
+        filterVerifiedRetrievalPlaces(vectorMatches).forEach((p: any) => {
           if (!placesMap.has(p.id)) placesMap.set(p.id, p);
         });
       }
@@ -516,13 +518,13 @@ export async function POST(req: NextRequest) {
         match_count: 4
       });
       if (nearbyPlaces) {
-        nearbyPlaces.forEach((p: any) => {
+        filterVerifiedRetrievalPlaces(nearbyPlaces).forEach((p: any) => {
           if (!placesMap.has(p.id)) placesMap.set(p.id, p);
         });
       }
     }
 
-    let places = Array.from(placesMap.values()).slice(0, 6);
+    let places = filterVerifiedRetrievalPlaces(Array.from(placesMap.values())).slice(0, 6);
 
     let ragContext = '';
     const formattedPlaces: any[] = [];
@@ -583,19 +585,22 @@ export async function POST(req: NextRequest) {
         });
       });
     } else {
-      // Fetch top 3 hot places as fallback context
+      // Fetch top 3 hot places as fallback context (P04-010: strictly VERIFIED only)
       if (supabase) {
         const { data: hotPlaces } = await supabase
           .from('places')
           .select('id, slug, name, commune, category, rating, image_url, golden_time_windows, price_level, opening_hours, description, source_url, is_verified, verification_status, verified_at')
           .eq('is_hot', true)
+          .eq('is_verified', true)
+          .eq('verification_status', 'VERIFIED')
           .limit(3);
 
-        if (hotPlaces) {
-          ragContext = hotPlaces
+        const verifiedHotPlaces = filterVerifiedRetrievalPlaces(hotPlaces || []);
+        if (verifiedHotPlaces.length > 0) {
+          ragContext = verifiedHotPlaces
             .map((p) => `- [ID: ${p.id}] ${p.name} (Thuộc Xã/Thị trấn ${p.commune}): Thể loại ${p.category}. Nguồn xác minh: ${p.source_url || 'https://maps.google.com'}. Mô tả: ${p.description || ''}`)
             .join('\n');
-          hotPlaces.forEach((p) => {
+          verifiedHotPlaces.forEach((p) => {
             const evidence = generateEvidenceLinks(p.name, p.commune);
             const vMeta = resolveVerificationMetadata(p);
             formattedPlaces.push({

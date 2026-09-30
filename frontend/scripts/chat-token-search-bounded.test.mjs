@@ -28,6 +28,9 @@ function loadModule(filePath) {
     if (id.includes('postgrestFilterSanitizer')) {
       return loadModule(path.resolve(__dirname, '../src/lib/postgrestFilterSanitizer.ts'));
     }
+    if (id.includes('placeVerificationGuard')) {
+      return loadModule(path.resolve(__dirname, '../src/lib/placeVerificationGuard.ts'));
+    }
     return require(id);
   };
 
@@ -142,29 +145,31 @@ test('P04-007: Single Bounded POI Token Search Invariant & Query-Count Proof', a
     let capturedLimit = null;
 
     const mockPlacesData = [
-      { id: 'PL001', name: 'Đỉnh Núi Cô Tô', commune: 'Xã Cô Tô', category: 'Thắng cảnh' },
-      { id: 'FD009', name: 'Cháo Bò Bảy Núi', commune: 'Xã Châu Lăng', category: 'Ẩm thực' },
+      { id: 'PL001', name: 'Đỉnh Núi Cô Tô', commune: 'Xã Cô Tô', category: 'Thắng cảnh', is_verified: true, verification_status: 'VERIFIED' },
+      { id: 'FD009', name: 'Cháo Bò Bảy Núi', commune: 'Xã Châu Lăng', category: 'Ẩm thực', is_verified: true, verification_status: 'VERIFIED' },
     ];
 
     const spySupabase = {
       from(table) {
         assert.equal(table, 'places', 'Must query places table');
-        return {
+        const queryBuilder = {
           select(fields) {
-            return {
-              or(filterStr) {
-                capturedFilter = filterStr;
-                return {
-                  async limit(limitNum) {
-                    singleBoundedQueryCount++;
-                    capturedLimit = limitNum;
-                    return { data: mockPlacesData, error: null };
-                  },
-                };
-              },
-            };
+            return queryBuilder;
+          },
+          eq(col, val) {
+            return queryBuilder;
+          },
+          or(filterStr) {
+            capturedFilter = filterStr;
+            return queryBuilder;
+          },
+          async limit(limitNum) {
+            singleBoundedQueryCount++;
+            capturedLimit = limitNum;
+            return { data: mockPlacesData, error: null };
           },
         };
+        return queryBuilder;
       },
     };
 
@@ -215,19 +220,21 @@ test('P04-007: Single Bounded POI Token Search Invariant & Query-Count Proof', a
   await t.test('5. Robustness: Supabase error degrades gracefully to empty array', async () => {
     const errorSupabase = {
       from() {
-        return {
+        const queryBuilder = {
           select() {
-            return {
-              or() {
-                return {
-                  async limit() {
-                    return { data: null, error: { message: 'Database connection timeout' } };
-                  },
-                };
-              },
-            };
+            return queryBuilder;
+          },
+          eq() {
+            return queryBuilder;
+          },
+          or() {
+            return queryBuilder;
+          },
+          async limit() {
+            return { data: null, error: { message: 'Database connection timeout' } };
           },
         };
+        return queryBuilder;
       },
     };
 

@@ -78,3 +78,25 @@ export function sanitizePlaceVerification<T extends Record<string, unknown>>(pla
     ...meta,
   };
 }
+
+/**
+ * P04-010: Strict predicate for Chatbot RAG / Search retrieval eligibility.
+ * A retrieval candidate MUST have verification_status === 'VERIFIED' AND is_verified === true.
+ * Any candidate that is UNVERIFIED, IN_REVIEW, REJECTED, EXPIRED, missing status,
+ * or has is_verified !== true is strictly rejected.
+ */
+export function isRetrievalEligiblePlace(record: unknown): boolean {
+  if (!record || typeof record !== 'object') return false;
+  const p = record as Record<string, unknown>;
+  return p.verification_status === 'VERIFIED' && p.is_verified === true;
+}
+
+/**
+ * P04-010: Filters an array of place candidates to ONLY approved VERIFIED places.
+ * Guarantees 0% leakage of unverified fixtures into RAG context or retrieval responses.
+ */
+export function filterVerifiedRetrievalPlaces<T extends Record<string, unknown>>(places: T[]): T[] {
+  if (!Array.isArray(places)) return [];
+  return places.filter(isRetrievalEligiblePlace);
+}
+
