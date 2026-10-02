@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass)
+### P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng endpoint hoặc workflow cho phép chủ sở hữu phiên (`session_id` + `session_token`) xóa chủ động dữ liệu phiên của chính mình (Right to Erasure / Immediate Erasure), có kiểm thực quyền sở hữu (ownership authentication test pass), ngăn chặn kẻ khác xóa trái phép.
-- **Next task sau P05-005:** P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
+- **Mục tiêu duy nhất:** Rà soát và chuẩn hóa câu thông báo quyền riêng tư (Privacy Notice) liên quan đến nơi lưu trữ và vòng đời của phiên hội thoại (`chat_sessions` lưu tại Supabase DB với TTL 24h và quyền xóa chủ động P05-005), bảo đảm nội dung hiển thị khớp 100% với hành vi code thực tế (Code Behavior Concordance Proof).
+- **Next task sau P05-006:** P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
 
 ---
 
@@ -104,11 +104,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 78. 🟢 **`P05-002`** *(Hoàn thành)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
 79. 🟢 **`P05-003`** *(Hoàn thành)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
 80. 🟢 **`P05-004`** *(Hoàn thành)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
-81. 🟡 **`P05-005`** *(Đang mở)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
+81. 🟢 **`P05-005`** *(Hoàn thành)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
+82. 🟡 **`P05-006`** *(Đang mở)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass)
+- **Status:** `done` tại `frontend/src/lib/chatSessionDeletionService.ts`, `frontend/src/app/api/v1/chat/session/route.ts`, và `frontend/scripts/chat-session-deletion.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module nghiệp vụ `chatSessionDeletionService.ts` (`executeChatSessionDeletion`) thực thi quyền được lãng quên / xóa bỏ dữ liệu tức thì (Right to Erasure / Immediate Erasure) theo Nghị định 13/2023/NĐ-CP và Decision Record G3, kiểm thực tính hợp lệ của UUID v4 (`validateSessionId`) và chữ ký mật mã HMAC-SHA256 (`verifySessionOwnershipToken`) trước khi cho phép thao tác xóa trên database.
+  - Xây dựng REST API endpoint `DELETE /api/v1/chat/session` (`frontend/src/app/api/v1/chat/session/route.ts`) hỗ trợ nhận diện phiên qua Query Params (`sessionId`/`session_id`) hoặc JSON Body, trích xuất token sở hữu qua đa kênh (`x-chat-session-token` header, `triton_chat_session_token` cookie, hoặc `session_token` body), và tự động xóa bỏ cookie phiên khi hoàn tất xóa thành công.
+  - Chứng minh bằng chứng thực tế (Proof):
+    1. Chủ sở hữu hợp pháp (Alice) với đúng UUID v4 và HMAC token xóa thành công phiên hội thoại của mình, trả về 200 OK và bản ghi bị xóa sạch 100% khỏi cơ sở dữ liệu (`chat_sessions`).
+    2. Kẻ tấn công mang token giả mạo/sai lệch bị từ chối dứt điểm với HTTP 403 Forbidden (`INVALID_SESSION_OWNERSHIP`), phiên của nạn nhân (Bob) được bảo toàn 100%.
+    3. Yêu cầu thiếu token (empty, null, undefined) bị từ chối 403 và phiên được bảo toàn 100%.
+    4. Tráo token giữa các phiên (token của Charlie dùng để xóa phiên của David) bị chặn đứng 403, cả hai phiên đều được giữ nguyên.
+    5. Mã phiên dị tật/non-UUID bị từ chối 400 Bad Request (`INVALID_SESSION_ID`).
+    6. Kiểm chứng trích xuất token qua cả 3 kênh Header, Cookie, Body.
+  - Bộ kiểm thử tự động `chat-session-deletion.test.mjs` đạt 7/7 assertions pass 100%; build production Next.js 16 biên dịch thành công 181/181 routes (exit code 0).
 
 ### P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa)
 - **Status:** `done` tại `supabase/migrations/20261002_p05_004_cleanup_expired_chat_logs.sql`, `frontend/src/lib/chatLogCleanupService.ts`, `frontend/src/app/api/v1/cron/cleanup-chat-logs/route.ts`, và `frontend/scripts/chat-logs-cleanup-job.test.mjs`.
