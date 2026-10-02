@@ -44,12 +44,14 @@ export const FORBIDDEN_AUDIT_MODELS = Object.freeze([
 export const CANONICAL_OUT_OF_SCOPE_PROVIDER = 'out_of_scope_guard';
 export const CANONICAL_EMERGENCY_PROVIDER = 'emergency_instant_bypass';
 export const CANONICAL_LOCAL_RAG_PROVIDER = 'local_expert_rag';
+export const CANONICAL_PROMPT_INJECTION_PROVIDER = 'guard_prompt_injection_firewall';
 export const CANONICAL_UNKNOWN_FALLBACK = 'local_expert_rag';
 
-// Canonical Model Constants (P04-012)
+// Canonical Model Constants (P04-012 & P04-020)
 export const CANONICAL_OUT_OF_SCOPE_MODEL = 'intent-out-of-scope-filter';
 export const CANONICAL_EMERGENCY_MODEL = 'emergency-instant-rule-engine';
 export const CANONICAL_LOCAL_RAG_MODEL = 'local-expert-rag-v1';
+export const CANONICAL_PROMPT_INJECTION_MODEL = 'prompt-injection-firewall-v1';
 
 /**
  * Chuẩn hóa giá trị provider trước khi ghi vào chat_logs audit log.
@@ -111,6 +113,9 @@ export function resolveAuditModel(
     const p = rawProvider.trim();
     if (p === CANONICAL_EMERGENCY_PROVIDER || p.includes('emergency')) {
       return CANONICAL_EMERGENCY_MODEL;
+    }
+    if (p === CANONICAL_PROMPT_INJECTION_PROVIDER || p.includes('prompt_injection')) {
+      return CANONICAL_PROMPT_INJECTION_MODEL;
     }
     if (p === CANONICAL_LOCAL_RAG_PROVIDER || p.includes('local_expert')) {
       return CANONICAL_LOCAL_RAG_MODEL;

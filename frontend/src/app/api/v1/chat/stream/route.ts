@@ -4,12 +4,13 @@ import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 import { getSupabaseServerClient } from '@/lib/serverSupabase';
 import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
-import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
+import { resolveAuditProvider, resolveAuditModel, CANONICAL_PROMPT_INJECTION_PROVIDER, CANONICAL_PROMPT_INJECTION_MODEL } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredStreamDoneEvent } from '@/lib/chatStructuredResultContract';
 import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
 import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
+import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -212,7 +213,40 @@ export async function POST(req: NextRequest) {
 
       try {
         const lower = queryStr.toLowerCase();
-        const cleanQ = lower.replace(/[?!.,]/g, '').trim();
+        // P04-020: Kiểm tra Prompt Injection Firewall fail-closed trước khi xử lý
+        const injection = detectPromptInjection(queryStr);
+        if (injection.isInjection && injection.rejectionText) {
+          const injectionMsg = injection.rejectionText;
+          const injectionProvider = CANONICAL_PROMPT_INJECTION_PROVIDER;
+          const injectionModel = CANONICAL_PROMPT_INJECTION_MODEL;
+          const injectionLatencyMs = calculateElapsedMs(t0);
+          send({
+            type: 'metadata',
+            places: [],
+            suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
+            data: [],
+          });
+          send({ type: 'token', token: injectionMsg, delta: injectionMsg });
+          send({
+            type: 'done',
+            full_text: injectionMsg,
+            provider: injectionProvider,
+            model: injectionModel,
+            latency_ms: injectionLatencyMs,
+            suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
+          });
+          logChatEvent({
+            session_id: sessionId,
+            query: queryStr,
+            response_preview: injectionMsg.slice(0, 300),
+            provider_used: injectionProvider,
+            model_used: injectionModel,
+            is_out_scope: true,
+            latency_ms: injectionLatencyMs,
+          });
+          controller.close();
+          return;
+        }
 
         // 1. Unified Hybrid RAG Context Extraction (<10ms)
         const ragResult = await buildUnifiedRagContext(queryStr, userLat, userLng);

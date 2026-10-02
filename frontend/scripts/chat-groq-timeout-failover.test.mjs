@@ -29,7 +29,7 @@ const helperPath = path.resolve(__dirname, '../src/lib/chatGroqTimeoutHelper.ts'
 const aiProviderSourcePath = path.resolve(__dirname, '../src/lib/aiProvider.ts');
 const fallbackClientsSourcePath = path.resolve(__dirname, '../src/lib/ai/fallbackClients.ts');
 
-function loadModule(filePath) {
+function loadModule(filePath, customResolver = {}) {
   const content = fs.readFileSync(filePath, 'utf8');
   const { outputText } = typescript.transpileModule(content, {
     compilerOptions: {
@@ -41,7 +41,22 @@ function loadModule(filePath) {
 
   const m = { exports: {} };
   const fn = new Function('module', 'exports', 'require', '__dirname', '__filename', outputText);
-  fn(m, m.exports, require, path.dirname(filePath), filePath);
+  fn(
+    m,
+    m.exports,
+    (id) => {
+      if (customResolver[id]) return customResolver[id];
+      if (id.startsWith('./') || id.startsWith('../')) {
+        const target = path.resolve(path.dirname(filePath), id.endsWith('.ts') ? id : `${id}.ts`);
+        if (fs.existsSync(target)) {
+          return loadModule(target, customResolver);
+        }
+      }
+      return require(id);
+    },
+    path.dirname(filePath),
+    filePath
+  );
   return m.exports;
 }
 

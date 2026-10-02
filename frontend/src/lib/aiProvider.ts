@@ -20,6 +20,7 @@ import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
 import { resolveAuditProvider, resolveAuditModel } from './chatAuditProviderHelper';
 import { validateChatbotOutput } from './chatOutputSchemaValidator';
 import { checkCitationCoverage } from './chatCitationCoverageGate';
+import { detectPromptInjection } from './chatPromptInjectionGuard';
 
 export * from './ai/config';
 export * from './ai/geminiClient';
@@ -32,6 +33,7 @@ export * from './chatAuditProviderHelper';
 export * from './chatGroqTimeoutHelper';
 export * from './chatOutputSchemaValidator';
 export * from './chatCitationCoverageGate';
+export * from './chatPromptInjectionGuard';
 
 import {
   GROQ_PRIMARY_TIMEOUT_MS,
@@ -72,6 +74,19 @@ export async function* streamAIResponse(
   userPrompt: string,
   options?: StreamAIOptions
 ): AsyncGenerator<StreamOutputChunk> {
+  // ── 0. LUỒNG 0: PROMPT INJECTION FIREWALL (P04-020: FAIL-CLOSED AN TOÀN) ───
+  const injection = detectPromptInjection(userPrompt);
+  if (injection.isInjection && injection.rejectionText) {
+    const words = injection.rejectionText.split(' ');
+    for (let i = 0; i < words.length; i += 4) {
+      const chunk = words.slice(i, i + 4).join(' ') + ' ';
+      yield { type: 'delta', content: chunk, provider: 'guard_prompt_injection_firewall', model: 'prompt-injection-firewall-v1' };
+      await new Promise((r) => setTimeout(r, 4));
+    }
+    yield { type: 'done', provider: 'guard_prompt_injection_firewall', model: 'prompt-injection-firewall-v1' };
+    return;
+  }
+
   // ── 1. LUỒNG 1: SOS KHẨN CẤP (< 30ms BYPASS TOÀN BỘ LLM) ───────────────────
   const analysis = routeQueryIntent(userPrompt);
   if (analysis.intent === 'SOS_EMERGENCY' && analysis.emergencyPayload) {
@@ -271,9 +286,10 @@ export async function generateAIResponse(
 
   const resolvedModel = resolveAuditModel(finalModel, finalProvider);
 
+  providerUsed = finalProvider;
   return {
     text: applyTruthAnchor(resolvedText),
-    provider: resolveAuditProvider(finalProvider),
+    provider: resolveAuditProvider(providerUsed),
     model: resolvedModel,
   };
 }

@@ -15,7 +15,7 @@ const queryRoutePath = path.resolve(__dirname, '../src/app/api/v1/chat/query/rou
 const streamRoutePath = path.resolve(__dirname, '../src/app/api/v1/chat/stream/route.ts');
 const aiProviderPath = path.resolve(__dirname, '../src/lib/aiProvider.ts');
 
-function loadModule(filePath) {
+function loadModule(filePath, customResolver = {}) {
   const content = fs.readFileSync(filePath, 'utf8');
   const { outputText } = typescript.transpileModule(content, {
     compilerOptions: {
@@ -27,7 +27,22 @@ function loadModule(filePath) {
 
   const m = { exports: {} };
   const fn = new Function('module', 'exports', 'require', '__dirname', '__filename', outputText);
-  fn(m, m.exports, require, path.dirname(filePath), filePath);
+  fn(
+    m,
+    m.exports,
+    (id) => {
+      if (customResolver[id]) return customResolver[id];
+      if (id.startsWith('./') || id.startsWith('../')) {
+        const target = path.resolve(path.dirname(filePath), id.endsWith('.ts') ? id : `${id}.ts`);
+        if (fs.existsSync(target)) {
+          return loadModule(target, customResolver);
+        }
+      }
+      return require(id);
+    },
+    path.dirname(filePath),
+    filePath
+  );
   return m.exports;
 }
 

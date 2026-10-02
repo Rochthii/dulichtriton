@@ -12,12 +12,13 @@ import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } fr
 import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
 import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
 import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
-import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
+import { resolveAuditProvider, resolveAuditModel, CANONICAL_PROMPT_INJECTION_PROVIDER, CANONICAL_PROMPT_INJECTION_MODEL } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredChatResponse } from '@/lib/chatStructuredResultContract';
 import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
 import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
+import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -355,6 +356,42 @@ export async function POST(req: NextRequest) {
     const history = await loadHistory(sessionId);
 
     // 1. Direct Next.js Multi-LLM RAG Engine Execution
+    // P04-020: Kiểm tra Prompt Injection Firewall fail-closed trước khi xử lý
+    const injection = detectPromptInjection(queryStr);
+    if (injection.isInjection && injection.rejectionText) {
+      const injectionProvider = CANONICAL_PROMPT_INJECTION_PROVIDER;
+      const injectionModel = CANONICAL_PROMPT_INJECTION_MODEL;
+      const injectionMessage = injection.rejectionText;
+      const injectionLatencyMs = calculateElapsedMs(t0);
+      logChatEvent({
+        session_id: sessionId,
+        query: queryStr,
+        response_preview: injectionMessage,
+        provider_used: injectionProvider,
+        model_used: injectionModel,
+        is_out_scope: true,
+        latency_ms: injectionLatencyMs,
+      });
+      const injectionRes = NextResponse.json({
+        text_response: injectionMessage,
+        provider: injectionProvider,
+        model: injectionModel,
+        latency_ms: injectionLatencyMs,
+        ui_components: [],
+        videos: [],
+        suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
+      });
+      if (ownership.token) {
+        injectionRes.headers.set(SESSION_TOKEN_HEADER, ownership.token);
+        injectionRes.cookies.set(SESSION_TOKEN_COOKIE, ownership.token, {
+          path: '/',
+          httpOnly: true,
+          sameSite: 'lax',
+        });
+      }
+      return injectionRes;
+    }
+
     const lowerQuery = queryStr.toLowerCase();
 
     if (checkIsOutOfScope(queryStr, history)) {

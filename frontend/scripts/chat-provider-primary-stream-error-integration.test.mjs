@@ -66,6 +66,10 @@ function loadModule(filePath, customResolver = {}) {
         const target = path.resolve(__dirname, '../src/data', rel.endsWith('.json') ? rel : `${rel}.json`);
         if (fs.existsSync(target)) return JSON.parse(fs.readFileSync(target, 'utf8'));
       }
+      if (id.startsWith('./') || id.startsWith('../')) {
+        const target = path.resolve(path.dirname(filePath), id.endsWith('.ts') ? id : `${id}.ts`);
+        if (fs.existsSync(target)) return loadModule(target, customResolver);
+      }
       return require(id);
     },
     path.dirname(filePath),

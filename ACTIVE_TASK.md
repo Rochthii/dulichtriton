@@ -7,16 +7,16 @@
 
 ---
 
-### 🎯 Task Đang Mở (Current Active Task)
+#### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy)
+### P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng bộ adversarial prompt-injection fixtures (jailbreaks, roleplay override, system prompt extraction, data policy tampering). Chứng minh chatbot giữ vững các chính sách bảo mật hệ thống, không tiết lộ system prompt và không thay đổi chính sách dữ liệu.
-- **Next task sau P04-020:** P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
+- **Mục tiêu duy nhất:** Xây dựng bộ poisoned-knowledge fixtures (untrusted user context, malicious knowledge injection, poisoned RAG sources). Chứng minh chatbot AI kiên quyết từ chối context chưa được kiểm chứng, không bao giờ dùng untrusted context làm fact trong câu trả lời.
+- **Next task sau P04-021:** P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at).
 
 ---
 
@@ -51,7 +51,7 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 25. 🟢 **`P01-028`** *(Hoàn thành)*: Bỏ Unsplash fallback khỏi admin place creation (207/207 tests pass 100%).
 26. 🟢 **`P03-001`** *(Hoàn thành)*: Tạo báo cáo count/ID cho từng source hiện có (CSV, frontend JSON, verified JSON, DB snapshot).
 27. 🟢 **`P03-002`** *(Hoàn thành)*: Tạo bảng concordance cho một ID giữa các nguồn (status match, missing, hoặc conflict).
-28. 🟢 **`P03-003`** *(Hoàn thành)*: Tạo review queue cho toàn bộ ID conflict (102 tickets độc lập từ CRQ-001 đến CRQ-102).
+28: 28. 🟢 **`P03-003`** *(Hoàn thành)*: Tạo review queue cho toàn bộ ID conflict (102 tickets độc lập từ CRQ-001 đến CRQ-102).
 29. 🟢 **`P03-004`** *(Hoàn thành)*: Xử lý một duplicate/conflict POI trong review queue (Ticket CRQ-001: Chùa Xà Tón).
 30. 🟢 **`P03-005`** *(Hoàn thành)*: Xử lý một POI ngoài bounding box trong review queue (hoặc ngoại lệ có căn cứ).
 31. 🟢 **`P03-006`** *(Hoàn thành)*: Xử lý một nhãn commune không có trong glossary (Chuẩn hóa danh mục 15 xã/thị trấn Tri Tôn).
@@ -89,18 +89,33 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 63. 🟢 **`P04-010`** *(Hoàn thành)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
 64. 🟢 **`P04-011`** *(Hoàn thành)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
 65. 🟢 **`P04-012`** *(Hoàn thành)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
-66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
+66: 66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 67. 🟢 **`P04-014`** *(Hoàn thành)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 68. 🟢 **`P04-015`** *(Hoàn thành)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 69. 🟢 **`P04-016`** *(Hoàn thành)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
 70. 🟢 **`P04-017`** *(Hoàn thành)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
 71. 🟢 **`P04-018`** *(Hoàn thành)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
 72. 🟢 **`P04-019`** *(Hoàn thành)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
-73. 🟡 **`P04-020`** *(Đang mở)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
+73. 🟢 **`P04-020`** *(Hoàn thành)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
+74. 🟡 **`P04-021`** *(Đang mở)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy)
+- **Status:** `done` tại `frontend/src/lib/chatPromptInjectionGuard.ts`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-adversarial-prompt-injection.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module phòng thủ đối kháng chuyên dụng `chatPromptInjectionGuard.ts` (`detectPromptInjection`, `getPromptInjectionRejection`, `assertPolicyInvariance`): phân loại rành mạch 5 họ tấn công đối kháng: `SYSTEM_PROMPT_EXTRACTION`, `JAILBREAK_OVERRIDE`, `ROLEPLAY_HIJACKING`, `DATA_POLICY_TAMPERING`, và `CULTURAL_BOUNDARY_TAMPERING`.
+  - Thiết lập rào chắn Gateway Firewall Fail-Closed tại cả hai route `/api/v1/chat/query` và `/api/v1/chat/stream`: phát hiện và trung hòa tức thì các yêu cầu prompt injection trước khi chạm tới LLMs, bảo vệ 100% token budget và tài nguyên hệ thống.
+  - Ghi nhận kiểm toán trung thực vào `chat_logs` với `provider_used: 'guard_prompt_injection_firewall'`, `model_used: 'prompt-injection-firewall-v1'`, `is_out_scope: true`, và `latency_ms` thực tế đo lường.
+  - Tích hợp defense-in-depth bên trong `streamAIResponse` và `generateAIResponse` của `aiProvider.ts`: ngăn chặn triệt để prompt rò rỉ kể cả khi hàm được gọi độc lập.
+  - Chứng minh tính bất biến chính sách (Policy Invariance): không bao giờ để lộ system prompt (`systemPromptLeaked === false`), không chấp nhận thay đổi dữ liệu/hotline/rating/is_verified (`dataPolicyTampered === false`), giữ vững địa giới 15 xã/thị trấn theo RULE 02 (`boundaryPolicyViolated === false`), và bảo tồn nguyên vẹn ẩm thực gà đốt Ô Thum, bún cá củ ngải Khmer theo RULE 05 (`culturalPolicyViolated === false`).
+  - Kiểm tra Negative Controls: các câu hỏi du lịch thông thường (hỏi rating Google Maps, hỏi số điện thoại công an, hỏi đường đi) không bị chặn nhầm (0% false-positive).
+  - Bộ kiểm thử tự động `chat-adversarial-prompt-injection.test.mjs` đạt 8/8 assertions pass 100%; toàn bộ 455 assertions frontend pass sạch sẽ; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate)
 - **Status:** `done` tại `frontend/src/lib/chatCitationCoverageGate.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-citation-coverage-gate.test.mjs`.
