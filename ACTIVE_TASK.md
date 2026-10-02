@@ -9,19 +9,19 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau)
+### P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ghi nhận chính xác nhà cung cấp AI thực tế (`provider_used`: 'Groq' | 'Gemini' | 'OpenRouter' | 'Fallback') vào bảng `chat_logs` và hệ thống audit log trong mỗi lượt hội thoại:
-  - **Hiện trạng:** Trường `provider_used` trong audit log đôi khi bị bỏ trống, gán constant hoặc ghi giá trị giả định ban đầu mà không phản ánh provider thực tế đã hoàn thành lượt suy luận (đặc biệt khi xảy ra failover từ Groq sang Gemini).
-  - **Giải pháp:** Truyền và ghi nhận chính xác provider thực tế đã trả về text cuối cùng trong vòng đời gọi AI Provider.
+- **Mục tiêu duy nhất:** Ghi nhận chính xác model ID thực tế của nhà cung cấp AI đã hoàn thành lượt suy luận vào bảng `chat_logs` và hệ thống audit log:
+  - **Hiện trạng:** Bảng `chat_logs` hoặc các log tracking hiện chưa ghi rõ model ID cụ thể (ví dụ: `llama-3.3-70b-versatile`, `gemini-2.5-flash`, `google/gemma-2-27b-it`), hoặc chỉ ghi chung chung tên provider.
+  - **Giải pháp:** Truyền và ghi nhận chính xác model ID thực tế đã trả về text cuối cùng trong vòng đời gọi AI Provider.
   - **Acceptance Criteria & Proof cần có:**
-    - Ghi nhận phân biệt rõ rệt giá trị provider khi chạy Groq, Gemini hoặc fallback.
-    - Bộ test tự động kiểm chứng với các kịch bản provider khác nhau.
-- **Next task sau P04-011:** P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
+    - Ghi nhận model ID khớp chính xác với request thực tế đã hoàn tất.
+    - Bộ test tự động kiểm chứng với các kịch bản model khác nhau.
+- **Next task sau P04-012:** P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 
 ---
 
@@ -92,11 +92,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 61. 🟢 **`P04-008`** *(Hoàn thành)*: Di chuyển user text khỏi PostgREST `.or` string interpolation (Proof: payload filter syntax không thay đổi điều kiện truy vấn).
 62. 🟢 **`P04-009`** *(Hoàn thành)*: Không default `is_verified` thành true (Proof: missing field không được trả `verified`).
 63. 🟢 **`P04-010`** *(Hoàn thành)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
-64. 🟡 **`P04-011`** *(Đang mở)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
+64. 🟢 **`P04-011`** *(Hoàn thành)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
+65. 🟡 **`P04-012`** *(Đang mở)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau)
+- **Status:** `done` tại `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-provider-audit-log.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module helper `frontend/src/lib/chatAuditProviderHelper.ts` cung cấp `resolveAuditProvider`, `classifyProviderFamily`, và `isValidAuditProvider`.
+  - Loại bỏ hoàn toàn 100% hằng số hardcoded `'parallel-race'` khỏi `frontend/src/app/api/v1/chat/query/route.ts` khi ghi audit log `chat_logs`.
+  - Nâng cấp `generateAIResponse` trả về `{ text: string; provider: string }`, thu thập chính xác provider từ các chunk stream (cả delta và done chunks) và chuẩn hóa qua `resolveAuditProvider`.
+  - Ghi nhận chính xác nhà cung cấp thực tế đã hoàn thành lượt suy luận vào cột `provider_used` của bảng `chat_logs` và đưa thuộc tính `provider` vào JSON response của route.
+  - Chuẩn hóa phân biệt rõ rệt 6 nhóm provider: Groq primary racer (`groq-*`), Gemini failover (`gemini-*`), OpenRouter fallback (`openrouter-*`), Local Expert RAG offline (`local_expert_rag`), Emergency SOS bypass (`emergency_instant_bypass`), và Out-of-Scope guard (`out_of_scope_guard`).
+  - Thiết lập negative invariants: ngăn chặn triệt để mọi rò rỉ của `'parallel-race'`, `'none'`, rỗng, `null` hay `undefined` vào audit log.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-provider-audit-log.test.mjs` đạt 7/7 assertions pass 100%.
+  - Toàn bộ 384/384 unit/integration tests frontend pass sạch sẽ (0 failures); build production Next.js đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Distinct AI Provider Audit Log Proof & Zero Parallel-Race Invariant).
+- **Next task:** P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
 
 ### P04-010 — Lọc retrieval theo verification_status đã duyệt (Proof: unverified fixture không xuất hiện)
 - **Status:** `done` tại `frontend/src/lib/placeVerificationGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/lib/chatTokenSearchHelper.ts`, `frontend/src/app/api/v1/search/route.ts`, `supabase/migrations/20260930_p04_010_match_places_verified_retrieval.sql`, và `frontend/scripts/retrieval-verification-status-filter.test.mjs`.

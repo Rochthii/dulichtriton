@@ -17,6 +17,7 @@ import { streamGeminiNative, callGeminiLiveSearch } from './ai/geminiClient';
 import { streamGroqNative, streamOpenRouterNative, callGroqFallback, callOpenRouterFallback } from './ai/fallbackClients';
 import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
 import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
+import { resolveAuditProvider } from './chatAuditProviderHelper';
 
 export * from './ai/config';
 export * from './ai/geminiClient';
@@ -25,6 +26,7 @@ export * from './ai/localExpertRag';
 export * from './ai/semanticCache';
 export * from './ai/intentRouter';
 export * from './ai/ragEngine';
+export * from './chatAuditProviderHelper';
 
 export interface StreamOutputChunk {
   type: 'delta' | 'done';
@@ -45,7 +47,7 @@ export async function* streamAIResponse(
     const words = analysis.emergencyPayload.split(' ');
     for (let i = 0; i < words.length; i += 4) {
       const chunk = words.slice(i, i + 4).join(' ') + ' ';
-      yield { type: 'delta', content: chunk };
+      yield { type: 'delta', content: chunk, provider: 'emergency_instant_bypass' };
       await new Promise((r) => setTimeout(r, 4));
     }
     yield { type: 'done', provider: 'emergency_instant_bypass' };
@@ -204,11 +206,14 @@ export async function generateAIResponse(
   userPrompt: string
 ): Promise<{ text: string; provider: string }> {
   let fullText = '';
-  let providerUsed = 'none';
+  let providerUsed = '';
 
   for await (const chunk of streamAIResponse(systemPrompt, userPrompt)) {
     if (chunk.type === 'delta' && chunk.content) {
       fullText += chunk.content;
+      if (chunk.provider) {
+        providerUsed = chunk.provider;
+      }
     }
     if (chunk.type === 'done' && chunk.provider) {
       providerUsed = chunk.provider;
@@ -217,7 +222,7 @@ export async function generateAIResponse(
 
   return {
     text: applyTruthAnchor(fullText),
-    provider: providerUsed,
+    provider: resolveAuditProvider(providerUsed),
   };
 }
 

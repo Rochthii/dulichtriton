@@ -12,6 +12,7 @@ import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } fr
 import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
 import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
 import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
+import { resolveAuditProvider } from '@/lib/chatAuditProviderHelper';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -284,7 +285,7 @@ async function generateAIResponse(
   userQuery: string,
   ragContext: string,
   history: Turn[] = []
-): Promise<string> {
+): Promise<{ text: string; provider: string }> {
   const historySnippet = history.length > 0
     ? '\n\nLịch sử hội thoại gần nhất:\n' +
       history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
@@ -293,7 +294,10 @@ async function generateAIResponse(
   const userMsg   = `Thông tin bối cảnh xác minh từ CSDL Tri Tôn:\n${ragContext}\n\nCâu hỏi của Bạn: ${userQuery}`;
 
   const aiResult = await generateProviderAIResponse(systemMsg, userMsg);
-  return aiResult.text;
+  return {
+    text: aiResult.text,
+    provider: resolveAuditProvider(aiResult.provider),
+  };
 }
 
 export async function POST(req: NextRequest) {
@@ -348,9 +352,19 @@ export async function POST(req: NextRequest) {
     const lowerQuery = queryStr.toLowerCase();
 
     if (checkIsOutOfScope(queryStr, history)) {
-      logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true, latency_ms: Date.now() - t0 });
+      const oosProvider = resolveAuditProvider(undefined, true);
+      const oosMessage = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
+      logChatEvent({
+        session_id: sessionId,
+        query: queryStr,
+        response_preview: oosMessage,
+        provider_used: oosProvider,
+        is_out_scope: true,
+        latency_ms: Date.now() - t0,
+      });
       const oosRes = NextResponse.json({
-        text_response: 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.',
+        text_response: oosMessage,
+        provider: oosProvider,
         ui_components: [],
         videos: [],
         suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
@@ -637,7 +651,9 @@ export async function POST(req: NextRequest) {
 
     // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots + knowledge base
     const combinedRagContext = [ragContext, kbSnippet, transportSnippet, festivalsSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
-    const aiTextResponse = await generateAIResponse(queryStr, combinedRagContext, history);
+    const aiResult = await generateAIResponse(queryStr, combinedRagContext, history);
+    const aiTextResponse = aiResult.text;
+    const actualProvider = aiResult.provider;
 
 
     // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
@@ -662,7 +678,7 @@ export async function POST(req: NextRequest) {
       session_id: sessionId,
       query: queryStr,
       response_preview: aiTextResponse.slice(0, 300),
-      provider_used: 'parallel-race',
+      provider_used: actualProvider,
       rag_method: places && places.length > 0 ? 'vector-or-ilike' : 'hot_fallback',
       places_count: formattedPlaces.length,
       latency_ms: Date.now() - t0,
@@ -671,6 +687,7 @@ export async function POST(req: NextRequest) {
 
     const mainRes = NextResponse.json({
       text_response: aiTextResponse,
+      provider: actualProvider,
       ui_components: formattedPlaces.length > 0 ? [{ type: 'place_grid', data: formattedPlaces }] : [],
       places: formattedPlaces,
       videos: videos || [],

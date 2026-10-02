@@ -4,6 +4,7 @@ import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 import { getSupabaseServerClient } from '@/lib/serverSupabase';
 import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
+import { resolveAuditProvider } from '@/lib/chatAuditProviderHelper';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -219,13 +220,21 @@ export async function POST(req: NextRequest) {
 
         if (checkIsOutOfScope(queryStr, history)) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
+          const oosProvider = resolveAuditProvider(undefined, true);
           send({ type: 'token', token: oosMsg, delta: oosMsg });
           send({
             type: 'done',
             full_text: oosMsg,
             suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
           });
-          logChatEvent({ session_id: sessionId, query: queryStr, is_out_scope: true, latency_ms: Date.now() - t0 });
+          logChatEvent({
+            session_id: sessionId,
+            query: queryStr,
+            response_preview: oosMsg.slice(0, 300),
+            provider_used: oosProvider,
+            is_out_scope: true,
+            latency_ms: Date.now() - t0,
+          });
           controller.close();
           return;
         }
@@ -241,12 +250,15 @@ export async function POST(req: NextRequest) {
           : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang]`;
 
         let fullText = '';
-        let providerUsed = 'none';
+        let providerUsed = '';
 
         // 3. Realtime Native SSE Token Streaming (<300ms TTFT)
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
           if (chunk.type === 'delta' && chunk.content) {
             fullText += chunk.content;
+            if (chunk.provider) {
+              providerUsed = chunk.provider;
+            }
             send({
               type: 'token',
               token: chunk.content,
@@ -286,7 +298,7 @@ export async function POST(req: NextRequest) {
           session_id: sessionId,
           query: queryStr,
           response_preview: fullText.slice(0, 300),
-          provider_used: providerUsed,
+          provider_used: resolveAuditProvider(providerUsed),
           rag_method: 'unified-rag-native-stream',
           places_count: ragResult.places.length,
           latency_ms: Date.now() - t0,
