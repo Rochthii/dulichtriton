@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa)
+### P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng tác vụ dọn dẹp định kỳ (Scheduled Cleanup Job) và hàm RPC / API endpoint bảo mật để xóa sạch các phiên trò chuyện hết hạn (`updated_at < NOW() - INTERVAL '24 hours'`) theo đúng Decision Record G3, kiểm chứng bằng chứng xóa sạch fixture expired.
-- **Next task sau P05-003:** P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
+- **Mục tiêu duy nhất:** Xây dựng tác vụ dọn dẹp định kỳ (Scheduled Cleanup Job) và cơ chế dọn dẹp bảng kiểm toán `public.chat_logs` hết hạn theo chính sách lưu trữ (retention window), kiểm chứng bằng chứng xóa sạch fixture expired.
+- **Next task sau P05-004:** P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
 
 ---
 
@@ -102,11 +102,23 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 76. 🟢 **`P04-023`** *(Hoàn thành)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
 77. 🟢 **`P05-001`** *(Hoàn thành)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
 78. 🟢 **`P05-002`** *(Hoàn thành)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
-79. 🟡 **`P05-003`** *(Đang mở)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
+79. 🟢 **`P05-003`** *(Hoàn thành)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
+80. 🟡 **`P05-004`** *(Đang mở)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa)
+- **Status:** `done` tại `supabase/migrations/20261002_p05_003_cleanup_expired_chat_sessions.sql`, `frontend/src/lib/chatSessionCleanupService.ts`, `frontend/src/app/api/v1/cron/cleanup-chat-sessions/route.ts`, và `frontend/scripts/chat-sessions-cleanup-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành migration PostgreSQL DDL `20261002_p05_003_cleanup_expired_chat_sessions.sql` tạo hàm RPC `public.cleanup_expired_chat_sessions(p_batch_limit INT DEFAULT 1000)` với `SECURITY DEFINER`, xóa sạch các phiên `WHERE updated_at < (NOW() - INTERVAL '24 hours')`, tước quyền `anon, authenticated` và chỉ cấp quyền `EXECUTE` duy nhất cho `service_role`.
+  - Phát triển module `chatSessionCleanupService.ts` (`executeChatSessionCleanup`, `verifyCleanupAuthorization`) cung cấp cơ chế thực thi dọn dẹp theo lô, hỗ trợ xác thực cron timing-safe qua `timingSafeEqual`, cùng API endpoint `/api/v1/cron/cleanup-chat-sessions` bảo vệ bằng `CRON_SECRET` (fail-closed).
+  - Chứng minh bằng chứng thực tế (Proof): Khi đưa vào 4 fixtures (2 expired: `NOW - 25h`, `NOW - 72h` và 2 active: `NOW - 1h`, `NOW - 23h`), job xóa sạch 100% hai fixture expired trong khi 100% active fixtures được bảo toàn nguyên vẹn; đồng thời chứng minh cơ chế sliding window bảo vệ phiên cũ có câu hỏi mới (`NOW - 30m`).
+  - Bộ kiểm thử tự động `chat-sessions-cleanup-job.test.mjs` đạt 6/6 assertions pass 100%; build production Next.js 16 biên dịch thành công 179/179 routes (exit code 0).
 
 ### P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện)
 - **Status:** `done` tại `docs/technical-spec/DECISION_RECORD_CHAT_SESSIONS_RETENTION.md`, `frontend/src/lib/chatSessionRetentionPolicy.ts`, và `frontend/scripts/chat-sessions-retention-decision.test.mjs`.
