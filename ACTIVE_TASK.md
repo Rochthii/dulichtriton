@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result)
+### P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Viết integration test mô phỏng kịch bản Groq primary bị timeout ngắt kết nối và kiểm chứng fallback (Gemini Secondary / Local RAG) trả về kết quả có cấu trúc hoàn chỉnh (structured result: text, provider, model hợp lệ, không bị rách chunk, không treo socket).
-- **Next task sau P04-016:** P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
+- **Mục tiêu duy nhất:** Viết integration test mô phỏng kịch bản Groq primary gặp lỗi stream giữa chừng (stream error: HTTP 500, socket rách, corrupt chunks) và kiểm chứng response không bị treo, giải phóng socket an toàn và không trả partial sai lệch cho client.
+- **Next task sau P04-017:** P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
 
 ---
 
@@ -92,11 +92,32 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 67. 🟢 **`P04-014`** *(Hoàn thành)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 68. 🟢 **`P04-015`** *(Hoàn thành)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
-69. 🟡 **`P04-016`** *(Đang mở)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
+69. 🟢 **`P04-016`** *(Hoàn thành)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
+70. 🟡 **`P04-017`** *(Đang mở)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result)
+- **Status:** `done` tại `frontend/src/lib/chatStructuredResultContract.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-provider-primary-timeout-integration.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module contract và validator chuyên dụng `frontend/src/lib/chatStructuredResultContract.ts` (`StructuredChatResponse`, `StructuredStreamDoneEvent`, `validateStructuredChatResponse`, `validateStructuredStreamDoneEvent`) thiết lập chuẩn mực bất biến cho kết quả trả về của Chatbot AI Tri Tôn.
+  - Tích hợp chuẩn contract vào cả 2 route chính: `/api/v1/chat/query` (`StructuredChatResponse`) và `/api/v1/chat/stream` (`StructuredStreamDoneEvent`), bảo đảm type safety và loại bỏ rủi ro rách dữ liệu.
+  - Xây dựng bộ kiểm thử tích hợp tự động `frontend/scripts/chat-provider-primary-timeout-integration.test.mjs` đạt 8/8 assertions pass 100%:
+    1. *Query Route Integration Proof*: khi Groq Primary bị timeout (treo socket > 2500ms), hệ thống ngắt kết nối chính xác và failover sang Secondary Provider (Gemini / Local RAG), trả về một Structured Result hoàn chỉnh 100% gồm `text_response` giàu thông tin, `provider` và `model` của fallback, `latency_ms >= 2500ms`, `suggestions` ngữ cảnh động, `places` xác minh và `ui_components` chuẩn.
+    2. *Stream Route Integration Proof*: phát xuất chuỗi sự kiện SSE trôi chảy (`metadata`, `token` deltas, `done` event) với `full_text` khớp 100% tổng deltas và đóng socket an toàn không leak.
+    3. *Zero Ghost Tokens Invariant*: triệt tiêu 100% token trễ từ Groq sau khi đã abort timeout, bảo đảm không ô nhiễm dữ liệu zombie vào stream của fallback.
+    4. *Total Cloud Outage Proof*: khi cả Groq timeout và Gemini lỗi mạng, hệ thống suy thoái êm ả về Tầng 5: Local Expert RAG và vẫn trả về Structured Result chuẩn 100% không crash 500.
+    5. *Audit Log Concordance*: ghi nhận chính xác provider/model fallback và latency thực tế $\ge 2500\text{ms}$.
+    6. *Negative Schema Invariants*: từ chối mọi payload thiếu trường, latency giả định hoặc provider sai.
+    7. *Static Code Invariants*: quét toàn bộ codebase xác nhận tính đồng nhất của các tham số và types.
+  - Toàn bộ 422/422 tests frontend pass sạch sẽ (0 failures); build production Next.js 16 (178/178 routes) đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Provider Primary Timeout Structured Fallback Proof).
+- **Next task:** P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
 
 ### P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover)
 - **Status:** `done` tại `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/lib/ai/fallbackClients.ts`, và `frontend/scripts/chat-groq-timeout-failover.test.mjs`.

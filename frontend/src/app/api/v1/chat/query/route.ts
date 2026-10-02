@@ -14,6 +14,7 @@ import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
 import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
+import { StructuredChatResponse } from '@/lib/chatStructuredResultContract';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -696,7 +697,7 @@ export async function POST(req: NextRequest) {
       is_out_scope: false,
     });
 
-    const mainRes = NextResponse.json({
+    const mainPayload: StructuredChatResponse = {
       text_response: aiTextResponse,
       provider: actualProvider,
       model: actualModel,
@@ -705,7 +706,9 @@ export async function POST(req: NextRequest) {
       places: formattedPlaces,
       videos: videos || [],
       suggestions,
-    });
+    };
+
+    const mainRes = NextResponse.json(mainPayload);
 
     if (ownership.token) {
       mainRes.headers.set(SESSION_TOKEN_HEADER, ownership.token);

@@ -6,6 +6,7 @@ import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
+import { StructuredStreamDoneEvent } from '@/lib/chatStructuredResultContract';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -294,13 +295,17 @@ export async function POST(req: NextRequest) {
           matchedPlaces: ragResult.places,
         });
 
-        send({
+        const donePayload: StructuredStreamDoneEvent = {
           type: 'done',
           full_text: fullText,
           latency_ms: actualLatencyMs,
           suggestions: dynamicSuggestions,
           places: ragResult.places,
-        });
+          provider: resolveAuditProvider(providerUsed),
+          model: resolveAuditModel(modelUsed, providerUsed),
+        };
+
+        send(donePayload);
 
         // 5. Save Conversation Turn (Non-blocking)
         if (fullText.trim()) {
