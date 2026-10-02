@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-012 — Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí)
+### P05-013 — Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ban hành Decision Record kỹ thuật chính thức chọn backend distributed cho rate limit (so sánh Redis self-hosted, Upstash Serverless Redis, Supabase KV/PostgreSQL rate limiting, Cloudflare KV về chi phí, cold-start latency, SLA và độ phức tạp vận hành), xác định kiến trúc chuẩn cho toàn hệ thống Tri Tôn AI.
-- **Next task sau P05-012:** P05-013 — Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test).
+- **Mục tiêu duy nhất:** Nâng cấp `frontend/src/lib/rateLimiter.ts` tích hợp kết nối phân tán tới Upstash Redis REST API theo chuẩn `DR-G3-RATELIMIT-BACKEND-001`, hỗ trợ atomic sliding window, graceful memory fallback và viết cross-instance integration test chứng minh hai instances độc lập chia sẻ chung một quota rate limit.
+- **Next task sau P05-013:** P05-014 — Đặt rate limit riêng cho chat query (Proof: vượt quota nhận 429 chuẩn).
 
 ---
 
@@ -111,11 +111,30 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 85. 🟢 **`P05-009`** *(Hoàn thành)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
 86. 🟢 **`P05-010`** *(Hoàn thành)*: Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
 87. 🟢 **`P05-011`** *(Hoàn thành)*: Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
-88. 🟡 **`P05-012`** *(Đang mở)*: Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
+88. 🟢 **`P05-012`** *(Hoàn thành)*: Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
+89. 🟡 **`P05-013`** *(Đang mở)*: Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-012 — Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí)
+- **Status:** `done` tại `docs/technical-spec/DECISION_RECORD_DISTRIBUTED_RATE_LIMIT_BACKEND.md`, `frontend/src/lib/rateLimitConfig.ts`, và `frontend/scripts/rate-limit-backend-decision.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-B Quality & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành tài liệu Decision Record kỹ thuật chính thức `DR-G3-RATELIMIT-BACKEND-001` tại Decision Gate G3 (phê duyệt bởi Lead Technical Architect Chăm Rốch Thi):
+    * Phân tích định lượng ma trận đánh đổi giữa 4 giải pháp: Upstash Serverless Redis (REST API), Self-hosted Redis, Supabase PostgreSQL Atomic RPC Table, Cloudflare KV.
+    * Lập bảng so sánh chi phí chi tiết: Upstash Serverless Redis cung cấp Free Tier 10,000 requests/ngày ($0.00/tháng), chi phí overage cực thấp ($0.20/100k req), tối ưu 100% ngân sách và không gây nghẽn kết nối TCP socket trên Serverless/Edge runtime của Vercel.
+    * Phê duyệt phương án duy nhất: **Upstash Serverless Redis REST API** làm Distributed Backend chính; **In-Memory Sliding Window** làm Graceful Degradation Fallback an toàn (khi chạy local dev hoặc gián đoạn mạng timeout > 1500ms).
+    * Phân tầng hạn mức tốc độ chuẩn hóa: `chat_query` (20 req / 60s), `admin_mutation` (30 req / 60s), `auth_login` (5 req / 60s), `public_api` (90 req / 60s).
+  - Phát triển module runtime hợp đồng cấu hình `frontend/src/lib/rateLimitConfig.ts`:
+    * Cung cấp các hằng số và kiểu dữ liệu `RateLimitTier`, `RATE_LIMIT_POLICIES`, `DISTRIBUTED_RATE_LIMIT_DEFAULTS`.
+    * Cung cấp các hàm phân giải runtime: `resolveRateLimitBackend(env)`, `getDistributedRateLimitCredentials(env)`, `getRateLimitPolicy(tier)`.
+    * Cơ chế fail-safe tự động suy thoái về memory fallback khi thiếu credentials hoặc URL không phải HTTPS.
+  - Xây dựng bộ kiểm thử tự động Node.js `frontend/scripts/rate-limit-backend-decision.test.mjs` đạt 5/5 assertions pass 100%: (1) Decision Record Document Integrity & Gate G3 Authority Proof; (2) Rate Limit Policy Quota Tiers Conformance Proof; (3) Distributed Redis Credentials & Environment Resolver Proof; (4) Graceful Degradation & In-Memory Fallback Invariant Proof; (5) Static Code Invariant Audit & Zero Mock Verification.
+  - Toàn bộ 544/544 test assertions frontend pass sạch sẽ (0 failures); build production Next.js 16 biên dịch thành công 181/181 routes (exit code 0).
 
 ### P05-011 — Thêm regression test cho alias Hồ Tà Pạ (Proof: deduplicate test pass)
 - **Status:** `done` tại `tourism_crawler/deduplicate/similarity.py`, `tests/test_deduplicate.py`, và `frontend/scripts/test-deduplicate-alias.test.mjs`.
