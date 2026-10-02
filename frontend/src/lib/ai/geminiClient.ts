@@ -114,7 +114,7 @@ export async function* streamGeminiNative(
             const delta = parsed.candidates?.[0]?.content?.parts?.[0]?.text;
             if (delta) {
               hasYielded = true;
-              yield { type: 'delta', content: delta, provider: `gemini-${keyId}-${model}` };
+              yield { type: 'delta', content: delta, provider: `gemini-${keyId}-${model}`, model };
             }
           } catch {
             // ignore JSON parse partial
@@ -123,7 +123,7 @@ export async function* streamGeminiNative(
       }
 
       if (hasYielded) {
-        yield { type: 'done', provider: `gemini-${keyId}-${model}` };
+        yield { type: 'done', provider: `gemini-${keyId}-${model}`, model };
         return;
       }
     } catch (err: any) {

@@ -9,19 +9,20 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất)
+### P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ghi nhận chính xác model ID thực tế của nhà cung cấp AI đã hoàn thành lượt suy luận vào bảng `chat_logs` và hệ thống audit log:
-  - **Hiện trạng:** Bảng `chat_logs` hoặc các log tracking hiện chưa ghi rõ model ID cụ thể (ví dụ: `llama-3.3-70b-versatile`, `gemini-2.5-flash`, `google/gemma-2-27b-it`), hoặc chỉ ghi chung chung tên provider.
-  - **Giải pháp:** Truyền và ghi nhận chính xác model ID thực tế đã trả về text cuối cùng trong vòng đời gọi AI Provider.
+- **Mục tiêu duy nhất:** Ghi nhận chính xác số đo thời gian phản hồi (latency tính bằng milliseconds) thực tế của lượt xử lý AI vào bảng `chat_logs` và hệ thống audit log:
+  - **Hiện trạng:** Bảng `chat_logs` hoặc các log tracking cần bảo đảm cột latency là số đo thực tế đo lường theo đồng hồ hệ thống (`Date.now() - startTime` hoặc `performance.now()`), tuyệt đối không gán hằng số giả định.
+  - **Giải pháp:** Bổ sung / chuẩn hóa cột `latency_ms` trong `chat_logs`, đo lường chính xác từ lúc bắt đầu request đến khi hoàn tất suy luận / streaming và lưu vào DB.
   - **Acceptance Criteria & Proof cần có:**
-    - Ghi nhận model ID khớp chính xác với request thực tế đã hoàn tất.
-    - Bộ test tự động kiểm chứng với các kịch bản model khác nhau.
-- **Next task sau P04-012:** P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
+    - Latency trong audit log là số nguyên dương hợp lệ phản ánh đúng thời gian xử lý thực tế của request.
+    - Loại trừ 100% hằng số giả định.
+    - Bộ test tự động kiểm chứng với các kịch bản đo độ trễ khác nhau.
+- **Next task sau P04-013:** P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 
 ---
 
@@ -93,11 +94,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 62. 🟢 **`P04-009`** *(Hoàn thành)*: Không default `is_verified` thành true (Proof: missing field không được trả `verified`).
 63. 🟢 **`P04-010`** *(Hoàn thành)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
 64. 🟢 **`P04-011`** *(Hoàn thành)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
-65. 🟡 **`P04-012`** *(Đang mở)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
+65. 🟢 **`P04-012`** *(Hoàn thành)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
+66. 🟡 **`P04-013`** *(Đang mở)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất)
+- **Status:** `done` tại `supabase/migrations/20261002_p04_012_chat_logs_model_used.sql`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/ai/fallbackClients.ts`, `frontend/src/lib/ai/geminiClient.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/admin/chat-logs/page.tsx`, và `frontend/scripts/chat-model-audit-log.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành migration DDL PostgreSQL `supabase/migrations/20261002_p04_012_chat_logs_model_used.sql` bổ sung cột `model_used TEXT`, COMMENT giải thích và INDEX `chat_logs_model_idx` cho bảng `public.chat_logs`.
+  - Mở rộng module helper `frontend/src/lib/chatAuditProviderHelper.ts` với `resolveAuditModel`, `isValidAuditModel`, `FORBIDDEN_AUDIT_MODELS`, và các hằng số canonical model ID (`CANONICAL_OUT_OF_SCOPE_MODEL = 'intent-out-of-scope-filter'`, `CANONICAL_EMERGENCY_MODEL = 'emergency-instant-rule-engine'`, `CANONICAL_LOCAL_RAG_MODEL = 'local-expert-rag-v1'`).
+  - Nâng cấp các native streaming clients (`fallbackClients.ts`, `geminiClient.ts`) phát xuất chính xác model ID của nhà cung cấp AI trong từng stream chunk.
+  - Cập nhật AI Orchestrator `frontend/src/lib/aiProvider.ts`: `generateAIResponse` trả về `{ text: string; provider: string; model: string }`, theo dõi `model` qua từng lượt streaming racer và chuẩn hóa an toàn qua `resolveAuditModel`.
+  - Cập nhật cả 2 route chat `/api/v1/chat/query` và `/api/v1/chat/stream`: thu thập chính xác model ID đã hoàn tất request, truyền vào `logChatEvent` (`model_used`) và trả về `model` trong JSON response / stream chunks.
+  - Cập nhật giao diện Admin Chat Logs `frontend/src/app/admin/chat-logs/page.tsx` hiển thị nhãn `model_used` và hỗ trợ tìm kiếm theo model ID.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-model-audit-log.test.mjs` đạt 8/8 assertions pass 100%: (1) Model ID Resolution Accuracy; (2) Negative Invariants & Forbidden Values Rejection; (3) Provider-to-Model Extraction Invariant; (4) Static Code Invariant trong Query & Stream Routes; (5) Static Code Invariant trong aiProvider & Native Clients; (6) Database Migration Invariant; (7) End-to-End Simulation: Completed Request Model Concordance Proof.
+  - Toàn bộ 392/392 unit/integration tests frontend pass sạch sẽ (0 failures); build production Next.js đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Actual AI Model Audit Log Proof & Completed Request Model Concordance).
+- **Next task:** P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 
 ### P04-011 — Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau)
 - **Status:** `done` tại `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-provider-audit-log.test.mjs`.

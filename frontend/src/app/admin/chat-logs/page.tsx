@@ -20,6 +20,7 @@ interface ChatLogRecord {
   query: string;
   response_preview: string;
   provider_used: string;
+  model_used?: string;
   rag_method: string;
   places_count: number;
   latency_ms: number;
@@ -67,7 +68,8 @@ export default function AdminChatLogsPage() {
     return (
       (l.query && l.query.toLowerCase().includes(q)) ||
       (l.session_id && l.session_id.toLowerCase().includes(q)) ||
-      (l.provider_used && l.provider_used.toLowerCase().includes(q))
+      (l.provider_used && l.provider_used.toLowerCase().includes(q)) ||
+      (l.model_used && l.model_used.toLowerCase().includes(q))
     );
   });
 
@@ -162,10 +164,17 @@ export default function AdminChatLogsPage() {
                       )}
                     </td>
                     <td className="py-3.5 px-4 whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg text-[11px] font-bold">
-                        <Cpu className="w-3 h-3 text-emerald-600" />
-                        {log.provider_used || 'gemini'}
-                      </span>
+                      <div className="flex flex-col gap-1 items-start">
+                        <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-lg text-[11px] font-bold">
+                          <Cpu className="w-3 h-3 text-emerald-600" />
+                          {log.provider_used || 'gemini'}
+                        </span>
+                        {log.model_used && (
+                          <span className="text-[10px] text-slate-500 font-mono pl-0.5">
+                            {log.model_used}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-900 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-amber-200/60">

@@ -162,7 +162,8 @@ test('P04-011: Audit Log Real Provider Tracking — Proof that Groq, Gemini & Fa
 
     // Rule: generateAIResponse must return an object with provider property
     assert.ok(
-      queryRouteCode.includes('Promise<{ text: string; provider: string }>'),
+      queryRouteCode.includes('Promise<{ text: string; provider: string }>') ||
+      queryRouteCode.includes('Promise<{ text: string; provider: string; model: string }>'),
       'generateAIResponse in query/route.ts must return text and provider'
     );
 

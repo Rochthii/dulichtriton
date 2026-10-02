@@ -17,7 +17,7 @@ import { streamGeminiNative, callGeminiLiveSearch } from './ai/geminiClient';
 import { streamGroqNative, streamOpenRouterNative, callGroqFallback, callOpenRouterFallback } from './ai/fallbackClients';
 import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
 import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
-import { resolveAuditProvider } from './chatAuditProviderHelper';
+import { resolveAuditProvider, resolveAuditModel } from './chatAuditProviderHelper';
 
 export * from './ai/config';
 export * from './ai/geminiClient';
@@ -32,6 +32,7 @@ export interface StreamOutputChunk {
   type: 'delta' | 'done';
   content?: string;
   provider?: string;
+  model?: string;
 }
 
 /**
@@ -47,10 +48,10 @@ export async function* streamAIResponse(
     const words = analysis.emergencyPayload.split(' ');
     for (let i = 0; i < words.length; i += 4) {
       const chunk = words.slice(i, i + 4).join(' ') + ' ';
-      yield { type: 'delta', content: chunk, provider: 'emergency_instant_bypass' };
+      yield { type: 'delta', content: chunk, provider: 'emergency_instant_bypass', model: 'emergency-instant-rule-engine' };
       await new Promise((r) => setTimeout(r, 4));
     }
-    yield { type: 'done', provider: 'emergency_instant_bypass' };
+    yield { type: 'done', provider: 'emergency_instant_bypass', model: 'emergency-instant-rule-engine' };
     return;
   }
 
@@ -75,10 +76,10 @@ export async function* streamAIResponse(
           clearTimeout(timer);
           if (chunk.type === 'delta' && chunk.content) {
             hasYielded = true;
-            yield { type: 'delta', content: chunk.content, provider: chunk.provider };
+            yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.geminiModels[0] };
           }
           if (chunk.type === 'done') {
-            yield { type: 'done', provider: chunk.provider || `gemini-${keyObj.id}` };
+            yield { type: 'done', provider: chunk.provider || `gemini-${keyObj.id}`, model: chunk.model || AI_CONFIG.geminiModels[0] };
             return;
           }
         }
@@ -93,6 +94,7 @@ export async function* streamAIResponse(
 
   // ── 3. LUỒNG 3: SMART HEDGING RACER (GROQ LPU 0ms ➔ GEMINI FAILOVER 600ms) ─
   let activeProvider = '';
+  let activeModel = '';
   let hasReceivedFirstToken = false;
 
   const groqAbort = new AbortController();
@@ -114,12 +116,13 @@ export async function* streamAIResponse(
             if (!hasReceivedFirstToken) {
               hasReceivedFirstToken = true;
               activeProvider = chunk.provider || 'groq-lpu';
+              activeModel = chunk.model || AI_CONFIG.groqModels[0];
               geminiAbort.abort(); // Hủy Gemini nếu đã bắt đầu
             }
-            yield { type: 'delta', content: chunk.content, provider: activeProvider };
+            yield { type: 'delta', content: chunk.content, provider: activeProvider, model: activeModel || chunk.model };
           }
           if (chunk.type === 'done') {
-            yield { type: 'done', provider: activeProvider || chunk.provider };
+            yield { type: 'done', provider: activeProvider || chunk.provider, model: activeModel || chunk.model };
             return;
           }
         }
@@ -148,10 +151,11 @@ export async function* streamAIResponse(
           if (chunk.type === 'delta' && chunk.content) {
             hasReceivedFirstToken = true;
             activeProvider = chunk.provider || `gemini-${keyObj.id}`;
-            yield { type: 'delta', content: chunk.content, provider: activeProvider };
+            activeModel = chunk.model || AI_CONFIG.geminiModels[0];
+            yield { type: 'delta', content: chunk.content, provider: activeProvider, model: activeModel || chunk.model };
           }
           if (chunk.type === 'done') {
-            yield { type: 'done', provider: activeProvider || chunk.provider };
+            yield { type: 'done', provider: activeProvider || chunk.provider, model: activeModel || chunk.model };
             return;
           }
         }
@@ -175,10 +179,10 @@ export async function* streamAIResponse(
 
       for await (const chunk of openRouterGen) {
         if (chunk.type === 'delta' && chunk.content) {
-          yield { type: 'delta', content: chunk.content, provider: chunk.provider };
+          yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0] };
         }
         if (chunk.type === 'done') {
-          yield { type: 'done', provider: chunk.provider };
+          yield { type: 'done', provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0] };
           return;
         }
       }
@@ -192,10 +196,10 @@ export async function* streamAIResponse(
   const words = localExpertResponse.split(' ');
   for (let i = 0; i < words.length; i += 3) {
     const chunk = words.slice(i, i + 3).join(' ') + ' ';
-    yield { type: 'delta', content: chunk, provider: 'local_expert_rag' };
+    yield { type: 'delta', content: chunk, provider: 'local_expert_rag', model: 'local-expert-rag-v1' };
     await new Promise((r) => setTimeout(r, 6));
   }
-  yield { type: 'done', provider: 'local_expert_rag' };
+  yield { type: 'done', provider: 'local_expert_rag', model: 'local-expert-rag-v1' };
 }
 
 /**
@@ -204,9 +208,10 @@ export async function* streamAIResponse(
 export async function generateAIResponse(
   systemPrompt: string,
   userPrompt: string
-): Promise<{ text: string; provider: string }> {
+): Promise<{ text: string; provider: string; model: string }> {
   let fullText = '';
   let providerUsed = '';
+  let modelUsed = '';
 
   for await (const chunk of streamAIResponse(systemPrompt, userPrompt)) {
     if (chunk.type === 'delta' && chunk.content) {
@@ -214,15 +219,26 @@ export async function generateAIResponse(
       if (chunk.provider) {
         providerUsed = chunk.provider;
       }
+      if (chunk.model) {
+        modelUsed = chunk.model;
+      }
     }
-    if (chunk.type === 'done' && chunk.provider) {
-      providerUsed = chunk.provider;
+    if (chunk.type === 'done') {
+      if (chunk.provider) {
+        providerUsed = chunk.provider;
+      }
+      if (chunk.model) {
+        modelUsed = chunk.model;
+      }
     }
   }
+
+  const resolvedModel = resolveAuditModel(modelUsed, providerUsed);
 
   return {
     text: applyTruthAnchor(fullText),
     provider: resolveAuditProvider(providerUsed),
+    model: resolvedModel,
   };
 }
 

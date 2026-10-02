@@ -10,12 +10,14 @@ import { AI_CONFIG, isKeyInCooldown, recordKeyUsage, setKeyCooldown, getRoundRob
 export interface FallbackCallResult {
   text: string;
   provider: string;
+  model?: string;
 }
 
 export interface StreamChunk {
   type: 'delta' | 'done';
   content?: string;
   provider?: string;
+  model?: string;
 }
 
 /**
@@ -105,7 +107,7 @@ export async function* streamGroqNative(
               const delta = parsed.choices?.[0]?.delta?.content;
               if (delta) {
                 hasYielded = true;
-                yield { type: 'delta', content: delta, provider: `groq-${keyObj.id}-${model}` };
+                yield { type: 'delta', content: delta, provider: `groq-${keyObj.id}-${model}`, model };
               }
             } catch {
               // ignore parse errors on incomplete chunks
@@ -114,7 +116,7 @@ export async function* streamGroqNative(
         }
 
         if (hasYielded) {
-          yield { type: 'done', provider: `groq-${keyObj.id}-${model}` };
+          yield { type: 'done', provider: `groq-${keyObj.id}-${model}`, model };
           return;
         }
       } catch (err: any) {
@@ -287,7 +289,7 @@ export async function* streamOpenRouterNative(
           const delta = parsed.choices?.[0]?.delta?.content;
           if (delta) {
             hasYielded = true;
-            yield { type: 'delta', content: delta, provider: `openrouter-${model}` };
+            yield { type: 'delta', content: delta, provider: `openrouter-${model}`, model };
           }
         } catch {
           // ignore chunk error
@@ -296,7 +298,7 @@ export async function* streamOpenRouterNative(
     }
 
     if (hasYielded) {
-      yield { type: 'done', provider: `openrouter-${model}` };
+      yield { type: 'done', provider: `openrouter-${model}`, model };
       return;
     }
   } catch (err: any) {

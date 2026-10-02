@@ -4,7 +4,7 @@ import { generateSmartSuggestions } from '@/lib/ai/contextualSuggestionEngine';
 import { getSupabaseServerClient } from '@/lib/serverSupabase';
 import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
-import { resolveAuditProvider } from '@/lib/chatAuditProviderHelper';
+import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -73,6 +73,7 @@ function logChatEvent(payload: {
   query: string;
   response_preview?: string;
   provider_used?: string;
+  model_used?: string;
   rag_method?: string;
   places_count?: number;
   latency_ms?: number;
@@ -221,6 +222,7 @@ export async function POST(req: NextRequest) {
         if (checkIsOutOfScope(queryStr, history)) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
           const oosProvider = resolveAuditProvider(undefined, true);
+          const oosModel = resolveAuditModel(undefined, undefined, true);
           send({ type: 'token', token: oosMsg, delta: oosMsg });
           send({
             type: 'done',
@@ -232,6 +234,7 @@ export async function POST(req: NextRequest) {
             query: queryStr,
             response_preview: oosMsg.slice(0, 300),
             provider_used: oosProvider,
+            model_used: oosModel,
             is_out_scope: true,
             latency_ms: Date.now() - t0,
           });
@@ -251,6 +254,7 @@ export async function POST(req: NextRequest) {
 
         let fullText = '';
         let providerUsed = '';
+        let modelUsed = '';
 
         // 3. Realtime Native SSE Token Streaming (<300ms TTFT)
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
@@ -259,14 +263,22 @@ export async function POST(req: NextRequest) {
             if (chunk.provider) {
               providerUsed = chunk.provider;
             }
+            if (chunk.model) {
+              modelUsed = chunk.model;
+            }
             send({
               type: 'token',
               token: chunk.content,
               delta: chunk.content,
             });
           }
-          if (chunk.type === 'done' && chunk.provider) {
-            providerUsed = chunk.provider;
+          if (chunk.type === 'done') {
+            if (chunk.provider) {
+              providerUsed = chunk.provider;
+            }
+            if (chunk.model) {
+              modelUsed = chunk.model;
+            }
           }
         }
 
@@ -299,6 +311,7 @@ export async function POST(req: NextRequest) {
           query: queryStr,
           response_preview: fullText.slice(0, 300),
           provider_used: resolveAuditProvider(providerUsed),
+          model_used: resolveAuditModel(modelUsed, providerUsed),
           rag_method: 'unified-rag-native-stream',
           places_count: ragResult.places.length,
           latency_ms: Date.now() - t0,
