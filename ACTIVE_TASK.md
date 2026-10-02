@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover)
+### P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Áp dụng tham số timeout đã được phê duyệt trong Decision Record `DR-LLM-STRATEGY-001` (`GROQ_PRIMARY_TIMEOUT_MS = 2500ms`) vào engine `frontend/src/lib/aiProvider.ts` và các native clients; xây dựng fault test chứng minh thời điểm ngắt kết nối và chuyển tầng failover sang secondary provider chính xác tại mốc $\sim 2500\text{ms}$.
-- **Next task sau P04-015:** P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result).
+- **Mục tiêu duy nhất:** Viết integration test mô phỏng kịch bản Groq primary bị timeout ngắt kết nối và kiểm chứng fallback (Gemini Secondary / Local RAG) trả về kết quả có cấu trúc hoàn chỉnh (structured result: text, provider, model hợp lệ, không bị rách chunk, không treo socket).
+- **Next task sau P04-016:** P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
 
 ---
 
@@ -91,11 +91,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 65. 🟢 **`P04-012`** *(Hoàn thành)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
 66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
 67. 🟢 **`P04-014`** *(Hoàn thành)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
-68. 🟡 **`P04-015`** *(Đang mở)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
+68. 🟢 **`P04-015`** *(Hoàn thành)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
+69. 🟡 **`P04-016`** *(Đang mở)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover)
+- **Status:** `done` tại `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/lib/ai/fallbackClients.ts`, và `frontend/scripts/chat-groq-timeout-failover.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển module helper chuyên dụng `frontend/src/lib/chatGroqTimeoutHelper.ts` cung cấp `createBoundedTimeoutController` và `orchestrateGroqWithFailover` áp dụng tham số timeout chuẩn hóa `GROQ_PRIMARY_TIMEOUT_MS = 2500ms` (tuân thủ Decision Record `DR-LLM-STRATEGY-001`).
+  - Áp dụng cơ chế `Promise.race` giữa TTFT token đầu tiên của Groq và Timeout Promise: giải quyết triệt để rủi ro treo socket/zombie generator, ngắt kết nối chính xác tại mốc $\sim 2500\text{ms}$ và chuyển ngay sang Secondary Provider (Gemini).
+  - Tái cấu trúc Luồng 3 trong `frontend/src/lib/aiProvider.ts` ủy quyền cho `orchestrateGroqWithFailover`, loại bỏ mã lặp, hỗ trợ dependency injection qua `StreamAIOptions`.
+  - Cập nhật native client `streamGroqNative` trong `frontend/src/lib/ai/fallbackClients.ts` bổ sung local timeout fail-safe 2500ms khi caller không truyền `abortSignal`.
+  - Xây dựng bộ kiểm thử fault test tự động `frontend/scripts/chat-groq-timeout-failover.test.mjs` đạt 7/7 assertions pass 100%: đo lường thực tế thời điểm failover chính xác tại mốc $\sim 2500\text{ms}$ (`2512ms`) khi Groq bị treo socket, hủy timer ngay khi nhận token đầu tiên và chuyển tầng an toàn sang Gemini Secondary.
+  - Toàn bộ 414/414 unit/integration tests frontend pass sạch sẽ (0 failures); build production Next.js 16 đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Groq Primary Bounded Timeout & Failover Proof).
+- **Next task:** P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result).
 
 ### P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off)
 - **Status:** `done` tại `docs/technical-spec/DECISION_RECORD_MULTI_LLM_PROVIDER_STRATEGY.md` và `frontend/scripts/multi-llm-strategy-decision-record.test.mjs`.

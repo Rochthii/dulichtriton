@@ -27,7 +27,8 @@ export async function* streamGroqNative(
   systemPrompt: string,
   userPrompt: string,
   preferredModel?: string,
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal,
+  timeoutMs = 2500
 ): AsyncGenerator<StreamChunk> {
   const groqKeyPool = getRoundRobinGroqKeys();
 
@@ -39,93 +40,118 @@ export async function* streamGroqNative(
     ? [preferredModel, ...AI_CONFIG.groqModels.filter(m => m !== preferredModel)]
     : AI_CONFIG.groqModels;
 
-  for (const keyObj of groqKeyPool) {
-    for (const model of modelsToTry) {
-      if (abortSignal?.aborted) return;
+  let localAbort: AbortController | null = null;
+  let localTimer: NodeJS.Timeout | null = null;
+  if (!abortSignal) {
+    localAbort = new AbortController();
+    localTimer = setTimeout(() => {
+      localAbort?.abort(new Error(`Groq stream timeout exceeded after ${timeoutMs}ms`));
+    }, timeoutMs);
+  }
+  const effectiveSignal = abortSignal || localAbort?.signal;
 
-      try {
-        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${keyObj.key}`,
-          },
-          body: JSON.stringify({
-            model,
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt },
-            ],
-            temperature: 0.6,
-            max_tokens: 1536,
-            stream: true,
-          }),
-          signal: abortSignal,
-        });
+  try {
+    for (const keyObj of groqKeyPool) {
+      for (const model of modelsToTry) {
+        if (effectiveSignal?.aborted) return;
 
-        if (!res.ok) {
-          if (res.status === 429) {
-            setKeyCooldown(keyObj.id, 30000);
-            console.warn(`[Groq Stream] Key ${keyObj.id} 429 Rate Limited. Switching key...`);
-            break;
-          }
-          console.warn(`[Groq Stream] Key ${keyObj.id} / Model ${model} HTTP ${res.status}. Trying next...`);
-          continue;
-        }
+        try {
+          const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${keyObj.key}`,
+            },
+            body: JSON.stringify({
+              model,
+              messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userPrompt },
+              ],
+              temperature: 0.6,
+              max_tokens: 1536,
+              stream: true,
+            }),
+            signal: effectiveSignal,
+          });
 
-        if (!res.body) {
-          continue;
-        }
-
-        recordKeyUsage(keyObj.id);
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
-        let hasYielded = false;
-
-        while (true) {
-          if (abortSignal?.aborted) {
-            reader.cancel().catch(() => {});
-            return;
+          if (!res.ok) {
+            if (res.status === 429) {
+              setKeyCooldown(keyObj.id, 30000);
+              console.warn(`[Groq Stream] Key ${keyObj.id} 429 Rate Limited. Switching key...`);
+              break;
+            }
+            console.warn(`[Groq Stream] Key ${keyObj.id} / Model ${model} HTTP ${res.status}. Trying next...`);
+            continue;
           }
 
-          const { value, done } = await reader.read();
-          if (done) break;
+          if (!res.body) {
+            continue;
+          }
 
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
+          recordKeyUsage(keyObj.id);
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+          let hasYielded = false;
 
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed.startsWith('data:')) continue;
-            const dataStr = trimmed.replace(/^data:\s*/, '').trim();
-            if (!dataStr || dataStr === '[DONE]') continue;
+          while (true) {
+            if (effectiveSignal?.aborted) {
+              reader.cancel().catch(() => {});
+              return;
+            }
 
-            try {
-              const parsed = JSON.parse(dataStr);
-              const delta = parsed.choices?.[0]?.delta?.content;
-              if (delta) {
-                hasYielded = true;
-                yield { type: 'delta', content: delta, provider: `groq-${keyObj.id}-${model}`, model };
+            const { value, done } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed.startsWith('data:')) continue;
+              const dataStr = trimmed.replace(/^data:\s*/, '').trim();
+              if (!dataStr || dataStr === '[DONE]') continue;
+
+              try {
+                const parsed = JSON.parse(dataStr);
+                const delta = parsed.choices?.[0]?.delta?.content;
+                if (delta) {
+                  hasYielded = true;
+                  if (localTimer) {
+                    clearTimeout(localTimer);
+                    localTimer = null;
+                  }
+                  yield { type: 'delta', content: delta, provider: `groq-${keyObj.id}-${model}`, model };
+                }
+              } catch {
+                // ignore parse errors on incomplete chunks
               }
-            } catch {
-              // ignore parse errors on incomplete chunks
             }
           }
-        }
 
-        if (hasYielded) {
-          yield { type: 'done', provider: `groq-${keyObj.id}-${model}`, model };
-          return;
+          if (hasYielded) {
+            if (localTimer) {
+              clearTimeout(localTimer);
+              localTimer = null;
+            }
+            yield { type: 'done', provider: `groq-${keyObj.id}-${model}`, model };
+            return;
+          }
+        } catch (err: any) {
+          if (err.name === 'AbortError' || effectiveSignal?.aborted) {
+            return;
+          }
+          console.warn(`[Groq Stream] Key ${keyObj.id} / Model ${model} failed: ${err.message}`);
+          continue;
         }
-      } catch (err: any) {
-        if (err.name === 'AbortError' || abortSignal?.aborted) {
-          return;
-        }
-        console.warn(`[Groq Stream] Key ${keyObj.id} / Model ${model} failed: ${err.message}`);
-        continue;
       }
+    }
+  } finally {
+    if (localTimer) {
+      clearTimeout(localTimer);
+      localTimer = null;
     }
   }
 

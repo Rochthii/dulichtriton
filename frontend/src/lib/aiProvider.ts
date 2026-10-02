@@ -27,6 +27,17 @@ export * from './ai/semanticCache';
 export * from './ai/intentRouter';
 export * from './ai/ragEngine';
 export * from './chatAuditProviderHelper';
+export * from './chatGroqTimeoutHelper';
+
+import {
+  GROQ_PRIMARY_TIMEOUT_MS,
+  GEMINI_SECONDARY_TIMEOUT_MS,
+  OPENROUTER_TERTIARY_TIMEOUT_MS,
+  LOCAL_RAG_TIMEOUT_MS,
+  getGroqPrimaryTimeoutMs,
+  createBoundedTimeoutController,
+  orchestrateGroqWithFailover,
+} from './chatGroqTimeoutHelper';
 
 export interface StreamOutputChunk {
   type: 'delta' | 'done';
@@ -35,12 +46,27 @@ export interface StreamOutputChunk {
   model?: string;
 }
 
+export interface StreamAIOptions {
+  groqTimeoutMs?: number;
+  customGroqStream?: (
+    systemPrompt: string,
+    userPrompt: string,
+    signal?: AbortSignal
+  ) => AsyncGenerator<StreamOutputChunk>;
+  customGeminiStream?: (
+    systemPrompt: string,
+    userPrompt: string,
+    signal?: AbortSignal
+  ) => AsyncGenerator<StreamOutputChunk>;
+}
+
 /**
- * Smart Hedging Native SSE Streaming Engine v80.0.0
+ * Sequential Failover với Fast Bounded Timeout Native SSE Streaming Engine (DR-LLM-STRATEGY-001)
  */
 export async function* streamAIResponse(
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
+  options?: StreamAIOptions
 ): AsyncGenerator<StreamOutputChunk> {
   // ── 1. LUỒNG 1: SOS KHẨN CẤP (< 30ms BYPASS TOÀN BỘ LLM) ───────────────────
   const analysis = routeQueryIntent(userPrompt);
@@ -92,80 +118,55 @@ export async function* streamAIResponse(
     }
   }
 
-  // ── 3. LUỒNG 3: SMART HEDGING RACER (GROQ LPU 0ms ➔ GEMINI FAILOVER 600ms) ─
-  let activeProvider = '';
-  let activeModel = '';
-  let hasReceivedFirstToken = false;
-
-  const groqAbort = new AbortController();
-  const geminiAbort = new AbortController();
-
+  // ── 3. LUỒNG 3: SEQUENTIAL FAILOVER VỚI FAST BOUNDED TIMEOUT (DR-LLM-STRATEGY-001) ──
+  // Tầng 1: Groq LPU Primary (llama-3.3-70b-versatile) với Bounded Timeout 2500ms
+  // Tầng 2: Google Gemini Round-Robin Failover (khi Groq timeout > 2500ms hoặc gặp lỗi)
   try {
-    // 3a. Khởi chạy Groq LPU Native Stream trước (Ưu tiên số 1: ~200ms TTFT)
-    let groqGenerator: AsyncGenerator<any> | null = null;
-    try {
-      groqGenerator = streamGroqNative(systemPrompt, userPrompt, AI_CONFIG.groqModels[0], groqAbort.signal);
-    } catch {
-      groqGenerator = null;
-    }
-
-    if (groqGenerator) {
-      try {
-        for await (const chunk of groqGenerator) {
-          if (chunk.type === 'delta' && chunk.content) {
-            if (!hasReceivedFirstToken) {
-              hasReceivedFirstToken = true;
-              activeProvider = chunk.provider || 'groq-lpu';
-              activeModel = chunk.model || AI_CONFIG.groqModels[0];
-              geminiAbort.abort(); // Hủy Gemini nếu đã bắt đầu
-            }
-            yield { type: 'delta', content: chunk.content, provider: activeProvider, model: activeModel || chunk.model };
-          }
-          if (chunk.type === 'done') {
-            yield { type: 'done', provider: activeProvider || chunk.provider, model: activeModel || chunk.model };
-            return;
-          }
-        }
-        if (hasReceivedFirstToken) return;
-      } catch (groqErr: any) {
-        console.warn(`[AI Provider] Groq stream interrupted (${groqErr.message}). Switching to Gemini...`);
+    const primaryStreamFn = (signal: AbortSignal) => {
+      if (options?.customGroqStream) {
+        return options.customGroqStream(systemPrompt, userPrompt, signal);
       }
-    }
+      return streamGroqNative(systemPrompt, userPrompt, AI_CONFIG.groqModels[0], signal);
+    };
 
-    // 3b. Nếu Groq thất bại hoặc không có key -> Failover ngay sang Gemini Native Stream
-    const geminiKeys = getRoundRobinGeminiKeys();
-    if (geminiKeys.length > 0) {
-      const keyObj = geminiKeys[0];
-      try {
-        const geminiGen = streamGeminiNative(
+    const fallbackStreamFn = (signal: AbortSignal) => {
+      if (options?.customGeminiStream) {
+        return options.customGeminiStream(systemPrompt, userPrompt, signal);
+      }
+      const geminiKeys = getRoundRobinGeminiKeys();
+      if (geminiKeys.length > 0) {
+        const keyObj = geminiKeys[0];
+        return streamGeminiNative(
           keyObj.key,
           keyObj.id,
           AI_CONFIG.geminiModels[0],
           systemPrompt,
           userPrompt,
           false,
-          geminiAbort.signal
+          signal
         );
+      }
+      return (async function* () {})();
+    };
 
-        for await (const chunk of geminiGen) {
-          if (chunk.type === 'delta' && chunk.content) {
-            hasReceivedFirstToken = true;
-            activeProvider = chunk.provider || `gemini-${keyObj.id}`;
-            activeModel = chunk.model || AI_CONFIG.geminiModels[0];
-            yield { type: 'delta', content: chunk.content, provider: activeProvider, model: activeModel || chunk.model };
-          }
-          if (chunk.type === 'done') {
-            yield { type: 'done', provider: activeProvider || chunk.provider, model: activeModel || chunk.model };
-            return;
-          }
-        }
-        if (hasReceivedFirstToken) return;
-      } catch (geminiErr: any) {
-        console.warn(`[AI Provider] Gemini stream failed (${geminiErr.message}). Failover to OpenRouter...`);
+    let hasYieldedFromPrimaryChain = false;
+    for await (const chunk of orchestrateGroqWithFailover(
+      primaryStreamFn,
+      fallbackStreamFn,
+      { groqTimeoutMs: options?.groqTimeoutMs }
+    )) {
+      hasYieldedFromPrimaryChain = true;
+      yield chunk;
+      if (chunk.type === 'done') {
+        return;
       }
     }
-  } catch (racingErr: any) {
-    console.warn(`[AI Provider] Primary hedging failed (${racingErr.message})...`);
+
+    if (hasYieldedFromPrimaryChain) {
+      return;
+    }
+  } catch (primaryErr: any) {
+    console.warn(`[AI Provider] Primary provider chain failed (${primaryErr.message})...`);
   }
 
   // ── 4. LUỒNG 4: OPENROUTER FREE STREAMING FALLBACK ──────────────────────────
@@ -207,13 +208,14 @@ export async function* streamAIResponse(
  */
 export async function generateAIResponse(
   systemPrompt: string,
-  userPrompt: string
+  userPrompt: string,
+  options?: StreamAIOptions
 ): Promise<{ text: string; provider: string; model: string }> {
   let fullText = '';
   let providerUsed = '';
   let modelUsed = '';
 
-  for await (const chunk of streamAIResponse(systemPrompt, userPrompt)) {
+  for await (const chunk of streamAIResponse(systemPrompt, userPrompt, options)) {
     if (chunk.type === 'delta' && chunk.content) {
       fullText += chunk.content;
       if (chunk.provider) {
