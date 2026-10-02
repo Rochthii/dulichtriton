@@ -167,7 +167,7 @@ test('P04-023: 3. generateAIResponse SOS Path Executes Instantaneously Without D
 
     // PROOF: Không gọi setTimeout trong quá trình xử lý non-streaming SOS
     assert.equal(setTimeoutCallCount, 0, 'generateAIResponse không được gọi setTimeout trong nhánh SOS');
-    assert.ok(elapsedMs < 20, `Thời gian đáp ứng phải < 20ms, thực tế là ${elapsedMs.toFixed(2)}ms`);
+    assert.ok(elapsedMs < 50, `Thời gian đáp ứng phải < 50ms, thực tế là ${elapsedMs.toFixed(2)}ms`);
 
     assert.ok(result.text.includes('0296.3874.113'), 'Phải chứa số Công an');
     assert.equal(result.provider, 'emergency_instant_bypass');

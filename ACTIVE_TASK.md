@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-011 — Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass)
+### P05-012 — Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Sửa thuật toán trùng lặp hoặc thêm normalization/synonym matching trong `tourism_crawler/deduplicate/similarity.py` cho alias nổi tiếng "Hồ Tà Pạ Tuyệt Tình Cốc" khớp với "Hồ Tà Pạ", chứng minh `tests/test_deduplicate.py` pass 100%.
-- **Next task sau P05-011:** P05-012 — Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
+- **Mục tiêu duy nhất:** Ban hành Decision Record kỹ thuật chính thức chọn backend distributed cho rate limit (so sánh Redis self-hosted, Upstash Serverless Redis, Supabase KV/PostgreSQL rate limiting, Cloudflare KV về chi phí, cold-start latency, SLA và độ phức tạp vận hành), xác định kiến trúc chuẩn cho toàn hệ thống Tri Tôn AI.
+- **Next task sau P05-012:** P05-013 — Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test).
 
 ---
 
@@ -110,11 +110,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 84. 🟢 **`P05-008`** *(Hoàn thành)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
 85. 🟢 **`P05-009`** *(Hoàn thành)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
 86. 🟢 **`P05-010`** *(Hoàn thành)*: Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
-87. 🟡 **`P05-011`** *(Đang mở)*: Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
+87. 🟢 **`P05-011`** *(Hoàn thành)*: Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
+88. 🟡 **`P05-012`** *(Đang mở)*: Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-011 — Thêm regression test cho alias Hồ Tà Pạ (Proof: deduplicate test pass)
+- **Status:** `done` tại `tourism_crawler/deduplicate/similarity.py`, `tests/test_deduplicate.py`, và `frontend/scripts/test-deduplicate-alias.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-B Quality & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp thuật toán so khớp địa danh trùng lặp trong `tourism_crawler/deduplicate/similarity.py`:
+    * Thiết lập danh bạ chuẩn tắc `KNOWN_ALIASES` cho các địa danh nổi tiếng Tri Tôn (nhóm `ho_ta_pa` bao gồm: 'hồ tà pạ', 'hồ đá tà pạ', 'tuyệt tình cốc', 'tuyệt tình cốc an giang', 'tuyệt tình cốc tà pạ', 'hồ tà pạ tuyệt tình cốc',...).
+    * Thêm hàm chuẩn hóa chuỗi `normalize_place_name()` và hàm kiểm tra nhóm đồng nghĩa `matches_known_alias()`.
+    * Bổ sung cơ chế đối chiếu Substring Containment (`min_len >= 5`) kết hợp khoảng cách địa lý Haversine `< 200m`, giải quyết triệt để trường hợp tên dài ngắn chênh lệch ("Hồ Tà Pạ" vs "Hồ Tà Pạ Tuyệt Tình Cốc") từng bị Jaccard 3-gram bỏ sót.
+  - Xây dựng bộ kiểm thử pytest regression tests & negative controls tại `tests/test_deduplicate.py`:
+    * `test_ho_ta_pa_alias_tuyet_tinh_coc_regression`: Khẳng định 100% các biến thể địa danh gắn với Hồ Tà Pạ đều được nhận diện trùng lặp chính xác khi ở cùng tọa độ vật lý.
+    * `test_ho_ta_pa_negative_controls`: Khẳng định các thực thể vật lý lân cận nhưng độc lập như "Chùa Tà Pạ" (cách hồ ~330m) hay "Hồ Soài So" không bị gộp nhầm (negative controls bảo toàn nguyên vẹn).
+    * `pytest tests/test_deduplicate.py` đạt 4/4 passed (100%); toàn bộ suite pytest thu thập và pass 13/13 tests sạch sẽ (0 lỗi).
+  - Xây dựng bộ kiểm thử tự động Node.js `frontend/scripts/test-deduplicate-alias.test.mjs` đạt 5/5 assertions pass 100%: (1) tests/test_deduplicate.py executes and passes; (2) Full pytest suite passes 13/13; (3) Deduplication runtime alias matching accuracy for Ho Ta Pa; (4) Negative controls distinct landmarks preserved; (5) Static code invariant audit on KNOWN_ALIASES.
+  - Toàn bộ 539/539 test assertions frontend pass sạch sẽ (0 failures); build production Next.js 16 biên dịch thành công 181/181 routes (exit code 0).
 
 ### P05-010 — Sửa import BaseExporter trong một test đang fail (Proof: test collection pass)
 - **Status:** `done` tại `tourism_crawler/export/exporter.py`, `tourism_crawler/export/__init__.py`, `tests/test_export.py`, và `frontend/scripts/test-export-base-exporter.test.mjs`.
