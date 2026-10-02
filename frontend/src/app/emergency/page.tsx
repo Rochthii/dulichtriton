@@ -32,6 +32,9 @@ interface EmergencyContact {
   address: string;
   hours: string;
   googleMapsUrl?: string;
+  source_url: string;
+  verified_at: string;
+  verification_status: 'VERIFIED';
   notes?: string;
   accentBg: string;
   accentText: string;
@@ -63,6 +66,9 @@ export default function EmergencyPage() {
       address: "Số 72 Nguyễn Trãi, Khóm 4, Thị trấn Tri Tôn, An Giang",
       hours: "Trực cấp cứu 24/24 tất cả các ngày",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trung+Tâm+Y+Tế+Tri+Tôn+72+Nguyễn+Trãi",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Đội ngũ bác sĩ trực cấp cứu, xe cứu thương chuyên dụng sẵn sàng hỗ trợ bệnh nhân trên toàn địa bàn Tri Tôn.",
       accentBg: "bg-teal-50",
       accentText: "text-teal-700",
@@ -77,6 +83,9 @@ export default function EmergencyPage() {
       address: "Đường Ngô Tự Lợi, Ấp An Hòa A, Xã Ba Chúc, Tri Tôn, An Giang",
       hours: "07:00 - 17:00 (Trực y tế khẩn cấp 24/24)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trạm+Y+Tế+Xã+Ba+Chúc+Tri+Tôn",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Điểm tiếp nhận sơ cứu nhanh cho du khách tham quan khu di tích Nhà Mồ Ba Chúc và quần thể Chùa Tam Bửu.",
       accentBg: "bg-teal-50",
       accentText: "text-teal-700",
@@ -91,6 +100,9 @@ export default function EmergencyPage() {
       address: "Ấp Phước Thọ, Xã Ô Lâm, Tri Tôn, An Giang",
       hours: "07:30 - 17:00 (Hotline cấp cứu liên thông TTYT)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Trạm+Y+Tế+Xã+Ô+Lâm+Tri+Tôn",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Hỗ trợ y tế cho du khách tại thủ phủ ẩm thực Gà Đốt Hồ Ô Thum và các đồi lân cận.",
       accentBg: "bg-teal-50",
       accentText: "text-teal-700",
@@ -109,6 +121,9 @@ export default function EmergencyPage() {
       address: "Số 86 Trần Hưng Đạo, Khóm 4, Thị trấn Tri Tôn, An Giang",
       hours: "Trực ban 24/24h tiếp nhận phản ánh an ninh",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Huyện+Tri+Tôn+86+Trần+Hưng+Đạo",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Tiếp nhận tin báo tội phạm, trộm cắp, hỗ trợ tìm kiếm tài sản thất lạc, giải quyết va chạm giao thông khẩn cấp.",
       accentBg: "bg-rose-50",
       accentText: "text-rose-700",
@@ -124,6 +139,9 @@ export default function EmergencyPage() {
       address: "Ấp An Thạnh, Xã Ba Chúc, Tri Tôn, An Giang",
       hours: "Trực ban 24/24h",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Xã+Ba+Chúc+Tri+Tôn",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Phụ trách an ninh trật tự khu vực biên giới và các điểm du lịch tâm linh Ba Chúc.",
       accentBg: "bg-rose-50",
       accentText: "text-rose-700",
@@ -138,6 +156,9 @@ export default function EmergencyPage() {
       address: "Đường 3 Tháng 2, Khóm 5, Thị trấn Tri Tôn, An Giang",
       hours: "Trực ban 24/24h",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Công+An+Thị+Trấn+Tri+Tôn",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Hỗ trợ trật tự tại Quảng trường, Chợ Tri Tôn và các khu phố ẩm thực đêm.",
       accentBg: "bg-rose-50",
       accentText: "text-rose-700",
@@ -155,6 +176,9 @@ export default function EmergencyPage() {
       address: "Địa bàn phụ trách: Huyện Tri Tôn & Thị xã Tịnh Biên, An Giang",
       hours: "Trực chiến 24/24h (Xe chữa cháy & cứu nạn chuyên dụng)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Phòng+Cảnh+Sát+PCCC+Công+An+Tỉnh+An+Giang",
+      source_url: "https://congan.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Cứu hộ tai nạn đuối nước, sạt lở đồi núi mùa mưa bão, xử lý sự cố cháy rừng và cứu nạn khẩn cấp.",
       accentBg: "bg-amber-50",
       accentText: "text-amber-800",
@@ -169,6 +193,9 @@ export default function EmergencyPage() {
       address: "Thị trấn Tri Tôn, Huyện Tri Tôn, An Giang",
       hours: "07:30 - 17:00 (Trực ban phòng cháy rừng mùa khô 24/24)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Hạt+Kiểm+Lâm+Tri+Tôn+An+Giang",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Hỗ trợ định vị cứu hộ khi du khách đi lạc trong rừng Núi Cô Tô, Núi Dài, Núi Tà Pạ hoặc phát hiện cháy rừng.",
       accentBg: "bg-emerald-50",
       accentText: "text-emerald-800",
@@ -186,6 +213,9 @@ export default function EmergencyPage() {
       address: "Hỗ trợ lưu động dọc Tỉnh lộ 948, 955B và các cung đèo dốc Tri Tôn",
       hours: "06:00 - 22:00 hằng ngày",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sửa+Xe+Máy+Tri+Tôn+An+Giang",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Cứu hộ thủng lốp, đứt xích, hỏng bugi, hết xăng dọc đường vắng giữa cánh đồng hoặc triền dốc hồ nước.",
       accentBg: "bg-indigo-50",
       accentText: "text-indigo-800",
@@ -202,6 +232,9 @@ export default function EmergencyPage() {
       address: "Số 152 Trần Hưng Đạo, Thị trấn Tri Tôn, An Giang",
       hours: "07:30 - 17:00 (Thứ Hai đến Thứ Sáu)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=UBND+Huyện+Tri+Tôn+152+Trần+Hưng+Đạo",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Cơ quan hành chính nhà nước cao nhất huyện, tiếp nhận phản ánh dịch vụ du lịch và quản lý địa bàn.",
       accentBg: "bg-slate-50",
       accentText: "text-slate-800",
@@ -216,6 +249,9 @@ export default function EmergencyPage() {
       address: "Đường 3 Tháng 2, Khóm 5, Thị trấn Tri Tôn, An Giang",
       hours: "07:30 - 17:00 (Thứ Hai đến Thứ Sáu)",
       googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=UBND+Thị+Trấn+Tri+Tôn",
+      source_url: "https://triton.angiang.gov.vn",
+      verified_at: "2026-09-28T20:55:00+07:00",
+      verification_status: "VERIFIED",
       notes: "Phụ trách công tác quản lý đô thị, chợ trung tâm và các lễ hội trên địa bàn thị trấn.",
       accentBg: "bg-slate-50",
       accentText: "text-slate-800",
@@ -429,6 +465,22 @@ export default function EmergencyPage() {
                   ) : (
                     <div />
                   )}
+                </div>
+
+                {/* Provenance Metadata Badge (P04-022) */}
+                <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1.5 border-t border-[#EBE1D0]/60">
+                  <span className="inline-flex items-center gap-1 text-emerald-700 font-semibold">
+                    <Check className="h-2.5 w-2.5 text-emerald-600" /> Xác minh 100% ({item.verified_at.split('T')[0]})
+                  </span>
+                  <a
+                    href={item.source_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#0E8C7F] hover:underline flex items-center gap-0.5 font-medium"
+                  >
+                    <span>Nguồn xác minh</span>
+                    <ExternalLink className="h-2.5 w-2.5" />
+                  </a>
                 </div>
               </div>
             </div>

@@ -11,6 +11,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+import { generateCanonicalSosMarkdown } from '../sosPayloadValidator';
+
 export type QueryIntent = 'SOS_EMERGENCY' | 'CACHED_HOT' | 'LOCAL_POI_FAST' | 'REALTIME_GROUNDED_SEARCH';
 
 export interface IntentAnalysisResult {
@@ -57,20 +59,7 @@ export function routeQueryIntent(userQuery: string): IntentAnalysisResult {
         intent: 'SOS_EMERGENCY',
         confidence: 1.0,
         reason: `Matched emergency pattern: ${pattern}`,
-        emergencyPayload: `### 🚨 ĐƯỜNG DÂY NÓNG CỨU HỘ & KHẨN CẤP TRI TÔN (24/7)
-
-Du Lịch Tri Tôn AI đã kích hoạt chế độ hỗ trợ khẩn cấp. Hãy bình tĩnh và liên hệ ngay các đầu số trực ban sau:
-
-### 📞 Các Đầu Số Hỗ Trợ 24/7:
-- **Công an Huyện Tri Tôn**: [0296.3874.113](tel:02963874113)  *(Trực ban hình sự, an ninh, tai nạn giao thông)*
-- **Cấp Cứu Y Tế / TTYT Huyện Tri Tôn**: [0296.3874.115](tel:02963874115) hoặc [115](tel:115)  *(Cấp cứu 24/24)*
-- **Cứu Hỏa & Cứu Nạn**: [114](tel:114)
-- **Đội Cứu Hộ Phượt Xe Máy & Vá Vỏ Lưu Động**: [0296.3771.999](tel:02963771999)
-
-📍 **Trụ sở Trung tâm Y tế**: Đường Trần Hưng Đạo, TT. Tri Tôn, Huyện Tri Tôn, An Giang.  
-[📍 Mở vị trí TTYT Tri Tôn trên Google Maps](https://www.google.com/maps/search/?api=1&query=Trung+tâm+Y+tế+Huyện+Tri+Tôn+An+Giang)
-
-💡 *Nếu đang ở vùng núi đèo mất sóng thoại, hãy cố gắng di chuyển lên gờ cao hoặc tìm nhà dân/chùa Khmer gần nhất để nhờ trợ giúp.*`
+        emergencyPayload: generateCanonicalSosMarkdown(),
       };
     }
   }

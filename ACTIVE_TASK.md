@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at)
+### P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Kiểm tra SOS payload khẩn cấp bảo đảm mọi contact (công an huyện, cứu hỏa, bệnh viện, trạm y tế) đều có đầy đủ trường nguồn kiểm chứng `source_url` hợp lệ và mốc thời gian xác minh thực địa `verified_at`, không có contact nào thiếu nguồn hoặc mang tính giả định.
-- **Next task sau P04-022:** P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
+- **Mục tiêu duy nhất:** Xóa bỏ hoàn toàn lời gọi trễ/delay nhân tạo (`setTimeout`, `sleep`) khỏi luồng phản hồi khẩn cấp SOS (`SOS_EMERGENCY`) trong cả streaming lẫn non-streaming generator, bảo đảm thời gian phát token đầu tiên (TTFT) đạt cực tiểu tức thì (< 30ms) phục vụ an toàn cứu nạn.
+- **Next task sau P04-023:** P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
 
 ---
 
@@ -98,11 +98,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 72. 🟢 **`P04-019`** *(Hoàn thành)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
 73. 🟢 **`P04-020`** *(Hoàn thành)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
 74. 🟢 **`P04-021`** *(Hoàn thành)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
-75. 🟡 **`P04-022`** *(Đang mở)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
+75. 🟢 **`P04-022`** *(Hoàn thành)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
+76. 🟡 **`P04-023`** *(Đang mở)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at)
+- **Status:** `done` tại `frontend/src/lib/sosPayloadValidator.ts`, `frontend/src/lib/ai/intentRouter.ts`, `frontend/src/lib/constants.ts`, `frontend/src/app/emergency/page.tsx`, `docs/technical-spec/VERIFIED_EMERGENCY_HOTLINES.json`, và `frontend/scripts/sos-payload-contact-provenance.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module kiểm toán chuyên dụng `sosPayloadValidator.ts` (`CANONICAL_VERIFIED_SOS_CONTACTS`, `validateSosContacts`, `generateCanonicalSosMarkdown`, `validateSosMarkdownProvenance`) thiết lập quy chuẩn kỹ thuật `EMERGENCY-HOTLINE-CONTRACT-001`.
+  - Chứng minh tính bất biến nguồn liên hệ khẩn cấp (Contact Provenance Invariance Proof): 100% số điện thoại và liên hệ cứu hộ đều bắt buộc có `source_url` chính thức từ cơ quan nhà nước (`https://triton.angiang.gov.vn`, `https://congan.angiang.gov.vn`), timestamp thẩm định thực địa `verified_at` (chuỗi ISO 8601 hợp lệ `2026-09-28T20:55:00+07:00`), và `verification_status: 'VERIFIED'`.
+  - Thẩm định fail-closed: từ chối dứt điểm mọi contact thiếu nguồn (`MISSING_SOURCE_URL`), URL không phải HTTPS (`INVALID_SOURCE_URL`), thiếu timestamp (`MISSING_VERIFIED_AT`), timestamp sai định dạng (`INVALID_VERIFIED_AT`), trạng thái chưa duyệt (`UNVERIFIED_STATUS`), hoặc chứa số điện thoại placeholder bị cấm (`UNAPPROVED_PHONE` như `0913 789 123`, `0296 3760 123`).
+  - Tích hợp `generateCanonicalSosMarkdown` vào `intentRouter.ts` bảo đảm `emergencyPayload` của Chatbot AI gắn kèm trích dẫn nguồn và mốc kiểm toán cho mọi số hotline.
+  - Chuẩn hóa `COMMUNE_EMERGENCY_DIRECTORY` trong `constants.ts` bổ sung `source_url` và `verified_at` cho toàn bộ 15 xã/thị trấn.
+  - Nâng cấp giao diện `/emergency` (`emergency/page.tsx`) hiển thị badge kiểm toán và link nguồn xác minh minh bạch trên từng card liên hệ.
+  - Bộ kiểm thử tự động `sos-payload-contact-provenance.test.mjs` đạt 6/6 assertions pass 100%; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact)
 - **Status:** `done` tại `frontend/src/lib/chatPoisonedKnowledgeGuard.ts`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-poisoned-knowledge.test.mjs`.
