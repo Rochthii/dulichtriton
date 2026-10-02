@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
   Send, Bot, User, Trash2, ArrowLeft,
-  MapPin, Navigation
+  MapPin, Navigation, ShieldCheck, EyeOff
 } from 'lucide-react';
 import FormattedChatMessage from '@/components/FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from '@/components/WireDiagramItinerary';
@@ -13,6 +13,7 @@ import ItineraryPresetPicker from '@/components/ItineraryPresetPicker';
 import AppLogo from '@/components/AppLogo';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
+import { CHAT_CONSENT_STORAGE_KEY, type ConsentStatus } from '@/lib/chatConsentGuard';
 
 interface EmbeddedSpot {
   type?: string;
@@ -74,6 +75,30 @@ export default function ChatbotPageClient() {
     }
   };
 
+  const [chatConsent, setChatConsent] = useState<ConsentStatus>('unset');
+
+  const handleSetConsent = (status: 'granted' | 'denied') => {
+    setChatConsent(status);
+    try {
+      localStorage.setItem(CHAT_CONSENT_STORAGE_KEY, status);
+    } catch { /* ignore */ }
+    if (status === 'denied') {
+      // Khi chuyển sang Ẩn danh: Kích hoạt xóa phiên trên máy chủ ngay lập tức theo quyền được xóa (P05-005)
+      if (sessionIdRef.current && sessionIdRef.current !== 'anonymous') {
+        void fetch(`/api/v1/chat/session?sessionId=${encodeURIComponent(sessionIdRef.current)}`, {
+          method: 'DELETE',
+          headers: {
+            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          },
+        }).catch(() => {});
+      }
+    }
+  };
+
+  const toggleConsent = () => {
+    handleSetConsent(chatConsent === 'denied' ? 'granted' : 'denied');
+  };
+
   useEffect(() => {
     setIsMounted(true);
     const KEY = 'triton_chat_page_session_id';
@@ -91,6 +116,13 @@ export default function ChatbotPageClient() {
     if (storedToken) {
       sessionTokenRef.current = storedToken;
     }
+
+    try {
+      const savedConsent = localStorage.getItem(CHAT_CONSENT_STORAGE_KEY) as ConsentStatus;
+      if (savedConsent === 'granted' || savedConsent === 'denied') {
+        setChatConsent(savedConsent);
+      }
+    } catch { /* ignore */ }
 
     try {
       const saved = localStorage.getItem(SESSION_KEY);
@@ -310,21 +342,27 @@ export default function ChatbotPageClient() {
     setMessages(prev => [...prev, botMsg]);
 
     try {
+      const isConsentDenied = chatConsent === 'denied';
+
       const res = await fetch('/api/v1/chat/stream', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          'x-chat-consent': isConsentDenied ? 'denied' : 'granted',
+          ...(sessionTokenRef.current && !isConsentDenied ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
         },
         body: JSON.stringify({
           question: textToSend,
           query: textToSend,
-          session_id: sessionIdRef.current,
-          session_token: sessionTokenRef.current || undefined,
-          history: messages.slice(-6).map(m => ({
-            sender: m.sender,
-            text: m.text,
-          })),
+          consent: !isConsentDenied,
+          session_id: isConsentDenied ? 'anonymous' : sessionIdRef.current,
+          session_token: !isConsentDenied ? (sessionTokenRef.current || undefined) : undefined,
+          history: isConsentDenied
+            ? []
+            : messages.slice(-6).map(m => ({
+                sender: m.sender,
+                text: m.text,
+              })),
         }),
       });
 
@@ -527,7 +565,29 @@ export default function ChatbotPageClient() {
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={toggleConsent}
+            title={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh (Không lưu phiên). Bấm để lưu 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
+            className={`px-2.5 py-1 rounded-full text-[11px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
+              chatConsent === 'denied'
+                ? 'bg-[#F26B3A]/25 text-[#FFD37A] border border-[#F26B3A]/50'
+                : 'bg-[#0B6B60] text-emerald-200 border border-emerald-400/40 hover:bg-[#095950]'
+            }`}
+          >
+            {chatConsent === 'denied' ? (
+              <>
+                <EyeOff className="w-3.5 h-3.5 text-[#FFD37A]" />
+                <span>Ẩn danh</span>
+              </>
+            ) : (
+              <>
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Lưu 24h</span>
+              </>
+            )}
+          </button>
           <button
             onClick={handleClearHistory}
             title="Xóa lịch sử trò chuyện"
@@ -538,6 +598,34 @@ export default function ChatbotPageClient() {
           </button>
         </div>
       </header>
+
+      {/* Privacy Consent Banner (P05-008: Hiển thị khi người dùng chưa chọn) */}
+      {chatConsent === 'unset' && (
+        <div className="bg-[#FFF8EE] border-b border-[#26221B]/10 px-4 py-2.5 flex items-center justify-between text-xs text-[#26221B] gap-2 shrink-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <ShieldCheck className="w-4 h-4 text-[#0E8C7F] shrink-0" />
+            <span className="text-xs leading-tight text-[#26221B]/90">
+              Lưu ngữ cảnh trò chuyện 24h trên máy chủ để trả lời mạch lạc các câu hỏi tiếp nối?
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => handleSetConsent('granted')}
+              className="px-2.5 py-1 bg-[#0E8C7F] text-white rounded-md text-xs font-bold font-display hover:bg-[#0B6B60] transition-colors cursor-pointer active:scale-95"
+            >
+              Đồng ý
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSetConsent('denied')}
+              className="px-2.5 py-1 bg-transparent text-[#6B6355] border border-[#26221B]/20 rounded-md text-xs hover:bg-[#26221B]/5 transition-colors cursor-pointer active:scale-95"
+            >
+              Ẩn danh
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── QUICK PRESET FILTER CHIPS ───────────────────────────────────── */}
       <div className="px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">

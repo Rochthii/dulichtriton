@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép)
+### P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng)
 
-- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
+- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát yêu cầu đồng thuận người dùng (Consent Requirement) theo Decision Gate G3 (`docs/technical-spec/DECISION_RECORD_CHAT_SESSIONS_RETENTION.md` & `docs/technical-spec/CHAT_DATA_INVENTORY.md` tuân thủ Điều 17 Nghị định 13/2023/NĐ-CP). Bổ sung Banner/Consent UI minh bạch tại giao diện Chatbot, chứng minh luồng từ chối đồng thuận (no-consent path) không lưu trữ lịch sử phiên vào cơ sở dữ liệu trên máy chủ.
-- **Next task sau P05-008:** P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
+- **Mục tiêu duy nhất:** Rà soát các file kiểm thử trong `frontend/scripts` hoặc `scripts/`, xác định test script đang thực hiện network call (như fetch HTTP, DNS query) tại import-time / module initialization time, tách biệt hoàn toàn network call ra khỏi import-time (chuyển sang lazy loading / dependency injection / test hook), chứng minh test import chạy cô lập không phát sinh bất kỳ network call nào.
+- **Next task sau P05-009:** P05-010 — Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
 
 ---
 
@@ -107,11 +107,28 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 81. 🟢 **`P05-005`** *(Hoàn thành)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
 82. 🟢 **`P05-006`** *(Hoàn thành)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
 83. 🟢 **`P05-007`** *(Hoàn thành)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
-84. 🟡 **`P05-008`** *(Đang mở)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
+84. 🟢 **`P05-008`** *(Hoàn thành)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
+85. 🟡 **`P05-009`** *(Đang mở)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép)
+- **Status:** `done` tại `frontend/src/lib/chatConsentGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/components/ChatbotWidget.tsx`, `frontend/src/components/ChatbotPageClient.tsx`, và `frontend/scripts/chat-consent-guard.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module kiểm soát quyền đồng thuận người dùng `chatConsentGuard.ts` (`resolveConsentStatus`, `shouldPersistChatSession`, `shouldLoadChatHistory`, `CHAT_CONSENT_STORAGE_KEY`, `CHAT_CONSENT_HEADER`) tuân thủ nghiêm ngặt Điều 17 Nghị định 13/2023/NĐ-CP và Quyết định Kiến trúc G3 (`DR-G3-RETENTION-SESSIONS-001`).
+  - Thiết lập rào chắn bảo vệ no-consent path fail-closed trên cả hai route xử lý AI: `/api/v1/chat/query` và `/api/v1/chat/stream`:
+    * Khi người dùng từ chối đồng thuận (`consent: false` hoặc header `x-chat-consent: 'denied'`): hệ thống TUYỆT ĐỐI KHÔNG ghi nhận bất kỳ bản ghi nào vào bảng `public.chat_sessions` trên cơ sở dữ liệu Supabase PostgreSQL.
+    * Mọi tính năng hỏi đáp du lịch, gợi ý địa điểm, trích dẫn bản đồ Google Maps vẫn hoạt động trôi chảy 100% ở chế độ ẩn danh (Ephemeral/Incognito Mode).
+    * Khi ở chế độ từ chối đồng thuận, hệ thống không tải lịch sử phiên cũ từ cơ sở dữ liệu và không truyền lịch sử hội thoại lên server (`history: []`), bảo vệ tối đa tính riêng tư cá nhân.
+  - Tích hợp giao diện Consent UI hoàn chỉnh trên cả hai client component `ChatbotWidget.tsx` và `ChatbotPageClient.tsx`:
+    * Thiết kế Privacy Consent Banner trực quan hiển thị thông báo minh bạch: *"Lưu ngữ cảnh trò chuyện 24h để duy trì hội thoại liên tục?"* kèm hai nút hành động thực tế *"Đồng ý"* và *"Ẩn danh"*.
+    * Bổ sung nút chuyển đổi trạng thái (Toggle Badge Button) ngay trên thanh tiêu đề Header cho phép du khách chủ động chuyển đổi tức thì giữa chế độ *"Lưu 24h"* và *"Ẩn danh"*. Khi chuyển sang Ẩn danh, hệ thống tự động kích hoạt API xóa sạch phiên máy chủ trước đó (`DELETE /api/v1/chat/session`) theo quyền được xóa bỏ dữ liệu (Right to Erasure).
+  - Bộ kiểm thử tự động `chat-consent-guard.test.mjs` đạt 6/6 assertions pass 100%: (1) Trích xuất consent từ body/headers; (2) Chặn ghi CSDL khi consent denied hoặc anonymous; (3) Query Route no-consent invariant; (4) Stream Route no-consent invariant; (5) Đồng bộ Consent Banner & Toggle trên cả 2 UI components; (6) Tính toàn vẹn và triệt tiêu history trong chế độ ẩn danh. Toàn bộ 181 routes Next.js 16 biên dịch thành công (exit code 0).
 
 ### P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix)
 - **Status:** `done` tại `frontend/src/app/privacy/page.tsx` và `frontend/scripts/privacy-notice-access-rights-concordance.test.mjs`.

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   MessageSquare, Sparkles, X, Send, Bot, User,
-  MapPin, Navigation, Maximize2, Minimize2, Trash2
+  MapPin, Navigation, Maximize2, Minimize2, Trash2,
+  ShieldCheck, EyeOff
 } from 'lucide-react';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import FormattedChatMessage from './FormattedChatMessage';
@@ -13,6 +14,7 @@ import WireDiagramItinerary, { type ItineraryData } from './WireDiagramItinerary
 import ItineraryPresetPicker from './ItineraryPresetPicker';
 import AppLogo from './AppLogo';
 import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
+import { CHAT_CONSENT_STORAGE_KEY, type ConsentStatus } from '@/lib/chatConsentGuard';
 
 interface EmbeddedSpot {
   type?: string;
@@ -76,6 +78,30 @@ export default function ChatbotWidget() {
     }
   };
 
+  const [chatConsent, setChatConsent] = useState<ConsentStatus>('unset');
+
+  const handleSetConsent = (status: 'granted' | 'denied') => {
+    setChatConsent(status);
+    try {
+      localStorage.setItem(CHAT_CONSENT_STORAGE_KEY, status);
+    } catch { /* ignore */ }
+    if (status === 'denied') {
+      // Khi chuyển sang Ẩn danh: Kích hoạt xóa phiên trên máy chủ ngay lập tức theo quyền được xóa (P05-005)
+      if (sessionIdRef.current && sessionIdRef.current !== 'anonymous') {
+        void fetch(`/api/v1/chat/session?sessionId=${encodeURIComponent(sessionIdRef.current)}`, {
+          method: 'DELETE',
+          headers: {
+            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          },
+        }).catch(() => {});
+      }
+    }
+  };
+
+  const toggleConsent = () => {
+    handleSetConsent(chatConsent === 'denied' ? 'granted' : 'denied');
+  };
+
   useEffect(() => {
     setIsMounted(true);
     const KEY = 'triton_widget_session_id';
@@ -93,6 +119,13 @@ export default function ChatbotWidget() {
     if (storedToken) {
       sessionTokenRef.current = storedToken;
     }
+
+    try {
+      const savedConsent = localStorage.getItem(CHAT_CONSENT_STORAGE_KEY) as ConsentStatus;
+      if (savedConsent === 'granted' || savedConsent === 'denied') {
+        setChatConsent(savedConsent);
+      }
+    } catch { /* ignore */ }
 
     try {
       const saved = localStorage.getItem(SESSION_KEY);
@@ -318,23 +351,29 @@ export default function ChatbotWidget() {
     setMessages(prev => [...prev, botMsg]);
 
     try {
+      const isConsentDenied = chatConsent === 'denied';
+
       const res = await fetch('/api/v1/chat/stream', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
+          'x-chat-consent': isConsentDenied ? 'denied' : 'granted',
+          ...(sessionTokenRef.current && !isConsentDenied ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
         },
         body: JSON.stringify({
           question: textToSend,
           query: textToSend,
-          session_id: sessionIdRef.current,
-          session_token: sessionTokenRef.current || undefined,
-          history: messages
-            .slice(-6)
-            .map(m => ({
-              role: m.sender === 'user' ? 'user' : 'assistant',
-              content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh quá tải context
-            })),
+          consent: !isConsentDenied,
+          session_id: isConsentDenied ? 'anonymous' : sessionIdRef.current,
+          session_token: !isConsentDenied ? (sessionTokenRef.current || undefined) : undefined,
+          history: isConsentDenied
+            ? []
+            : messages
+                .slice(-6)
+                .map(m => ({
+                  role: m.sender === 'user' ? 'user' : 'assistant',
+                  content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh quá tải context
+                })),
         }),
       });
 
@@ -691,7 +730,29 @@ export default function ChatbotWidget() {
               </div>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={toggleConsent}
+                title={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh (Không lưu phiên). Bấm để lưu 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
+                className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
+                  chatConsent === 'denied'
+                    ? 'bg-[#F26B3A]/25 text-[#FFD37A] border border-[#F26B3A]/50'
+                    : 'bg-[#0B6B60] text-emerald-200 border border-emerald-400/40 hover:bg-[#095950]'
+                }`}
+              >
+                {chatConsent === 'denied' ? (
+                  <>
+                    <EyeOff className="w-3 h-3 text-[#FFD37A]" />
+                    <span>Ẩn danh</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck className="w-3 h-3 text-emerald-300" />
+                    <span>Lưu 24h</span>
+                  </>
+                )}
+              </button>
               <button onClick={handleClearHistory} title="Xóa lịch sử" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95">
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -703,6 +764,34 @@ export default function ChatbotWidget() {
               </button>
             </div>
           </div>
+
+          {/* Privacy Consent Banner (P05-008: Hiển thị khi người dùng chưa chọn) */}
+          {chatConsent === 'unset' && (
+            <div className="bg-[#FFF8EE] border-b border-[#26221B]/10 px-3.5 py-2 flex items-center justify-between text-xs text-[#26221B] gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <ShieldCheck className="w-4 h-4 text-[#0E8C7F] shrink-0" />
+                <span className="text-[11px] leading-tight text-[#26221B]/90 truncate">
+                  Lưu ngữ cảnh trò chuyện 24h để duy trì hội thoại liên tục?
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleSetConsent('granted')}
+                  className="px-2 py-0.5 bg-[#0E8C7F] text-white rounded-md text-[11px] font-bold font-display hover:bg-[#0B6B60] transition-colors cursor-pointer active:scale-95"
+                >
+                  Đồng ý
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSetConsent('denied')}
+                  className="px-2 py-0.5 bg-transparent text-[#6B6355] border border-[#26221B]/20 rounded-md text-[11px] hover:bg-[#26221B]/5 transition-colors cursor-pointer active:scale-95"
+                >
+                  Ẩn danh
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Quick preset chips */}
           <div className="px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">

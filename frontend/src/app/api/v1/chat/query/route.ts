@@ -20,6 +20,7 @@ import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 import { detectPoisonedKnowledgeClaims, sanitizeClientChatHistory } from '@/lib/chatPoisonedKnowledgeGuard';
+import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory } from '@/lib/chatConsentGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -353,8 +354,12 @@ export async function POST(req: NextRequest) {
 
     const t0 = startLatencyTimer(); // latency tracking (P04-013)
 
-    // Load and sanitize conversation history (P04-021: chống history poisoning)
-    const rawHistory = await loadHistory(sessionId);
+    const consentStatus = resolveConsentStatus({ body, req });
+    const canPersistSession = shouldPersistChatSession(consentStatus, sessionId);
+    const canLoadHistory = shouldLoadChatHistory(consentStatus, sessionId);
+
+    // Load and sanitize conversation history (P04-021: chống history poisoning; P05-008: tuân thủ consent)
+    const rawHistory = canLoadHistory ? await loadHistory(sessionId) : [];
     const history = sanitizeClientChatHistory(rawHistory);
 
     // 1. Direct Next.js Multi-LLM RAG Engine Execution
@@ -768,8 +773,8 @@ export async function POST(req: NextRequest) {
       aiTextResponse = citationCheck.enrichedText;
     }
 
-    // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
-    if (outValidation.isValid || aiTextResponse.trim().length > 0) {
+    // Persist this turn to chat_sessions (P05-008: Chỉ lưu khi được phép theo consent guard, no-consent path tuyệt đối không ghi)
+    if (canPersistSession && (outValidation.isValid || aiTextResponse.trim().length > 0)) {
       saveHistory(sessionId, [
         ...history,
         { role: 'user',      content: queryStr },

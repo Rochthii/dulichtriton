@@ -12,6 +12,7 @@ import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 import { detectPoisonedKnowledgeClaims, sanitizeClientChatHistory } from '@/lib/chatPoisonedKnowledgeGuard';
+import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory } from '@/lib/chatConsentGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -190,7 +191,11 @@ export async function POST(req: NextRequest) {
   const userLat = typeof body.latitude === 'number' ? body.latitude : (typeof body.user_lat === 'number' ? body.user_lat : undefined);
   const userLng = typeof body.longitude === 'number' ? body.longitude : (typeof body.user_lng === 'number' ? body.user_lng : undefined);
 
-  const rawClientHistory: Turn[] = Array.isArray(body.history)
+  const consentStatus = resolveConsentStatus({ body, req });
+  const canPersistSession = shouldPersistChatSession(consentStatus, sessionId);
+  const canLoadHistory = shouldLoadChatHistory(consentStatus, sessionId);
+
+  const rawClientHistory: Turn[] = (canLoadHistory && Array.isArray(body.history))
     ? (body.history as any[]).map((t) => ({
         role: t.role || (t.sender === 'user' ? 'user' : 'assistant'),
         content: t.content || t.text || '',
@@ -421,8 +426,8 @@ export async function POST(req: NextRequest) {
 
         send(donePayload);
 
-        // 5. Save Conversation Turn (Non-blocking, chỉ lưu khi output hợp lệ)
-        if (fullText.trim() && validateChatbotOutput(fullText).isValid) {
+        // 5. Save Conversation Turn (P05-008: Non-blocking, chỉ lưu khi có consent, no-consent path tuyệt đối không ghi)
+        if (canPersistSession && fullText.trim() && validateChatbotOutput(fullText).isValid) {
           const updatedHistory: Turn[] = [
             ...history,
             { role: 'user', content: queryStr },
