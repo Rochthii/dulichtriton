@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng)
+### P05-010 — Sửa import BaseExporter trong một test đang fail (Proof: test collection pass)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát các file kiểm thử trong `frontend/scripts` hoặc `scripts/`, xác định test script đang thực hiện network call (như fetch HTTP, DNS query) tại import-time / module initialization time, tách biệt hoàn toàn network call ra khỏi import-time (chuyển sang lazy loading / dependency injection / test hook), chứng minh test import chạy cô lập không phát sinh bất kỳ network call nào.
-- **Next task sau P05-009:** P05-010 — Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
+- **Mục tiêu duy nhất:** Sửa import `BaseExporter` trong `tests/test_export.py` (hoặc module xuất khẩu tương ứng `tourism_crawler.export`) hiện đang gây lỗi `ImportError: cannot import name 'BaseExporter' from 'tourism_crawler.export.exporter'`, chứng minh pytest collection thu thập đầy đủ các bài test mà không phát sinh lỗi thu thập.
+- **Next task sau P05-010:** P05-011 — Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
 
 ---
 
@@ -108,11 +108,31 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 82. 🟢 **`P05-006`** *(Hoàn thành)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
 83. 🟢 **`P05-007`** *(Hoàn thành)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
 84. 🟢 **`P05-008`** *(Hoàn thành)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
-85. 🟡 **`P05-009`** *(Đang mở)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
+85. 🟢 **`P05-009`** *(Hoàn thành)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
+86. 🟡 **`P05-010`** *(Đang mở)*: Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng)
+- **Status:** `done` tại `scripts/test_embedding.py`, `scripts/test_page_queries.py`, `tests/test_script_import_no_network.py`, và `frontend/scripts/test-script-import-no-network.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-B Quality & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Tách biệt hoàn toàn network call / socket connection ra khỏi thời điểm import module (`import-time` / module initialization time) tại các test scripts chính:
+    * `scripts/test_embedding.py`: Đóng gói logic gọi API Google Gemini Embeddings vào hàm `test_gemini_embedding(api_key, text, output_dim, urlopen_fn)` và `build_embedding_request`. Loại bỏ 100% việc gọi trực tiếp `urllib.request.urlopen` tại top-level; chuyển toàn bộ logic chạy thử sang khối `if __name__ == '__main__':` hoặc kích hoạt tường minh qua hàm. Hỗ trợ Dependency Injection (`urlopen_fn`) phục vụ kiểm thử cô lập offline.
+    * `scripts/test_page_queries.py`: Đóng gói logic kết nối TCP PostgreSQL vào hàm `run_page_queries_test(database_url, connection_fn)` và guard `if __name__ == '__main__':`. Loại bỏ 100% việc gọi `psycopg2.connect` tại top-level; bảo đảm khi import module không mở socket tới database từ xa.
+  - Xây dựng bộ kiểm thử Python unit test chuyên dụng `tests/test_script_import_no_network.py`:
+    * Mock toàn bộ các giao diện mạng (`urllib.request.urlopen`, `http.client.HTTPConnection.connect`, `socket.socket.connect`, `psycopg2.connect`).
+    * Khẳng định bất biến (Invariant): Khi import `scripts.test_embedding` và `scripts.test_page_queries`, số lượng network calls và database connection calls ĐÚNG BẰNG 0 (`call_count == 0`).
+    * Kiểm chứng cơ chế Dependency Injection và chạy on-demand độc lập offline: 5/5 tests pass 100%.
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/test-script-import-no-network.test.mjs`:
+    * Thẩm định tĩnh (Static AST / Source Code Invariants): cả 2 script có cấu trúc hàm tách biệt, zero top-level network/DB calls, và có guard `if __name__ == '__main__':`.
+    * Kiểm chứng Subprocess Isolation: Lệnh nạp module độc lập trong subprocess kết thúc trôi chảy trong vòng chưa đầy 300ms, không treo socket hay throw lỗi mạng.
+    * Đạt 5/5 assertions pass 100%; toàn bộ 529/529 assertions của frontend test runner pass sạch sẽ (0 failures).
+  - Next.js 16 biên dịch thành công 181/181 routes (exit code 0).
 
 ### P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép)
 - **Status:** `done` tại `frontend/src/lib/chatConsentGuard.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/components/ChatbotWidget.tsx`, `frontend/src/components/ChatbotPageClient.tsx`, và `frontend/scripts/chat-consent-guard.test.mjs`.

@@ -36,6 +36,8 @@ inspect_*.py
 list_*.py
 sync_*.py
 curate_*.py
+!tests/**
+tests/**/__pycache__/
 
 # 3. Node.js & Next.js Frontend
 node_modules/
