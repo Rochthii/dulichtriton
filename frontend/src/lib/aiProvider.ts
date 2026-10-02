@@ -18,6 +18,7 @@ import { streamGroqNative, streamOpenRouterNative, callGroqFallback, callOpenRou
 import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
 import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
 import { resolveAuditProvider, resolveAuditModel } from './chatAuditProviderHelper';
+import { validateChatbotOutput } from './chatOutputSchemaValidator';
 
 export * from './ai/config';
 export * from './ai/geminiClient';
@@ -28,6 +29,7 @@ export * from './ai/intentRouter';
 export * from './ai/ragEngine';
 export * from './chatAuditProviderHelper';
 export * from './chatGroqTimeoutHelper';
+export * from './chatOutputSchemaValidator';
 
 import {
   GROQ_PRIMARY_TIMEOUT_MS,
@@ -235,11 +237,28 @@ export async function generateAIResponse(
     }
   }
 
-  const resolvedModel = resolveAuditModel(modelUsed, providerUsed);
+  let resolvedText = fullText;
+  let finalProvider = providerUsed;
+  let finalModel = modelUsed;
+
+  // P04-018: Kiểm tra Output Schema của Provider; chặn malformed và kích hoạt Fallback
+  const validation = validateChatbotOutput(resolvedText);
+  if (!validation.isValid) {
+    console.warn(
+      `[AI Provider] Malformed provider output detected (${validation.code}: ${validation.reason}). Falling back to Local Expert RAG.`
+    );
+    resolvedText = generateSmartLocalDomainResponse(userPrompt);
+    finalProvider = 'local_expert_rag';
+    finalModel = 'local-expert-rag-v1';
+  } else if (validation.sanitizedText) {
+    resolvedText = validation.sanitizedText;
+  }
+
+  const resolvedModel = resolveAuditModel(finalModel, finalProvider);
 
   return {
-    text: applyTruthAnchor(fullText),
-    provider: resolveAuditProvider(providerUsed),
+    text: applyTruthAnchor(resolvedText),
+    provider: resolveAuditProvider(finalProvider),
     model: resolvedModel,
   };
 }

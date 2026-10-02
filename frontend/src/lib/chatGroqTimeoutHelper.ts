@@ -62,6 +62,8 @@ export function createBoundedTimeoutController(timeoutMs?: number): BoundedTimeo
   };
 }
 
+import { containsRawProviderError } from './chatOutputSchemaValidator';
+
 export interface StreamOutputChunk {
   type: 'delta' | 'done';
   content?: string;
@@ -74,6 +76,7 @@ export interface SequentialFailoverOptions {
   onGroqTimeout?: (elapsedMs: number) => void;
   onFailoverTriggered?: (fromProvider: string, toProvider: string, reason: string) => void;
   onPrimaryStreamError?: (err: Error, partialTextSoFar: string) => void;
+  onPrimaryMalformedOutput?: (rawContent: string, reason: string) => void;
 }
 
 /**
@@ -124,14 +127,33 @@ export async function* orchestrateGroqWithFailover(
 
       const chunk = nextResult.value;
       if (chunk.type === 'delta' && chunk.content) {
-        accumulatedPrimaryText += chunk.content;
         if (!hasReceivedFirstToken) {
+          // P04-018: Kiểm tra nếu token/chunk đầu tiên là raw provider error (chặn và fallback)
+          if (containsRawProviderError(chunk.content)) {
+            options?.onPrimaryMalformedOutput?.(chunk.content, 'RAW_PROVIDER_ERROR');
+            options?.onFailoverTriggered?.(
+              'groq-primary',
+              'gemini-secondary',
+              `Primary returned raw error: ${chunk.content.slice(0, 80)}`
+            );
+            try {
+              if (typeof primaryGen.return === 'function') {
+                const retPromise = primaryGen.return(undefined as any);
+                if (retPromise && typeof retPromise.catch === 'function') {
+                  retPromise.catch(() => {});
+                }
+              }
+            } catch {}
+            break; // Thoát vòng lặp, nhảy xuống khối !hasReceivedFirstToken để kích hoạt fallbackStreamFn
+          }
+
           hasReceivedFirstToken = true;
           bounded.cleanup(); // Hủy timeout timer ngay khi token đầu tiên xuất hiện
           activeProvider = chunk.provider || 'groq-lpu';
           activeModel = chunk.model || 'llama-3.3-70b-versatile';
           secondaryAbort.abort();
         }
+        accumulatedPrimaryText += chunk.content;
         yield {
           type: 'delta',
           content: chunk.content,

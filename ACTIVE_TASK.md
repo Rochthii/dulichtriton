@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback)
+### P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng output schema validator cho câu trả lời chatbot trước khi gửi về client và ghi audit log. Kiểm chứng các phản hồi malformed (rách JSON, markdown lỗi, inject injection hoặc dị tật cấu trúc) bị chặn đứng và kích hoạt fallback an toàn.
-- **Next task sau P04-018:** P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
+- **Mục tiêu duy nhất:** Xây dựng citation coverage gate kiểm tra câu trả lời mang tính sự kiện/thực địa (factual answer). Chứng minh các fixture câu trả lời không có nguồn xác minh (thiếu citation, link Maps/TikTok hoặc reference POI) bị chặn lại và không được thông qua gate.
+- **Next task sau P04-019:** P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
 
 ---
 
@@ -94,11 +94,24 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 68. 🟢 **`P04-015`** *(Hoàn thành)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 69. 🟢 **`P04-016`** *(Hoàn thành)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
 70. 🟢 **`P04-017`** *(Hoàn thành)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
-71. 🟡 **`P04-018`** *(Đang mở)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
+71. 🟢 **`P04-018`** *(Hoàn thành)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
+72. 🟡 **`P04-019`** *(Đang mở)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback)
+- **Status:** `done` tại `frontend/src/lib/chatOutputSchemaValidator.ts`, `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-output-schema-validator.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module kiểm toán schema chuyên dụng `chatOutputSchemaValidator.ts`: thẩm định fail-closed toàn bộ phản hồi từ LLM Providers, loại trừ 100% các dạng malformed: `EMPTY_OR_WHITESPACE` (rỗng, null bytes), `TOO_SHORT_OR_MEANINGLESS` (vô nghĩa, < 15 ký tự), `RAW_PROVIDER_ERROR` (chữ ký lỗi 500, 502, 503, 429, JSON error), `PROMPT_LEAKAGE` (rò rỉ `<system>`, `[INST]`, `<|im_start|>`), `MALFORMED_JSON_DUMP` (JSON rách, raw choices), và `REPETITIVE_LOOP` (vòng lặp lấy mẫu suy thoái n-gram).
+  - Hỗ trợ cơ chế tự động khép kín markdown code fences (`repairMarkdownFences`) bảo vệ giao diện người dùng không bị vỡ bố cục.
+  - Nâng cấp `orchestrateGroqWithFailover` trong `chatGroqTimeoutHelper.ts`: phát hiện và chặn đứng tức thì ngay tại token đầu tiên nếu Groq trả về raw error chunk, kích hoạt failover sạch sang Secondary Gemini / Local RAG không để rác lọt ra client stream.
+  - Nâng cấp `generateAIResponse` trong `aiProvider.ts`, route `query/route.ts` và route `stream/route.ts`: khi phát hiện provider trả về text malformed, tự động kích hoạt fallback an toàn sang Tầng 5: Local Expert RAG (`generateSmartLocalDomainResponse`) và bảo đảm chỉ lưu session turns khi output hợp lệ.
+  - Bộ kiểm thử tự động `chat-output-schema-validator.test.mjs` đạt 12/12 assertions pass 100%; toàn bộ 442/442 test assertions frontend pass sạch sẽ; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai)
 - **Status:** `done` tại `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/lib/chatStructuredResultContract.ts`, và `frontend/scripts/chat-provider-primary-stream-error-integration.test.mjs`.

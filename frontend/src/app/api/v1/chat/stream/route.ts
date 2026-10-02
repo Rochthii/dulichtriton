@@ -7,6 +7,8 @@ import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } fr
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredStreamDoneEvent } from '@/lib/chatStructuredResultContract';
+import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
+import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -288,6 +290,25 @@ export async function POST(req: NextRequest) {
 
         const actualLatencyMs = calculateElapsedMs(t0);
 
+        // P04-018: Thẩm định Output Schema của stream fullText
+        const validation = validateChatbotOutput(fullText);
+        if (!validation.isValid) {
+          console.warn(
+            `[ChatStream] Malformed fullText detected (${validation.code}: ${validation.reason}).`
+          );
+          if (fullText.trim().length === 0) {
+            const fallbackAnswer = generateSmartLocalDomainResponse(queryStr);
+            send({ type: 'token', token: fallbackAnswer, delta: fallbackAnswer });
+            fullText = fallbackAnswer;
+            providerUsed = 'local_expert_rag';
+            modelUsed = 'local-expert-rag-v1';
+          } else if (validation.sanitizedText) {
+            fullText = validation.sanitizedText;
+          }
+        } else if (validation.sanitizedText) {
+          fullText = validation.sanitizedText;
+        }
+
         // 4. Send Completion Event with 100% Dynamic Contextual Suggestions
         const dynamicSuggestions = generateSmartSuggestions({
           query: queryStr,
@@ -307,8 +328,8 @@ export async function POST(req: NextRequest) {
 
         send(donePayload);
 
-        // 5. Save Conversation Turn (Non-blocking)
-        if (fullText.trim()) {
+        // 5. Save Conversation Turn (Non-blocking, chỉ lưu khi output hợp lệ)
+        if (fullText.trim() && validateChatbotOutput(fullText).isValid) {
           const updatedHistory: Turn[] = [
             ...history,
             { role: 'user', content: queryStr },

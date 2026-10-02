@@ -15,6 +15,8 @@ import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/li
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredChatResponse } from '@/lib/chatStructuredResultContract';
+import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
+import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -660,17 +662,31 @@ export async function POST(req: NextRequest) {
     // Generate AI response with Multi-LLM provider fallback + conversation history + dynamic few-shots + knowledge base
     const combinedRagContext = [ragContext, kbSnippet, transportSnippet, festivalsSnippet, goldenFewShotsSnippet].filter(Boolean).join('\n\n');
     const aiResult = await generateAIResponse(queryStr, combinedRagContext, history);
-    const aiTextResponse = aiResult.text;
-    const actualProvider = aiResult.provider;
-    const actualModel = aiResult.model;
+    let aiTextResponse = aiResult.text;
+    let actualProvider = aiResult.provider;
+    let actualModel = aiResult.model;
 
+    // P04-018: Defense-in-depth output schema validation (chặn malformed và fallback)
+    const outValidation = validateChatbotOutput(aiTextResponse);
+    if (!outValidation.isValid) {
+      console.warn(
+        `[ChatQuery] Malformed response detected (${outValidation.code}: ${outValidation.reason}). Fallback to Local Expert RAG.`
+      );
+      aiTextResponse = generateSmartLocalDomainResponse(queryStr);
+      actualProvider = 'local_expert_rag';
+      actualModel = 'local-expert-rag-v1';
+    } else if (outValidation.sanitizedText) {
+      aiTextResponse = outValidation.sanitizedText;
+    }
 
     // Persist this turn to chat_sessions (fire-and-forget, non-blocking)
-    saveHistory(sessionId, [
-      ...history,
-      { role: 'user',      content: queryStr },
-      { role: 'assistant', content: aiTextResponse.slice(0, 1200) }, // cap to avoid DB bloat
-    ]).catch(e => console.warn('[Memory] saveHistory failed:', e));
+    if (outValidation.isValid || aiTextResponse.trim().length > 0) {
+      saveHistory(sessionId, [
+        ...history,
+        { role: 'user',      content: queryStr },
+        { role: 'assistant', content: aiTextResponse.slice(0, 1200) }, // cap to avoid DB bloat
+      ]).catch(e => console.warn('[Memory] saveHistory failed:', e));
+    }
 
     // Fetch context-aware videos (POI matched or Topic matched)
     const videos = await fetchContextAwareVideos(queryStr, places);
