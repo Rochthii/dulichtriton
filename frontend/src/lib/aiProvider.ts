@@ -88,16 +88,21 @@ export async function* streamAIResponse(
     return;
   }
 
-  // ── 1. LUỒNG 1: SOS KHẨN CẤP (< 30ms BYPASS TOÀN BỘ LLM) ───────────────────
+  // ── 1. LUỒNG 1: SOS KHẨN CẤP (P04-023: ZERO ARTIFICIAL DELAY INSTANT BYPASS) ─
   const analysis = routeQueryIntent(userPrompt);
   if (analysis.intent === 'SOS_EMERGENCY' && analysis.emergencyPayload) {
-    const words = analysis.emergencyPayload.split(' ');
-    for (let i = 0; i < words.length; i += 4) {
-      const chunk = words.slice(i, i + 4).join(' ') + ' ';
-      yield { type: 'delta', content: chunk, provider: 'emergency_instant_bypass', model: 'emergency-instant-rule-engine' };
-      await new Promise((r) => setTimeout(r, 4));
-    }
-    yield { type: 'done', provider: 'emergency_instant_bypass', model: 'emergency-instant-rule-engine' };
+    // Phát xuất trực tiếp toàn bộ payload khẩn cấp ngay lập tức — 0 delay nhân tạo
+    yield {
+      type: 'delta',
+      content: analysis.emergencyPayload,
+      provider: 'emergency_instant_bypass',
+      model: 'emergency-instant-rule-engine',
+    };
+    yield {
+      type: 'done',
+      provider: 'emergency_instant_bypass',
+      model: 'emergency-instant-rule-engine',
+    };
     return;
   }
 

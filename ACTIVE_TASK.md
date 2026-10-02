@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper)
+### P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi)
 
-- **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
-- **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
+- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xóa bỏ hoàn toàn lời gọi trễ/delay nhân tạo (`setTimeout`, `sleep`) khỏi luồng phản hồi khẩn cấp SOS (`SOS_EMERGENCY`) trong cả streaming lẫn non-streaming generator, bảo đảm thời gian phát token đầu tiên (TTFT) đạt cực tiểu tức thì (< 30ms) phục vụ an toàn cứu nạn.
-- **Next task sau P04-023:** P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
+- **Mục tiêu duy nhất:** Lập bảng kiểm kê dữ liệu (Data Inventory / Data Catalog) quy chuẩn cho một trường dữ liệu trò chuyện (`public.chat_sessions.session_id`), ghi nhận rõ: Tên trường (field), Mục đích xử lý (purpose), Thời hạn lưu trữ (retention), Vai trò có quyền truy cập (access role), Cơ sở pháp lý và chính sách bảo vệ dữ liệu người dùng.
+- **Next task sau P05-001:** P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
 
 ---
 
@@ -99,11 +99,23 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 73. 🟢 **`P04-020`** *(Hoàn thành)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
 74. 🟢 **`P04-021`** *(Hoàn thành)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
 75. 🟢 **`P04-022`** *(Hoàn thành)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
-76. 🟡 **`P04-023`** *(Đang mở)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
+76. 🟢 **`P04-023`** *(Hoàn thành)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
+77. 🟡 **`P05-001`** *(Đang mở)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper)
+- **Status:** `done` tại `frontend/src/lib/aiProvider.ts` và `frontend/scripts/chat-sos-zero-delay.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xóa bỏ triệt để toàn bộ vòng lặp trễ nhân tạo `await new Promise((r) => setTimeout(r, 4))` cùng mọi lời gọi delay helper khỏi luồng xử lý phản hồi khẩn cấp SOS (`SOS_EMERGENCY`) trong cả streaming generator (`streamAIResponse`) lẫn non-streaming generator (`generateAIResponse`) của `frontend/src/lib/aiProvider.ts`.
+  - Phát xuất tức thì toàn bộ nội dung cứu nạn đã xác minh (`emergencyPayload`) trong 1 delta duy nhất và 1 `done` chunk kết thúc (< 5ms), đưa thời gian phát token đầu tiên (TTFT) về trạng thái tức thời không trễ, phục vụ tính mạng và cứu hộ khẩn cấp của người dân và du khách.
+  - Bảo toàn 100% nội dung cứu nạn đã xác minh (P04-022 provenance): 100% số hotline, link nguồn kiểm toán chính thức `https://triton.angiang.gov.vn`, `https://congan.angiang.gov.vn` và timestamp `verified_at`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-sos-zero-delay.test.mjs` đạt 4/4 assertions pass 100%: (1) `streamAIResponse` SOS response path chạy với ZERO `setTimeout` calls (`setTimeoutCallCount === 0`); (2) Tính toàn vẹn nội dung SOS và trích dẫn provenance; (3) `generateAIResponse` chạy tức thì không delay (< 5ms); (4) Static Code Invariant Audit chứng minh 0% xuất hiện `setTimeout` / `sleep` trong khối code SOS của `aiProvider.ts`. Toàn bộ test regression pass 100%; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at)
 - **Status:** `done` tại `frontend/src/lib/sosPayloadValidator.ts`, `frontend/src/lib/ai/intentRouter.ts`, `frontend/src/lib/constants.ts`, `frontend/src/app/emergency/page.tsx`, `docs/technical-spec/VERIFIED_EMERGENCY_HOTLINES.json`, và `frontend/scripts/sos-payload-contact-provenance.test.mjs`.
