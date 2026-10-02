@@ -8,6 +8,7 @@ import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProvider
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredStreamDoneEvent } from '@/lib/chatStructuredResultContract';
 import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
+import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 
 export const runtime = 'nodejs';
@@ -307,6 +308,27 @@ export async function POST(req: NextRequest) {
           }
         } else if (validation.sanitizedText) {
           fullText = validation.sanitizedText;
+        }
+
+        // P04-019: Thẩm định Citation Coverage cho Factual Answer
+        const citationCheck = checkCitationCoverage(fullText, { allowEnrichment: true });
+        if (!citationCheck.passed) {
+          console.warn(
+            `[ChatStream] Factual response failed citation coverage gate (${citationCheck.code}: ${citationCheck.reason}).`
+          );
+          if (fullText.trim().length === 0 || citationCheck.code === 'MISSING_ALL_CITATIONS') {
+            const fallbackAnswer = generateSmartLocalDomainResponse(queryStr);
+            send({ type: 'token', token: fallbackAnswer, delta: fallbackAnswer });
+            fullText = fallbackAnswer;
+            providerUsed = 'local_expert_rag';
+            modelUsed = 'local-expert-rag-v1';
+          }
+        } else if (citationCheck.enrichedText && citationCheck.wasEnriched) {
+          const extraDelta = citationCheck.enrichedText.slice(fullText.length);
+          if (extraDelta) {
+            send({ type: 'token', token: extraDelta, delta: extraDelta });
+            fullText = citationCheck.enrichedText;
+          }
         }
 
         // 4. Send Completion Event with 100% Dynamic Contextual Suggestions

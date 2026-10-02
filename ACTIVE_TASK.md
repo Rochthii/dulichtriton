@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate)
+### P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng citation coverage gate kiểm tra câu trả lời mang tính sự kiện/thực địa (factual answer). Chứng minh các fixture câu trả lời không có nguồn xác minh (thiếu citation, link Maps/TikTok hoặc reference POI) bị chặn lại và không được thông qua gate.
-- **Next task sau P04-019:** P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
+- **Mục tiêu duy nhất:** Xây dựng bộ adversarial prompt-injection fixtures (jailbreaks, roleplay override, system prompt extraction, data policy tampering). Chứng minh chatbot giữ vững các chính sách bảo mật hệ thống, không tiết lộ system prompt và không thay đổi chính sách dữ liệu.
+- **Next task sau P04-020:** P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
 
 ---
 
@@ -95,11 +95,24 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 69. 🟢 **`P04-016`** *(Hoàn thành)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
 70. 🟢 **`P04-017`** *(Hoàn thành)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
 71. 🟢 **`P04-018`** *(Hoàn thành)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
-72. 🟡 **`P04-019`** *(Đang mở)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
+72. 🟢 **`P04-019`** *(Hoàn thành)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
+73. 🟡 **`P04-020`** *(Đang mở)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate)
+- **Status:** `done` tại `frontend/src/lib/chatCitationCoverageGate.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-citation-coverage-gate.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module kiểm toán trích dẫn chuyên dụng `chatCitationCoverageGate.ts` (`checkCitationCoverage`, `detectFactualElements`, `extractValidCitations`, `enrichFactualCitations`): phân loại chính xác câu trả lời xã giao (`NON_FACTUAL`) và câu trả lời mang tính sự kiện/thực địa (`isFactual = true`).
+  - Thiết lập rào chắn Gatekeeper Fail-Closed: mọi câu trả lời factual nhắc đến các thực thể địa danh/ẩm thực/claims Tri Tôn mà có 0 trích dẫn xác minh (`MISSING_ALL_CITATIONS`) hoặc chứa link domain giả mạo/unapproved (`INVALID_CITATION_DOMAIN`) đều bị CHẶN ĐỨNG 100% không cho thông qua gate.
+  - Hỗ trợ cơ chế Deterministic Citation Enrichment tự động bổ sung link Google Maps và TikTok xác minh cho các thực thể đã có trong CSDL tri thức; đối với các factual fixture bịa đặt / không nguồn, hệ thống từ chối enrich và fail-closed dứt điểm.
+  - Nâng cấp `generateAIResponse` trong `aiProvider.ts`, route `query/route.ts` và route `stream/route.ts`: khi câu trả lời factual không qua Citation Gate, hệ thống tự động kích hoạt fallback an toàn sang Tầng 5: Local Expert RAG (`generateSmartLocalDomainResponse`) nơi 100% câu trả lời đều có trích dẫn bản đồ và video thực địa đã kiểm chứng.
+  - Bộ kiểm thử tự động `chat-citation-coverage-gate.test.mjs` đạt 10/10 assertions pass 100%; toàn bộ 452/452 test assertions frontend pass sạch sẽ; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback)
 - **Status:** `done` tại `frontend/src/lib/chatOutputSchemaValidator.ts`, `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-output-schema-validator.test.mjs`.

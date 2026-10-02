@@ -16,6 +16,7 @@ import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProvider
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredChatResponse } from '@/lib/chatStructuredResultContract';
 import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
+import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
@@ -677,6 +678,19 @@ export async function POST(req: NextRequest) {
       actualModel = 'local-expert-rag-v1';
     } else if (outValidation.sanitizedText) {
       aiTextResponse = outValidation.sanitizedText;
+    }
+
+    // P04-019: Defense-in-depth Citation Coverage Gate cho Factual Answers
+    const citationCheck = checkCitationCoverage(aiTextResponse, { allowEnrichment: true });
+    if (!citationCheck.passed) {
+      console.warn(
+        `[ChatQuery] Factual response failed citation coverage gate (${citationCheck.code}: ${citationCheck.reason}). Fallback to Local Expert RAG.`
+      );
+      aiTextResponse = generateSmartLocalDomainResponse(queryStr);
+      actualProvider = 'local_expert_rag';
+      actualModel = 'local-expert-rag-v1';
+    } else if (citationCheck.enrichedText) {
+      aiTextResponse = citationCheck.enrichedText;
     }
 
     // Persist this turn to chat_sessions (fire-and-forget, non-blocking)

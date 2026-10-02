@@ -19,6 +19,7 @@ import { generateSmartLocalDomainResponse } from './ai/localExpertRag';
 import { routeQueryIntent, applyTruthAnchor } from './ai/intentRouter';
 import { resolveAuditProvider, resolveAuditModel } from './chatAuditProviderHelper';
 import { validateChatbotOutput } from './chatOutputSchemaValidator';
+import { checkCitationCoverage } from './chatCitationCoverageGate';
 
 export * from './ai/config';
 export * from './ai/geminiClient';
@@ -30,6 +31,7 @@ export * from './ai/ragEngine';
 export * from './chatAuditProviderHelper';
 export * from './chatGroqTimeoutHelper';
 export * from './chatOutputSchemaValidator';
+export * from './chatCitationCoverageGate';
 
 import {
   GROQ_PRIMARY_TIMEOUT_MS,
@@ -252,6 +254,19 @@ export async function generateAIResponse(
     finalModel = 'local-expert-rag-v1';
   } else if (validation.sanitizedText) {
     resolvedText = validation.sanitizedText;
+  }
+
+  // P04-019: Thẩm định Citation Coverage cho Factual Answer; chặn fixture không nguồn và kích hoạt Fallback
+  const citationGate = checkCitationCoverage(resolvedText, { allowEnrichment: true });
+  if (!citationGate.passed) {
+    console.warn(
+      `[AI Provider] Factual answer failed citation coverage gate (${citationGate.code}: ${citationGate.reason}). Falling back to Local Expert RAG.`
+    );
+    resolvedText = generateSmartLocalDomainResponse(userPrompt);
+    finalProvider = 'local_expert_rag';
+    finalModel = 'local-expert-rag-v1';
+  } else if (citationGate.enrichedText) {
+    resolvedText = citationGate.enrichedText;
   }
 
   const resolvedModel = resolveAuditModel(finalModel, finalProvider);
