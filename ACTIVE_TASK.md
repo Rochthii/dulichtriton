@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix)
+### P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và cập nhật câu thông báo về quyền truy cập dữ liệu (Access Rights & Role-Based Access Control) trên trang chính sách bảo mật, bảo đảm khớp 100% với RLS Matrix (P02-024) và Data Inventory (P05-001): vai trò `anon` bị tước bỏ 100% quyền SELECT/INSERT/UPDATE/DELETE trực tiếp trên bảng `chat_sessions` và `chat_logs`, truy cập bắt buộc qua Server-side API có xác thực token sở hữu.
-- **Next task sau P05-007:** P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
+- **Mục tiêu duy nhất:** Rà soát yêu cầu đồng thuận người dùng (Consent Requirement) theo Decision Gate G3 (`docs/technical-spec/DECISION_RECORD_CHAT_SESSIONS_RETENTION.md` & `docs/technical-spec/CHAT_DATA_INVENTORY.md` tuân thủ Điều 17 Nghị định 13/2023/NĐ-CP). Bổ sung Banner/Consent UI minh bạch tại giao diện Chatbot, chứng minh luồng từ chối đồng thuận (no-consent path) không lưu trữ lịch sử phiên vào cơ sở dữ liệu trên máy chủ.
+- **Next task sau P05-008:** P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
 
 ---
 
@@ -106,11 +106,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 80. 🟢 **`P05-004`** *(Hoàn thành)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
 81. 🟢 **`P05-005`** *(Hoàn thành)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
 82. 🟢 **`P05-006`** *(Hoàn thành)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
-83. 🟡 **`P05-007`** *(Đang mở)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
+83. 🟢 **`P05-007`** *(Hoàn thành)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
+84. 🟡 **`P05-008`** *(Đang mở)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix)
+- **Status:** `done` tại `frontend/src/app/privacy/page.tsx` và `frontend/scripts/privacy-notice-access-rights-concordance.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Sửa đổi toàn diện Mục 5 tại trang Chính Sách Bảo Mật (`frontend/src/app/privacy/page.tsx`): công bố tiêu chuẩn bảo vệ không tin cậy (Zero-Trust) và ma trận khóa chặt phân quyền cấp hàng (Row Level Security - RLS Matrix Lockdown theo chuẩn `P02-024`) trên cơ sở dữ liệu Supabase PostgreSQL.
+  - Phân định rành mạch 3 tầng phân quyền dữ liệu khớp 100% với RLS Lockdown Matrix (`supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql`) và Data Inventory chuẩn tắc (`DATA-INVENTORY-CHAT-001` trong `frontend/src/lib/chatDataInventory.ts`):
+    1. Khách vãng lai (`anon`) & tài khoản thông thường (`authenticated`): bị tước bỏ 100% quyền truy cập trực tiếp (`REVOKE ALL: SELECT, INSERT, UPDATE, DELETE`) trên các bảng dữ liệu nhạy cảm (`chat_sessions`, `chat_logs`, `audit_logs`). Không ai có thể dùng PostgREST client từ trình duyệt để đọc trộm hay sửa đổi dữ liệu phiên người khác. Đối với dữ liệu công cộng (`places`), quyền đọc bị giới hạn chỉ hiển thị các bản ghi đã xác minh (`is_verified = true`).
+    2. Cổng kết nối máy chủ an toàn (`service_role`): chỉ được kích hoạt độc quyền tại Next.js Server API Gateway sau khi kiểm thực thành công chữ ký mật mã HMAC-SHA256 (`x-chat-session-token`) bằng so sánh thời gian hằng số `timingSafeEqual`.
+    3. Quản trị viên hệ thống (`admin`): tuyệt đối không được đọc nội dung chat thô của cá nhân du khách, chỉ quan sát các chỉ số vận hành tổng hợp (SLO, latency p95, phân bổ model) qua nhật ký kiểm toán bất biến `audit_logs`.
+  - Bộ kiểm thử tự động `privacy-notice-access-rights-concordance.test.mjs` đạt 6/6 assertions pass 100%: (1) Explicit Zero-Trust & RLS Matrix Disclosure; (2) Anon & Authenticated Direct Access Denial; (3) service_role Gateway & HMAC Verification; (4) Admin Privacy Boundary; (5) DDL Migration & Data Inventory Specification Concordance; (6) Negative & Integrity Invariants (Zero demo/mock). Toàn bộ 181 routes Next.js 16 biên dịch thành công (exit code 0).
 
 ### P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code)
 - **Status:** `done` tại `frontend/src/app/privacy/page.tsx`, `frontend/src/components/ChatbotWidget.tsx`, `frontend/src/components/ChatbotPageClient.tsx`, và `frontend/scripts/privacy-notice-chat-storage-concordance.test.mjs`.

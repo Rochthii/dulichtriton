@@ -104,13 +104,44 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 5 */}
-          <section className="space-y-3">
+          <section className="space-y-4">
             <div className="flex items-center gap-2 text-[#0E8C7F] font-display font-bold text-base sm:text-lg">
               <Lock className="w-5 h-5 shrink-0" />
-              <h2>5. An Toàn Máy Chủ & Mã Hóa Truyền Tải (SSL/TLS)</h2>
+              <h2>5. Phân Quyền Truy Cập Dữ Liệu & Ma Trận Bảo Vệ RLS (Zero-Trust Access Matrix)</h2>
             </div>
             <p>
-              Tất cả các lượt truy vấn, dữ liệu 149 địa danh và thông tin kết nối tới hệ thống Supabase PostgreSQL đều được mã hóa bằng giao thức HTTPS/TLS 1.3 theo tiêu chuẩn ngành. Cơ sở dữ liệu được bảo vệ nghiêm ngặt bằng Row-Level Security (RLS) và chính sách kiểm toán nhật ký (Audit Logging).
+              Nhằm đảm bảo an toàn tối đa cho du khách và ngăn chặn triệt để nguy cơ rò rỉ dữ liệu, hệ thống áp dụng triết lý bảo mật không tin cậy (Zero Trust) và cơ chế khóa chặt ma trận phân quyền cấp hàng (Row Level Security - RLS Matrix Lockdown theo quy chuẩn <code>P02-024</code>) tại cơ sở dữ liệu Supabase PostgreSQL:
+            </p>
+            <div className="space-y-3 pl-2 sm:pl-4 border-l-2 border-[#0E8C7F]/30">
+              <div>
+                <h3 className="font-display font-bold text-sm text-[#26221B]">
+                  a. Khách vãng lai (<code>anon</code>) & Tài khoản thông thường (<code>authenticated</code>)
+                </h3>
+                <p className="text-[#6B6355] text-xs sm:text-sm mt-1">
+                  Bị tước bỏ 100% quyền truy cập trực tiếp (<code>REVOKE ALL: SELECT, INSERT, UPDATE, DELETE</code>) trên các bảng dữ liệu hội thoại và kiểm toán nhạy cảm (<code>chat_sessions</code>, <code>chat_logs</code>, <code>audit_logs</code>). Tuyệt đối không ai có thể sử dụng PostgREST client từ trình duyệt để đọc trộm, quét duyệt hoặc can thiệp vào lịch sử trò chuyện của người khác. Với dữ liệu danh lam thắng cảnh công cộng (<code>places</code>), quyền đọc được kiểm soát nghiêm ngặt theo chính sách RLS chỉ hiển thị các địa danh đã xác minh (<code>is_verified = true</code>).
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-display font-bold text-sm text-[#26221B]">
+                  b. Cổng kết nối máy chủ an toàn (<code>service_role</code>)
+                </h3>
+                <p className="text-[#6B6355] text-xs sm:text-sm mt-1">
+                  Quyền đọc/ghi dữ liệu phiên hội thoại trên máy chủ chỉ được kích hoạt độc quyền tại Next.js Server API Gateway. Mọi yêu cầu truy vấn hay xóa lịch sử phiên bắt buộc phải vượt qua hàng rào kiểm thực chữ ký mật mã HMAC-SHA256 (<code>x-chat-session-token</code>) với thuật toán so sánh thời gian hằng số <code>timingSafeEqual</code> nhằm xác minh quyền sở hữu phiên hợp pháp.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-display font-bold text-sm text-[#26221B]">
+                  c. Quản trị viên hệ thống (<code>admin</code>)
+                </h3>
+                <p className="text-[#6B6355] text-xs sm:text-sm mt-1">
+                  Quản trị viên khi đăng nhập vào hệ thống quản trị tuyệt đối <strong>không được đọc nội dung thô</strong> của các phiên trò chuyện cá nhân (<code>chat_sessions</code>). Quản trị viên chỉ được quan sát các chỉ số vận hành tổng hợp (SLO hệ thống, độ trễ p95, phân bổ tải mô hình AI) qua nhật ký kiểm toán bất biến (<code>audit_logs</code>) nhằm mục đích bảo trì kỹ thuật và chất lượng dịch vụ.
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-[#6B6355]">
+              Mọi kết nối giữa trình duyệt, máy chủ Next.js và Supabase PostgreSQL đều được mã hóa bằng giao thức HTTPS / TLS 1.3 theo tiêu chuẩn ngành, ngăn chặn tuyệt đối các cuộc tấn công bắt gói tin trung gian (MitM).
             </p>
           </section>
 
