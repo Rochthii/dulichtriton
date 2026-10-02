@@ -42,21 +42,21 @@ test('P04-013: Audit Log Real Latency Tracking — Proof that Latency is a Real 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const t1 = startLatencyTimer();
-    await delay(25);
+    await delay(20);
     const m1 = calculateElapsedMs(t1);
 
     const t2 = startLatencyTimer();
-    await delay(60);
+    await delay(160);
     const m2 = calculateElapsedMs(t2);
 
     const t3 = startLatencyTimer();
-    await delay(100);
+    await delay(380);
     const m3 = calculateElapsedMs(t3);
 
     // Rule: Latency must be non-negative integers
-    assert.ok(Number.isInteger(m1) && m1 >= 20, `m1 (${m1}ms) must reflect >= 20ms delay`);
-    assert.ok(Number.isInteger(m2) && m2 >= 55, `m2 (${m2}ms) must reflect >= 55ms delay`);
-    assert.ok(Number.isInteger(m3) && m3 >= 90, `m3 (${m3}ms) must reflect >= 90ms delay`);
+    assert.ok(Number.isInteger(m1) && m1 >= 15, `m1 (${m1}ms) must reflect >= 15ms delay`);
+    assert.ok(Number.isInteger(m2) && m2 >= 150, `m2 (${m2}ms) must reflect >= 150ms delay`);
+    assert.ok(Number.isInteger(m3) && m3 >= 360, `m3 (${m3}ms) must reflect >= 360ms delay`);
 
     // Proof: Real measurements vary with actual execution time and are strictly ordered
     assert.ok(m1 < m2, `m1 (${m1}ms) must be less than m2 (${m2}ms)`);

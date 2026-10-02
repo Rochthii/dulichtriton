@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off)
+### P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ban hành Decision Record chính thức chốt chiến lược gọi Multi-LLM provider: sequential failover hay timed hedge (racing), phân tích định lượng đánh đổi (trade-off) giữa quota tiêu thụ, tỉ lệ lỗi, và độ trễ phản hồi (latency).
-- **Next task sau P04-014:** P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
+- **Mục tiêu duy nhất:** Áp dụng tham số timeout đã được phê duyệt trong Decision Record `DR-LLM-STRATEGY-001` (`GROQ_PRIMARY_TIMEOUT_MS = 2500ms`) vào engine `frontend/src/lib/aiProvider.ts` và các native clients; xây dựng fault test chứng minh thời điểm ngắt kết nối và chuyển tầng failover sang secondary provider chính xác tại mốc $\sim 2500\text{ms}$.
+- **Next task sau P04-015:** P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result).
 
 ---
 
@@ -90,11 +90,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 64. 🟢 **`P04-011`** *(Hoàn thành)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
 65. 🟢 **`P04-012`** *(Hoàn thành)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
 66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
-67. 🟡 **`P04-014`** *(Đang mở)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
+67. 🟢 **`P04-014`** *(Hoàn thành)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
+68. 🟡 **`P04-015`** *(Đang mở)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off)
+- **Status:** `done` tại `docs/technical-spec/DECISION_RECORD_MULTI_LLM_PROVIDER_STRATEGY.md` và `frontend/scripts/multi-llm-strategy-decision-record.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành Decision Record kỹ thuật chính thức `DR-LLM-STRATEGY-001` tại `docs/technical-spec/DECISION_RECORD_MULTI_LLM_PROVIDER_STRATEGY.md`, phê duyệt bởi Chăm Rốch Thi.
+  - Phân tích ma trận so sánh định lượng trade-off giữa 3 phương án (Timed Hedge 600ms, Sequential Failover fast timeout 2.5s, và Unbounded Sequential 30s) trên 6 tiêu chí kỹ thuật: tiêu thụ Quota/Token budget, rủi ro 429 cascade rate limit, độ trễ TTFT thông thường P50/P90, độ trễ sự cố P99, khả năng kiểm toán/auditability, và nguy cơ rò rỉ kết nối zombie requests.
+  - Chốt quyết định duy nhất: **Phương án B (Sequential Failover với Fast Bounded Timeout)** nhằm bảo toàn 100% Quota/Token budget (Zero Quota Waste) và loại trừ nguy cơ rate-limit kép 429 trên hệ thống tài nguyên cộng đồng.
+  - Xác lập bộ tham số timeout chuẩn hóa bất biến cho downstream: `GROQ_PRIMARY_TIMEOUT_MS = 2500ms`, `GEMINI_SECONDARY_TIMEOUT_MS = 6000ms`, `OPENROUTER_TERTIARY_TIMEOUT_MS = 5000ms`, `LOCAL_RAG_TIMEOUT_MS = 0ms`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/multi-llm-strategy-decision-record.test.mjs` đạt 7/7 assertions pass 100% kiểm chứng tính toàn vẹn tài liệu, mã định danh, ma trận trade-off, quyết định dứt khoát và liên kết kế hoạch downstream cho P04-015, P04-016, P04-017.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Multi-LLM Strategy Decision Record Proof).
+- **Next task:** P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 
 ### P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant)
 - **Status:** `done` tại `supabase/migrations/20261002_p04_013_chat_logs_latency_ms.sql`, `frontend/src/lib/chatAuditLatencyHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/admin/chat-logs/page.tsx`, và `frontend/scripts/chat-latency-audit-log.test.mjs`.
