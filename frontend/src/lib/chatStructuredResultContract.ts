@@ -241,3 +241,32 @@ export function validateStructuredStreamDoneEvent(
     errors,
   };
 }
+
+/**
+ * Xác thực tính nhất quán giữa các token delta đã phát xuất và full_text trong done event
+ * (Bảo đảm không rách chunk, không trả partial sai - P04-017)
+ */
+export function validateStreamTokenConcordance(
+  emittedDeltas: string[],
+  doneFullText: string
+): ValidationResult {
+  const errors: string[] = [];
+
+  if (!Array.isArray(emittedDeltas)) {
+    return { isValid: false, errors: ['ERR_INVALID_DELTAS: emittedDeltas must be an array of strings'] };
+  }
+
+  const concatenated = emittedDeltas.join('');
+
+  if (concatenated !== doneFullText) {
+    errors.push(
+      `ERR_PARTIAL_MISMATCH: Concatenated deltas (${concatenated.length} chars) do not match done event full_text (${doneFullText.length} chars)`
+    );
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
+}
+

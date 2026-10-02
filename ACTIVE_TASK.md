@@ -9,14 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai)
+### P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Viết integration test mô phỏng kịch bản Groq primary gặp lỗi stream giữa chừng (stream error: HTTP 500, socket rách, corrupt chunks) và kiểm chứng response không bị treo, giải phóng socket an toàn và không trả partial sai lệch cho client.
-- **Next task sau P04-017:** P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
+- **Mục tiêu duy nhất:** Xây dựng output schema validator cho câu trả lời chatbot trước khi gửi về client và ghi audit log. Kiểm chứng các phản hồi malformed (rách JSON, markdown lỗi, inject injection hoặc dị tật cấu trúc) bị chặn đứng và kích hoạt fallback an toàn.
+- **Next task sau P04-018:** P04-019 — Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
 
 ---
 
@@ -93,11 +93,33 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 67. 🟢 **`P04-014`** *(Hoàn thành)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 68. 🟢 **`P04-015`** *(Hoàn thành)*: Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 69. 🟢 **`P04-016`** *(Hoàn thành)*: Viết integration test provider primary timeout (Proof: fallback trả structured result).
-70. 🟡 **`P04-017`** *(Đang mở)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
+70. 🟢 **`P04-017`** *(Hoàn thành)*: Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai).
+71. 🟡 **`P04-018`** *(Đang mở)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-017 — Viết integration test provider primary stream error (Proof: response không treo và không trả partial sai)
+- **Status:** `done` tại `frontend/src/lib/chatGroqTimeoutHelper.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/lib/chatStructuredResultContract.ts`, và `frontend/scripts/chat-provider-primary-stream-error-integration.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Nâng cấp bộ điều phối tuần tự `orchestrateGroqWithFailover` trong `frontend/src/lib/chatGroqTimeoutHelper.ts`: bổ sung callback `onPrimaryStreamError`, theo dõi `accumulatedPrimaryText`, kích hoạt failover tức thì khi gặp lỗi sớm (Early Error: HTTP 500/503/429) và phát xuất `done` chunk kết thúc an toàn khi gặp lỗi giữa chừng (Mid-stream Error) để downstream stream không bao giờ bị treo.
+  - Nâng cấp khối `catch` trong `/api/v1/chat/stream/route.ts`: khi đã có tokens phát ra trước đó, bảo toàn nguyên vẹn `fullText` đã gửi ra client thay vì ghi đè partial sai lệch bằng thông báo lỗi, loại bỏ hoàn toàn mâu thuẫn dữ liệu giữa UI và server.
+  - Bổ sung hàm kiểm toán `validateStreamTokenConcordance` vào `frontend/src/lib/chatStructuredResultContract.ts`, kiểm tra tính đồng nhất 100% giữa các delta tokens và trường `full_text` trong event `done`.
+  - Xây dựng bộ kiểm thử tích hợp tự động `frontend/scripts/chat-provider-primary-stream-error-integration.test.mjs` đạt 8/8 assertions pass 100%:
+    1. *Early Stream Error Proof*: Groq ném HTTP 500/Connection Reset trước token đầu tiên kích hoạt failover sạch 100% sang Secondary Provider (Gemini / Local RAG).
+    2. *Mid-Stream Error Proof*: Groq crash sau khi đã stream 2 chunks không gây treo stream, phát xuất `done` chunk an toàn và bảo đảm tính đồng nhất partial 100%.
+    3. *Corrupted Chunk Invariant*: Trung hòa an toàn các dòng SSE bị lỗi cú pháp JSON mà không crash tiến trình.
+    4. *Socket Cleanup & Resource Release Proof*: `controller.close()` luôn được gọi trong khối `finally`, signal abort kích hoạt, dọn dẹp sạch sẽ tài nguyên.
+    5. *Query Route Resilience*: `query/route.ts` xử lý stream error suy thoái an toàn về Local RAG và trả về Structured Result chuẩn 100%, không throw 500.
+    6. *Negative Tests*: Từ chối dứt điểm stream bị treo, missing `full_text` hoặc partial mismatch.
+    7. *Static Code Invariants*: Kiểm tra toàn diện codebase đảm bảo rào chắn `finally` và error handlers.
+  - Toàn bộ 430/430 tests frontend pass sạch sẽ (0 failures); build production Next.js 16 (178/178 routes) đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Provider Primary Stream Error Resilience Proof).
+- **Next task:** P04-018 — Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
 
 ### P04-016 — Viết integration test provider primary timeout (Proof: fallback trả structured result)
 - **Status:** `done` tại `frontend/src/lib/chatStructuredResultContract.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-provider-primary-timeout-integration.test.mjs`.

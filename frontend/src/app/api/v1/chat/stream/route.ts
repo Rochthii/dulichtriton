@@ -202,8 +202,12 @@ export async function POST(req: NextRequest) {
         } catch { /* closed */ }
       };
 
+      const t0 = startLatencyTimer();
+      let fullText = '';
+      let providerUsed = '';
+      let modelUsed = '';
+
       try {
-        const t0 = startLatencyTimer();
         const lower = queryStr.toLowerCase();
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
@@ -255,10 +259,6 @@ export async function POST(req: NextRequest) {
         const userMsg = ragResult.ragContext
           ? `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Luôn ưu tiên thông tin thực tế mới nhất. CSDL Tri Tôn xác minh:\n${ragResult.ragContext}]`
           : `Câu hỏi của Bạn: ${queryStr}\n\n[Lưu ý: Hãy cung cấp thông tin thực tế, chính xác nhất về Tri Tôn, An Giang]`;
-
-        let fullText = '';
-        let providerUsed = '';
-        let modelUsed = '';
 
         // 3. Realtime Native SSE Token Streaming (<300ms TTFT)
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
@@ -330,9 +330,22 @@ export async function POST(req: NextRequest) {
         });
       } catch (err) {
         console.error('Chat stream error:', err);
-        const errMsg = 'Hiện tại hệ thống AI đang bận xử lý, bạn vui lòng thử lại sau giây lát nhé!';
-        send({ type: 'token', token: errMsg, delta: errMsg });
-        send({ type: 'done', full_text: errMsg, suggestions: [] });
+        if (fullText.trim().length === 0) {
+          const errMsg = 'Hiện tại hệ thống AI đang bận xử lý, bạn vui lòng thử lại sau giây lát nhé!';
+          send({ type: 'token', token: errMsg, delta: errMsg });
+          send({ type: 'done', full_text: errMsg, suggestions: [] });
+        } else {
+          // Bảo toàn fullText đã gửi ra client, không trả partial sai lệch (P04-017)
+          const actualLatencyMs = calculateElapsedMs(t0);
+          send({
+            type: 'done',
+            full_text: fullText,
+            latency_ms: actualLatencyMs,
+            suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?'],
+            provider: resolveAuditProvider(providerUsed || 'stream_error_recovery'),
+            model: resolveAuditModel(modelUsed, providerUsed),
+          });
+        }
       } finally {
         controller.close();
       }

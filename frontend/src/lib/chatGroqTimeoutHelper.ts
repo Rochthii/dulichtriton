@@ -73,6 +73,7 @@ export interface SequentialFailoverOptions {
   groqTimeoutMs?: number;
   onGroqTimeout?: (elapsedMs: number) => void;
   onFailoverTriggered?: (fromProvider: string, toProvider: string, reason: string) => void;
+  onPrimaryStreamError?: (err: Error, partialTextSoFar: string) => void;
 }
 
 /**
@@ -89,6 +90,7 @@ export async function* orchestrateGroqWithFailover(
   const secondaryAbort = new AbortController();
 
   let hasReceivedFirstToken = false;
+  let accumulatedPrimaryText = '';
   let activeProvider = '';
   let activeModel = '';
   const startTime = Date.now();
@@ -122,6 +124,7 @@ export async function* orchestrateGroqWithFailover(
 
       const chunk = nextResult.value;
       if (chunk.type === 'delta' && chunk.content) {
+        accumulatedPrimaryText += chunk.content;
         if (!hasReceivedFirstToken) {
           hasReceivedFirstToken = true;
           bounded.cleanup(); // Hủy timeout timer ngay khi token đầu tiên xuất hiện
@@ -161,15 +164,20 @@ export async function* orchestrateGroqWithFailover(
     }
 
     const elapsed = Date.now() - startTime;
-    if (bounded.isTimedOut() || bounded.signal.aborted || err?.message?.includes('timeout')) {
+    const isTimeout = bounded.isTimedOut() || bounded.signal.aborted || err?.message?.includes('timeout');
+    if (isTimeout) {
       options?.onGroqTimeout?.(elapsed);
       options?.onFailoverTriggered?.('groq-primary', 'gemini-secondary', `Timeout exceeded ${timeoutMs}ms`);
+    } else {
+      const streamErr = err instanceof Error ? err : new Error(String(err));
+      options?.onPrimaryStreamError?.(streamErr, accumulatedPrimaryText);
+      options?.onFailoverTriggered?.('groq-primary', 'gemini-secondary', `Stream error: ${streamErr.message}`);
     }
   } finally {
     bounded.cleanup();
   }
 
-  // Nếu Groq không yield bất kỳ token nào (do timeout hoặc lỗi) -> Failover sang Secondary Provider
+  // Nếu Groq không yield bất kỳ token nào (do timeout hoặc stream error) -> Failover sang Secondary Provider
   if (!hasReceivedFirstToken) {
     const elapsed = Date.now() - startTime;
     if (bounded.isTimedOut() || bounded.signal.aborted) {
@@ -204,5 +212,14 @@ export async function* orchestrateGroqWithFailover(
     } catch (fallbackErr: any) {
       throw fallbackErr;
     }
+  } else {
+    // Trường hợp Groq stream error giữa chừng sau khi đã phát một phần token:
+    // Đảm bảo downstream consumer nhận được tín hiệu hoàn tất, không bị treo socket
+    yield {
+      type: 'done',
+      provider: activeProvider || 'groq-lpu-interrupted',
+      model: activeModel || 'llama-3.3-70b-versatile',
+    };
   }
 }
+
