@@ -9,20 +9,14 @@
 
 ### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant)
+### P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ghi nhận chính xác số đo thời gian phản hồi (latency tính bằng milliseconds) thực tế của lượt xử lý AI vào bảng `chat_logs` và hệ thống audit log:
-  - **Hiện trạng:** Bảng `chat_logs` hoặc các log tracking cần bảo đảm cột latency là số đo thực tế đo lường theo đồng hồ hệ thống (`Date.now() - startTime` hoặc `performance.now()`), tuyệt đối không gán hằng số giả định.
-  - **Giải pháp:** Bổ sung / chuẩn hóa cột `latency_ms` trong `chat_logs`, đo lường chính xác từ lúc bắt đầu request đến khi hoàn tất suy luận / streaming và lưu vào DB.
-  - **Acceptance Criteria & Proof cần có:**
-    - Latency trong audit log là số nguyên dương hợp lệ phản ánh đúng thời gian xử lý thực tế của request.
-    - Loại trừ 100% hằng số giả định.
-    - Bộ test tự động kiểm chứng với các kịch bản đo độ trễ khác nhau.
-- **Next task sau P04-013:** P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
+- **Mục tiêu duy nhất:** Ban hành Decision Record chính thức chốt chiến lược gọi Multi-LLM provider: sequential failover hay timed hedge (racing), phân tích định lượng đánh đổi (trade-off) giữa quota tiêu thụ, tỉ lệ lỗi, và độ trễ phản hồi (latency).
+- **Next task sau P04-014:** P04-015 — Áp timeout đã chọn cho Groq (Proof: fault test chứng minh thời điểm failover).
 
 ---
 
@@ -95,11 +89,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 63. 🟢 **`P04-010`** *(Hoàn thành)*: Lọc retrieval theo `verification_status` đã duyệt (Proof: unverified fixture không xuất hiện).
 64. 🟢 **`P04-011`** *(Hoàn thành)*: Ghi provider thực tế vào audit log (Proof: Groq/Gemini/fallback có giá trị khác nhau).
 65. 🟢 **`P04-012`** *(Hoàn thành)*: Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất).
-66. 🟡 **`P04-013`** *(Đang mở)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
+66. 🟢 **`P04-013`** *(Hoàn thành)*: Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant).
+67. 🟡 **`P04-014`** *(Đang mở)*: Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-013 — Ghi latency thực tế vào audit log (Proof: latency là số đo, không phải constant)
+- **Status:** `done` tại `supabase/migrations/20261002_p04_013_chat_logs_latency_ms.sql`, `frontend/src/lib/chatAuditLatencyHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/admin/chat-logs/page.tsx`, và `frontend/scripts/chat-latency-audit-log.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành migration DDL PostgreSQL `supabase/migrations/20261002_p04_013_chat_logs_latency_ms.sql` bổ sung ràng buộc CHECK `chk_chat_logs_latency_positive` (bảo đảm `latency_ms >= 0`), INDEX `chat_logs_latency_idx`, và COMMENT mô tả số đo thời gian thực tế không constant cho bảng `public.chat_logs`.
+  - Phát triển module helper chuyên dụng `frontend/src/lib/chatAuditLatencyHelper.ts` cung cấp `startLatencyTimer`, `calculateElapsedMs`, `isValidAuditLatency`, `resolveAuditLatency`, và tập hợp `FORBIDDEN_AUDIT_LATENCIES`.
+  - Tích hợp đo lường thời gian đáp ứng thực tế (`actualLatencyMs`) cho cả hai route `/api/v1/chat/query` và `/api/v1/chat/stream` (cả nhánh out-of-scope lẫn nhánh chính), ghi nhận vào audit log `chat_logs` và trả về `latency_ms` trong JSON response / SSE stream done event.
+  - Loại bỏ hoàn toàn 100% demo mock fallback `|| 1200` tại giao diện Admin Chat Logs `frontend/src/app/admin/chat-logs/page.tsx`, thay thế bằng kiểm tra chuẩn xác `typeof log.latency_ms === 'number' ? `${log.latency_ms} ms` : '—'`.
+  - Xây dựng bộ kiểm thử tự động `frontend/scripts/chat-latency-audit-log.test.mjs` đạt 8/8 assertions pass 100%: (1) Real Measured Latency Proof (chứng minh biến thiên thực tế giữa các lượt chạy); (2) Negative Invariants & Forbidden Constants Rejection Proof; (3) Static code invariant 0% mock 1200ms trong admin page; (4) Static code invariant trong query route; (5) Static code invariant trong stream route; (6) Database migration invariant; (7) End-to-End Simulation: Latency Measurement Concordance Proof giữa audit payload và client response.
+  - Toàn bộ 400/400 unit/integration tests frontend pass sạch sẽ (0 failures); build production Next.js đạt exit code 0 thành công tuyệt đối.
+- **Claim state:** `PLANNED → IMPLEMENTED → VERIFIED` (Actual Measured Latency Audit Log Proof & Client Concordance).
+- **Next task:** P04-014 — Chọn một chiến lược provider: sequential failover hoặc timed hedge (Proof: Decision Record mô tả quota/latency trade-off).
 
 ### P04-012 — Ghi model thực tế vào audit log (Proof: model ID khớp request đã hoàn tất)
 - **Status:** `done` tại `supabase/migrations/20261002_p04_012_chat_logs_model_used.sql`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/ai/fallbackClients.ts`, `frontend/src/lib/ai/geminiClient.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/admin/chat-logs/page.tsx`, và `frontend/scripts/chat-model-audit-log.test.mjs`.

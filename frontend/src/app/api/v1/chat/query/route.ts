@@ -13,6 +13,7 @@ import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
 import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
 import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
+import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -344,7 +345,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const t0 = Date.now(); // latency tracking
+    const t0 = startLatencyTimer(); // latency tracking (P04-013)
 
     // Load conversation history
     const history = await loadHistory(sessionId);
@@ -356,6 +357,7 @@ export async function POST(req: NextRequest) {
       const oosProvider = resolveAuditProvider(undefined, true);
       const oosModel = resolveAuditModel(undefined, undefined, true);
       const oosMessage = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
+      const oosLatencyMs = calculateElapsedMs(t0);
       logChatEvent({
         session_id: sessionId,
         query: queryStr,
@@ -363,12 +365,13 @@ export async function POST(req: NextRequest) {
         provider_used: oosProvider,
         model_used: oosModel,
         is_out_scope: true,
-        latency_ms: Date.now() - t0,
+        latency_ms: oosLatencyMs,
       });
       const oosRes = NextResponse.json({
         text_response: oosMessage,
         provider: oosProvider,
         model: oosModel,
+        latency_ms: oosLatencyMs,
         ui_components: [],
         videos: [],
         suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
@@ -678,6 +681,8 @@ export async function POST(req: NextRequest) {
       matchedPlaces: formattedPlaces,
     });
 
+    const actualLatencyMs = calculateElapsedMs(t0);
+
     // Audit log before returning
     logChatEvent({
       session_id: sessionId,
@@ -687,7 +692,7 @@ export async function POST(req: NextRequest) {
       model_used: actualModel,
       rag_method: places && places.length > 0 ? 'vector-or-ilike' : 'hot_fallback',
       places_count: formattedPlaces.length,
-      latency_ms: Date.now() - t0,
+      latency_ms: actualLatencyMs,
       is_out_scope: false,
     });
 
@@ -695,6 +700,7 @@ export async function POST(req: NextRequest) {
       text_response: aiTextResponse,
       provider: actualProvider,
       model: actualModel,
+      latency_ms: actualLatencyMs,
       ui_components: formattedPlaces.length > 0 ? [{ type: 'place_grid', data: formattedPlaces }] : [],
       places: formattedPlaces,
       videos: videos || [],

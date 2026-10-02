@@ -185,7 +185,7 @@ export default function AdminChatLogsPage() {
                     <td className="py-3.5 px-4 font-mono font-bold whitespace-nowrap text-slate-700">
                       <span className="inline-flex items-center gap-1">
                         <Zap className="w-3 h-3 text-amber-500" />
-                        {log.latency_ms || 1200} ms
+                        {typeof log.latency_ms === 'number' ? `${log.latency_ms} ms` : '—'}
                       </span>
                     </td>
                     <td className="py-3.5 px-4 whitespace-nowrap">

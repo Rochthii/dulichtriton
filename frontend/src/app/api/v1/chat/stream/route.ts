@@ -5,6 +5,7 @@ import { getSupabaseServerClient } from '@/lib/serverSupabase';
 import { validateChatQuery } from '@/lib/chatQueryGuard';
 import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } from '@/lib/chatSessionOwnership';
 import { resolveAuditProvider, resolveAuditModel } from '@/lib/chatAuditProviderHelper';
+import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -201,7 +202,7 @@ export async function POST(req: NextRequest) {
       };
 
       try {
-        const t0 = Date.now();
+        const t0 = startLatencyTimer();
         const lower = queryStr.toLowerCase();
         const cleanQ = lower.replace(/[?!.,]/g, '').trim();
 
@@ -223,10 +224,12 @@ export async function POST(req: NextRequest) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
           const oosProvider = resolveAuditProvider(undefined, true);
           const oosModel = resolveAuditModel(undefined, undefined, true);
+          const oosLatencyMs = calculateElapsedMs(t0);
           send({ type: 'token', token: oosMsg, delta: oosMsg });
           send({
             type: 'done',
             full_text: oosMsg,
+            latency_ms: oosLatencyMs,
             suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
           });
           logChatEvent({
@@ -236,7 +239,7 @@ export async function POST(req: NextRequest) {
             provider_used: oosProvider,
             model_used: oosModel,
             is_out_scope: true,
-            latency_ms: Date.now() - t0,
+            latency_ms: oosLatencyMs,
           });
           controller.close();
           return;
@@ -282,6 +285,8 @@ export async function POST(req: NextRequest) {
           }
         }
 
+        const actualLatencyMs = calculateElapsedMs(t0);
+
         // 4. Send Completion Event with 100% Dynamic Contextual Suggestions
         const dynamicSuggestions = generateSmartSuggestions({
           query: queryStr,
@@ -292,6 +297,7 @@ export async function POST(req: NextRequest) {
         send({
           type: 'done',
           full_text: fullText,
+          latency_ms: actualLatencyMs,
           suggestions: dynamicSuggestions,
           places: ragResult.places,
         });
@@ -314,7 +320,7 @@ export async function POST(req: NextRequest) {
           model_used: resolveAuditModel(modelUsed, providerUsed),
           rag_method: 'unified-rag-native-stream',
           places_count: ragResult.places.length,
-          latency_ms: Date.now() - t0,
+          latency_ms: actualLatencyMs,
           is_out_scope: false,
         });
       } catch (err) {
