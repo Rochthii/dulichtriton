@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa)
+### P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng tác vụ dọn dẹp định kỳ (Scheduled Cleanup Job) và cơ chế dọn dẹp bảng kiểm toán `public.chat_logs` hết hạn theo chính sách lưu trữ (retention window), kiểm chứng bằng chứng xóa sạch fixture expired.
-- **Next task sau P05-004:** P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
+- **Mục tiêu duy nhất:** Xây dựng endpoint hoặc workflow cho phép chủ sở hữu phiên (`session_id` + `session_token`) xóa chủ động dữ liệu phiên của chính mình (Right to Erasure / Immediate Erasure), có kiểm thực quyền sở hữu (ownership authentication test pass), ngăn chặn kẻ khác xóa trái phép.
+- **Next task sau P05-005:** P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
 
 ---
 
@@ -103,11 +103,24 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 77. 🟢 **`P05-001`** *(Hoàn thành)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
 78. 🟢 **`P05-002`** *(Hoàn thành)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
 79. 🟢 **`P05-003`** *(Hoàn thành)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
-80. 🟡 **`P05-004`** *(Đang mở)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
+80. 🟢 **`P05-004`** *(Hoàn thành)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
+81. 🟡 **`P05-005`** *(Đang mở)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa)
+- **Status:** `done` tại `supabase/migrations/20261002_p05_004_cleanup_expired_chat_logs.sql`, `frontend/src/lib/chatLogCleanupService.ts`, `frontend/src/app/api/v1/cron/cleanup-chat-logs/route.ts`, và `frontend/scripts/chat-logs-cleanup-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bãi bỏ quy tắc PostgreSQL cũ `chat_logs_no_delete` (`DO INSTEAD NOTHING`) ngăn cản lệnh DELETE, đồng thời thu hồi triệt để quyền `DELETE, UPDATE` từ `PUBLIC, anon, authenticated` và chỉ cấp quyền `DELETE` duy nhất cho `service_role`.
+  - Ban hành migration PostgreSQL DDL `20261002_p05_004_cleanup_expired_chat_logs.sql` tạo hàm RPC `public.cleanup_expired_chat_logs(p_batch_limit INT DEFAULT 1000)` với `SECURITY DEFINER`, xóa theo lô an toàn các bản ghi kiểm toán `WHERE created_at < (NOW() - INTERVAL '30 days')`, chỉ cấp quyền `EXECUTE` duy nhất cho `service_role`.
+  - Phát triển module nghiệp vụ `chatLogCleanupService.ts` (`executeChatLogCleanup`, `isChatLogExpired`, `calculateChatLogExpirationDate`, `verifyCleanupAuthorization`) cung cấp cơ chế thực thi dọn dẹp theo lô kèm fallback, và API endpoint `/api/v1/cron/cleanup-chat-logs` bảo vệ bằng `CRON_SECRET` fail-closed.
+  - Chứng minh bằng chứng thực tế (Proof): Khi đưa vào 4 fixtures (2 expired: `NOW - 31d`, `NOW - 60d` và 2 active: `NOW - 5d`, `NOW - 29d`), job xóa sạch 100% hai fixture expired trong khi 100% active fixtures được bảo toàn nguyên vẹn; đồng thời kiểm chứng batch limit safeguard chống nghẽn I/O.
+  - Bộ kiểm thử tự động `chat-logs-cleanup-job.test.mjs` đạt 6/6 assertions pass 100%; toàn bộ 180 routes Next.js 16 build thành công (exit code 0).
 
 ### P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa)
 - **Status:** `done` tại `supabase/migrations/20261002_p05_003_cleanup_expired_chat_sessions.sql`, `frontend/src/lib/chatSessionCleanupService.ts`, `frontend/src/app/api/v1/cron/cleanup-chat-sessions/route.ts`, và `frontend/scripts/chat-sessions-cleanup-job.test.mjs`.
