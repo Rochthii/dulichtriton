@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện)
+### P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Ban hành Decision Record kỹ thuật chính thức tại Decision Gate G3 xác lập thời hạn lưu trữ chuẩn tắc (số ngày/giờ cụ thể, điều kiện gia hạn, điều kiện thu hồi và tiêu chí thanh lọc TTL) cho bảng `public.chat_sessions`.
-- **Next task sau P05-002:** P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
+- **Mục tiêu duy nhất:** Xây dựng tác vụ dọn dẹp định kỳ (Scheduled Cleanup Job) và hàm RPC / API endpoint bảo mật để xóa sạch các phiên trò chuyện hết hạn (`updated_at < NOW() - INTERVAL '24 hours'`) theo đúng Decision Record G3, kiểm chứng bằng chứng xóa sạch fixture expired.
+- **Next task sau P05-003:** P05-004 — Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
 
 ---
 
@@ -101,11 +101,24 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 75. 🟢 **`P04-022`** *(Hoàn thành)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
 76. 🟢 **`P04-023`** *(Hoàn thành)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
 77. 🟢 **`P05-001`** *(Hoàn thành)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
-78. 🟡 **`P05-002`** *(Đang mở)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
+78. 🟢 **`P05-002`** *(Hoàn thành)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
+79. 🟡 **`P05-003`** *(Đang mở)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện)
+- **Status:** `done` tại `docs/technical-spec/DECISION_RECORD_CHAT_SESSIONS_RETENTION.md`, `frontend/src/lib/chatSessionRetentionPolicy.ts`, và `frontend/scripts/chat-sessions-retention-decision.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành tài liệu Decision Record kỹ thuật chính thức `docs/technical-spec/DECISION_RECORD_CHAT_SESSIONS_RETENTION.md` (mã quy chuẩn `DR-G3-RETENTION-SESSIONS-001`, phê duyệt bởi Lead Technical Architect Chăm Rốch Thi tại Decision Gate G3).
+  - Phân tích ma trận đánh đổi định lượng giữa 4 phương án lưu trữ trên 5 tiêu chuẩn cốt lõi (Day-trip Continuity, Privacy Risk, Storage Quota, Cleanup Overhead, Audit Decoupling) và chốt lựa chọn duy nhất: **Phương án B — Thời hạn lưu trữ chính xác 24 giờ (1 ngày - Exactly 24 Hours / 1 Day)** tính từ mốc tương tác cuối cùng (`updated_at`).
+  - Xác lập 4 điều kiện quy chuẩn bắt buộc: (1) **Sliding Window TTL:** trigger `trg_chat_sessions_updated_at` cập nhật `updated_at = NOW()` cấp mới thêm 24h cho mỗi câu hỏi tiếp nối; (2) **Expiration Threshold:** bản ghi có `updated_at < NOW() - INTERVAL '24 hours'` coi là hết hạn và đủ điều kiện xóa; (3) **Immediate Right to Erasure:** xóa ngay lập tức khi người dùng yêu cầu (P05-005) kèm session_token hợp lệ không cần chờ 24h; (4) **Audit Decoupling:** nội dung hội thoại thô tự hủy sạch, tách biệt hoàn toàn với lưu vết an ninh bất biến tại `chat_logs` (P05-004).
+  - Phát triển module runtime `chatSessionRetentionPolicy.ts` cung cấp các hằng số và hàm logic kiểm tra hạn dùng (`isSessionExpired`, `calculateSessionExpirationDate`, `buildRetentionCleanupQuery`, `assertRetentionPolicyConcordance`) đồng bộ 100% với Data Inventory (P05-001).
+  - Bộ kiểm thử tự động `chat-sessions-retention-decision.test.mjs` đạt 6/6 assertions pass 100%; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi)
 - **Status:** `done` tại `frontend/src/lib/chatDataInventory.ts`, `docs/technical-spec/CHAT_DATA_INVENTORY.md`, và `frontend/scripts/chat-data-inventory.test.mjs`.
