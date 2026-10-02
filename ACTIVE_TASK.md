@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi)
+### P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Lập bảng kiểm kê dữ liệu (Data Inventory / Data Catalog) quy chuẩn cho một trường dữ liệu trò chuyện (`public.chat_sessions.session_id`), ghi nhận rõ: Tên trường (field), Mục đích xử lý (purpose), Thời hạn lưu trữ (retention), Vai trò có quyền truy cập (access role), Cơ sở pháp lý và chính sách bảo vệ dữ liệu người dùng.
-- **Next task sau P05-001:** P05-002 — Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
+- **Mục tiêu duy nhất:** Ban hành Decision Record kỹ thuật chính thức tại Decision Gate G3 xác lập thời hạn lưu trữ chuẩn tắc (số ngày/giờ cụ thể, điều kiện gia hạn, điều kiện thu hồi và tiêu chí thanh lọc TTL) cho bảng `public.chat_sessions`.
+- **Next task sau P05-002:** P05-003 — Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
 
 ---
 
@@ -100,11 +100,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 74. 🟢 **`P04-021`** *(Hoàn thành)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
 75. 🟢 **`P04-022`** *(Hoàn thành)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
 76. 🟢 **`P04-023`** *(Hoàn thành)*: Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
-77. 🟡 **`P05-001`** *(Đang mở)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
+77. 🟢 **`P05-001`** *(Hoàn thành)*: Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi).
+78. 🟡 **`P05-002`** *(Đang mở)*: Quyết định retention cho `chat_sessions` (Proof: Decision Record G3 có số ngày/điều kiện).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-001 — Lập data inventory cho một field chat (Proof: field, purpose, retention, access role được ghi)
+- **Status:** `done` tại `frontend/src/lib/chatDataInventory.ts`, `docs/technical-spec/CHAT_DATA_INVENTORY.md`, và `frontend/scripts/chat-data-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng module kiểm kê dữ liệu chính thức `chatDataInventory.ts` (`CANONICAL_CHAT_SESSION_ID_INVENTORY`, `REGISTERED_CHAT_FIELD_INVENTORIES`, `getChatFieldInventory`, `validateFieldInventory`) thiết lập quy chuẩn kỹ thuật `DATA-INVENTORY-CHAT-001`.
+  - Ban hành tài liệu đặc tả `docs/technical-spec/CHAT_DATA_INVENTORY.md` đối chiếu toàn diện với Nghị định 13/2023/NĐ-CP và hệ thống an ninh dữ liệu Tri Tôn AI.
+  - Chứng minh đầy đủ 4 tiêu chuẩn cốt lõi (Proof):
+    1. **Field:** `public.chat_sessions.session_id` (TEXT PRIMARY KEY, định dạng UUID v4 RFC 4122).
+    2. **Purpose:** Duy trì ngữ cảnh hội thoại đa lượt (multi-turn context continuity), cô lập phiên làm việc (session isolation) và xác thực quyền sở hữu phiên (HMAC-SHA256 ownership authentication).
+    3. **Retention:** Lưu trữ 24 giờ kể từ `updated_at`, gắn chỉ mục `chat_sessions_updated_at_idx`, cơ chế thanh lọc tự động TTL định kỳ (P05-002, P05-003) và quyền xóa chủ động của người dùng (P05-005).
+    4. **Access Roles:** Khớp 100% với RLS Matrix (P02-024) và migration DDL: `anon` bị tước bỏ 100% quyền trực tiếp (`REVOKE SELECT, INSERT, UPDATE, DELETE FROM anon`), `service_role` chỉ truy cập qua Server-side API Gateway sau khi kiểm thực token sở hữu, `admin` không đọc trực tiếp nội dung phiên trò chuyện cá nhân thô.
+  - Bộ kiểm thử tự động `chat-data-inventory.test.mjs` đạt 6/6 assertions pass 100%; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper)
 - **Status:** `done` tại `frontend/src/lib/aiProvider.ts` và `frontend/scripts/chat-sos-zero-delay.test.mjs`.
