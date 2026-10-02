@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code)
+### P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và chuẩn hóa câu thông báo quyền riêng tư (Privacy Notice) liên quan đến nơi lưu trữ và vòng đời của phiên hội thoại (`chat_sessions` lưu tại Supabase DB với TTL 24h và quyền xóa chủ động P05-005), bảo đảm nội dung hiển thị khớp 100% với hành vi code thực tế (Code Behavior Concordance Proof).
-- **Next task sau P05-006:** P05-007 — Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
+- **Mục tiêu duy nhất:** Rà soát và cập nhật câu thông báo về quyền truy cập dữ liệu (Access Rights & Role-Based Access Control) trên trang chính sách bảo mật, bảo đảm khớp 100% với RLS Matrix (P02-024) và Data Inventory (P05-001): vai trò `anon` bị tước bỏ 100% quyền SELECT/INSERT/UPDATE/DELETE trực tiếp trên bảng `chat_sessions` và `chat_logs`, truy cập bắt buộc qua Server-side API có xác thực token sở hữu.
+- **Next task sau P05-007:** P05-008 — Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
 
 ---
 
@@ -105,11 +105,23 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 79. 🟢 **`P05-003`** *(Hoàn thành)*: Tạo job xóa `chat_sessions` hết hạn (Proof: fixture expired bị xóa).
 80. 🟢 **`P05-004`** *(Hoàn thành)*: Tạo job xóa `chat_logs` hết hạn (Proof: fixture expired bị xóa).
 81. 🟢 **`P05-005`** *(Hoàn thành)*: Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass).
-82. 🟡 **`P05-006`** *(Đang mở)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
+82. 🟢 **`P05-006`** *(Hoàn thành)*: Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code).
+83. 🟡 **`P05-007`** *(Đang mở)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-006 — Sửa một câu privacy notice về nơi lưu hội thoại (Proof: khớp hành vi code)
+- **Status:** `done` tại `frontend/src/app/privacy/page.tsx`, `frontend/src/components/ChatbotWidget.tsx`, `frontend/src/components/ChatbotPageClient.tsx`, và `frontend/scripts/privacy-notice-chat-storage-concordance.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Sửa đổi toàn diện câu tuyên bố quyền riêng tư tại trang `frontend/src/app/privacy/page.tsx` (Mục 3 và Mục 4 chuyên biệt): xóa bỏ triệt để câu nói cũ gây hiểu lầm rằng toàn bộ nội dung trò chuyện chỉ lưu trong LocalStorage trên điện thoại; công khai minh bạch nơi lưu trữ thực tế trên máy chủ tại bảng `public.chat_sessions` ở cơ sở dữ liệu Supabase PostgreSQL (tối đa 20 lượt trao đổi gần nhất), gắn với mã phiên ẩn danh UUID v4 và chữ ký bảo vệ HMAC-SHA256.
+  - Tuyên bố chính xác vòng đời lưu trữ tự hủy tối đa 24 giờ kể từ mốc tương tác cuối cùng (sliding window TTL 24h) tuân thủ Nghị định 13/2023/NĐ-CP và Quyết định Kiến trúc G3 (`DR-G3-RETENTION-SESSIONS-001`), được hệ thống tự động dọn dẹp sạch sẽ bởi scheduled job (P05-003).
+  - Tuyên bố quyền xóa chủ động ngay lập tức (Right to Erasure) qua nút "Xóa chat", đồng thời nâng cấp cả hai client component `ChatbotWidget.tsx` và `ChatbotPageClient.tsx` kích hoạt lệnh gọi API thực tế `DELETE /api/v1/chat/session` (P05-005) kèm token sở hữu HMAC, bảo đảm 100% mọi nút bấm trên UI đều map tới backend operation thực tế (RULE 01).
+  - Bộ kiểm thử tự động `privacy-notice-chat-storage-concordance.test.mjs` đạt 5/5 assertions pass 100%: (1) Explicit Chat Storage Disclosure Proof; (2) Code Behavior Concordance Proof với runtime constants và Data Inventory; (3) UI Action to Backend API Concordance Proof; (4) Negative Invariant: No False Claim of LocalStorage Only; (5) Legal & Architectural Authority Concordance (Decree 13/2023 & DR-G3). Toàn bộ 181 routes Next.js 16 biên dịch thành công (exit code 0).
 
 ### P05-005 — Tạo endpoint hoặc workflow xóa một session của chủ sở hữu (Proof: ownership test pass)
 - **Status:** `done` tại `frontend/src/lib/chatSessionDeletionService.ts`, `frontend/src/app/api/v1/chat/session/route.ts`, và `frontend/scripts/chat-session-deletion.test.mjs`.

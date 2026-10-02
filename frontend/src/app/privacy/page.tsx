@@ -80,11 +80,11 @@ export default function PrivacyPage() {
               <h2>3. Lưu Trữ Dữ Liệu Cục Bộ (LocalStorage & Cookie)</h2>
             </div>
             <p>
-              Để mang lại trải nghiệm tiện lợi nhất mà không cần đăng nhập, hệ thống sử dụng bộ nhớ cục bộ trên điện thoại (Browser LocalStorage) để lưu trữ:
+              Để mang lại trải nghiệm tiện lợi nhất mà không cần đăng nhập, hệ thống sử dụng bộ nhớ cục bộ trên thiết bị của bạn (Browser LocalStorage và Cookie) để lưu trữ:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-[#6B6355]">
               <li>Danh sách địa điểm bạn đã bấm thả tim yêu thích (<code>triton_fav_places</code>).</li>
-              <li>Lịch sử trò chuyện gần nhất với Trợ lý AI (bạn có thể chủ động bấm nút <strong>Xóa chat</strong> bất cứ lúc nào để làm sạch toàn bộ dữ liệu).</li>
+              <li>Mã định danh phiên hội thoại ngẫu nhiên (UUID v4) và mã xác thực quyền sở hữu mật mã HMAC-SHA256 phục vụ duy trì phiên.</li>
               <li>Các bản nháp lịch trình tùy chỉnh bạn đã lưu lại để chuẩn bị cho chuyến đi.</li>
             </ul>
           </section>
@@ -93,18 +93,32 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <div className="flex items-center gap-2 text-[#0E8C7F] font-display font-bold text-base sm:text-lg">
               <Server className="w-5 h-5 shrink-0" />
-              <h2>4. An Toàn Máy Chủ & Mã Hóa Truyền Tải (SSL/TLS)</h2>
+              <h2>4. Nơi Lưu Trữ Phiên Hội Thoại & Vòng Đời Tự Hủy (Chat Sessions Storage & Retention)</h2>
+            </div>
+            <p>
+              Nội dung các lượt trò chuyện với Trợ lý AI được lưu trữ tạm thời trên máy chủ tại cơ sở dữ liệu Supabase PostgreSQL (bảng <code>public.chat_sessions</code>, tối đa 20 lượt trao đổi gần nhất) dưới mã phiên ngẫu nhiên UUID v4 được bảo vệ bởi chữ ký mật mã HMAC-SHA256 nhằm duy trì ngữ cảnh trò chuyện liên tục trong phiên làm việc.
+            </p>
+            <p>
+              Tuân thủ Nghị định 13/2023/NĐ-CP và Quyết định Kiến trúc G3 (<code>DR-G3-RETENTION-SESSIONS-001</code>), dữ liệu hội thoại có thời hạn lưu trữ tự hủy tối đa <strong>chính xác 24 giờ</strong> kể từ lượt tương tác cuối cùng (sliding window TTL 24h) và được tự động xóa sạch bởi tác vụ bảo trì định kỳ. Bạn có toàn quyền chủ động xóa ngay lập tức phiên hội thoại của mình khỏi cơ sở dữ liệu bất cứ lúc nào thông qua nút <strong>Xóa chat</strong> (Quyền được xóa dữ liệu / Right to Erasure).
+            </p>
+          </section>
+
+          {/* Section 5 */}
+          <section className="space-y-3">
+            <div className="flex items-center gap-2 text-[#0E8C7F] font-display font-bold text-base sm:text-lg">
+              <Lock className="w-5 h-5 shrink-0" />
+              <h2>5. An Toàn Máy Chủ & Mã Hóa Truyền Tải (SSL/TLS)</h2>
             </div>
             <p>
               Tất cả các lượt truy vấn, dữ liệu 149 địa danh và thông tin kết nối tới hệ thống Supabase PostgreSQL đều được mã hóa bằng giao thức HTTPS/TLS 1.3 theo tiêu chuẩn ngành. Cơ sở dữ liệu được bảo vệ nghiêm ngặt bằng Row-Level Security (RLS) và chính sách kiểm toán nhật ký (Audit Logging).
             </p>
           </section>
 
-          {/* Section 5 */}
+          {/* Section 6 */}
           <section className="space-y-3 pt-4 border-t border-[#26221B]/8">
             <div className="flex items-center gap-2 text-[#0E8C7F] font-display font-bold text-base sm:text-lg">
               <Lock className="w-5 h-5 shrink-0" />
-              <h2>5. Đơn Vị Chịu Trách Nhiệm Vận Hành & Bảo Mật</h2>
+              <h2>6. Đơn Vị Chịu Trách Nhiệm Vận Hành & Bảo Mật</h2>
             </div>
             <p>
               Hệ thống được thiết kế, vận hành và quản lý trực tiếp bởi nhà phát triển <strong>Chăm Rốch Thi</strong>. Mọi thắc mắc về quyền riêng tư và yêu cầu hỗ trợ dữ liệu, vui lòng liên hệ trực tiếp:

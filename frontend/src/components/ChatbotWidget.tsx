@@ -462,13 +462,37 @@ export default function ChatbotWidget() {
 
   handleSendRef.current = handleSend;
 
-  const handleClearHistory = () => {
+  const handleClearHistory = async () => {
+    const currentSessionId = sessionIdRef.current;
+    const currentToken = sessionTokenRef.current;
+
+    // Kích hoạt xóa phiên thực tế trên máy chủ theo quyền được xóa bỏ dữ liệu (P05-005)
+    if (currentSessionId && currentSessionId !== 'anonymous') {
+      try {
+        await fetch(`/api/v1/chat/session?sessionId=${encodeURIComponent(currentSessionId)}`, {
+          method: 'DELETE',
+          headers: {
+            ...(currentToken ? { 'x-chat-session-token': currentToken } : {}),
+          },
+        });
+      } catch {
+        // Tiếp tục làm sạch giao diện cục bộ kể cả khi mất mạng
+      }
+    }
+
     setMessages([{
       ...defaultWelcome,
       id: Date.now().toString(),
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }]);
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
+    const newSessionId = generateSessionId();
+    sessionIdRef.current = newSessionId;
+    sessionTokenRef.current = '';
+    try {
+      localStorage.setItem('triton_widget_session_id', newSessionId);
+      localStorage.removeItem('triton_widget_session_token');
+    } catch { /* ignore */ }
   };
 
   // ── DRAGGABLE FLOATING ACTION BUTTON LOGIC ───────────────────────
