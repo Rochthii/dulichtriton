@@ -2,10 +2,21 @@ import json
 import csv
 import os
 import logging
-from typing import List
+from abc import ABC, abstractmethod
+from typing import List, Dict, Any
 from tourism_crawler.models.place import PlaceEnrichedModel
 
 logger = logging.getLogger("tourism_crawler")
+
+
+class BaseExporter(ABC):
+    """Abstract base class for all data exporters."""
+
+    @abstractmethod
+    def export(self, records: List[Dict[str, Any]], output_filepath: str) -> None:
+        """Export records to the target output filepath."""
+        pass
+
 
 class DataExporter:
     """Exporter to generate places.json, places.csv, and seed_places.sql."""

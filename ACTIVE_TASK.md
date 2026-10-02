@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-010 — Sửa import BaseExporter trong một test đang fail (Proof: test collection pass)
+### P05-011 — Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Sửa import `BaseExporter` trong `tests/test_export.py` (hoặc module xuất khẩu tương ứng `tourism_crawler.export`) hiện đang gây lỗi `ImportError: cannot import name 'BaseExporter' from 'tourism_crawler.export.exporter'`, chứng minh pytest collection thu thập đầy đủ các bài test mà không phát sinh lỗi thu thập.
-- **Next task sau P05-010:** P05-011 — Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
+- **Mục tiêu duy nhất:** Sửa thuật toán trùng lặp hoặc thêm normalization/synonym matching trong `tourism_crawler/deduplicate/similarity.py` cho alias nổi tiếng "Hồ Tà Pạ Tuyệt Tình Cốc" khớp với "Hồ Tà Pạ", chứng minh `tests/test_deduplicate.py` pass 100%.
+- **Next task sau P05-011:** P05-012 — Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
 
 ---
 
@@ -109,11 +109,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 83. 🟢 **`P05-007`** *(Hoàn thành)*: Sửa một câu privacy notice về quyền truy cập (Proof: khớp RLS matrix).
 84. 🟢 **`P05-008`** *(Hoàn thành)*: Thêm consent UI nếu G3 yêu cầu (Proof: no-consent path không ghi dữ liệu không được phép).
 85. 🟢 **`P05-009`** *(Hoàn thành)*: Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng).
-86. 🟡 **`P05-010`** *(Đang mở)*: Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
+86. 🟢 **`P05-010`** *(Hoàn thành)*: Sửa import `BaseExporter` trong một test đang fail (Proof: test collection pass).
+87. 🟡 **`P05-011`** *(Đang mở)*: Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-010 — Sửa import BaseExporter trong một test đang fail (Proof: test collection pass)
+- **Status:** `done` tại `tourism_crawler/export/exporter.py`, `tourism_crawler/export/__init__.py`, `tests/test_export.py`, và `frontend/scripts/test-export-base-exporter.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-B Quality & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Khắc phục triệt để lỗi `ImportError: cannot import name 'BaseExporter' from 'tourism_crawler.export.exporter'` khi chạy pytest:
+    * Định nghĩa Abstract Base Class `BaseExporter(ABC)` chuẩn mực trong `tourism_crawler/export/exporter.py` với phương thức trừu tượng `@abstractmethod def export(self, records: List[Dict[str, Any]], output_filepath: str) -> None`.
+    * Cả 3 exporter chuyên biệt (`JSONExporter`, `CSVExporter`, `GeoJSONExporter`) kế thừa hợp lệ từ `BaseExporter`.
+    * Tái xuất bản `BaseExporter` trong `tourism_crawler/export/__init__.py` (`__all__ = ["BaseExporter", "DataExporter", "JSONExporter", "CSVExporter", "GeoJSONExporter"]`).
+  - Chứng minh bằng chứng nghiệm thu kỹ thuật (Proof):
+    * Lệnh `pytest --collect-only tests` thu thập thành công 100% test items (11/11 tests collected), 0 collection errors (loại bỏ hoàn toàn lỗi fail collection cũ).
+    * Bộ kiểm thử `tests/test_export.py` chạy thành công `test_json_exporter` đạt 1 passed (100%).
+    * Hợp đồng kế thừa runtime: `issubclass(JSONExporter, BaseExporter)`, `issubclass(CSVExporter, BaseExporter)`, `issubclass(GeoJSONExporter, BaseExporter)` đều trả về `True`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/test-export-base-exporter.test.mjs` đạt 5/5 assertions pass 100%: (1) Pytest collection passes with 0 errors; (2) tests/test_export.py executes and passes; (3) Runtime inheritance contract verified; (4) Static source audit in exporter.py & __init__.py; (5) Export execution payload verification.
+  - Toàn bộ 534/534 test assertions frontend pass sạch sẽ (0 failures); build production Next.js 16 biên dịch thành công 181/181 routes (exit code 0).
 
 ### P05-009 — Tách network call khỏi import-time của một test script (Proof: test import không gọi mạng)
 - **Status:** `done` tại `scripts/test_embedding.py`, `scripts/test_page_queries.py`, `tests/test_script_import_no_network.py`, và `frontend/scripts/test-script-import-no-network.test.mjs`.
