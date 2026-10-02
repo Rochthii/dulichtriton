@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkRateLimit, isSuspiciousBot } from '@/lib/rateLimiter';
+import { checkRateLimitAsync, isSuspiciousBot } from '@/lib/rateLimiter';
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 
              req.headers.get('x-real-ip') || 
              '127.0.0.1';
@@ -66,7 +66,7 @@ export function middleware(req: NextRequest) {
   // 2. Sliding Window Rate Limiting (Anti-DDoS & Wallet Drain Shield)
   if (pathname.startsWith('/api/v1/chat/')) {
     // Protect AI Chatbot endpoints: max 20 prompts / minute per IP
-    const limitResult = checkRateLimit(`chat_${ip}`, 20, 60);
+    const limitResult = await checkRateLimitAsync(`chat_${ip}`, 20, 60, 'chat_query');
     if (!limitResult.allowed) {
       return new NextResponse(
         JSON.stringify({
@@ -87,7 +87,7 @@ export function middleware(req: NextRequest) {
     }
   } else if (pathname.startsWith('/api/v1/admin/auth/login')) {
     // Protect Admin Login: max 5 login attempts / minute per IP (Anti Brute-force)
-    const limitResult = checkRateLimit(`login_${ip}`, 5, 60);
+    const limitResult = await checkRateLimitAsync(`login_${ip}`, 5, 60, 'auth_login');
     if (!limitResult.allowed) {
       return new NextResponse(
         JSON.stringify({
@@ -105,7 +105,7 @@ export function middleware(req: NextRequest) {
     }
   } else if (pathname.startsWith('/api/')) {
     // General API rate limit: max 90 requests / minute per IP
-    const limitResult = checkRateLimit(`api_${ip}`, 90, 60);
+    const limitResult = await checkRateLimitAsync(`api_${ip}`, 90, 60, 'public_api');
     if (!limitResult.allowed) {
       return new NextResponse(
         JSON.stringify({
