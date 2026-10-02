@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact)
+### P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at)
 
 - **Status:** `ready` / `active` cho Wave W4 (AI Grounding, Verification Claims & Observability).
 - **Luồng:** Thống nhất (Wave W4: AI & Chatbot Reliability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng bộ poisoned-knowledge fixtures (untrusted user context, malicious knowledge injection, poisoned RAG sources). Chứng minh chatbot AI kiên quyết từ chối context chưa được kiểm chứng, không bao giờ dùng untrusted context làm fact trong câu trả lời.
-- **Next task sau P04-021:** P04-022 — Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có source_url và verified_at).
+- **Mục tiêu duy nhất:** Kiểm tra SOS payload khẩn cấp bảo đảm mọi contact (công an huyện, cứu hỏa, bệnh viện, trạm y tế) đều có đầy đủ trường nguồn kiểm chứng `source_url` hợp lệ và mốc thời gian xác minh thực địa `verified_at`, không có contact nào thiếu nguồn hoặc mang tính giả định.
+- **Next task sau P04-022:** P04-023 — Bỏ sleep nhân tạo khỏi SOS response path (Proof: unit test xác nhận không gọi delay helper).
 
 ---
 
@@ -97,11 +97,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 71. 🟢 **`P04-018`** *(Hoàn thành)*: Thêm output schema validator cho câu trả lời chatbot (Proof: malformed provider output bị chặn/fallback).
 72. 🟢 **`P04-019`** *(Hoàn thành)*: Thêm citation coverage check cho factual answer (Proof: factual fixture không nguồn không qua gate).
 73. 🟢 **`P04-020`** *(Hoàn thành)*: Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy).
-74. 🟡 **`P04-021`** *(Đang mở)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
+74. 🟢 **`P04-021`** *(Hoàn thành)*: Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact).
+75. 🟡 **`P04-022`** *(Đang mở)*: Kiểm tra SOS payload với nguồn từng contact (Proof: từng số có `source_url` và `verified_at`).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P04-021 — Viết poisoned-knowledge fixture (Proof: untrusted context không được dùng làm fact)
+- **Status:** `done` tại `frontend/src/lib/chatPoisonedKnowledgeGuard.ts`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-poisoned-knowledge.test.mjs`.
+- **Luồng:** Thống nhất (Wave W4: AI Grounding, Verification Claims & Observability).
+- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng Untrusted Context Firewall và Knowledge Provenance Guard `chatPoisonedKnowledgeGuard.ts` (`detectPoisonedKnowledgeClaims`, `sanitizeClientChatHistory`, `assertKnowledgeProvenanceInvariance`): ngăn chặn triệt để 4 họ tấn công ngộ độc tri thức: (1) Injected Context & Knowledge Override Markers (`[Bối cảnh mới]`, `Knowledge override:`, tài liệu mật mạo danh), (2) False Presupposition Entrapment Claims (gài bẫy tiền đề sai sự thật về thực địa như Hồ Tà Pạ cạn nước, Chùa Xà Tón bị cháy, Gà đốt Ô Thum bị cấm), (3) Fake Entities (truy vấn địa danh, quán ăn, resort 5 sao bịa đặt không có trong CSDL), và (4) Client Chat History Poisoning (lọc bỏ các turn giả mạo do client tự gửi lên gán cho assistant).
+  - Thiết lập rào chắn Gateway Fail-Closed tại cả hai route `/api/v1/chat/query` và `/api/v1/chat/stream`, trả về thông tin đính chính sự thật từ CSDL xác minh thực địa và ghi nhận audit log với `provider_used: 'guard_poisoned_knowledge_firewall'`, `model_used: 'poisoned-knowledge-firewall-v1'`, `is_out_scope: true`, và `latency_ms` đo lường thực tế.
+  - Chứng minh tính bất biến nguồn tri thức (Knowledge Provenance Invariance Proof): untrusted context tuyệt đối không được dùng làm fact (`untrustedContextUsedAsFact === false`), không bao giờ đồng tình với tiền đề gài bẫy (`falsePresuppositionEndorsed === false`), không thừa nhận thực thể bịa đặt (`fakeEntityAccepted === false`), bảo toàn 100% Canonical Verified Data.
+  - Khử độc lịch sử hội thoại: `sanitizeClientChatHistory` lọc sạch các turns độc hại hoặc giả mạo assistant statement trước khi nạp vào context LLM.
+  - Kiểm tra negative controls xác nhận 0% false-positive đối với câu hỏi du lịch thông thường.
+  - Bộ kiểm thử tự động `chat-poisoned-knowledge.test.mjs` đạt 6/6 assertions pass 100%; build production Next.js 16 biên dịch thành công 178/178 routes (exit code 0).
 
 ### P04-020 — Viết adversarial prompt-injection fixture (Proof: fixture không thay system/data policy)
 - **Status:** `done` tại `frontend/src/lib/chatPromptInjectionGuard.ts`, `frontend/src/lib/chatAuditProviderHelper.ts`, `frontend/src/lib/aiProvider.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, và `frontend/scripts/chat-adversarial-prompt-injection.test.mjs`.

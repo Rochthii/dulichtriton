@@ -34,6 +34,7 @@ export * from './chatGroqTimeoutHelper';
 export * from './chatOutputSchemaValidator';
 export * from './chatCitationCoverageGate';
 export * from './chatPromptInjectionGuard';
+export * from './chatPoisonedKnowledgeGuard';
 
 import {
   GROQ_PRIMARY_TIMEOUT_MS,

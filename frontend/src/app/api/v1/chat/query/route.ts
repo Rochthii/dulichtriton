@@ -12,13 +12,14 @@ import { verifySessionOwnership, SESSION_TOKEN_HEADER, SESSION_TOKEN_COOKIE } fr
 import { generateQueryEmbedding } from '@/lib/chatEmbeddingHelper';
 import { executeBoundedTokenSearch } from '@/lib/chatTokenSearchHelper';
 import { resolveVerificationMetadata, filterVerifiedRetrievalPlaces } from '@/lib/placeVerificationGuard';
-import { resolveAuditProvider, resolveAuditModel, CANONICAL_PROMPT_INJECTION_PROVIDER, CANONICAL_PROMPT_INJECTION_MODEL } from '@/lib/chatAuditProviderHelper';
+import { resolveAuditProvider, resolveAuditModel, CANONICAL_PROMPT_INJECTION_PROVIDER, CANONICAL_PROMPT_INJECTION_MODEL, CANONICAL_POISONED_KNOWLEDGE_PROVIDER, CANONICAL_POISONED_KNOWLEDGE_MODEL } from '@/lib/chatAuditProviderHelper';
 import { calculateElapsedMs, startLatencyTimer } from '@/lib/chatAuditLatencyHelper';
 import { StructuredChatResponse } from '@/lib/chatStructuredResultContract';
 import { validateChatbotOutput } from '@/lib/chatOutputSchemaValidator';
 import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
+import { detectPoisonedKnowledgeClaims, sanitizeClientChatHistory } from '@/lib/chatPoisonedKnowledgeGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -352,8 +353,9 @@ export async function POST(req: NextRequest) {
 
     const t0 = startLatencyTimer(); // latency tracking (P04-013)
 
-    // Load conversation history
-    const history = await loadHistory(sessionId);
+    // Load and sanitize conversation history (P04-021: chống history poisoning)
+    const rawHistory = await loadHistory(sessionId);
+    const history = sanitizeClientChatHistory(rawHistory);
 
     // 1. Direct Next.js Multi-LLM RAG Engine Execution
     // P04-020: Kiểm tra Prompt Injection Firewall fail-closed trước khi xử lý
@@ -390,6 +392,42 @@ export async function POST(req: NextRequest) {
         });
       }
       return injectionRes;
+    }
+
+    // P04-021: Chặn đứng Poisoned Knowledge Claims & Đính chính sự thật thực địa
+    const poisoned = detectPoisonedKnowledgeClaims(queryStr);
+    if (poisoned.isPoisoned && poisoned.correctionFact) {
+      const poisonedProvider = CANONICAL_POISONED_KNOWLEDGE_PROVIDER;
+      const poisonedModel = CANONICAL_POISONED_KNOWLEDGE_MODEL;
+      const poisonedMessage = poisoned.correctionFact;
+      const poisonedLatencyMs = calculateElapsedMs(t0);
+      logChatEvent({
+        session_id: sessionId,
+        query: queryStr,
+        response_preview: poisonedMessage,
+        provider_used: poisonedProvider,
+        model_used: poisonedModel,
+        is_out_scope: false,
+        latency_ms: poisonedLatencyMs,
+      });
+      const poisonedRes = NextResponse.json({
+        text_response: poisonedMessage,
+        provider: poisonedProvider,
+        model: poisonedModel,
+        latency_ms: poisonedLatencyMs,
+        ui_components: [],
+        videos: [],
+        suggestions: ['Hồ Tà Pạ có gì đẹp?', 'Ăn Gà Đốt Ô Thum ở đâu?', 'Chùa Khmer Bảy Núi'],
+      });
+      if (ownership.token) {
+        poisonedRes.headers.set(SESSION_TOKEN_HEADER, ownership.token);
+        poisonedRes.cookies.set(SESSION_TOKEN_COOKIE, ownership.token, {
+          path: '/',
+          httpOnly: true,
+          sameSite: 'lax',
+        });
+      }
+      return poisonedRes;
     }
 
     const lowerQuery = queryStr.toLowerCase();
