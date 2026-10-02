@@ -187,7 +187,8 @@ async function saveHistory(sessionId: string, history: Turn[]): Promise<void> {
 function logChatEvent(entry: {
   session_id: string; query: string; response_preview?: string;
   provider_used?: string; model_used?: string; rag_method?: string; places_count?: number;
-  latency_ms?: number; is_out_scope?: boolean;
+  latency_ms?: number; is_out_scope?: boolean; provider_fallback?: boolean | null;
+  retrieval_zero_result?: boolean | null;
 }): void {
   const supabase = getSupabase();
   if (!supabase) return;
@@ -293,7 +294,7 @@ async function generateAIResponse(
   userQuery: string,
   ragContext: string,
   history: Turn[] = []
-): Promise<{ text: string; provider: string; model: string }> {
+): Promise<{ text: string; provider: string; model: string; providerFallback: boolean | null }> {
   const historySnippet = history.length > 0
     ? '\n\nLịch sử hội thoại gần nhất:\n' +
       history.map(t => `${t.role === 'user' ? 'Bạn' : 'Tôi'}: ${t.content}`).join('\n')
@@ -306,6 +307,7 @@ async function generateAIResponse(
     text: aiResult.text,
     provider: resolveAuditProvider(aiResult.provider),
     model: resolveAuditModel(aiResult.model, aiResult.provider),
+    providerFallback: aiResult.providerFallback,
   };
 }
 
@@ -746,6 +748,7 @@ export async function POST(req: NextRequest) {
     let aiTextResponse = aiResult.text;
     let actualProvider = aiResult.provider;
     let actualModel = aiResult.model;
+    let providerFallback = aiResult.providerFallback;
 
     // P04-018: Defense-in-depth output schema validation (chặn malformed và fallback)
     const outValidation = validateChatbotOutput(aiTextResponse);
@@ -756,6 +759,7 @@ export async function POST(req: NextRequest) {
       aiTextResponse = generateSmartLocalDomainResponse(queryStr);
       actualProvider = 'local_expert_rag';
       actualModel = 'local-expert-rag-v1';
+      providerFallback = true;
     } else if (outValidation.sanitizedText) {
       aiTextResponse = outValidation.sanitizedText;
     }
@@ -769,6 +773,7 @@ export async function POST(req: NextRequest) {
       aiTextResponse = generateSmartLocalDomainResponse(queryStr);
       actualProvider = 'local_expert_rag';
       actualModel = 'local-expert-rag-v1';
+      providerFallback = true;
     } else if (citationCheck.enrichedText) {
       aiTextResponse = citationCheck.enrichedText;
     }
@@ -805,6 +810,8 @@ export async function POST(req: NextRequest) {
       places_count: formattedPlaces.length,
       latency_ms: actualLatencyMs,
       is_out_scope: false,
+      provider_fallback: providerFallback,
+      retrieval_zero_result: places.length === 0,
     });
 
     const mainPayload: StructuredChatResponse = {

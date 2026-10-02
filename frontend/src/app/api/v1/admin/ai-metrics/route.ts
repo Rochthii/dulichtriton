@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAIProviderMetrics } from '@/lib/aiProvider';
 import { verifyAdminSession } from '@/lib/adminSessionGuard';
 import { requireSupabaseServerClient } from '@/lib/serverSupabase';
+import {
+  calculateChatLatencyMetrics,
+  calculateChatProviderFallbackMetrics,
+  calculateChatRetrievalZeroResultMetrics,
+} from '@/lib/chatAuditLatencyHelper';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,21 +46,20 @@ export async function GET(req: NextRequest) {
       /* table might not exist yet */
     }
 
-    // 3. Fetch average latency from chat_logs
-    let avgLatencyMs = 0;
+    // 3. Calculate latency metrics from the latest persisted chat log samples
+    let latencyMetrics = calculateChatLatencyMetrics([]);
+    let providerFallbackMetrics = calculateChatProviderFallbackMetrics([]);
+    let retrievalZeroResultMetrics = calculateChatRetrievalZeroResultMetrics([]);
     try {
       const { data: logs } = await supabase
         .from('chat_logs')
-        .select('latency_ms')
+        .select('latency_ms, provider_fallback, retrieval_zero_result')
         .order('id', { ascending: false })
         .limit(50);
 
-      if (logs && logs.length > 0) {
-        const validMs = logs.map(l => l.latency_ms).filter(Boolean) as number[];
-        if (validMs.length > 0) {
-          avgLatencyMs = Math.round(validMs.reduce((a, b) => a + b, 0) / validMs.length);
-        }
-      }
+      latencyMetrics = calculateChatLatencyMetrics((logs || []).map((log) => log.latency_ms));
+      providerFallbackMetrics = calculateChatProviderFallbackMetrics((logs || []).map((log) => log.provider_fallback));
+      retrievalZeroResultMetrics = calculateChatRetrievalZeroResultMetrics((logs || []).map((log) => log.retrieval_zero_result));
     } catch {
       /* ignore */
     }
@@ -66,7 +70,9 @@ export async function GET(req: NextRequest) {
       providers: providerMetrics,
       cache: cacheStats,
       observability: {
-        avgLatencyMs,
+        ...latencyMetrics,
+        ...providerFallbackMetrics,
+        ...retrievalZeroResultMetrics,
         uptimeStatus: '100% Operational',
       },
     });

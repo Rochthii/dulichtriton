@@ -51,6 +51,7 @@ export interface StreamOutputChunk {
   content?: string;
   provider?: string;
   model?: string;
+  providerFallback?: boolean;
 }
 
 export interface StreamAIOptions {
@@ -90,6 +91,7 @@ export async function* streamAIResponse(
 
   // ── 1. LUỒNG 1: SOS KHẨN CẤP (P04-023: ZERO ARTIFICIAL DELAY INSTANT BYPASS) ─
   const analysis = routeQueryIntent(userPrompt);
+  let preferredRouteFailed = false;
   if (analysis.intent === 'SOS_EMERGENCY' && analysis.emergencyPayload) {
     // Phát xuất trực tiếp toàn bộ payload khẩn cấp ngay lập tức — 0 delay nhân tạo
     yield {
@@ -127,16 +129,17 @@ export async function* streamAIResponse(
           clearTimeout(timer);
           if (chunk.type === 'delta' && chunk.content) {
             hasYielded = true;
-            yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.geminiModels[0] };
+            yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.geminiModels[0], providerFallback: false };
           }
           if (chunk.type === 'done') {
-            yield { type: 'done', provider: chunk.provider || `gemini-${keyObj.id}`, model: chunk.model || AI_CONFIG.geminiModels[0] };
+            yield { type: 'done', provider: chunk.provider || `gemini-${keyObj.id}`, model: chunk.model || AI_CONFIG.geminiModels[0], providerFallback: false };
             return;
           }
         }
 
         if (hasYielded) return;
       } catch (err: any) {
+        preferredRouteFailed = true;
         console.warn(`[AI Provider] Gemini Live Search Key ${keyObj.id} failed (${err.message}). Failover to hedging path...`);
         continue;
       }
@@ -181,7 +184,7 @@ export async function* streamAIResponse(
       { groqTimeoutMs: options?.groqTimeoutMs }
     )) {
       hasYieldedFromPrimaryChain = true;
-      yield chunk;
+      yield preferredRouteFailed ? { ...chunk, providerFallback: true } : chunk;
       if (chunk.type === 'done') {
         return;
       }
@@ -205,10 +208,10 @@ export async function* streamAIResponse(
 
       for await (const chunk of openRouterGen) {
         if (chunk.type === 'delta' && chunk.content) {
-          yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0] };
+          yield { type: 'delta', content: chunk.content, provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0], providerFallback: true };
         }
         if (chunk.type === 'done') {
-          yield { type: 'done', provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0] };
+          yield { type: 'done', provider: chunk.provider, model: chunk.model || AI_CONFIG.openRouterModels[0], providerFallback: true };
           return;
         }
       }
@@ -222,10 +225,10 @@ export async function* streamAIResponse(
   const words = localExpertResponse.split(' ');
   for (let i = 0; i < words.length; i += 3) {
     const chunk = words.slice(i, i + 3).join(' ') + ' ';
-    yield { type: 'delta', content: chunk, provider: 'local_expert_rag', model: 'local-expert-rag-v1' };
+    yield { type: 'delta', content: chunk, provider: 'local_expert_rag', model: 'local-expert-rag-v1', providerFallback: true };
     await new Promise((r) => setTimeout(r, 6));
   }
-  yield { type: 'done', provider: 'local_expert_rag', model: 'local-expert-rag-v1' };
+  yield { type: 'done', provider: 'local_expert_rag', model: 'local-expert-rag-v1', providerFallback: true };
 }
 
 /**
@@ -235,13 +238,15 @@ export async function generateAIResponse(
   systemPrompt: string,
   userPrompt: string,
   options?: StreamAIOptions
-): Promise<{ text: string; provider: string; model: string }> {
+): Promise<{ text: string; provider: string; model: string; providerFallback: boolean | null }> {
   let fullText = '';
   let providerUsed = '';
   let modelUsed = '';
+  let providerFallback: boolean | null = null;
 
   for await (const chunk of streamAIResponse(systemPrompt, userPrompt, options)) {
     if (chunk.type === 'delta' && chunk.content) {
+      if (typeof chunk.providerFallback === 'boolean') providerFallback = chunk.providerFallback;
       fullText += chunk.content;
       if (chunk.provider) {
         providerUsed = chunk.provider;
@@ -251,6 +256,7 @@ export async function generateAIResponse(
       }
     }
     if (chunk.type === 'done') {
+      if (typeof chunk.providerFallback === 'boolean') providerFallback = chunk.providerFallback;
       if (chunk.provider) {
         providerUsed = chunk.provider;
       }
@@ -273,6 +279,7 @@ export async function generateAIResponse(
     resolvedText = generateSmartLocalDomainResponse(userPrompt);
     finalProvider = 'local_expert_rag';
     finalModel = 'local-expert-rag-v1';
+    providerFallback = true;
   } else if (validation.sanitizedText) {
     resolvedText = validation.sanitizedText;
   }
@@ -286,6 +293,7 @@ export async function generateAIResponse(
     resolvedText = generateSmartLocalDomainResponse(userPrompt);
     finalProvider = 'local_expert_rag';
     finalModel = 'local-expert-rag-v1';
+    providerFallback = true;
   } else if (citationGate.enrichedText) {
     resolvedText = citationGate.enrichedText;
   }
@@ -297,6 +305,7 @@ export async function generateAIResponse(
     text: applyTruthAnchor(resolvedText),
     provider: resolveAuditProvider(providerUsed),
     model: resolvedModel,
+    providerFallback,
   };
 }
 

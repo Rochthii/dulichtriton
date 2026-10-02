@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-014 — Đặt rate limit riêng cho chat query (Proof: vượt quota nhận 429 chuẩn)
+### P05-019 — Thêm CI build job (Proof: clean checkout build được)
 
-- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-B Quality & Observability).
+- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thiết lập rate limit chuyên biệt cho luồng Chatbot AI (`/api/v1/chat/query` và `/api/v1/chat/stream`) với quota 20 req / 60s theo `chat_query` tier; khi vượt quá quota thì trả về HTTP 429 chuẩn kèm `Retry-After` header và message thông báo rõ ràng, không làm ảnh hưởng các luồng khác.
-- **Next task sau P05-014:** P05-015 — Đặt rate limit riêng cho admin mutation (Proof: vượt quota nhận 429 chuẩn).
+- **Mục tiêu duy nhất:** Thêm CI build job cho clean checkout build được.
+- **Next task sau P05-019:** P05-020 — Thêm CI test job (Proof: test suite chạy trên CI).
 
 ---
 
@@ -113,11 +113,46 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 87. 🟢 **`P05-011`** *(Hoàn thành)*: Thêm regression test cho alias `Hồ Tà Pạ` (Proof: deduplicate test pass).
 88. 🟢 **`P05-012`** *(Hoàn thành)*: Chọn backend distributed cho rate limit (Proof: Decision Record về Redis/managed provider/chi phí).
 89. 🟢 **`P05-013`** *(Hoàn thành)*: Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test).
-90. 🟡 **`P05-014`** *(Đang mở)*: Đặt rate limit riêng cho chat query (Proof: vượt quota nhận 429 chuẩn).
+90. 🟢 **`P05-014`** *(Hoàn thành)*: Đặt rate limit riêng cho chat query (Proof: vượt quota nhận 429 chuẩn).
+91. 🟢 **`P05-015`** *(Hoàn thành)*: Đặt rate limit riêng cho admin mutation (Proof: vượt quota nhận 429 chuẩn).
+92. 🟢 **`P05-016`** *(Hoàn thành)*: Ghi metric p95 chatbot latency (Proof: request thành công tạo metric).
+93. 🟢 **`P05-017`** *(Hoàn thành)*: Ghi metric provider fallback rate (Proof: fallback fixture tăng metric).
+94. 🟢 **`P05-018`** *(Hoàn thành)*: Ghi metric retrieval zero-result rate (Proof: fixture zero-result tăng metric).
+95. 🟡 **`P05-019`** *(Đang mở)*: Thêm CI build job (Proof: clean checkout build được).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-018 — Ghi metric retrieval zero-result rate (Proof: fixture zero-result tăng metric)
+- **Status:** `done` tại migration `supabase/migrations/20261002_p05_018_chat_logs_retrieval_zero_result.sql`, `frontend/src/lib/chatAuditLatencyHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/api/v1/admin/ai-metrics/route.ts`, `frontend/src/app/admin/ai-metrics/page.tsx`, và `frontend/scripts/retrieval-zero-result-metric.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-B Quality & Observability).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung cột `retrieval_zero_result BOOLEAN` vào bảng `public.chat_logs` qua migration DDL.
+  - Cung cấp hàm `calculateChatRetrievalZeroResultMetrics(samples)`: chỉ đưa các lượt có chạy qua retrieval (`typeof sample === 'boolean'`) vào mẫu số; các lượt out-of-scope/guard bypass có giá trị `NULL` và không làm sai lệch mẫu số; tỷ lệ tính bằng `Math.round((zeroResultCount / sampleCount) * 1000) / 10`.
+  - Cập nhật luồng ghi audit log tại `/api/v1/chat/query` và `/api/v1/chat/stream`: ghi `retrieval_zero_result: places.length === 0` (hoặc `ragResult.places.length === 0`) khi thực hiện retrieval.
+  - Cập nhật API `/api/v1/admin/ai-metrics` và giao diện `/admin/ai-metrics` hiển thị card "Tỷ Lệ Retrieval Không Kết Quả" với `zeroResultRatePercent`, `zeroResultCount`, `retrievalSampleCount`.
+  - Bộ kiểm thử `retrieval-zero-result-metric.test.mjs` đạt 6/6 tests pass 100%, chứng minh fixture zero-result làm tăng metric rõ ràng (từ 0% lên 20% rồi 50%). Toàn bộ bộ test frontend rate limit, latency p95 đạt 20/20 pass; pytest 13/13 pass; Next.js 16 build 181/181 static routes thành công (exit code 0).
+
+### P05-017 — Ghi metric provider fallback rate (Proof: fallback fixture tăng metric)
+- **Status:** `done` tại migration chat logs provider_fallback, hai chat route, provider orchestrator, admin metrics API/dashboard và regression tests.
+- **AI thực dùng:** GPT-6.1 Sol (Codex lead); Gemini 3.8 Flash (High) được dispatch để review chỉ đọc nhưng job `agy-2a98cf7d` bị hủy sau gần 7 phút chờ, không có findings được tích hợp; Linear CRT-14 ghi nhận trạng thái Canceled.
+- **Evidence:** Ghi `provider_fallback` vào `chat_logs`: `false` khi provider chính trả lời, `true` khi chuyển sang Gemini/OpenRouter/local hoặc local quality fallback, `NULL` cho guard/out-of-scope/chưa phân loại và dữ liệu cũ. Admin API tính rate từ tối đa 50 log gần nhất, chỉ dùng mẫu boolean làm mẫu số; dashboard hiển thị rate, số fallback và số mẫu. Fixture 1 fallback/1 primary cho ra 50%; test failover khẳng định primary=false, Gemini fallback=true. Migration đã viết nhưng chưa deploy lên Supabase; live data/production chưa xác minh.
+
+### P05-016 — Ghi metric p95 chatbot latency (Proof: request thành công tạo metric)
+- **Status:** `done` tại `frontend/src/lib/chatAuditLatencyHelper.ts`, `frontend/src/app/api/v1/admin/ai-metrics/route.ts`, `frontend/src/app/admin/ai-metrics/page.tsx`, và `frontend/scripts/chat-latency-p95-metric.test.mjs`.
+- **Evidence:** Dùng `latency_ms` đã ghi trong `chat_logs`, tính nearest-rank p95 trên tối đa 50 log gần nhất; bỏ mẫu không hợp lệ, giữ giá trị 0 và trả p95 `null` nếu chưa có mẫu. Admin metrics API trả `avgLatencyMs`, `p95LatencyMs`, `latencySampleCount`; dashboard hiển thị p95 và cỡ mẫu. Bộ test p95/API đạt 5/5, kiểm thử audit latency P04-013 đạt 8/8 (tổng 13/13); TypeScript và `git diff --check` pass. ESLint pass khi tắt riêng rule `react-hooks/set-state-in-effect` cho lệnh kiểm tra vì lỗi `fetchMetrics()` trong `useEffect` đã tồn tại ở HEAD. API metric được test với fixture local; chưa xác minh dữ liệu Supabase hoặc production.
+
+### P05-015 — Đặt rate limit riêng cho admin mutation (Proof: vượt quota nhận 429 chuẩn)
+- **Status:** `done` tại `frontend/src/middleware.ts` và `frontend/scripts/admin-mutation-rate-limit.test.mjs`.
+- **AI thực dùng:** GPT-6.1 Sol (Codex lead), Gemini 3.8 Flash (High, read-only review).
+- **Evidence:** Sau kill-switch hiện có, các request `POST`/`PUT`/`PATCH`/`DELETE` trong `/api/v1/admin/*` (trừ `/auth/`) dùng riêng tier `admin_mutation` 30 req / 60s; vượt hạn trả 429 với JSON message, `Retry-After`, quota headers và `Cache-Control: no-store`. Giữ nguyên HTTP 503 khi mutation bị tắt, login vẫn dùng tier `auth_login` 5/60; GET, auth/logout và public API không dùng bucket mutation. Focused middleware integration tests đạt 3/3 cases; tổng P05-014/P05-015 đạt 7/7; ESLint và `git diff --check` pass. Proof chạy trên local memory fallback; Upstash/production chưa được xác minh.
+
+### P05-014 — Đặt rate limit riêng cho chat query (Proof: vượt quota nhận 429 chuẩn)
+- **Status:** `done` tại `frontend/src/middleware.ts` và `frontend/scripts/chat-query-rate-limit.test.mjs`.
+- **AI thực dùng:** GPT-6.1 Sol (Codex lead), Gemini 3.8 Flash (High, read-only review).
+- **Evidence:** Chỉ `/api/v1/chat/query` và `/api/v1/chat/stream` dùng tier `chat_query` (20 req / 60s); chuẩn hóa trailing slash để không bypass quota; phản hồi 429 có JSON message, `Retry-After`, quota headers và `Cache-Control: no-store`; các route chat utility tiếp tục dùng public API tier. Focused middleware integration test đạt 4/4 cases, bao gồm quota 21 trả 429, query/stream dùng chung bucket, trailing slash và route isolation. ESLint và `git diff --check` pass. Kiểm chứng dùng memory fallback trong tiến trình local; chưa xác minh Redis/Upstash hoặc deployment production.
 
 ### P05-013 — Chuyển rate limiter sang backend đã chọn (Proof: cross-instance integration test)
 - **Status:** `done` tại `frontend/src/lib/rateLimiter.ts`, `frontend/src/middleware.ts`, và `frontend/scripts/rate-limit-cross-instance.test.mjs`.

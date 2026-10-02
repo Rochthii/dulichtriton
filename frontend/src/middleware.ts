@@ -64,8 +64,33 @@ export async function middleware(req: NextRequest) {
   }
 
   // 2. Sliding Window Rate Limiting (Anti-DDoS & Wallet Drain Shield)
-  if (pathname.startsWith('/api/v1/chat/')) {
-    // Protect AI Chatbot endpoints: max 20 prompts / minute per IP
+  const normalizedPathname = pathname.replace(/\/+$/, '');
+  const isChatQueryEndpoint =
+    normalizedPathname === '/api/v1/chat/query' || normalizedPathname === '/api/v1/chat/stream';
+
+  if (isAdminMutation) {
+    const limitResult = await checkRateLimitAsync(`admin_mutation_${ip}`, undefined, undefined, 'admin_mutation');
+    if (!limitResult.allowed) {
+      return new NextResponse(
+        JSON.stringify({
+          error: 'Admin mutation rate limit exceeded.',
+          message: `Bạn đã thực hiện quá nhiều thao tác quản trị. Vui lòng thử lại sau ${limitResult.resetSeconds} giây!`,
+          reset_seconds: limitResult.resetSeconds,
+        }),
+        {
+          status: 429,
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store',
+            'Retry-After': String(limitResult.resetSeconds),
+            'X-RateLimit-Limit': String(limitResult.limit),
+            'X-RateLimit-Remaining': '0',
+          },
+        }
+      );
+    }
+  } else if (isChatQueryEndpoint) {
+    // Protect only AI query endpoints: max 20 prompts / minute per IP.
     const limitResult = await checkRateLimitAsync(`chat_${ip}`, 20, 60, 'chat_query');
     if (!limitResult.allowed) {
       return new NextResponse(
@@ -78,6 +103,7 @@ export async function middleware(req: NextRequest) {
           status: 429,
           headers: {
             'Content-Type': 'application/json',
+            'Cache-Control': 'no-store',
             'Retry-After': String(limitResult.resetSeconds),
             'X-RateLimit-Limit': String(limitResult.limit),
             'X-RateLimit-Remaining': '0',

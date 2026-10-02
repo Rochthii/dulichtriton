@@ -118,6 +118,7 @@ test('P04-015: Groq Primary Bounded Timeout & Failover Verification', async (t) 
 
     // Must be answered by Groq, NOT fallback
     assert.equal(fallbackCalled, false, 'Fallback must NOT be called when Groq responds fast');
+    assert.ok(chunks.filter((c) => c.type === 'delta').every((c) => c.providerFallback === false), 'Primary Groq chunks must be classified as non-fallback');
     assert.ok(elapsed < 2000, `Execution elapsed (${elapsed}ms) must be well within 2500ms window`);
 
     const deltas = chunks.filter((c) => c.type === 'delta').map((c) => c.content).join('');
@@ -186,6 +187,7 @@ test('P04-015: Groq Primary Bounded Timeout & Failover Verification', async (t) 
     const doneChunk = chunks.find((c) => c.type === 'done');
     assert.equal(doneChunk.provider, 'gemini-secondary-failover');
     assert.equal(doneChunk.model, 'gemini-2.5-flash-lite');
+    assert.equal(doneChunk.providerFallback, true, 'Gemini chunks after Groq timeout must be classified as fallback');
   });
 
   await t.test('Assertion 4: Precise 2500ms Production Bound Failover Time Window Proof', async () => {
@@ -230,6 +232,7 @@ test('P04-015: Groq Primary Bounded Timeout & Failover Verification', async (t) 
     assert.equal(groqSignalAborted, true, 'Groq abort signal must be aborted at 2500ms');
     const doneChunk = chunks.find((c) => c.type === 'done');
     assert.equal(doneChunk.provider, 'gemini-production-failover');
+    assert.equal(doneChunk.providerFallback, true);
   });
 
   await t.test('Assertion 5: Mid-Stream Safety: Timer is Cleared Once First Token is Received', async () => {
@@ -264,6 +267,7 @@ test('P04-015: Groq Primary Bounded Timeout & Failover Verification', async (t) 
 
     // Stream must finish legitimately without premature abort
     assert.equal(wasAborted, false, 'Timer must be cleared after first token, preventing mid-stream abort');
+    assert.ok(chunks.every((c) => c.providerFallback === false), 'All primary Groq chunks must remain non-fallback');
     const fullText = chunks.filter((c) => c.type === 'delta').map((c) => c.content).join('');
     assert.equal(fullText, 'Token 1 Token 2 Token 3.');
   });

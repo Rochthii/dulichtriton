@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Server,
   Layers,
+  Search,
 } from 'lucide-react';
 
 interface KeyMetric {
@@ -40,6 +41,14 @@ interface MetricsData {
   };
   observability: {
     avgLatencyMs: number;
+    p95LatencyMs: number | null;
+    latencySampleCount: number;
+    fallbackCount: number;
+    fallbackRatePercent: number | null;
+    sampleCount: number;
+    zeroResultCount: number;
+    zeroResultRatePercent: number | null;
+    retrievalSampleCount: number;
     uptimeStatus: string;
   };
 }
@@ -102,7 +111,7 @@ export default function AIMetricsAdminPage() {
       )}
 
       {/* Top Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-slate-500">
             <span className="text-xs font-semibold uppercase tracking-wider">Trạng Thái Hệ Thống</span>
@@ -116,13 +125,44 @@ export default function AIMetricsAdminPage() {
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
           <div className="flex items-center justify-between text-slate-500">
-            <span className="text-xs font-semibold uppercase tracking-wider">Độ Trễ Phản Hồi TB</span>
+            <span className="text-xs font-semibold uppercase tracking-wider">Độ Trễ Phản Hồi p95</span>
             <Clock className="w-5 h-5 text-amber-500" />
           </div>
           <div className="text-2xl font-bold text-slate-900">
-            {metrics?.observability.avgLatencyMs || 0} ms
+            {metrics?.observability.p95LatencyMs ?? '—'} ms
           </div>
-          <p className="text-xs text-slate-400">Tốc độ xử lý bình quân RAG</p>
+          <p className="text-xs text-slate-400">
+            Trung bình {metrics?.observability.avgLatencyMs ?? 0} ms
+          </p>
+          <p className="text-xs text-slate-400">
+            Từ {metrics?.observability.latencySampleCount ?? 0} lượt chat gần nhất
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider">Tỷ lệ chuyển provider dự phòng</span>
+            <Activity className="w-5 h-5 text-rose-500" />
+          </div>
+          <div className="text-2xl font-bold text-slate-900">
+            {metrics?.observability.fallbackRatePercent == null ? '—' : `${metrics.observability.fallbackRatePercent}%`}
+          </div>
+          <p className="text-xs text-slate-400">
+            {metrics?.observability.fallbackCount ?? 0} fallback / {metrics?.observability.sampleCount ?? 0} lượt đã phân loại
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="flex items-center justify-between text-slate-500">
+            <span className="text-xs font-semibold uppercase tracking-wider">Tỷ Lệ Retrieval Không Kết Quả</span>
+            <Search className="w-5 h-5 text-indigo-500" />
+          </div>
+          <div className="text-2xl font-bold text-slate-900">
+            {metrics?.observability.zeroResultRatePercent == null ? '—' : `${metrics.observability.zeroResultRatePercent}%`}
+          </div>
+          <p className="text-xs text-slate-400">
+            {metrics?.observability.zeroResultCount ?? 0} zero-result / {metrics?.observability.retrievalSampleCount ?? 0} lượt tìm kiếm
+          </p>
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">

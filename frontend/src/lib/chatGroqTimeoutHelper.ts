@@ -69,6 +69,7 @@ export interface StreamOutputChunk {
   content?: string;
   provider?: string;
   model?: string;
+  providerFallback?: boolean;
 }
 
 export interface SequentialFailoverOptions {
@@ -159,6 +160,7 @@ export async function* orchestrateGroqWithFailover(
           content: chunk.content,
           provider: activeProvider,
           model: activeModel || chunk.model,
+          providerFallback: false,
         };
       }
 
@@ -168,6 +170,7 @@ export async function* orchestrateGroqWithFailover(
           type: 'done',
           provider: activeProvider || chunk.provider,
           model: activeModel || chunk.model,
+          providerFallback: false,
         };
         return;
       }
@@ -219,6 +222,7 @@ export async function* orchestrateGroqWithFailover(
             content: chunk.content,
             provider: activeProvider,
             model: activeModel || chunk.model,
+            providerFallback: true,
           };
         }
 
@@ -227,6 +231,7 @@ export async function* orchestrateGroqWithFailover(
             type: 'done',
             provider: activeProvider || chunk.provider,
             model: activeModel || chunk.model,
+            providerFallback: true,
           };
           return;
         }

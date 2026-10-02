@@ -86,6 +86,8 @@ function logChatEvent(payload: {
   places_count?: number;
   latency_ms?: number;
   is_out_scope?: boolean;
+  provider_fallback?: boolean | null;
+  retrieval_zero_result?: boolean | null;
 }): void {
   try {
     const supabase = getSupabaseServerClient();
@@ -217,6 +219,7 @@ export async function POST(req: NextRequest) {
       let fullText = '';
       let providerUsed = '';
       let modelUsed = '';
+      let providerFallback: boolean | null = null;
 
       try {
         const lower = queryStr.toLowerCase();
@@ -341,6 +344,7 @@ export async function POST(req: NextRequest) {
 
         // 3. Realtime Native SSE Token Streaming (<300ms TTFT)
         for await (const chunk of streamAIResponse(systemMsg, userMsg)) {
+          if (typeof chunk.providerFallback === 'boolean') providerFallback = chunk.providerFallback;
           if (chunk.type === 'delta' && chunk.content) {
             fullText += chunk.content;
             if (chunk.provider) {
@@ -379,6 +383,7 @@ export async function POST(req: NextRequest) {
             fullText = fallbackAnswer;
             providerUsed = 'local_expert_rag';
             modelUsed = 'local-expert-rag-v1';
+            providerFallback = true;
           } else if (validation.sanitizedText) {
             fullText = validation.sanitizedText;
           }
@@ -398,6 +403,7 @@ export async function POST(req: NextRequest) {
             fullText = fallbackAnswer;
             providerUsed = 'local_expert_rag';
             modelUsed = 'local-expert-rag-v1';
+            providerFallback = true;
           }
         } else if (citationCheck.enrichedText && citationCheck.wasEnriched) {
           const extraDelta = citationCheck.enrichedText.slice(fullText.length);
@@ -446,6 +452,8 @@ export async function POST(req: NextRequest) {
           places_count: ragResult.places.length,
           latency_ms: actualLatencyMs,
           is_out_scope: false,
+          provider_fallback: providerFallback,
+          retrieval_zero_result: ragResult.places.length === 0,
         });
       } catch (err) {
         console.error('Chat stream error:', err);
