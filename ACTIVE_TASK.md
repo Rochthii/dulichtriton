@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-021 — Thêm CI unit-test job (Proof: test failure làm CI fail)
+### P05-022 — Thêm CI migration replay job (Proof: migration failure làm CI fail)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thêm CI unit-test job và chứng minh test failure làm CI fail.
-- **Next task sau P05-021:** P05-022 — Thêm CI synthetic health check job (Proof: health check failure chặn release).
+- **Mục tiêu duy nhất:** Thêm CI migration replay job và chứng minh migration failure làm CI fail.
+- **Next task sau P05-022:** P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
 
 ---
 
@@ -120,11 +120,22 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 94. 🟢 **`P05-018`** *(Hoàn thành)*: Ghi metric retrieval zero-result rate (Proof: fixture zero-result tăng metric).
 95. 🟢 **`P05-019`** *(Hoàn thành)*: Thêm CI build job (Proof: clean checkout build được).
 96. 🟢 **`P05-020`** *(Hoàn thành)*: Thêm CI lint job (Proof: lint failure làm CI fail).
-97. 🟡 **`P05-021`** *(Đang mở)*: Thêm CI unit-test job (Proof: test failure làm CI fail).
+97. 🟢 **`P05-021`** *(Hoàn thành)*: Thêm CI unit-test job (Proof: test failure làm CI fail).
+98. 🟡 **`P05-022`** *(Đang mở)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-021 — Thêm CI unit-test job (Proof: test failure làm CI fail)
+- **Status:** `done` tại `.github/workflows/ci.yml`, `frontend/package.json`, và `frontend/scripts/ci-unit-test-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung job `unit-test` độc lập vào workflow `.github/workflows/ci.yml`: chạy trên `ubuntu-latest`, setup Node.js 20 LTS kèm cache npm, cài dependencies sạch qua `npm --prefix frontend ci`, tạo artifact dữ liệu tĩnh `node scripts/generate_static_frontend_places.mjs`, chạy frontend unit test qua `npm test`, thiết lập Python 3.11 (`actions/setup-python@v5`), cài đặt `pip install -r requirements.txt pytest`, và thực thi kiểm thử backend qua `pytest -p no:cacheprovider tests`.
+  - Cập nhật `frontend/package.json` với script `"test": "node --test scripts/ci-build-job.test.mjs scripts/ci-lint-job.test.mjs scripts/ci-unit-test-job.test.mjs"`.
+  - Bộ kiểm thử tự động `frontend/scripts/ci-unit-test-job.test.mjs` đạt 6/6 tests pass 100%: (1) Xác thực workflow YAML hợp lệ chứa cả 3 jobs `build`, `lint`, `unit-test`; (2) Xác thực định nghĩa các bước kiểm thử Node 20 và Python 3.11 trên `ubuntu-latest`; (3) Kiểm chứng script `test` trong `frontend/package.json`; (4) Kiểm chứng toàn bộ test suites hiện tại của dự án chạy sạch lỗi (pytest 13/13 pass, node build job pass); (5) Fault injection proof tầng Node: inject fixture thất bại `scratch_fail_fixture.test.mjs`, chứng minh test runner lập tức exit với non-zero code và làm CI fail, sau đó dọn dẹp fixture an toàn; (6) Fault injection proof tầng Python: inject fixture thất bại `tests/test_scratch_fail_fixture.py`, chứng minh pytest lập tức trả về non-zero exit code và làm CI fail, sau đó dọn dẹp fixture và xác nhận phục hồi hoàn toàn trạng thái sạch lỗi 13/13 passed.
+  - Toàn bộ các bộ kiểm thử CI của frontend và 13/13 pytest backend pass 100%.
 
 ### P05-020 — Thêm CI lint job (Proof: lint failure làm CI fail)
 - **Status:** `done` tại `.github/workflows/ci.yml`, `frontend/eslint.config.mjs`, `frontend/src/components/ChatbotWidget.tsx`, `frontend/src/components/TikTokReelsViewer.tsx`, `frontend/src/components/VideoChatCard.tsx`, `frontend/src/lib/routeOptimizer.ts`, `frontend/next.config.ts`, và `frontend/scripts/ci-lint-job.test.mjs`.

@@ -7,7 +7,8 @@
     "prebuild": "node ../scripts/generate_static_frontend_places.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --test scripts/ci-build-job.test.mjs scripts/ci-lint-job.test.mjs scripts/ci-unit-test-job.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.1",
