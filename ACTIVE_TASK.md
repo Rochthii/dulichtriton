@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-019 — Thêm CI build job (Proof: clean checkout build được)
+### P05-020 — Thêm CI lint job (Proof: lint failure làm CI fail)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thêm CI build job cho clean checkout build được.
-- **Next task sau P05-019:** P05-020 — Thêm CI test job (Proof: test suite chạy trên CI).
+- **Mục tiêu duy nhất:** Thêm CI lint job và chứng minh lint failure làm CI fail.
+- **Next task sau P05-020:** P05-021 — Thêm CI unit-test job (Proof: test failure làm CI fail).
 
 ---
 
@@ -118,11 +118,22 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 92. 🟢 **`P05-016`** *(Hoàn thành)*: Ghi metric p95 chatbot latency (Proof: request thành công tạo metric).
 93. 🟢 **`P05-017`** *(Hoàn thành)*: Ghi metric provider fallback rate (Proof: fallback fixture tăng metric).
 94. 🟢 **`P05-018`** *(Hoàn thành)*: Ghi metric retrieval zero-result rate (Proof: fixture zero-result tăng metric).
-95. 🟡 **`P05-019`** *(Đang mở)*: Thêm CI build job (Proof: clean checkout build được).
+95. 🟢 **`P05-019`** *(Hoàn thành)*: Thêm CI build job (Proof: clean checkout build được).
+96. 🟡 **`P05-020`** *(Đang mở)*: Thêm CI lint job (Proof: lint failure làm CI fail).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-019 — Thêm CI build job (Proof: clean checkout build được)
+- **Status:** `done` tại `.github/workflows/ci.yml`, `scripts/generate_static_frontend_places.mjs`, `frontend/package.json`, và `frontend/scripts/ci-build-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Khởi tạo workflow GitHub Actions `.github/workflows/ci.yml` chuẩn hóa triggers `push` và `pull_request` trên branch `main`.
+  - Cấu hình job `build` chạy trên môi trường sạch `ubuntu-latest`: thực hiện clean checkout (`actions/checkout@v4`), thiết lập Node.js 20 LTS kèm cache npm (`actions/setup-node@v4` theo `frontend/package-lock.json`), cài đặt dependencies sạch qua `npm --prefix frontend ci`, sinh dữ liệu tĩnh chuẩn tắc qua `node scripts/generate_static_frontend_places.mjs`, và thực thi biên dịch production qua `npm --prefix frontend run build`.
+  - Bộ kiểm thử tự động `ci-build-job.test.mjs` đạt 6/6 tests pass 100%: (1) Xác thực cấu trúc strict YAML qua Python pyyaml; (2) Trigger events invariant (push & pull_request main); (3) Định nghĩa các bước build trên ubuntu-latest; (4) Hợp đồng lockfile và canonical manifest được đáp ứng; (5) Script static data generator sinh artifact `places.canonical.json` đúng schema và count; (6) Next.js build output xác nhận `BUILD_ID` và `routes-manifest.json` đầy đủ các static routes.
+  - Toàn bộ 5 test suites frontend (26 tests) pass 100%, pytest backend 13/13 pass.
 
 ### P05-018 — Ghi metric retrieval zero-result rate (Proof: fixture zero-result tăng metric)
 - **Status:** `done` tại migration `supabase/migrations/20261002_p05_018_chat_logs_retrieval_zero_result.sql`, `frontend/src/lib/chatAuditLatencyHelper.ts`, `frontend/src/app/api/v1/chat/query/route.ts`, `frontend/src/app/api/v1/chat/stream/route.ts`, `frontend/src/app/api/v1/admin/ai-metrics/route.ts`, `frontend/src/app/admin/ai-metrics/page.tsx`, và `frontend/scripts/retrieval-zero-result-metric.test.mjs`.
