@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-022 — Thêm CI migration replay job (Proof: migration failure làm CI fail)
+### P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thêm CI migration replay job và chứng minh migration failure làm CI fail.
-- **Next task sau P05-022:** P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
+- **Mục tiêu duy nhất:** Thêm CI RLS matrix job và chứng minh policy regression làm CI fail.
+- **Next task sau P05-023:** P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
 
 ---
 
@@ -121,11 +121,23 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 95. 🟢 **`P05-019`** *(Hoàn thành)*: Thêm CI build job (Proof: clean checkout build được).
 96. 🟢 **`P05-020`** *(Hoàn thành)*: Thêm CI lint job (Proof: lint failure làm CI fail).
 97. 🟢 **`P05-021`** *(Hoàn thành)*: Thêm CI unit-test job (Proof: test failure làm CI fail).
-98. 🟡 **`P05-022`** *(Đang mở)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
+98. 🟢 **`P05-022`** *(Hoàn thành)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
+99. 🟡 **`P05-023`** *(Đang mở)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-022 — Thêm CI migration replay job (Proof: migration failure làm CI fail)
+- **Status:** `done` tại `.github/workflows/ci.yml`, `scripts/ci_migration_replay.py`, `frontend/package.json`, và `frontend/scripts/ci-migration-replay-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung job `migration-replay` độc lập vào workflow `.github/workflows/ci.yml`: chạy trên `ubuntu-latest`, khởi tạo service container PostgreSQL `pgvector/pgvector:pg16` với health-check chu kỳ 10s, thiết lập Python 3.11 (`actions/setup-python@v5`), cài đặt `psycopg2-binary pytest`, và thực thi kiểm tra tính toàn vẹn và replay chuỗi 50 file migration qua `python scripts/ci_migration_replay.py --validate-only`.
+  - Phát triển script điều phối `scripts/ci_migration_replay.py`: hỗ trợ thẩm định tĩnh cú pháp SQL, encoding UTF-8, kiểm tra cân bằng dollar-quoting cho PL/pgSQL blocks (`$$`), bắt các lỗi cú pháp gõ sai (`CREATE TABEL`, `SELEKT`, `INSRT INTO`,...), đồng thời hỗ trợ kết nối thực thi migration tuần tự trên PostgreSQL database và kiểm tra các assertion cấu trúc bảng sau replay.
+  - Cập nhật `frontend/package.json` với script `test` bao gồm kiểm thử migration replay.
+  - Bộ kiểm thử tự động `frontend/scripts/ci-migration-replay-job.test.mjs` đạt 6/6 tests pass 100%: (1) Xác thực workflow YAML hợp lệ chứa cả 4 jobs `build`, `lint`, `unit-test`, `migration-replay`; (2) Xác thực định nghĩa service postgres và runner script trên `ubuntu-latest`; (3) Thẩm định 50/50 file migration SQL được đánh số thứ tự timestamp hợp lệ; (4) Chạy runner script trên toàn bộ 50 migrations hiện tại đạt kết quả sạch lỗi 100%; (5) Fault injection proof lỗi cú pháp: inject file migration lỗi cú pháp `CREATE TABEL`, chứng minh runner phát hiện lập tức trả về non-zero exit code và làm CI fail, sau đó dọn dẹp và xác nhận phục hồi; (6) Fault injection proof lỗi unbalanced dollar-quotes: inject khối PL/pgSQL thiếu dấu đóng `$$`, chứng minh runner bắt lỗi và exit với code 1, sau đó dọn dẹp và phục hồi trạng thái sạch lỗi 100%.
+  - Toàn bộ các bộ kiểm thử CI của frontend và 13/13 pytest backend pass 100%.
 
 ### P05-021 — Thêm CI unit-test job (Proof: test failure làm CI fail)
 - **Status:** `done` tại `.github/workflows/ci.yml`, `frontend/package.json`, và `frontend/scripts/ci-unit-test-job.test.mjs`.

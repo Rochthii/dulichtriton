@@ -89,3 +89,37 @@ jobs:
 
       - name: Run Python unit tests
         run: pytest -p no:cacheprovider tests
+
+  migration-replay:
+    name: Migration Replay & Validation
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgrespassword
+          POSTGRES_DB: triton_replay
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install psycopg2-binary pytest
+
+      - name: Run Migration Syntax and Structure Validation
+        run: python scripts/ci_migration_replay.py --validate-only
