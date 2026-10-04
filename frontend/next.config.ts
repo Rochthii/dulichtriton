@@ -66,6 +66,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-let exportedConfig = nextConfig;
+const exportedConfig = nextConfig;
 
 export default exportedConfig;

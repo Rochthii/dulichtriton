@@ -180,9 +180,6 @@ export default function ChatbotWidget() {
     }
   }, [messages, isTyping, isOpen, scrollToBottom]);
 
-  if (pathname === '/chatbot') {
-    return null;
-  }
 
   const presets = [
     '🧭 27 Lịch Trình',
@@ -499,7 +496,9 @@ export default function ChatbotWidget() {
     }
   };
 
-  handleSendRef.current = handleSend;
+  useEffect(() => {
+    handleSendRef.current = handleSend;
+  });
 
   const handleClearHistory = async () => {
     const currentSessionId = sessionIdRef.current;
@@ -657,6 +656,9 @@ export default function ChatbotWidget() {
       });
     }
   };
+  if (pathname === '/chatbot') {
+    return null;
+  }
 
   return (
     <>

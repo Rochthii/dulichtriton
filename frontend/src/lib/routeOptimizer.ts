@@ -168,7 +168,7 @@ export function optimizeRouteTSP(
     if (foundIdx >= 0) startIdx = foundIdx;
   }
 
-  let currentRoute: OptimizablePlace[] = [unvisited.splice(startIdx, 1)[0]];
+  const currentRoute: OptimizablePlace[] = [unvisited.splice(startIdx, 1)[0]];
 
   while (unvisited.length > 0) {
     const last = currentRoute[currentRoute.length - 1];

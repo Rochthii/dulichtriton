@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Play, X, ChevronUp, ChevronDown, Heart, Navigation, Eye, Share2, Sparkles, Volume2 } from 'lucide-react';
 import { VideoItem } from './VideoModal';
 
@@ -26,6 +26,20 @@ export default function TikTokReelsViewer({
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
 
+  const handleNext = useCallback(() => {
+    if (currentIndex < videos.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setIsLiked(false);
+    }
+  }, [currentIndex, videos.length]);
+
+  const handlePrev = useCallback(() => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setIsLiked(false);
+    }
+  }, [currentIndex]);
+
   useEffect(() => {
     setCurrentIndex(initialIndex);
   }, [initialIndex]);
@@ -39,25 +53,11 @@ export default function TikTokReelsViewer({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, currentIndex, videos.length]);
+  }, [isOpen, handleNext, handlePrev, onClose]);
 
   if (!isOpen || videos.length === 0) return null;
 
   const currentVideo = videos[currentIndex] || videos[0];
-
-  const handleNext = () => {
-    if (currentIndex < videos.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setIsLiked(false);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setIsLiked(false);
-    }
-  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;

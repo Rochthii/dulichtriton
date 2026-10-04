@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { Play } from 'lucide-react';
 import VideoModal, { VideoItem } from './VideoModal';
 
@@ -12,6 +12,7 @@ interface VideoChatCardProps {
 }
 
 export default function VideoChatCard({ title, views, imageUrl, embedUrl }: VideoChatCardProps) {
+  const reactId = useId();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Safely parse views whether it is string, number, or undefined
@@ -24,7 +25,7 @@ export default function VideoChatCard({ title, views, imageUrl, embedUrl }: Vide
     : parseInt(displayViews.replace(/[^0-9]/g, '')) * 1000 || 10000;
 
   const videoItem: VideoItem = {
-    id: Date.now().toString(),
+    id: embedUrl || reactId,
     title,
     embed_url: embedUrl || '',
     thumbnail_url: imageUrl,
