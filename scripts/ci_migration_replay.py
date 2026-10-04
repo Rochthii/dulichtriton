@@ -50,6 +50,9 @@ def validate_migrations_syntax(migrations_dir: Path) -> list:
     ]
 
     for f in files:
+        if not f.exists():
+            continue
+
         # 1. Filename pattern check: Must start with timestamp/version digits
         if not re.match(r'^\d{8}', f.name):
             errors.append(f"{f.name}: Filename must start with an 8+ digit timestamp (YYYYMMDD...)")
@@ -58,8 +61,9 @@ def validate_migrations_syntax(migrations_dir: Path) -> list:
         try:
             with open(f, "r", encoding="utf-8") as fp:
                 content = fp.read()
-        except UnicodeDecodeError as e:
-            errors.append(f"{f.name}: Failed to decode UTF-8: {e}")
+        except (UnicodeDecodeError, FileNotFoundError) as e:
+            if isinstance(e, UnicodeDecodeError):
+                errors.append(f"{f.name}: Failed to decode UTF-8: {e}")
             continue
 
         if not content.strip():

@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail)
+### P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thêm CI RLS matrix job và chứng minh policy regression làm CI fail.
-- **Next task sau P05-023:** P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
+- **Mục tiêu duy nhất:** Viết runbook vận hành khi nhà cung cấp AI gặp sự cố (provider outage), đáp ứng 4 tiêu chuẩn bắt buộc: trigger, owner, rollback, verification.
+- **Next task sau P05-024:** P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
 
 ---
 
@@ -122,11 +122,33 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 96. 🟢 **`P05-020`** *(Hoàn thành)*: Thêm CI lint job (Proof: lint failure làm CI fail).
 97. 🟢 **`P05-021`** *(Hoàn thành)*: Thêm CI unit-test job (Proof: test failure làm CI fail).
 98. 🟢 **`P05-022`** *(Hoàn thành)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
-99. 🟡 **`P05-023`** *(Đang mở)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
+99. 🟢 **`P05-023`** *(Hoàn thành)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
+100. 🟡 **`P05-024`** *(Đang mở)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail)
+- **Status:** `done` tại `.github/workflows/ci.yml`, `scripts/ci_rls_matrix.py`, `frontend/package.json`, và `frontend/scripts/ci-rls-matrix-job.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Bổ sung job `rls-matrix` độc lập vào workflow `.github/workflows/ci.yml`: chạy trên `ubuntu-latest`, khởi tạo service container PostgreSQL `pgvector/pgvector:pg16` với health-check, thiết lập Python 3.11 (`actions/setup-python@v5`), cài đặt `psycopg2-binary pytest`, và thực thi kiểm định ma trận phân quyền truy cập RLS qua `python scripts/ci_rls_matrix.py --validate-only`.
+  - Phát triển script kiểm định ma trận `scripts/ci_rls_matrix.py`:
+    1. Xác thực Baseline P02-024: 16/16 bảng đều có `ENABLE ROW LEVEL SECURITY`.
+    2. Mô phỏng luồng chuyển đổi quyền tích lũy (Cumulative Privilege Tracker) xuyên suốt 50 file migrations: kiểm chứng trạng thái phân quyền cuối cùng tuân thủ 100% Zero-Trust (6 bảng nhạy cảm: `admin_users`, `audit_logs`, `chat_sessions`, `chat_logs`, `eval_cases`, `eval_runs` có 0 quyền cho `anon` & `authenticated`; 10 bảng nghiệp vụ chỉ cấp duy nhất quyền `SELECT` cho client roles; `service_role` có toàn quyền).
+    3. Thẩm định hồi quy các file migration sau baseline (Post-baseline Regression Audit): phát hiện mọi lệnh GRANT trái phép hoặc permissive mutation policy chèn vào sau mốc baseline.
+    4. Hỗ trợ kiểm thử live PostgreSQL 192 kịch bản qua `SET ROLE` và transaction rollback.
+  - Cập nhật `frontend/package.json` với script `test` tích hợp `scripts/ci-rls-matrix-job.test.mjs`.
+  - Bộ kiểm thử tự động `frontend/scripts/ci-rls-matrix-job.test.mjs` đạt 6/6 tests pass 100%:
+    1. Xác thực workflow YAML hợp lệ chứa cả 5 jobs `build`, `lint`, `unit-test`, `migration-replay`, `rls-matrix`.
+    2. Xác thực định nghĩa service postgres, Python 3.11 và runner script trên `ubuntu-latest`.
+    3. Thẩm định repository hiện tại đạt 0 regressions trên toàn bộ 16 bảng và 50 migrations.
+    4. Negative Fault Injection Proof 1: Cấp quyền INSERT trái phép cho role `anon` trên bảng nhạy cảm `admin_users`, chứng minh validator lập tức phát hiện policy regression, trả về exit code 1 làm CI fail, sau đó dọn dẹp an toàn.
+    5. Negative Fault Injection Proof 2: Cấp mutation policy DELETE trái phép cho role `authenticated` trên bảng nghiệp vụ `places`, chứng minh validator phát hiện ngay lập tức và exit code 1 làm CI fail, sau đó dọn dẹp an toàn.
+    6. Kiểm chứng phục hồi hoàn toàn trạng thái sạch lỗi 0 regressions với exit code 0 sau dọn dẹp fixture.
+  - Toàn bộ 29/29 tests của cả 5 test suites frontend pass 100%; pytest backend 13/13 pass.
 
 ### P05-022 — Thêm CI migration replay job (Proof: migration failure làm CI fail)
 - **Status:** `done` tại `.github/workflows/ci.yml`, `scripts/ci_migration_replay.py`, `frontend/package.json`, và `frontend/scripts/ci-migration-replay-job.test.mjs`.
