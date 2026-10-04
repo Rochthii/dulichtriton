@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification)
+### P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification)
 
 - **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
 - **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Viết runbook vận hành khi nhà cung cấp AI gặp sự cố (provider outage), đáp ứng 4 tiêu chuẩn bắt buộc: trigger, owner, rollback, verification.
-- **Next task sau P05-024:** P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
+- **Mục tiêu duy nhất:** Viết runbook vận hành cho việc rollback dữ liệu (data rollback), đáp ứng 2 bằng chứng: có snapshot version và restore verification.
+- **Next task sau P05-025:** P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
 
 ---
 
@@ -123,11 +123,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 97. 🟢 **`P05-021`** *(Hoàn thành)*: Thêm CI unit-test job (Proof: test failure làm CI fail).
 98. 🟢 **`P05-022`** *(Hoàn thành)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
 99. 🟢 **`P05-023`** *(Hoàn thành)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
-100. 🟡 **`P05-024`** *(Đang mở)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
+100. 🟢 **`P05-024`** *(Hoàn thành)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
+101. 🟡 **`P05-025`** *(Đang mở)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification)
+- **Status:** `done` tại `docs/runbooks/RUNBOOK_PROVIDER_OUTAGE.md`, `frontend/src/lib/providerOutageRunbook.ts`, `frontend/package.json`, và `frontend/scripts/provider-outage-runbook.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành tài liệu chuẩn vận hành `docs/runbooks/RUNBOOK_PROVIDER_OUTAGE.md` (mã quy chuẩn `RB-SRE-PROVIDER-OUTAGE-001`), đáp ứng 4 tiêu chuẩn bắt buộc:
+    1. **TRIGGER:** Định nghĩa ngưỡng định lượng rõ ràng cho 3 cấp độ sự cố (SEV-3: lỗi Groq > 15% hoặc p95 > 2500ms; SEV-2: tỷ lệ fallback > 40%; SEV-1: mất kết nối toàn bộ đám mây) kèm các câu lệnh SQL truy vấn chẩn đoán trên bảng `chat_logs`.
+    2. **OWNER:** Phân định rõ cấp bậc chỉ huy: Incident Commander (Chăm Rốch Thi — Lead Technical Architect nắm toàn quyền quyết định), On-call SRE / Production Engineer (kỹ sư trực ca chẩn đoán và xử lý), Communications Lead (truyền thông người dùng).
+    3. **ROLLBACK:** Quy định quy trình hạ cấp tự động 4 tầng failover tuyến tính (Tầng 1 Groq LPU -> Tầng 2 Gemini -> Tầng 3 OpenRouter -> Tầng 4 Local Expert RAG Offline) và 3 kịch bản can thiệp khẩn cấp (xoay vòng API key, ép hạ cấp secondary, chế độ offline cô lập).
+    4. **VERIFICATION:** Thiết lập 4 bước kiểm chứng sau khắc phục trước khi đóng sự cố (kiểm thử curl End-to-End Chat API, đối chiếu metric p95 < 2000ms & fallback rate < 10%, kiểm tra nguyên vẹn cứu hộ SOS bypass, biên bản Post-Incident Review).
+  - Xây dựng module runtime `frontend/src/lib/providerOutageRunbook.ts` (`evaluateProviderOutageSeverity`, `verifyProviderOutageRecovery`, `PROVIDER_OUTAGE_TRIGGER_THRESHOLDS`, `PROVIDER_OUTAGE_OWNERSHIP_MATRIX`) ánh xạ 100% giữa tài liệu và code thực thi.
+  - Cập nhật script `test` trong `frontend/package.json` tích hợp `scripts/provider-outage-runbook.test.mjs`.
+  - Bộ kiểm thử tự động `frontend/scripts/provider-outage-runbook.test.mjs` đạt 7/7 tests pass 100% (chứng minh tính toàn vẹn 4 tiêu chuẩn bắt buộc và logic đánh giá runtime).
+  - Toàn bộ 29 frontend test suites và 13/13 pytest backend pass 100%.
 
 ### P05-023 — Thêm CI RLS matrix job (Proof: policy regression làm CI fail)
 - **Status:** `done` tại `.github/workflows/ci.yml`, `scripts/ci_rls_matrix.py`, `frontend/package.json`, và `frontend/scripts/ci-rls-matrix-job.test.mjs`.
