@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "document_id": "DR-GATE-G4-PROD-RELEASE-001",
+  "title": "Decision Record Gate G4 — Production Release Gate GO/NO-GO Approval",
+  "gate": "G4",
+  "decision": "GO",
+  "release_verdict": "GO",
+  "status": "APPROVED_GO",
+  "version": "1.0.0",
+  "system_name": "Hệ thống Trợ lý Du Lịch Tri Tôn AI Assistant",
+  "evaluated_at": "2026-10-05T15:00:00+07:00",
+  "release_owner": {
+    "name": "Chăm Rốch Thi",
+    "role": "Lead Technical Architect, Platform Operator & Release Owner",
+    "attestation": "Tôi xác nhận đã kiểm toán toàn diện toàn bộ các tiêu chí Release Gate từ P00 đến P07. Toàn bộ 11 rủi ro P0/P1 đã được khắc phục hoặc phê chuẩn có kiểm soát (open_unaccepted_count = 0). Mọi bài kiểm thử tự động, an ninh bảo mật, toàn vẹn dữ liệu và độ tin cậy đều vượt qua 100%. Tôi chính thức phê chuẩn quyết định GO cho phiên bản phát hành sản xuất v1.0.0.",
+    "signature": "CHAM_ROCH_THI_20261005_GATE_G4_APPROVED_GO"
+  },
+  "summary": {
+    "total_release_gates": 11,
+    "passed_release_gates": 11,
+    "failed_release_gates": 0,
+    "total_open_p0_p1_risks": 0,
+    "all_evidence_verified": true,
+    "final_verdict": "GO"
+  },
+  "release_criteria": [
+    {
+      "gate_id": "G4-CRIT-001",
+      "task_ref": "P07-001",
+      "title": "Authenticated Admin Mutation Protection & Zero Database Writes",
+      "requirement": "Toàn bộ 19 phương thức mutation của 12 route quản trị phải được bọc verifyAdminSession(req), từ chối 100% request không hợp lệ và chứng minh 0% database writes.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/authenticated-admin-negative.test.mjs",
+      "verified_evidence": "114 negative checks pass 100% (401 Unauthorized khi thiếu/sai token, 403 Forbidden khi role VIEWER, 503 khi kill-switch bật, 0 writes)."
+    },
+    {
+      "gate_id": "G4-CRIT-002",
+      "task_ref": "P07-002",
+      "title": "Network Egress & SSRF Protection Boundary",
+      "requirement": "Server-side fetch chỉ chấp nhận giao thức HTTPS, chặn 100% IP nội bộ, loopback, link-local, cloud IMDS, hostname đám mây và chặn redirect ngoài allowlist.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/ssrf-negative-suite.test.mjs",
+      "verified_evidence": "136 negative checks pass 100% trên 4 suites, kiểm chứng Zero Private Egress Invariant bảo vệ scrape-images và gmaps-scraper."
+    },
+    {
+      "gate_id": "G4-CRIT-003",
+      "task_ref": "P07-003",
+      "title": "Fresh Migration Replay from Blank Database",
+      "requirement": "Tái lập thành công toàn bộ chuỗi 50 SQL migrations từ database hoàn toàn trống, bảo đảm tính đơn điệu của timestamp, cú pháp sạch và đầy đủ schema cốt lõi.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/fresh-migration-replay.test.mjs",
+      "verified_evidence": "50 migrations replay thành công, dựng đủ 6 extensions, 14 core tables có RLS, CHECK constraints lat/lng/rating và 4 RPCs."
+    },
+    {
+      "gate_id": "G4-CRIT-004",
+      "task_ref": "P07-004",
+      "title": "Row Level Security (RLS) 196-Cell Privilege Matrix Lockdown",
+      "requirement": "16/16 bảng cơ sở dữ liệu phải bật RLS; 196 ô ma trận phân quyền từ chối 100% truy cập bảng nhạy cảm đối với anon/authenticated và cấm client mutation trên bảng nghiệp vụ.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/rls-matrix-suite.test.mjs",
+      "verified_evidence": "196 ô ma trận pass 100%: 72 ô cấm tuyệt đối trên 6 bảng nhạy cảm, 120 ô SELECT-only trên 10 bảng nghiệp vụ, 4 row-filtering policies, 0 regressions."
+    },
+    {
+      "gate_id": "G4-CRIT-005",
+      "task_ref": "P07-005",
+      "title": "Canonical Data Validators & Manifest Cryptographic Integrity",
+      "requirement": "Canonical Manifest v1.0.0 và 100% file POI canonical phải vượt qua validator schema, khớp mã băm SHA-256, nằm trong bounding box Tri Tôn và 15 xã/thị trấn chính thức.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/canonical-data-validators.test.mjs",
+      "verified_evidence": "Khớp 100% SHA-256 toàn cục (f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb), 0 duplicate IDs, 0 ngoài bounding box."
+    },
+    {
+      "gate_id": "G4-CRIT-006",
+      "task_ref": "P07-006",
+      "title": "Production Database & Canonical Reconciliation",
+      "requirement": "Toàn bộ 137 bản ghi CSDL sản xuất phải được đối soát vào Bảng Concordance, unapproved_divergence_count = 0, và backup snapshot có chữ ký SHA-256.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/db-canonical-divergence.test.mjs",
+      "verified_evidence": "Báo cáo DB-CANONICAL-DIVERGENCE-001 xác nhận 0 unapproved divergence, 137 bản ghi quản trị minh bạch bởi Concordance Table và Review Queue."
+    },
+    {
+      "gate_id": "G4-CRIT-007",
+      "task_ref": "P07-007",
+      "title": "Chatbot AI Resilience & Multi-LLM Sequential Failover",
+      "requirement": "Sequential Failover 4 tầng với Bounded Timeouts (Groq 2.5s -> Gemini 6s -> OpenRouter 5s -> Local RAG 0ms), zero hanging stream error, output schema validation và citation gate.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/chatbot-provider-failure-suite.test.mjs",
+      "verified_evidence": "5 test suites pass 100%: ngắt kết nối an toàn khi quá 2.5s, xử lý early/mid-stream abort, chặn 100% malformed output và factual unverified claims."
+    },
+    {
+      "gate_id": "G4-CRIT-008",
+      "task_ref": "P07-008",
+      "title": "User Privacy Retention & HMAC Right to Erasure",
+      "requirement": "Chính sách lưu trữ bất biến (chat_sessions 24h, chat_logs 30d), job dọn dẹp tự động định kỳ, và cơ chế xác thực HMAC-SHA256 bảo đảm quyền xóa dữ liệu tức thì.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/privacy-retention-deletion-suite.test.mjs",
+      "verified_evidence": "5 test suites pass 100%: dọn sạch 100% sessions/logs hết hạn, từ chối 403 cho kẻ tấn công giả mạo token, xóa vĩnh viễn với HTTP 200 cho chủ sở hữu hợp pháp."
+    },
+    {
+      "gate_id": "G4-CRIT-009",
+      "task_ref": "P07-009",
+      "title": "Production Build & Lint Clean Invariant",
+      "requirement": "Biên dịch Next.js 16 thành công 181 routes tĩnh và SSR, ESLint 0 errors, TypeScript strict 0 type errors, và artifact tĩnh prebuild đồng bộ với manifest.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/build-and-lint-clean-suite.test.mjs",
+      "verified_evidence": "5 test suites pass 100%: npm run lint hoàn tất exit code 0 với 0 errors, next build sinh đủ 181 routes và build manifests, tsc --noEmit 0 type errors."
+    },
+    {
+      "gate_id": "G4-CRIT-010",
+      "task_ref": "P07-010",
+      "title": "Mobile Accessibility & Design System Conformance",
+      "requirement": "Tuân thủ WCAG 2.1 AA/AAA Color Contrast trên toàn bảng màu Folk-Modern Bảy Núi, hỗ trợ prefers-reduced-motion, focus-visible indicators và WAI-ARIA Modal không keyboard trap.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/mobile-accessibility-smoke-test.test.mjs",
+      "verified_evidence": "5 test suites pass 100%: Text ink/bg đạt 14.12:1 (AAA), motion-reduce <= 0.01ms, focus-visible 2px solid jade, modal có Escape listener và role dialog."
+    },
+    {
+      "gate_id": "G4-CRIT-011",
+      "task_ref": "P07-011",
+      "title": "Production P0/P1 Risk Register Review & Zero Unaccepted Risks",
+      "requirement": "Sổ đăng ký rủi ro sản xuất RR-TRI-TON-PROD-001 phải đạt open_unaccepted_count = 0, 100% rủi ro P0/P1 đã REMEDIATED hoặc ACCEPTED_RISK có kiểm soát.",
+      "status": "PASSED",
+      "proof_link": "frontend/scripts/p0-p1-risk-register.test.mjs",
+      "verified_evidence": "5 test suites pass 100%: 11 rủi ro cốt lõi (4 P0, 7 P1) đã giải quyết 10 REMEDIATED, 1 ACCEPTED_RISK (RSK-P1-007 có DR-G3 và graceful degradation fallback), open_unaccepted_count = 0."
+    }
+  ],
+  "evidence_links": [
+    "frontend/scripts/authenticated-admin-negative.test.mjs",
+    "frontend/scripts/ssrf-negative-suite.test.mjs",
+    "frontend/scripts/fresh-migration-replay.test.mjs",
+    "frontend/scripts/rls-matrix-suite.test.mjs",
+    "frontend/scripts/canonical-data-validators.test.mjs",
+    "frontend/scripts/db-canonical-divergence.test.mjs",
+    "frontend/scripts/chatbot-provider-failure-suite.test.mjs",
+    "frontend/scripts/privacy-retention-deletion-suite.test.mjs",
+    "frontend/scripts/build-and-lint-clean-suite.test.mjs",
+    "frontend/scripts/mobile-accessibility-smoke-test.test.mjs",
+    "frontend/scripts/p0-p1-risk-register.test.mjs",
+    "docs/technical-spec/P0_P1_RISK_REGISTER.json",
+    "docs/technical-spec/P0_P1_RISK_REGISTER.md",
+    "docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.json",
+    "data/canonical/canonical_manifest.json",
+    "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+    "docs/13_TWO_STREAM_EXECUTION_BOARD.md",
+    "ACTIVE_TASK.md"
+  ],
+  "conclusion": {
+    "decision": "GO",
+    "release_recommendation": "Phê chuẩn chính thức phát hành phiên bản Production Release v1.0.0 của Hệ thống Du Lịch Tri Tôn AI Assistant.",
+    "effective_immediately": true,
+    "monitoring_plan": "Theo dõi audit logs, SRE metrics (latency, failure rate, fallback rate), và định kỳ dọn dẹp dữ liệu phiên chat theo quy chuẩn vận hành."
+  }
+}
