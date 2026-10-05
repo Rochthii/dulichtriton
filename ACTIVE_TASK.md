@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng)
+### P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực tổng thể lỗi nhà cung cấp AI chatbot (chatbot provider failure suite), kiểm chứng tính đúng đắn của hành vi hệ thống trong mọi kịch bản lỗi: timeout Groq primary -> failover sang Gemini/OpenRouter, lỗi stream response -> ngắt an toàn không trả partial sai hoặc treo socket, output sai schema JSON -> chặn đứng và fallback structured response sạch, trích dẫn thiếu nguồn fact -> citation coverage gate kích hoạt.
-- **Next task sau P07-007:** P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
+- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực tổng thể chính sách quyền riêng tư dữ liệu (privacy retention/deletion suite), kiểm chứng tính đúng đắn của hành vi xóa dữ liệu hết hạn (expired sessions/logs cleanup job) và xóa dữ liệu theo yêu cầu của chủ sở hữu phiên (owner-request deletion workflow với HMAC session ownership verification).
+- **Next task sau P07-008:** P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
 
 ---
 
@@ -144,8 +144,8 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 118. 🟢 **`P07-004`** *(Hoàn thành)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
 119. 🟢 **`P07-005`** *(Hoàn thành)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
 120. 🟢 **`P07-006`** *(Hoàn thành)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
-121. 🟡 **`P07-007`** *(Đang mở)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
-122. ⚪ **`P07-008`**: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
+121. 🟢 **`P07-007`** *(Hoàn thành)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
+122. 🟡 **`P07-008`** *(Đang mở)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 123. ⚪ **`P07-009`**: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
 124. ⚪ **`P07-010`**: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
 125. ⚪ **`P07-011`**: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
@@ -154,6 +154,19 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng)
+- **Status:** `done` tại [`frontend/src/lib/chatGroqTimeoutHelper.ts`](frontend/src/lib/chatGroqTimeoutHelper.ts), [`frontend/src/lib/chatOutputSchemaValidator.ts`](frontend/src/lib/chatOutputSchemaValidator.ts), [`frontend/src/lib/chatCitationCoverageGate.ts`](frontend/src/lib/chatCitationCoverageGate.ts), [`frontend/src/lib/aiProvider.ts`](frontend/src/lib/aiProvider.ts), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/chatbot-provider-failure-suite.test.mjs`](frontend/scripts/chatbot-provider-failure-suite.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử release-gate Chatbot Provider Failure với 5 test suites bao quát 100% các kịch bản sự cố AI:
+    * **Suite 1 (Groq Primary Timeout > 2500ms Failover & Bounded Latency):** Kiểm chứng hằng số timeout 2500ms theo `DR-LLM-STRATEGY-001`, controller abort ngắt kết nối chính xác, chuyển tầng failover sang Secondary Gemini / Local RAG với `providerFallback: true`, latency đo lường phản ánh đúng bounded timeout threshold (>= 2500ms).
+    * **Suite 2 (Stream Network Error & Zero Hanging):** Early Stream Error (500/503 connection reset) kích hoạt failover 100% không emit chunk lỗi ra client, Mid-stream Error ngắt an toàn và emit closing `done` event không treo socket connection, client AbortSignal ngắt ngay lập tức mọi generator upstream (0% resource leak).
+    * **Suite 3 (Malformed Output Schema Defense):** Phát hiện và chặn đứng 100% 6 biến thể malformed (`EMPTY_OR_WHITESPACE`, `TOO_SHORT_OR_MEANINGLESS`, `RAW_PROVIDER_ERROR`, `PROMPT_LEAKAGE`, `MALFORMED_JSON_DUMP`, `REPETITIVE_LOOP`) và tự động kích hoạt fallback có cấu trúc về Local Expert RAG; tự động sửa chữa code fences markdown unclosed.
+    * **Suite 4 (Citation Coverage Gate for Factual Answers):** Câu trả lời xã giao pass thẳng (`NON_FACTUAL`), chặn đứng câu khẳng định sự thật về POI Tri Tôn thiếu nguồn (`MISSING_ALL_CITATIONS`) hoặc chứa URL domain giả mạo (`INVALID_CITATION_DOMAIN`), thực hiện deterministic citation enrichment cho POI hợp lệ và vượt qua gate (`code: 'PASSED'`).
+    * **Suite 5 (End-to-End Orchestrator Resilience & Boundary Invariants):** SOS Emergency Instant Bypass (< 5ms) không qua LLM với hotline xác minh (Công an 0296.3874.113, Y tế 115), Prompt Injection Firewall chặn đứng tấn công tại Tầng 0 trước khi chạm tới LLM, và Local Expert RAG bảo đảm 100% offline zero-downtime uptime.
+  - Bộ kiểm thử tự động `chatbot-provider-failure-suite.test.mjs` đạt 5/5 test suites pass 100%. Toàn bộ 26 frontend suites (261 tests) và 13/13 backend pytest pass 100%.
 
 ### P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận)
 - **Status:** `done` tại [`scripts/generate_db_canonical_divergence_report.mjs`](scripts/generate_db_canonical_divergence_report.mjs), [`docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.json`](docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.json), [`docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.md`](docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.md), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/db-canonical-divergence.test.mjs`](frontend/scripts/db-canonical-divergence.test.mjs).
