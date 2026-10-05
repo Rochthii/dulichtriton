@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass)
+### P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy bộ kiểm thử ma trận phân quyền Row Level Security (RLS matrix suite) xác nhận toàn bộ 196 quyền (16 bảng x 3 client/admin roles x 4 operations + row-filtering policies) đều pass 100% expected allow/deny.
-- **Next task sau P07-004:** P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass).
+- **Mục tiêu duy nhất:** Chạy toàn bộ các canonical data validators kiểm chứng tính toàn vẹn của canonical manifest hiện tại (`data/canonical/canonical_manifest.json`): schema `CANONICAL-POI-SCHEMA-V1`, checksum SHA-256, record count = 1, bounding box GPS Tri Tôn, commune glossary 15 xã/thị trấn, không duplicate canonical ID.
+- **Next task sau P07-005:** P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
 
 ---
 
@@ -141,11 +141,37 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 115. 🟢 **`P07-001`** *(Hoàn thành)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
 116. 🟢 **`P07-002`** *(Hoàn thành)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
 117. 🟢 **`P07-003`** *(Hoàn thành)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
-118. 🟡 **`P07-004`** *(Đang mở)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
+118. 🟢 **`P07-004`** *(Hoàn thành)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
+119. 🟡 **`P07-005`** *(Đang mở)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
+120. ⚪ **`P07-006`**: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
+121. ⚪ **`P07-007`**: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
+122. ⚪ **`P07-008`**: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
+123. ⚪ **`P07-009`**: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
+124. ⚪ **`P07-010`**: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
+125. ⚪ **`P07-011`**: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
+126. ⚪ **`P07-012`**: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass)
+- **Status:** `done` tại [`supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql`](supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql), [`scripts/ci_rls_matrix.py`](scripts/ci_rls_matrix.py), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/rls-matrix-suite.test.mjs`](frontend/scripts/rls-matrix-suite.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử tự động [`frontend/scripts/rls-matrix-suite.test.mjs`](frontend/scripts/rls-matrix-suite.test.mjs) kiểm chứng toàn diện ma trận phân quyền Row Level Security (RLS) với đúng 196 assertions xuyên suốt 5 test suites:
+    * **Suite 1 (Full 196-Cell Privilege Matrix Specification):**
+      - 72 ô cấm tuyệt đối (0 privileges) cho 6 bảng nhạy cảm (`admin_users`, `audit_logs`, `chat_sessions`, `chat_logs`, `eval_cases`, `eval_runs`): `anon` và `authenticated` bị từ chối 100% đối với cả 4 thao tác `SELECT`, `INSERT`, `UPDATE`, `DELETE`.
+      - 120 ô quản lý 10 bảng nghiệp vụ (`places`, `videos`, `video_discoveries`, `preset_itineraries`, `custom_knowledge_base`, `knowledge_base`, `golden_answers`, `system_configs`, `system_config`, `semantic_chat_cache`): `anon` và `authenticated` chỉ được cấp duy nhất quyền `SELECT` và bị cấm 100% đối với mọi mutation (`INSERT`, `UPDATE`, `DELETE`).
+      - Vai trò `service_role` bảo lưu toàn quyền trên cả 16 bảng.
+      - 4 row-filtering policy constraints (`places.is_verified`, `videos.is_verified`, `preset_itineraries.is_active`, `custom_knowledge_base.is_active`).
+      - Phép tính: $16 \times 3 \times 4 = 192$ cells cơ bản + 4 row filters = đúng 196 ô assertions.
+    * **Suite 2 (Cumulative Privilege State Across All 50 Migrations):** Quét toàn bộ 50 files migration từ baseline `20260807` đến cleanup `20261002`, kiểm chứng 16/16 bảng đều có `ENABLE ROW LEVEL SECURITY`, không có bảng nào bị disable RLS.
+    * **Suite 3 (Post-Baseline Policy Regression Audit):** Quét tất cả migrations sau baseline `20260924_p02_024`, xác nhận Zero Regressions, không có lệnh `GRANT` mutation hay nới lỏng chính sách trái phép nào cho client roles.
+    * **Suite 4 (Python Matrix Runner Execution):** Chạy `python scripts/ci_rls_matrix.py --validate-only` vượt qua 16 bảng với 0 lỗi chính sách.
+    * **Suite 5 (Dual Fault Injection & Fail-Closed Guarantee):** Giả lập injection cấp quyền INSERT trái phép trên bảng nhạy cảm `admin_users` và chính sách DELETE công khai trên bảng nghiệp vụ `places`, chứng minh runner fail-closed lập tức (exit code != 0) và tự động dọn dẹp sạch sẽ 100%.
+  - Cập nhật `frontend/package.json` tích hợp `scripts/rls-matrix-suite.test.mjs` vào lệnh `"test"`. Toàn bộ 6 tests pass 100% trong 1.2s.
 
 ### P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công)
 - **Status:** `done` tại [`supabase/migrations/`](supabase/migrations/), [`scripts/ci_migration_replay.py`](scripts/ci_migration_replay.py), [`.github/workflows/ci.yml`](.github/workflows/ci.yml), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/fresh-migration-replay.test.mjs`](frontend/scripts/fresh-migration-replay.test.mjs).
