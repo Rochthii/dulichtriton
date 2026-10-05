@@ -357,7 +357,7 @@ export default function GuideClientPage() {
               <h3 className="font-display text-base font-bold text-[#26221B]">Xe Khách Giường Nằm & Limousine VIP</h3>
               <p className="font-body text-xs text-[#6B6355] leading-relaxed">
                 • <strong>Nhà xe Huệ Nghĩa</strong> (Hotline: <strong>1900 636497</strong>): Chạy tuyến thẳng TP.HCM (BX Miền Tây, trạm An Sương) về thẳng BX Tri Tôn & Ba Chúc (mỗi 1-2h có 1 chuyến 24/7).<br/>
-                • <strong>Nhà xe Phương Trang (FUTA Bus Lines)</strong> (Hotline: <strong>1900 6067</strong> - VP Tri Tôn: <strong>51 Đường 3 Tháng 2, TT. Tri Tôn</strong>): Xe giường nằm cao cấp chạy thẳng tuyến TP.HCM (BX Miền Tây) ➔ Bến xe & Văn phòng Tri Tôn (đặt vé tiện lợi qua FUTA App).
+                • <strong>Nhà xe Phương Trang (FUTA Bus Lines)</strong> (Hotline: <strong>1900 6067</strong> - VP Tri Tôn: <strong>51 Đường 3 Tháng 2, Thị trấn Tri Tôn</strong>): Xe giường nằm cao cấp chạy thẳng tuyến TP.HCM (BX Miền Tây) ➔ Bến xe & Văn phòng Tri Tôn (đặt vé tiện lợi qua FUTA App).
               </p>
               <p className="font-body text-xs font-bold text-[#0E8C7F]">Thời gian: ~4.5 – 5 tiếng • Giá vé: 170.000đ – 220.000đ</p>
             </div>

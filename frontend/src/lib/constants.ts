@@ -97,7 +97,7 @@ export const COMMUNE_EMERGENCY_DIRECTORY: Record<string, CommuneEmergencyEntry> 
   'Thị trấn Tri Tôn': {
     policePhone: '0296.3874.213',
     healthPhone: '0296.3874.115',
-    policeName: 'Công an TT. Tri Tôn',
+    policeName: 'Công an Thị trấn Tri Tôn',
     healthName: 'TTYT Tri Tôn (Trụ sở chính)',
     source_url: 'https://triton.angiang.gov.vn',
     verified_at: '2026-09-28T20:55:00+07:00',
@@ -106,8 +106,8 @@ export const COMMUNE_EMERGENCY_DIRECTORY: Record<string, CommuneEmergencyEntry> 
   'Thị trấn Ba Chúc': {
     policePhone: '0296.3877.113',
     healthPhone: '0296.3877.115',
-    policeName: 'Công an TT. Ba Chúc',
-    healthName: 'Trạm Y tế TT. Ba Chúc',
+    policeName: 'Công an Thị trấn Ba Chúc',
+    healthName: 'Trạm Y tế Thị trấn Ba Chúc',
     source_url: 'https://triton.angiang.gov.vn',
     verified_at: '2026-09-28T20:55:00+07:00',
     verification_status: 'VERIFIED',

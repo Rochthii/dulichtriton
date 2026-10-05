@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass)
+### P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Sửa một nhãn đơn vị hành chính xã/thị trấn trên giao diện người dùng theo chuẩn chính thức của Glossary G1 (RULE 02), đáp ứng proof: UI test/snapshot pass.
-- **Next task sau P06-005:** P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
+- **Mục tiêu duy nhất:** Lập danh sách kiểm kê toàn diện các emoji đang xuất hiện trong từng component giao diện người dùng (`frontend/src/components/`, `frontend/src/app/`), đáp ứng proof: mỗi occurrence có file/component.
+- **Next task sau P06-006:** P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
 
 ---
 
@@ -129,11 +129,30 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 103. 🟢 **`P06-002`** *(Hoàn thành)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
 104. 🟢 **`P06-003`** *(Hoàn thành)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
 105. 🟢 **`P06-004`** *(Hoàn thành)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
-106. 🟡 **`P06-005`** *(Đang mở)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
+106. 🟢 **`P06-005`** *(Hoàn thành)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
+107. 🟡 **`P06-006`** *(Đang mở)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass)
+- **Status:** `done` tại `frontend/src/lib/clusterData.ts`, `frontend/src/app/page.tsx`, `frontend/src/app/culture/page.tsx`, `frontend/src/components/GuideClientPage.tsx`, `frontend/src/lib/constants.ts`, `frontend/package.json`, và `frontend/scripts/commune-ui-label-glossary.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Sửa đổi dứt điểm nhãn đơn vị hành chính xã/thị trấn viết tắt trên giao diện người dùng theo chuẩn chính thức của Glossary G1 và RULE 02.
+  - Tại Cụm Thắng Cảnh Cô Tô & Soài So (`cluster-coto` trên Trang chủ `page.tsx` và module dữ liệu quy hoạch `frontend/src/lib/clusterData.ts`), thay thế chuỗi viết tắt `commune: "Xã Cô Tô, Xã Núi Tô & TT Tri Tôn"` thành tên chính thức chuẩn tắc `commune: "Xã Cô Tô, Xã Núi Tô & Thị trấn Tri Tôn"`.
+  - Chuẩn hóa đồng bộ các nhãn viết tắt khác trên toàn bộ các trang UI: `frontend/src/app/culture/page.tsx` (sửa `TT. Tri Tôn` thành `Thị trấn Tri Tôn` ở cradle và location), `frontend/src/components/GuideClientPage.tsx` (sửa địa chỉ phòng vé FUTA thành `Thị trấn Tri Tôn`), `frontend/src/lib/constants.ts` (chuẩn hóa `Công an Thị trấn Tri Tôn`, `Công an Thị trấn Ba Chúc`, `Trạm Y tế Thị trấn Ba Chúc`).
+  - Xây dựng hàm snapshot `renderClusterCommuneBadgeSnapshot(commune)` mô phỏng chính xác JSX fragment được render trên card Trang chủ.
+  - Cập nhật script `test` trong `frontend/package.json` tích hợp `scripts/commune-ui-label-glossary.test.mjs`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/commune-ui-label-glossary.test.mjs` đạt 5/5 tests pass 100%:
+    1. Static Code Invariant: Không còn bất kỳ nhãn viết tắt cấm nào (`TT Tri Tôn`, `TT. Tri Tôn`, `TT Ba Chúc`, `TT. Ba Chúc`) trong các file UI được chỉ định.
+    2. Glossary G1 Compliance: 100% đơn vị hành chính trong cả 4 cụm `CLUSTER_DEFS` đều khớp chuẩn xác với danh mục 15 xã/thị trấn chính thức của Huyện Tri Tôn.
+    3. UI Snapshot Pass: Cả nhãn chuỗi UI (`"Xã Cô Tô, Xã Núi Tô & Thị trấn Tri Tôn"`) lẫn JSX DOM fragment (`<p class="..."><MapPin class="..." /><span class="truncate">Xã Cô Tô, Xã Núi Tô & Thị trấn Tri Tôn</span></p>`) và toàn bộ đối tượng snapshot card của `cluster-coto` đều khớp 100% với snapshot chuẩn.
+    4. Negative Fault Injection: Giả lập nhãn viết tắt hoặc thiếu tiền tố hoặc ngoài địa giới chứng minh validator fail-closed lập tức.
+    5. Audit Concordance: Xác nhận nhãn tại `page.tsx` từng được kiểm toán trong P06-004 là `ABBREVIATION` nay đã khớp hoàn hảo với `official_target: 'Thị trấn Tri Tôn'`.
+  - Toàn bộ 64 tests frontend và 13/13 pytest backend pass 100%; Next.js 16 build thành công 181/181 static routes (exit code 0).
 
 ### P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label)
 - **Status:** `done` tại `docs/technical-spec/COMMUNE_LABELS_INVENTORY.json`, `docs/technical-spec/COMMUNE_LABELS_INVENTORY.md`, `scripts/audit_commune_labels.py`, `frontend/package.json`, và `frontend/scripts/commune-labels-inventory.test.mjs`.

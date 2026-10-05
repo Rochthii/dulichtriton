@@ -99,7 +99,7 @@ const ALL_FESTIVALS: FestivalItem[] = [
     tagColor: "bg-[#D9822B] text-white border-[#D9822B]",
     image_url: "/images/culture/festival_chol_chnam_thmay.jpg",
     desc: "Dịp lễ hội lớn nhất năm của đồng bào Khmer đón mừng năm mới, khắp phum sóc rực rỡ cờ hoa, nghi thức rước Đại lịch Maha Sangkran, đắp núi cát tích đức và té nước chúc phúc an lành.",
-    cradle: "Không gian trang nghiêm cổ kính nhất tại Chùa Xvayton (>300 năm tuổi, TT. Tri Tôn).",
+    cradle: "Không gian trang nghiêm cổ kính nhất tại Chùa Xvayton (>300 năm tuổi, Thị trấn Tri Tôn).",
     highlights: [
       "Nghi thức Đắp Núi Cát (Poun Phnum Khsach) tích lũy công đức",
       "Lễ tắm tượng Phật và tắm sư (Srong Preah) bằng nước thơm hoa tươi",
@@ -224,7 +224,7 @@ const HERITAGE_STORIES = [
     id: "la-buong",
     title: "Kinh Lá Buông (Satra Slarkrit)",
     subtitle: "Di Sản Phi Vật Thể Quốc Gia Độc Bản",
-    location: "Chùa Xvayton (Wat Xvayton), TT. Tri Tôn",
+    location: "Chùa Xvayton (Wat Xvayton), Thị trấn Tri Tôn",
     icon: BookOpen,
     image_url: "/images/culture/heritage_kinh_la_buong.jpg",
     desc: "Bảo vật quốc gia vô giá lưu giữ giáo lý Tam Tạng Kinh, văn học và y học cổ truyền Khmer; được khắc thủ công bằng kim sắt mũi nhọn trên lá cây buông sấy khô, quét tro than rơm và dầu cây trai bảo quản hàng trăm năm không bị mối mọt mục rữa.",
