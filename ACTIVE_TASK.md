@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder)
+### P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Thay thế một emoji trên component giao diện người dùng bằng Lucide icon SVG chuẩn theo Design System Folk-Modern Bảy Núi, đáp ứng proof: component render đúng, không thêm asset placeholder.
-- **Next task sau P06-007:** P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
+- **Mục tiêu duy nhất:** Quét và lập bảng kiểm kê toàn diện các URL ảnh stock/fallback trên giao diện người dùng, component và feature owner, xác định rõ nguồn gốc và trạng thái xác minh.
+- **Next task sau P06-008:** P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
 
 ---
 
@@ -131,11 +131,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 105. 🟢 **`P06-004`** *(Hoàn thành)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
 106. 🟢 **`P06-005`** *(Hoàn thành)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
 107. 🟢 **`P06-006`** *(Hoàn thành)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
-108. 🟡 **`P06-007`** *(Đang mở)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
+108. 🟢 **`P06-007`** *(Hoàn thành)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
+109. 🟡 **`P06-008`** *(Đang mở)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder)
+- **Status:** `done` tại `frontend/src/lib/designSystemIcons.ts`, `frontend/src/app/page.tsx`, `frontend/package.json`, và `frontend/scripts/emoji-lucide-replacement.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Chuẩn hóa module `frontend/src/lib/designSystemIcons.ts` định nghĩa registry chuẩn tắc `AUDIENCE_FILTERS`, interface `AudienceFilterItem`, snapshot renderer `renderAudienceChipSnapshot()` và validator fail-closed `validateDesignSystemChip()`.
+  - Thay thế toàn bộ raw OS emojis trong Audience Persona Filter Chips tại Trang chủ (`frontend/src/app/page.tsx`): emoji `📸` (Sống Ảo) được thay bằng icon vector SVG `Camera` từ `lucide-react`, đồng thời chuẩn hóa `Users` cho `👨‍👩‍👧‍👦`, `Mountain` cho `🥾`, `Landmark` cho `🙏`. Nhãn filter là văn bản thuần sạch ("Tất Cả", "Sống Ảo", "Gia Đình", "Săn Mây", "Tâm Linh").
+  - Tuân thủ nghiêm ngặt nguyên tắc Zero Asset Placeholders (0% dummy images, 0% unverified CDN assets, 0% placeholder tokens).
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/emoji-lucide-replacement.test.mjs` vào `frontend/package.json` (`npm test`).
+  - Bộ kiểm thử `emoji-lucide-replacement.test.mjs` đạt 5/5 tests pass 100%:
+    1. Static Code Invariant: `page.tsx` loại bỏ hoàn toàn các chuỗi emoji cũ, ánh xạ icon `Camera` từ `lucide-react`.
+    2. Asset Integrity: Khẳng định 0% placeholder assets trong toàn bộ filter registry `AUDIENCE_FILTERS`.
+    3. PROOF Render Snapshot: Chuỗi DOM markup render snapshot khớp 100% SVG `<svg class="lucide lucide-camera ..."><span>Sống Ảo</span></button>`.
+    4. Fault Injection: Fixture chứa raw emoji hoặc placeholder asset lập tức bị validator fail-closed.
+    5. Inventory Concordance: Đối chiếu khớp chính xác bản ghi kiểm toán `EMOJI-0005` trong `EMOJI_INVENTORY.json`.
+  - ESLint pass 0 errors, Next.js 16 build pass 181 routes tĩnh và động, toàn bộ 69 tests frontend và 13/13 tests backend pytest pass 100%.
 
 ### P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component)
 - **Status:** `done` tại `docs/technical-spec/EMOJI_INVENTORY.json`, `docs/technical-spec/EMOJI_INVENTORY.md`, `scripts/audit_emoji_inventory.py`, `frontend/package.json`, và `frontend/scripts/emoji-inventory.test.mjs`.

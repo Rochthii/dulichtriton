@@ -87,10 +87,10 @@ interface ItineraryCardItem {
 }
 
 import { CLUSTER_DEFS, type TourismCluster } from "@/lib/clusterData";
+import { AUDIENCE_FILTERS, type AudienceFilter } from "@/lib/designSystemIcons";
 export { CLUSTER_DEFS, type TourismCluster };
 
 type TimeSlot = "morning" | "noon" | "afternoon" | "evening";
-type AudienceFilter = "all" | "youth" | "family" | "trekking" | "spiritual";
 
 function getInitialHotPlaces(): PlaceItem[] {
   return (localMasterPois as any[])
@@ -645,25 +645,33 @@ export default function HomePage() {
 
             {/* Persona Chips */}
             <div className="flex flex-wrap items-center gap-1.5 font-display">
-              {[
-                { key: "all", label: "Tất Cả" },
-                { key: "youth", label: "📸 Sống Ảo" },
-                { key: "family", label: "👨‍👩‍👧‍👦 Gia Đình" },
-                { key: "trekking", label: "🥾 Săn Mây" },
-                { key: "spiritual", label: "🙏 Tâm Linh" },
-              ].map((aud) => (
-                <button
-                  key={aud.key}
-                  onClick={() => setActiveAudience(aud.key as AudienceFilter)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all tap-bounce ${
-                    activeAudience === aud.key
-                      ? "bg-[#0E8C7F] text-white shadow-xs"
-                      : "bg-[#FFFDF7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#0E8C7F]/30"
-                  }`}
-                >
-                  {aud.label}
-                </button>
-              ))}
+              {AUDIENCE_FILTERS.map((aud) => {
+                const IconComponent =
+                  aud.iconName === "Camera"
+                    ? Camera
+                    : aud.iconName === "Users"
+                    ? Users
+                    : aud.iconName === "Mountain"
+                    ? Mountain
+                    : aud.iconName === "Landmark"
+                    ? Landmark
+                    : null;
+                return (
+                  <button
+                    key={aud.key}
+                    type="button"
+                    onClick={() => setActiveAudience(aud.key)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all tap-bounce flex items-center gap-1.5 ${
+                      activeAudience === aud.key
+                        ? "bg-[#0E8C7F] text-white shadow-xs"
+                        : "bg-[#FFFDF7] border border-[#26221B]/8 text-[#6B6355] hover:border-[#0E8C7F]/30"
+                    }`}
+                  >
+                    {IconComponent && <IconComponent className="w-3.5 h-3.5 shrink-0" />}
+                    <span>{aud.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
