@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass)
+### P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực tổng thể chính sách quyền riêng tư dữ liệu (privacy retention/deletion suite), kiểm chứng tính đúng đắn của hành vi xóa dữ liệu hết hạn (expired sessions/logs cleanup job) và xóa dữ liệu theo yêu cầu của chủ sở hữu phiên (owner-request deletion workflow với HMAC session ownership verification).
-- **Next task sau P07-008:** P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
+- **Mục tiêu duy nhất:** Chạy toàn diện quy trình kiểm tra chất lượng mã nguồn (lint clean với ESLint 0 warnings/errors) và biên dịch sản xuất (Next.js 16 production build pass 100% routes, exit code 0) kiểm chứng nguyên tắc bất biến Zero Error theo toàn bộ rule đã duyệt trước khi tiến tới Decision Gate G4.
+- **Next task sau P07-009:** P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
 
 ---
 
@@ -145,8 +145,8 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 119. 🟢 **`P07-005`** *(Hoàn thành)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
 120. 🟢 **`P07-006`** *(Hoàn thành)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
 121. 🟢 **`P07-007`** *(Hoàn thành)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
-122. 🟡 **`P07-008`** *(Đang mở)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
-123. ⚪ **`P07-009`**: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
+122. 🟢 **`P07-008`** *(Hoàn thành)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
+123. 🟡 **`P07-009`** *(Đang mở)*: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
 124. ⚪ **`P07-010`**: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
 125. ⚪ **`P07-011`**: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
 126. ⚪ **`P07-012`**: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
@@ -154,6 +154,19 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass)
+- **Status:** `done` tại [`frontend/src/lib/chatSessionRetentionPolicy.ts`](frontend/src/lib/chatSessionRetentionPolicy.ts), [`frontend/src/lib/chatSessionCleanupService.ts`](frontend/src/lib/chatSessionCleanupService.ts), [`frontend/src/lib/chatLogCleanupService.ts`](frontend/src/lib/chatLogCleanupService.ts), [`frontend/src/lib/chatSessionDeletionService.ts`](frontend/src/lib/chatSessionDeletionService.ts), [`frontend/src/lib/chatSessionOwnership.ts`](frontend/src/lib/chatSessionOwnership.ts), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/privacy-retention-deletion-suite.test.mjs`](frontend/scripts/privacy-retention-deletion-suite.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử release-gate Quyền riêng tư & Xóa dữ liệu với 5 test suites bao quát 100% các kịch bản:
+    * **Suite 1 (Retention Policy Specification Invariants):** Chuẩn hóa thời hạn lưu trữ bất biến theo Decision Record G3 (`chat_sessions` 24 giờ, `chat_logs` 30 ngày) và kiểm toán ranh giới hết hạn `isSessionExpired` & `isChatLogExpired` (fail-closed).
+    * **Suite 2 (Expired Chat Sessions Automated Cleanup Proof):** Kiểm chứng job dọn dẹp xóa sạch 100% các phiên hết hạn (> 24h) và bảo toàn 100% các phiên đang hoạt động (< 24h), xác thực bảo mật Cron token timing-safe.
+    * **Suite 3 (Expired Chat Logs Automated Cleanup Proof):** Kiểm chứng job dọn dẹp nhật ký kiểm toán xóa sạch 100% các log > 30 ngày và bảo tồn các log còn hạn, tuân thủ nghiêm ngặt phân quyền RLS service_role.
+    * **Suite 4 (Owner-Request Session Deletion Proof):** Kiểm chứng xác thực quyền sở hữu mật mã HMAC-SHA256 fail-closed: từ chối 403 Forbidden cho kẻ tấn công (không token / sai token / tráo token giữa 2 session), từ chối 400 Bad Request khi session_id sai format, và xóa vĩnh viễn 100% dữ liệu session trong database với HTTP 200 OK cho chủ sở hữu hợp pháp.
+    * **Suite 5 (Privacy Notice Concordance & Fail-Closed Invariants):** Đối chiếu tính trung thực của tuyên bố chính sách với mã nguồn thực tế và kiểm chứng fail-closed trả về HTTP 500 khi client database gặp sự cố (0% fake success).
+  - Bộ kiểm thử tự động `privacy-retention-deletion-suite.test.mjs` đạt 5/5 test suites pass 100%. Toàn bộ 27 frontend suites (266 tests) và 13/13 backend pytest pass 100%.
 
 ### P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng)
 - **Status:** `done` tại [`frontend/src/lib/chatGroqTimeoutHelper.ts`](frontend/src/lib/chatGroqTimeoutHelper.ts), [`frontend/src/lib/chatOutputSchemaValidator.ts`](frontend/src/lib/chatOutputSchemaValidator.ts), [`frontend/src/lib/chatCitationCoverageGate.ts`](frontend/src/lib/chatCitationCoverageGate.ts), [`frontend/src/lib/aiProvider.ts`](frontend/src/lib/aiProvider.ts), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/chatbot-provider-failure-suite.test.mjs`](frontend/scripts/chatbot-provider-failure-suite.test.mjs).
