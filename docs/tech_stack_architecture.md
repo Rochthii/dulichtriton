@@ -1,69 +1,59 @@
 # BỘ CÔNG NGHỆ TOÀN CẢNH & KIẾN TRÚC TỐI ƯU HÓA (DU LỊCH TRI TÔN AI)
 
+> **Căn cứ xác thực:** [Deployment Path Inventory](technical-spec/DEPLOYMENT_PATH_INVENTORY.md) (P00-003 / P06-010) · [Kiến Trúc Hệ Thống](02_System_Architecture.md) · [Decision Record G0](technical-spec/DECISION_RECORD_G0.md).  
+> **Nguyên tắc cốt lõi:** Production-Real, 0% Mock/Demo. Mọi thành phần đều có đường build và deploy thực tế.
+
 ---
 
 ## 🎯 1. ĐÁNH GIÁ KIẾN TRÚC & ĐIỀU CHỈNH CHUYÊN GIA
 
-Nền tảng **Du Lịch Tri Tôn** được thiết kế theo tiêu chuẩn **Software Architect**, đảm bảo mở rộng linh hoạt khi hệ thống phát triển lớn, không bị phụ thuộc vào một nhà cung cấp LLM duy nhất và sẵn sàng cho các tính năng AI nâng cao (Tối ưu hóa tuyến đường, Reranking RAG, Map Clustering).
+Nền tảng **Du Lịch Tri Tôn** được thiết kế theo tiêu chuẩn kiến trúc hiện đại Jamstack / Serverless Portal, tối ưu hóa tốc độ tải trang, độ trễ phản hồi AI và khả năng mở rộng không giới hạn:
 
 ```
-[ Frontend: Next.js 14 App Router (Vercel) ]
+[ Frontend & API Gateway: Next.js 16 App Router (Vercel Production) ]
                  │
-                 ▼
-[ Backend: FastAPI Gateway (Python 3.11) ]
-                 │
- ┌───────────────┼───────────────────────────────┐
- │               │                               │
- ▼               ▼                               ▼
-[ AI Orchestrator Service ]       [ Vector & Retrieval Service ]       [ GIS & Route Service ]
- (Gemini / OpenAI / Claude)         (pgvector + Reranker)              (PostGIS + OSRM + MapLibre)
+                 ├──► [ AI Multi-LLM Layer: Groq Llama 3.3 + Gemini 2.5 + OpenRouter ]
+                 ├──► [ GIS & Spatial Queries: Supabase PostGIS Engine ]
+                 ├──► [ Vector & Knowledge Retrieval: pgvector + Hybrid Matching ]
+                 └──► [ Media Storage & Optimization: Cloudinary Media CDN ]
 ```
 
 ---
 
-## 🛠️ 2. LỰA CHỌN CÔNG NGHỆ THEO LỚP KỸ THUẬT NÂNG CẤP
+## 🛠️ 2. LỰA CHỌN CÔNG NGHỆ THEO LỚP KỸ THUẬT
 
-### 2.1. Lớp AI Orchestration & Multi-LLM Layer
-* **AI Orchestrator Engine**: Tách rời luồng AI gọi LLM trực tiếp. Tự động Quản lý Caching, Fallback linh hoạt, Dynamic Routing và A/B Testing giữa nhiều nhà cung cấp:
-  * **Primary LLM**: Google Gemini 1.5 Flash (Tốc độ siêu nhanh, phản hồi tiếng Việt mượt).
-  * **Fallback LLM**: OpenAI GPT-4o / Claude 3.5 Sonnet / Qwen 2.5 (Xử lý truy vấn phức tạp hoặc phục hồi khi dịch vụ chính gián đoạn).
-
-### 2.2. Lớp RAG & Vector Service Tách Biệt
-* **Vector & Embedding Service**: Độc lập hóa hoàn toàn luồng Vectorize & Retrieval:
-  $$\text{Documents} \longrightarrow \text{Chunking} \longrightarrow \text{Embedding (1536d)} \longrightarrow \text{Metadata} \longrightarrow \text{pgvector} \longrightarrow \text{Retriever} \longrightarrow \text{Cross-Encoder Reranker} \longrightarrow \text{LLM Output}$$
-* **Hệ CSDL Vector**: **Supabase PostgreSQL 15 + Extension `pgvector`**.
-
-### 2.3. Lớp GIS & Tối Ưu Hóa Tuyến Đường (Route Optimization)
-* **Bộ tứ GIS hoàn chỉnh**: **Leaflet + MapLibre GL + PostGIS + OSRM (Open Source Routing Machine)**.
-  * *MapLibre GL / Leaflet*: Hiển thị bản đồ tương tác mượt mà, Map Clustering & Heatmap trên di động.
-  * *PostGIS Extension*: Xử lý truy vấn không gian phức tạp (Bán kính bán kính điểm ăn uống gần nhất).
-  * *OSRM Service*: AI tự động tính toán & tối ưu hóa đường đi ngắn nhất giữa các điểm tham quan trong tour 2D1N.
-
-### 2.4. Lớp Lưu Trữ & Tối Ưu Hóa Hình Ảnh Cloudinary Media Service
-* **Cloudinary Media API Integration**: Quản lý và lưu trữ toàn bộ kho ảnh địa điểm, đặc sản Gà Đốt Ô Thum và homestay Tri Tôn.
-* **Tự Động Nén & Tối Ưu Hóa Ảnh (Auto Optimization Protocol)**:
-  * Tự động resize kích thước tối đa 1200px (`w_1200,c_limit`).
-  * Tự động chuyển đổi sang định dạng **WebP** thế hệ mới (`f_auto,q_auto`) giúp giảm 75% dung lượng ảnh mà vẫn giữ nguyên độ nét.
-  * Trả về URL HTTPS bảo mật đã tối ưu lưu vào bảng `public.places.photos` trong CSDL PostgreSQL.
-* **Dynamic Environment Security**: Load động biến `CLOUDINARY_URL` từ tệp `.env.local` / `.env` bảo vệ an toàn 100% credential theo `RULE-20`.
-
-
-### 2.5. Lớp Frontend Web Portal
-* **Next.js 14 (App Router & React 18)**: Server-Side Rendering (SSR) & Incremental Static Regeneration (ISR) tối ưu SEO Top 1 Google.
-* **TailwindCSS**: Design tokens (`#1B4D3E` Emerald Green, `#D99B26` Golden Palm).
+### 2.1. Lớp Frontend & Serverless API Gateway
+* **Next.js 16 (App Router & React 19)**: Server-Side Rendering (SSR) & Incremental Static Regeneration (ISR) với 181 routes tĩnh và động.
+* **TailwindCSS v4**: Design tokens Folk-Modern Bảy Núi (`#1B4D3E` Emerald Green, `#D99B26` Golden Palm).
 * **Lucide React Icons**: Đảm bảo quy tắc **0% Emoji**, 100% SVG icons.
 
+### 2.2. Lớp AI Orchestration & Multi-LLM Layer
+* **Adaptive Multi-LLM Engine (`src/lib/aiProvider.ts`)**: Quản lý caching, streaming SSE, tự động circuit breaker và fallback linh hoạt:
+  * **Primary LLM**: Groq Llama-3.3-70b-versatile (Tốc độ phản hồi cực nhanh dưới 500ms).
+  * **Fallback LLM**: Google Gemini 2.5 Flash / Gemini 1.5 Flash (Tổng hợp ngữ cảnh lớn và phân tích sâu).
+  * **Redundancy Fallback**: OpenRouter (Dự phòng thảm họa).
+
+### 2.3. Lớp CSDL & Không Gian Địa Lý (Database & GIS Layer)
+* **Supabase Cloud PostgreSQL 15**:
+  * **Extension `PostGIS`**: Xử lý truy vấn không gian WGS84 Tri Tôn, tìm điểm tham quan và quán ăn lân cận qua hàm `match_places_nearby`.
+  * **Extension `pgvector`**: Lưu trữ và tìm kiếm vector embedding tri thức du lịch Tri Tôn.
+  * **Row Level Security (RLS)**: Khóa chặt 100% quyền truy cập bảng nhạy cảm đối với client roles (`anon`, `authenticated`), chỉ cho phép thực thi qua server-side service role key.
+
+### 2.4. Lớp Lưu Trữ & Tối Ưu Hóa Hình Ảnh Cloudinary Media Service
+* **Cloudinary Media API Integration**: Quản lý và lưu trữ kho ảnh thực địa địa điểm và ẩm thực Tri Tôn.
+* **Tự Động Nén & Tối Ưu Hóa Ảnh**:
+  * Tự động resize kích thước tối đa 1200px (`w_1200,c_limit`).
+  * Tự động chuyển đổi sang định dạng **WebP** thế hệ mới (`f_auto,q_auto`) giúp giảm dung lượng ảnh mà vẫn giữ nguyên độ nét.
+  * Tải lên qua API bảo mật `frontend/src/app/api/v1/admin/upload/route.ts` với giới hạn 10MB và MIME type allowlist.
+
+### 2.5. Phân Định Công Cụ Nghiên Cứu Python (Offline Tooling)
+* **Python 3.11/3.12 (`backend/`, `scripts/`)**: Phục vụ khảo sát dữ liệu thô, kiểm thử hồi quy pytest, kiểm tra fresh migration replay và xác thực ma trận RLS. **Không triển khai endpoint công khai nào lên môi trường production**.
+
 ---
 
-## 🚀 3. THỨ TỰ TRIỂN KHAI DỰ ÁN AI-FIRST (EXECUTION ORDER)
+## 🚀 3. QUY TRÌNH VẬN HÀNH & TRIỂN KHAI PRODUCTION
 
-Để đảm bảo nền tảng dữ liệu vững chắc và tránh việc phải Refactor mã nguồn về sau, dự án triển khai nghiêm ngặt theo lộ trình **AI-First**:
-
-1. **Knowledge Base (Hoàn thiện)**: Chuẩn hóa 105 địa điểm Master, video, lịch trình, nhà xe, văn hóa Khmer.
-2. **Database Schema (Đang thực hiện)**: Tạo CSDL Supabase PostgreSQL + `pgvector` + `PostGIS`.
-3. **Crawler**: Công cụ cào & làm sạch dữ liệu tự động 19 nhóm địa điểm.
-4. **AI Flow & Orchestrator**: Triển khai 9 bước AI Pipeline & AI Orchestrator Engine (`docs/ai_workflow.md`).
-5. **Backend**: Phát triển dịch vụ FastAPI REST APIs & AI Modular Services.
-6. **Frontend**: Xây dựng Web Portal Next.js 14 & AI Chatbot Widget.
-7. **Admin CMS**: Trang quản trị duyệt gian hàng Partner & xem Audit Logs.
-8. **Deployment**: Triển khai Vercel + Supabase Production.
+1. **Build Frontend**: `cd frontend && npm install && npm run build` (tạo 181 static/dynamic routes).
+2. **Triển khai Vercel**: Tự động qua git push lên nhánh `main` dựa trên cấu hình `vercel.json`.
+3. **Triển khai CSDL**: Migration replay pass trên Supabase PostgreSQL qua `supabase/migrations/*.sql`.
+4. **Giám sát**: Nhật ký kiểm toán bất biến `public.audit_logs` và đo lường hiệu năng tại `/admin/ai-metrics`.

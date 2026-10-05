@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế)
+### P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu kiến trúc hệ thống để các liên kết route/build phản ánh chính xác 100% deployment inventory thực tế tại P00-003.
-- **Next task sau P06-010:** P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
+- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu AI hệ thống để loại bỏ hoàn toàn các tuyên bố sai lệch/lỗi thời về race condition providers hay vector RAG chưa tồn tại, khớp với kết quả behavior test của P04.
+- **Next task sau P06-011:** P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
 
 ---
 
@@ -134,11 +134,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 108. 🟢 **`P06-007`** *(Hoàn thành)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
 109. 🟢 **`P06-008`** *(Hoàn thành)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
 110. 🟢 **`P06-009`** *(Hoàn thành)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
-111. 🟡 **`P06-010`** *(Đang mở)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
+111. 🟢 **`P06-010`** *(Hoàn thành)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
+112. 🟡 **`P06-011`** *(Đang mở)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế)
+- **Status:** `done` tại `docs/02_System_Architecture.md`, `docs/tech_stack_architecture.md`, `docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.json`, `docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.md`, `frontend/package.json`, và `frontend/scripts/architecture-deployment-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Hoàn tất đặc tả Deployment Path Inventory P00-003: ban hành [`DEPLOYMENT_PATH_INVENTORY.json`](docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.json) và [`DEPLOYMENT_PATH_INVENTORY.md`](docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.md) ghi nhận sơ đồ runtime thực tế (Next.js 16 App Router trên Vercel, Supabase PostgreSQL 15, Multi-LLM Cloud, Media CDN Cloudinary, và Python offline tooling).
+  - Cập nhật tài liệu kiến trúc hệ thống chính [`docs/02_System_Architecture.md`](docs/02_System_Architecture.md) và [`docs/tech_stack_architecture.md`](docs/tech_stack_architecture.md) loại bỏ 100% tuyên bố lỗi thời (Next.js 14, FastAPI Python 3.11 Gateway trung gian trên production, master data 105 spots cũ).
+  - Tài liệu dẫn chiếu và tạo liên kết trực tiếp tới 65 route files vật lý trong `frontend/src/app/**`, cấu hình triển khai `vercel.json`, và kết quả build 181 routes trong `frontend/.next`.
+  - Phân định rõ ràng vai trò của Python runtime: chỉ là công cụ nghiên cứu, crawler khảo sát thô, script CI/CD và replay test chạy offline/local, không triển khai bất kỳ endpoint nào lên production.
+  - Xây dựng và tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/architecture-deployment-inventory.test.mjs` vào `frontend/package.json` (`npm test`).
+  - Bộ kiểm thử `architecture-deployment-inventory.test.mjs` đạt 5/5 tests pass 100%: (1) Xác thực tính toàn vẹn schema của DEPLOYMENT_PATH_INVENTORY; (2) Kiểm chứng tài liệu kiến trúc không còn claim lỗi thời; (3) Kiểm chứng 100% tệp route được dẫn chiếu tồn tại thực tế trên đĩa cứng; (4) Khớp số lượng 65 routes giữa inventory và Next.js app directory / build manifest; (5) Bất biến cấu hình build `vercel.json` và `package.json`.
+  - Toàn bộ 79 tests frontend và 13/13 tests backend pytest pass 100%; Next.js 16 build thành công 181/181 static routes.
+
 
 ### P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan)
 - **Status:** `done` tại `frontend/src/app/admin/places/components/CheckinSpotsManager.tsx`, `frontend/package.json`, và `frontend/scripts/stock-fallback-removal.test.mjs`.
