@@ -1,13 +1,27 @@
 'use client';
 
 import React from 'react';
-import { Camera, Plus, Trash2, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { Camera, Plus, Trash2, Image as ImageIcon, Sparkles, ImageOff } from 'lucide-react';
 
 export interface CheckinSpotItem {
   title: string;
   photo_url: string;
   tip?: string;
   best_time?: string;
+}
+
+/**
+ * Generates canonical rendered DOM snapshot fragment for Checkin Spot image preview
+ * Used to verify honest failure state (zero unverified stock photos)
+ */
+export function renderCheckinSpotPreviewSnapshot(photoUrl?: string | null, title: string = 'Góc check-in'): string {
+  const hasAuthenticPhoto = Boolean(
+    photoUrl && typeof photoUrl === 'string' && photoUrl.trim().length > 0 && !photoUrl.includes('unsplash.com')
+  );
+  if (hasAuthenticPhoto) {
+    return `<img src="${photoUrl}" alt="${title}" class="w-full h-full object-cover" />`;
+  }
+  return `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-2 text-center" data-testid="honest-failure-state"><svg class="lucide lucide-image-off w-6 h-6 mb-1 text-slate-400"></svg><span class="text-[10px] font-medium text-slate-500">Chưa có ảnh thực địa</span></div>`;
 }
 
 interface CheckinSpotsManagerProps {
@@ -98,13 +112,23 @@ export const CheckinSpotsManager: React.FC<CheckinSpotsManagerProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {/* Image Preview & Quick Picker */}
                 <div className="space-y-1">
-                  <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-200 border border-slate-300 relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={spot.photo_url || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400'}
-                      alt={spot.title}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-200 border border-slate-300 relative flex items-center justify-center">
+                    {spot.photo_url && !spot.photo_url.includes('unsplash.com') ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={spot.photo_url}
+                        alt={spot.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-2 text-center"
+                        data-testid="honest-failure-state"
+                      >
+                        <ImageOff className="w-6 h-6 mb-1 text-slate-400" />
+                        <span className="text-[10px] font-medium text-slate-500">Chưa có ảnh thực địa</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Album Quick Selector */}

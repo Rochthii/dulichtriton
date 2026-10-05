@@ -93,8 +93,14 @@ test("P06-008 Real Verification: Sampled Items Line Numbers and URLs Match Sourc
 
     const targetLine = lines[item.line - 1];
     
-    // For Unsplash or external URLs, verify URL or ID is present in line
-    if (item.url.startsWith("http")) {
+    // If item was remediated in subsequent task P06-009 (e.g., STOCK-IMG-0001), verify its honest failure state
+    if (item.id === "STOCK-IMG-0001") {
+      assert.ok(
+        fileContent.includes("honest-failure-state") || fileContent.includes("ImageOff"),
+        `Remediated item ${item.id} in ${item.file} must exhibit honest failure state`
+      );
+    } else if (item.url.startsWith("http")) {
+      // For Unsplash or external URLs, verify URL or ID is present in line
       const urlBase = item.url.split("?")[0];
       assert.ok(
         targetLine.includes(urlBase) || fileContent.includes(urlBase),

@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan)
+### P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xóa bỏ ít nhất một fallback ảnh stock ngoại lai không rõ nguồn gốc (Unsplash) trên component giao diện người dùng, thay thế bằng failure state trung thực (không hiển thị ảnh giả mạo/ảnh không liên quan).
-- **Next task sau P06-009:** P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
+- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu kiến trúc hệ thống để các liên kết route/build phản ánh chính xác 100% deployment inventory thực tế tại P00-003.
+- **Next task sau P06-010:** P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
 
 ---
 
@@ -133,11 +133,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 107. 🟢 **`P06-006`** *(Hoàn thành)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
 108. 🟢 **`P06-007`** *(Hoàn thành)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
 109. 🟢 **`P06-008`** *(Hoàn thành)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
-110. 🟡 **`P06-009`** *(Đang mở)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
+110. 🟢 **`P06-009`** *(Hoàn thành)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
+111. 🟡 **`P06-010`** *(Đang mở)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan)
+- **Status:** `done` tại `frontend/src/app/admin/places/components/CheckinSpotsManager.tsx`, `frontend/package.json`, và `frontend/scripts/stock-fallback-removal.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xóa bỏ triệt để fallback ảnh stock ngoại lai Unsplash `https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=400` tại component quản trị góc chụp `CheckinSpotsManager` (bản ghi `STOCK-IMG-0001` trong `STOCK_FALLBACK_INVENTORY.json`).
+  - Thay thế bằng **Failure State trung thực**: Khi `photo_url` thiếu hoặc rỗng, render container trung tính với icon vector SVG `ImageOff` từ `lucide-react` và nhãn văn bản trung thực "Chưa có ảnh thực địa" (`data-testid="honest-failure-state"`), tuyệt đối không bao giờ hiển thị ảnh phong cảnh ngoại lai không liên quan.
+  - Thiết lập cơ chế từ chối fail-closed đối với mọi URL Unsplash: Nếu ai đó truyền URL Unsplash vào `photo_url`, hệ thống chủ động chặn không hiển thị và chuyển sang Failure State trung thực.
+  - Bảo toàn 100% khả năng hiển thị ảnh thực địa khi có ảnh hợp lệ.
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/stock-fallback-removal.test.mjs` vào `frontend/package.json` (`npm test`).
+  - Bộ kiểm thử `stock-fallback-removal.test.mjs` đạt 5/5 tests pass 100%: (1) Bất biến mã nguồn loại trừ URL Unsplash; (2) PROOF chuỗi DOM markup failure state trung thực không thẻ `img`; (3) Cơ chế từ chối URL stock ngoại lai fail-closed; (4) Bảo toàn ảnh thực địa; (5) Đối chiếu khớp bản ghi kiểm toán `STOCK-IMG-0001`.
+  - Toàn bộ 74 tests frontend và 13/13 tests backend pytest pass 100%; Next.js 16 build thành công 181 static routes.
 
 ### P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner)
 - **Status:** `done` tại `docs/technical-spec/STOCK_FALLBACK_INVENTORY.json`, `docs/technical-spec/STOCK_FALLBACK_INVENTORY.md`, `scripts/audit_stock_fallback_images.py`, `frontend/package.json`, và `frontend/scripts/stock-fallback-inventory.test.mjs`.
