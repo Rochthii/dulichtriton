@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label)
+### P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Quét và tạo danh sách kiểm kê toàn diện tất cả các nhãn tên đơn vị hành chính xã/thị trấn đang hiển thị trên giao diện và tài liệu, đáp ứng proof: file/line/current label.
-- **Next task sau P06-004:** P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
+- **Mục tiêu duy nhất:** Sửa một nhãn đơn vị hành chính xã/thị trấn trên giao diện người dùng theo chuẩn chính thức của Glossary G1 (RULE 02), đáp ứng proof: UI test/snapshot pass.
+- **Next task sau P06-005:** P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
 
 ---
 
@@ -128,11 +128,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 102. 🟢 **`P06-001`** *(Hoàn thành)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
 103. 🟢 **`P06-002`** *(Hoàn thành)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
 104. 🟢 **`P06-003`** *(Hoàn thành)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
-105. 🟡 **`P06-004`** *(Đang mở)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
+105. 🟢 **`P06-004`** *(Hoàn thành)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
+106. 🟡 **`P06-005`** *(Đang mở)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label)
+- **Status:** `done` tại `docs/technical-spec/COMMUNE_LABELS_INVENTORY.json`, `docs/technical-spec/COMMUNE_LABELS_INVENTORY.md`, `scripts/audit_commune_labels.py`, `frontend/package.json`, và `frontend/scripts/commune-labels-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển script kiểm toán quét tự động `scripts/audit_commune_labels.py` quét toàn diện mã nguồn UI (`frontend/src/`) và tài liệu (`docs/`, `README.md`).
+  - Ban hành 2 tài liệu chuẩn tắc: `docs/technical-spec/COMMUNE_LABELS_INVENTORY.json` và `docs/technical-spec/COMMUNE_LABELS_INVENTORY.md` (mã quy chuẩn `INVENTORY-COMMUNE-LABELS-001`, chủ trì kiểm toán bởi Lead Technical Architect & Local Cultural Auditor Chăm Rốch Thi).
+  - Lập bảng kiểm kê đầy đủ **4,246** nhãn đơn vị hành chính (2,429 nhãn UI và 1,817 nhãn Docs).
+  - Hợp đồng Proof 3 trường: Mọi bản ghi kiểm toán đều sở hữu đầy đủ 3 trường bắt buộc: `file`, `line`, `current_label` (kèm `scope`, `glossary_status`, `official_target` và `snippet`).
+  - Đối chiếu và phân loại chính xác theo chuẩn Glossary G1 và RULE 02 (15 đơn vị hành chính chính thức: 2 thị trấn + 13 xã), ghi nhận 1,922 nhãn chuẩn hóa (`STANDARDIZED`), 2,143 nhãn thiếu tiền tố (`MISSING_PREFIX`), 146 nhãn sai hoa thường (`CASE_MISMATCH`), và 35 nhãn viết tắt (`ABBREVIATION`) làm tiền đề cho việc chuẩn hóa tại Task P06-005.
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/commune-labels-inventory.test.mjs`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/commune-labels-inventory.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực artifacts tồn tại và chứa dữ liệu đầy đủ; (2) Hợp đồng Proof 3 trường được thỏa mãn trên 100% bản ghi; (3) Xác thực tính trung thực của các số dòng và trích dẫn trên tệp tin thực tế; (4) Cấu trúc bảng markdown và căn chỉnh Glossary G1.
+  - Toàn bộ 59 tests frontend và 13/13 pytest backend pass 100%.
 
 ### P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source)
 - **Status:** `done` tại `docs/01_Project_Overview.md`, `frontend/package.json`, và `frontend/scripts/poi-doc-claim-canonical.test.mjs`.
