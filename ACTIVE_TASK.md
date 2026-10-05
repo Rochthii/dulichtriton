@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại)
+### P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu AI hệ thống để loại bỏ hoàn toàn các tuyên bố sai lệch/lỗi thời về race condition providers hay vector RAG chưa tồn tại, khớp với kết quả behavior test của P04.
-- **Next task sau P06-011:** P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
+- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu dữ liệu hệ thống theo Decision Gates G1/G2 để mọi số liệu POI/địa giới đều gắn liền với manifest version và căn cứ thẩm định chính thức.
+- **Next task sau P06-012:** P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
 
 ---
 
@@ -135,11 +135,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 109. 🟢 **`P06-008`** *(Hoàn thành)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
 110. 🟢 **`P06-009`** *(Hoàn thành)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
 111. 🟢 **`P06-010`** *(Hoàn thành)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
-112. 🟡 **`P06-011`** *(Đang mở)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
+112. 🟢 **`P06-011`** *(Hoàn thành)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
+113. 🟡 **`P06-012`** *(Đang mở)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
 
 ---
 
-## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+## 📜 Lịch Sử Task Đã Hoành Thành (Consolidated Completed Records)
+
+### P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại)
+- **Status:** `done` tại `docs/ai_workflow.md`, `frontend/package.json`, và `frontend/scripts/ai-doc-behavior-alignment.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Rà soát và cập nhật toàn diện tài liệu kiến trúc quy trình AI chính [`docs/ai_workflow.md`](docs/ai_workflow.md) theo 100% kết quả kiểm thử hành vi thực tế (Behavior Tests Phase P04).
+  - Loại bỏ triệt để các giả định lỗi thời: (1) Sơ đồ FastAPI gateway trung gian trên production; (2) Giả định chạy đua song song (Parallel Race / Timed Hedge 600ms) gây lãng phí định ngạch token; (3) Cross-Encoder Reranker và Hybrid BM25 Python chưa từng tồn tại trên production; (4) Số liệu cũ 105 spots master documents.
+  - Chuẩn hóa kiến trúc **Multi-LLM Sequential Failover 4 tầng với Fast Bounded Timeouts** theo Quyết định `DR-LLM-STRATEGY-001` (Tầng 1 Groq LPU primary 2500ms -> Tầng 2 Gemini secondary 6000ms -> Tầng 3 OpenRouter tertiary 5000ms -> Tầng 4 Local Expert RAG offline 0ms); khẳng định nguyên tắc bất biến 0% Provider Race và 0% Zombie Requests / Token Waste.
+  - Tích hợp đầy đủ 10 bước quy trình Factual RAG Pipeline đã được chứng minh trong P04: Query input length guard (P04-001), Session UUID v4 & HMAC ownership (P04-002, P04-005), Prompt Injection Firewall (P04-020), Poisoned Knowledge Firewall (P04-021), Single query embedding (P04-006), Bounded token search (P04-007), PostgREST sanitizer (P04-008), Verified-only retrieval gate `verification_status = 'VERIFIED'` (P04-009, P04-010), SOS emergency fast-path zero-delay < 5ms với hotline cơ quan nhà nước xác minh (P04-022, P04-023), Output schema validation (P04-018), Citation coverage gate (P04-019), và ghi nhận audit log `model_used` (P04-012) & `latency_ms` đo lường thực tế (P04-013) vào `public.chat_logs`.
+  - Đồng bộ giới hạn dữ liệu với Canonical Manifest `v1.0.0` (Schema: `CANONICAL-POI-SCHEMA-V1`) tại `data/canonical/canonical_manifest.json`.
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/ai-doc-behavior-alignment.test.mjs` vào `frontend/package.json` (`npm test`).
+  - Bộ kiểm thử `ai-doc-behavior-alignment.test.mjs` đạt 5/5 tests pass 100%: (1) Xác thực kiến trúc Sequential Failover và các mốc timeout; (2) Không còn claim race/RAG lỗi thời trong `docs/ai_workflow.md`; (3) Tích hợp đầy đủ các rào chắn kiểm thử P04; (4) Khớp các hằng số timeout với `DR-LLM-STRATEGY-001` và mã nguồn runtime `chatGroqTimeoutHelper.ts`; (5) Căn chỉnh ranh giới dữ liệu Canonical Manifest v1.0.0.
+  - Toàn bộ 84 tests frontend và 13/13 tests backend pytest pass 100%; Next.js 16 build thành công 181 static routes.
+
 
 ### P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế)
 - **Status:** `done` tại `docs/02_System_Architecture.md`, `docs/tech_stack_architecture.md`, `docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.json`, `docs/technical-spec/DEPLOYMENT_PATH_INVENTORY.md`, `frontend/package.json`, và `frontend/scripts/architecture-deployment-inventory.test.mjs`.
