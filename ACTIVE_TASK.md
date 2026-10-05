@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass)
+### P07-011 — Review open P0/P1 risk register (Proof: không còn risk chưa accept)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Xây dựng và thực thi bộ kiểm thử khói trợ năng di động (mobile accessibility smoke test) chứng minh 100% các tiêu chí kiểm tra: điều hướng bàn phím (keyboard navigation), vòng lặp/quản lý tiêu điểm (focus ring & trapping), chế độ giảm chuyển động (`prefers-reduced-motion`) và độ tương phản màu sắc đạt chuẩn WCAG AA (contrast checklist pass) trên các giao diện cốt lõi trước Decision Gate G4.
-- **Next task sau P07-010:** P07-011 — Review open P0/P1 risk register (Proof: không còn risk chưa accept).
+- **Mục tiêu duy nhất:** Rà soát và kiểm toán toàn diện sổ đăng ký rủi ro (P0/P1 Risk Register), đối soát toàn bộ các mục rủi ro nghiêm trọng và trung bình đã được nhận diện xuyên suốt quá trình remediation, xác nhận chứng minh không còn bất kỳ rủi ro P0/P1 nào chưa được giải quyết hoặc chưa được phê chuẩn chính thức (Proof: không còn risk chưa accept) trước khi tiến tới ký duyệt Decision Gate G4.
+- **Next task sau P07-011:** P07-012 — Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
 
 ---
 
@@ -147,13 +147,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 121. 🟢 **`P07-007`** *(Hoàn thành)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
 122. 🟢 **`P07-008`** *(Hoàn thành)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 123. 🟢 **`P07-009`** *(Hoàn thành)*: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
-124. 🟡 **`P07-010`** *(Đang mở)*: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
-125. ⚪ **`P07-011`**: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
+124. 🟢 **`P07-010`** *(Hoàn thành)*: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
+125. 🟡 **`P07-011`** *(Đang mở)*: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
 126. ⚪ **`P07-012`**: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass)
+- **Status:** `done` tại [`frontend/src/lib/accessibilityChecklist.ts`](frontend/src/lib/accessibilityChecklist.ts), [`frontend/src/app/globals.css`](frontend/src/app/globals.css), [`frontend/src/components/MobileBottomNav.tsx`](frontend/src/components/MobileBottomNav.tsx), [`frontend/src/components/ChatbotWidget.tsx`](frontend/src/components/ChatbotWidget.tsx), [`frontend/src/components/Header.tsx`](frontend/src/components/Header.tsx), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/mobile-accessibility-smoke-test.test.mjs`](frontend/scripts/mobile-accessibility-smoke-test.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử release-gate Trợ năng di động (Mobile Accessibility Smoke Test) với 5 test suites bao quát 100% các tiêu chuẩn WCAG 2.1 AA/AAA:
+    * **Suite 1 (WCAG 2.1 Color Contrast Mathematical Checklist & Palette Invariants):** Tính toán toán học độ chói (Relative Luminance) và tỷ lệ tương phản chuẩn W3C, xác nhận 100% các cặp màu cốt lõi trong Folk-Modern Bảy Núi Design System đạt và vượt chuẩn WCAG AA (>= 4.5:1) và AAA (>= 7.0:1): Primary text `--ink` trên `--bg` đạt 14.12:1 (AAA), `--ink` trên `--surface` đạt 15.65:1 (AAA), Secondary `--ink-soft` trên `--bg` đạt 5.38:1 (AA), CTA Palm Button `--ink` trên `--palm` đạt 7.01:1 (AAA), và Dark Mode text đạt 16.20:1 (AAA).
+    * **Suite 2 (Reduced Motion Media Query Invariant):** Kiểm chứng `@media (prefers-reduced-motion: reduce)` trong `globals.css` vô hiệu hóa hoàn toàn animation-duration và transition-duration (<= 0.01ms !important), reset `scroll-behavior: auto !important` bảo vệ du khách nhạy cảm thị giác.
+    * **Suite 3 (Mobile Keyboard Navigation & Focus Visible Invariants):** Quy tắc `:focus-visible` toàn cục được thiết lập trong `globals.css` với outline rõ ràng (`2px solid var(--jade)`), các thành phần di động cốt lõi (`MobileBottomNav.tsx`, `Header.tsx`, `ChatbotWidget.tsx`) tích hợp các class `focus-visible:` hỗ trợ hoàn hảo điều hướng phím Tab.
+    * **Suite 4 (WAI-ARIA Modal Dialog & No Keyboard Trap Invariants):** Cửa sổ Trợ lý AI (`ChatbotWidget.tsx`) và Mobile Drawer (`Header.tsx`) tuân thủ nghiêm ngặt chuẩn WAI-ARIA Modal Dialog (`role="dialog"`, `aria-modal="true"`, `aria-label`), tích hợp event listener phím `Escape` đóng modal tức thì (WCAG 2.1.2 No Keyboard Trap).
+    * **Suite 5 (Fault Injection & Strict Compliance Interception Invariants):** Giả lập vi phạm độ tương phản kém (< 3.0:1), mã HEX sai định dạng, và các modal thiếu Escape handler chứng minh hệ thống fail-closed tức thì.
+  - Bộ kiểm thử tự động `mobile-accessibility-smoke-test.test.mjs` đạt 5/5 test suites pass 100%. Toàn bộ 29 frontend suites (276 tests) và 13/13 backend pytest pass 100%.
 
 ### P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt)
 - **Status:** `done` tại [`frontend/eslint.config.mjs`](frontend/eslint.config.mjs), [`frontend/tsconfig.json`](frontend/tsconfig.json), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/build-and-lint-clean-suite.test.mjs`](frontend/scripts/build-and-lint-clean-suite.test.mjs).

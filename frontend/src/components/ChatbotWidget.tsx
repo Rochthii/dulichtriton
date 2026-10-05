@@ -146,6 +146,18 @@ export default function ChatbotWidget() {
     }
   }, [messages, isMounted]);
 
+  // WCAG 2.1.2: No Keyboard Trap — Đóng modal bằng phím Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const handleSendRef = useRef<((text?: string) => Promise<void>) | null>(null);
 
   useEffect(() => {
@@ -703,6 +715,9 @@ export default function ChatbotWidget() {
       {/* ── CHAT MODAL WINDOW ───────────────────────────────────────────── */}
       {isOpen && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Cửa sổ Trợ lý AI Du Lịch Tri Tôn"
           className={`fixed z-50 flex flex-col bg-[#FAF3E7] shadow-[0_10px_40px_rgba(38,34,27,0.2)] border border-[#26221B]/10 overflow-hidden font-body transition-all duration-300
             ${isExpanded
               ? 'inset-3 sm:inset-6 rounded-[28px]'
@@ -712,7 +727,11 @@ export default function ChatbotWidget() {
           {/* Mobile swipe handle */}
           <div
             onClick={() => setIsOpen(false)}
-            className="sm:hidden w-full flex justify-center py-2 bg-[#0E8C7F] cursor-pointer shrink-0 active:opacity-80"
+            aria-label="Thu nhỏ cửa sổ chat"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}
+            className="sm:hidden w-full flex justify-center py-2 bg-[#0E8C7F] cursor-pointer shrink-0 active:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <div className="w-12 h-1.5 bg-white/40 rounded-full" />
           </div>
@@ -737,7 +756,8 @@ export default function ChatbotWidget() {
                 type="button"
                 onClick={toggleConsent}
                 title={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh (Không lưu phiên). Bấm để lưu 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
-                className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
+                aria-label={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh. Bấm để lưu phiên 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
+                className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                   chatConsent === 'denied'
                     ? 'bg-[#F26B3A]/25 text-[#FFD37A] border border-[#F26B3A]/50'
                     : 'bg-[#0B6B60] text-emerald-200 border border-emerald-400/40 hover:bg-[#095950]'
@@ -755,13 +775,13 @@ export default function ChatbotWidget() {
                   </>
                 )}
               </button>
-              <button onClick={handleClearHistory} title="Xóa lịch sử" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95">
+              <button onClick={handleClearHistory} title="Xóa lịch sử" aria-label="Xóa lịch sử trò chuyện" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 <Trash2 className="w-4 h-4" />
               </button>
-              <button onClick={() => setIsExpanded(!isExpanded)} title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'} className="hidden sm:block p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors">
+              <button onClick={() => setIsExpanded(!isExpanded)} title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'} aria-label={isExpanded ? 'Thu nhỏ cửa sổ chat' : 'Mở rộng toàn màn hình'} className="hidden sm:block p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
-              <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors ml-1 active:scale-95">
+              <button onClick={() => setIsOpen(false)} title="Đóng cửa sổ chat" aria-label="Đóng cửa sổ chat" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors ml-1 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -923,13 +943,15 @@ export default function ChatbotWidget() {
             <button
               onClick={handleOpenPresetPicker}
               title="Mở 27 Lịch trình Khép Vòng"
-              className="p-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] hover:text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group"
+              aria-label="Mở 27 Lịch trình Khép Vòng"
+              className="p-2.5 rounded-full bg-[#FAF3E7] hover:bg-[#F0A32F] border border-[#26221B]/15 text-[#26221B] hover:text-[#26221B] flex items-center justify-center transition-colors shrink-0 shadow-2xs active:scale-95 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F]"
             >
               <Navigation className="w-4 h-4 text-[#0E8C7F] group-hover:text-[#26221B] rotate-45" />
             </button>
             <input
               type="text"
               value={input}
+              aria-label="Nội dung câu hỏi du lịch Tri Tôn"
               onChange={(e) => {
                 setInput(e.target.value);
                 // CƠ CHẾC: Pre-ping Groq khi user gõ chữ (debounce 300ms)
@@ -946,12 +968,13 @@ export default function ChatbotWidget() {
               }}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Hỏi AI về Hồ Tà Pạ, Gà đốt Ô Thum, Chùa Khmer..."
-              className="flex-1 px-4 py-2.5 rounded-full border border-[#26221B]/15 text-xs sm:text-sm text-[#26221B] focus:outline-none focus:border-[#0E8C7F] focus:ring-2 focus:ring-[#0E8C7F]/20 bg-[#FAF3E7] font-body"
+              className="flex-1 px-4 py-2.5 rounded-full border border-[#26221B]/15 text-xs sm:text-sm text-[#26221B] focus:outline-none focus:border-[#0E8C7F] focus:ring-2 focus:ring-[#0E8C7F]/20 focus-visible:outline-none focus-visible:border-[#0E8C7F] focus-visible:ring-2 focus-visible:ring-[#0E8C7F]/40 bg-[#FAF3E7] font-body"
             />
             <button
               onClick={() => handleSend()}
               disabled={isTyping || isLoadingItinerary || !input.trim()}
-              className="p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] disabled:opacity-50 disabled:cursor-not-allowed text-[#26221B] hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[44px] min-h-[44px] shadow-xs active:scale-95 font-display"
+              aria-label="Gửi tin nhắn"
+              className="p-2.5 sm:px-4 sm:py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] disabled:opacity-50 disabled:cursor-not-allowed text-[#26221B] hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shrink-0 min-w-[44px] min-h-[44px] shadow-xs active:scale-95 font-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F]"
             >
               <Send className="w-4 h-4 text-[#26221B]" />
               <span className="hidden sm:inline">Gửi</span>

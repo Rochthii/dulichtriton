@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Compass, MapPin, Utensils, Bed, Calendar, Map, 
@@ -11,6 +11,19 @@ import MobileBottomNav from '@/components/MobileBottomNav';
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // WCAG 2.1.2: No Keyboard Trap — Đóng mobile menu / dropdown bằng phím Escape
+  useEffect(() => {
+    if (!mobileMenuOpen && !dropdownOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        setDropdownOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen, dropdownOpen]);
 
   // 6 Primary navigation links according to y-tuong-du-an.md
   const mainNav = [
@@ -125,8 +138,9 @@ export default function Header() {
         {/* Mobile Menu Toggle Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
-          aria-label="Toggle Navigation Menu"
+          className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4D3E]"
+          aria-label={mobileMenuOpen ? "Đóng menu điều hướng" : "Mở menu điều hướng"}
+          aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -134,7 +148,12 @@ export default function Header() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-top duration-200">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu điều hướng trên di động"
+          className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-4 max-h-[85vh] overflow-y-auto animate-in slide-in-from-top duration-200"
+        >
           
           <div className="space-y-1">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 block mb-1">

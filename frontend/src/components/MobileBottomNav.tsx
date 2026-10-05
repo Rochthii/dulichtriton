@@ -67,8 +67,9 @@ export default function MobileBottomNav() {
                     window.dispatchEvent(new CustomEvent("triton:open-chat"));
                   }
                 }}
-                className="flex flex-col items-center justify-center -mt-6 select-none group cursor-pointer"
+                className="flex flex-col items-center justify-center -mt-6 select-none group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2 rounded-full"
                 title="Hỏi Trợ Lý Du Lịch Tri Tôn AI"
+                aria-label="Hỏi Trợ Lý Du Lịch Tri Tôn AI"
               >
                 <div className="relative flex items-center justify-center w-13 h-13 rounded-full bg-gradient-to-tr from-[#D98E20] via-[#F0A32F] to-[#FFD37A] text-slate-950 shadow-[0_6px_20px_rgba(240,163,47,0.45)] border-4 border-[#FAF3E7] active:scale-95 transition-transform">
                   <Bot className="w-6 h-6 text-slate-950 stroke-[2.5]" />
@@ -89,7 +90,8 @@ export default function MobileBottomNav() {
               key={item.href}
               href={item.href}
               prefetch={true}
-              className={`flex flex-col items-center justify-center flex-1 h-full py-1 transition-all active:scale-95 select-none ${
+              aria-label={item.label}
+              className={`flex flex-col items-center justify-center flex-1 h-full py-1 transition-all active:scale-95 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] rounded-xl ${
                 item.isActive
                   ? "text-[#0E8C7F]"
                   : "text-[#6B6355] hover:text-[#26221B]"
