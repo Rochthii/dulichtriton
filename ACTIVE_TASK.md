@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source)
+### P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Điều chỉnh một claim POI trong tài liệu kỹ thuật theo Canonical Manifest, đáp ứng proof: doc có version/source rõ ràng.
-- **Next task sau P06-003:** P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
+- **Mục tiêu duy nhất:** Quét và tạo danh sách kiểm kê toàn diện tất cả các nhãn tên đơn vị hành chính xã/thị trấn đang hiển thị trên giao diện và tài liệu, đáp ứng proof: file/line/current label.
+- **Next task sau P06-004:** P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
 
 ---
 
@@ -127,11 +127,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 101. 🟢 **`P05-025`** *(Hoàn thành)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
 102. 🟢 **`P06-001`** *(Hoàn thành)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
 103. 🟢 **`P06-002`** *(Hoàn thành)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
-104. 🟡 **`P06-003`** *(Đang mở)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
+104. 🟢 **`P06-003`** *(Hoàn thành)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
+105. 🟡 **`P06-004`** *(Đang mở)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source)
+- **Status:** `done` tại `docs/01_Project_Overview.md`, `frontend/package.json`, và `frontend/scripts/poi-doc-claim-canonical.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Rà soát và loại bỏ hoàn toàn các tuyên bố cũ không rõ nguồn gốc "82+ địa điểm" / "master 82" trong tài liệu kiến trúc cấp cao `docs/01_Project_Overview.md`.
+  - Căn chỉnh claim của AI Chatbot theo chuẩn Canonical Manifest v1.0.0 (Source: `data/canonical/canonical_manifest.json`, Schema: `CANONICAL-POI-SCHEMA-V1`, phê chuẩn tại Decision Gate G2).
+  - Thiết lập phân định rành mạch giữa 1 POI Canonical Verified (`Chùa Xà Tón`, `chua-xa-ton`) được phép nạp vào factual RAG context với 1,592 bản ghi khảo sát thô (`data/tri_ton_master_cleaned.csv`) đang được thẩm định tuần tự theo Review Queue.
+  - Bổ sung Mục 5 "Chuẩn tắc Dữ liệu & Giới hạn Claim" khẳng định cam kết 0% số liệu suy diễn.
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/poi-doc-claim-canonical.test.mjs`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/poi-doc-claim-canonical.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực tính toàn vẹn và thẩm quyền của Canonical Manifest; (2) Kiểm toán loại trừ triệt để các claim cũ trong `docs/01_Project_Overview.md`; (3) Kiểm chứng tài liệu công bố rõ ràng `version: v1.0.0`, `source: data/canonical/canonical_manifest.json` và số lượng verified POI khớp manifest; (4) Phân định minh bạch hai lớp dữ liệu.
+  - Toàn bộ 55 tests frontend và 13/13 pytest backend pass 100%.
 
 ### P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest)
 - **Status:** `done` tại `frontend/src/lib/canonicalClaims.ts`, `frontend/src/components/ChatbotPageClient.tsx`, `frontend/package.json`, và `frontend/scripts/poi-ui-claim-canonical.test.mjs`.
