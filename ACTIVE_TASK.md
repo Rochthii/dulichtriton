@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version)
+### P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và cập nhật ít nhất một tài liệu dữ liệu hệ thống theo Decision Gates G1/G2 để mọi số liệu POI/địa giới đều gắn liền với manifest version và căn cứ thẩm định chính thức.
-- **Next task sau P06-012:** P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
+- **Mục tiêu duy nhất:** Rà soát và gắn nhãn banner archived cho ít nhất một tài liệu đã bị superseded, có link dẫn chiếu rõ ràng tới tài liệu thẩm quyền (authority doc).
+- **Next task sau P06-013:** P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
 
 ---
 
@@ -136,11 +136,28 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 110. 🟢 **`P06-009`** *(Hoàn thành)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
 111. 🟢 **`P06-010`** *(Hoàn thành)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
 112. 🟢 **`P06-011`** *(Hoàn thành)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
-113. 🟡 **`P06-012`** *(Đang mở)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
+113. 🟢 **`P06-012`** *(Hoàn thành)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
+114. 🟡 **`P06-013`** *(Đang mở)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
 
 ---
 
-## 📜 Lịch Sử Task Đã Hoành Thành (Consolidated Completed Records)
+## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version)
+- **Status:** `done` tại `docs/05_Database.md`, `frontend/package.json`, và `frontend/scripts/data-doc-alignment.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Rà soát và cập nhật toàn diện tài liệu cơ sở dữ liệu và quản trị dữ liệu chính [`docs/05_Database.md`](docs/05_Database.md) (Mã quy chuẩn `DOC-DB-SPEC-001`, chủ trì bởi Lead Technical Architect & Data Governance Owner `Chăm Rốch Thi`) phản ánh 100% các quyết định của Decision Gate G1 và Decision Gate G2.
+  - Thiết lập phân tầng dữ liệu minh bạch 2 tầng (2-Tier Data Governance Architecture):
+    * **Tầng 1 — Canonical Dataset (Sự thật xác thực):** Quản lý bởi Canonical Manifest `v1.0.0` tại `data/canonical/canonical_manifest.json` (Schema: `CANONICAL-POI-SCHEMA-V1`, Quyết định G2), gồm đúng `1` POI canonical verified (`Chùa Xà Tón` / `chua-xa-ton`), kiểm toán mã hóa toàn vẹn SHA-256 (`5398587c7e5c2e4e...`), chỉ duy nhất các bản ghi này mới được nạp vào factual RAG context của AI.
+    * **Tầng 2 — Raw Candidates Dataset (Khảo sát thô đang thẩm định):** Tập tin nguồn `data/tri_ton_master_cleaned.csv` gồm 1,592 bản ghi khảo sát địa lý thô, quản trị bởi Hàng đợi thẩm định tuần tự (Review Queue) theo `docs/technical-spec/POI_CONFLICT_REVIEW_QUEUE.md` và biên bản thẩm định `POI_VERIFICATION_REVIEW_TEMPLATE.md`.
+  - Loại trừ triệt để các tuyên bố số liệu cũ không nguồn gốc ("82 bản ghi v10.0.0", "master 82") và khẳng định không suy diễn số liệu khi chưa có bằng chứng thực địa.
+  - Chuẩn hóa địa giới hành chính theo Decision Gate G1 và RULE 02: Liệt kê đầy đủ 100% danh mục 15 đơn vị hành chính cấp xã/thị trấn chính thức của Huyện Tri Tôn (2 thị trấn: Tri Tôn, Ba Chúc; 13 xã: An Tức, Châu Lăng, Cô Tô, Lạc Quới, Lê Trì, Lương An Trà, Lương Phi, Núi Tô, Ô Lâm, Tà Đảnh, Tân Tuyến, Vĩnh Gia, Vĩnh Phước); loại trừ hoàn toàn các dạng viết tắt cấm ("TT", "X"); chuẩn hóa Bounding Box Tri Tôn ($[10.30, 10.55] \times [104.80, 105.15]$).
+  - Tài liệu hóa hạ tầng CSDL thực tế: Supabase Cloud PostgreSQL 15/16 (`knmlbwsmfljlabhvqfid`) tích hợp PostGIS `GEOMETRY(Point, 4326)` và pgvector `vector(768)` HNSW cosine index.
+  - Tích hợp Ma trận Row Level Security Lockdown P02-024 (`20260924_p02_024_rls_lockdown_client_roles_matrix.sql`): kích hoạt RLS trên toàn bộ 16 bảng, thu hồi 100% quyền truy cập bảng nhạy cảm đối với `anon` và `authenticated` (0 privileges), tước bỏ 100% quyền mutation phía client trên các bảng nghiệp vụ, bảo vệ mutation qua `service_role` tại Server API Gateway.
+  - Dẫn chiếu Runbook phục hồi dữ liệu sản xuất `RUNBOOK_DATA_ROLLBACK.md` (RB-DB-DATA-ROLLBACK-001).
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/data-doc-alignment.test.mjs` vào `frontend/package.json` (`npm test`) đạt 5/5 tests pass 100%.
 
 ### P06-011 — Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại)
 - **Status:** `done` tại `docs/ai_workflow.md`, `frontend/package.json`, và `frontend/scripts/ai-doc-behavior-alignment.test.mjs`.
