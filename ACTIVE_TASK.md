@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass)
+### P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy toàn bộ các canonical data validators kiểm chứng tính toàn vẹn của canonical manifest hiện tại (`data/canonical/canonical_manifest.json`): schema `CANONICAL-POI-SCHEMA-V1`, checksum SHA-256, record count = 1, bounding box GPS Tri Tôn, commune glossary 15 xã/thị trấn, không duplicate canonical ID.
-- **Next task sau P07-005:** P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
+- **Mục tiêu duy nhất:** Chạy so sánh và kiểm chứng đối chiếu số lượng bản ghi (record count) và checksum mã băm dữ liệu giữa Supabase PostgreSQL Database (`public.places`) với Canonical Manifest (`data/canonical/canonical_manifest.json`), xuất báo cáo chứng minh không còn độ lệch (divergence) chưa được chấp thuận.
+- **Next task sau P07-006:** P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
 
 ---
 
@@ -142,8 +142,8 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 116. 🟢 **`P07-002`** *(Hoàn thành)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
 117. 🟢 **`P07-003`** *(Hoàn thành)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
 118. 🟢 **`P07-004`** *(Hoàn thành)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
-119. 🟡 **`P07-005`** *(Đang mở)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
-120. ⚪ **`P07-006`**: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
+119. 🟢 **`P07-005`** *(Hoàn thành)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
+120. 🟡 **`P07-006`** *(Đang mở)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
 121. ⚪ **`P07-007`**: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
 122. ⚪ **`P07-008`**: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 123. ⚪ **`P07-009`**: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
@@ -154,6 +154,20 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass)
+- **Status:** `done` tại [`data/canonical/canonical_manifest.json`](data/canonical/canonical_manifest.json), [`scripts/validate_canonical_dataset.mjs`](scripts/validate_canonical_dataset.mjs), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/canonical-data-validators.test.mjs`](frontend/scripts/canonical-data-validators.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử tự động [`frontend/scripts/canonical-data-validators.test.mjs`](frontend/scripts/canonical-data-validators.test.mjs) kiểm chứng toàn diện các canonical data validators qua 6 test suites đạt 6/6 tests pass 100%:
+    * **Suite 1 (Canonical Manifest Specification & Cryptographic Integrity):** Kiểm chứng `canonical_manifest.json` tuân thủ phiên bản `1.0.0`, schema `CANONICAL-POI-SCHEMA-V1`, thẩm quyền Hội đồng Quản trị Dữ liệu Du Lịch Tri Tôn, kiểm toán viên Chăm Rốch Thi, bounding box $[10.30, 10.55] \times [104.80, 105.15]$, 15 xã/thị trấn, `total_verified_count = 1`; tính toán lại và khớp 100% mã băm SHA-256 của từng file địa điểm thực địa (`chua-xa-ton.json`) và mã băm toàn cục `overall_sha256` (`f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb`).
+    * **Suite 2 (Schema & Invariant Contract Verification on Production Places):** Kiểm chứng 100% bản ghi địa điểm canonical trên đĩa cứng (`data/canonical/places/chua-xa-ton.json`) vượt qua `validatePlaceRecord`, tuân thủ toàn bộ 5 verification invariants: INV-01 (`review_id` "PVR-CHUA-XA-TON-2026" tồn tại trên đĩa), INV-02 (`is_verified === true` khi `VERIFIED`), INV-04 (`verified_at` ISO 8601 hợp lệ trước `expires_at`), INV-05 (`source_url` HTTPS chính thức `https://triton.angiang.gov.vn` không trỏ IP nội bộ).
+    * **Suite 3 (Geographic Boundary & Administrative Commune Glossary):** 100% tọa độ nằm gọn trong bounding box Tri Tôn và không bị đảo trục (`in_bounding_box: true`, `is_swapped: false`); 100% nhãn xã thuộc danh mục chính thức 15 xã/thị trấn (`TRI_TON_15_COMMUNES`, "Thị trấn Tri Tôn", 0% viết tắt, 0% lỗi chính tả).
+    * **Suite 4 (Uniqueness, Concordance & Frontend Static Artifact Alignment):** 0 duplicate canonical IDs, 0 alias collisions, đối chiếu khớp 100% giữa đĩa cứng, manifest và build artifact frontend `places.canonical.json`.
+    * **Suite 5 (Runner Execution):** Chạy `scripts/validate_canonical_dataset.mjs` bằng cả gọi hàm lẫn CLI subprocess đạt `valid: true`, 0 errors, exit code 0.
+    * **Suite 6 (Negative Fault Injections):** Giả lập 7 kịch bản lỗi vi phạm (sai hash, tọa độ ngoài bounding box, đảo tọa độ, nhãn xã sai, thiếu file review, URL không an toàn, trùng ID) chứng minh hệ thống fail-closed lập tức.
+  - Cập nhật `frontend/package.json` tích hợp `scripts/canonical-data-validators.test.mjs` và cờ `--test-concurrency=1` vào lệnh `"test"`. Toàn bộ 25 frontend test suites (250 tests) và 13/13 backend pytest pass 100%.
 
 ### P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass)
 - **Status:** `done` tại [`supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql`](supabase/migrations/20260924_p02_024_rls_lockdown_client_roles_matrix.sql), [`scripts/ci_rls_matrix.py`](scripts/ci_rls_matrix.py), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/rls-matrix-suite.test.mjs`](frontend/scripts/rls-matrix-suite.test.mjs).
