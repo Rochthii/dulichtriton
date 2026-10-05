@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt)
+### P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy toàn diện quy trình kiểm tra chất lượng mã nguồn (lint clean với ESLint 0 warnings/errors) và biên dịch sản xuất (Next.js 16 production build pass 100% routes, exit code 0) kiểm chứng nguyên tắc bất biến Zero Error theo toàn bộ rule đã duyệt trước khi tiến tới Decision Gate G4.
-- **Next task sau P07-009:** P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
+- **Mục tiêu duy nhất:** Xây dựng và thực thi bộ kiểm thử khói trợ năng di động (mobile accessibility smoke test) chứng minh 100% các tiêu chí kiểm tra: điều hướng bàn phím (keyboard navigation), vòng lặp/quản lý tiêu điểm (focus ring & trapping), chế độ giảm chuyển động (`prefers-reduced-motion`) và độ tương phản màu sắc đạt chuẩn WCAG AA (contrast checklist pass) trên các giao diện cốt lõi trước Decision Gate G4.
+- **Next task sau P07-010:** P07-011 — Review open P0/P1 risk register (Proof: không còn risk chưa accept).
 
 ---
 
@@ -146,14 +146,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 120. 🟢 **`P07-006`** *(Hoàn thành)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
 121. 🟢 **`P07-007`** *(Hoàn thành)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
 122. 🟢 **`P07-008`** *(Hoàn thành)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
-123. 🟡 **`P07-009`** *(Đang mở)*: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
-124. ⚪ **`P07-010`**: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
+123. 🟢 **`P07-009`** *(Hoàn thành)*: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
+124. 🟡 **`P07-010`** *(Đang mở)*: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
 125. ⚪ **`P07-011`**: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
 126. ⚪ **`P07-012`**: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-009 — Chạy build và lint clean (Proof: zero error theo rule đã duyệt)
+- **Status:** `done` tại [`frontend/eslint.config.mjs`](frontend/eslint.config.mjs), [`frontend/tsconfig.json`](frontend/tsconfig.json), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/build-and-lint-clean-suite.test.mjs`](frontend/scripts/build-and-lint-clean-suite.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử release-gate Biên dịch và Linter sạch với 5 test suites bao quát 100% các tiêu chí chất lượng mã nguồn:
+    * **Suite 1 (ESLint Zero Error & Rule Configuration Invariant):** Cấu hình `eslint.config.mjs` tuân thủ chuẩn Next.js core-web-vitals và TypeScript strictness, lệnh `npm run lint` hoàn tất với exit code 0 và ĐÚNG 0 ERRORS trên toàn bộ codebase frontend.
+    * **Suite 2 (Prebuild Canonical Generation Integrity Invariant):** Script `prebuild` (`scripts/generate_static_frontend_places.mjs`) tự động sinh artifact dữ liệu tĩnh `frontend/src/data/places.canonical.json` khớp chính xác 100% với Canonical Manifest `v1.0.0` (1 verified POI `chua-xa-ton`, Schema `CANONICAL-POI-SCHEMA-V1`, checksum SHA-256 toàn cục `f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb`).
+    * **Suite 3 (Next.js 16 Production Build Artifacts & Zero Error Invariant):** Lệnh `next build` biên dịch thành công 100% các routes (181/181 routes tĩnh và dynamic SSG/SSR) với exit code 0, sinh đầy đủ các build artifacts (`.next/build-manifest.json`, `prerender-manifest.json`, `routes-manifest.json`), các trang công cộng và chi tiết điểm đến `/places/ho-ta-pa`, `/places/chua-ta-pa` được prerender hoàn hảo.
+    * **Suite 4 (TypeScript Strictness & Zero Type Errors Invariant):** `tsconfig.json` kích hoạt `strict: true` và `noEmit: true`, lệnh kiểm tra kiểu dữ liệu `tsc --noEmit` hoàn tất với exit code 0 và đúng 0 type errors.
+    * **Suite 5 (Fault Injection & Strict Failure Interception Invariants):** Giả lập chèn lỗi cú pháp nguồn chứng minh linter fail-closed tức thì (exit code != 0), khôi phục sạch sẽ 100%.
+  - Bộ kiểm thử tự động `build-and-lint-clean-suite.test.mjs` đạt 5/5 test suites pass 100%. Toàn bộ 28 frontend suites (271 tests) và 13/13 backend pytest pass 100%.
 
 ### P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass)
 - **Status:** `done` tại [`frontend/src/lib/chatSessionRetentionPolicy.ts`](frontend/src/lib/chatSessionRetentionPolicy.ts), [`frontend/src/lib/chatSessionCleanupService.ts`](frontend/src/lib/chatSessionCleanupService.ts), [`frontend/src/lib/chatLogCleanupService.ts`](frontend/src/lib/chatLogCleanupService.ts), [`frontend/src/lib/chatSessionDeletionService.ts`](frontend/src/lib/chatSessionDeletionService.ts), [`frontend/src/lib/chatSessionOwnership.ts`](frontend/src/lib/chatSessionOwnership.ts), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/privacy-retention-deletion-suite.test.mjs`](frontend/scripts/privacy-retention-deletion-suite.test.mjs).
