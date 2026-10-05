@@ -1,8 +1,8 @@
-# 11. LỘ TRÌNH TRIỂN KHAI (ROADMAP)
+# 11. LỘ TRÌNH TRIỂN KHAI (ROADMAP) — [ARCHIVED / ĐÃ LƯU TRỮ]
 
-> **Trạng thái:** roadmap lịch sử. Không dùng tài liệu này làm authority cho production readiness, số lượng POI, địa giới hành chính hoặc kiến trúc runtime. Điều phối remediation đang hiệu lực: [13_TWO_STREAM_EXECUTION_BOARD.md](13_TWO_STREAM_EXECUTION_BOARD.md); chi tiết task: [12_PRODUCTION_REMEDIATION_PLAN.md](12_PRODUCTION_REMEDIATION_PLAN.md).
->
-> Các phase bên dưới được giữ để bảo toàn bối cảnh phát triển; chỉ được cập nhật sau khi Decision Gates G1/G2 trong remediation plan được chốt.
+> [!WARNING]
+> **TÀI LIỆU LỊCH SỬ ĐÃ BỊ THAY THẾ (SUPERSEDED & ARCHIVED)**: Tài liệu này không còn hiệu lực điều hành. Mọi quyền điều phối kế hoạch sản xuất đã chuyển giao sang [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md), [Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md) và [ACTIVE_TASK.md](../ACTIVE_TASK.md).
+> Các giai đoạn bên dưới chỉ được lưu trữ làm bối cảnh khảo sát sơ khai; tuyệt đối không dùng làm căn cứ triển khai runtime, số lượng POI hoặc kiến trúc production.
 
 ## Giai đoạn 1: Khảo sát & Master Data (Đã hoàn thành ✅)
 * Thu thập & chuẩn hóa CSDL 82 địa điểm master (`data/tri_ton_master_cleaned.csv`).
@@ -28,3 +28,14 @@
 * Testing toàn bộ luồng sử dụng (Visitor, Partner, Admin).
 * Tối ưu tốc độ tải trang & phản hồi Chatbot (target 2-4s).
 * Triển khai hệ thống Production.
+
+---
+
+## 📌 Phụ Lục: Chấm Dứt Xung Đột Lộ Trình (Zero Roadmap Contention Invariant)
+
+Kể từ khi ban hành Kế hoạch Khắc phục Sản xuất (Production Remediation Plan - P00 đến P07), hệ thống tuân thủ nghiêm ngặt nguyên tắc **Một Luồng Điều Phối Duy Nhất (Single Source of Truth for Roadmap)**:
+1. **Lộ trình 5 giai đoạn sơ khai trên đã chính thức khép lại** và được lưu trữ (archived) nhằm mục đích ghi vết lịch sử nghiên cứu.
+2. Mọi quyết định kỹ thuật, trạng thái các tính năng, phân rã rủi ro P0/P1, Decision Gates (G0, G1, G2, G3, G4), và kế hoạch phát hành đều được điều hành độc quyền bởi:
+   - [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md) (Quy chuẩn điều hành kỹ thuật production)
+   - [Two-Stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md) (Bảng điều phối tiến độ hai luồng / thống nhất)
+   - [ACTIVE_TASK.md](../ACTIVE_TASK.md) (Bảng phân công task nguyên tử trực tiếp)

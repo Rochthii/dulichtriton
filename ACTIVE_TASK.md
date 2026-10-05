@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority)
+### P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous)
 
-- **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
-- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
-- **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
+- **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và gắn nhãn banner archived cho ít nhất một tài liệu đã bị superseded, có link dẫn chiếu rõ ràng tới tài liệu thẩm quyền (authority doc).
-- **Next task sau P06-013:** P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
+- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực (negative test suite) xác minh toàn bộ các mutation route quản trị (POST/PUT/PATCH/DELETE từ P01) từ chối dứt điểm các yêu cầu vô danh (anonymous) với HTTP 401/403 và 0% side-effect.
+- **Next task sau P07-001:** P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
 
 ---
 
@@ -137,11 +137,27 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 111. 🟢 **`P06-010`** *(Hoàn thành)*: Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
 112. 🟢 **`P06-011`** *(Hoàn thành)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
 113. 🟢 **`P06-012`** *(Hoàn thành)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
-114. 🟡 **`P06-013`** *(Đang mở)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
+114. 🟢 **`P06-013`** *(Hoàn thành)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
+115. 🟡 **`P07-001`** *(Đang mở)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority)
+- **Status:** `done` tại `docs/11_Roadmap.md`, `frontend/package.json`, và `frontend/scripts/archived-doc-banner.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Gắn nhãn chính thức `[ARCHIVED / ĐÃ LƯU TRỮ]` trên tiêu đề và tích hợp Banner cảnh báo chuẩn GitHub Alert (`> [!WARNING]`) cho tài liệu lộ trình lịch sử sơ khai [`docs/11_Roadmap.md`](docs/11_Roadmap.md).
+  - Tuyên bố vô hiệu hóa hoàn toàn thẩm quyền điều hành dự án của tài liệu cũ: lộ trình 5 giai đoạn sơ khai chỉ được lưu giữ làm bối cảnh khảo sát ban đầu; tuyệt đối không dùng làm căn cứ triển khai runtime, số lượng POI hoặc kiến trúc production.
+  - Thiết lập liên kết trực tiếp tới 3 tài liệu thẩm quyền chính thức (Authority Documents):
+    * [Production Remediation Plan](12_PRODUCTION_REMEDIATION_PLAN.md) — Sổ kiểm soát nhiệm vụ và các Decision Gates G0/G1/G2/G3/G4.
+    * [Two-Stream Execution Board](13_TWO_STREAM_EXECUTION_BOARD.md) — Bảng điều phối tiến độ hai luồng / thống nhất.
+    * [ACTIVE_TASK.md](../ACTIVE_TASK.md) — Bảng phân công task nguyên tử trực tiếp.
+  - Bổ sung phụ lục khẳng định nguyên tắc bất biến chấm dứt hoàn toàn sự tranh chấp lộ trình (Zero Roadmap Contention Invariant), bảo đảm không còn hai roadmap cùng tranh quyền trong hệ thống tài liệu và đáp ứng 100% tiêu chí Exit của Phase P06.
+  - Bảo toàn nguyên vẹn số dòng của dòng 8 (`* Thu thập & chuẩn hóa CSDL 82 địa điểm master...`) bảo đảm không gây regression cho bộ kiểm thử `poi-claims-inventory.test.mjs`.
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/archived-doc-banner.test.mjs` vào `frontend/package.json` (`npm test`) đạt 5/5 tests pass 100% (kiểm chứng tiêu đề, banner warning, hyperlinks authority, nguyên tắc zero roadmap contention, và kiểm chứng sự tồn tại vật lý trên đĩa cứng của 100% các file authority được link).
 
 ### P06-012 — Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version)
 - **Status:** `done` tại `docs/05_Database.md`, `frontend/package.json`, và `frontend/scripts/data-doc-alignment.test.mjs`.
