@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification)
+### P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source)
 
-- **Status:** `ready` / `active` cho Wave W5 (Privacy, User Data & Extended Observability — Sub-wave P05-C Build & Release Verification).
-- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability).
+- **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Viết runbook vận hành cho việc rollback dữ liệu (data rollback), đáp ứng 2 bằng chứng: có snapshot version và restore verification.
-- **Next task sau P05-025:** P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
+- **Mục tiêu duy nhất:** Quét và tạo danh mục kiểm toán toàn diện tất cả các tuyên bố (claim) về số lượng POI đang tồn tại trên giao diện người dùng và tài liệu dự án, đáp ứng proof: file/line/current claim/source.
+- **Next task sau P06-001:** P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
 
 ---
 
@@ -124,11 +124,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 98. 🟢 **`P05-022`** *(Hoàn thành)*: Thêm CI migration replay job (Proof: migration failure làm CI fail).
 99. 🟢 **`P05-023`** *(Hoàn thành)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
 100. 🟢 **`P05-024`** *(Hoàn thành)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
-101. 🟡 **`P05-025`** *(Đang mở)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
+101. 🟢 **`P05-025`** *(Hoàn thành)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
+102. 🟡 **`P06-001`** *(Đang mở)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification)
+- **Status:** `done` tại `docs/runbooks/RUNBOOK_DATA_ROLLBACK.md`, `frontend/src/lib/dataRollbackRunbook.ts`, `frontend/package.json`, và `frontend/scripts/data-rollback-runbook.test.mjs`.
+- **Luồng:** Thống nhất (Wave W5: Privacy, Data Retention & Observability — Sub-wave P05-C Build & Release Verification).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Ban hành tài liệu quy chuẩn vận hành SRE `docs/runbooks/RUNBOOK_DATA_ROLLBACK.md` (mã quy chuẩn `RB-DB-DATA-ROLLBACK-001`), phê duyệt bởi Lead Technical Architect & Data Governance Owner Chăm Rốch Thi.
+  - **Proof 1 — Snapshot Versioning:** Thiết lập kiến trúc phiên bản snapshot chặt chẽ: quy chuẩn đặt tên `snapshot_manifest_<ISO_TIMESTAMP>.json`, `snapshot_places_<ISO_TIMESTAMP>.json`, `snapshot_itineraries_<ISO_TIMESTAMP>.json`; mỗi bản ghi lưu trữ đầy đủ `sha256` checksum, số lượng bản ghi `count`, mốc thời gian ISO 8601, liên kết phê duyệt `GATE_G2` và chữ ký của Data Governance Owner; kiểm chứng tệp snapshot thực tế `data/backups/snapshot_places_2026-09-29T07-23-14-982Z.json` khớp chính xác 100% mã hash SHA-256 trên đĩa cứng (`ed2504b4290a6d68f3fcb642ca29e749f0bfde9c386726b6c4613f1980e66ee1`).
+  - **Proof 2 — Restore Verification Criteria:** Thiết lập 5 tiêu chí kiểm chứng sau phục hồi: (1) Khớp chữ ký hash SHA-256 với snapshot manifest; (2) Số lượng bản ghi `public.places` đạt đủ số lượng bảo toàn; (3) 100% bản ghi có tọa độ nằm trong ranh giới hành chính Tri Tôn (`latitude [10.3, 10.55]`, `longitude [104.8, 105.15]`); (4) Bảo toàn phân quyền Row Level Security (RLS enabled trên `places`); (5) Biên bản nghiệm thu có chữ ký của Data Governance Owner.
+  - Xây dựng module runtime `frontend/src/lib/dataRollbackRunbook.ts` (`verifySnapshotFileIntegrity`, `verifyDataRestoreIntegrity`, `isPlaceWithinTriTonBoundingBox`, `DATA_ROLLBACK_CANONICAL_TARGETS`) cung cấp cơ chế thẩm định kỹ thuật tự động.
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/data-rollback-runbook.test.mjs`.
+  - Bộ kiểm thử tự động `frontend/scripts/data-rollback-runbook.test.mjs` đạt 7/7 tests pass 100% (chứng minh tính hợp lệ của manifest schema, tính toàn vẹn hash trên đĩa cứng, 5 tiêu chí nghiệm thu sau rollback, và 5 bài negative fault injection chứng minh hệ thống fail-closed khi có bất kỳ sai lệch nào).
+  - Hoàn tất 100% Sub-wave P05-C và khép lại toàn bộ Phase P05 (Wave W5). Toàn bộ 29 frontend test suites và 13/13 pytest backend pass 100%.
 
 ### P05-024 — Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification)
 - **Status:** `done` tại `docs/runbooks/RUNBOOK_PROVIDER_OUTAGE.md`, `frontend/src/lib/providerOutageRunbook.ts`, `frontend/package.json`, và `frontend/scripts/provider-outage-runbook.test.mjs`.

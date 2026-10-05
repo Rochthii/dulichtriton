@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test scripts/ci-build-job.test.mjs scripts/ci-lint-job.test.mjs scripts/ci-unit-test-job.test.mjs scripts/ci-migration-replay-job.test.mjs scripts/ci-rls-matrix-job.test.mjs scripts/provider-outage-runbook.test.mjs"
+    "test": "node --test scripts/ci-build-job.test.mjs scripts/ci-lint-job.test.mjs scripts/ci-unit-test-job.test.mjs scripts/ci-migration-replay-job.test.mjs scripts/ci-rls-matrix-job.test.mjs scripts/provider-outage-runbook.test.mjs scripts/data-rollback-runbook.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.1",
