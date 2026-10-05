@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component)
+### P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Lập danh sách kiểm kê toàn diện các emoji đang xuất hiện trong từng component giao diện người dùng (`frontend/src/components/`, `frontend/src/app/`), đáp ứng proof: mỗi occurrence có file/component.
-- **Next task sau P06-006:** P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
+- **Mục tiêu duy nhất:** Thay thế một emoji trên component giao diện người dùng bằng Lucide icon SVG chuẩn theo Design System Folk-Modern Bảy Núi, đáp ứng proof: component render đúng, không thêm asset placeholder.
+- **Next task sau P06-007:** P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
 
 ---
 
@@ -130,11 +130,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 104. 🟢 **`P06-003`** *(Hoàn thành)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
 105. 🟢 **`P06-004`** *(Hoàn thành)*: Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
 106. 🟢 **`P06-005`** *(Hoàn thành)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
-107. 🟡 **`P06-006`** *(Đang mở)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
+107. 🟢 **`P06-006`** *(Hoàn thành)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
+108. 🟡 **`P06-007`** *(Đang mở)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-006 — Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component)
+- **Status:** `done` tại `docs/technical-spec/EMOJI_INVENTORY.json`, `docs/technical-spec/EMOJI_INVENTORY.md`, `scripts/audit_emoji_inventory.py`, `frontend/package.json`, và `frontend/scripts/emoji-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển script kiểm toán quét tự động `scripts/audit_emoji_inventory.py` quét toàn diện mã nguồn UI và API/Lib (`frontend/src/`).
+  - Ban hành 2 tài liệu chuẩn tắc: `docs/technical-spec/EMOJI_INVENTORY.json` và `docs/technical-spec/EMOJI_INVENTORY.md` (mã quy chuẩn `INVENTORY-EMOJI-001`, chủ trì kiểm toán bởi Lead Technical Architect & Design System Owner Chăm Rốch Thi).
+  - Lập bảng kiểm kê đầy đủ **358** lượt xuất hiện emoji trên **48** components/modules (211 lượt trong UI Components và 147 lượt trong API/Lib), bao gồm 90 ký tự emoji độc bản.
+  - Hợp đồng Proof 4 trường: Mọi bản ghi kiểm toán đều sở hữu đầy đủ các trường bắt buộc: `file`, `component`, `line`, `emoji` (kèm `codepoints`, `scope`, `category`, `snippet` và `recommended_lucide` gợi ý icon Lucide thay thế theo Folk-Modern Bảy Núi Design System để chuẩn bị cho Task P06-007).
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/emoji-inventory.test.mjs`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/emoji-inventory.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực artifacts tồn tại và chứa dữ liệu đầy đủ; (2) Hợp đồng Proof 4 trường được thỏa mãn trên 100% 358 bản ghi; (3) Xác thực tính trung thực của các số dòng và emoji trên tệp tin thực tế đĩa cứng; (4) Cấu trúc bảng markdown và chữ ký phê duyệt của Lead Technical Architect.
+  - Toàn bộ 68 tests frontend và 13/13 pytest backend pass 100%.
 
 ### P06-005 — Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass)
 - **Status:** `done` tại `frontend/src/lib/clusterData.ts`, `frontend/src/app/page.tsx`, `frontend/src/app/culture/page.tsx`, `frontend/src/components/GuideClientPage.tsx`, `frontend/src/lib/constants.ts`, `frontend/package.json`, và `frontend/scripts/commune-ui-label-glossary.test.mjs`.
