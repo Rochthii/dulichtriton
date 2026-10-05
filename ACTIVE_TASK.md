@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest)
+### P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Điều chỉnh một claim POI trên giao diện người dùng (UI) để giá trị hiển thị (rendered value) khớp chính xác với Canonical Manifest đã được phê duyệt, đáp ứng proof: rendered value khớp manifest.
-- **Next task sau P06-002:** P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
+- **Mục tiêu duy nhất:** Điều chỉnh một claim POI trong tài liệu kỹ thuật theo Canonical Manifest, đáp ứng proof: doc có version/source rõ ràng.
+- **Next task sau P06-003:** P06-004 — Tạo danh sách tên đơn vị hành chính đang hiển thị (Proof: file/line/current label).
 
 ---
 
@@ -126,11 +126,24 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 100. 🟢 **`P05-024`** *(Hoàn thành)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
 101. 🟢 **`P05-025`** *(Hoàn thành)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
 102. 🟢 **`P06-001`** *(Hoàn thành)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
-103. 🟡 **`P06-002`** *(Đang mở)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
+103. 🟢 **`P06-002`** *(Hoàn thành)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
+104. 🟡 **`P06-003`** *(Đang mở)*: Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest)
+- **Status:** `done` tại `frontend/src/lib/canonicalClaims.ts`, `frontend/src/components/ChatbotPageClient.tsx`, `frontend/package.json`, và `frontend/scripts/poi-ui-claim-canonical.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xóa bỏ hoàn toàn chuỗi hardcode "149 Địa Điểm Đã Xác Minh" trên Header của Trợ Lý AI Chatbot (`frontend/src/components/ChatbotPageClient.tsx`).
+  - Xây dựng module runtime chuẩn tắc `frontend/src/lib/canonicalClaims.ts` (`getCanonicalVerifiedPoiCount`, `getCanonicalChatbotHeaderClaim`, `CANONICAL_TOTAL_VERIFIED_COUNT`, `CANONICAL_MANIFEST_VERSION`) kết nối trực tiếp với build artifact tĩnh `frontend/src/data/places.canonical.json` (sinh từ `data/canonical/canonical_manifest.json` theo chuẩn P03-019).
+  - Bảo đảm giá trị hiển thị trên UI (rendered value: `"1 Địa Điểm Đã Xác Minh (Canonical v1.0.0) • 35 Lịch Trình Gợi Ý"`) khớp chính xác 100% với dữ liệu `total_verified_count` (1 POI đã duyệt) và phiên bản `manifest_version` (1.0.0) của Canonical Manifest.
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/poi-ui-claim-canonical.test.mjs`.
+  - Bộ kiểm thử tự động Node.js `frontend/scripts/poi-ui-claim-canonical.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực tính toàn vẹn đồng bộ giữa manifest và build artifact; (2) Kiểm toán mã nguồn tĩnh loại trừ hardcode trong `ChatbotPageClient.tsx`; (3) Kiểm chứng giá trị hiển thị rendered value khớp chính xác 100% manifest; (4) Kiểm chứng cơ chế đồng bộ thích ứng khi manifest được cập nhật.
+  - Toàn bộ 51 tests frontend và 13/13 pytest backend pass 100%.
 
 ### P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source)
 - **Status:** `done` tại `docs/technical-spec/POI_CLAIMS_INVENTORY.json`, `docs/technical-spec/POI_CLAIMS_INVENTORY.md`, `scripts/audit_poi_count_claims.py`, `frontend/package.json`, và `frontend/scripts/poi-claims-inventory.test.mjs`.

@@ -14,6 +14,7 @@ import AppLogo from '@/components/AppLogo';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
 import { CHAT_CONSENT_STORAGE_KEY, type ConsentStatus } from '@/lib/chatConsentGuard';
+import { getCanonicalChatbotHeaderClaim } from '@/lib/canonicalClaims';
 
 interface EmbeddedSpot {
   type?: string;
@@ -560,7 +561,7 @@ export default function ChatbotPageClient() {
               <span className="w-2 h-2 rounded-full bg-[#FFD37A] animate-ping" />
             </h1>
             <p className="text-[10px] sm:text-xs text-[#FAF3E7]/80 mt-1 font-medium font-body">
-              149 Địa Điểm Đã Xác Minh • 35 Lịch Trình Gợi Ý
+              {getCanonicalChatbotHeaderClaim()}
             </p>
           </div>
         </div>
