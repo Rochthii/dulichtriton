@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner)
+### P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Quét và lập bảng kiểm kê toàn diện các URL ảnh stock/fallback trên giao diện người dùng, component và feature owner, xác định rõ nguồn gốc và trạng thái xác minh.
-- **Next task sau P06-008:** P06-009 — Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
+- **Mục tiêu duy nhất:** Xóa bỏ ít nhất một fallback ảnh stock ngoại lai không rõ nguồn gốc (Unsplash) trên component giao diện người dùng, thay thế bằng failure state trung thực (không hiển thị ảnh giả mạo/ảnh không liên quan).
+- **Next task sau P06-009:** P06-010 — Cập nhật một tài liệu kiến trúc theo deployment inventory P00-003 (Proof: docs link route/build thực tế).
 
 ---
 
@@ -132,11 +132,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 106. 🟢 **`P06-005`** *(Hoàn thành)*: Sửa một label hành chính theo glossary G1 (Proof: UI test/snapshot pass).
 107. 🟢 **`P06-006`** *(Hoàn thành)*: Tạo inventory emoji theo component (Proof: mỗi occurrence có file/component).
 108. 🟢 **`P06-007`** *(Hoàn thành)*: Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder).
-109. 🟡 **`P06-008`** *(Đang mở)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
+109. 🟢 **`P06-008`** *(Hoàn thành)*: Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner).
+110. 🟡 **`P06-009`** *(Đang mở)*: Xóa một fallback ảnh stock (Proof: failure state trung thực, không hiển thị ảnh không liên quan).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-008 — Tạo inventory ảnh stock/fallback (Proof: URL/component/feature owner)
+- **Status:** `done` tại `docs/technical-spec/STOCK_FALLBACK_INVENTORY.json`, `docs/technical-spec/STOCK_FALLBACK_INVENTORY.md`, `scripts/audit_stock_fallback_images.py`, `frontend/package.json`, và `frontend/scripts/stock-fallback-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển script kiểm toán tự động `scripts/audit_stock_fallback_images.py` quét toàn diện mã nguồn UI, API/Lib và Data Artifacts.
+  - Ban hành 2 tài liệu kiểm toán chuẩn tắc: `docs/technical-spec/STOCK_FALLBACK_INVENTORY.json` và `docs/technical-spec/STOCK_FALLBACK_INVENTORY.md` (tiêu chuẩn `INVENTORY-STOCK-IMG-001`, chủ trì bởi Lead Technical Architect & Design System Owner Chăm Rốch Thi).
+  - Lập bảng kiểm kê đầy đủ **57** vị trí ảnh stock/fallback (42 ảnh stock ngoại lai Unsplash rủi ro cao, 10 ảnh Cloudinary fallback địa phương, 5 ảnh local fallback), với 35 URLs độc bản qua 13 components và 8 Feature Owners.
+  - Hợp đồng Proof 3 trường: 100% bản ghi kiểm toán đều có đủ 3 trường bắt buộc: `url`, `component`, `feature_owner` (kèm `file`, `line`, `asset_type`, `scope`, `snippet`, và `remediation_action` phục vụ kế hoạch gỡ bỏ tại Task P06-009).
+  - Tích hợp bộ kiểm thử tự động Node.js `frontend/scripts/stock-fallback-inventory.test.mjs` vào `frontend/package.json` (`npm test`).
+  - Bộ kiểm thử `stock-fallback-inventory.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực tính sẵn có và dung lượng non-empty của cả hai artifacts; (2) Kiểm chứng hợp đồng Proof 3 trường trên 100% bản ghi; (3) Xác thực dòng và URL đối chiếu thực tế trên đĩa cứng; (4) Cấu trúc báo cáo Markdown và kế hoạch bàn giao cho Task P06-009.
+  - Toàn bộ 73 tests frontend và 13/13 tests backend pytest pass 100%; Next.js 16 build thành công 181 static routes.
 
 ### P06-007 — Thay một emoji bằng Lucide/icon theo design system (Proof: component render đúng, không thêm asset placeholder)
 - **Status:** `done` tại `frontend/src/lib/designSystemIcons.ts`, `frontend/src/app/page.tsx`, `frontend/package.json`, và `frontend/scripts/emoji-lucide-replacement.test.mjs`.
