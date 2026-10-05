@@ -229,7 +229,7 @@ Mẫu bắt buộc cho từng issue nằm tại [ATOMIC_TASK_TEMPLATE.md](E:/Pro
 
 **Exit của phase:** UI không nói nhiều hơn dữ liệu có thể chứng minh; docs không còn hai roadmap cùng tranh quyền.
 
-- [ ] **P06-001** — Tạo danh sách claim số lượng POI trên UI/docs. **Proof:** file/line/current claim/source.
+- [x] **P06-001** — Tạo danh sách claim số lượng POI trên UI/docs. **Proof:** [`docs/technical-spec/POI_CLAIMS_INVENTORY.json`](technical-spec/POI_CLAIMS_INVENTORY.json), [`docs/technical-spec/POI_CLAIMS_INVENTORY.md`](technical-spec/POI_CLAIMS_INVENTORY.md), [`scripts/audit_poi_count_claims.py`](../scripts/audit_poi_count_claims.py), và [`frontend/scripts/poi-claims-inventory.test.mjs`](../frontend/scripts/poi-claims-inventory.test.mjs); quét toàn diện codebase và lập bảng kiểm toán danh mục 89 tuyên bố số lượng POI (50 UI claims, 39 Docs claims); mỗi bản ghi đảm bảo 100% hợp đồng proof 4 trường: `file`, `line`, `current_claim`, `source` (kèm `scope` và `snippet`); xác lập căn cứ chuẩn tắc đối chiếu với Canonical Manifest (1 verified POI) và Master Cleaned CSV (1592 POIs); bộ kiểm thử tự động `poi-claims-inventory.test.mjs` đạt 4/4 tests pass (xác thực hợp đồng 4 trường, đối chiếu số dòng thực tế trên đĩa, kiểm tra cấu trúc markdown và chữ ký kiểm toán); toàn bộ 47 tests frontend và 13/13 pytest backend pass 100%.
 - [ ] **P06-002** — Sửa một claim POI ở UI theo canonical manifest. **Proof:** rendered value khớp manifest.
 - [ ] **P06-003** — Sửa một claim POI ở tài liệu theo canonical manifest. **Proof:** doc có version/source.
 - [ ] **P06-004** — Tạo danh sách tên đơn vị hành chính đang hiển thị. **Proof:** file/line/current label.

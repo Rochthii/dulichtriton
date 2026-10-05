@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source)
+### P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest)
 
 - **Status:** `ready` / `active` cho Phase P06 (Đồng bộ giao diện, tài liệu và giới hạn claim).
 - **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
 - **AI route đề xuất:** `Sol · low` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Quét và tạo danh mục kiểm toán toàn diện tất cả các tuyên bố (claim) về số lượng POI đang tồn tại trên giao diện người dùng và tài liệu dự án, đáp ứng proof: file/line/current claim/source.
-- **Next task sau P06-001:** P06-002 — Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
+- **Mục tiêu duy nhất:** Điều chỉnh một claim POI trên giao diện người dùng (UI) để giá trị hiển thị (rendered value) khớp chính xác với Canonical Manifest đã được phê duyệt, đáp ứng proof: rendered value khớp manifest.
+- **Next task sau P06-002:** P06-003 — Sửa một claim POI ở tài liệu theo canonical manifest (Proof: doc có version/source).
 
 ---
 
@@ -125,11 +125,26 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 99. 🟢 **`P05-023`** *(Hoàn thành)*: Thêm CI RLS matrix job (Proof: policy regression làm CI fail).
 100. 🟢 **`P05-024`** *(Hoàn thành)*: Viết runbook cho provider outage (Proof: có trigger, owner, rollback, verification).
 101. 🟢 **`P05-025`** *(Hoàn thành)*: Viết runbook cho data rollback (Proof: có snapshot version và restore verification).
-102. 🟡 **`P06-001`** *(Đang mở)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
+102. 🟢 **`P06-001`** *(Hoàn thành)*: Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source).
+103. 🟡 **`P06-002`** *(Đang mở)*: Sửa một claim POI ở UI theo canonical manifest (Proof: rendered value khớp manifest).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P06-001 — Tạo danh sách claim số lượng POI trên UI/docs (Proof: file/line/current claim/source)
+- **Status:** `done` tại `docs/technical-spec/POI_CLAIMS_INVENTORY.json`, `docs/technical-spec/POI_CLAIMS_INVENTORY.md`, `scripts/audit_poi_count_claims.py`, `frontend/package.json`, và `frontend/scripts/poi-claims-inventory.test.mjs`.
+- **Luồng:** Thống nhất (Phase P06: Interface, Documentation & Claim Alignment).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Phát triển script kiểm toán quét tự động `scripts/audit_poi_count_claims.py` quét toàn diện mã nguồn UI (`frontend/src/`) và tài liệu (`docs/`, `README.md`).
+  - Ban hành 2 tài liệu chuẩn tắc: `docs/technical-spec/POI_CLAIMS_INVENTORY.json` và `docs/technical-spec/POI_CLAIMS_INVENTORY.md` (mã quy chuẩn `INVENTORY-POI-CLAIMS-001`, chủ trì kiểm toán bởi Lead Technical Architect & Local Cultural Auditor Chăm Rốch Thi).
+  - Lập bảng kiểm kê đầy đủ **89** tuyên bố số lượng POI (50 tuyên bố UI và 39 tuyên bố Docs).
+  - Hợp đồng Proof 4 trường: Mọi bản ghi kiểm toán đều sở hữu đầy đủ 4 trường bắt buộc: `file`, `line`, `current_claim`, `source` (kèm `scope` và `snippet`).
+  - Thiết lập căn cứ chuẩn tắc đối chiếu với Canonical Manifest (1 verified POI đã phê duyệt đầy đủ) và Master Cleaned CSV (1592 POIs đã làm sạch), phân tích rõ mức độ lệch (drift) giữa UI/Docs và canonical manifest làm tiền đề cho các task P06-002 và P06-003.
+  - Cập nhật `frontend/package.json` với script `"test"` tích hợp `scripts/poi-claims-inventory.test.mjs`.
+  - Bộ kiểm thử tự động `frontend/scripts/poi-claims-inventory.test.mjs` đạt 4/4 tests pass 100%: (1) Xác thực artifacts tồn tại và chứa dữ liệu đầy đủ; (2) Hợp đồng Proof 4 trường được thỏa mãn trên 100% 89 bản ghi; (3) Xác thực tính trung thực của các số dòng và trích dẫn trên tệp tin thực tế; (4) Cấu trúc bảng markdown và chữ ký phê duyệt của Lead Technical Architect.
+  - Toàn bộ 47 tests frontend và 13/13 pytest backend pass 100%.
 
 ### P05-025 — Viết runbook cho data rollback (Proof: có snapshot version và restore verification)
 - **Status:** `done` tại `docs/runbooks/RUNBOOK_DATA_ROLLBACK.md`, `frontend/src/lib/dataRollbackRunbook.ts`, `frontend/package.json`, và `frontend/scripts/data-rollback-runbook.test.mjs`.

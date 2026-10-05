@@ -1,0 +1,731 @@
+{
+  "audit_name": "Tri Ton Tourism Official POI Count Claims Inventory",
+  "standard_code": "INVENTORY-POI-CLAIMS-001",
+  "task_id": "P06-001",
+  "generated_at": "2026-10-05T08:00:00+07:00",
+  "lead_auditor": "Chăm Rốch Thi",
+  "canonical_reference": {
+    "canonical_manifest_verified_count": 1,
+    "master_cleaned_csv_count": 1592,
+    "canonical_manifest_path": "data/canonical/canonical_manifest.json"
+  },
+  "summary": {
+    "total_claims_discovered": 89,
+    "ui_claims_count": 50,
+    "doc_claims_count": 39
+  },
+  "claims": [
+    {
+      "file": "README.md",
+      "line": 21,
+      "current_claim": "82 Địa điểm",
+      "source": "Doc Project README",
+      "scope": "DOCS",
+      "snippet": "* **Bản đồ GIS 82 Địa điểm Master**: 100% dữ liệu đã qua kiểm duyệt thực tế, phân loại chuẩn theo Xã / Thị trấn."
+    },
+    {
+      "file": "docs/01_Project_Overview.md",
+      "line": 14,
+      "current_claim": "82+ địa điểm",
+      "source": "Doc Project Overview",
+      "scope": "DOCS",
+      "snippet": "* **AI Chatbot**: Trả lời câu hỏi ngôn ngữ tự nhiên kết hợp RAG và dữ liệu master 82+ địa điểm."
+    },
+    {
+      "file": "docs/03_Use_Cases.md",
+      "line": 14,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* **UC04 - Bản đồ GIS**: Hiển thị vị trí 82 địa điểm master trên bản đồ tương tác."
+    },
+    {
+      "file": "docs/03_Use_Cases.md",
+      "line": 18,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* **UC08 - Admin Control Center**: Quản trị dữ liệu 82 địa điểm, duyệt video, audit logs."
+    },
+    {
+      "file": "docs/07_AI_System.md",
+      "line": 25,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* **Fallback Strategy**: Không bịa dữ liệu ngoài 82 địa điểm master. Nếu thiếu thông tin, phản hồi minh bạch và gợi ý liên quan."
+    },
+    {
+      "file": "docs/11_Roadmap.md",
+      "line": 8,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* Thu thập & chuẩn hóa CSDL 82 địa điểm master (`data/tri_ton_master_cleaned.csv`)."
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 117,
+      "current_claim": "2 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P02-009** — Sửa một RPC khoảng cách để khớp kiểu không gian đã chọn. **Proof:** migration `20260807060000_p02_009_fix_match_places_n"
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 117,
+      "current_claim": "5 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P02-009** — Sửa một RPC khoảng cách để khớp kiểu không gian đã chọn. **Proof:** migration `20260807060000_p02_009_fix_match_places_n"
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 138,
+      "current_claim": "132 POIs",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P03-001** — Tạo báo cáo count/ID cho từng source hiện có. **Proof:** [DATA_SOURCES_INVENTORY_REPORT.md](technical-spec/DATA_SOURCES_"
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 138,
+      "current_claim": "137 POIs",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P03-001** — Tạo báo cáo count/ID cho từng source hiện có. **Proof:** [DATA_SOURCES_INVENTORY_REPORT.md](technical-spec/DATA_SOURCES_"
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 138,
+      "current_claim": "141 POIs",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P03-001** — Tạo báo cáo count/ID cho từng source hiện có. **Proof:** [DATA_SOURCES_INVENTORY_REPORT.md](technical-spec/DATA_SOURCES_"
+    },
+    {
+      "file": "docs/12_PRODUCTION_REMEDIATION_PLAN.md",
+      "line": 164,
+      "current_claim": "137 POIs",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- [x] **P03-028** — Chạy sync production sau approval G2 và snapshot backup. **Proof:** [`scripts/sync/create_production_snapshot.js`](../sc"
+    },
+    {
+      "file": "docs/PRODUCT_STRATEGY.md",
+      "line": 13,
+      "current_claim": "20 POI",
+      "source": "Doc Product Strategy",
+      "scope": "DOCS",
+      "snippet": "| **Dữ liệu** | 82 POI chuẩn hoá NFC, ảnh verify nguồn, TikTok hashtag, GeoJSON | Rất mạnh | Top 20 POI cần >= 1 video embed thực tế |"
+    },
+    {
+      "file": "docs/PRODUCT_STRATEGY.md",
+      "line": 13,
+      "current_claim": "82 POI",
+      "source": "Doc Product Strategy",
+      "scope": "DOCS",
+      "snippet": "| **Dữ liệu** | 82 POI chuẩn hoá NFC, ảnh verify nguồn, TikTok hashtag, GeoJSON | Rất mạnh | Top 20 POI cần >= 1 video embed thực tế |"
+    },
+    {
+      "file": "docs/PRODUCT_STRATEGY.md",
+      "line": 82,
+      "current_claim": "82 POI",
+      "source": "Doc Product Strategy",
+      "scope": "DOCS",
+      "snippet": "| M1 | Feed vuốt dọc 82 POI (ảnh thật + video TikTok nhúng) | VideoModal + VideoGallery done (Phase 1) | Populate embed_url thực tế cho 18 r"
+    },
+    {
+      "file": "docs/PRODUCT_STRATEGY.md",
+      "line": 86,
+      "current_claim": "82 POI",
+      "source": "Doc Product Strategy",
+      "scope": "DOCS",
+      "snippet": "| M5 | Dữ liệu sạch: giờ mở cửa thật, giá, tọa độ chuẩn WGS84 | 82 POI verify nhưng embed_url còn thiếu | Gọi điện xác nhận 5 quán hot nhất;"
+    },
+    {
+      "file": "docs/README.md",
+      "line": 11,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "5. [05. Cơ sở dữ liệu](file:///e:/Projects/Project_ca_nhan/dulichtriton/docs/05_Database.md) — Master Data 82 địa điểm & CSDL quan hệ / Vect"
+    },
+    {
+      "file": "docs/ai_workflow.md",
+      "line": 50,
+      "current_claim": "3 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "6. **Knowledge Ranking & Reranking**: Đánh giá điểm relevance và xếp hạng Top 3 địa điểm/quán ăn phù hợp nhất."
+    },
+    {
+      "file": "docs/ai_workflow.md",
+      "line": 51,
+      "current_claim": "105 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "7. **Prompt Builder (Dựng Prompt chuyên sâu)**: Đưa bối cảnh tri thức 105 địa điểm Master, quy tắc văn hóa và Ràng buộc \"No Emoji\" vào Promp"
+    },
+    {
+      "file": "docs/dynamic_video_discovery_spec.md",
+      "line": 45,
+      "current_claim": "95 POI",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- Trừ **-1.00 điểm (REJECT)** nếu tiêu đề/metadata chứa các địa danh An Giang ngoài Tri Tôn (*Châu Đốc, Long Xuyên, Núi Sam, Rừng tràm Trà S"
+    },
+    {
+      "file": "docs/dynamic_video_discovery_spec.md",
+      "line": 101,
+      "current_claim": "95 POI",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "1. **STEP 1**: Audit toàn bộ 95 POI Master Data (`tri_ton_master_cleaned.csv`) — ✅ Complete"
+    },
+    {
+      "file": "docs/dynamic_video_discovery_spec.md",
+      "line": 101,
+      "current_claim": "toàn bộ 95 POI",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "1. **STEP 1**: Audit toàn bộ 95 POI Master Data (`tri_ton_master_cleaned.csv`) — ✅ Complete"
+    },
+    {
+      "file": "docs/full_system_use_case_blueprint.md",
+      "line": 66,
+      "current_claim": "106 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* **UC08 (Admin Portal)**: Quản trị 106 địa điểm Master, Re-indexing Vector DB, **Audit Log bất biến `{WHO, WHAT, WHEN, FROM_WHERE}`**."
+    },
+    {
+      "file": "docs/mvp_scope_and_checklist.md",
+      "line": 7,
+      "current_claim": "82 địa điểm",
+      "source": "Doc MVP Scope & Roadmap",
+      "scope": "DOCS",
+      "snippet": "Bản MVP của **Du Lịch Tri Tôn** tập trung hoàn thiện bộ khung **Web Portal + AI Chatbot Widget** hoạt động thực tế 100% (Production-Real Dat"
+    },
+    {
+      "file": "docs/mvp_scope_and_checklist.md",
+      "line": 18,
+      "current_claim": "6 Địa điểm",
+      "source": "Doc MVP Scope & Roadmap",
+      "scope": "DOCS",
+      "snippet": "* Grid 6 Địa điểm Hot nhất (Hồ Tà Pạ, Đồi Tức Dụp, Chùa Xvayton, Gà đốt Ô Thum, Hồ Soài So, Cực thốt nốt trái tim)."
+    },
+    {
+      "file": "docs/mvp_scope_and_checklist.md",
+      "line": 39,
+      "current_claim": "82 địa điểm",
+      "source": "Doc MVP Scope & Roadmap",
+      "scope": "DOCS",
+      "snippet": "* Bảng `places`: Nạp 82 địa điểm master từ `data/tri_ton_master_cleaned.csv`."
+    },
+    {
+      "file": "docs/mvp_scope_and_checklist.md",
+      "line": 57,
+      "current_claim": "82 địa điểm",
+      "source": "Doc MVP Scope & Roadmap",
+      "scope": "DOCS",
+      "snippet": "3. **Chính xác dữ liệu**: Không bịa dữ liệu ngoài 82 địa điểm master đã qua kiểm duyệt."
+    },
+    {
+      "file": "docs/runbooks/RUNBOOK_PROVIDER_OUTAGE.md",
+      "line": 90,
+      "current_claim": "149 POIs",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- Kích hoạt Local Expert RAG độc lập. Hệ thống tiếp tục trả lời chính xác 100% thông tin 149 POIs canonical và số điện thoại cứu hộ khẩn cấp"
+    },
+    {
+      "file": "docs/tech_stack_architecture.md",
+      "line": 62,
+      "current_claim": "105 địa điểm",
+      "source": "Doc Technical Architecture",
+      "scope": "DOCS",
+      "snippet": "1. **Knowledge Base (Hoàn thiện)**: Chuẩn hóa 105 địa điểm Master, video, lịch trình, nhà xe, văn hóa Khmer."
+    },
+    {
+      "file": "docs/technical-spec/CURRENT_STATE_AUDIT.md",
+      "line": 37,
+      "current_claim": "149 POI",
+      "source": "Doc Technical Specification",
+      "scope": "DOCS",
+      "snippet": "- Production-ready, secure-by-default, RLS strict, canonical 149 POI, current 15-unit boundary."
+    },
+    {
+      "file": "docs/technical-spec/DATA_SOURCES_INVENTORY_REPORT.md",
+      "line": 79,
+      "current_claim": "11 địa điểm",
+      "source": "Doc Technical Specification",
+      "scope": "DOCS",
+      "snippet": "- **11 địa điểm pilot xác minh thực địa:**"
+    },
+    {
+      "file": "docs/use_cases/level_0_overview.md",
+      "line": 38,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Overview",
+      "scope": "DOCS",
+      "snippet": "- Quản lý bộ dữ liệu Master 82 địa điểm chuẩn hóa Tri Tôn."
+    },
+    {
+      "file": "docs/use_cases/level_1_modules.md",
+      "line": 118,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "├── UC08.02 Quản lý danh mục & 82 địa điểm Master (Manage Places DB)"
+    },
+    {
+      "file": "docs/use_cases/level_4_activity.md",
+      "line": 16,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "[Phân tích & Lọc danh sách 82 địa điểm Tri Tôn phù hợp]"
+    },
+    {
+      "file": "docs/use_cases_architecture.md",
+      "line": 160,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "├── UC08.02 Quản lý danh mục & 82 địa điểm Master (Manage Places DB)"
+    },
+    {
+      "file": "docs/use_cases_architecture.md",
+      "line": 234,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "[Phân tích & Lọc danh sách 82 địa điểm Tri Tôn phù hợp]"
+    },
+    {
+      "file": "docs/user_personas_and_pain_points.md",
+      "line": 76,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "* **Kiểm duyệt thông tin chuẩn 100%**: Dữ liệu lấy từ Master Dataset 82 địa điểm đã xác minh."
+    },
+    {
+      "file": "docs/y-tuong-du-an.md",
+      "line": 285,
+      "current_claim": "20 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- Liệt kê 10-20 địa điểm nổi bật, thu thập ảnh/mô tả/địa chỉ."
+    },
+    {
+      "file": "docs/y-tuong-du-an.md",
+      "line": 392,
+      "current_claim": "82 địa điểm",
+      "source": "Doc Project Documentation",
+      "scope": "DOCS",
+      "snippet": "- **Level 3 (Low-level AI Execution)**: Chi tiết luồng xử lý 16 bước từ tiếp nhận câu hỏi tự nhiên -> Chuẩn hóa tiếng Việt NFC -> Phân tích "
+    },
+    {
+      "file": "frontend/src/app/admin/page.tsx",
+      "line": 157,
+      "current_claim": "149 POIs",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "{/* Metric 1: 149 POIs */}"
+    },
+    {
+      "file": "frontend/src/app/admin/page.tsx",
+      "line": 306,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "<span>Phân Bố 149 Địa Điểm Theo Xã & Thị Trấn</span>"
+    },
+    {
+      "file": "frontend/src/app/admin/stories/page.tsx",
+      "line": 185,
+      "current_claim": "155 địa điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "'Bạn có chắc chắn muốn TỰ ĐỘNG CĂN CHỈNH TOÀN BỘ bài viết của 155 địa điểm theo chuẩn Typography Bảy Núi?'"
+    },
+    {
+      "file": "frontend/src/app/admin/stories/page.tsx",
+      "line": 192,
+      "current_claim": "155 địa điểm",
+      "source": "UI Statistics Metric Widget",
+      "scope": "UI",
+      "snippet": "setBatchStatus('Đang chuẩn hóa và đồng bộ 155 địa điểm lên Supabase...');"
+    },
+    {
+      "file": "frontend/src/app/admin/stories/page.tsx",
+      "line": 242,
+      "current_claim": "155 địa điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "Biên tập, căn chỉnh bố cục và chuẩn hóa định dạng Markdown cho 155 địa điểm du lịch Tri Tôn."
+    },
+    {
+      "file": "frontend/src/app/admin/stories/page.tsx",
+      "line": 256,
+      "current_claim": "155 Địa Điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "<span>{isBatchProcessing ? 'Đang xử lý...' : '⚡ Căn Chỉnh Toàn Bộ 155 Địa Điểm'}</span>"
+    },
+    {
+      "file": "frontend/src/app/admin/stories/page.tsx",
+      "line": 256,
+      "current_claim": "Toàn Bộ 155 Địa Điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "<span>{isBatchProcessing ? 'Đang xử lý...' : '⚡ Căn Chỉnh Toàn Bộ 155 Địa Điểm'}</span>"
+    },
+    {
+      "file": "frontend/src/app/api/v1/llms-context/route.ts",
+      "line": 64,
+      "current_claim": "149 POIs",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Verified travel data for Tri Tôn, An Giang, Vietnam — 149 POIs, field-researched 2025–2026',"
+    },
+    {
+      "file": "frontend/src/app/chatbot/layout.tsx",
+      "line": 16,
+      "current_claim": "149 địa điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Hỏi đáp thông minh về 149 địa điểm, quán ăn ngon và đường đi phượt an toàn tại Tri Tôn, An Giang.',"
+    },
+    {
+      "file": "frontend/src/app/food/page.tsx",
+      "line": 318,
+      "current_claim": "4 ĐẶC SẢN",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "{/* 🌟 TOP 4 ĐẶC SẢN & QUÁN HOT NHẤT PHẢI THỬ 🌟 */}"
+    },
+    {
+      "file": "frontend/src/app/layout.tsx",
+      "line": 25,
+      "current_claim": "149 địa điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: \"Cẩm nang du lịch Tri Tôn, An Giang: 149 địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thô"
+    },
+    {
+      "file": "frontend/src/app/layout.tsx",
+      "line": 38,
+      "current_claim": "149 điểm đến",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: \"Trợ lý AI hướng dẫn du lịch Tri Tôn, 149 điểm đến thực tế, 35 tour gợi ý và bản đồ số GIS.\","
+    },
+    {
+      "file": "frontend/src/app/layout.tsx",
+      "line": 82,
+      "current_claim": "149 địa điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Nền tảng du lịch thông minh vùng Bảy Núi Tri Tôn, An Giang với 149 địa điểm xác minh thực tế.',"
+    },
+    {
+      "file": "frontend/src/app/map/layout.tsx",
+      "line": 5,
+      "current_claim": "149 Điểm Đến",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "title: 'Bản Đồ Du Lịch Số GIS Tri Tôn — Định Vị GPS 149 Điểm Đến Thực Địa',"
+    },
+    {
+      "file": "frontend/src/app/map/layout.tsx",
+      "line": 6,
+      "current_claim": "149 địa điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Bản đồ tương tác GIS thông minh 149 địa điểm Tri Tôn, An Giang: Phân loại theo 15 xã/thị trấn, lọc danh lam thắng cảnh, quán g"
+    },
+    {
+      "file": "frontend/src/app/page.tsx",
+      "line": 587,
+      "current_claim": "149 thắng cảnh",
+      "source": "UI Landing / Home Page",
+      "scope": "UI",
+      "snippet": "149 thắng cảnh đã xác minh thực tế • 35 lịch trình gợi ý • Bản đồ ẩm thực Gà Đốt Ô Thum & Di sản Chùa Khmer."
+    },
+    {
+      "file": "frontend/src/app/pitch-deck/page.tsx",
+      "line": 123,
+      "current_claim": "149 di tích",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "Nền tảng du lịch AI thực chiến đầu tiên tại An Giang: Kết nối 149 di tích lịch sử, chùa tháp Khmer, ẩm thực Gà Đốt Ô Thum và mạng lưới 50+ h"
+    },
+    {
+      "file": "frontend/src/app/pitch-deck/page.tsx",
+      "line": 245,
+      "current_claim": "149 di tích",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "• Số hóa chuẩn xác <strong>149 di tích & chùa Khmer</strong>.<br />"
+    },
+    {
+      "file": "frontend/src/app/pitch-deck/page.tsx",
+      "line": 321,
+      "current_claim": "149 POIs",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "<span className=\"text-xs font-mono font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded\">149 POIs</span>"
+    },
+    {
+      "file": "frontend/src/app/pitch-deck/page.tsx",
+      "line": 324,
+      "current_claim": "149 địa điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "• <strong>149 địa điểm</strong> phủ khắp các xã/thị trấn (không dùng từ 'Huyện Tri Tôn').<br />"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 5,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "title: '149 Địa Điểm Du Lịch Tri Tôn — Danh Thắng, Check-in & Điểm Đến Thực Địa',"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 16,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "title: '149 Địa Điểm Du Lịch Tri Tôn — Bản Đồ & Điểm Đến Thực Địa 2026',"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 17,
+      "current_claim": "149 điểm đến",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Khám phá trọn vẹn 149 điểm đến đã xác minh thực tế tại vùng Bảy Núi Tri Tôn: Danh lam thắng cảnh, check-in, ẩm thực và văn hóa"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 25,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "alt: '149 Địa Điểm Du Lịch Tri Tôn An Giang',"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 33,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "title: '149 Địa Điểm Du Lịch Tri Tôn',"
+    },
+    {
+      "file": "frontend/src/app/places/layout.tsx",
+      "line": 34,
+      "current_claim": "149 danh thắng",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Cẩm nang tra cứu 149 danh thắng và tọa độ check-in đẹp nhất Tri Tôn, An Giang.',"
+    },
+    {
+      "file": "frontend/src/app/places/page.tsx",
+      "line": 269,
+      "current_claim": "149 địa điểm",
+      "source": "UI Places Directory Page",
+      "scope": "UI",
+      "snippet": "Tra cứu đầy đủ 149 địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp"
+    },
+    {
+      "file": "frontend/src/app/places/page.tsx",
+      "line": 478,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Places Directory Page",
+      "scope": "UI",
+      "snippet": "<span>Danh Sách 149 Địa Điểm Đã Xác Minh ({filteredPlaces.length} Địa Điểm)</span>"
+    },
+    {
+      "file": "frontend/src/app/places/page.tsx",
+      "line": 485,
+      "current_claim": "149 địa điểm",
+      "source": "UI Places Directory Page",
+      "scope": "UI",
+      "snippet": "Đang tải danh mục 149 địa điểm du lịch Tri Tôn..."
+    },
+    {
+      "file": "frontend/src/app/places/page.tsx",
+      "line": 485,
+      "current_claim": "danh mục 149 địa điểm",
+      "source": "UI Places Directory Page",
+      "scope": "UI",
+      "snippet": "Đang tải danh mục 149 địa điểm du lịch Tri Tôn..."
+    },
+    {
+      "file": "frontend/src/app/terms/page.tsx",
+      "line": 53,
+      "current_claim": "149 địa điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "Cổng thông tin <strong>Du Lịch Tri Tôn AI Platform</strong> là nền tảng phi thương mại hướng tới cộng đồng du khách và người dân bản địa, cu"
+    },
+    {
+      "file": "frontend/src/components/AdminClientPage.tsx",
+      "line": 74,
+      "current_claim": "149 địa điểm",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "Nhật ký hành động bất biến mã hóa an toàn `{'{WHO, WHAT, WHEN, FROM_WHERE}'}` và quản lý CSDL Supabase 149 địa điểm."
+    },
+    {
+      "file": "frontend/src/components/ChatbotPageClient.tsx",
+      "line": 563,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "149 Địa Điểm Đã Xác Minh • 35 Lịch Trình Gợi Ý"
+    },
+    {
+      "file": "frontend/src/components/FormattedChatMessage.tsx",
+      "line": 444,
+      "current_claim": "149 địa điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "<strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin 149 địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>"
+    },
+    {
+      "file": "frontend/src/components/GuideClientPage.tsx",
+      "line": 108,
+      "current_claim": "149 Điểm Đến",
+      "source": "UI Application Page",
+      "scope": "UI",
+      "snippet": "<p className=\"font-display text-2xl font-extrabold text-[#0E8C7F]\">149 Điểm Đến</p>"
+    },
+    {
+      "file": "frontend/src/components/ItineraryClientPage.tsx",
+      "line": 201,
+      "current_claim": "8 địa điểm",
+      "source": "UI Itineraries Page",
+      "scope": "UI",
+      "snippet": "alert('Bạn chỉ nên chọn tối đa 8 địa điểm trong 1 ngày để đảm bảo thời gian tham quan!');"
+    },
+    {
+      "file": "frontend/src/components/MiniGisMapBanner.tsx",
+      "line": 59,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "<span>Hệ Thống Tọa Độ 149 Địa Điểm Đã Xác Minh</span>"
+    },
+    {
+      "file": "frontend/src/components/MiniGisMapBanner.tsx",
+      "line": 92,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "<span>Mở Bản Đồ Khám Phá 149 Địa Điểm</span>"
+    },
+    {
+      "file": "frontend/src/components/PlaceDetailClient.tsx",
+      "line": 176,
+      "current_claim": "141 POIs",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "// 100% Dynamic Real-World Nearby Food (Haversine GPS calculation from 141 POIs - Zero Mock)"
+    },
+    {
+      "file": "frontend/src/components/SiteFooter.tsx",
+      "line": 27,
+      "current_claim": "149 danh thắng",
+      "source": "UI Footer Component",
+      "scope": "UI",
+      "snippet": "Cổng thông tin & Trợ lý AI du lịch Bảy Núi, hỗ trợ du khách khám phá trọn vẹn 149 danh thắng, chùa Khmer và ẩm thực đặc sản tại Tri Tôn, An "
+    },
+    {
+      "file": "frontend/src/components/SiteFooter.tsx",
+      "line": 170,
+      "current_claim": "149 POIs",
+      "source": "UI Footer Component",
+      "scope": "UI",
+      "snippet": "Thiết kế & phát triển bởi <strong>Chăm Rốch Thi</strong> (Cham Roch Thi) • Dữ liệu 149 POIs thực địa xác minh 100%."
+    },
+    {
+      "file": "frontend/src/components/WireDiagramItinerary.tsx",
+      "line": 92,
+      "current_claim": "149 POIs",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "// 1. Search directly in master 149 POIs"
+    },
+    {
+      "file": "frontend/src/components/admin/AdminSidebar.tsx",
+      "line": 42,
+      "current_claim": "149 Địa Điểm",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "label: 'Quản Lý 149 Địa Điểm',"
+    },
+    {
+      "file": "frontend/src/data/triton_pois_full.json",
+      "line": 4840,
+      "current_claim": "3 di tích",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "\"detailed_story\": \"Chùa Tam Bửu Ba Chúc – Tổ Đình Đạo Tứ Ân Hiếu Nghĩa & Di Tích Lịch Sử Văn Hóa Quốc Gia\\n\\nTọa lạc dưới chân Núi Tượng trầ"
+    },
+    {
+      "file": "frontend/src/lib/ai/intentRouter.ts",
+      "line": 9,
+      "current_claim": "149 POIs",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "* 3. LOCAL_POI_FAST: 80% tra cứu 149 POIs & văn hóa qua Groq LPU (< 250ms)"
+    },
+    {
+      "file": "frontend/src/lib/ai/intentRouter.ts",
+      "line": 79,
+      "current_claim": "149 POIS",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "// ── LUỒNG 3: TRA CỨU TĨNH 149 POIS, ẨM THỰC, LỊCH TRÌNH (>95%) ─────────"
+    },
+    {
+      "file": "frontend/src/lib/ai/spatialRouter.ts",
+      "line": 86,
+      "current_claim": "1 POI",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "// Nếu chỉ có 1 POI"
+    },
+    {
+      "file": "frontend/src/lib/dataSanitizer.ts",
+      "line": 247,
+      "current_claim": "141 POIs",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "* Find dynamic real-world nearby food places using 100% GPS coordinates from 141 POIs"
+    },
+    {
+      "file": "frontend/src/lib/routeOptimizer.ts",
+      "line": 5,
+      "current_claim": "10 POIs",
+      "source": "UI Frontend Component",
+      "scope": "UI",
+      "snippet": "* Computes optimal visiting sequence for 2-10 POIs using Haversine distance,"
+    },
+    {
+      "file": "frontend/src/lib/siteConfig.ts",
+      "line": 21,
+      "current_claim": "149 địa điểm",
+      "source": "UI SEO Page Metadata",
+      "scope": "UI",
+      "snippet": "description: 'Cẩm nang du lịch Tri Tôn, An Giang: 149 địa điểm xác minh thực tế, ẩm thực Gà Đốt Ô Thum, di sản Khmer và bản đồ tương tác thô"
+    }
+  ]
+}
