@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn)
+### P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực SSRF (Server-Side Request Forgery negative test suite) xác minh các server-side fetch routes (`scrape-images`, `gmaps-scraper`) chặn đứng 100% private IP, loopback, link-local, redirect bypass, và non-HTTPS schemes.
-- **Next task sau P07-002:** P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công).
+- **Mục tiêu duy nhất:** Chạy fresh migration replay toàn bộ chuỗi 50 file SQL migrations trên database sạch và kiểm chứng database dựng thành công 100% không lỗi cú pháp.
+- **Next task sau P07-003:** P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
 
 ---
 
@@ -139,11 +139,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 113. 🟢 **`P06-012`** *(Hoàn thành)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
 114. 🟢 **`P06-013`** *(Hoàn thành)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
 115. 🟢 **`P07-001`** *(Hoàn thành)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
-116. 🟡 **`P07-002`** *(Đang mở)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
+116. 🟢 **`P07-002`** *(Hoàn thành)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
+117. 🟡 **`P07-003`** *(Đang mở)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn)
+- **Status:** `done` tại `frontend/src/lib/serverFetchValidator.ts`, `frontend/src/app/api/v1/admin/scrape-images/route.ts`, `frontend/src/app/api/v1/admin/gmaps-scraper/route.ts`, `frontend/package.json`, và `frontend/scripts/ssrf-negative-suite.test.mjs`.
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử tiêu cực SSRF toàn diện [`frontend/scripts/ssrf-negative-suite.test.mjs`](frontend/scripts/ssrf-negative-suite.test.mjs) bao phủ 136 test items xuyên suốt 4 test suites:
+    * **Suite 1 (Scheme & Protocol Invariants):** Chặn đứng 15+ malicious schemes (`http:`, `file:`, `data:`, `gopher:`, `ftp:`, `ftps:`, `javascript:`, `blob:`, `ldap:`, `dict:`, `tftp:`, protocol-relative `//169.254.169.254`, `//localhost`, mixed-case `hTTp:`, v.v.) và malformed URLs, bảo toàn duy nhất giao thức an toàn `https:`.
+    * **Suite 2 (Private, Loopback, Link-Local, Cloud IMDS & Hostname Invariants):** Chặn đứng 20 dải IPv4 (loopback `127.0.0.0/8`, RFC 1918 `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, cloud IMDS `169.254.169.254`, link-local `169.254.1.1`, current network `0.0.0.0`, CGNAT `100.64.0.0/10`, broadcast `255.255.255.255`), 12 dải IPv6 (`::1`, `::`, link-local `fe80::/10`, ULA `fc00::/7`, IPv4-mapped `::ffff:`), 11 hostname nội bộ/đám mây (`localhost`, `metadata.google.internal`, `instance-data`, `admin`, `intranet`), DNS rebinding và port policy (chặn toàn bộ ports non-443).
+    * **Suite 3 (Redirect Hop Interception & Allowlist Invariants):** Đánh chặn 100% các cuộc tấn công SSRF qua redirect (302 sang HTTP, sang loopback `127.0.0.1`, sang cloud IMDS `169.254.169.254`, sang RFC 1918 `192.168.1.1`, sang hostname nội bộ, redirect loops vượt `maxRedirects`, redirect ngoài allowlist, và giới hạn kích thước response body).
+    * **Suite 4 (Route-Level Mutation SSRF Defense & Zero Private Egress Invariant):** Kiểm thử trực tiếp 43 kịch bản tấn công đối với 2 route server-side fetch quản trị `scrape-images` và `gmaps-scraper` với authenticated admin session (`role: ADMIN`), chứng minh 100% payload độc hại đều bị chặn đứng fail-closed với HTTP 400 Bad Request kèm mã lỗi chuẩn xác (`INVALID_SCHEME`, `BLOCKED_IP`, `BLOCKED_HOSTNAME`, `DISALLOWED_DOMAIN`).
+    * **Zero Private Egress Invariant Proof:** Giám sát mạng độc lập chứng minh đúng 0 outbound requests nào tiếp cận dải IP nội bộ hoặc cloud metadata service trong toàn bộ quá trình kiểm thử.
+  - Cập nhật `frontend/package.json` tích hợp `scripts/ssrf-negative-suite.test.mjs` vào lệnh `"test"`. Toàn bộ 136 tests pass 100% trong 1.3s.
 
 ### P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous)
 - **Status:** `done` tại `frontend/src/app/api/v1/admin/feedbacks/route.ts`, `frontend/package.json`, và `frontend/scripts/authenticated-admin-negative.test.mjs`.
