@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous)
+### P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực (negative test suite) xác minh toàn bộ các mutation route quản trị (POST/PUT/PATCH/DELETE từ P01) từ chối dứt điểm các yêu cầu vô danh (anonymous) với HTTP 401/403 và 0% side-effect.
-- **Next task sau P07-001:** P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
+- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực SSRF (Server-Side Request Forgery negative test suite) xác minh các server-side fetch routes (`scrape-images`, `gmaps-scraper`) chặn đứng 100% private IP, loopback, link-local, redirect bypass, và non-HTTPS schemes.
+- **Next task sau P07-002:** P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công).
 
 ---
 
@@ -138,11 +138,30 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 112. 🟢 **`P06-011`** *(Hoàn thành)*: Cập nhật một tài liệu AI theo behavior test P04 (Proof: không còn claim race/RAG chưa tồn tại).
 113. 🟢 **`P06-012`** *(Hoàn thành)*: Cập nhật một tài liệu data theo G1/G2 (Proof: số liệu có manifest version).
 114. 🟢 **`P06-013`** *(Hoàn thành)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
-115. 🟡 **`P07-001`** *(Đang mở)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
+115. 🟢 **`P07-001`** *(Hoàn thành)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
+116. 🟡 **`P07-002`** *(Đang mở)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-001 — Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous)
+- **Status:** `done` tại `frontend/src/app/api/v1/admin/feedbacks/route.ts`, `frontend/package.json`, và `frontend/scripts/authenticated-admin-negative.test.mjs`.
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Rà soát toàn diện và phát hiện lỗ hổng bảo mật còn sót lại từ P01 tại route `feedbacks`: file [`frontend/src/app/api/v1/admin/feedbacks/route.ts`](frontend/src/app/api/v1/admin/feedbacks/route.ts) trước đó chưa được bọc guard kiểm thực phiên admin và đang dùng client Supabase không an toàn. Đã tiến hành bọc toàn diện `verifyAdminSession(req)` trên cả GET và PATCH, chuyển đổi sang `requireSupabaseServerClient()`.
+  - Xây dựng bộ kiểm thử tiêu cực tổng thể [`frontend/scripts/authenticated-admin-negative.test.mjs`](frontend/scripts/authenticated-admin-negative.test.mjs) bao phủ toàn bộ 19 phương thức mutation của 12 route quản trị từ P01 (`places`, `videos`, `videos/ai-scan`, `upload`, `itineraries`, `knowledge-base`, `knowledge-base/[id]`, `feedbacks`, `feedback`, `revalidate`, `gmaps-scraper`, `scrape-images`).
+  - Thực thi thành công **114 bài kiểm tra tiêu cực** xuyên suốt 6 kịch bản rủi ro cao:
+    * Kịch bản 1: Raw anonymous (không cookie) -> 401 Unauthorized.
+    * Kịch bản 2: Malformed cookie (cookie định dạng rác) -> 401 Unauthorized.
+    * Kịch bản 3: Forged token (token giả mạo không tồn tại trong DB) -> 401 Unauthorized.
+    * Kịch bản 4: Expired token (token đã hết hạn) -> 401 Unauthorized.
+    * Kịch bản 5: Disabled user (tài khoản đã bị vô hiệu hóa `is_active: false`) -> 401 Unauthorized.
+    * Kịch bản 6: Unauthorized role (vai trò `VIEWER` cố tình gọi mutation) -> 403 Forbidden.
+  - Kiểm chứng bất biến Middleware Kill-Switch: khi `ADMIN_MUTATIONS_ENABLED !== 'true'`, toàn bộ các route mutation đều bị chặn đứng với HTTP 503 Service Unavailable trước khi tới tầng logic nghiệp vụ; loại trừ `/api/v1/admin/auth/login` có chủ đích.
+  - **Chứng minh Bất Biến Zero Side-Effect (Zero Side-Effect Proof):** Mock database HTTP server ghi nhận ĐÚNG 0 yêu cầu ghi (`POST`, `PUT`, `PATCH`, `DELETE`) vào các bảng nghiệp vụ (`places`, `videos`, `itineraries`, `custom_knowledge_base`, `feedbacks`), chứng minh tuyệt đối không có bất kỳ side-effect nào lọt qua guard.
+  - Tích hợp `authenticated-admin-negative.test.mjs` vào `frontend/package.json` (`npm test`), đạt 2/2 test suites pass 100%.
 
 ### P06-013 — Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority)
 - **Status:** `done` tại `docs/11_Roadmap.md`, `frontend/package.json`, và `frontend/scripts/archived-doc-banner.test.mjs`.

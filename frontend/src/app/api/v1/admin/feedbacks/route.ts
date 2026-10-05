@@ -1,16 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { verifyAdminSession } from "@/lib/adminSessionGuard";
+import { requireSupabaseServerClient } from "@/lib/serverSupabase";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");
     const category = searchParams.get("category");
     const limit = parseInt(searchParams.get("limit") || "50", 10);
     const offset = parseInt(searchParams.get("offset") || "0", 10);
 
+    const supabase = requireSupabaseServerClient();
     let query = supabase
       .from("feedbacks")
       .select("*", { count: "exact" })
@@ -44,6 +49,9 @@ export async function GET(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   try {
+    const auth = await verifyAdminSession(req);
+    if (!auth.authenticated) return auth.response;
+
     const body = await req.json();
     const { id, status, admin_notes } = body;
 
@@ -59,10 +67,12 @@ export async function PATCH(req: NextRequest) {
     if (admin_notes !== undefined) {
       updatePayload.metadata = {
         admin_notes,
-        reviewed_at: new Date().toISOString(),
+        resolved_by: auth.principal.fullName || auth.principal.email,
+        resolved_at: new Date().toISOString(),
       };
     }
 
+    const supabase = requireSupabaseServerClient();
     const { data, error } = await supabase
       .from("feedbacks")
       .update(updatePayload)
@@ -74,7 +84,10 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, feedback: data });
+    return NextResponse.json({
+      success: true,
+      feedback: data,
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message || "Internal server error" }, { status: 500 });
   }
