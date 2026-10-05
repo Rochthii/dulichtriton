@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-011 — Review open P0/P1 risk register (Proof: không còn risk chưa accept)
+### P07-012 — Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Rà soát và kiểm toán toàn diện sổ đăng ký rủi ro (P0/P1 Risk Register), đối soát toàn bộ các mục rủi ro nghiêm trọng và trung bình đã được nhận diện xuyên suốt quá trình remediation, xác nhận chứng minh không còn bất kỳ rủi ro P0/P1 nào chưa được giải quyết hoặc chưa được phê chuẩn chính thức (Proof: không còn risk chưa accept) trước khi tiến tới ký duyệt Decision Gate G4.
-- **Next task sau P07-011:** P07-012 — Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
+- **Mục tiêu duy nhất:** Soạn thảo, ban hành và thực thi Decision Record Gate G4 (Production Release Gate Decision Record), tổng hợp toàn bộ bằng chứng kỹ thuật (evidence links) từ P00 đến P07, cung cấp cơ chế biểu quyết và chữ ký điện tử của Release Owner (Chăm Rốch Thi) xác nhận quyết định GO/NO-GO chính thức đưa hệ thống Du Lịch Tri Tôn AI Assistant lên Production.
+- **Next task sau P07-012:** Toàn bộ lộ trình Remediation hoàn tất! (Hoàn thành Phase P07 và sẵn sàng triển khai sản xuất).
 
 ---
 
@@ -148,12 +148,25 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 122. 🟢 **`P07-008`** *(Hoàn thành)*: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 123. 🟢 **`P07-009`** *(Hoàn thành)*: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
 124. 🟢 **`P07-010`** *(Hoàn thành)*: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
-125. 🟡 **`P07-011`** *(Đang mở)*: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
-126. ⚪ **`P07-012`**: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
+125. 🟢 **`P07-011`** *(Hoàn thành)*: Review open P0/P1 risk register (Proof: không còn risk chưa accept).
+126. 🟡 **`P07-012`** *(Đang mở)*: Tạo Decision Record G4 (Proof: release owner chọn GO/NO-GO và ký evidence links).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-011 — Review open P0/P1 risk register (Proof: không còn risk chưa accept)
+- **Status:** `done` tại [`docs/technical-spec/P0_P1_RISK_REGISTER.json`](docs/technical-spec/P0_P1_RISK_REGISTER.json), [`docs/technical-spec/P0_P1_RISK_REGISTER.md`](docs/technical-spec/P0_P1_RISK_REGISTER.md), [`frontend/scripts/p0-p1-risk-register.test.mjs`](frontend/scripts/p0-p1-risk-register.test.mjs), [`frontend/package.json`](frontend/package.json), và [`docs/12_PRODUCTION_REMEDIATION_PLAN.md`](docs/12_PRODUCTION_REMEDIATION_PLAN.md).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử release-gate Sổ đăng ký rủi ro (P0/P1 Risk Register Review Suite) với 5 test suites bao quát 100% nguyên tắc bất biến Zero Unaccepted Risks:
+    * **Suite 1 (Risk Register Artifact Integrity & Schema Completeness Invariant):** Xác thực định dạng và cấu trúc dữ liệu của `P0_P1_RISK_REGISTER.json` và `P0_P1_RISK_REGISTER.md` (mã quy chuẩn `RR-TRI-TON-PROD-001`, Release Owner Chăm Rốch Thi). Toàn bộ 11 rủi ro cốt lõi (4 P0 Blockers, 7 P1 High/Critical) đều có đầy đủ trường bắt buộc: `risk_id`, `title`, `severity`, `status`, `remediation_phase`, `remediation_evidence_link`, `acceptance_decision_record`, `acceptance_rationale`, `mitigation_in_place`.
+    * **Suite 2 (Zero Unaccepted P0/P1 Risks Invariant):** Khẳng định tuyệt đối `open_unaccepted_count = 0` (0% rủi ro `OPEN`, `PENDING` hay `UNREVIEWED`). 10/11 rủi ro đã `REMEDIATED` 100%. Duy nhất 1 rủi ro `RSK-P1-007` được phê chuẩn `ACCEPTED_RISK` có kiểm soát.
+    * **Suite 3 (Formal Accepted Risk Governance & Rationale Invariant):** Rủi ro `RSK-P1-007` (Multi-pod distributed rate limit drift) có đầy đủ căn cứ quyết định pháp lý (`DR-G3-RATELIMIT-BACKEND-001`), cơ chế dự phòng suy thoái an toàn (Graceful Degradation Fallback về In-Memory Sliding Window) và kế hoạch theo dõi sản xuất.
+    * **Suite 4 (Proof Links Physical Existence on Disk Invariant):** 100% các liên kết chứng cứ (`remediation_evidence_link`) đều trỏ đến các tệp tài liệu, kiểm thử và mã nguồn tồn tại thực tế trên đĩa cứng.
+    * **Suite 5 (Fault Injection & Fail-Closed Compliance Invariants):** Giả lập chèn rủi ro mới ở trạng thái `OPEN` hoặc sửa trạng thái `ACCEPTED_RISK` mà thiếu `acceptance_decision_record` chứng minh bộ kiểm thử fail-closed lập tức.
+  - Tích hợp `frontend/scripts/p0-p1-risk-register.test.mjs` vào lệnh `"test"` trong `frontend/package.json`. Chạy test suite đạt 5/5 tests pass 100% trong 12.2ms. Đánh dấu `[x] P07-011` trong `docs/12_PRODUCTION_REMEDIATION_PLAN.md`.
 
 ### P07-010 — Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass)
 - **Status:** `done` tại [`frontend/src/lib/accessibilityChecklist.ts`](frontend/src/lib/accessibilityChecklist.ts), [`frontend/src/app/globals.css`](frontend/src/app/globals.css), [`frontend/src/components/MobileBottomNav.tsx`](frontend/src/components/MobileBottomNav.tsx), [`frontend/src/components/ChatbotWidget.tsx`](frontend/src/components/ChatbotWidget.tsx), [`frontend/src/components/Header.tsx`](frontend/src/components/Header.tsx), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/mobile-accessibility-smoke-test.test.mjs`](frontend/scripts/mobile-accessibility-smoke-test.test.mjs).
