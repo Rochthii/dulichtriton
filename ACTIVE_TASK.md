@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công)
+### P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy fresh migration replay toàn bộ chuỗi 50 file SQL migrations trên database sạch và kiểm chứng database dựng thành công 100% không lỗi cú pháp.
-- **Next task sau P07-003:** P07-004 — Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
+- **Mục tiêu duy nhất:** Chạy bộ kiểm thử ma trận phân quyền Row Level Security (RLS matrix suite) xác nhận toàn bộ 196 quyền (16 bảng x 3 client/admin roles x 4 operations + row-filtering policies) đều pass 100% expected allow/deny.
+- **Next task sau P07-004:** P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass).
 
 ---
 
@@ -140,11 +140,29 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 114. 🟢 **`P06-013`** *(Hoàn thành)*: Gắn nhãn archived cho một tài liệu superseded (Proof: banner link tới tài liệu authority).
 115. 🟢 **`P07-001`** *(Hoàn thành)*: Chạy authenticated-admin negative test (Proof: toàn bộ mutation route từ P01 từ chối anonymous).
 116. 🟢 **`P07-002`** *(Hoàn thành)*: Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn).
-117. 🟡 **`P07-003`** *(Đang mở)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
+117. 🟢 **`P07-003`** *(Hoàn thành)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
+118. 🟡 **`P07-004`** *(Đang mở)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
 
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-003 — Chạy fresh migration replay (Proof: database trống dựng thành công)
+- **Status:** `done` tại [`supabase/migrations/`](supabase/migrations/), [`scripts/ci_migration_replay.py`](scripts/ci_migration_replay.py), [`.github/workflows/ci.yml`](.github/workflows/ci.yml), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/fresh-migration-replay.test.mjs`](frontend/scripts/fresh-migration-replay.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ kiểm thử tự động [`frontend/scripts/fresh-migration-replay.test.mjs`](frontend/scripts/fresh-migration-replay.test.mjs) kiểm chứng toàn diện 5 bằng chứng tái lập database từ trạng thái hoàn toàn trống:
+    * **Proof 1 (Migration Inventory & Monotonic Chronology):** Kiểm chứng toàn bộ 50 file SQL migrations có timestamp định dạng chuẩn `YYYYMMDD...`, sắp xếp đơn điệu theo thời gian (từ baseline `20260807` đến cleanup `20261002`), mã hóa UTF-8 sạch, không file rỗng và 100% cân bằng dollar-quotes `$$`.
+    * **Proof 2 (Blank Database Replay Simulation & Dependency Graph):** Bắt đầu từ trạng thái 0 đối tượng, bootstrap roles chuẩn Supabase (`anon`, `authenticated`, `service_role`), mô phỏng tái lập tuần tự toàn bộ 50 migrations dựng thành công:
+      - 6 core extensions (`uuid-ossp`, `pgcrypto`, `vector`, `postgis`, `unaccent`, `pg_trgm`).
+      - 14 bảng nghiệp vụ cốt lõi (`places`, `admin_users`, `preset_itineraries`, `videos`, `video_discoveries`, `audit_logs`, `chat_sessions`, `chat_logs`, `golden_answers`, `eval_cases`, `system_configs`, `knowledge_base`, `custom_knowledge_base`, `semantic_chat_cache`) với 100% các bảng được bật Row Level Security (`ENABLE ROW LEVEL SECURITY`).
+      - Toàn bộ các cột cốt lõi và ràng buộc CHECK địa lý/chất lượng trên `places` (`places_lat_check` $[10.30, 10.55]$, `places_lng_check` $[104.80, 105.15]$, `places_rating_check` $[0.0, 5.0]$, `verification_status`, `is_verified`).
+      - 4 hàm RPC cốt lõi (`match_places_nearby`, `match_places`, `cleanup_expired_chat_sessions`, `cleanup_expired_chat_logs`).
+    * **Proof 3 (Python Runner Validation):** Chạy `python scripts/ci_migration_replay.py --validate-only` vượt qua 50/50 files với 0 lỗi cú pháp.
+    * **Proof 4 (CI Workflow Replay Invariant):** Job `migration-replay` trên GitHub Actions chạy trên môi trường sạch `ubuntu-latest` với service container `pgvector/pgvector:pg16`.
+    * **Proof 5 (Fault Injection Invariant):** Giả lập lỗi cú pháp `CREATE TABEL` và lỗi dollar-quotes `$$` chứng minh validator fail-closed lập tức (exit code != 0), khôi phục sạch 100%.
+  - Cập nhật `frontend/package.json` tích hợp `scripts/fresh-migration-replay.test.mjs` vào lệnh `"test"`. Toàn bộ 6 tests pass 100% trong 1.5s.
 
 ### P07-002 — Chạy SSRF negative test suite (Proof: private/redirect/scheme payload đều bị chặn)
 - **Status:** `done` tại `frontend/src/lib/serverFetchValidator.ts`, `frontend/src/app/api/v1/admin/scrape-images/route.ts`, `frontend/src/app/api/v1/admin/gmaps-scraper/route.ts`, `frontend/package.json`, và `frontend/scripts/ssrf-negative-suite.test.mjs`.
