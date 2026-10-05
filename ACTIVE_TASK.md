@@ -9,14 +9,14 @@
 
 #### 🎯 Task Đang Mở (Current Active Task)
 
-### P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận)
+### P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng)
 
 - **Status:** `ready` / `active` cho Phase P07 (Chứng minh GO/NO-GO).
 - **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
 - **AI route đề xuất:** `Sol · high` theo [Model Routing](docs/technical-spec/MODEL_ROUTING.md).
 - **AI thực dùng:** Gemini 3.8 Flash (High).
-- **Mục tiêu duy nhất:** Chạy so sánh và kiểm chứng đối chiếu số lượng bản ghi (record count) và checksum mã băm dữ liệu giữa Supabase PostgreSQL Database (`public.places`) với Canonical Manifest (`data/canonical/canonical_manifest.json`), xuất báo cáo chứng minh không còn độ lệch (divergence) chưa được chấp thuận.
-- **Next task sau P07-006:** P07-007 — Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
+- **Mục tiêu duy nhất:** Chạy bộ kiểm thử tiêu cực tổng thể lỗi nhà cung cấp AI chatbot (chatbot provider failure suite), kiểm chứng tính đúng đắn của hành vi hệ thống trong mọi kịch bản lỗi: timeout Groq primary -> failover sang Gemini/OpenRouter, lỗi stream response -> ngắt an toàn không trả partial sai hoặc treo socket, output sai schema JSON -> chặn đứng và fallback structured response sạch, trích dẫn thiếu nguồn fact -> citation coverage gate kích hoạt.
+- **Next task sau P07-007:** P07-008 — Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 
 ---
 
@@ -143,8 +143,8 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 117. 🟢 **`P07-003`** *(Hoàn thành)*: Chạy fresh migration replay (Proof: database trống dựng thành công).
 118. 🟢 **`P07-004`** *(Hoàn thành)*: Chạy RLS matrix suite (Proof: tất cả expected allow/deny pass).
 119. 🟢 **`P07-005`** *(Hoàn thành)*: Chạy canonical data validators (Proof: manifest hiện tại pass).
-120. 🟡 **`P07-006`** *(Đang mở)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
-121. ⚪ **`P07-007`**: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
+120. 🟢 **`P07-006`** *(Hoàn thành)*: So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận).
+121. 🟡 **`P07-007`** *(Đang mở)*: Chạy chatbot provider failure suite (Proof: timeout/stream-error/output-invalid đều có behavior đúng).
 122. ⚪ **`P07-008`**: Chạy privacy retention/deletion suite (Proof: expired và owner-request fixture pass).
 123. ⚪ **`P07-009`**: Chạy build và lint clean (Proof: zero error theo rule đã duyệt).
 124. ⚪ **`P07-010`**: Chạy mobile accessibility smoke test (Proof: keyboard, focus, reduced motion và contrast checklist pass).
@@ -154,6 +154,20 @@ Mỗi task thực hiện tuần tự, nghiệm thu proof xong mới chuyển tas
 ---
 
 ## 📜 Lịch Sử Task Đã Hoàn Thành (Consolidated Completed Records)
+
+### P07-006 — So sánh DB count/checksum với canonical manifest (Proof: report không còn divergence chưa chấp thuận)
+- **Status:** `done` tại [`scripts/generate_db_canonical_divergence_report.mjs`](scripts/generate_db_canonical_divergence_report.mjs), [`docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.json`](docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.json), [`docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.md`](docs/technical-spec/DB_CANONICAL_DIVERGENCE_REPORT.md), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/db-canonical-divergence.test.mjs`](frontend/scripts/db-canonical-divergence.test.mjs).
+- **Luồng:** Thống nhất (Phase P07: Production Release Gate & GO/NO-GO Proof).
+- **AI thực dùng:** Gemini 3.8 Flash (High).
+- **Evidence:**
+  - Xây dựng và thực thi bộ đối soát dữ liệu CSDL sản xuất (`public.places`, 137 bản ghi) với Canonical Manifest `v1.0.0` (`total_verified_count = 1`, overall_sha256 = `f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb`) và Pre-sync Snapshot Backup (`snapshot_manifest_*.json`, `snapshot_places_*.json`, SHA-256 `ed2504b4290a6d68f3fcb642ca29e749f0bfde9c386726b6c4613f1980e66ee1`):
+    * **Suite 1 (Canonical Manifest Specification & Checksum Invariant):** Kiểm chứng canonical manifest có đúng 1 verified POI (`chua-xa-ton`) và khớp 100% mã băm SHA-256.
+    * **Suite 2 (Database Snapshot & Pre-Sync Backup Cryptographic Integrity):** Xác nhận 137 bản ghi snapshot DB khớp mã băm snapshot file `ed2504b4...`, và backup manifest liên kết chính xác với Gate G2 và mã băm toàn cục của Canonical Manifest `v1.0.0`.
+    * **Suite 3 (Concordance Cross-Mapping & Zero Unapproved Divergence Invariant):** 100% của 137 bản ghi CSDL được ánh xạ đầy đủ vào Bảng Đối Soát Đồng Nhất (`POI_CONCORDANCE_TABLE.json`, `POI-CONCORDANCE-001`), không thiếu bất kỳ bản ghi nào (0 missing); toàn bộ 136 bản ghi chênh lệch là tập ứng viên Tầng 2 được quản trị minh bạch bởi Hàng Đợi Thẩm Định (`POI_CONFLICT_REVIEW_QUEUE.md`, CRQ-001 đến CRQ-102); xác nhận bất biến Zero Unapproved Divergence: `unapproved_divergence_count = 0`, `unapproved_drift_detected = false`, trạng thái đạt `FULLY_APPROVED_AND_GOVERNED`.
+    * **Suite 4 (Divergence Report Artifacts & Governance Approvals):** Ban hành báo cáo kỹ thuật chính thức `DB-CANONICAL-DIVERGENCE-001` (JSON và Markdown) phê chuẩn bởi Lead Auditor Chăm Rốch Thi.
+    * **Suite 5 (Generator Subprocess Execution):** Thực thi CLI subprocess `scripts/generate_db_canonical_divergence_report.mjs` thành công với exit code 0.
+    * **Suite 6 (Negative Fault Injections):** Giả lập bản ghi lạ không rõ nguồn (rogue POI), sai lệch mã băm backup và thay đổi nội dung snapshot chứng minh hệ thống fail-closed lập tức.
+  - Cập nhật `frontend/package.json` tích hợp `scripts/db-canonical-divergence.test.mjs` vào lệnh `"test"`. Bộ kiểm thử tự động đạt 6/6 tests pass 100% trong 98ms.
 
 ### P07-005 — Chạy canonical data validators (Proof: manifest hiện tại pass)
 - **Status:** `done` tại [`data/canonical/canonical_manifest.json`](data/canonical/canonical_manifest.json), [`scripts/validate_canonical_dataset.mjs`](scripts/validate_canonical_dataset.mjs), [`frontend/package.json`](frontend/package.json), và [`frontend/scripts/canonical-data-validators.test.mjs`](frontend/scripts/canonical-data-validators.test.mjs).

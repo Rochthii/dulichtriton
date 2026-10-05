@@ -1,0 +1,69 @@
+{
+  "report_name": "Báo Cáo Đối Soát Dữ Liệu Cơ Sở Dữ Liệu và Canonical Manifest",
+  "report_code": "DB-CANONICAL-DIVERGENCE-001",
+  "generated_at": "2026-10-05T14:00:00+07:00",
+  "lead_auditor": "Chăm Rốch Thi",
+  "authority": "Hội đồng Quản trị Dữ liệu Du Lịch Tri Tôn",
+  "gate_reference": "GATE_G2 / DECISION_RECORD_G2",
+  "standards_compliance": [
+    "RULE 01 (No Mock)",
+    "RULE 02 (15 Communes)",
+    "DECISION_RECORD_G2"
+  ],
+  "canonical_manifest_summary": {
+    "manifest_path": "data/canonical/canonical_manifest.json",
+    "version": "1.0.0",
+    "schema": "CANONICAL-POI-SCHEMA-V1",
+    "total_verified_count": 1,
+    "overall_sha256": "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb",
+    "places": [
+      {
+        "canonical_id": "chua-xa-ton",
+        "name": "Chùa Xà Tón (Wat Xvayton)",
+        "commune": "Thị trấn Tri Tôn",
+        "sha256": "5398587c7e5c2e4e300e8460af8253e5ea433af1026558bced647d5c4b186e7f",
+        "review_id": "PVR-CHUA-XA-TON-2026"
+      }
+    ]
+  },
+  "database_summary": {
+    "table_name": "public.places",
+    "snapshot_file": "docs/technical-spec/LIVE_DB_PLACES_SNAPSHOT.json",
+    "backup_manifest_file": "data/backups/snapshot_manifest_2026-09-29T07-23-14-982Z.json",
+    "backup_places_file": "data/backups/snapshot_places_2026-09-29T07-23-14-982Z.json",
+    "total_db_count": 137,
+    "backup_recorded_count": 137,
+    "backup_sha256": "ed2504b4290a6d68f3fcb642ca29e749f0bfde9c386726b6c4613f1980e66ee1",
+    "manifest_recorded_sha256": "ed2504b4290a6d68f3fcb642ca29e749f0bfde9c386726b6c4613f1980e66ee1",
+    "canonical_manifest_reference_sha256": "f65d568ab075eb7d4a0689e6d35a45420e6a27739064c4e755ff1a83ba2b3cfb"
+  },
+  "cryptographic_integrity": {
+    "canonical_manifest_matches_backup_reference": true,
+    "backup_places_file_matches_manifest_sha256": true,
+    "integrity_status": "VERIFIED_TAMPER_FREE"
+  },
+  "divergence_analysis": {
+    "total_db_places": 137,
+    "canonical_verified_places": 1,
+    "numerical_divergence": 136,
+    "governance_model": "2-Tier Architecture (Tier 1: Canonical Factual RAG / Tier 2: Candidate Pool & Review Queue)",
+    "total_concordance_mapped_places": 137,
+    "unapproved_divergence_count": 0,
+    "unapproved_places": [],
+    "status_distribution": {
+      "MATCH": 48,
+      "UUID_CONFLICT": 68,
+      "SLUG_ALIAS": 0,
+      "MISSING_IN_MASTER": 21,
+      "OTHER_APPROVED": 0
+    },
+    "unapproved_drift_detected": false,
+    "divergence_governance_status": "FULLY_APPROVED_AND_GOVERNED"
+  },
+  "governance_conclusions": [
+    "100% của 137 bản ghi trong CSDL sản xuất được lập chỉ mục đầy đủ trong Bảng Đối Soát Đồng Nhất (POI_CONCORDANCE_TABLE.json).",
+    "Số lượng bản ghi chênh lệch (136 bản ghi) là tập dữ liệu ứng viên khảo sát thô thuộc Tầng 2, được quản trị minh bạch bởi Hàng Đợi Thẩm Định (Review Queue CRQ-001 đến CRQ-102) theo Quyết định Gate G2.",
+    "Chỉ duy nhất 1 địa điểm được phê duyệt đầy đủ (Chùa Xà Tón, Wat Xvayton) được nạp vào Canonical Manifest v1.0.0 phục vụ Factual RAG.",
+    "Không tồn tại bất kỳ bản ghi mồ côi (orphan), bản ghi lạ hay sự trôi lệch dữ liệu không được phê duyệt nào (ZERO UNAPPROVED DIVERGENCE)."
+  ]
+}
