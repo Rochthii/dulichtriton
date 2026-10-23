@@ -1,5 +1,10 @@
 "use client";
 
+import { CatalogCard, CatalogFeedback, FilterChip } from '@/components/CatalogUI';
+import SavePlaceButton from '@/components/SavePlaceButton';
+import PlaceListingImage from '@/components/PlaceListingImage';
+import { presentPlaceImage, presentRating } from '@/lib/publicPlacePresentation';
+
 import { useEffect, useState, useMemo } from "react";
 import { 
   Landmark, MapPin, Calendar, Clock, Star, Sparkles, 
@@ -289,19 +294,18 @@ export default function CulturePage() {
 
   const spotlightFestival = sortedFestivals[0];
 
+  const [reloadKey, setReloadKey] = useState(0);
+  const [catalogError, setCatalogError] = useState('');
+
   useEffect(() => {
+    let active = true;
+    setCatalogError('');
+    setLoading(true);
     function processCultureData(json: any) {
+      if (!active) return;
       const data = Array.isArray(json) ? json : (json?.culture || []);
-      if (data && data.length > 0) {
+      if (Array.isArray(data)) {
         const formatted = data.map((item: any) => {
-          let img = "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop";
-          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-            img = item.image_url;
-          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-            const p0 = item.photos[0];
-            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-          }
           return {
             id: item.id,
             slug: item.slug || item.id,
@@ -309,8 +313,8 @@ export default function CulturePage() {
             category: item.category || "culture",
             tourism_category: item.tourism_category || "Văn Hóa & Di Tích",
             commune: item.commune || "Thị trấn Tri Tôn",
-            rating: item.rating ? Number(item.rating) : 4.9,
-            image_url: img,
+            rating: presentRating(item.rating),
+            image_url: presentPlaceImage(item),
             description: item.description || "",
             detailed_story: item.detailed_story || "",
             is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
@@ -328,13 +332,17 @@ export default function CulturePage() {
     }
 
     async function loadLiveCultureData() {
+      const fetchCatalog = async () => {
+        const response = await fetch('/api/v1/culture?limit=100');
+        if (!response.ok) throw new Error('Catalog unavailable');
+        const payload = await response.json();
+        if (!Array.isArray(payload?.culture)) throw new Error('Invalid catalog response');
+        return payload;
+      };
       try {
-        const json = await fetchWithCache(
-          "client-culture-catalog-v2",
-          async () => {
-            const res = await fetch("/api/v1/culture?limit=100");
-            return await res.json();
-          },
+        const json = reloadKey > 0 ? await fetchCatalog() : await fetchWithCache(
+          "client-culture-catalog-v3",
+          fetchCatalog,
           60 * 60 * 1000,
           (freshJson: any) => {
             processCultureData(freshJson);
@@ -342,6 +350,8 @@ export default function CulturePage() {
         );
         processCultureData(json);
       } catch (err) {
+        if (!active) return;
+        setCatalogError('Chưa cập nhật được danh mục. Đang hiển thị dữ liệu tham khảo có sẵn; hãy thử lại.');
         console.warn('Fallback local master pois for culture:', err);
         const fallbackItems = (localMasterPois as any[]).filter(
           (p: any) =>
@@ -352,12 +362,13 @@ export default function CulturePage() {
         );
         processCultureData({ culture: fallbackItems });
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     }
 
     loadLiveCultureData();
-  }, []);
+    return () => { active = false; };
+  }, [reloadKey]);
 
   const filteredCultures = useMemo(() => {
     if (selectedTab === "ALL") return cultures;
@@ -409,23 +420,23 @@ export default function CulturePage() {
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-[#F0A32F]/10 blur-3xl" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-8 sm:space-y-12 px-3 sm:px-6 md:px-8 py-5 sm:py-10 pb-24 sm:pb-16">
-        
+      <div className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-8 sm:space-y-12 px-3 sm:px-6 md:px-8 py-5 sm:py-10 pb-24 sm:pb-16">
+
         {/* ── 1. HEADER HERO BANNER (Folk-Modern Heritage Gateway) ───────────────── */}
         <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0E8C7F] via-[#0B6B60] to-[#084D45] p-6 sm:p-8 md:p-12 text-white shadow-xl border border-[#0B6B60]">
           <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#FFD37A]/10 blur-2xl pointer-events-none" />
           <div className="absolute top-0 right-1/4 w-40 h-40 rounded-full bg-white/5 blur-xl pointer-events-none" />
-          
+
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#FFD37A]/20 px-4 py-1.5 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-md font-display border border-[#FFD37A]/30">
               <Landmark className="h-4 w-4" />
               <span>Di Sản & Lễ Hội Bảy Núi — Tri Tôn, An Giang</span>
             </div>
-            
+
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
               Kho Tàng Di Sản & Đại Lễ Hội Thất Sơn
             </h1>
-            
+
             <p className="text-sm sm:text-base text-[#FFFDF7]/90 leading-relaxed font-body max-w-2xl">
               Vùng đất hội tụ trầm tích văn hóa ngàn năm với <strong>Lễ Hội Khinh Khí Cầu & Dù Lượn</strong> đỉnh cao, <strong>Đua Bò Bảy Núi</strong> di sản quốc gia, <strong>Kinh Lá Buông</strong> độc bản, <strong>37 ngôi chùa Nam Tông Khmer</strong> cổ kính và những làng nghề trăm tuổi dệt thổ cẩm, gốm đất nung.
             </p>
@@ -478,11 +489,11 @@ export default function CulturePage() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-[#F26B3A]"></span>
               </span>
               <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[#26221B]">
-                Tiêu Điểm Lễ Hội Đang / Sắp Diễn Ra (Tháng {currentMonth})
+                Tiêu Điểm Lễ Hội Tham Khảo
               </h2>
             </div>
             <span className="text-xs font-bold text-[#F26B3A] bg-[#F26B3A]/10 px-3.5 py-1 rounded-full border border-[#F26B3A]/20">
-              Tự Động Cập Nhật Theo Thời Gian Thực
+              Chưa xác nhận lịch tổ chức
             </span>
           </div>
 
@@ -499,7 +510,7 @@ export default function CulturePage() {
                     loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
+
                   <div className="absolute top-3 left-3">
                     <span className="px-3 py-1 rounded-full bg-[#F26B3A] text-white text-[11px] font-black uppercase tracking-wider shadow-md font-display flex items-center gap-1">
                       <Flame className="w-3 h-3 text-white" />
@@ -594,7 +605,7 @@ export default function CulturePage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {ALL_FESTIVALS.map((fest) => {
               const isHighlight = fest.monthsActive.includes(currentMonth);
               return (
@@ -614,7 +625,7 @@ export default function CulturePage() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#151B34]/90 via-[#151B34]/30 to-transparent" />
-                    
+
                     {/* Badges on Photo */}
                     <div className="absolute top-2 sm:top-3 left-2 sm:left-3 right-2 sm:right-3 flex items-start justify-between gap-1">
                       <span className={`px-2 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-full text-[9px] sm:text-[11px] font-black uppercase tracking-wider shadow-md backdrop-blur-md truncate ${fest.tagColor}`}>
@@ -648,12 +659,12 @@ export default function CulturePage() {
                         {fest.name}
                       </h3>
 
-                      <p className="text-[11px] sm:text-xs text-[#6B6355] leading-relaxed line-clamp-2 sm:line-clamp-3">
+                      <p className="text-sm text-[#6B6355] leading-relaxed line-clamp-2 sm:line-clamp-3">
                         {fest.desc}
                       </p>
 
                       {/* Location Badge */}
-                      <div className="p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl bg-[#FAF3E7] border border-[#EBE1D0] space-y-0.5">
+                      <div className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 sm:p-2.5 rounded-xl sm:rounded-2xl bg-[#FAF3E7] border border-[#EBE1D0] space-y-0.5">
                         <div className="text-[10px] sm:text-[11px] font-bold text-[#26221B] flex items-start gap-1">
                           <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F26B3A] shrink-0 mt-0.5" />
                           <span className="leading-snug line-clamp-1 sm:line-clamp-2">{fest.location}</span>
@@ -707,12 +718,12 @@ export default function CulturePage() {
                 Cẩm Nang 6 Quy Chuẩn Viếng 37 Chùa Nam Tông Khmer
               </h2>
             </div>
-            <span className="text-[11px] sm:text-xs font-bold text-[#6B6355]">
+            <span className="text-sm font-bold text-[#6B6355]">
               Tuân Thủ Để Trải Nghiệm Trọn Vẹn Sự Tôn Kính
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-6">
             {KHMER_PAGODA_RULES.map((rule) => (
               <div
                 key={rule.id}
@@ -751,7 +762,7 @@ export default function CulturePage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {HERITAGE_STORIES.map((h) => {
               const Icon = h.icon;
               return (
@@ -769,7 +780,7 @@ export default function CulturePage() {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#151B34]/85 via-transparent to-transparent" />
-                    
+
                     {/* Heritage Stamp */}
                     <div className="absolute top-2 sm:top-3 right-2 sm:right-3 px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-md sm:rounded-full bg-[#FFD37A] text-[#26221B] font-black text-[8px] sm:text-[9px] uppercase tracking-wider shadow-sm font-display truncate">
                       {h.stamp}
@@ -812,6 +823,10 @@ export default function CulturePage() {
           </div>
         </section>
 
+        {catalogError && <CatalogFeedback kind="error" message={catalogError} actionLabel="Thử tải lại" onAction={() => setReloadKey(value => value + 1)} />}
+
+        <p className="rounded-[var(--r-m)] border border-[var(--ink)]/15 bg-[var(--surface)] p-4 text-sm text-[var(--ink-soft)]">Nội dung lễ hội là thông tin tham khảo. Hãy đối chiếu lịch tổ chức, giờ và điều kiện tiếp cận với ban tổ chức trước khi đi.</p>
+
         {/* ── 6. BỘ LỌC TABS & DANH SÁCH 37 CHÙA THÁP, DI TÍCH, LỄ HỘI ────────── */}
         <section className="space-y-4 sm:space-y-6 pt-4">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 border-b border-[#26221B]/10 pb-4">
@@ -821,7 +836,7 @@ export default function CulturePage() {
                 <span>Không Gian Văn Hóa Thực Địa ({filteredCultures.length} Điểm)</span>
               </h2>
               <p className="text-xs sm:text-sm text-[#6B6355] mt-1">
-                Khám phá 37 ngôi chùa tháp Nam Tông, di tích lịch sử kháng chiến, sân đua bò và làng nghề bản địa
+                Tra cứu danh mục chùa, di tích, lễ hội và làng nghề; xem trạng thái xác minh tại chi tiết.
               </p>
             </div>
 
@@ -829,51 +844,41 @@ export default function CulturePage() {
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none font-display">
               {[
                 { id: "ALL", label: "Tất Cả" },
-                { id: "PAGODA", label: "37 Chùa Khmer" },
+                { id: "PAGODA", label: "Chùa Khmer" },
                 { id: "FESTIVAL", label: "Lễ Hội & Sân Đua Bò" },
                 { id: "HISTORY", label: "Di Tích Lịch Sử" },
                 { id: "CRAFT", label: "Làng Nghề" }
               ].map((tab) => (
-                <button
+                <FilterChip active={selectedTab === tab.id}
                   key={tab.id}
                   onClick={() => setSelectedTab(tab.id)}
-                  className={`px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
-                    selectedTab === tab.id
-                      ? "bg-[#0E8C7F] text-white shadow-xs"
-                      : "bg-[#FFFDF7] text-[#6B6355] hover:bg-[#FAF3E7] hover:text-[#26221B] border border-[#EBE1D0]"
-                  }`}
                 >
                   {tab.label}
-                </button>
+                </FilterChip>
               ))}
             </div>
           </div>
 
           {loading ? (
-            <div className="py-20 text-center text-[#6B6355] font-bold text-sm">
-              Đang tải dữ liệu không gian văn hóa thực địa...
-            </div>
+            <CatalogFeedback kind="loading" message="Đang tải danh mục văn hóa..." />
           ) : filteredCultures.length === 0 ? (
-            <div className="py-16 text-center text-[#6B6355] bg-[#FFFDF7] rounded-[26px] border border-dashed border-[#EBE1D0] p-8">
-              <p className="font-bold text-sm">Chưa tìm thấy địa điểm phù hợp trong danh mục này.</p>
-            </div>
+            <CatalogFeedback message="Chưa tìm thấy địa điểm phù hợp trong danh mục này." actionLabel="Xóa tất cả bộ lọc" onAction={() => setSelectedTab('ALL')} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {filteredCultures.map((culture) => (
-                <div
+                <CatalogCard
                   key={culture.id}
-                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border border-[#EBE1D0] shadow-sm hover:shadow-xl hover:border-amber-400 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+
                 >
                   <div>
                     {/* 4:3 Image Cover */}
                     <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={getOptimizedImageUrl(culture.image_url, { width: 800, dpr: 2, quality: 'best' })}
+                      <PlaceListingImage
+                        src={culture.image_url ? getOptimizedImageUrl(culture.image_url, { width: 800, dpr: 2, quality: 'best' }) : undefined}
                         alt={culture.name}
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         loading="lazy"
-                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
@@ -884,11 +889,11 @@ export default function CulturePage() {
                           <span>{culture.tourism_category}</span>
                         </span>
                       </div>
-                      
+
                       {/* Rating Chip */}
                       <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-2 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
                         <Star className="h-3 w-3 fill-amber-400 text-amber-500" />
-                        <span>{culture.rating || 4.9}</span>
+                        <span>{culture.rating ?? 'Chưa có đánh giá'}</span>
                       </span>
 
                       {/* Bottom Text on Photo */}
@@ -896,7 +901,7 @@ export default function CulturePage() {
                         <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
                           {culture.commune}
                         </span>
-                        <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                        <h3 className="font-display font-extrabold text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
                           {culture.name}
                         </h3>
                       </div>
@@ -904,7 +909,7 @@ export default function CulturePage() {
 
                     <div className="p-3 sm:p-4 space-y-1.5 sm:space-y-2 text-xs text-[#6B6355]">
                       {culture.description && (
-                        <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                        <p className="text-sm text-[#6B6355] line-clamp-2 leading-relaxed font-body">
                           {culture.description}
                         </p>
                       )}
@@ -912,31 +917,33 @@ export default function CulturePage() {
                   </div>
 
                   {/* Dual Action Bottom */}
-                  <div className="p-3 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-2">
+                  <div className="p-3 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex flex-wrap items-center justify-between gap-2">
+                    <SavePlaceButton place={culture} compact feedbackPlacement="above" />
+
                     <Link
                       href={`/places/${culture.slug || culture.id}`}
-                      className="text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
+                      className="min-h-11 min-w-11 inline-flex items-center justify-center text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
                     >
                       <span>Xem chi tiết</span>
                       <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                     </Link>
-                    <a
+                    <a aria-label={`Chỉ đường đến ${culture.name}`}
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(culture.name + " " + culture.commune + " Tri Tôn An Giang")}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
+                      className="min-h-11 min-w-11 inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
                       title="Chỉ đường Google Maps"
                     >
                       <Navigation className="w-3 h-3 text-emerald-600 shrink-0" />
                       <span className="hidden sm:inline">Chỉ đường</span>
                     </a>
                   </div>
-                </div>
+                </CatalogCard>
               ))}
             </div>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

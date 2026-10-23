@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react';
 import { useSavedPlaces } from '@/hooks/useSavedPlaces';
 import { isPlaceSaved, type SavedPlaceIdentity } from '@/lib/savedPlaces';
 
-export default function SavePlaceButton({ place, compact = false }: { place: SavedPlaceIdentity & { name: string }; compact?: boolean }) {
+export default function SavePlaceButton({ place, compact = false, feedbackPlacement = 'below' }: { place: SavedPlaceIdentity & { name: string }; compact?: boolean; feedbackPlacement?: 'above' | 'below' }) {
   const { saved, ready, error, refresh, toggle } = useSavedPlaces();
   const [message, setMessage] = useState('');
   const [showError, setShowError] = useState(false);
@@ -25,7 +25,7 @@ export default function SavePlaceButton({ place, compact = false }: { place: Sav
       {!compact && <span>{selected ? 'Đã lưu' : 'Lưu điểm'}</span>}
     </button>
     {message && !error && <span role="status" className="sr-only">{message}</span>}
-    {showError && error && <div className="absolute right-0 top-full z-30 mt-2 w-60 max-w-[70vw] rounded-lg bg-[var(--surface)] border border-[var(--terracotta)] p-3 text-xs text-[var(--ink)] shadow-[var(--shadow-1)]">
+    {showError && error && <div className={`absolute ${feedbackPlacement === 'above' ? 'left-0 bottom-full mb-2' : 'right-0 top-full mt-2'} z-30 w-52 max-w-[70vw] rounded-lg bg-[var(--surface)] border border-[var(--terracotta)] p-3 text-xs text-[var(--ink)] shadow-[var(--shadow-1)]`}>
       <p role="alert">{error}</p>
       <button type="button" className="min-h-11 underline text-[var(--jade-deep)]" onClick={refresh}>Thử đọc lại</button>
     </div>}

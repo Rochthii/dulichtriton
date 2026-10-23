@@ -4,6 +4,7 @@ import { getPlaceById } from '@/lib/places';
 import { notFound } from 'next/navigation';
 import localMasterPois from '@/data/triton_pois_full.json';
 import { SITE_URL } from '@/lib/siteConfig';
+import { presentPlaceImage, presentRating } from '@/lib/publicPlacePresentation';
 
 import type { Metadata } from 'next';
 
@@ -26,8 +27,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const title = `${place.name} — Cẩm Nang & Bản Đồ Du Lịch Tri Tôn`;
   const description = place.description 
     ? `${place.description.slice(0, 155)}...` 
-    : `Khám phá ${place.name} tại ${place.commune || 'Tri Tôn'}, An Giang với hình ảnh thực tế và hướng dẫn đường đi chi tiết.`;
-  const imageUrl = place.image_url || 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif';
+    : `Tra cứu thông tin tham khảo và hướng dẫn đường đi đến ${place.name} tại ${place.commune || 'Tri Tôn'}, An Giang.`;
+  const imageUrl = presentPlaceImage(place);
 
   const rawKeywords = [
     place.name,
@@ -54,22 +55,22 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       description,
       url: `${SITE_URL}/places/${place.slug || place.id}`,
       siteName: 'Du Lịch Tri Tôn AI',
-      images: [
+      images: imageUrl ? [
         {
           url: imageUrl,
           width: 1200,
           height: 630,
           alt: place.name,
         },
-      ],
+      ] : [],
       locale: 'vi_VN',
       type: 'article',
     },
     twitter: {
-      card: 'summary_large_image',
+      card: imageUrl ? 'summary_large_image' : 'summary',
       title,
       description,
-      images: [imageUrl],
+      images: imageUrl ? [imageUrl] : [],
     },
   };
 }
@@ -118,6 +119,9 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
     festival: 'Event',
   };
   const addType = categoryMap[place.category || ''] || 'TouristAttraction';
+  const imageUrl = presentPlaceImage(place);
+  const rating = presentRating(place.rating);
+  const reviewCount = place.review_count;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -128,8 +132,8 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
         name: place.name,
         description: place.description || '',
         url: `${SITE_URL}/places/${place.slug || place.id}`,
-        image: place.image_url
-          ? { '@type': 'ImageObject', url: place.image_url, name: place.name }
+        image: imageUrl
+          ? { '@type': 'ImageObject', url: imageUrl, name: place.name }
           : undefined,
         address: {
           '@type': 'PostalAddress',
@@ -145,13 +149,13 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
               longitude: (place as any).longitude,
             }
           : undefined,
-        aggregateRating: place.rating
+        aggregateRating: rating !== undefined && rating >= 1 && typeof reviewCount === 'number' && Number.isInteger(reviewCount) && reviewCount > 0
           ? {
               '@type': 'AggregateRating',
-              ratingValue: place.rating,
+              ratingValue: rating,
               bestRating: 5,
               worstRating: 1,
-              ratingCount: 50,
+              ratingCount: reviewCount,
             }
           : undefined,
         isLocatedInPlace: {
@@ -163,11 +167,6 @@ export default async function PlaceDetailPage({ params }: { params: Promise<{ id
             containedInPlace: { '@type': 'Country', name: 'Việt Nam' },
           },
         },
-        touristType: ['Du khách trong nước', 'Khách gia đình', 'Phượt thủ'],
-        amenityFeature: [
-          { '@type': 'LocationFeatureSpecification', name: 'Bãi đỗ xe', value: true },
-          { '@type': 'LocationFeatureSpecification', name: 'Chụp ảnh', value: true },
-        ],
         speakable: {
           '@type': 'SpeakableSpecification',
           cssSelector: ['h1', '.place-description', '.place-story'],

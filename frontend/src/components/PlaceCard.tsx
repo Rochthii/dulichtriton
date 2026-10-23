@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CatalogCard } from '@/components/CatalogUI';
 import SavePlaceButton from '@/components/SavePlaceButton';
 import Link from 'next/link';
 import { MapPin, Star, Clock, Navigation, Play, ChevronRight, Award, Flame } from 'lucide-react';
@@ -116,10 +117,10 @@ export default function PlaceCard({ place }: PlaceCardProps) {
   const detailUrl = `/places/${place.slug || place.id}`;
 
   return (
-    <div className="group relative bg-[var(--surface)] rounded-[var(--r-l)] overflow-hidden border border-[#26221B]/10 shadow-[var(--shadow-1)] hover:shadow-[var(--shadow-2)] hover:border-[#0E8C7F]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between font-body">
+    <CatalogCard>
       <div>
         {/* Image Header with Scrim */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[4/3]">
         <Link href={detailUrl} prefetch={true} className="block relative h-full w-full overflow-hidden bg-slate-900 cursor-pointer">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -204,6 +205,6 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           </a>
         </div>
       </div>
-    </div>
+    </CatalogCard>
   );
 }

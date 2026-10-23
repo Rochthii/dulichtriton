@@ -2,6 +2,10 @@
 
 > Scope: checkout hiện tại; riêng mục “Supabase live preflight” dưới đây là quan sát read-only từ project được xác định ngày 2026-09-24. Mọi dòng `OBSERVED` cần tái kiểm khi code/runtime đổi.
 
+## Quan sát bổ sung 2026-10-23 — lượt UI hợp nhất
+
+Catalog card/filter/feedback và inline markdown đã hội tụ; retry/empty, metadata ảnh/review/amenity, culture missing rating và nhãn lịch tham khảo có sửa local. 46 tests (11 mới), TypeScript/build 181/181 pass, lint 0 errors/44 warnings. **Readiness vẫn chưa nghiệm thu; canonical 1 verified.** G2/source approval và browser acceptance được gom trong [một hồ sơ evidence](UI_UX_CONSOLIDATED_CLOSEOUT_2026_10_23.md); không có browser/staging/live-source proof mới, không thay data/schema/quyền/AI routing hoặc quyết định owner.
+
 ## Quan sát bổ sung 2026-10-23 — data trust UI containment
 
 Phần UI `UX-FOLLOWUP-DATA-TRUST` implemented: loại record food có subtype conflict khỏi listing/nearby; không suy giờ/giá/rating/review count/amenities/menu; fallback ảnh là placeholder trung tính. Public SOS/home/detail/footer/PDF không còn công bố local contacts đang mâu thuẫn, dùng chung các tổng đài quốc gia vốn có và trạng thái đang đối chiếu. **Canonical vẫn 1 verified; source/canonical/schema/AI routing không đổi.** 91 combined tests, lint 37 source files 0 errors/132 warnings, build+TS 181/181 pass. Không có browser/staging/live-call proof; G2/data owner, AI/offline SOS và nhiều narrative/source claims còn mở. [Evidence/giới hạn](PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md); không nâng readiness hoặc chọn một bộ số địa phương làm truth mới.

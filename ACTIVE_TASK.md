@@ -1,5 +1,14 @@
 # ACTIVE TASK — UNIFIED EXECUTION STREAM (LUỒNG THỐNG NHẤT)
 
+### Completion — UX-CONSOLIDATED-CLOSEOUT (2026-10-23)
+
+- **Luồng A:** theo yêu cầu user gộp một lượt: hội tụ catalog card/filter/feedback, markdown và metadata hiển thị; gom evidence G2/acceptance còn thiếu, kiểm tra phù hợp rồi commit chung.
+- **Acceptance:** component dùng chung cho các catalog; dữ liệu thiếu không thành ảnh/review giả trong metadata; markdown giữ nội dung và link an toàn; targeted checks/build pass, giới hạn browser/source ghi rõ. Không tự duyệt G2 hoặc sửa canonical/schema/AI routing.
+- **AI:** đề xuất Sol · medium (UI), xhigh khi ranh giới tin cậy; thực dùng Codex GPT-6, effort không công bố. Antigravity read-only `agy-af0d8c26` / Linear CRT-31, flash mặc định, đối chiếu checkout trước dùng kết quả.
+- **Kết quả:** phần code/UI done/`IMPLEMENTED` local; toàn đợt readiness còn pending G2/source approval và browser acceptance. Dùng chung catalog card/filter/feedback và inline markdown; retry/empty thật, bỏ fake metadata/rating/ảnh culture, bỏ filter chưa thực thi và nhãn lễ hội thời gian thực. Không mở thêm task code nhỏ.
+- **Kiểm chứng:** 46/46 tests (11 mới), tsc và Turbopack + TS 181/181 pass; lint 11 source files 0 errors/44 warnings; diff-check pass, không data/schema/AI routing diff. Không có browser/staging proof mới do URL policy đã chặn. [Evidence và gói nghiệm thu còn thiếu](docs/technical-spec/UI_UX_CONSOLIDATED_CLOSEOUT_2026_10_23.md).
+- **Review/commit:** worker đọc đúng checkout, Codex đối chiếu source; model resolved Gemini 3.8 Flash (High), CRT-31 Done. Commit chung theo yêu cầu user, không push/deploy. Next chỉ tiếp nhận G2 approval/source và browser acceptance để chốt readiness; không tự nâng canonical 1 hoặc quyết định owner.
+
 ### Completion — UX-FOLLOWUP-COMPONENTS, lưu điểm (2026-10-23)
 
 - **Luồng A, scope:** hội tụ lưu/tìm lại POI trên card/detail/list và entry điều hướng; không gộp hoặc di chuyển storage lịch trình. Giữ nguyên data/privacy/AI boundaries.

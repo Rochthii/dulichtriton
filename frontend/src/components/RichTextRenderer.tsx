@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { renderInlineMarkdown as renderInline } from '@/components/InlineMarkdown';
 import { formatDetailedStory } from '@/lib/storyFormatter';
 
 interface RichTextRendererProps {
@@ -11,58 +12,6 @@ interface RichTextRendererProps {
 /**
  * Format inline text (bold **text**, italic *text*, links [title](url))
  */
-function renderInline(text: string): React.ReactNode[] {
-  // Regex to match markdown links [text](url), bold **text**, and italic *text*
-  const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
-  const parts = text.split(tokenRegex);
-
-  return parts.map((part, index) => {
-    if (!part) return null;
-
-    // Link [Title](url)
-    if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
-      const match = part.match(/\[([^\]]+)\]\(([^)]+)\)/);
-      if (match) {
-        const [, linkText, url] = match;
-        return (
-          <a
-            key={index}
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#0E8C7F] hover:text-[#0B6B60] font-semibold underline underline-offset-2 transition-colors"
-          >
-            {linkText}
-          </a>
-        );
-      }
-    }
-
-    // Bold **text**
-    if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
-      const boldContent = part.slice(2, -2);
-      return (
-        <strong key={index} className="font-bold text-[#26221B]">
-          {boldContent}
-        </strong>
-      );
-    }
-
-    // Italic *text*
-    if (part.startsWith('*') && part.endsWith('*') && part.length >= 2) {
-      const italicContent = part.slice(1, -1);
-      return (
-        <em key={index} className="italic text-[#6B6355]">
-          {italicContent}
-        </em>
-      );
-    }
-
-    // Normal text
-    return <span key={index}>{part}</span>;
-  });
-}
-
 /**
  * Clean up redundant geographical phrasing
  */
@@ -166,7 +115,7 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
   }
 
   return (
-    <div className={`space-y-4 text-sm sm:text-base leading-relaxed text-[#26221B]/90 font-body ${className}`}>
+    <div className={`min-w-0 break-words space-y-4 text-sm sm:text-base leading-relaxed text-[#26221B]/90 font-body ${className}`}>
       {blocks.map((block, bIdx) => {
         if (block.type === 'heading') {
           return (
@@ -210,11 +159,11 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
               key={bIdx}
               className="p-3.5 sm:p-4 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/8 space-y-1 my-2 shadow-2xs"
             >
-              <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#D9822B] font-display uppercase tracking-wide">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#D9822B] font-display uppercase tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D9822B]" />
                 <span>{block.data.label}</span>
               </div>
-              <p className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
+              <p className="text-sm text-[#26221B] leading-relaxed">
                 {renderInline(block.data.text)}
               </p>
             </div>
@@ -223,16 +172,16 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
 
         if (block.type === 'list') {
           return (
-            <div key={bIdx} className="space-y-1.5 my-2 pl-1">
+            <ul key={bIdx} className="space-y-1.5 my-2 pl-1">
               {(block.data as string[]).map((item, lIdx) => (
-                <div key={lIdx} className="flex items-start gap-2.5">
+                <li key={lIdx} className="flex items-start gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#0E8C7F] mt-2 shrink-0" />
-                  <p className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
+                  <p className="text-sm text-[#26221B] leading-relaxed">
                     {renderInline(item)}
                   </p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           );
         }
 
@@ -242,7 +191,7 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
           const [header, ...bodyRows] = rows;
 
           return (
-            <div key={bIdx} className="overflow-x-auto rounded-[20px] border border-[#EBE1D0] bg-[#FFFDF7] my-3 shadow-xs">
+            <div key={bIdx} tabIndex={0} role="region" aria-label="Bảng thông tin, cuộn ngang để xem thêm" className="focus-visible:outline-2 focus-visible:outline-[var(--jade)] overflow-x-auto rounded-[var(--r-m)] border border-[#EBE1D0] bg-[#FFFDF7] my-3 shadow-xs">
               <table className="w-full text-left border-collapse">
                 {header && header.length > 0 && (
                   <thead>
@@ -250,7 +199,7 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
                       {header.map((col, cIdx) => (
                         <th
                           key={cIdx}
-                          className="px-4 py-3 text-xs sm:text-sm font-bold text-[#26221B] font-display uppercase tracking-wider"
+                          className="px-4 py-3 text-sm font-bold text-[#26221B] font-display uppercase tracking-wider"
                         >
                           {renderInline(col)}
                         </th>
@@ -267,7 +216,7 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
                       {row.map((cell, cellIdx) => (
                         <td
                           key={cellIdx}
-                          className={`px-4 py-2.5 text-xs sm:text-sm text-[#26221B] ${
+                          className={`px-4 py-2.5 text-sm text-[#26221B] ${
                             cellIdx === 0 ? 'font-bold text-[#0E8C7F]' : ''
                           }`}
                         >
@@ -283,7 +232,7 @@ export function RichTextRenderer({ content, className = '' }: RichTextRendererPr
         }
 
         return (
-          <p key={bIdx} className="text-xs sm:text-sm text-[#26221B] leading-relaxed">
+          <p key={bIdx} className="text-sm text-[#26221B] leading-relaxed">
             {renderInline(block.data)}
           </p>
         );

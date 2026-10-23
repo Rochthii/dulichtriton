@@ -2,6 +2,12 @@
 
 Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của hệ thống **Du Lịch Tri Tôn** sẽ được ghi vết chi tiết tại tài liệu này.
 
+## 2026-10-23 — Consolidated catalog/markdown/metadata UX (local)
+
+- Theo yêu cầu gộp một lượt, dùng `CatalogUI` chung cho card/filter/loading/empty/error, vùng chạm/focus; lưu điểm trên food/stay/culture, list mobile một cột, retry HTTP/shape errors và reset. Bỏ hai chip chưa lọc thật, nested main và icon emoji trong food filter.
+- Dùng chung inline markdown an toàn/link nội bộ, giữ phút timeline và nhãn link đầy đủ; detail list/table có semantics/focus. Culture thiếu dữ liệu không thành ảnh stock/rating 4.9; spotlight không tự gọi lịch theo tháng là real-time. Metadata detail bỏ ảnh thay địa điểm, review count/amenity/touristType suy đoán; footer in bỏ claim 149 verified.
+- 46 tests pass (11 mới), TypeScript/build 181/181 pass, lint 0 errors/44 warnings. Không thay data/schema/AI routing/dependencies; không browser/staging proof mới hoặc G2 approval. [Hồ sơ nghiệm thu hợp nhất](docs/technical-spec/UI_UX_CONSOLIDATED_CLOSEOUT_2026_10_23.md). Antigravity đúng checkout, Codex kiểm lại, CRT-31 Done; commit chung, chưa push/deploy.
+
 ## 2026-10-23 — Shared saved-place experience (local)
 
 - `UX-FOLLOWUP-COMPONENTS` / Luồng A, phạm vi lưu POI: shared helper/hook/SavePlaceButton cho card/detail; nhận aliases hiện có, lưu mới ưu tiên slug, không ghi đè storage hỏng; same-tab/storage-event sync và feedback lỗi/đọc lại. Không gộp hoặc migration storage lịch trình.

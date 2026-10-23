@@ -1,5 +1,8 @@
 "use client";
 
+import { CatalogCard, CatalogFeedback, FilterChip } from '@/components/CatalogUI';
+import SavePlaceButton from '@/components/SavePlaceButton';
+
 import PlaceListingImage from '@/components/PlaceListingImage';
 import { presentRating, presentPlaceImage } from '@/lib/publicPlacePresentation';
 
@@ -55,9 +58,16 @@ export default function StayPage() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<FilterGroup>("all");
 
+  const [reloadKey, setReloadKey] = useState(0);
+  const [catalogError, setCatalogError] = useState('');
+
   useEffect(() => {
+    let active = true;
+    setCatalogError('');
+    setLoading(true);
     function processStayData(data: any[]) {
-      if (data && data.length > 0) {
+      if (!active) return;
+      if (Array.isArray(data)) {
         const formatted: StayItem[] = data.map((item: any) => {
           const img = presentPlaceImage(item);
 
@@ -109,14 +119,17 @@ export default function StayPage() {
     }
 
     async function loadLiveStayData() {
+      const fetchCatalog = async () => {
+        const response = await fetch('/api/v1/stays?limit=100');
+        if (!response.ok) throw new Error('Catalog unavailable');
+        const payload = await response.json();
+        if (!Array.isArray(payload?.stays)) throw new Error('Invalid catalog response');
+        return payload.stays;
+      };
       try {
-        const json = await fetchWithCache(
-          "client-stays-catalog-v2",
-          async () => {
-            const res = await fetch("/api/v1/stays?limit=100");
-            const resJson = await res.json();
-            return resJson?.stays || localStaysJson;
-          },
+        const json = reloadKey > 0 ? await fetchCatalog() : await fetchWithCache(
+          "client-stay-catalog-v3",
+          fetchCatalog,
           30 * 60 * 1000,
           (freshData) => {
             processStayData(Array.isArray(freshData) ? freshData : (freshData?.stays || localStaysJson));
@@ -125,14 +138,17 @@ export default function StayPage() {
 
         processStayData(Array.isArray(json) ? json : (json?.stays || localStaysJson));
       } catch {
+        if (!active) return;
+        setCatalogError('Chưa cập nhật được danh mục. Đang hiển thị dữ liệu tham khảo có sẵn; hãy thử lại.');
         processStayData(localStaysJson as any[]);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     }
 
     loadLiveStayData();
-  }, []);
+    return () => { active = false; };
+  }, [reloadKey]);
 
   // Filtered Stays based on active tab
   const filteredStays = useMemo(() => {
@@ -162,8 +178,8 @@ export default function StayPage() {
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-amber-300/15 blur-3xl" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-6 sm:space-y-8 px-3.5 py-6 sm:px-6 sm:py-10">
-        
+      <div className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-6 sm:space-y-8 px-3.5 py-6 sm:px-6 sm:py-10">
+
         {/* Header Hero Section */}
         <section className="relative overflow-hidden rounded-2xl sm:rounded-[28px] bg-gradient-to-br from-[#0E8C7F] via-[#0B6B60] to-[#085A52] p-5 sm:p-8 md:p-10 text-white shadow-md border border-[#0B6B60]">
           <div className="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
@@ -175,60 +191,42 @@ export default function StayPage() {
               Homestay, Khách Sạn & Cắm Trại Tri Tôn
             </h1>
             <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-body">
-              Tra cứu thông tin tham khảo: Hotline đặt phòng 1 chạm, bảng giá thực tế, có dịch vụ cho thuê xe máy và view ngắm cảnh núi Cô Tô / Hồ Tà Pạ tuyệt đẹp.
+              Tra cứu thông tin tham khảo về cơ sở lưu trú. Hãy xác nhận giá, phòng trống và dịch vụ trực tiếp với cơ sở trước khi đặt phòng.
             </p>
           </div>
         </section>
 
+        {catalogError && <CatalogFeedback kind="error" message={catalogError} actionLabel="Thử tải lại" onAction={() => setReloadKey(value => value + 1)} />}
+
         {/* 🌟 BỘ LỌC PHÂN NHÓM CHUYÊN NGHIỆP 🌟 */}
         <section className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <button
+          <FilterChip active={activeFilter === "all"}
             onClick={() => setActiveFilter("all")}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black whitespace-nowrap transition-all flex items-center gap-1.5 font-display shrink-0 ${
-              activeFilter === "all"
-                ? "bg-[#0E8C7F] text-white shadow-sm scale-102"
-                : "bg-[#FFFDF7] text-[#6B6355] hover:bg-white border border-[#EBE1D0]"
-            }`}
           >
             <Compass className="w-4 h-4" />
             <span>Tất Cả ({stays.length})</span>
-          </button>
+          </FilterChip>
 
-          <button
+          <FilterChip active={activeFilter === "homestay_camping"}
             onClick={() => setActiveFilter("homestay_camping")}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black whitespace-nowrap transition-all flex items-center gap-1.5 font-display shrink-0 ${
-              activeFilter === "homestay_camping"
-                ? "bg-[#0E8C7F] text-white shadow-sm scale-102"
-                : "bg-[#FFFDF7] text-[#6B6355] hover:bg-white border border-[#EBE1D0]"
-            }`}
           >
             <Tent className="w-4 h-4 text-emerald-500" />
             <span>Homestay & Cắm Trại View Núi ({stays.filter(s => s.stay_type === "homestay" || s.stay_type === "camping").length})</span>
-          </button>
+          </FilterChip>
 
-          <button
+          <FilterChip active={activeFilter === "hotel_resort"}
             onClick={() => setActiveFilter("hotel_resort")}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black whitespace-nowrap transition-all flex items-center gap-1.5 font-display shrink-0 ${
-              activeFilter === "hotel_resort"
-                ? "bg-[#0E8C7F] text-white shadow-sm scale-102"
-                : "bg-[#FFFDF7] text-[#6B6355] hover:bg-white border border-[#EBE1D0]"
-            }`}
           >
             <Building2 className="w-4 h-4 text-blue-500" />
             <span>Khách Sạn & Resort Trung Tâm ({stays.filter(s => s.stay_type === "hotel").length})</span>
-          </button>
+          </FilterChip>
 
-          <button
+          <FilterChip active={activeFilter === "motel"}
             onClick={() => setActiveFilter("motel")}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black whitespace-nowrap transition-all flex items-center gap-1.5 font-display shrink-0 ${
-              activeFilter === "motel"
-                ? "bg-[#0E8C7F] text-white shadow-sm scale-102"
-                : "bg-[#FFFDF7] text-[#6B6355] hover:bg-white border border-[#EBE1D0]"
-            }`}
           >
             <Hotel className="w-4 h-4 text-amber-500" />
             <span>Nhà Nghỉ Tiện Lợi ({stays.filter(s => s.stay_type === "motel").length})</span>
-          </button>
+          </FilterChip>
         </section>
 
         {/* 🌟 SPOTLIGHT: TOP 3 LỰA CHỌN ĐẶC SẮC NHẤT 🌟 */}
@@ -255,7 +253,7 @@ export default function StayPage() {
                   <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-900">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <PlaceListingImage
-                      src={getOptimizedImageUrl(hotStay.image_url, { width: 900, dpr: 2, quality: 'best' })}
+                      src={hotStay.image_url ? getOptimizedImageUrl(hotStay.image_url, { width: 900, dpr: 2, quality: 'best' }) : undefined}
                       alt={hotStay.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -311,7 +309,7 @@ export default function StayPage() {
                     </p>
                   </div>
 
-                  <div className="p-3.5 sm:p-4 pt-0 border-t border-[#26221B]/5 flex items-center justify-between gap-2">
+                  <div className="p-3.5 sm:p-4 pt-0 border-t border-[#26221B]/5 flex flex-wrap items-center justify-between gap-2">
                     {hotStay.phone ? (
                       <a
                         href={`tel:${hotStay.phone}`}
@@ -329,7 +327,7 @@ export default function StayPage() {
                       </Link>
                     )}
 
-                    <a
+                    <a aria-label={`Chỉ đường đến ${hotStay.name}`}
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotStay.name + " " + hotStay.commune + " Tri Tôn An Giang")}`}
                       target="_blank"
                       rel="noreferrer"
@@ -358,21 +356,21 @@ export default function StayPage() {
           </div>
 
           {loading ? (
-            <div className="py-16 text-center text-[#6B6355] font-bold text-sm">
-              Đang tải danh sách lưu trú...
-            </div>
+            <CatalogFeedback kind="loading" message="Đang tải danh sách lưu trú..." />
+          ) : filteredStays.length === 0 ? (
+            <CatalogFeedback message="Chưa tìm thấy cơ sở lưu trú phù hợp trong danh mục này." actionLabel="Xóa tất cả bộ lọc" onAction={() => setActiveFilter('all')} />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
               {filteredStays.map((stay) => (
-                <div
+                <CatalogCard
                   key={stay.id}
-                  className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#EBE1D0] shadow-xs hover:shadow-md hover:border-amber-400 transition-all duration-300 flex flex-col justify-between"
+
                 >
                   <div>
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <PlaceListingImage
-                        src={getOptimizedImageUrl(stay.image_url, { width: 800, dpr: 2, quality: 'best' })}
+                        src={stay.image_url ? getOptimizedImageUrl(stay.image_url, { width: 800, dpr: 2, quality: 'best' }) : undefined}
                         alt={stay.name}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
@@ -429,11 +427,13 @@ export default function StayPage() {
                     </div>
                   </div>
 
-                  <div className="p-3.5 pt-0 border-t border-[#EBE1D0]/60 flex items-center justify-between gap-2">
+                  <div className="p-3.5 pt-0 border-t border-[#EBE1D0]/60 flex flex-wrap items-center justify-between gap-2">
+
+                    <SavePlaceButton place={stay} compact feedbackPlacement="above" />
                     {stay.phone ? (
                       <a
                         href={`tel:${stay.phone}`}
-                        className="flex-1 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] text-center transition-colors font-display flex items-center justify-center gap-1"
+                        className="min-h-11 min-w-11 inline-flex items-center justify-center flex-1 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] text-center transition-colors font-display flex items-center justify-center gap-1"
                       >
                         <Phone className="w-3 h-3" />
                         <span>Gọi ({stay.phone})</span>
@@ -441,28 +441,28 @@ export default function StayPage() {
                     ) : (
                       <Link
                         href={`/places/${stay.slug || stay.id}`}
-                        className="flex-1 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-[11px] text-center transition-colors font-display"
+                        className="min-h-11 min-w-11 inline-flex items-center justify-center flex-1 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-[11px] text-center transition-colors font-display"
                       >
                         Chi Tiết
                       </Link>
                     )}
 
-                    <a
+                    <a aria-label={`Chỉ đường đến ${stay.name}`}
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stay.name + " " + stay.commune + " Tri Tôn An Giang")}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] flex items-center gap-1 transition-colors shrink-0"
+                      className="min-h-11 min-w-11 inline-flex items-center justify-center p-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] flex items-center gap-1 transition-colors shrink-0"
                       title="Chỉ đường Google Maps"
                     >
                       <Navigation className="w-3.5 h-3.5 text-emerald-600" />
                     </a>
                   </div>
-                </div>
+                </CatalogCard>
               ))}
             </div>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

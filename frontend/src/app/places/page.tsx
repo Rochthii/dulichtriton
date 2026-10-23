@@ -1,5 +1,7 @@
 "use client";
 
+import { CatalogFeedback, FilterChip } from '@/components/CatalogUI';
+
 import { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useSavedPlaces } from "@/hooks/useSavedPlaces";
@@ -307,7 +309,7 @@ function PlacesPageContent() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
               {topSpotlightPlaces.map((hotPlace, pidx) => (
                 <div
                   key={hotPlace.id}
@@ -383,26 +385,22 @@ function PlacesPageContent() {
             <div className="relative flex-1 w-full">
               <Search className="w-4 h-4 text-[#6B6355] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
-                type="text"
+                aria-label="Tìm kiếm trong danh mục"
+                type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Tìm kiếm theo tên địa điểm, xã, câu chuyện sự tích..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus:outline-none focus:border-[#0E8C7F]"
+                className="min-h-11 w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus-visible:outline-2 focus-visible:outline-[var(--jade)] focus:border-[#0E8C7F]"
               />
             </div>
 
             <div className="flex items-center gap-2 w-full md:w-auto">
-              <button
+              <FilterChip active={tiktokOnlyFilter}
                 onClick={() => setTiktokOnlyFilter(!tiktokOnlyFilter)}
-                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  tiktokOnlyFilter
-                    ? "bg-rose-600 text-white shadow-xs"
-                    : "bg-[#FAF3E7] text-[#6B6355] hover:bg-rose-50 hover:text-rose-700 border border-[#26221B]/10"
-                }`}
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
                 <span>Có Video TikTok</span>
-              </button>
+              </FilterChip>
             </div>
           </div>
 
@@ -414,22 +412,15 @@ function PlacesPageContent() {
             {[
               { id: "all", label: "Tất Cả" },
               { id: "night", label: "Tri Tôn về đêm" },
-              { id: "youth", label: "Giới trẻ check-in" },
-              { id: "family", label: "Gia đình & nghỉ dưỡng" },
               { id: "trekking", label: "Leo núi săn mây" },
               { id: "spiritual", label: "Hành hương tâm linh" },
             ].map((chip) => (
-              <button
+              <FilterChip active={activeAudience === chip.id}
                 key={chip.id}
                 onClick={() => setActiveAudience(chip.id as AudienceFilter)}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeAudience === chip.id
-                    ? "bg-[#0E8C7F] text-white shadow-xs"
-                    : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
-                }`}
               >
                 {chip.label}
-              </button>
+              </FilterChip>
             ))}
           </div>
 
@@ -439,17 +430,12 @@ function PlacesPageContent() {
               <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> Khu Vực:
             </span>
             {communes.map((commune) => (
-              <button
+              <FilterChip active={selectedCommune === commune}
                 key={commune}
                 onClick={() => setSelectedCommune(commune)}
-                className={`whitespace-nowrap px-3 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
-                  selectedCommune === commune
-                    ? "bg-[#26221B] text-[#FAF3E7] shadow-xs"
-                    : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
-                }`}
               >
                 {commune}
-              </button>
+              </FilterChip>
             ))}
           </div>
         </section>
@@ -499,30 +485,18 @@ function PlacesPageContent() {
           </div>
 
           {loading || (savedOnly && !savedPlaces.ready) ? (
-            <div className="py-16 text-center text-[#6B6355] font-bold">
-              {savedOnly ? "Đang đọc điểm đã lưu trên thiết bị..." : "Đang tải danh mục điểm đến..."}
-            </div>
+            <CatalogFeedback kind="loading" message={savedOnly ? "Đang đọc điểm đã lưu trên thiết bị..." : "Đang tải danh mục điểm đến..."} />
           ) : savedOnly && savedPlaces.error ? null : filteredPlaces.length === 0 ? (
             <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">
-              <Compass className="w-8 h-8 text-[#6B6355]/40 mx-auto" />
-              <div className="font-bold text-sm text-[#26221B]">{savedOnly ? (savedPlaces.saved.length ? "Không có điểm đã lưu khớp danh mục hoặc bộ lọc hiện tại." : "Bạn chưa lưu điểm nào trên thiết bị này.") : "Không tìm thấy địa điểm nào phù hợp."}</div>
+              <CatalogFeedback message={savedOnly ? (savedPlaces.saved.length ? "Không có điểm đã lưu khớp danh mục hoặc bộ lọc hiện tại." : "Bạn chưa lưu điểm nào trên thiết bị này.") : "Không tìm thấy địa điểm nào phù hợp."}
+                actionLabel="Xóa tất cả bộ lọc" onAction={() => {
+                  setSelectedCommune("Tất cả"); setActiveCategory("Tất cả"); setActiveAudience("all");
+                  setSearchQuery(""); setSelectedClusterId(null); setTiktokOnlyFilter(false);
+                }} />
               {savedOnly && !savedPlaces.saved.length && <Link href="/places" className="inline-flex min-h-11 items-center rounded-full bg-[var(--palm)] px-4 text-[var(--ink)] font-bold text-sm">Khám phá để lưu điểm</Link>}
-              <button
-                onClick={() => {
-                  setSelectedCommune("Tất cả");
-                  setActiveCategory("Tất cả");
-                  setActiveAudience("all");
-                  setSearchQuery("");
-                  setSelectedClusterId(null);
-                  setTiktokOnlyFilter(false);
-                }}
-                className="px-4 py-2 rounded-xl bg-[#0E8C7F] text-white text-xs font-bold cursor-pointer"
-              >
-                Xóa tất cả bộ lọc
-              </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
               {filteredPlaces.map((place) => (
                 <PlaceCard key={place.id} place={place} />
               ))}

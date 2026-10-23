@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { renderInlineMarkdown as renderInlineFormatted } from '@/components/InlineMarkdown';
 import { 
   Clock, Sparkles, Bookmark, QrCode, Printer, Check, X, Share2, 
   ChevronDown, ChevronUp, Globe, CheckCircle2, Navigation, Play, ExternalLink, MapPin, Bike, Coins, PhoneCall,
@@ -8,7 +9,6 @@ import {
 } from 'lucide-react';
 import type { ItineraryData } from './WireDiagramItinerary';
 import ItineraryExportModal from './ItineraryExportModal';
-import { resolveTikTokHashtag } from '@/lib/tiktok';
 import { SITE_URL } from '@/lib/siteConfig';
 import { downloadItineraryPDF } from '@/lib/pdfExporter';
 
@@ -441,7 +441,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
             </div>
 
             <div class="footer-bar">
-              <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Cổng thông tin 149 địa điểm đã xác minh & Lộ trình du lịch thông minh An Giang.<br/>
+              <strong>Dự Án Du Lịch Tri Tôn AI</strong> — Thông tin du lịch tham khảo & Lộ trình du lịch An Giang.<br/>
               Truy cập trực tuyến: <em>${SITE_URL.replace(/^https?:\/\//, '')}</em>
             </div>
           </div>
@@ -458,81 +458,6 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
     `;
     printWindow.document.write(htmlContent);
     printWindow.document.close();
-  };
-
-  // ── Render inline tokens (Bold + Markdown Links + Plain text) ──────────────
-  const renderInlineFormatted = (text: string) => {
-    // Clean any lingering [ID: ...]
-    const cleanText = text.replace(/\[ID:\s*[^\]]+\]\s*/gi, '');
-    const tokenRegex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g;
-    const parts = cleanText.split(tokenRegex);
-
-    return parts.map((part, index) => {
-      if (!part) return null;
-
-      // Markdown Link: [Label](URL)
-      const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-      if (linkMatch) {
-        const label = linkMatch[1];
-        let url = linkMatch[2].trim().replace(/\s+/g, '');
-
-        try {
-          url = encodeURI(decodeURI(url));
-        } catch {
-          // ignore
-        }
-
-        const isTikTok = url.includes('tiktok.com');
-        if (isTikTok && url.includes('/search')) {
-          try {
-            const parsed = new URL(url);
-            const q = parsed.searchParams.get('q') || label;
-            const tag = resolveTikTokHashtag(q);
-            url = `https://www.tiktok.com/tag/${tag}`;
-          } catch {
-            url = 'https://www.tiktok.com/tag/dulichtriton';
-          }
-        }
-        const isMaps = url.includes('google.com/maps') || url.includes('maps.google') || url.includes('goo.gl');
-
-        return (
-          <a
-            key={index}
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-full text-xs font-bold transition-all shadow-2xs active:scale-95 ${
-              isTikTok
-                ? 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 hover:border-rose-300'
-                : isMaps
-                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300'
-                : 'bg-amber-50 text-amber-900 border border-amber-200 hover:bg-amber-100'
-            }`}
-          >
-            {isTikTok ? (
-              <Play className="w-3.5 h-3.5 text-rose-600 fill-rose-600 shrink-0" />
-            ) : isMaps ? (
-              <Navigation className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-            ) : (
-              <ExternalLink className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-            )}
-            <span className="truncate max-w-[200px]">{label}</span>
-          </a>
-        );
-      }
-
-      // Bold: **Text**
-      const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
-      if (boldMatch) {
-        return (
-          <strong key={index} className="font-extrabold text-[#1A1713]">
-            {boldMatch[1]}
-          </strong>
-        );
-      }
-
-      return <span key={index}>{part}</span>;
-    });
   };
 
   // Pre-clean and heal broken multiline markdown links from LLM
@@ -552,29 +477,29 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
   });
 
   return (
-    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-[#26221B] font-body">
+    <div className="min-w-0 break-words space-y-2 text-sm leading-relaxed text-[#26221B] font-body">
       <div className={`space-y-1.5 ${shouldTruncate ? 'line-clamp-6' : ''}`}>
         {lines.map((line, idx) => {
           const trimmed = line.trim();
           if (!trimmed) return <div key={idx} className="h-1" />;
 
           // H3 Heading (### Section)
-          if (trimmed.startsWith('###')) {
-            const titleText = trimmed.replace(/^###\s*/, '');
+          if (/^#{1,6}\s/.test(trimmed)) {
+            const titleText = trimmed.replace(/^#{1,6}\s*/, '');
             return (
-              <h4
+              <h3
                 key={idx}
                 className="font-display font-black text-sm sm:text-base text-[#0E8C7F] mt-3 mb-1 pt-1.5 border-t border-[#26221B]/6 flex items-center gap-1.5"
               >
                 <Sparkles className="w-4 h-4 text-[#F0A32F] shrink-0" />
                 <span>{titleText}</span>
-              </h4>
+              </h3>
             );
           }
 
           // Timeline Stop (07:00, Sáng, Chiều, Chặng...)
-          const isTimeline = /^(\d{1,2}:\d{2}|Sáng|Trưa|Chiều|Tối|Chặng \d)/i.test(trimmed);
-          if (isTimeline) {
+          const timeline = trimmed.match(/^(\d{1,2}:\d{2}|Sáng|Trưa|Chiều|Tối|Chặng \d+)\s*[:–—-]?\s*(.*)$/i);
+          if (timeline) {
             return (
               <div
                 key={idx}
@@ -582,10 +507,10 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
               >
                 <div className="flex items-center gap-1.5 font-bold text-xs text-[#0E8C7F] font-display">
                   <Clock className="w-3.5 h-3.5 text-[#F0A32F] shrink-0" />
-                  <span>{trimmed.split(':')[0]}</span>
+                  <span>{timeline[1]}</span>
                 </div>
-                <div className="text-xs text-[#3B342A] pl-5">
-                  {renderInlineFormatted(trimmed.substring(trimmed.indexOf(':') + 1 || 0))}
+                <div className="text-sm text-[var(--ink)] pl-5">
+                  {renderInlineFormatted(timeline[2])}
                 </div>
               </div>
             );
@@ -615,7 +540,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
       {isLongContent && isAssistant && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="inline-flex items-center gap-1 text-xs font-bold text-[#0E8C7F] hover:text-[#0A6B61] transition-colors py-1 cursor-pointer"
+          className="min-h-11 inline-flex items-center gap-1 text-xs font-bold text-[#0E8C7F] hover:text-[#0A6B61] transition-colors py-1 cursor-pointer"
         >
           {isExpanded ? (
             <>
@@ -659,7 +584,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
             onClick={handleDownloadPdfDirect}
             disabled={isExportingPdf}
             title="Tải Ngay File PDF Lịch Trình Kèm Link Google Maps Dẫn Đường Bấm Được Trực Tiếp"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#0E8C7F] hover:bg-[#0A6B61] text-white transition-all cursor-pointer shadow-xs active:scale-95 disabled:opacity-75 font-display"
+            className="min-h-11 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#0E8C7F] hover:bg-[#0A6B61] text-white transition-all cursor-pointer shadow-xs active:scale-95 disabled:opacity-75 font-display"
           >
             {isExportingPdf ? (
               <>
@@ -682,7 +607,7 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
           {itinerary && (
             <button
               onClick={() => setShowExportModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#F0A32F] hover:bg-[#D98E20] text-[#26221B] transition-all cursor-pointer shadow-xs active:scale-95 font-display"
+              className="min-h-11 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-[#F0A32F] hover:bg-[#D98E20] text-[#26221B] transition-all cursor-pointer shadow-xs active:scale-95 font-display"
             >
               <QrCode className="w-3.5 h-3.5" />
               <span>Tải Ảnh QR Sơ Đồ</span>

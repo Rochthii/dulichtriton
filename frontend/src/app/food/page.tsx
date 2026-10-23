@@ -1,5 +1,8 @@
 "use client";
 
+import { CatalogCard, CatalogFeedback, FilterChip } from '@/components/CatalogUI';
+import SavePlaceButton from '@/components/SavePlaceButton';
+
 import PlaceListingImage from '@/components/PlaceListingImage';
 import { presentRating, presentPlaceImage, isFoodListing } from '@/lib/publicPlacePresentation';
 
@@ -38,13 +41,13 @@ interface FoodItem {
 type FoodSpecialtyCategory = 'all' | 'ga_dot' | 'bo_7_mon' | 'chao_bo' | 'banh_bo' | 'cafe' | 'night';
 
 const SPECIALTY_FILTERS = [
-  { key: 'all' as FoodSpecialtyCategory, label: 'Tất Cả Đặc Sản', icon: '🍽️' },
-  { key: 'ga_dot' as FoodSpecialtyCategory, label: 'Gà Đốt Ô Thum', icon: '🍗' },
-  { key: 'bo_7_mon' as FoodSpecialtyCategory, label: 'Bò 7 Món Ba Chúc', icon: '🥩' },
-  { key: 'chao_bo' as FoodSpecialtyCategory, label: 'Cháo Bò & Bún Cá', icon: '🍲' },
-  { key: 'banh_bo' as FoodSpecialtyCategory, label: 'Bánh Bò & Ăn Vặt', icon: '🥞' },
-  { key: 'cafe' as FoodSpecialtyCategory, label: 'Cà Phê View Núi Hồ', icon: '☕' },
-  { key: 'night' as FoodSpecialtyCategory, label: 'Ăn Đêm Sau 21h', icon: '🌙' },
+  { key: 'all' as FoodSpecialtyCategory, label: 'Tất Cả Đặc Sản', icon: Utensils },
+  { key: 'ga_dot' as FoodSpecialtyCategory, label: 'Gà Đốt Ô Thum', icon: Flame },
+  { key: 'bo_7_mon' as FoodSpecialtyCategory, label: 'Bò 7 Món Ba Chúc', icon: Utensils },
+  { key: 'chao_bo' as FoodSpecialtyCategory, label: 'Cháo Bò & Bún Cá', icon: Utensils },
+  { key: 'banh_bo' as FoodSpecialtyCategory, label: 'Bánh Bò & Ăn Vặt', icon: Utensils },
+  { key: 'cafe' as FoodSpecialtyCategory, label: 'Cà Phê View Núi Hồ', icon: Coffee },
+  { key: 'night' as FoodSpecialtyCategory, label: 'Ăn Đêm Sau 21h', icon: Moon },
 ];
 
 function getInitialFoodList(): FoodItem[] {
@@ -99,9 +102,16 @@ export default function FoodPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [reloadKey, setReloadKey] = useState(0);
+  const [catalogError, setCatalogError] = useState('');
+
   useEffect(() => {
+    let active = true;
+    setCatalogError('');
+    setLoading(reloadKey > 0);
     function processFoodData(json: any) {
-      if (json?.food && json.food.length > 0) {
+      if (!active) return;
+      if (Array.isArray(json?.food)) {
         const formatted = json.food.filter(isFoodListing).map((item: any) => {
           const img = presentPlaceImage(item);
 
@@ -142,13 +152,17 @@ export default function FoodPage() {
     }
 
     async function loadLiveFoodData() {
+      const fetchCatalog = async () => {
+        const response = await fetch('/api/v1/food?limit=100');
+        if (!response.ok) throw new Error('Catalog unavailable');
+        const payload = await response.json();
+        if (!Array.isArray(payload?.food)) throw new Error('Invalid catalog response');
+        return payload;
+      };
       try {
-        const json = await fetchWithCache(
-          "client-food-places-catalog-v1",
-          async () => {
-            const res = await fetch("/api/v1/food?limit=100");
-            return await res.json();
-          },
+        const json = reloadKey > 0 ? await fetchCatalog() : await fetchWithCache(
+          "client-food-catalog-v3",
+          fetchCatalog,
           60 * 60 * 1000,
           (freshJson) => {
             processFoodData(freshJson);
@@ -156,11 +170,16 @@ export default function FoodPage() {
         );
         processFoodData(json);
       } catch (err) {
+        if (!active) return;
+        setCatalogError('Chưa cập nhật được danh mục. Đang hiển thị dữ liệu tham khảo có sẵn; hãy thử lại.');
         console.warn("API fetch failed, using local master:", err);
+      } finally {
+        if (active) setLoading(false);
       }
     }
     loadLiveFoodData();
-  }, []);
+    return () => { active = false; };
+  }, [reloadKey]);
 
   // Top Signature Hot Dishes (Showcased prominently at top)
   const topSignatureHotFoods = useMemo(() => {
@@ -192,7 +211,7 @@ export default function FoodPage() {
   const filteredFoods = useMemo(() => {
     return foods.filter((f) => {
       const n = f.name.toLowerCase();
-      
+
       // Category filter
       if (selectedCategory === 'ga_dot' && !(n.includes('gà đốt') || n.includes('ô thum'))) return false;
       if (selectedCategory === 'bo_7_mon' && !(n.includes('bò 7 món') || n.includes('bò nướng') || (n.includes('ba chúc') && n.includes('bò')))) return false;
@@ -225,7 +244,7 @@ export default function FoodPage() {
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-amber-300/15 blur-3xl" />
       </div>
 
-      <main className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-8 px-4 py-8 md:px-6 md:py-10">
+      <div className="relative z-10 mx-auto w-full max-w-7xl flex-grow flex-col space-y-8 px-4 py-8 md:px-6 md:py-10">
         {/* Banner Section */}
         <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0E8C7F] to-[#085A52] p-6 text-white shadow-md md:p-10 border border-[#0B6B60]">
           <div className="relative z-10 max-w-3xl space-y-3">
@@ -297,7 +316,7 @@ export default function FoodPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
               {topSignatureHotFoods.map((hotItem, hidx) => {
                 const priceInfo = getFoodPriceBadge(hotItem);
                 return (
@@ -313,7 +332,7 @@ export default function FoodPage() {
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <PlaceListingImage
-                        src={getOptimizedImageUrl(hotItem.image_url, { width: 900, dpr: 2, quality: 'best' })}
+                        src={hotItem.image_url ? getOptimizedImageUrl(hotItem.image_url, { width: 900, dpr: 2, quality: 'best' }) : undefined}
                         alt={hotItem.name}
                         className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                         loading="lazy"
@@ -364,7 +383,7 @@ export default function FoodPage() {
                           <span>Xem quán</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Link>
-                        <a
+                        <a aria-label={`Chỉ đường đến ${hotItem.name}`}
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotItem.name + " " + hotItem.commune + " Tri Tôn")}`}
                           target="_blank"
                           rel="noreferrer"
@@ -395,23 +414,18 @@ export default function FoodPage() {
                 const count = (categoryCounts as any)[cat.key] || 0;
                 const isSelected = selectedCategory === cat.key;
                 return (
-                  <button
+                  <FilterChip active={isSelected}
                     key={cat.key}
                     onClick={() => setSelectedCategory(cat.key)}
-                    className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0 tap-bounce ${
-                      isSelected
-                        ? "bg-[#0E8C7F] text-white shadow-xs"
-                        : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
-                    }`}
                   >
-                    <span>{cat.icon}</span>
+                    <cat.icon className="h-4 w-4" aria-hidden="true" />
                     <span>{cat.label}</span>
                     <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                       isSelected ? "bg-white/20 text-white" : "bg-[#26221B]/5 text-[#6B6355]"
                     }`}>
                       {count}
                     </span>
-                  </button>
+                  </FilterChip>
                 );
               })}
             </div>
@@ -423,11 +437,12 @@ export default function FoodPage() {
             <div className="relative flex-1 w-full">
               <Search className="w-4 h-4 text-[#6B6355] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
-                type="text"
+                aria-label="Tìm kiếm trong danh mục"
+                type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Tìm kiếm món ăn, quán gà đốt, cháo bò, quán cà phê..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus:outline-none focus:border-[#0E8C7F]"
+                className="min-h-11 w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-medium text-[#26221B] placeholder-[#6B6355]/70 focus-visible:outline-2 focus-visible:outline-[var(--jade)] focus:border-[#0E8C7F]"
               />
             </div>
 
@@ -437,21 +452,18 @@ export default function FoodPage() {
                 <MapPin className="w-3.5 h-3.5 text-[#0E8C7F]" /> Xã:
               </span>
               {communes.map((commune) => (
-                <button
+                <FilterChip active={selectedCommune === commune}
                   key={commune}
                   onClick={() => setSelectedCommune(commune)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shrink-0 ${
-                    selectedCommune === commune
-                      ? "bg-[#26221B] text-white shadow-xs"
-                      : "bg-[#FAF3E7] text-[#6B6355] hover:bg-[#FAF3E7]/80 border border-[#26221B]/8"
-                  }`}
                 >
                   {commune}
-                </button>
+                </FilterChip>
               ))}
             </div>
           </div>
         </section>
+
+        {catalogError && <CatalogFeedback kind="error" message={catalogError} actionLabel="Thử tải lại" onAction={() => setReloadKey(value => value + 1)} />}
 
         {/* Food Places Grid */}
         <section className="space-y-4">
@@ -464,33 +476,23 @@ export default function FoodPage() {
           </div>
 
           {loading ? (
-            <div className="py-16 text-center text-[#6B6355] font-bold">
-              Đang tải danh sách quán ngon Bảy Núi...
-            </div>
+            <CatalogFeedback kind="loading" message="Đang tải danh sách quán ăn..." />
           ) : filteredFoods.length === 0 ? (
-            <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">
-              <Utensils className="w-8 h-8 text-[#6B6355]/40 mx-auto" />
-              <div className="font-bold text-sm text-[#26221B]">Không tìm thấy quán ăn nào phù hợp với bộ lọc.</div>
-              <button
-                onClick={() => {
+            <CatalogFeedback message="Không tìm thấy quán ăn nào phù hợp với bộ lọc." actionLabel="Xóa tất cả bộ lọc"
+                onAction={() => {
                   setSelectedCategory("all");
                   setSelectedCommune("Tất cả");
                   setSearchQuery("");
-                }}
-                className="px-4 py-2 rounded-xl bg-[#0E8C7F] text-white text-xs font-bold cursor-pointer"
-              >
-                Xóa tất cả bộ lọc
-              </button>
-            </div>
+                }} />
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
               {filteredFoods.map((food, idx) => {
                 const priceInfo = getFoodPriceBadge(food);
                 const isGa = food.name.toLowerCase().includes('gà đốt');
                 return (
-                  <div
+                  <CatalogCard
                     key={food.id}
-                    className="group relative bg-[#FFFDF7] rounded-2xl sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_2px_12px_rgba(240,163,47,0.10)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+
                   >
                     <div>
                       {/* Clickable Direct Thumbnail Link */}
@@ -501,7 +503,7 @@ export default function FoodPage() {
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <PlaceListingImage
-                          src={getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' })}
+                          src={food.image_url ? getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' }) : undefined}
                           alt={food.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                           loading="lazy"
@@ -535,7 +537,7 @@ export default function FoodPage() {
                           <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
                             {food.commune}
                           </span>
-                          <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                          <h3 className="font-display font-extrabold text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
                             {food.name}
                           </h3>
                         </div>
@@ -553,7 +555,7 @@ export default function FoodPage() {
                         </div>
 
                         {food.description && (
-                          <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                          <p className="text-sm text-[#6B6355] line-clamp-2 leading-relaxed font-body">
                             {food.description}
                           </p>
                         )}
@@ -561,10 +563,12 @@ export default function FoodPage() {
                     </div>
 
                     {/* Card Footer Actions */}
-                    <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-1.5 sm:gap-2">
+                    <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+                    <SavePlaceButton place={food} compact feedbackPlacement="above" />
+
                       <Link
                         href={`/places/${food.slug || food.id}`}
-                        className="text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
+                        className="min-h-11 min-w-11 inline-flex items-center justify-center text-[11px] sm:text-sm font-extrabold text-[#0E8C7F] hover:text-[#085A52] flex items-center gap-0.5 sm:gap-1 transition-colors font-display truncate"
                       >
                         <span>Xem quán</span>
                         <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
@@ -574,8 +578,8 @@ export default function FoodPage() {
                         {isGa && food.phone && (
                           <a
                             href={`tel:${food.phone}`}
-                            title="Gọi đặt gà trước 45p"
-                            className="p-1 sm:p-2 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition-colors"
+                            title="Liên hệ quán để xác nhận thời gian"
+                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1 sm:p-2 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition-colors"
                           >
                             <Phone className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-700" />
                           </a>
@@ -587,29 +591,29 @@ export default function FoodPage() {
                             target="_blank"
                             rel="noreferrer"
                             title="Xem Video TikTok"
-                            className="p-1 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+                            className="min-h-11 min-w-11 inline-flex items-center justify-center p-1 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
                           >
                             <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-rose-600 text-rose-600" />
                           </a>
                         )}
-                        <a
+                        <a aria-label={`Chỉ đường đến ${food.name}`}
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(food.name + " " + food.commune + " Tri Tôn")}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
+                          className="min-h-11 min-w-11 inline-flex items-center justify-center px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[10px] sm:text-xs flex items-center gap-1 transition-colors shadow-2xs"
                         >
                           <Navigation className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-600 shrink-0" />
                           <span className="hidden sm:inline">Chỉ đường</span>
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </CatalogCard>
                 );
               })}
             </div>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

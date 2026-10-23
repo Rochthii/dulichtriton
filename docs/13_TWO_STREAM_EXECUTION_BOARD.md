@@ -10,6 +10,10 @@
 
 ## 1. Cách dùng
 
+### Lượt hợp nhất còn lại — 2026-10-23
+
+`UX-CONSOLIDATED-CLOSEOUT` · Luồng A: code/UI phạm vi catalog/markdown/metadata done, implemented local; không tách thêm task code. 46 tests (11 mới), TypeScript/build 181/181 pass; lint 11 files 0 errors/44 warnings. Readiness còn chờ G2/source approval và browser acceptance do URL policy; [một hồ sơ evidence/acceptance](technical-spec/UI_UX_CONSOLIDATED_CLOSEOUT_2026_10_23.md). Sol medium/xhigh đề xuất theo boundary; Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash High đúng checkout `agy-af0d8c26` / CRT-31 Done. User yêu cầu commit chung, chưa push/deploy. Các mục “next component” bên dưới là lịch sử, được phần code của lượt này thay thế; các gate owner vẫn mở.
+
 ### Component follow-up — lưu điểm, 2026-10-23
 
 `UX-FOLLOWUP-COMPONENTS` · Luồng A: phạm vi lưu/tìm lại POI done/implemented local; chưa hoàn tất component convergence toàn app. Shared card/detail save, `/places?saved=1`, mobile entry, honest storage/empty/error/retry và URL reset. 42 combined tests, tsc, lint 0 errors/27 warnings, Turbopack + TS 181/181 pass. Không browser/staging proof mới. [Evidence/giới hạn](technical-spec/SAVED_PLACES_UI_EVIDENCE_2026_10_23.md). Sol · medium đề xuất; Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash Low `agy-24cf7b98` / CRT-30 Done nhưng worker nhầm checkout, không dùng làm review evidence. Next component card/filter/markdown còn lại và browser acceptance; G2/source approval vẫn mở. User cho phép commit, không push/deploy.

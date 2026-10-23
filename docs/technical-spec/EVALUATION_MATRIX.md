@@ -53,6 +53,14 @@ EV-UX-03 readiness tổng thể vẫn `DISPUTED`; metadata/contract tests cũ pa
 
 EV-UX-03 readiness vẫn `DISPUTED`; component convergence còn phạm vi khác và G2/source approval chưa đóng.
 
+## Evidence lượt UI hợp nhất — 2026-10-23
+
+| ID | Claim/boundary | Evidence | State / giới hạn |
+|---|---|---|---|
+| EV-UX-07 | Catalog dùng chung feedback/filter/card, retry có kết quả thật; markdown và metadata không tạo các claim/link sai đã phát hiện | 11 tests mới thực thi page/effect/SSR/metadata source, trong 46 tests pass; lint 0 errors/44 warnings, TypeScript/build 181/181 pass | `IMPLEMENTED` local; không viewport/DOM/browser/WCAG/user-study/source approval proof. G2 và acceptance còn mở; [evidence](UI_UX_CONSOLIDATED_CLOSEOUT_2026_10_23.md) |
+
+EV-UX-03 readiness vẫn `DISPUTED`; không nâng canonical count hoặc release claim.
+
 ## Quy tắc benchmark
 
 Không trộn kết quả benchmark của data validator, DB/RLS, HTTP auth, provider latency hay UI build thành một con số “performance”. Mỗi benchmark phải ghi rõ boundary, fixture, môi trường và giới hạn kết luận.
