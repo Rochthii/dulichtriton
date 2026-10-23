@@ -4,8 +4,6 @@
  * Tuân thủ chuẩn UUID v4 (RFC 4122), loại bỏ hoàn toàn Math.random().
  */
 
-import { randomUUID } from 'node:crypto';
-
 /**
  * Biểu thức chính quy bất biến xác thực UUID v4 (RFC 4122).
  * Vị trí ký tự thứ 15 bắt buộc là '4' (version 4).
@@ -32,13 +30,21 @@ export function isValidSessionId(id: unknown): boolean {
 
 /**
  * Sinh mới một Session ID chuẩn UUID v4 an toàn mật mã.
- * Sử dụng native crypto.randomUUID() tương thích cả Web Crypto API và Node.js.
+ * Dùng Web Crypto trong trình duyệt và Node.js; dừng nếu không có CSPRNG.
  */
 export function generateSessionId(): string {
-  if (typeof globalThis.crypto !== 'undefined' && typeof globalThis.crypto.randomUUID === 'function') {
-    return globalThis.crypto.randomUUID().toLowerCase();
+  const crypto = globalThis.crypto;
+  if (typeof crypto?.randomUUID === 'function') {
+    return crypto.randomUUID().toLowerCase();
   }
-  return randomUUID().toLowerCase();
+  if (typeof crypto?.getRandomValues !== 'function') {
+    throw new Error('Secure session ID generation requires Web Crypto.');
+  }
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
 /**

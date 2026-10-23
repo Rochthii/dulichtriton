@@ -4,6 +4,8 @@ import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import test from 'node:test';
+import { runInNewContext } from 'node:vm';
+import { webcrypto } from 'node:crypto';
 import typescript from 'typescript';
 
 const require = createRequire(import.meta.url);
@@ -14,7 +16,7 @@ const specPath = path.resolve(__dirname, '../../docs/technical-spec/CHAT_SESSION
 const contractModulePath = path.resolve(__dirname, '../src/lib/sessionIdentifierContract.ts');
 
 // Transpile and load TypeScript helper
-function loadModule(filePath) {
+function loadModule(filePath, crypto) {
   const content = fs.readFileSync(filePath, 'utf8');
   const { outputText } = typescript.transpileModule(content, {
     compilerOptions: {
@@ -25,6 +27,16 @@ function loadModule(filePath) {
   });
 
   const m = { exports: {} };
+  if (arguments.length > 1) {
+    runInNewContext(outputText, {
+      module: m, exports: m.exports, crypto,
+      require() { throw new Error('Browser code cannot import Node modules'); },
+      Math: Object.assign(Object.create(Math), {
+        random() { throw new Error('Insecure random source used'); },
+      }),
+    });
+    return m.exports;
+  }
   const fn = new Function('module', 'exports', 'require', '__dirname', '__filename', outputText);
   fn(m, m.exports, require, path.dirname(filePath), filePath);
   return m.exports;
@@ -159,4 +171,43 @@ test('P04-002: Chat Session Identifier Contract Suite', async (t) => {
     assert.equal(invalidRes.code, 'INVALID_SESSION_ID');
     assert.ok(invalidRes.error.includes('UUID v4'));
   });
+});
+
+test('Browser generation uses native Web Crypto without Node imports', () => {
+  const { generateSessionId, isValidSessionId } = loadModule(contractModulePath, webcrypto);
+  assert.equal(isValidSessionId(generateSessionId()), true);
+});
+
+test('Browser fallback preserves UUID v4 version/variant and random bytes', () => {
+  for (const byte of [0x00, 0xff]) {
+    let calls = 0;
+    const { generateSessionId } = loadModule(contractModulePath, {
+      getRandomValues(bytes) {
+        calls++;
+        assert.equal(bytes.length, 16);
+        return bytes.fill(byte);
+      },
+    });
+    assert.equal(generateSessionId(), byte === 0
+      ? '00000000-0000-4000-8000-000000000000'
+      : 'ffffffff-ffff-4fff-bfff-ffffffffffff');
+    assert.equal(calls, 1);
+  }
+  const { generateSessionId, isValidSessionId } = loadModule(contractModulePath, {
+    getRandomValues: webcrypto.getRandomValues.bind(webcrypto),
+  });
+  const ids = new Set(Array.from({ length: 1000 }, () => generateSessionId()));
+  assert.equal(ids.size, 1000);
+  assert.ok([...ids].every(isValidSessionId));
+});
+
+test('Missing or failing CSPRNG cannot generate or repair a session ID', () => {
+  for (const crypto of [undefined, {}, { getRandomValues() { throw new Error('CSPRNG unavailable'); } }]) {
+    const { generateSessionId, sanitizeSessionId, validateSessionId } = loadModule(contractModulePath, crypto);
+    assert.throws(generateSessionId, /Web Crypto|CSPRNG unavailable/);
+    assert.throws(() => sanitizeSessionId('legacy_session'), /Web Crypto|CSPRNG unavailable/);
+    const valid = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+    assert.equal(sanitizeSessionId(valid), valid);
+    assert.equal(validateSessionId('legacy_session').isValid, false);
+  }
 });

@@ -6,15 +6,16 @@ import { usePathname } from 'next/navigation';
 import {
   MessageSquare, Sparkles, X, Send, Bot, User,
   MapPin, Navigation, Maximize2, Minimize2, Trash2,
-  ShieldCheck, EyeOff
 } from 'lucide-react';
 import { getGoogleMapsUrl } from '@/lib/utils';
 import FormattedChatMessage from './FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from './WireDiagramItinerary';
 import ItineraryPresetPicker from './ItineraryPresetPicker';
 import AppLogo from './AppLogo';
-import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
-import { CHAT_CONSENT_STORAGE_KEY, type ConsentStatus } from '@/lib/chatConsentGuard';
+import { generateSessionId } from '@/lib/sessionIdentifierContract';
+import { useChatPrivacy } from '@/hooks/useChatPrivacy';
+import { ChatConsentBadge, ChatConsentNotice } from '@/components/ChatConsentControls';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface EmbeddedSpot {
   type?: string;
@@ -55,6 +56,7 @@ export default function ChatbotWidget() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const dialogRef = useDialogFocus(isOpen && pathname !== '/chatbot' && pathname !== '/chat' && !pathname.startsWith('/admin'), () => setIsOpen(false));
   const [input, setInput] = useState('');
   const [unreadCount, setUnreadCount] = useState(0);
   const [isLoadingItinerary, setIsLoadingItinerary] = useState(false);
@@ -63,70 +65,19 @@ export default function ChatbotWidget() {
 
   const [isTyping, setIsTyping] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const sessionIdRef = useRef<string>('');
-  const sessionTokenRef = useRef<string>('');
-  // CƠ CHẾC: Pre-ping ref — track để debounce và tránh fire nhiều lần
+  const { chatConsent, consentRef, privacyNotice, sessionIdRef, sessionTokenRef,
+    handleSetConsent, updateSessionToken, beginRequest, createRequest, retryDeletion, hasPendingDeletion } = useChatPrivacy(
+    SESSION_KEY, 'triton_widget_session_id', 'triton_widget_session_token', () => {
+      setMessages([defaultWelcome]);
+      setIsTyping(false);
+      setIsLoadingItinerary(false);
+    });
   const prePingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hasPingedRef = useRef<boolean>(false);
-
-  const updateSessionToken = (token?: string | null) => {
-    if (token && typeof token === 'string' && token.trim()) {
-      sessionTokenRef.current = token.trim();
-      try {
-        localStorage.setItem('triton_widget_session_token', token.trim());
-      } catch { /* ignore */ }
-    }
-  };
-
-  const [chatConsent, setChatConsent] = useState<ConsentStatus>('unset');
-
-  const handleSetConsent = (status: 'granted' | 'denied') => {
-    setChatConsent(status);
-    try {
-      localStorage.setItem(CHAT_CONSENT_STORAGE_KEY, status);
-    } catch { /* ignore */ }
-    if (status === 'denied') {
-      // Khi chuyển sang Ẩn danh: Kích hoạt xóa phiên trên máy chủ ngay lập tức theo quyền được xóa (P05-005)
-      if (sessionIdRef.current && sessionIdRef.current !== 'anonymous') {
-        void fetch(`/api/v1/chat/session?sessionId=${encodeURIComponent(sessionIdRef.current)}`, {
-          method: 'DELETE',
-          headers: {
-            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-          },
-        }).catch(() => {});
-      }
-    }
-  };
-
-  const toggleConsent = () => {
-    handleSetConsent(chatConsent === 'denied' ? 'granted' : 'denied');
-  };
+  const hasPingedRef = useRef(false);
 
   useEffect(() => {
     setIsMounted(true);
-    const KEY = 'triton_widget_session_id';
-    const stored = localStorage.getItem(KEY);
-    if (stored && isValidSessionId(stored)) {
-      sessionIdRef.current = stored;
-    } else {
-      const newId = generateSessionId();
-      localStorage.setItem(KEY, newId);
-      sessionIdRef.current = newId;
-    }
-
-    const TOKEN_KEY = 'triton_widget_session_token';
-    const storedToken = localStorage.getItem(TOKEN_KEY);
-    if (storedToken) {
-      sessionTokenRef.current = storedToken;
-    }
-
-    try {
-      const savedConsent = localStorage.getItem(CHAT_CONSENT_STORAGE_KEY) as ConsentStatus;
-      if (savedConsent === 'granted' || savedConsent === 'denied') {
-        setChatConsent(savedConsent);
-      }
-    } catch { /* ignore */ }
-
+    if (consentRef.current !== 'granted') return;
     try {
       const saved = localStorage.getItem(SESSION_KEY);
       if (saved) {
@@ -136,15 +87,15 @@ export default function ChatbotWidget() {
         }
       }
     } catch { /* ignore */ }
-  }, []);
+  }, [consentRef]);
 
   useEffect(() => {
-    if (isMounted && messages.length > 0) {
+    if (isMounted && consentRef.current === 'granted' && messages.length > 0) {
       try {
         localStorage.setItem(SESSION_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
-      } catch { /* ignore */ }
+      } catch { /* storage unavailable */ }
     }
-  }, [messages, isMounted]);
+  }, [messages, isMounted, chatConsent, consentRef]);
 
   // WCAG 2.1.2: No Keyboard Trap — Đóng modal bằng phím Escape
   useEffect(() => {
@@ -257,6 +208,7 @@ export default function ChatbotWidget() {
   const handleSend = async (customText?: string) => {
     const textToSend = customText || input;
     if (!textToSend.trim()) return;
+    const request = beginRequest();
 
     const lower = textToSend.toLowerCase();
     const isItinIntent = 
@@ -312,9 +264,10 @@ export default function ChatbotWidget() {
       setIsLoadingItinerary(true);
 
       try {
-        const res = await fetch(`/api/v1/chat/itinerary?slug=${matchedSlug}`);
+        const res = await fetch(`/api/v1/chat/itinerary?slug=${matchedSlug}`, { signal: request.signal });
         if (res.ok) {
           const data = await res.json();
+          if (!request.isCurrent()) return;
           if (data.itinerary) {
             const botMsg: Message = {
               id: (Date.now() + 1).toString(),
@@ -335,6 +288,7 @@ export default function ChatbotWidget() {
           }
         }
       } catch { /* fallback */ }
+      if (!request.isCurrent()) return;
       setIsLoadingItinerary(false);
     }
 
@@ -345,7 +299,7 @@ export default function ChatbotWidget() {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    if (!isItinIntent) setMessages(prev => [...prev, userMsg]);
     if (!customText) setInput('');
     setIsTyping(true);
 
@@ -360,34 +314,13 @@ export default function ChatbotWidget() {
     setMessages(prev => [...prev, botMsg]);
 
     try {
-      const isConsentDenied = chatConsent === 'denied';
-
       const res = await fetch('/api/v1/chat/stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-chat-consent': isConsentDenied ? 'denied' : 'granted',
-          ...(sessionTokenRef.current && !isConsentDenied ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-        },
-        body: JSON.stringify({
-          question: textToSend,
-          query: textToSend,
-          consent: !isConsentDenied,
-          session_id: isConsentDenied ? 'anonymous' : sessionIdRef.current,
-          session_token: !isConsentDenied ? (sessionTokenRef.current || undefined) : undefined,
-          history: isConsentDenied
-            ? []
-            : messages
-                .slice(-6)
-                .map(m => ({
-                  role: m.sender === 'user' ? 'user' : 'assistant',
-                  content: m.text.slice(0, 400),  // Giới hạn 400 ký tự/lượt tránh quá tải context
-                })),
-        }),
+        ...createRequest(textToSend, messages.slice(-6)), signal: request.signal,
       });
+      if (!request.isCurrent()) return;
 
       const tokenHeader = res.headers?.get('x-chat-session-token');
-      if (tokenHeader) updateSessionToken(tokenHeader);
+      if (tokenHeader) updateSessionToken(tokenHeader, request.revision);
 
 
       if (!res.ok || !res.body) {
@@ -403,6 +336,7 @@ export default function ChatbotWidget() {
 
       while (true) {
         const { value, done } = await reader.read();
+        if (!request.isCurrent()) { await reader.cancel(); return; }
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
@@ -459,31 +393,26 @@ export default function ChatbotWidget() {
         }
       }
     } catch {
+      if (!request.isCurrent()) return;
       try {
         const fallbackRes = await fetch('/api/v1/chat/query', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-          },
-          body: JSON.stringify({
-            question: textToSend,
-            session_id: sessionIdRef.current,
-            session_token: sessionTokenRef.current || undefined,
-          }),
+          ...createRequest(textToSend, messages.slice(-6)), signal: request.signal,
         });
+        if (!request.isCurrent()) return;
+        if (!fallbackRes.ok) throw new Error('Fallback request failed');
 
         const fbToken = fallbackRes.headers?.get('x-chat-session-token');
-        if (fbToken) updateSessionToken(fbToken);
+        if (fbToken) updateSessionToken(fbToken, request.revision);
 
         if (fallbackRes.ok) {
           const data = await fallbackRes.json();
+          if (!request.isCurrent()) return;
           setMessages(prev =>
             prev.map(m =>
               m.id === botMsgId
                 ? {
                     ...m,
-                    text: data.answer || data.text || 'Tôi đã nhận được thông tin nhưng chưa thể phản hồi ngay.',
+                    text: data.text_response || data.answer || data.text || 'Tôi đã nhận được thông tin nhưng chưa thể phản hồi ngay.',
                     suggestions: data.suggestions || ['Khám phá Tà Pạ', 'Gà Đốt Ô Thum', 'Lịch trình 1 ngày'],
                   }
                 : m
@@ -491,6 +420,7 @@ export default function ChatbotWidget() {
           );
         }
       } catch {
+        if (!request.isCurrent()) return;
         setMessages(prev =>
           prev.map(m =>
             m.id === botMsgId
@@ -504,7 +434,7 @@ export default function ChatbotWidget() {
         );
       }
     } finally {
-      setIsTyping(false);
+      if (request.isCurrent()) setIsTyping(false);
     }
   };
 
@@ -513,6 +443,8 @@ export default function ChatbotWidget() {
   });
 
   const handleClearHistory = async () => {
+    const clearRequest = beginRequest();
+    setIsTyping(false);
     const currentSessionId = sessionIdRef.current;
     const currentToken = sessionTokenRef.current;
 
@@ -530,17 +462,19 @@ export default function ChatbotWidget() {
       }
     }
 
+    if (!clearRequest.isCurrent()) return;
     setMessages([{
       ...defaultWelcome,
       id: Date.now().toString(),
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }]);
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
-    const newSessionId = generateSessionId();
+    const newSessionId = consentRef.current === 'granted' ? generateSessionId() : 'anonymous';
     sessionIdRef.current = newSessionId;
     sessionTokenRef.current = '';
     try {
-      localStorage.setItem('triton_widget_session_id', newSessionId);
+      if (consentRef.current === 'granted') localStorage.setItem('triton_widget_session_id', newSessionId);
+      else localStorage.removeItem('triton_widget_session_id');
       localStorage.removeItem('triton_widget_session_token');
     } catch { /* ignore */ }
   };
@@ -668,15 +602,15 @@ export default function ChatbotWidget() {
       });
     }
   };
-  if (pathname === '/chatbot') {
+  if (pathname === '/chatbot' || pathname === '/chat' || pathname.startsWith('/admin')) {
     return null;
   }
 
   return (
     <>
       {/* ── DRAGGABLE FLOATING BUTTON (KÉO THẢ TỰ DO BẤT KỲ VỊ TRÍ) ── */}
-      {!isOpen && (
         <div
+          hidden={isOpen}
           style={
             fabPos
               ? { left: `${fabPos.x}px`, top: `${fabPos.y}px`, position: 'fixed' }
@@ -710,15 +644,16 @@ export default function ChatbotWidget() {
             )}
           </button>
         </div>
-      )}
-
       {/* ── CHAT MODAL WINDOW ───────────────────────────────────────────── */}
+      {isOpen && <div className="fixed inset-0 z-[55] bg-[#26221B]/30" onClick={() => setIsOpen(false)} aria-hidden="true" />}
       {isOpen && (
         <div
+          ref={dialogRef}
+          tabIndex={-1}
           role="dialog"
           aria-modal="true"
           aria-label="Cửa sổ Trợ lý AI Du Lịch Tri Tôn"
-          className={`fixed z-50 flex flex-col bg-[#FAF3E7] shadow-[0_10px_40px_rgba(38,34,27,0.2)] border border-[#26221B]/10 overflow-hidden font-body transition-all duration-300
+          className={`fixed z-[60] flex flex-col bg-[#FAF3E7] shadow-[0_10px_40px_rgba(38,34,27,0.2)] border border-[#26221B]/10 overflow-hidden font-body transition-all duration-300
             ${isExpanded
               ? 'inset-3 sm:inset-6 rounded-[28px]'
               : 'bottom-0 inset-x-0 sm:inset-x-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] sm:max-w-[calc(100vw-3rem)] h-[88dvh] sm:h-[620px] sm:max-h-[85vh] rounded-t-[26px] sm:rounded-[26px]'
@@ -752,29 +687,7 @@ export default function ChatbotWidget() {
             </div>
 
             <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={toggleConsent}
-                title={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh (Không lưu phiên). Bấm để lưu 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
-                aria-label={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh. Bấm để lưu phiên 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
-                className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                  chatConsent === 'denied'
-                    ? 'bg-[#F26B3A]/25 text-[#FFD37A] border border-[#F26B3A]/50'
-                    : 'bg-[#0B6B60] text-emerald-200 border border-emerald-400/40 hover:bg-[#095950]'
-                }`}
-              >
-                {chatConsent === 'denied' ? (
-                  <>
-                    <EyeOff className="w-3 h-3 text-[#FFD37A]" />
-                    <span>Ẩn danh</span>
-                  </>
-                ) : (
-                  <>
-                    <ShieldCheck className="w-3 h-3 text-emerald-300" />
-                    <span>Lưu 24h</span>
-                  </>
-                )}
-              </button>
+          <ChatConsentBadge status={chatConsent} onChange={handleSetConsent} />
               <button onClick={handleClearHistory} title="Xóa lịch sử" aria-label="Xóa lịch sử trò chuyện" className="p-1.5 rounded-full text-[#FAF3E7] hover:text-white hover:bg-[#0B6B60] transition-colors active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -788,34 +701,9 @@ export default function ChatbotWidget() {
           </div>
 
           {/* Privacy Consent Banner (P05-008: Hiển thị khi người dùng chưa chọn) */}
-          {chatConsent === 'unset' && (
-            <div className="bg-[#FFF8EE] border-b border-[#26221B]/10 px-3.5 py-2 flex items-center justify-between text-xs text-[#26221B] gap-2 shrink-0">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <ShieldCheck className="w-4 h-4 text-[#0E8C7F] shrink-0" />
-                <span className="text-[11px] leading-tight text-[#26221B]/90 truncate">
-                  Lưu ngữ cảnh trò chuyện 24h để duy trì hội thoại liên tục?
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => handleSetConsent('granted')}
-                  className="px-2 py-0.5 bg-[#0E8C7F] text-white rounded-md text-[11px] font-bold font-display hover:bg-[#0B6B60] transition-colors cursor-pointer active:scale-95"
-                >
-                  Đồng ý
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSetConsent('denied')}
-                  className="px-2 py-0.5 bg-transparent text-[#6B6355] border border-[#26221B]/20 rounded-md text-[11px] hover:bg-[#26221B]/5 transition-colors cursor-pointer active:scale-95"
-                >
-                  Ẩn danh
-                </button>
-              </div>
-            </div>
-          )}
+      <ChatConsentNotice status={chatConsent} onChange={handleSetConsent} notice={privacyNotice} onRetry={hasPendingDeletion ? () => { void retryDeletion(); } : undefined} />
 
-          {/* Quick preset chips */}
+      {/* Quick preset chips */}
           <div className="px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">
             {presets.map((preset, idx) => (
               <button

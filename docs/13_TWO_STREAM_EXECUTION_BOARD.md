@@ -10,6 +10,22 @@
 
 ## 1. Cách dùng
 
+### Data trust follow-up — 2026-10-23
+
+`UX-FOLLOWUP-DATA-TRUST` · Luồng A: phần UI done/implemented local, **G2/source approval vẫn mở**. Chặn food subtype mâu thuẫn, default giả và ảnh thay địa điểm; shared national SOS, ẩn local contacts đang tranh chấp trên public UI/PDF. 91 combined tests, lint 37 files 0 errors/132 warnings, Turbopack + TS 181/181 pass; không browser/staging/live-call proof. [Evidence và owner handoff](technical-spec/PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md). Sol · xhigh đề xuất; Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash Low `agy-af913405` / CRT-29 Done. User yêu cầu commit tích lũy, không push/deploy. Next `UX-FOLLOWUP-DATA-TRUST-G2` cần owner evidence; UI tiếp `UX-FOLLOWUP-COMPONENTS` · Sol medium.
+
+### Consent follow-up — 2026-10-23
+
+`UX-FOLLOWUP-CONSENT` · Luồng A: done local, code implemented. Chỉ granted được lưu/tải; shared request/hook/controls sửa unset, fallback, cross-client sync và stale responses; owned deletion lỗi có retry. 58 tests, lint 0 errors/13 warnings, Turbopack + TS 181/181 pass. [Evidence/giới hạn](technical-spec/CHAT_CONSENT_BOUNDARY_EVIDENCE_2026_10_23.md). Sol · xhigh đề xuất; thực dùng Codex GPT-6 (effort không công bố). Antigravity `agy-c45a0870` canceled vì không trả kết quả sau tool error, `CRT-28` Canceled. Next `UX-FOLLOWUP-DATA-TRUST` với G2/data owner; chưa đủ production/browser/staging evidence.
+
+### Build follow-up — 2026-10-23
+
+`UX-FOLLOWUP-BUILD` · Luồng A: done local. Sửa browser/server imports và Next extra exports; 36 tests, tsc và lint (0 errors) pass; webpack và Turbopack build pass 181/181 sau tạo lại `.next`. Không deploy/clean-checkout/CI evidence; browser recheck bị tool URL policy chặn. AI đề xuất Sol · xhigh, thực dùng Codex GPT-6 (effort không công bố) + Antigravity Gemini 3.8 Flash High read-only (`agy-afd1597f`, `CRT-27` Done). [Evidence bổ sung](technical-spec/UI_UX_READINESS_AUDIT_2026_10_20.md). Next: `UX-FOLLOWUP-CONSENT`; readiness còn mở.
+
+### Post-roadmap UI/UX audit — 2026-10-20
+
+`UX-AUDIT-20261020-01` · Luồng A: audit done, UI fixes implemented local; không đồng nghĩa nghiệm thu readiness. [Báo cáo/evidence](technical-spec/UI_UX_READINESS_AUDIT_2026_10_20.md) ghi lỗi build/type-check và các P1 consent/data trust còn mở. Task đề xuất tiếp theo `UX-FOLLOWUP-BUILD` (`Sol · xhigh`), sau đó consent và G2/SOS source review. Đây là follow-up mới, không cộng hoặc đổi trạng thái các ID remediation lịch sử.
+
 > ⚡ **CẬP NHẬT ĐIỀU HÀNH: GOM THÀNH 1 LUỒNG TUẦN TỰ DUY NHẤT**  
 > Để tối ưu hóa sự tập trung và loại bỏ phân mảnh context, toàn bộ các task của Luồng A và Luồng B đã được hợp nhất thành một lộ trình tuần tự duy nhất trong [`ACTIVE_TASK.md`](../ACTIVE_TASK.md).  
 > Tại mọi thời điểm, chỉ có **đúng 1 task duy nhất** active toàn dự án.

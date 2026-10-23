@@ -9,7 +9,7 @@ import {
   History, Trash2, ChevronRight, ArrowUpLeft, CornerDownLeft
 } from 'lucide-react';
 import localMasterPois from '@/data/triton_pois_full.json';
-import { removeVietnameseTones } from '@/app/api/v1/search/route';
+import { removeVietnameseTones } from '@/lib/searchText';
 
 interface SearchResultItem {
   id: string;
@@ -305,6 +305,11 @@ export default function SearchAutocomplete() {
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+      setFocused(false);
+      return;
+    }
     if (!isOpen || filteredResults.length === 0) return;
 
     if (e.key === 'ArrowDown') {
@@ -334,7 +339,7 @@ export default function SearchAutocomplete() {
     if (!q) return;
     saveRecentSearch(q);
     setIsOpen(false);
-    window.dispatchEvent(new CustomEvent('triton:open-chat', { detail: { query: q } }));
+    router.push(`/places?q=${encodeURIComponent(q)}`);
   };
 
   const handleAskAI = () => {

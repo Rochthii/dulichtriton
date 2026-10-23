@@ -9,7 +9,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
 
   // Hide on admin routes or full-screen chatbot page to avoid double UI
-  if (pathname?.startsWith("/admin") || pathname === "/chatbot") {
+  if (pathname?.startsWith("/admin") || pathname === "/chatbot" || pathname === "/chat") {
     return null;
   }
 
@@ -91,6 +91,7 @@ export default function MobileBottomNav() {
               href={item.href}
               prefetch={true}
               aria-label={item.label}
+              aria-current={item.isActive ? 'page' : undefined}
               className={`flex flex-col items-center justify-center flex-1 h-full py-1 transition-all active:scale-95 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] rounded-xl ${
                 item.isActive
                   ? "text-[#0E8C7F]"

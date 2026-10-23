@@ -39,7 +39,9 @@ test('P04-004: ChatbotWidget Session Identifier Contract Compliance', async (t) 
   // 1. Static Code Invariant
   await t.test('1. Static Code Invariant: Elimination of Math.random and mandatory UUID v4 enforcement', () => {
     assert.ok(fs.existsSync(widgetComponentPath), 'ChatbotWidget.tsx must exist');
-    const content = fs.readFileSync(widgetComponentPath, 'utf8');
+    const component = fs.readFileSync(widgetComponentPath, 'utf8');
+    assert.ok(component.includes('useChatPrivacy'), 'Widget must use shared privacy lifecycle');
+    const content = component + fs.readFileSync(path.resolve(__dirname, '../src/hooks/useChatPrivacy.ts'), 'utf8');
 
     // Must NOT contain Math.random()
     assert.equal(
@@ -60,13 +62,13 @@ test('P04-004: ChatbotWidget Session Identifier Contract Compliance', async (t) 
 
     // Must check stored session validity before reusing
     assert.ok(
-      content.includes('stored && isValidSessionId(stored)'),
+      content.includes('storedId && isValidSessionId(storedId)'),
       'ChatbotWidget.tsx must validate stored session using isValidSessionId'
     );
   });
 
   // 2. Behavioral Simulation: Fresh Visitor (Empty localStorage)
-  await t.test('2. Fresh Visitor: Generates valid UUID v4 session and stores in localStorage', () => {
+  await t.test('2. Consenting Fresh Visitor: Generates valid UUID v4 session and stores in localStorage', () => {
     const store = new Map();
     const mockLocalStorage = {
       getItem: (k) => store.get(k) || null,
@@ -91,7 +93,7 @@ test('P04-004: ChatbotWidget Session Identifier Contract Compliance', async (t) 
   });
 
   // 3. Behavioral Simulation: Legacy Migration (localStorage contains old Math.random() session)
-  await t.test('3. Legacy Migration: Detects invalid legacy session, migrates to fresh UUID v4', () => {
+  await t.test('3. Consenting Legacy Migration: Detects invalid legacy session, migrates to fresh UUID v4', () => {
     const store = new Map();
     const KEY = 'triton_widget_session_id';
     // Seed with old legacy format

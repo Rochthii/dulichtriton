@@ -100,10 +100,11 @@ export default function MapClientPage({ places }: MapClientPageProps) {
       },
       (error) => {
         console.warn('GPS Error:', error);
-        // Fallback to Tri Tôn Center for demo testing if GPS denied
-        setUserLocation({ lat: 10.4215, lng: 105.0035 });
-        setRadiusKm(5);
-        setLocationError('Đã đặt vị trí mẫu tại Trung tâm Thị trấn Tri Tôn.');
+        setUserLocation(null);
+        setRadiusKm(null);
+        setLocationError(error.code === 1
+          ? 'Bạn chưa cho phép định vị. Bật quyền vị trí rồi thử lại, hoặc chọn địa điểm trên bản đồ.'
+          : 'Chưa lấy được vị trí của bạn. Hãy thử lại hoặc chọn địa điểm trên bản đồ.');
         setIsLocating(false);
       },
       { enableHighAccuracy: true, timeout: 10000 }

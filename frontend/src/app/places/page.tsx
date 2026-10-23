@@ -26,7 +26,7 @@ import {
 
 type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
 
-export const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: string[]; keywords: string[] }> = {
+const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: string[]; keywords: string[] }> = {
   "cluster-tapa": {
     name: "Cụm Tà Pạ & Núi Tô",
     badge: "Check-in Biểu Tượng",
@@ -65,7 +65,7 @@ function PlacesPageContent() {
     return initialCluster && CLUSTERS_MAP[initialCluster] ? initialCluster : null;
   });
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
   const [places, setPlaces] = useState<Place[]>(() => {
     const list: Place[] = (localMasterPois as any[]).map((p) => ({
@@ -87,6 +87,7 @@ function PlacesPageContent() {
     const cParam = searchParams.get("commune");
     const catParam = searchParams.get("category");
     const clParam = searchParams.get("cluster");
+    setSearchQuery(searchParams.get("q") || "");
     if (clParam && CLUSTERS_MAP[clParam]) {
       setSelectedClusterId(clParam);
     }
@@ -260,13 +261,13 @@ function PlacesPageContent() {
           <div className="relative z-10 max-w-3xl space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
               <Compass className="h-3.5 w-3.5" />
-              <span>149 Tọa Độ Du Lịch Bảy Núi Đã Xác Minh</span>
+              <span>Danh mục khám phá Bảy Núi</span>
             </div>
             <h1 className="font-display text-2xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
               Khám Phá Danh Thắng & Di Tích Tri Tôn
             </h1>
             <p className="text-xs md:text-sm text-white/85 leading-relaxed font-body">
-              Tra cứu đầy đủ 149 địa điểm: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.
+              Tra cứu danh mục tham khảo: Hồ nước trên núi, ngôi chùa Khmer cổ kính, danh thắng thiên nhiên, ẩm thực đặc sản và tọa độ check-in tuyệt đẹp.
             </p>
           </div>
         </section>
@@ -315,7 +316,7 @@ function PlacesPageContent() {
 
                       <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
                         <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
-                        <span>{hotPlace.rating || 4.9}</span>
+                        <span>{hotPlace.rating ?? 'Chưa có đánh giá'}</span>
                       </span>
 
                       <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 text-white space-y-0.5">
@@ -395,11 +396,11 @@ function PlacesPageContent() {
             </span>
             {[
               { id: "all", label: "Tất Cả" },
-              { id: "night", label: "Tri Tôn Về Đêm 🌙" },
-              { id: "youth", label: "Giới Trẻ Check-in 📸" },
-              { id: "family", label: "Gia Đình & Nghỉ Dưỡng 👨‍👩‍👧" },
-              { id: "trekking", label: "Leo Núi Săn Mây 🏔️" },
-              { id: "spiritual", label: "Hành Hương Tâm Linh 🛕" },
+              { id: "night", label: "Tri Tôn về đêm" },
+              { id: "youth", label: "Giới trẻ check-in" },
+              { id: "family", label: "Gia đình & nghỉ dưỡng" },
+              { id: "trekking", label: "Leo núi săn mây" },
+              { id: "spiritual", label: "Hành hương tâm linh" },
             ].map((chip) => (
               <button
                 key={chip.id}
@@ -467,22 +468,22 @@ function PlacesPageContent() {
                 onClick={() => setSelectedClusterId(null)}
                 className="self-start sm:self-center inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200 shadow-2xs transition-all cursor-pointer font-display"
               >
-                <span>✕ Xóa lọc cụm (Xem tất cả 149 điểm)</span>
+                <span>Xóa lọc cụm (Xem tất cả điểm đến)</span>
               </button>
             </div>
           )}
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0E8C7F]" />
-              <span>Danh Sách 149 Địa Điểm Đã Xác Minh ({filteredPlaces.length} Địa Điểm)</span>
+              <span>Danh sách điểm đến ({filteredPlaces.length} kết quả)</span>
             </h2>
-            <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
+            <span className="text-xs text-[#6B6355] font-medium">Xem trạng thái xác minh tại chi tiết</span>
           </div>
 
           {loading ? (
             <div className="py-16 text-center text-[#6B6355] font-bold">
-              Đang tải danh mục 149 địa điểm du lịch Tri Tôn...
+              Đang tải danh mục điểm đến...
             </div>
           ) : filteredPlaces.length === 0 ? (
             <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">

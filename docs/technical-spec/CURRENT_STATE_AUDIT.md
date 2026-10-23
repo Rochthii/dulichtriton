@@ -2,6 +2,22 @@
 
 > Scope: checkout hiện tại; riêng mục “Supabase live preflight” dưới đây là quan sát read-only từ project được xác định ngày 2026-09-24. Mọi dòng `OBSERVED` cần tái kiểm khi code/runtime đổi.
 
+## Quan sát bổ sung 2026-10-23 — data trust UI containment
+
+Phần UI `UX-FOLLOWUP-DATA-TRUST` implemented: loại record food có subtype conflict khỏi listing/nearby; không suy giờ/giá/rating/review count/amenities/menu; fallback ảnh là placeholder trung tính. Public SOS/home/detail/footer/PDF không còn công bố local contacts đang mâu thuẫn, dùng chung các tổng đài quốc gia vốn có và trạng thái đang đối chiếu. **Canonical vẫn 1 verified; source/canonical/schema/AI routing không đổi.** 91 combined tests, lint 37 source files 0 errors/132 warnings, build+TS 181/181 pass. Không có browser/staging/live-call proof; G2/data owner, AI/offline SOS và nhiều narrative/source claims còn mở. [Evidence/giới hạn](PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md); không nâng readiness hoặc chọn một bộ số địa phương làm truth mới.
+
+## Quan sát bổ sung 2026-10-23 — consent follow-up local
+
+`UX-FOLLOWUP-CONSENT`: chỉ granted được lưu/tải history; shared request giữ consent ở stream/fallback; hiệu lực anonymous trước ownership khi chưa granted, audit helper cũng bị chặn; hai UI dùng chung state lifecycle/controls và chặn late response. 58 targeted tests pass với DB/provider fixtures, hook harness/SSR; lint 0 errors, production build + TS 181/181 pass. [Evidence và rủi ro](CHAT_CONSENT_BOUNDARY_EVIDENCE_2026_10_23.md) phân biệt rõ không có browser/staging/DB live proof, không đảm bảo thu hồi write đã commit hoặc provider-side retention. Antigravity canceled không có review result. Data trust/SOS và readiness tổng thể còn mở; các mô tả lỗi consent ngày 2026-10-20 bên dưới là lịch sử.
+
+## Quan sát bổ sung 2026-10-23 — build follow-up local
+
+`UX-FOLLOWUP-BUILD`: browser-safe shared UUID generator và search helper đã triển khai; gỡ Next extra exports. 36 targeted tests, tsc, ESLint (0 errors), webpack và Turbopack build 181/181 pass trong working tree hiện tại. Turbopack CSS subprocess lỗi với cache cũ; tạo lại `.next` và build xác nhận sau dọn diagnostics đều pass. Chưa xác định cơ chế hỏng cache ban đầu; không đổi bundler/config/dependency. Browser recheck bị tool URL policy từ chối, không có runtime map evidence mới. Consent/data trust/SOS vẫn mở; không nâng claim production readiness. Chi tiết ở [UI/UX audit](UI_UX_READINESS_AUDIT_2026_10_20.md).
+
+## Quan sát bổ sung 2026-10-20 — UI/UX local
+
+[UI/UX Readiness Audit](UI_UX_READINESS_AUDIT_2026_10_20.md) ghi các sửa UI `IMPLEMENTED` và behavior local đã quan sát ở 390×844/1440×900. Chưa đủ evidence nghiệm thu sẵn sàng dùng: còn consent `unset` đi nhánh granted ở client, nguồn/contact SOS cần đối chiếu và pipeline build/type-check chưa pass. Lượt `tsc` sau sinh Next types fail 3 extra exports; webpack fail `node:crypto` import vào client; Turbopack CSS subprocess fail. Các import/export liên quan đã có ở HEAD trước sửa UI, chưa chạy baseline build checkout riêng. Không suy từ audit local sang production hiện hành hoặc đổi quyết định owner G4.
+
 ## Trục trách nhiệm
 
 **Hệ thống chỉ được đưa thông tin du lịch hoặc SOS mà người dùng có thể tin để hành động khi dữ liệu có nguồn/xác minh rõ ràng; mọi thay đổi persistent vào dữ liệu, tri thức AI hoặc cấu hình phải đi qua authorization server-side và database policy.**

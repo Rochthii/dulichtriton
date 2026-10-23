@@ -2,6 +2,30 @@
 
 Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của hệ thống **Du Lịch Tri Tôn** sẽ được ghi vết chi tiết tại tài liệu này.
 
+## 2026-10-23 — Data trust UI containment (local)
+
+- `UX-FOLLOWUP-DATA-TRUST` / Luồng A: dùng category/subtype gate thống nhất ở food/home/nearby để không đưa lễ hội/artwork thành quán; không sửa canonical category hoặc tự duyệt POI.
+- Bỏ các default giả về giá, giờ, rating/review count, menu theo tên, tiện ích/chỗ đỗ; giữ dữ liệu có sẵn và trạng thái thiếu. Fallback ảnh và image optimizer dùng placeholder trung tính, food/stay không thay ảnh cơ sở bằng stock/hero khác địa điểm.
+- Public SOS/home/detail/footer/PDF dùng chung các tổng đài quốc gia đang có; danh bạ địa phương tạm không công bố vì source/phone/address mâu thuẫn và thiếu expiry. Không sửa số/canonical/data/schema/AI routing hoặc tự đóng G2. Không nối số Công an vào CTA đặt bàn khi thiếu phone cơ sở.
+- 91 combined tests pass, lint 37 source files 0 errors/132 warnings, Turbopack + TS 181/181 pass; không browser/staging/DB live/live-call/PDF runtime proof. Antigravity read-only completed, CRT-29 Done. [Evidence/owner handoff](docs/technical-spec/PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md). Commit tích lũy theo yêu cầu user; chưa push/deploy/readiness approval.
+
+## 2026-10-23 — Consent follow-up (local)
+
+- `UX-FOLLOWUP-CONSENT` / Luồng A: fail-closed cho unset/denied và denial wins khi body/header conflict; không load/save session hoặc thử ghi chat log, không cấp token/cookie. Shared client request áp dụng cả SSE và fallback, không gửi session/token/history/cookie khi chưa granted.
+- Dùng `useChatPrivacy` và `ChatConsentControls` cho cả hai giao diện: hydrate/persist chỉ granted, đồng bộ same-tab/storage events, abort/revision chống stale token/response; nhãn trung thực, controls 44px/focus/tokens, retry khi owned deletion chưa được xác nhận. Sửa SSE double-close ở early return khi test source route thật.
+- 58 targeted tests pass, lint 0 errors/13 warnings, Turbopack + TS pass 181/181; đăng ký boundary suite trong npm test, không thêm dependency/đổi lock/schema/data/AI routing. Chưa deploy, không có browser/staging/DB live proof. [Evidence/giới hạn](docs/technical-spec/CHAT_CONSENT_BOUNDARY_EVIDENCE_2026_10_23.md). Antigravity canceled không có review result; CRT-28 Canceled.
+
+## 2026-10-23 — UI/UX build follow-up (local)
+
+- `UX-FOLLOWUP-BUILD` / Luồng A: tách normalize text sang `lib/searchText.ts` dùng chung browser/server, gỡ exports ngoài contract của Next page/route; shared session generator dùng Web Crypto, giữ UUID v4 và fail-closed khi thiếu CSPRNG.
+- 36 targeted tests pass, gồm browser VM/native/fallback/error và ownership/deletion regressions; tsc pass, lint 0 errors (còn warnings). Webpack và Turbopack build 181/181 pass; lỗi CSS subprocess không tái hiện sau tạo lại `.next`. Không đổi dependency/config/dataset/schema/quyền; không deploy. Browser recheck bị tool URL policy chặn. Consent/data trust/SOS còn mở; không nâng claim readiness. [Evidence](docs/technical-spec/UI_UX_READINESS_AUDIT_2026_10_20.md).
+
+## 2026-10-20 — UI/UX audit và sửa tối thiểu (local)
+
+- `UX-AUDIT-20261020-01` / Luồng A: sửa token bị legacy CSS override, navigation mobile/tablet và SOS entry, query tìm kiếm, link tour/empty/error/retry, dialog focus/Escape, card favorite semantics và vùng chạm/safe-area.
+- Gỡ nhãn verified/149/100% đại trà ở các vị trí được sửa; POI detail dùng provenance canonical còn hạn, ảnh thiếu nguồn không được tự gắn source/license. Giá thiếu ở food không suy từ tên món. Feedback report kiểm SDK error trước khi báo thành công. Không đổi schema/dataset/quyền/AI provider routing.
+- Evidence: 11 narrow tests pass; kiểm browser local 390×844/1440×900. Final type-check và production build **chưa pass**; consent/data trust có P1 mở. [Báo cáo đầy đủ](docs/technical-spec/UI_UX_READINESS_AUDIT_2026_10_20.md); không tuyên bố production-ready từ đợt sửa này.
+
 Định dạng nhật ký dựa trên [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) và tuân thủ [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]

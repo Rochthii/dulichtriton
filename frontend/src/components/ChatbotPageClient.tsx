@@ -5,15 +5,16 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
   Send, Bot, User, Trash2, ArrowLeft,
-  MapPin, Navigation, ShieldCheck, EyeOff
+  MapPin, Navigation
 } from 'lucide-react';
 import FormattedChatMessage from '@/components/FormattedChatMessage';
 import WireDiagramItinerary, { type ItineraryData } from '@/components/WireDiagramItinerary';
 import ItineraryPresetPicker from '@/components/ItineraryPresetPicker';
 import AppLogo from '@/components/AppLogo';
 import { getGoogleMapsUrl } from '@/lib/utils';
-import { isValidSessionId, generateSessionId } from '@/lib/sessionIdentifierContract';
-import { CHAT_CONSENT_STORAGE_KEY, type ConsentStatus } from '@/lib/chatConsentGuard';
+import { generateSessionId } from '@/lib/sessionIdentifierContract';
+import { useChatPrivacy } from '@/hooks/useChatPrivacy';
+import { ChatConsentBadge, ChatConsentNotice } from '@/components/ChatConsentControls';
 import { getCanonicalChatbotHeaderClaim } from '@/lib/canonicalClaims';
 
 interface EmbeddedSpot {
@@ -64,67 +65,17 @@ export default function ChatbotPageClient() {
   const [isMounted, setIsMounted] = useState(false);
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const sessionIdRef = useRef<string>('');
-  const sessionTokenRef = useRef<string>('');
-
-  const updateSessionToken = (token?: string | null) => {
-    if (token && typeof token === 'string' && token.trim()) {
-      sessionTokenRef.current = token.trim();
-      try {
-        localStorage.setItem('triton_chat_page_session_token', token.trim());
-      } catch { /* ignore */ }
-    }
-  };
-
-  const [chatConsent, setChatConsent] = useState<ConsentStatus>('unset');
-
-  const handleSetConsent = (status: 'granted' | 'denied') => {
-    setChatConsent(status);
-    try {
-      localStorage.setItem(CHAT_CONSENT_STORAGE_KEY, status);
-    } catch { /* ignore */ }
-    if (status === 'denied') {
-      // Khi chuyển sang Ẩn danh: Kích hoạt xóa phiên trên máy chủ ngay lập tức theo quyền được xóa (P05-005)
-      if (sessionIdRef.current && sessionIdRef.current !== 'anonymous') {
-        void fetch(`/api/v1/chat/session?sessionId=${encodeURIComponent(sessionIdRef.current)}`, {
-          method: 'DELETE',
-          headers: {
-            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-          },
-        }).catch(() => {});
-      }
-    }
-  };
-
-  const toggleConsent = () => {
-    handleSetConsent(chatConsent === 'denied' ? 'granted' : 'denied');
-  };
+  const { chatConsent, consentRef, privacyNotice, sessionIdRef, sessionTokenRef,
+    handleSetConsent, updateSessionToken, beginRequest, createRequest, retryDeletion, hasPendingDeletion } = useChatPrivacy(
+    SESSION_KEY, 'triton_chat_page_session_id', 'triton_chat_page_session_token', () => {
+      setMessages([defaultWelcome]);
+      setIsTyping(false);
+      setIsLoadingItinerary(false);
+    });
 
   useEffect(() => {
     setIsMounted(true);
-    const KEY = 'triton_chat_page_session_id';
-    const stored = localStorage.getItem(KEY);
-    if (stored && isValidSessionId(stored)) {
-      sessionIdRef.current = stored;
-    } else {
-      const newId = generateSessionId();
-      localStorage.setItem(KEY, newId);
-      sessionIdRef.current = newId;
-    }
-
-    const TOKEN_KEY = 'triton_chat_page_session_token';
-    const storedToken = localStorage.getItem(TOKEN_KEY);
-    if (storedToken) {
-      sessionTokenRef.current = storedToken;
-    }
-
-    try {
-      const savedConsent = localStorage.getItem(CHAT_CONSENT_STORAGE_KEY) as ConsentStatus;
-      if (savedConsent === 'granted' || savedConsent === 'denied') {
-        setChatConsent(savedConsent);
-      }
-    } catch { /* ignore */ }
-
+    if (consentRef.current !== 'granted') return;
     try {
       const saved = localStorage.getItem(SESSION_KEY);
       if (saved) {
@@ -145,15 +96,15 @@ export default function ChatbotPageClient() {
         }
       }
     } catch { /* ignore */ }
-  }, []);
+  }, [consentRef]);
 
   useEffect(() => {
-    if (isMounted && messages.length > 0) {
+    if (isMounted && consentRef.current === 'granted' && messages.length > 0) {
       try {
         localStorage.setItem(SESSION_KEY, JSON.stringify(messages.slice(-MAX_STORED_MESSAGES)));
-      } catch { /* ignore */ }
+      } catch { /* storage unavailable */ }
     }
-  }, [messages, isMounted]);
+  }, [messages, isMounted, chatConsent, consentRef]);
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
     if (messagesContainerRef.current) {
@@ -240,6 +191,7 @@ export default function ChatbotPageClient() {
   const handleSend = async (customText?: string) => {
     const textToSend = customText || input;
     if (!textToSend.trim()) return;
+    const request = beginRequest();
 
     const lower = textToSend.toLowerCase();
     const isItinIntent = 
@@ -295,9 +247,10 @@ export default function ChatbotPageClient() {
       setIsLoadingItinerary(true);
 
       try {
-        const res = await fetch(`/api/v1/chat/itinerary?slug=${matchedSlug}`);
+        const res = await fetch(`/api/v1/chat/itinerary?slug=${matchedSlug}`, { signal: request.signal });
         if (res.ok) {
           const data = await res.json();
+          if (!request.isCurrent()) return;
           if (data.itinerary) {
             const botMsg: Message = {
               id: (Date.now() + 1).toString(),
@@ -318,6 +271,7 @@ export default function ChatbotPageClient() {
           }
         }
       } catch { /* fallback to standard query */ }
+      if (!request.isCurrent()) return;
       setIsLoadingItinerary(false);
     }
 
@@ -328,7 +282,7 @@ export default function ChatbotPageClient() {
       timestamp: getSafeTime(),
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    if (!isItinIntent) setMessages(prev => [...prev, userMsg]);
     if (!customText) setInput('');
     setIsTyping(true);
 
@@ -343,32 +297,13 @@ export default function ChatbotPageClient() {
     setMessages(prev => [...prev, botMsg]);
 
     try {
-      const isConsentDenied = chatConsent === 'denied';
-
       const res = await fetch('/api/v1/chat/stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-chat-consent': isConsentDenied ? 'denied' : 'granted',
-          ...(sessionTokenRef.current && !isConsentDenied ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-        },
-        body: JSON.stringify({
-          question: textToSend,
-          query: textToSend,
-          consent: !isConsentDenied,
-          session_id: isConsentDenied ? 'anonymous' : sessionIdRef.current,
-          session_token: !isConsentDenied ? (sessionTokenRef.current || undefined) : undefined,
-          history: isConsentDenied
-            ? []
-            : messages.slice(-6).map(m => ({
-                sender: m.sender,
-                text: m.text,
-              })),
-        }),
+        ...createRequest(textToSend, messages.slice(-6)), signal: request.signal,
       });
+      if (!request.isCurrent()) return;
 
       const tokenHeader = res.headers?.get('x-chat-session-token');
-      if (tokenHeader) updateSessionToken(tokenHeader);
+      if (tokenHeader) updateSessionToken(tokenHeader, request.revision);
 
       if (!res.ok || !res.body) {
         throw new Error('API request failed');
@@ -383,6 +318,7 @@ export default function ChatbotPageClient() {
 
       while (true) {
         const { value, done } = await reader.read();
+        if (!request.isCurrent()) { await reader.cancel(); return; }
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
@@ -439,31 +375,26 @@ export default function ChatbotPageClient() {
         }
       }
     } catch {
+      if (!request.isCurrent()) return;
       try {
         const fallbackRes = await fetch('/api/v1/chat/query', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(sessionTokenRef.current ? { 'x-chat-session-token': sessionTokenRef.current } : {}),
-          },
-          body: JSON.stringify({
-            question: textToSend,
-            session_id: sessionIdRef.current,
-            session_token: sessionTokenRef.current || undefined,
-          }),
+          ...createRequest(textToSend, messages.slice(-6)), signal: request.signal,
         });
+        if (!request.isCurrent()) return;
+        if (!fallbackRes.ok) throw new Error('Fallback request failed');
 
         const fbToken = fallbackRes.headers?.get('x-chat-session-token');
-        if (fbToken) updateSessionToken(fbToken);
+        if (fbToken) updateSessionToken(fbToken, request.revision);
 
         if (fallbackRes.ok) {
           const data = await fallbackRes.json();
+          if (!request.isCurrent()) return;
           setMessages(prev =>
             prev.map(m =>
               m.id === botMsgId
                 ? {
                     ...m,
-                    text: data.answer || data.text || 'Tôi đã nhận được thông tin nhưng chưa thể phản hồi ngay.',
+                    text: data.text_response || data.answer || data.text || 'Tôi đã nhận được thông tin nhưng chưa thể phản hồi ngay.',
                     suggestions: data.suggestions || ['Khám phá Tà Pạ', 'Gà Đốt Ô Thum', 'Lịch trình 1 ngày'],
                   }
                 : m
@@ -471,6 +402,7 @@ export default function ChatbotPageClient() {
           );
         }
       } catch {
+        if (!request.isCurrent()) return;
         setMessages(prev =>
           prev.map(m =>
             m.id === botMsgId
@@ -484,7 +416,7 @@ export default function ChatbotPageClient() {
         );
       }
     } finally {
-      setIsTyping(false);
+      if (request.isCurrent()) setIsTyping(false);
     }
   };
 
@@ -498,6 +430,8 @@ export default function ChatbotPageClient() {
   }, [isMounted, searchParams]);
 
   const handleClearHistory = async () => {
+    const clearRequest = beginRequest();
+    setIsTyping(false);
     const currentSessionId = sessionIdRef.current;
     const currentToken = sessionTokenRef.current;
 
@@ -515,30 +449,24 @@ export default function ChatbotPageClient() {
       }
     }
 
+    if (!clearRequest.isCurrent()) return;
     setMessages([{
       ...defaultWelcome,
       id: Date.now().toString(),
       timestamp: getSafeTime(),
     }]);
     try { localStorage.removeItem(SESSION_KEY); } catch { /* ignore */ }
-    const newSessionId = generateSessionId();
+    const newSessionId = consentRef.current === 'granted' ? generateSessionId() : 'anonymous';
     sessionIdRef.current = newSessionId;
     sessionTokenRef.current = '';
     try {
-      localStorage.setItem('triton_chat_page_session_id', newSessionId);
+      if (consentRef.current === 'granted') localStorage.setItem('triton_chat_page_session_id', newSessionId);
+      else localStorage.removeItem('triton_chat_page_session_id');
       localStorage.removeItem('triton_chat_page_session_token');
     } catch { /* ignore */ }
   };
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const urlParams = new URLSearchParams(window.location.search);
-    const q = urlParams.get('q') || urlParams.get('prompt') || urlParams.get('question');
-    if (q && !initialQueryHandledRef.current) {
-      initialQueryHandledRef.current = true;
-      void handleSend(q);
-    }
-  }, []);
+
 
   return (
     <div className="flex flex-col h-[100dvh] bg-[#FAF3E7] text-[#26221B] font-body">
@@ -567,28 +495,7 @@ export default function ChatbotPageClient() {
         </div>
 
         <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={toggleConsent}
-            title={chatConsent === 'denied' ? 'Đang ở chế độ Ẩn danh (Không lưu phiên). Bấm để lưu 24h' : 'Đang lưu phiên 24h. Bấm để chuyển sang Ẩn danh'}
-            className={`px-2.5 py-1 rounded-full text-[11px] font-bold font-display flex items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
-              chatConsent === 'denied'
-                ? 'bg-[#F26B3A]/25 text-[#FFD37A] border border-[#F26B3A]/50'
-                : 'bg-[#0B6B60] text-emerald-200 border border-emerald-400/40 hover:bg-[#095950]'
-            }`}
-          >
-            {chatConsent === 'denied' ? (
-              <>
-                <EyeOff className="w-3.5 h-3.5 text-[#FFD37A]" />
-                <span>Ẩn danh</span>
-              </>
-            ) : (
-              <>
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
-                <span>Lưu 24h</span>
-              </>
-            )}
-          </button>
+          <ChatConsentBadge status={chatConsent} onChange={handleSetConsent} />
           <button
             onClick={handleClearHistory}
             title="Xóa lịch sử trò chuyện"
@@ -601,32 +508,7 @@ export default function ChatbotPageClient() {
       </header>
 
       {/* Privacy Consent Banner (P05-008: Hiển thị khi người dùng chưa chọn) */}
-      {chatConsent === 'unset' && (
-        <div className="bg-[#FFF8EE] border-b border-[#26221B]/10 px-4 py-2.5 flex items-center justify-between text-xs text-[#26221B] gap-2 shrink-0">
-          <div className="flex items-center gap-2 min-w-0">
-            <ShieldCheck className="w-4 h-4 text-[#0E8C7F] shrink-0" />
-            <span className="text-xs leading-tight text-[#26221B]/90">
-              Lưu ngữ cảnh trò chuyện 24h trên máy chủ để trả lời mạch lạc các câu hỏi tiếp nối?
-            </span>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={() => handleSetConsent('granted')}
-              className="px-2.5 py-1 bg-[#0E8C7F] text-white rounded-md text-xs font-bold font-display hover:bg-[#0B6B60] transition-colors cursor-pointer active:scale-95"
-            >
-              Đồng ý
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSetConsent('denied')}
-              className="px-2.5 py-1 bg-transparent text-[#6B6355] border border-[#26221B]/20 rounded-md text-xs hover:bg-[#26221B]/5 transition-colors cursor-pointer active:scale-95"
-            >
-              Ẩn danh
-            </button>
-          </div>
-        </div>
-      )}
+      <ChatConsentNotice status={chatConsent} onChange={handleSetConsent} notice={privacyNotice} onRetry={hasPendingDeletion ? () => { void retryDeletion(); } : undefined} />
 
       {/* ── QUICK PRESET FILTER CHIPS ───────────────────────────────────── */}
       <div className="px-3 py-2 bg-[#FFFDF7] border-b border-[#26221B]/8 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none shrink-0 touch-pan-x">

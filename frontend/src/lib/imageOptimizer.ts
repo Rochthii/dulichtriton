@@ -1,3 +1,5 @@
+import { MISSING_PLACE_IMAGE } from './publicPlacePresentation';
+
 /**
  * Utility to generate high-resolution, Retina-ready (2x/3x DPR) optimized image URLs
  * across Cloudinary, Unsplash, and local image assets.
@@ -15,7 +17,7 @@ export function getOptimizedImageUrl(
   } = {}
 ): string {
   if (!url || typeof url !== 'string') {
-    return 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg';
+    return MISSING_PLACE_IMAGE;
   }
 
   const {

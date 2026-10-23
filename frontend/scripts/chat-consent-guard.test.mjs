@@ -169,42 +169,24 @@ test('P05-008 Assertion 4: Stream Route enforces consent guard and prevents DB w
   );
 });
 
-test('P05-008 Assertion 5: UI Components (ChatbotWidget & ChatbotPageClient) integrate Consent Banner and Toggle', () => {
-  const widgetContent = fs.readFileSync(chatbotWidgetTsPath, 'utf8');
-  const pageContent = fs.readFileSync(chatbotPageClientTsPath, 'utf8');
-
-  // Widget must contain consent state and banner
-  assert.ok(widgetContent.includes('chatConsent'), 'ChatbotWidget must contain chatConsent state');
-  assert.ok(widgetContent.includes('CHAT_CONSENT_STORAGE_KEY'), 'ChatbotWidget must persist consent');
-  assert.ok(widgetContent.includes('handleSetConsent'), 'ChatbotWidget must provide handleSetConsent');
-  assert.ok(widgetContent.includes('toggleConsent'), 'ChatbotWidget must provide toggleConsent');
-  assert.ok(widgetContent.includes('Ẩn danh'), 'ChatbotWidget must offer incognito/denied option');
-  assert.ok(widgetContent.includes('x-chat-consent'), 'ChatbotWidget must send x-chat-consent header');
-
-  // Page must contain consent state and banner
-  assert.ok(pageContent.includes('chatConsent'), 'ChatbotPageClient must contain chatConsent state');
-  assert.ok(pageContent.includes('CHAT_CONSENT_STORAGE_KEY'), 'ChatbotPageClient must persist consent');
-  assert.ok(pageContent.includes('handleSetConsent'), 'ChatbotPageClient must provide handleSetConsent');
-  assert.ok(pageContent.includes('toggleConsent'), 'ChatbotPageClient must provide toggleConsent');
-  assert.ok(pageContent.includes('Ẩn danh'), 'ChatbotPageClient must offer incognito/denied option');
-  assert.ok(pageContent.includes('x-chat-consent'), 'ChatbotPageClient must send x-chat-consent header');
+test('P05-008 Assertion 5: both clients use shared consent UI and lifecycle', () => {
+  const controls = fs.readFileSync(path.resolve(__dirname, '../src/components/ChatConsentControls.tsx'), 'utf8');
+  for (const file of [chatbotWidgetTsPath, chatbotPageClientTsPath]) {
+    const content = fs.readFileSync(file, 'utf8');
+    assert.ok(content.includes('useChatPrivacy('));
+    assert.ok(content.includes('<ChatConsentBadge'));
+    assert.ok(content.includes('<ChatConsentNotice'));
+    assert.ok(content.includes("consentRef.current === 'granted'"), 'Local history writes require granted');
+    assert.equal((content.match(/\.\.\.createRequest\(textToSend/g) || []).length, 2, 'Stream and fallback use the same privacy envelope');
+  }
+  assert.ok(controls.includes('Chưa lưu'));
+  assert.ok(controls.includes('Không lưu'));
 });
 
-test('P05-008 Assertion 6: Negative & Privacy Invariant - Ephemeral mode suppresses history and protects privacy', () => {
-  const widgetContent = fs.readFileSync(chatbotWidgetTsPath, 'utf8');
-  const pageContent = fs.readFileSync(chatbotPageClientTsPath, 'utf8');
-
-  // When consent is denied, history must be cleared/empty array
-  assert.ok(
-    widgetContent.includes('history: isConsentDenied') && widgetContent.includes('? []'),
-    'Widget must not transmit conversation history when consent is denied'
-  );
-
-  assert.ok(
-    pageContent.includes('history: isConsentDenied') && pageContent.includes('? []'),
-    'ChatbotPageClient must not transmit conversation history when consent is denied'
-  );
-
-  // Invariant: No mock or placeholder
-  assert.ok(!fs.readFileSync(consentGuardTsPath, 'utf8').includes('TODO'), 'No TODOs in consent guard');
+test('P05-008 Assertion 6: unset/denied suppress persistence and history at the shared guard', () => {
+  const id = '00000000-0000-4000-8000-000000000001';
+  for (const status of ['unset', 'denied']) {
+    assert.equal(consentGuard.shouldLoadChatHistory(status, id), false);
+    assert.equal(consentGuard.shouldPersistChatSession(status, id), false);
+  }
 });

@@ -16,6 +16,7 @@ import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
 import WireDiagramItinerary from './WireDiagramItinerary';
 import { optimizeRouteTSP, OptimizablePlace, OptimizedRouteResult } from '@/lib/routeOptimizer';
 import { supabase } from '@/lib/supabase';
+import { useSearchParams } from 'next/navigation';
 
 interface PresetSummary {
   slug: string;
@@ -41,11 +42,17 @@ type DurationFilter = 'all' | '1-day' | 'evening' | '2-day' | '3-day';
 type PlannerTab = 'presets' | 'optimizer';
 
 export default function ItineraryClientPage() {
+  const searchParams = useSearchParams();
+  const requestedSlug = searchParams.get('slug');
+  const [listError, setListError] = useState('');
+  const [detailError, setDetailError] = useState('');
+  const [listAttempt, setListAttempt] = useState(0);
+  const [detailAttempt, setDetailAttempt] = useState(0);
   const [activeTab, setActiveTab] = useState<PlannerTab>('presets');
   const [presets, setPresets] = useState<PresetSummary[]>([]);
   const [selectedSlug, setSelectedSlug] = useState<string>('');
   const [currentItinerary, setCurrentItinerary] = useState<ItineraryData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isListLoading, setIsListLoading] = useState(true);
   const [durationFilter, setDurationFilter] = useState<DurationFilter>('all');
   const [transport, setTransport] = useState<'bike' | 'car'>('bike');
@@ -65,23 +72,30 @@ export default function ItineraryClientPage() {
   useEffect(() => {
     let isMounted = true;
     async function loadPresets() {
+      setIsListLoading(true);
+      setListError('');
       try {
         const res = await fetch('/api/v1/chat/itinerary');
         if (!res.ok) throw new Error('Failed to load presets');
         const data = await res.json();
         if (isMounted && Array.isArray(data.presets) && data.presets.length > 0) {
           setPresets(data.presets);
-          setSelectedSlug(data.presets[0].slug);
+          const requested = data.presets.find((preset: PresetSummary) => preset.slug === requestedSlug);
+          setSelectedSlug(requested?.slug || data.presets[0].slug);
+          if (requestedSlug && !requested) setListError('Không tìm thấy tour trong liên kết. Bạn có thể chọn một lịch trình khác bên dưới.');
+        } else if (isMounted) {
+          setListError('Chưa có lịch trình để hiển thị. Hãy thử lại sau.');
         }
       } catch (err) {
         console.error('Error fetching itinerary presets:', err);
+        if (isMounted) setListError('Chưa tải được danh sách lịch trình. Kiểm tra kết nối và thử lại.');
       } finally {
         if (isMounted) setIsListLoading(false);
       }
     }
     loadPresets();
     return () => { isMounted = false; };
-  }, []);
+  }, [requestedSlug, listAttempt]);
 
   // ── Fetch full itinerary details on selectedSlug change ───────────────────
   useEffect(() => {
@@ -89,22 +103,24 @@ export default function ItineraryClientPage() {
     let isMounted = true;
     async function loadDetail() {
       setIsLoading(true);
+      setCurrentItinerary(null);
+      setDetailError('');
       try {
         const res = await fetch(`/api/v1/chat/itinerary?slug=${encodeURIComponent(selectedSlug)}`);
         if (!res.ok) throw new Error('Failed to load detail');
         const data = await res.json();
-        if (isMounted && data.itinerary) {
-          setCurrentItinerary(data.itinerary);
-        }
+        if (!data.itinerary) throw new Error('Missing itinerary');
+        if (isMounted) setCurrentItinerary(data.itinerary);
       } catch (err) {
         console.error('Error fetching itinerary detail:', err);
+        if (isMounted) setDetailError('Chưa tải được chi tiết tour đã chọn. Hãy thử lại hoặc chọn tour khác.');
       } finally {
         if (isMounted) setIsLoading(false);
       }
     }
     loadDetail();
     return () => { isMounted = false; };
-  }, [selectedSlug]);
+  }, [selectedSlug, detailAttempt]);
 
   // ── Load POIs for Custom Route Optimizer ──────────────────────────────────
   useEffect(() => {
@@ -241,12 +257,12 @@ export default function ItineraryClientPage() {
     <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen">
       {/* Page Header Banner */}
       <PageHeaderBanner
-        badgeText="35 Lịch Trình Gợi Ý & Tối Ưu Tuyến Đường"
+        badgeText="Lịch trình gợi ý & Tối ưu tuyến đường"
         badgeIcon={Compass}
         title="LẬP KẾ HOẠCH & TỐI ƯU LỘ TRÌNH DU LỊCH BẢY NÚI"
         subtitle="Khám phá các tour gợi ý chuyên sâu hoặc tự chọn các điểm đến yêu thích để hệ thống tự động sắp xếp thứ tự ngắn nhất, tránh đi vòng và tiết kiệm thời gian qua đèo."
         countLabel="Lịch trình gợi ý"
-        countValue="35 Kịch bản tour"
+        countValue={isListLoading ? 'Đang tải' : `${presets.length} lịch trình`}
       />
 
       {/* ── TOP PLANNER MODE SWITCHER TABS ── */}
@@ -260,7 +276,7 @@ export default function ItineraryClientPage() {
           }`}
         >
           <Compass className="w-4 h-4" />
-          <span>Lịch Trình Có Sẵn (35 Tour)</span>
+          <span>Lịch trình có sẵn{presets.length > 0 ? ` (${presets.length})` : ''}</span>
         </button>
 
         <button
@@ -281,6 +297,10 @@ export default function ItineraryClientPage() {
       ════════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'presets' && (
         <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
+          {listError && <div role="status" className="rounded-[var(--r-m)] border border-[#A6503A]/30 bg-[var(--surface)] p-4 text-sm text-[var(--ink)]">
+            <p>{listError}</p>
+            <button onClick={() => setListAttempt(value => value + 1)} className="btn-jade min-h-11 px-4 mt-3">Thử tải lại danh sách</button>
+          </div>}
 
           {/* ── SMART TRIP BUILDER: 3-Button Filter ── */}
           <SmartTripBuilder
@@ -329,6 +349,7 @@ export default function ItineraryClientPage() {
                 )}
               </label>
               <select
+                aria-label="Chọn lịch trình gợi ý"
                 value={selectedSlug}
                 onChange={(e) => setSelectedSlug(e.target.value)}
                 className="w-full px-3 py-2 rounded-xl bg-[#FAF3E7] border border-[#26221B]/10 text-xs font-bold text-[#26221B] focus:outline-none focus:border-[#0E8C7F]"
@@ -443,6 +464,11 @@ export default function ItineraryClientPage() {
 
                   {/* Wire Diagram Itinerary */}
                   <WireDiagramItinerary itinerary={currentItinerary} transport={transport} />
+                </div>
+              ) : detailError ? (
+                <div role="alert" className="bg-[var(--surface)] rounded-[var(--r-l)] p-6 border border-[#A6503A]/30 text-sm">
+                  <p>{detailError}</p>
+                  <button onClick={() => setDetailAttempt(value => value + 1)} className="btn-jade min-h-11 px-4 mt-3">Thử lại chi tiết tour</button>
                 </div>
               ) : null}
             </div>

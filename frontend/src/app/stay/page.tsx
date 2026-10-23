@@ -1,5 +1,8 @@
 "use client";
 
+import PlaceListingImage from '@/components/PlaceListingImage';
+import { presentRating, presentPlaceImage } from '@/lib/publicPlacePresentation';
+
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import localStaysJson from "@/data/tri_ton_stays.json";
@@ -56,14 +59,7 @@ export default function StayPage() {
     function processStayData(data: any[]) {
       if (data && data.length > 0) {
         const formatted: StayItem[] = data.map((item: any) => {
-          let img = "https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg";
-          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-            img = item.image_url;
-          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-            const p0 = item.photos[0];
-            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-          }
+          const img = presentPlaceImage(item);
 
           // Detect stay_type if not set
           let sType: "homestay" | "hotel" | "camping" | "motel" = item.stay_type || "hotel";
@@ -87,16 +83,16 @@ export default function StayPage() {
             subcategory: item.subcategory || "Cơ sở lưu trú",
             tourism_category: item.tourism_category || "Homestay & Khách Sạn",
             commune: item.commune || "Thị trấn Tri Tôn",
-            rating: item.rating ? Number(item.rating) : 4.8,
+            rating: presentRating(item.rating),
             image_url: img,
             video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
             address: item.address || "",
             phone: item.phone || item.hotline || "",
             hotline: item.hotline || item.phone || "",
-            price_level: item.price_level || "200.000đ – 450.000đ/đêm",
+            price_level: item.price_level || "Chưa có thông tin giá",
             description: item.description || "",
             detailed_story: item.detailed_story || "",
-            amenities: item.amenities || ["Wifi miễn phí", "Máy lạnh", "Gần điểm tham quan"],
+            amenities: Array.isArray(item.amenities) ? item.amenities : [],
             stay_type: sType,
             is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
           };
@@ -173,13 +169,13 @@ export default function StayPage() {
           <div className="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-[#FFD37A]/20 px-3 py-1 text-xs font-black text-[#FFD37A] uppercase tracking-wider backdrop-blur-xs font-display">
               <Hotel className="h-3.5 w-3.5" />
-              <span>12 Cơ Sở Lưu Trú Đã Xác Minh Thực Địa</span>
+              <span>Danh mục lưu trú tham khảo</span>
             </div>
             <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-[#FFFDF7] leading-tight">
               Homestay, Khách Sạn & Cắm Trại Tri Tôn
             </h1>
             <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-body">
-              Tra cứu thông tin chính xác 100%: Hotline đặt phòng 1 chạm, bảng giá thực tế, có dịch vụ cho thuê xe máy và view ngắm cảnh núi Cô Tô / Hồ Tà Pạ tuyệt đẹp.
+              Tra cứu thông tin tham khảo: Hotline đặt phòng 1 chạm, bảng giá thực tế, có dịch vụ cho thuê xe máy và view ngắm cảnh núi Cô Tô / Hồ Tà Pạ tuyệt đẹp.
             </p>
           </div>
         </section>
@@ -258,7 +254,7 @@ export default function StayPage() {
                 >
                   <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-900">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <PlaceListingImage
                       src={getOptimizedImageUrl(hotStay.image_url, { width: 900, dpr: 2, quality: 'best' })}
                       alt={hotStay.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -274,7 +270,7 @@ export default function StayPage() {
 
                     <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-[11px] flex items-center gap-1 shadow-xs font-display">
                       <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
-                      <span>{hotStay.rating}</span>
+                      <span>{hotStay.rating ?? "Chưa có đánh giá"}</span>
                     </span>
 
                     <div className="absolute bottom-2.5 left-3 right-3 text-white">
@@ -357,7 +353,7 @@ export default function StayPage() {
               <span>Danh Sách Lưu Trú ({filteredStays.length})</span>
             </h2>
             <span className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60 font-bold font-mono">
-              100% Thực Địa Đã Xác Minh
+              Đối chiếu với cơ sở trước khi đặt phòng
             </span>
           </div>
 
@@ -375,7 +371,7 @@ export default function StayPage() {
                   <div>
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <PlaceListingImage
                         src={getOptimizedImageUrl(stay.image_url, { width: 800, dpr: 2, quality: 'best' })}
                         alt={stay.name}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -391,7 +387,7 @@ export default function StayPage() {
 
                       <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-lg bg-white/95 text-[#26221B] font-black text-[11px] flex items-center gap-0.5 shadow-xs font-display">
                         <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
-                        <span>{stay.rating || 4.8}</span>
+                        <span>{stay.rating ?? "Chưa có đánh giá"}</span>
                       </span>
 
                       <div className="absolute bottom-2.5 left-3 right-3 text-white space-y-0.5">

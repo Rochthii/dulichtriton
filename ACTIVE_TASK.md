@@ -1,5 +1,48 @@
 # ACTIVE TASK — UNIFIED EXECUTION STREAM (LUỒNG THỐNG NHẤT)
 
+### Completion — UX-FOLLOWUP-DATA-TRUST, phần UI (2026-10-23)
+
+- **Luồng A:** UI không biến candidate/conflicting metadata thành verified, không suy giá/giờ/rating/tiện ích/ảnh, không đưa số SOS địa phương chưa đối chiếu thành CTA. Giữ canonical/schema/AI routing và số tổng đài quốc gia đang có.
+- **Acceptance:** inventory nguồn/category/SOS, tests UI/helper với dữ liệu thiếu/mâu thuẫn và controlled SSR; build/lint phù hợp; evidence chỉ rõ phần G2/data owner còn mở. Commit các sửa UI/build/consent đã hoàn tất và phần task này theo yêu cầu người dùng, không push/deploy.
+- **AI đề xuất:** Sol · xhigh; thực dùng Codex GPT-6 (effort không công bố); Antigravity Gemini 3.8 Flash Low read-only `agy-af913405` / Linear `CRT-29`. Không tự duyệt hotline hoặc sửa category canonical.
+- **Kết quả:** phần UI done/`IMPLEMENTED` local; G2/source approval còn mở. Chặn food subtype mâu thuẫn, bỏ default giá/giờ/rating/reviews/amenities/menu và ảnh thay địa điểm. SOS dùng chung tổng đài quốc gia đang có, tạm ẩn local contacts đang tranh chấp; PDF và public entry đồng bộ. Không đổi canonical/data/schema/AI routing.
+- **Kiểm chứng:** 91/91 combined tests, lint 37 source files 0 errors/132 warnings, Turbopack build + TypeScript 181/181, diff-check pass. Source SSR/helper/fixture tests; không browser/staging/DB live hoặc gọi thử hotline. [Evidence/G2 handoff](docs/technical-spec/PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md).
+- **Review:** Antigravity completed, CRT-29 Done; Codex đối chiếu source mismatch và thiếu expiry; bác bỏ phần worker nói không có reviewer vì JSON có verified_by.
+- **Commit:** người dùng đã yêu cầu commit sau khi xong; bao gồm các thay đổi UI/build/consent tích lũy cùng đợt này, không push/deploy.
+- **Next:** owner `UX-FOLLOWUP-DATA-TRUST-G2` (Astra · xhigh khi nguồn mâu thuẫn); UI tiếp được phép `UX-FOLLOWUP-COMPONENTS` (Sol · medium), không tự đóng G2/G4 hoặc nâng claim readiness.
+
+### Completion — UX-FOLLOWUP-CONSENT (2026-10-23)
+
+- **Luồng A:** đồng bộ consent unset/granted/denied cho widget, chat page, stream và fallback; chỉ granted được lưu/tải lịch sử hoặc ghi chat log.
+- **Acceptance:** kiểm actual route với side-effect recorder cho unset/denied/conflict và granted control; không đọc/lưu session/log/cache, cấp token/cookie hoặc replay history khi chưa granted. Provider inference để trả lời câu hỏi hiện tại vẫn có thể chạy; không suy ra chính sách lưu dữ liệu của nhà cung cấp.
+- **AI đề xuất:** Sol · xhigh; **thực dùng:** Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash High read-only `agy-c45a0870` / Linear `CRT-28`. Không đổi schema/dataset/quyền/AI routing hoặc quyết định owner.
+- **Kết quả:** done local, code `IMPLEMENTED`; chỉ granted được persist/load, denied thắng conflict; shared request giữ consent ở fallback, shared hook/UI đồng bộ lựa chọn, abort/revision và retry owned deletion có feedback thật. Gỡ double-close của SSE early branches phát hiện khi test route.
+- **Kiểm chứng:** 58/58 tests pass (12 boundary tests mới), lint 0 errors/13 warnings, Turbopack build + TypeScript pass 181/181, diff-check pass. Test route thật với DB/provider fixtures và hook harness/SSR; không DB/provider live, browser hoặc staging evidence.
+- **Review:** Antigravity bị hủy sau hơn 12 phút không có kết quả, log có tool-step error; `CRT-28` Canceled. Không suy diễn worker đã review hoặc coi bộ test là audit production.
+- **Giới hạn:** abort không thu hồi write đã commit; pending deletion chỉ trong RAM; secret fallback/auth và stream log lazy builder có rủi ro ngoài scope. Chi tiết [evidence](docs/technical-spec/CHAT_CONSENT_BOUNDARY_EVIDENCE_2026_10_23.md).
+- **Next:** `UX-FOLLOWUP-DATA-TRUST` (Sol · xhigh, G2/data owner chốt nguồn/claim), sau đó component convergence/staging acceptance. Chưa deploy hoặc nghiệm thu readiness tổng thể.
+
+### Completion — UX-FOLLOWUP-BUILD (2026-10-23)
+
+- **Luồng:** A. Gỡ lỗi client/server import và route exports, giữ contract UUID v4/CSPRNG cùng hành vi tìm kiếm.
+- **AI route đề xuất:** Sol · xhigh. **AI thực dùng:** Codex GPT-6 (effort không được host công bố); Antigravity Gemini 3.8 Flash High review read-only.
+- **Acceptance:** tests UUID/validation/ownership không regression; TypeScript kiểm Next-generated types, ESLint file thay đổi và production build có kết quả rõ. Không thay dataset/schema/quyền/AI routing.
+- **Kết quả:** done trong working tree hiện tại, sửa `IMPLEMENTED` local. Tách search text khỏi API route, gỡ 3 extra exports không hợp lệ, thay Node crypto import ở shared helper bằng Web Crypto UUID v4/CSPRNG fail-closed.
+- **Evidence:** 36/36 targeted tests pass; tsc pass; lint 0 errors (18 warnings source, 2 warnings scripts bị ignore); webpack và Turbopack build pass 181/181 sau tạo lại cache `.next`. Lượt Turbopack xác nhận sau dọn thư mục chẩn đoán cũng pass, không cần đổi dependency/config.
+- **Review:** Antigravity `agy-afd1597f` completed; Codex đối chiếu masks/consumer/tests; Linear `CRT-27` Done. Browser recheck bị URL policy của công cụ từ chối; không tuyên bố đã kiểm lại map runtime. Không có clean-checkout/CI/deploy evidence.
+- **Next:** `UX-FOLLOWUP-CONSENT` (Sol · xhigh), rồi data trust/SOS và đồng bộ component. Readiness tổng thể vẫn chưa nghiệm thu.
+
+> **Cập nhật 2026-10-20 — UX-AUDIT-20261020-01 (Luồng A):** audit UI/UX sau roadmap hoàn tất, các sửa UI ở trạng thái `IMPLEMENTED` local. **Chưa nghiệm thu sẵn sàng dùng rộng rãi**: build/type-check còn lỗi và có findings P1 về consent/nguồn dữ liệu. Xem [báo cáo và evidence](docs/technical-spec/UI_UX_READINESS_AUDIT_2026_10_20.md). Các tuyên bố hoàn tất roadmap/G4 bên dưới là record lịch sử, không thay thế kết quả audit hiện hành.
+
+### Completion — UX-AUDIT-20261020-01
+
+- **Luồng:** A · audit `done`; sửa UI `IMPLEMENTED` local, không deploy.
+- **Đã làm:** inventory 29 page files, rà mobile/desktop; sửa shared token/navigation, search URL, tour slug/error, dialog focus, card/save, nhãn xác minh và feedback lỗi; giữ nguyên dataset/schema/quyền/AI routing.
+- **AI route đề xuất:** Sol · xhigh cho boundary tin cậy, Sol · medium cho style. **AI thực dùng:** Codex GPT-6 (effort không được host công bố); Antigravity Claude Sonnet 4.6 Thinking read-only, `agy-d814d887` / Linear `CRT-26` Done.
+- **Evidence:** 11/11 narrow tests pass, canonical rerun 6/6; browser local 390×844 và 1440×900 kiểm search/favorite/dialog/tour; tsc cuối fail 3 extra route exports; Turbopack build fail CSS subprocess, webpack fail `node:crypto` client import; các lỗi export/import đã có trong HEAD trước task. Chi tiết và phạm vi kiểm chứng ở báo cáo.
+- **Claim state:** sửa UI `IMPLEMENTED`; chỉ behavior local ghi rõ trong báo cáo có quan sát; không nâng claim production/auth/RLS/privacy hoặc WCAG toàn hệ thống.
+- **Next task:** `UX-FOLLOWUP-BUILD` — Sol · xhigh; sau đó `UX-FOLLOWUP-CONSENT` và `UX-FOLLOWUP-DATA-TRUST` trước khi chốt readiness. Không tự coi các follow-up này thuộc 126 task lịch sử.
+
 > **CƠ CHẾ ĐIỀU HÀNH DUY NHẤT:**  
 > Hệ thống đã hợp nhất toàn bộ Luồng A (App Security) và Luồng B (DB & Data Governance) thành **MỘT LUỒNG TUẦN TỰ DUY NHẤT**.  
 > Tại mọi thời điểm, chỉ có **ĐÚNG 1 TASK ACTIVE DUY NHẤT** được thực thi và nghiệm thu bằng bằng chứng thực tế (production-real evidence).  

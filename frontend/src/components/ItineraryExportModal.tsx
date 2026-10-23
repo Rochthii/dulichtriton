@@ -1,5 +1,7 @@
 'use client';
 
+import { NATIONAL_EMERGENCY_CONTACTS } from '@/components/EmergencyQuickLinks';
+
 import React, { useRef, useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import html2canvas from 'html2canvas';
@@ -9,6 +11,7 @@ import type { ItineraryData, ItineraryStop } from './WireDiagramItinerary';
 import { SITE_URL } from '@/lib/siteConfig';
 
 import { downloadItineraryPDF } from '@/lib/pdfExporter';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface ItineraryExportModalProps {
   onClose: () => void;
@@ -24,6 +27,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string
 };
 
 export default function ItineraryExportModal({ onClose, itinerary: propItinerary }: ItineraryExportModalProps) {
+  const dialogRef = useDialogFocus(true, onClose);
   const qrRef = useRef<HTMLDivElement>(null);
   const pdfRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
@@ -58,11 +62,6 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
     ? `${window.location.origin}/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`
     : `${SITE_URL}/itinerary?slug=${itinerary?.slug || 'kinh-dien-1-ngay'}`;
 
-  const emergencyContacts = {
-    police: '0296 3874 113',
-    hospital: '0296 3874 115',
-    hotline: '0296 3771 999',
-  };
 
   const handleDownloadQR = async () => {
     if (!qrRef.current) return;
@@ -110,14 +109,14 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Xuất lịch trình" tabIndex={-1} className="bg-[var(--surface)] rounded-[var(--r-l)] shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90dvh]">
         {/* Modal Header */}
         <div className="p-4 bg-[#1B4D3E] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Map className="w-5 h-5 text-[#D99B26]" />
             <h3 className="font-bold text-sm sm:text-base">Xuất Sơ Đồ Lịch Trình PDF</h3>
           </div>
-          <button onClick={onClose} className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+          <button onClick={onClose} aria-label="Đóng xuất lịch trình" className="min-h-11 min-w-11 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -135,7 +134,7 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
           ) : (
             <>
               {/* ── HIDDEN HIGH-RES WIRE DIAGRAM TEMPLATE FOR HTML2CANVAS ── */}
-              <div className="absolute top-[-9999px] left-[-9999px]">
+              <div aria-hidden="true" className="absolute top-[-9999px] left-[-9999px]">
                 <div ref={pdfRef} style={{ width: '820px', backgroundColor: '#FFFFFF', padding: '36px 40px', fontFamily: '"Plus Jakarta Sans", Arial, sans-serif' }}>
                   
                   {/* Header Banner */}
@@ -302,28 +301,23 @@ export default function ItineraryExportModal({ onClose, itinerary: propItinerary
                   <div style={{ backgroundColor: '#FFF1F2', border: '2px solid #FECDD3', borderRadius: '16px', padding: '14px 18px', marginBottom: '18px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                       <span style={{ fontSize: '12px', fontWeight: 900, color: '#BE123C' }}>
-                        🚨 THÔNG TIN CỨU HỘ & KHẨN CẤP 24/7 (TRI TÔN, AN GIANG)
+                        TỔNG ĐÀI KHẨN CẤP QUỐC GIA
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', fontSize: '11px' }}>
-                      <div style={{ backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: '10px', border: '1px solid #FFE4E6' }}>
-                        <p style={{ margin: 0, fontWeight: 700, color: '#9F1239' }}>🚔 Công An Tri Tôn</p>
-                        <p style={{ margin: '3px 0 0 0', fontWeight: 900, fontSize: '13px', color: '#BE123C' }}>{emergencyContacts.police}</p>
-                      </div>
-                      <div style={{ backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: '10px', border: '1px solid #FFE4E6' }}>
-                        <p style={{ margin: 0, fontWeight: 700, color: '#9F1239' }}>🚑 Y Tế Tri Tôn</p>
-                        <p style={{ margin: '3px 0 0 0', fontWeight: 900, fontSize: '13px', color: '#BE123C' }}>{emergencyContacts.hospital}</p>
-                      </div>
-                      <div style={{ backgroundColor: '#FFFFFF', padding: '8px 12px', borderRadius: '10px', border: '1px solid #FFE4E6' }}>
-                        <p style={{ margin: 0, fontWeight: 700, color: '#9F1239' }}>🏛️ Hỗ Trợ Du Lịch</p>
-                        <p style={{ margin: '3px 0 0 0', fontWeight: 900, fontSize: '13px', color: '#BE123C' }}>{emergencyContacts.hotline}</p>
-                      </div>
+                      {NATIONAL_EMERGENCY_CONTACTS.map(({ phone, label }) => (
+                        <div key={phone} style={{ backgroundColor: '#FFFDF7', padding: '8px 12px', borderRadius: '10px', border: '1px solid #FFE4E6' }}>
+                          <p style={{ margin: 0, fontWeight: 700, color: '#9F1239' }}>{label}</p>
+                          <p style={{ margin: '3px 0 0 0', fontWeight: 900, fontSize: '13px', color: '#BE123C' }}>{phone}</p>
+                        </div>
+                      ))}
                     </div>
+                    <p style={{ fontSize: '10px', marginTop: '8px' }}>Danh bạ địa phương đang đối chiếu. Xem trạng thái tại {SITE_URL}/emergency</p>
                   </div>
 
                   {/* Footer Watermark */}
                   <div style={{ textAlign: 'center', borderTop: '1px solid #E2E8F0', paddingTop: '12px', fontSize: '10px', color: '#94A3B8' }}>
-                    Dự án Chuyên trang Du Lịch Tri Tôn • Website: <strong>{SITE_URL.replace(/^https?:\/\//, '')}</strong> • Dữ liệu thực địa chuẩn xác 2026
+                    Dự án Chuyên trang Du Lịch Tri Tôn • Website: <strong>{SITE_URL.replace(/^https?:\/\//, '')}</strong> • Thông tin tham khảo; xác nhận trước khi đi
                   </div>
 
                 </div>

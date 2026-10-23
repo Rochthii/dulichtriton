@@ -1,8 +1,9 @@
 @import "./lovable.css";
 @import "tailwindcss";
 
-@layer base {
-  :root {
+/* Keep these authoritative tokens outside layers: lovable.css contains
+   unlayered legacy variables, which otherwise override @layer base. */
+:root {
     /* Folk-Modern Bảy Núi Color Palette Tokens */
     --bg: #FAF3E7;
     --surface: #FFFDF7;
@@ -54,6 +55,7 @@
     --border-color: rgba(38, 34, 27, 0.12);
   }
 
+@layer base {
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     color: var(--ink);

@@ -42,11 +42,12 @@ Trong đó:
 
 1. **Client-side Generation**:
    - Sử dụng Web Cryptography API chuẩn: `crypto.randomUUID()`.
-   - API này được hỗ trợ gốc (native) trên 100% các trình duyệt hiện đại (Chrome 92+, Safari 15.4+, Firefox 95+, Edge 92+).
+   - Nếu không có `crypto.randomUUID()`, helper dùng `crypto.getRandomValues()` sinh 16 byte, đặt version 4 và variant RFC 4122; giữ 122 bits ngẫu nhiên từ CSPRNG.
+   - Nếu Web Crypto không khả dụng hoặc báo lỗi, dừng sinh ID; không hạ xuống nguồn ngẫu nhiên không an toàn. Helper dùng chung không import module Node vào client bundle.
    - Tuyệt đối **NGHIÊM CẤM** sử dụng `Math.random()` để ghép chuỗi.
 
 2. **Server-side Generation / Validation**:
-   - Sử dụng Node.js native `crypto.randomUUID()` hoặc hàm chuẩn hóa `generateSessionId()` từ `@/lib/sessionIdentifierContract`.
+   - Sử dụng Node.js native `crypto.randomUUID()` hoặc `generateSessionId()` từ `@/lib/sessionIdentifierContract` trên runtime có global Web Crypto.
    - Khi nhận `session_id` từ client, server **phải thẩm định** tính hợp lệ qua `isValidSessionId(id)`. Nếu nhận ID rỗng, sai định dạng hoặc chuỗi legacy cũ, server phải xử lý fail-closed hoặc tự động khởi tạo UUID v4 mới.
 
 ---

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import EmergencyQuickLinks from '@/components/EmergencyQuickLinks';
+import { isFoodListing, presentRating } from '@/lib/publicPlacePresentation';
 import { 
   MapPin, Navigation, Clock, Tag, Star, Camera, ShieldCheck, 
   Video, ArrowLeft, Heart, Share2, Sparkles, Play, Globe, Info, Compass,
@@ -17,16 +19,18 @@ import { type VideoItem } from '@/components/VideoModal';
 import TikTokReelsViewer from '@/components/TikTokReelsViewer';
 import ReviewSentimentWidget from '@/components/ReviewSentimentWidget';
 import CheckinMasonryGallery from '@/components/CheckinMasonryGallery';
-import { parseTravelGuide, parseNearbyFood, parseCheckinSpots, sanitizeDescription, sanitizeReviews, getCategoryFallbackImage, findDynamicNearbyFood, getCategoryGoldenHourTip, getAccessibilityTerrainInfo, getFoodSignatureMenu, findDynamicNearbyAttractionsAndCafes } from '@/lib/dataSanitizer';
+import { parseTravelGuide, parseNearbyFood, parseCheckinSpots, sanitizeDescription, sanitizeReviews, getCategoryFallbackImage, findDynamicNearbyFood, getCategoryGoldenHourTip, getAccessibilityTerrainInfo, findDynamicNearbyAttractionsAndCafes } from '@/lib/dataSanitizer';
 import { calculateTimeStatus } from '@/lib/timeStatus';
 import { savePlaceToOfflineCache, EMERGENCY_CONTACTS } from '@/lib/offlineStorage';
-import { COMMUNE_EMERGENCY_DIRECTORY, KHMER_TEMPLE_RULES } from '@/lib/constants';
+import { KHMER_TEMPLE_RULES } from '@/lib/constants';
 import localMasterPois from '@/data/triton_pois_full.json';
 import { getDeviceHardwareGps, TRI_TON_CENTER_COORDS } from '@/lib/maps';
 import { calculateRoadDistanceKm, estimateDriveMinutes } from '@/lib/routeOptimizer';
 import PoiWeatherWidget from '@/components/PoiWeatherWidget';
 import { supabase } from '@/lib/supabase';
 import { RichTextRenderer } from '@/components/RichTextRenderer';
+import { getCanonicalPlaceVerification } from '@/lib/canonicalClaims';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
 
 interface PlaceDetailClientProps {
   place: Place;
@@ -35,6 +39,7 @@ interface PlaceDetailClientProps {
 
 export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = [] }: PlaceDetailClientProps) {
   const [place, setPlace] = useState<Place>(initialPlace);
+  const verification = getCanonicalPlaceVerification(place);
 
   // Client-Side Reactive SWR + Realtime Subscription (0 Vercel ISR Writes)
   useEffect(() => {
@@ -117,14 +122,17 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
   const photos = useMemo(() => {
     return rawPhotos.map((photoUrl: string, idx: number) => {
       const finalUrl = photoUrl && photoUrl.trim().length > 0 ? photoUrl.trim() : defaultImg;
+      const metadata = Array.isArray(place.photos)
+        ? place.photos.find(photo => photo && typeof photo === 'object' && photo.url === finalUrl)
+        : undefined;
       return {
         url: finalUrl,
         caption: idx === 0 ? place.name : `${place.name} - Ảnh ${idx + 1}`,
-        source: 'Cổng thông tin Du lịch Tri Tôn',
-        license: 'Verified Field Data'
+        source: metadata?.source,
+        license: metadata?.license,
       };
     });
-  }, [rawPhotos, place.name, defaultImg]);
+  }, [rawPhotos, place.name, place.photos, defaultImg]);
 
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -161,6 +169,8 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
   const [reportReason, setReportReason] = useState('');
   const [reportContact, setReportContact] = useState('');
   const [reportSuccess, setReportSuccess] = useState(false);
+  const [reportError, setReportError] = useState('');
+  const reportDialogRef = useDialogFocus(showReportModal, () => setShowReportModal(false));
   const [isSubmittingReport, setIsSubmittingReport] = useState(false);
 
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
@@ -178,18 +188,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
     return findDynamicNearbyFood(place, localMasterPois as any[], 5.5, 3);
   }, [place]);
 
-  const isGastronomyPOI = Boolean(
-    place.category === 'gastronomy' ||
-    place.category === 'food' ||
-    (place.id && (place.id.startsWith('AT') || place.id.startsWith('CF') || place.id.startsWith('DS'))) ||
-    (place.tourism_category && place.tourism_category.includes('Ẩm Thực'))
-  );
-
-  // 100% Real-world Signature Menu & Add-ons for Gastronomy POIs
-  const signatureMenu = useMemo(() => {
-    if (!isGastronomyPOI) return [];
-    return getFoodSignatureMenu(place.name);
-  }, [isGastronomyPOI, place.name]);
+  const isGastronomyPOI = isFoodListing(place);
 
   // Post-meal Attractions, Lakes & Viewpoints (Smart Cross-sell, avoids competitor restaurants)
   const dynamicNearbyAttractions = useMemo(() => {
@@ -206,9 +205,6 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
   const terrainInfo = useMemo(() => {
     return getAccessibilityTerrainInfo(place.name, place.category);
   }, [place.name, place.category]);
-
-  // 15 Communes Administrative Emergency Directory
-  const communeEmergency = COMMUNE_EMERGENCY_DIRECTORY[place.commune] || COMMUNE_EMERGENCY_DIRECTORY['Thị trấn Tri Tôn'];
 
   const isGaDotOThum = place.name.toLowerCase().includes('gà đốt') || place.name.toLowerCase().includes('ô thum');
   const isHomestayOrCafe = place.name.toLowerCase().includes('homestay') || place.name.toLowerCase().includes('coffee') || place.name.toLowerCase().includes('cà phê') || place.name.toLowerCase().includes('quán');
@@ -326,8 +322,9 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
     e.preventDefault();
     if (!reportReason) return;
     setIsSubmittingReport(true);
+    setReportError('');
     try {
-      await supabase.from('audit_logs').insert([
+      const { error } = await supabase.from('audit_logs').insert([
         {
           action: 'POI_CORRECTION_REPORTED',
           entity: 'place',
@@ -340,6 +337,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
           }
         }
       ]);
+      if (error) throw error;
       setReportSuccess(true);
       setTimeout(() => {
         setReportSuccess(false);
@@ -349,6 +347,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
       }, 2500);
     } catch (err) {
       console.error('Report error:', err);
+      setReportError('Chưa gửi được góp ý. Nội dung vẫn được giữ để bạn thử lại sau.');
     } finally {
       setIsSubmittingReport(false);
     }
@@ -393,10 +392,10 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <a href="tel:0296.3874.113" className="px-3 py-1 rounded-full bg-[#A6503A] text-white font-bold flex items-center gap-1">
+            <Link href="/emergency" className="px-3 py-1 rounded-full bg-[#A6503A] text-white font-bold flex items-center gap-1">
               <Phone className="w-3 h-3" />
-              <span>Cứu hộ: 0296.3874.113</span>
-            </a>
+              <span>SOS · Xem tổng đài</span>
+            </Link>
           </div>
         </div>
       )}
@@ -434,10 +433,14 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-3 max-w-3xl">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="stamp-verified">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Đã Xác Minh Thực Địa</span>
-              </span>
+              {verification ? (
+                <a href={verification.source_url} target="_blank" rel="noopener noreferrer" className="stamp-verified" title={`Xác minh: ${verification.verified_at}`}>
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Đã xác minh • Xem nguồn</span>
+                </a>
+              ) : (
+                <span className="px-3 py-1 rounded-full bg-[#FAF3E7] text-[#6B6355] text-xs border border-[#26221B]/15">Thông tin tham khảo • Chưa được xác minh</span>
+              )}
               <span className="px-3.5 py-1 rounded-full bg-[#0E8C7F]/10 text-[#0E8C7F] text-xs font-bold border border-[#0E8C7F]/20 font-display">
                 {place.commune}
               </span>
@@ -446,7 +449,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
               </span>
               <div className="flex items-center gap-1 bg-[#FAF3E7] px-3 py-1 rounded-full border border-[#F0A32F]/40 font-display">
                 <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
-                <span className="text-xs font-bold text-[#26221B]">{place.rating || 4.8} / 5.0</span>
+                <span className="text-xs font-bold text-[#26221B]">{typeof place.rating === 'number' ? `${place.rating} / 5.0` : 'Chưa có đánh giá'}</span>
               </div>
             </div>
 
@@ -521,7 +524,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
           <div className="absolute top-4 left-4 flex items-center gap-2">
             <span className="stamp-verified backdrop-blur-md bg-[#0E8C7F]/90 text-white border border-[#FFD37A]/40 shadow-sm">
               <Camera className="w-3.5 h-3.5 text-[#FFD37A]" />
-              <span>Góc Nhìn Thực Địa</span>
+              <span>Ảnh địa điểm</span>
             </span>
           </div>
 
@@ -532,7 +535,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 {currentPhoto.caption || place.name}
               </h3>
               <p className="text-[11px] text-[#FAF3E7]/80 font-medium drop-shadow-sm font-body">
-                Nguồn: {currentPhoto.source || 'Cổng thông tin Du lịch Tri Tôn'}
+                Nguồn: {currentPhoto.source || 'Chưa có thông tin nguồn ảnh'}
               </p>
             </div>
 
@@ -628,7 +631,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
             <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
               <span className="text-[10px] font-bold text-[#6B6355] uppercase block">Giờ mở cửa</span>
               <span className="text-xs sm:text-sm font-bold text-[#0E8C7F] mt-1 block">
-                {guide.openingHours.split('(')[0]}
+                {place.opening_hours || guide.openingHours}
               </span>
             </div>
             <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
@@ -636,7 +639,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 {isGastronomyPOI ? 'Mức giá tham khảo' : 'Giá vé / Giữ xe'}
               </span>
               <span className="text-xs sm:text-sm font-bold text-[#D9822B] mt-1 block">
-                {isGastronomyPOI ? (place.price_level || '~280k – 350k') : guide.ticketPrice.split('.')[0]}
+                {isGastronomyPOI ? (place.price_level || 'Chưa có thông tin giá') : guide.ticketPrice}
               </span>
             </div>
             <div className="bg-[#FAF3E7] p-3.5 rounded-[20px] border border-[#26221B]/8">
@@ -653,81 +656,14 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
             </div>
           </div>
 
-          {/* ── 100% REAL-WORLD SIGNATURE MENU & ADD-ONS FOR GASTRONOMY ── */}
-          {isGastronomyPOI && signatureMenu.length > 0 && (
-            <div className="p-4 sm:p-6 rounded-[24px] bg-gradient-to-br from-amber-50/80 via-[#FFFDF7] to-amber-50/40 border border-amber-300/80 shadow-xs space-y-4 font-body">
-              <div className="flex items-center justify-between flex-wrap gap-2 border-b border-amber-200/80 pb-3">
-                <div className="flex items-center gap-2 font-display text-sm font-extrabold text-[#26221B]">
-                  <Utensils className="w-4 h-4 text-[#F26B3A]" />
-                  <span>Thực Đơn Chữ Ký & Món Ăn Kèm Chuẩn Thực Địa</span>
-                </div>
-                <span className="text-[11px] text-[#D9822B] font-bold font-display">
-                  Giá niêm yết tham khảo
-                </span>
-              </div>
-
-              <div className="space-y-4">
-                {signatureMenu.map((group, gIdx) => (
-                  <div key={gIdx} className="space-y-2">
-                    <h4 className="text-xs font-bold text-[#26221B] font-display">{group.categoryName}</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {group.items.map((item, iIdx) => (
-                        <div
-                          key={iIdx}
-                          className={`p-3 rounded-2xl border flex flex-col justify-between space-y-1 ${
-                            item.isSignature
-                              ? 'bg-amber-100/60 border-amber-300 text-[#26221B]'
-                              : 'bg-white/90 border-[#26221B]/8 text-[#26221B]'
-                          }`}
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <span className="font-display font-extrabold text-xs text-[#26221B]">
-                              {item.name}
-                            </span>
-                            <span className="font-display font-extrabold text-xs text-[#D9822B] shrink-0">
-                              {item.price}
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-[#6B6355] leading-relaxed">
-                            {item.note}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Restaurant Amenities Matrix */}
-          {isGastronomyPOI && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-display">
-              <div className="p-3 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/8 space-y-0.5">
-                <span className="text-[10px] text-[#6B6355] block font-bold">Không gian quán</span>
-                <span className="font-bold text-[#0E8C7F] text-xs block">Chòi lá / Sân vườn</span>
-              </div>
-              <div className="p-3 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/8 space-y-0.5">
-                <span className="text-[10px] text-[#6B6355] block font-bold">Bãi đỗ xe ô tô</span>
-                <span className="font-bold text-[#0E8C7F] text-xs block">4 – 29 chỗ vào tận nơi</span>
-              </div>
-              <div className="p-3 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/8 space-y-0.5">
-                <span className="text-[10px] text-[#6B6355] block font-bold">Thanh toán</span>
-                <span className="font-bold text-[#0E8C7F] text-xs block">Tiền mặt / VietQR</span>
-              </div>
-              <div className="p-3 rounded-2xl bg-[#FAF3E7] border border-[#26221B]/8 space-y-0.5">
-                <span className="text-[10px] text-[#6B6355] block font-bold">Phục vụ</span>
-                <span className="font-bold text-[#0E8C7F] text-xs block">Ăn tại chỗ & Mang về</span>
-              </div>
-            </div>
-          )}
+          {isGastronomyPOI && <p className="p-4 rounded-[var(--r-m)] bg-[var(--bg)] text-sm text-[var(--ink-soft)]">Chưa có thực đơn và thông tin tiện ích do cơ sở cung cấp. Hãy liên hệ xác nhận giá, chỗ đỗ xe và dịch vụ trước khi đến.</p>}
 
           {/* Accessibility & Terrain Index Badge */}
           <div className="p-3.5 rounded-[20px] bg-[#FAF3E7] border border-[#26221B]/8 flex items-center justify-between gap-3 text-xs font-display">
             <div className="flex items-center gap-2">
               <Footprints className="w-4 h-4 text-[#0E8C7F] shrink-0" />
               <span className="text-[#6B6355]">Chỉ số tiếp cận địa hình:</span>
-              <span className="font-extrabold text-[#26221B]">{terrainInfo.accessibilityLabel}</span>
+              <span className="font-extrabold text-[#26221B]">Chưa có xác nhận điều kiện tiếp cận</span>
             </div>
           </div>
 
@@ -860,11 +796,12 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 </div>
               </div>
               <a
-                href={place.phone ? `tel:${place.phone}` : "tel:02963874113"}
+                href={place.phone ? `tel:${place.phone}` : undefined}
+                aria-disabled={!place.phone}
                 className="px-4 py-2.5 rounded-full bg-[#F26B3A] hover:bg-[#D9531E] text-white text-xs font-bold flex items-center justify-center gap-1.5 shrink-0 shadow-xs tap-bounce"
               >
                 <Phone className="w-3.5 h-3.5" />
-                <span>{place.phone ? `Gọi ${place.phone}` : 'Gọi Hỗ Trợ Đặt Bàn'}</span>
+                <span>{place.phone ? `Gọi ${place.phone}` : 'Chưa có số liên hệ cơ sở'}</span>
               </a>
             </div>
           )}
@@ -951,7 +888,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 <Clock className="w-5 h-5 text-[#0E8C7F] shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-display text-sm font-bold text-[#26221B]">Thời Gian Hoạt Động Khuyến Nghị</h3>
-                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{guide.openingHours}</p>
+                  <p className="text-xs text-[#26221B] mt-1 leading-relaxed">{place.opening_hours || guide.openingHours}</p>
                 </div>
               </div>
             </div>
@@ -977,19 +914,19 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-display">
                   <div className="p-3 rounded-xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-0.5">
                     <span className="font-bold text-[#0E8C7F]">🚗 Ô tô 4 – 7 chỗ:</span>
-                    <p className="text-[#6B6355] font-body text-[11px]">{terrainInfo.parkingMatrix.car4_7}</p>
+                    <p className="text-[#6B6355] font-body text-[11px]">Chưa có thông tin bãi đỗ phù hợp</p>
                   </div>
                   <div className="p-3 rounded-xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-0.5">
                     <span className="font-bold text-[#D9822B]">🚐 Xe 16 – 29 chỗ:</span>
-                    <p className="text-[#6B6355] font-body text-[11px]">{terrainInfo.parkingMatrix.car16_29}</p>
+                    <p className="text-[#6B6355] font-body text-[11px]">Chưa có thông tin bãi đỗ phù hợp</p>
                   </div>
                   <div className="p-3 rounded-xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-0.5">
                     <span className="font-bold text-[#A6503A]">🚌 Xe lớn 45 chỗ:</span>
-                    <p className="text-[#6B6355] font-body text-[11px]">{terrainInfo.parkingMatrix.car45}</p>
+                    <p className="text-[#6B6355] font-body text-[11px]">Chưa có thông tin bãi đỗ phù hợp</p>
                   </div>
                   <div className="p-3 rounded-xl bg-[#FAF3E7] border border-[#26221B]/6 space-y-0.5">
                     <span className="font-bold text-[#26221B]">🛵 Xe máy / Xe ôm:</span>
-                    <p className="text-[#6B6355] font-body text-[11px]">{terrainInfo.parkingMatrix.motorbike}</p>
+                    <p className="text-[#6B6355] font-body text-[11px]">Chưa có thông tin bãi đỗ phù hợp</p>
                   </div>
                 </div>
               </div>
@@ -1061,7 +998,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-[#26221B] font-display">
                             <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
-                            <span>{spot.rating}</span>
+                            <span>{presentRating(spot.rating) ?? 'Chưa có đánh giá'}</span>
                           </div>
                         </div>
 
@@ -1132,7 +1069,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-[#26221B] font-display">
                             <Star className="w-3.5 h-3.5 fill-[#F0A32F] text-[#F0A32F]" />
-                            <span>{food.rating}</span>
+                            <span>{presentRating(food.rating) ?? 'Chưa có đánh giá'}</span>
                           </div>
                         </div>
 
@@ -1176,47 +1113,10 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
           )
         )}
 
-        {/* ── SECTION: CỨU HỘ & AN TOÀN HÀNH CHÍNH XÃ SỞ TẠI ── */}
-        <section className="bg-[#151B34] text-white rounded-[28px] p-6 sm:p-8 border border-[#FFD37A]/30 shadow-md space-y-4 font-body">
-          <div className="flex items-center justify-between flex-wrap gap-2 border-b border-white/10 pb-3 font-display">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-[#FFD37A]" />
-              <h3 className="text-base sm:text-lg font-bold text-white">
-                Đường Dây Nóng Hỗ Trợ Tại Địa Bàn ({place.commune})
-              </h3>
-            </div>
-            <span className="text-[11px] text-[#FFD37A] font-bold">Trực ban 24/7</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-display">
-            <div className="p-3.5 rounded-[18px] bg-white/10 border border-white/10 flex items-center justify-between">
-              <div>
-                <span className="text-[#FAF3E7]/70 text-[10px] block">Công An Địa Bàn</span>
-                <span className="font-extrabold text-white text-sm block mt-0.5">{communeEmergency.policeName}</span>
-              </div>
-              <a
-                href={`tel:${communeEmergency.policePhone.replace(/\./g, '')}`}
-                className="px-4 py-2 rounded-full bg-[#A6503A] hover:bg-[#8A3F2C] text-white font-bold flex items-center gap-1.5 shadow-sm tap-bounce"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>{communeEmergency.policePhone}</span>
-              </a>
-            </div>
-
-            <div className="p-3.5 rounded-[18px] bg-white/10 border border-white/10 flex items-center justify-between">
-              <div>
-                <span className="text-[#FAF3E7]/70 text-[10px] block">Y Tế & Cấp Cứu</span>
-                <span className="font-extrabold text-white text-sm block mt-0.5">{communeEmergency.healthName}</span>
-              </div>
-              <a
-                href={`tel:${communeEmergency.healthPhone.replace(/\./g, '')}`}
-                className="px-4 py-2 rounded-full bg-[#0E8C7F] hover:bg-[#085A52] text-white font-bold flex items-center gap-1.5 shadow-sm tap-bounce"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>{communeEmergency.healthPhone}</span>
-              </a>
-            </div>
-          </div>
+        <section className="rounded-[var(--r-l)] border border-[var(--terracotta)]/30 bg-[var(--surface)] p-4 sm:p-6 space-y-3">
+          <h3 className="font-display text-lg font-bold">Hỗ trợ khẩn cấp</h3>
+          <EmergencyQuickLinks />
+          <Link href="/emergency" className="inline-flex min-h-11 items-center text-sm text-[var(--jade-deep)] underline">Danh bạ địa phương và trạng thái đối chiếu</Link>
         </section>
 
         {/* ── SECTION 5: VIDEO TIKTOK REELS ── */}
@@ -1264,7 +1164,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                     <span className="font-display font-bold text-xs text-[#26221B]">{r.author || 'Du khách đã trải nghiệm'}</span>
                     <div className="flex items-center gap-1 text-xs font-bold text-[#F0A32F]">
                       <Star className="w-3.5 h-3.5 fill-current" />
-                      <span>{r.rating || 5}</span>
+                      <span>{presentRating(r.rating) ?? 'Chưa có đánh giá'}</span>
                     </div>
                   </div>
                   <p className="text-xs text-[#6B6355] leading-relaxed">{r.content}</p>
@@ -1288,8 +1188,8 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
 
       {/* ── REPORT MODAL ── */}
       {showReportModal && (
-        <div className="fixed inset-0 z-50 bg-[#151B34]/60 backdrop-blur-sm flex items-center justify-center p-4 font-body">
-          <div className="bg-[#FFFDF7] rounded-[28px] max-w-lg w-full p-6 sm:p-8 border border-[#26221B]/10 shadow-2xl space-y-5">
+        <div className="fixed inset-0 z-[70] bg-[#151B34]/60 backdrop-blur-sm flex items-center justify-center p-4 font-body">
+          <div ref={reportDialogRef} role="dialog" aria-modal="true" aria-label="Báo lỗi địa điểm" tabIndex={-1} className="bg-[#FFFDF7] rounded-[28px] max-w-lg w-full max-h-[90dvh] overflow-y-auto p-6 sm:p-8 border border-[#26221B]/10 shadow-2xl space-y-5">
             <div className="flex items-center justify-between border-b border-[#26221B]/8 pb-3">
               <div className="flex items-center gap-2">
                 <Flag className="w-5 h-5 text-[#A6503A]" />
@@ -1297,7 +1197,8 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
               </div>
               <button
                 onClick={() => setShowReportModal(false)}
-                className="p-1.5 rounded-full text-[#6B6355] hover:bg-[#FAF3E7]"
+                aria-label="Đóng báo lỗi địa điểm"
+                className="min-h-11 min-w-11 flex items-center justify-center rounded-full text-[#6B6355] hover:bg-[#FAF3E7]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1311,9 +1212,11 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
               </div>
             ) : (
               <form onSubmit={handleReportSubmit} className="space-y-4">
+                {reportError && <p role="alert" className="text-sm text-[#A6503A]">{reportError}</p>}
                 <div>
-                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Địa điểm:</label>
+                  <label htmlFor="report-place" className="block text-xs font-bold text-[#26221B] mb-1 font-display">Địa điểm:</label>
                   <input
+                    id="report-place"
                     type="text"
                     disabled
                     value={place.name}
@@ -1322,8 +1225,9 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Nội dung báo lỗi hoặc cập nhật *</label>
+                  <label htmlFor="report-reason" className="block text-xs font-bold text-[#26221B] mb-1 font-display">Nội dung báo lỗi hoặc cập nhật *</label>
                   <textarea
+                    id="report-reason"
                     required
                     rows={4}
                     placeholder="VD: Quán đã chuyển địa điểm, giờ mở cửa mới từ 06:00, đường đi đang sửa..."
@@ -1334,8 +1238,9 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#26221B] mb-1 font-display">Số điện thoại hoặc Email liên hệ (tùy chọn)</label>
+                  <label htmlFor="report-contact" className="block text-xs font-bold text-[#26221B] mb-1 font-display">Số điện thoại hoặc Email liên hệ (tùy chọn)</label>
                   <input
+                    id="report-contact"
                     type="text"
                     placeholder="Để BQT xác minh nếu cần"
                     value={reportContact}
@@ -1359,7 +1264,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
       )}
 
       {/* ── MOBILE STICKY 3-BUTTON ACTION BAR ── */}
-      <div className="fixed bottom-16 inset-x-0 z-30 bg-[#FAF3E7]/95 backdrop-blur-lg border-t border-[#26221B]/10 p-3 sm:hidden shadow-[0_-4px_25px_rgba(38,34,27,0.1)] flex items-center gap-2 font-display">
+      <div className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] inset-x-0 z-30 bg-[#FAF3E7]/95 backdrop-blur-lg border-t border-[#26221B]/10 p-3 sm:hidden shadow-[0_-4px_25px_rgba(38,34,27,0.1)] flex items-center gap-2 font-display">
         <a
           href={maps.url}
           target="_blank"

@@ -12,7 +12,7 @@ import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 import { detectPoisonedKnowledgeClaims, sanitizeClientChatHistory } from '@/lib/chatPoisonedKnowledgeGuard';
-import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory } from '@/lib/chatConsentGuard';
+import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory, type ConsentStatus } from '@/lib/chatConsentGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -88,7 +88,8 @@ function logChatEvent(payload: {
   is_out_scope?: boolean;
   provider_fallback?: boolean | null;
   retrieval_zero_result?: boolean | null;
-}): void {
+}, consentStatus: ConsentStatus): void {
+  if (!shouldPersistChatSession(consentStatus, payload.session_id)) return;
   try {
     const supabase = getSupabaseServerClient();
     if (!supabase) return;
@@ -167,7 +168,10 @@ export async function POST(req: NextRequest) {
 
   const queryStr = validation.sanitizedQuery;
 
-  const sessionId = (body.session_id as string)?.trim() || 'anonymous';
+  const consentStatus = resolveConsentStatus({ body, req });
+  const sessionId = consentStatus === 'granted' && typeof body.session_id === 'string'
+    ? body.session_id.trim() || 'anonymous'
+    : 'anonymous';
 
   // Verify session ownership before reading chat history (P04-005)
   const ownership = await verifySessionOwnership({
@@ -193,7 +197,6 @@ export async function POST(req: NextRequest) {
   const userLat = typeof body.latitude === 'number' ? body.latitude : (typeof body.user_lat === 'number' ? body.user_lat : undefined);
   const userLng = typeof body.longitude === 'number' ? body.longitude : (typeof body.user_lng === 'number' ? body.user_lng : undefined);
 
-  const consentStatus = resolveConsentStatus({ body, req });
   const canPersistSession = shouldPersistChatSession(consentStatus, sessionId);
   const canLoadHistory = shouldLoadChatHistory(consentStatus, sessionId);
 
@@ -253,8 +256,7 @@ export async function POST(req: NextRequest) {
             model_used: injectionModel,
             is_out_scope: true,
             latency_ms: injectionLatencyMs,
-          });
-          controller.close();
+          }, req.signal.aborted ? 'unset' : consentStatus);
           return;
         }
 
@@ -288,8 +290,7 @@ export async function POST(req: NextRequest) {
             model_used: poisonedModel,
             is_out_scope: false,
             latency_ms: poisonedLatencyMs,
-          });
-          controller.close();
+          }, req.signal.aborted ? 'unset' : consentStatus);
           return;
         }
 
@@ -305,7 +306,7 @@ export async function POST(req: NextRequest) {
         // 2. Load History & Out-of-Scope Protection
         const history: Turn[] = clientHistory.length > 0
           ? clientHistory
-          : await loadHistory(sessionId);
+          : canLoadHistory ? await loadHistory(sessionId) : [];
 
         if (checkIsOutOfScope(queryStr, history)) {
           const oosMsg = 'Tôi chỉ hỗ trợ các nội dung liên quan đến Tri Tôn và dự án Du Lịch Tri Tôn. Bạn hãy đặt câu hỏi trong phạm vi này.';
@@ -327,8 +328,7 @@ export async function POST(req: NextRequest) {
             model_used: oosModel,
             is_out_scope: true,
             latency_ms: oosLatencyMs,
-          });
-          controller.close();
+          }, req.signal.aborted ? 'unset' : consentStatus);
           return;
         }
 
@@ -433,7 +433,7 @@ export async function POST(req: NextRequest) {
         send(donePayload);
 
         // 5. Save Conversation Turn (P05-008: Non-blocking, chỉ lưu khi có consent, no-consent path tuyệt đối không ghi)
-        if (canPersistSession && fullText.trim() && validateChatbotOutput(fullText).isValid) {
+        if (canPersistSession && !req.signal.aborted && fullText.trim() && validateChatbotOutput(fullText).isValid) {
           const updatedHistory: Turn[] = [
             ...history,
             { role: 'user', content: queryStr },
@@ -454,7 +454,7 @@ export async function POST(req: NextRequest) {
           is_out_scope: false,
           provider_fallback: providerFallback,
           retrieval_zero_result: ragResult.places.length === 0,
-        });
+        }, req.signal.aborted ? 'unset' : consentStatus);
       } catch (err) {
         console.error('Chat stream error:', err);
         if (fullText.trim().length === 0) {

@@ -36,6 +36,30 @@ function loadTypeScriptModule(filePath) {
   return m.exports;
 }
 
+test('UI verification badge accepts current canonical provenance and rejects expired reviews', () => {
+  const { getCanonicalPlaceVerification } = loadTypeScriptModule(claimsModulePath);
+  const record = JSON.parse(fs.readFileSync(artifactPath, 'utf8')).places[0];
+  const duringReview = Date.parse(record.verified_at) + 1000;
+  assert.equal(getCanonicalPlaceVerification(record, duringReview)?.canonical_id, record.canonical_id);
+  assert.equal(getCanonicalPlaceVerification(record, Date.parse(record.expires_at)), null);
+  assert.equal(getCanonicalPlaceVerification(record, Date.parse(record.verified_at) - 1), null);
+});
+
+test('UI verification badge rejects legacy flags, fuzzy names and forged provenance', () => {
+  const { getCanonicalPlaceVerification } = loadTypeScriptModule(claimsModulePath);
+  const record = JSON.parse(fs.readFileSync(artifactPath, 'utf8')).places[0];
+  const now = Date.parse(record.verified_at) + 1000;
+  assert.equal(getCanonicalPlaceVerification({ is_verified: true, name: record.name }, now), null);
+  assert.equal(getCanonicalPlaceVerification({ ...record, canonical_id: 'other-place' }, now), null);
+  assert.equal(getCanonicalPlaceVerification({ ...record, canonical_id: 'other-place', id: record.canonical_id }, now), null);
+  for (const field of ['is_verified', 'verification_status', 'source_url', 'review_id', 'verified_at']) {
+    const candidate = { ...record };
+    delete candidate[field];
+    assert.equal(getCanonicalPlaceVerification(candidate, now), null, `missing ${field}`);
+  }
+  assert.equal(getCanonicalPlaceVerification({ ...record, source_url: 'https://example.com/forged' }, now), null);
+});
+
 test('P06-002: Canonical Manifest and Frontend Static Artifact Alignment', () => {
   assert.ok(fs.existsSync(manifestPath), 'data/canonical/canonical_manifest.json must exist');
   assert.ok(fs.existsSync(artifactPath), 'frontend/src/data/places.canonical.json must exist');

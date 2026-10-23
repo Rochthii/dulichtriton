@@ -19,6 +19,32 @@
 | EV-13 | Login đặt cookie admin có flags production và chỉ giảm `Secure` khi local HTTP được bật rõ | `/admin/auth/login` cookie response | Thiếu flag, Domain, downgrade do `NODE_ENV` hoặc cờ riêng lẻ, cookie legacy còn sống | Route test kiểm production/default development/local explicit flag; cookie mới HttpOnly/Strict/Path/8h, production Secure + `__Host-`, local tên riêng, legacy Max-Age=0 | `IMPLEMENTED` local (P01-007); `/auth/me` đã chuyển ở P01-008 local, logout còn dùng cookie cũ, chưa deploy |
 | EV-14 | `/auth/me` chỉ trả admin identity từ phiên DB còn hiệu lực | `/admin/auth/me` | Cookie cũ/giả/sửa/hết hạn; inactive, role lạ, row xóa, DB lỗi | Route test với Supabase HTTP fixture: hợp lệ 200 từ DB, các negative 401; query theo SHA-256, chỉ GET và account state không đổi | `IMPLEMENTED` local (P01-008); logout/guard admin API chưa xong, chưa deploy |
 
+## Evidence bổ sung UI/UX — 2026-10-20
+
+> **Follow-up 2026-10-23:** phần build của EV-UX-03 đã có evidence local mới: 36 targeted tests, tsc, lint 0 errors, webpack và Turbopack 181/181 pass sau tạo lại `.next`. Không thay verdict readiness: consent/SOS/data trust chưa đóng; browser recheck bị tool URL policy chặn. Xem phần bổ sung trong [báo cáo](UI_UX_READINESS_AUDIT_2026_10_20.md). Các kết quả fail ngày 2026-10-20 dưới đây giữ làm lịch sử, không còn là kết quả build mới nhất.
+
+| ID | Claim/boundary | Evidence | State / giới hạn |
+|---|---|---|---|
+| EV-UX-01 | Nhãn verified của POI detail không suy từ tên/rating hoặc cờ legacy | `getCanonicalPlaceVerification`, 2 tests mới trong `poi-ui-claim-canonical.test.mjs`; thiếu flags/provenance, sai identity/source, trước ngày review/hết hạn đều trả null | `IMPLEMENTED`; test tại display resolver. Không đổi trạng thái canonical dataset hoặc các claim UI còn lại |
+| EV-UX-02 | Search, favorite, tour URL và dialog có feedback/focus đúng ở mẫu local | Browser local: q giữ từ khóa; favorite không điều hướng; food-tour đúng slug; Tab loop/Escape/return focus ở report/chat/export | `VERIFIED` cho đúng các UI behavior local đã ghi trong [báo cáo](UI_UX_READINESS_AUDIT_2026_10_20.md); không phải WCAG/user-testing hoặc production verification |
+| EV-UX-03 | Bản sửa có thể nghiệm thu readiness tổng thể | Final tsc fail 3 route exports; Turbopack CSS panic; webpack `node:crypto` error; consent/SOS/data mapping còn cần task riêng | `DISPUTED` đối với claim readiness hiện hành; không ghi đè quyết định G4 của owner |
+
+## Evidence consent bổ sung — 2026-10-23
+
+| ID | Claim/boundary | Evidence | State / giới hạn |
+|---|---|---|---|
+| EV-UX-04 | Unset/denied không replay/persist hội thoại qua query/stream/fallback | 12 boundary tests thực thi POST source với DB recorder, shared request, hook harness và controls SSR; trong 58 tests pass | Code `IMPLEMENTED`; các ca fixture đã kiểm. Không là DB/provider live, browser hoặc distributed-revocation proof; [evidence](CHAT_CONSENT_BOUNDARY_EVIDENCE_2026_10_23.md) |
+
+Lỗi mặc định unset/fallback của audit 2026-10-20 đã có sửa local; EV-UX-03 readiness tổng thể vẫn `DISPUTED` vì data trust/SOS và staging acceptance còn mở. Không nâng claim RLS/auth/privacy production hoặc sửa quyết định G3/G4 của owner.
+
+## Evidence data trust UI — 2026-10-23
+
+| ID | Claim/boundary | Evidence | State / giới hạn |
+|---|---|---|---|
+| EV-UX-05 | Các UI entry được sửa không công bố local SOS tranh chấp hoặc tự biến dữ liệu thiếu thành fact | 8 tests mới public-data-trust: source SSR /food, /emergency, helper negatives, public/export source check; nằm trong 91 combined tests pass | UI `IMPLEMENTED`, test đúng phạm vi local. G2/source accuracy, AI/offline và browser/staging vẫn mở; [evidence](PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md) |
+
+EV-UX-03 readiness tổng thể vẫn `DISPUTED`; metadata/contract tests cũ pass không đủ chứng minh số SOS đang hoạt động hay mọi POI chính xác. Không sửa source authority/canonical hoặc G2/G4 decision.
+
 ## Quy tắc benchmark
 
 Không trộn kết quả benchmark của data validator, DB/RLS, HTTP auth, provider latency hay UI build thành một con số “performance”. Mỗi benchmark phải ghi rõ boundary, fixture, môi trường và giới hạn kết luận.

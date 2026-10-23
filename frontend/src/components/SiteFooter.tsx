@@ -7,6 +7,8 @@ import { Compass, Phone, ShieldCheck, MapPin, Lock, Sparkles, Heart, Scale, Shie
 import AppLogo from './AppLogo';
 
 export default function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname.startsWith('/admin')) return null;
   return (
     <footer className="border-t border-[#1E2647] bg-[#151B34] text-[#FAF3E7]/80 pt-12 pb-24 md:pb-8 font-body">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -24,7 +26,7 @@ export default function SiteFooter() {
               </div>
             </Link>
             <p className="text-xs text-[#FAF3E7]/70 leading-relaxed font-body">
-              Cổng thông tin & Trợ lý AI du lịch Bảy Núi, hỗ trợ du khách khám phá trọn vẹn 149 danh thắng, chùa Khmer và ẩm thực đặc sản tại Tri Tôn, An Giang.
+              Cổng thông tin & Trợ lý AI du lịch Bảy Núi, hỗ trợ khám phá cảnh quan, di sản và ẩm thực Tri Tôn. Xem nguồn và trạng thái xác minh tại từng địa điểm.
             </p>
             
             {/* Developer Credit Signature Badge */}
@@ -54,7 +56,7 @@ export default function SiteFooter() {
               </div>
               <div className="flex items-center gap-2 text-[#FFD37A] font-bold">
                 <Phone className="h-3.5 w-3.5 text-[#F0A32F] shrink-0" />
-                <span>Hotline Cứu Hộ: 0296.3874.113</span>
+                <Link href="/emergency" className="min-h-11 inline-flex items-center underline">SOS · Xem tổng đài và nguồn thông tin</Link>
               </div>
             </div>
           </div>
@@ -167,7 +169,7 @@ export default function SiteFooter() {
           <div className="space-y-1 text-center sm:text-left">
             <p>© {new Date().getFullYear()} Du Lịch Tri Tôn AI Platform • Phong cách Folk-Modern Bảy Núi.</p>
             <p className="text-[11px] text-[#FAF3E7]/40">
-              Thiết kế & phát triển bởi <strong>Chăm Rốch Thi</strong> (Cham Roch Thi) • Dữ liệu 149 POIs thực địa xác minh 100%.
+              Thiết kế & phát triển bởi <strong>Chăm Rốch Thi</strong> (Cham Roch Thi) • Đối chiếu thông tin trước khi khởi hành.
             </p>
           </div>
           

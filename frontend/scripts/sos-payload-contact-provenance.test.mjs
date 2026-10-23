@@ -224,23 +224,15 @@ test('P04-022: 4. Constants Emergency Contacts & Commune Directory Provenance In
   assert.ok(countVerifiedAt >= 16, `Expected at least 16 verified_at occurrences, got ${countVerifiedAt}`);
 });
 
-test('P04-022: 5. Emergency Page UI Provenance Rendering Invariant', async () => {
+test('P04-022: 5. Emergency UI withholds disputed local contact claims and retains national entry points', () => {
   const pagePath = path.join(REPO_ROOT, 'frontend', 'src', 'app', 'emergency', 'page.tsx');
   const pageCode = fs.readFileSync(pagePath, 'utf8');
-
-  // Interface check
-  assert.ok(pageCode.includes('source_url: string;'), 'EmergencyContact must require source_url');
-  assert.ok(pageCode.includes('verified_at: string;'), 'EmergencyContact must require verified_at');
-  assert.ok(pageCode.includes("verification_status: 'VERIFIED';"), 'EmergencyContact must require VERIFIED status');
-
-  // UI rendering check
-  assert.ok(pageCode.includes('item.source_url'), 'UI must render link to source_url');
-  assert.ok(pageCode.includes('item.verified_at'), 'UI must render verified_at badge');
-  assert.ok(pageCode.includes('Xác minh 100%'), 'UI must display verification text');
-
-  // Strict check: Tuyệt đối không chứa số mock
-  assert.ok(!pageCode.includes('0913 789 123'), 'page.tsx must not contain 0913 789 123');
-  assert.ok(!pageCode.includes('0296 3760 123'), 'page.tsx must not contain 0296 3760 123');
+  assert.ok(pageCode.includes('EmergencyQuickLinks'));
+  assert.ok(pageCode.includes('Danh bạ địa phương đang đối chiếu'));
+  assert.ok(pageCode.includes('chinhphu.vn'));
+  assert.ok(!pageCode.includes('Xác minh 100%'));
+  assert.ok(!pageCode.includes('0296'));
+  // Actual SSR and dialing targets are exercised by public-data-trust.test.mjs.
 });
 
 test('P04-022: 6. Specification Artifact Concordance (VERIFIED_EMERGENCY_HOTLINES.json)', async () => {

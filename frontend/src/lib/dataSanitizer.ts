@@ -1,3 +1,5 @@
+import { isFoodListing, presentRating, MISSING_PLACE_IMAGE } from './publicPlacePresentation';
+
 /**
  * Data Cleansing, Sanitization & Safe Parser Utility
  * Du Lịch Tri Tôn AI Project
@@ -36,39 +38,9 @@ const AUTHENTIC_DESCRIPTIONS: Record<string, string> = {
   'vườn nho nông trại': 'Nông trại sinh thái trồng các giống nho bản địa và dâu tằm, du khách có thể tự tay hái trái chín ngọt, thưởng thức mật nho và nước ép thốt nốt tươi nguyên chất.',
 };
 
-// Authentic 100% Tri Ton Photography fallback images (Zero Unsplash / AI stock)
-const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
-  nature_lake: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758888/tri_ton_hero/hero_ho_ta_pa.avif',
-  nature_mountain: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758531/tri_ton_hero/hero_hang_cong_ta_pa.jpg',
-  culture_temple: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758891/tri_ton_hero/hero_chua_khmer_chikaeng.avif',
-  food_restaurant: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758535/tri_ton_hero/hero_dong_thot_not.jpg',
-  stay_homestay: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg',
-  checkin_general: 'https://res.cloudinary.com/dhjesnejt/image/upload/f_auto,q_auto:best,w_1600,c_fill/v1786758533/tri_ton_hero/hero_cong_troi_koh_kas.jpg',
-};
-
-/**
- * Get intelligent authentic fallback image based on POI category and name
- */
-export function getCategoryFallbackImage(category: string = '', name: string = ''): string {
-  const cat = category.toLowerCase();
-  const n = name.toLowerCase();
-
-  if (n.includes('hồ') || cat.includes('lake')) {
-    return CATEGORY_FALLBACK_IMAGES.nature_lake;
-  }
-  if (n.includes('núi') || n.includes('vồ hội') || n.includes('đỉnh') || cat.includes('mountain')) {
-    return CATEGORY_FALLBACK_IMAGES.nature_mountain;
-  }
-  if (n.includes('chùa') || n.includes('nhà mồ') || cat.includes('temple') || cat.includes('heritage') || cat.includes('culture')) {
-    return CATEGORY_FALLBACK_IMAGES.culture_temple;
-  }
-  if (n.includes('gà đốt') || n.includes('quán') || n.includes('bò') || cat.includes('food') || cat.includes('restaurant')) {
-    return CATEGORY_FALLBACK_IMAGES.food_restaurant;
-  }
-  if (n.includes('homestay') || n.includes('resort') || cat.includes('stay') || cat.includes('cafe')) {
-    return CATEGORY_FALLBACK_IMAGES.stay_homestay;
-  }
-  return CATEGORY_FALLBACK_IMAGES.checkin_general;
+/** Neutral missing-photo state; never substitute a photo of another location. */
+export function getCategoryFallbackImage(_category: string = '', _name: string = ''): string {
+  return MISSING_PLACE_IMAGE;
 }
 
 /**
@@ -169,12 +141,15 @@ export function parseTravelGuide(rawGuide: any): TravelGuideParsed {
     guide = rawGuide;
   }
 
+  if (!guide || typeof guide !== 'object' || Array.isArray(guide)) guide = {};
+  const text = (value: unknown) => typeof value === 'string' && value.trim() ? value.trim() : undefined;
+
   return {
-    openingHours: guide.opening_hours || '06:00 - 18:30 hằng ngày',
-    ticketPrice: guide.ticket_price || 'Miễn phí vé vào cổng',
-    vehicleSuitability: guide.vehicle_suitability || 'Xe máy, Ô tô < 16 chỗ',
-    bestSeason: guide.best_season || 'Quanh năm, đẹp nhất mùa lúa chín tháng 9-11',
-    howToGetThere: guide.how_to_get_there || 'Di chuyển theo tuyến tỉnh lộ thuận tiện.',
+    openingHours: text(guide.opening_hours) || 'Chưa có thông tin giờ mở cửa',
+    ticketPrice: text(guide.ticket_price) || 'Chưa có thông tin giá vé',
+    vehicleSuitability: text(guide.vehicle_suitability) || 'Chưa có thông tin phương tiện phù hợp',
+    bestSeason: text(guide.best_season) || 'Chưa có thông tin thời điểm phù hợp',
+    howToGetThere: text(guide.how_to_get_there) || 'Chưa có hướng dẫn di chuyển',
   };
 }
 
@@ -184,8 +159,8 @@ export interface NearbyFoodParsed {
   type: string;
   address: string;
   specialties: string[];
-  rating: number;
-  reviewsCount: number;
+  rating?: number;
+  reviewsCount?: number;
   distanceKm?: number;
   distanceLabel: string;
   phone?: string;
@@ -231,13 +206,13 @@ export function parseNearbyFood(rawFood: any): NearbyFoodParsed[] {
     list = rawFood;
   }
 
-  return list.map((item, idx) => ({
+  return list.map((item) => ({
     name: item.name || 'Quán ăn đặc sản bản địa',
     type: item.type || 'restaurant',
     address: item.address || 'Khu vực lân cận Tri Tôn',
-    specialties: Array.isArray(item.specialties) ? item.specialties : ['Gà đốt lá chúc', 'Đặc sản Bảy Núi'],
-    rating: item.rating ? Number(item.rating) : 4.8,
-    reviewsCount: item.reviews_count ? Number(item.reviews_count) : 150 + idx * 50,
+    specialties: Array.isArray(item.specialties) ? item.specialties : [],
+    rating: presentRating(item.rating),
+    reviewsCount: typeof item.reviews_count === 'number' ? item.reviews_count : undefined,
     distanceLabel: item.distance || 'Khu vực lân cận',
     phone: item.phone || '',
   }));
@@ -261,20 +236,7 @@ export function findDynamicNearbyFood(
 
   const foodCandidates = allPois.filter((p) => {
     if (!p || p.id === currentPoi.id) return false;
-    const cat = (p.category || '').toLowerCase();
-    const name = (p.name || '').toLowerCase();
-    const isFood =
-      cat.includes('food') ||
-      cat.includes('gastronomy') ||
-      cat.includes('restaurant') ||
-      name.includes('gà đốt') ||
-      name.includes('quán') ||
-      name.includes('bò 7 món') ||
-      name.includes('cháo bò') ||
-      name.includes('bún cá') ||
-      name.includes('cà phê') ||
-      name.includes('cafe');
-    return isFood && p.latitude && p.longitude;
+    return isFoodListing(p) && p.latitude && p.longitude;
   });
 
   const withDistances = foodCandidates.map((p) => {
@@ -289,9 +251,9 @@ export function findDynamicNearbyFood(
       address: p.address || `${p.commune || 'Tri Tôn'}, An Giang`,
       specialties: Array.isArray(p.specialties) && p.specialties.length > 0
         ? p.specialties
-        : [p.name.includes('Gà') ? 'Gà đốt lá chúc' : p.name.includes('Bò') ? 'Bò 7 món Bảy Núi' : 'Ẩm thực bản địa'],
-      rating: p.rating ? Number(p.rating) : 4.8,
-      reviewsCount: 180,
+        : [],
+      rating: presentRating(p.rating),
+      reviewsCount: typeof p.review_count === 'number' ? p.review_count : undefined,
       distanceKm: distKm,
       distanceLabel: `Cách ${distKm < 1 ? `${Math.round(distKm * 1000)}m` : `${distKm} km`}`,
       phone: p.phone || '',
@@ -461,11 +423,11 @@ export function findDynamicNearbyAttractionsAndCafes(
       slug: p.slug || p.id,
       name: p.name,
       type: 'attraction',
-      reviewsCount: 150,
+      reviewsCount: typeof p.review_count === 'number' ? p.review_count : undefined,
       address: p.address || p.commune || 'Tri Tôn, An Giang',
       distanceKm: km,
       distanceLabel: `Cách ${km < 1 ? Math.round(km * 1000) + 'm' : km.toFixed(1) + ' km'}`,
-      rating: p.rating ? Number(p.rating) : 4.8,
+      rating: presentRating(p.rating),
       specialties: [p.tourism_category || 'Điểm Đến Trải Nghiệm', p.commune || 'Tri Tôn'],
       image_url: p.image_url || (Array.isArray(p.photos) ? p.photos[0] : undefined),
     });

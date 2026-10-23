@@ -30,6 +30,23 @@ export const CANONICAL_CLAIM_METADATA: CanonicalClaimMetadata = {
 export const CANONICAL_TOTAL_VERIFIED_COUNT = CANONICAL_CLAIM_METADATA.totalVerifiedCount;
 export const CANONICAL_MANIFEST_VERSION = CANONICAL_CLAIM_METADATA.manifestVersion;
 
+/** Do not infer verification from a name, rating or a legacy is_verified flag. */
+export function getCanonicalPlaceVerification(place: {
+  id?: string; slug?: string; canonical_id?: string; is_verified?: boolean;
+  verification_status?: string; review_id?: string; source_url?: string; verified_at?: string;
+}, now = Date.now()) {
+  if (place.is_verified !== true || place.verification_status !== 'VERIFIED') return null;
+  const canonicalId = place.canonical_id || place.id || place.slug;
+  return placesCanonical.places.find(record =>
+    canonicalId === record.canonical_id
+    && place.review_id === record.review_id
+    && place.source_url === record.source_url
+    && place.verified_at === record.verified_at
+    && Date.parse(record.verified_at) <= now
+    && Date.parse(record.expires_at) > now
+  ) || null;
+}
+
 /**
  * Returns the exact verified POI count guaranteed by the canonical manifest.
  */

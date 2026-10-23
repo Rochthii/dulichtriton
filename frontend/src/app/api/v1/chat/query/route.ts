@@ -20,7 +20,7 @@ import { checkCitationCoverage } from '@/lib/chatCitationCoverageGate';
 import { generateSmartLocalDomainResponse } from '@/lib/ai/localExpertRag';
 import { detectPromptInjection } from '@/lib/chatPromptInjectionGuard';
 import { detectPoisonedKnowledgeClaims, sanitizeClientChatHistory } from '@/lib/chatPoisonedKnowledgeGuard';
-import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory } from '@/lib/chatConsentGuard';
+import { resolveConsentStatus, shouldPersistChatSession, shouldLoadChatHistory, type ConsentStatus } from '@/lib/chatConsentGuard';
 
 const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://127.0.0.1:8000';
 
@@ -189,7 +189,8 @@ function logChatEvent(entry: {
   provider_used?: string; model_used?: string; rag_method?: string; places_count?: number;
   latency_ms?: number; is_out_scope?: boolean; provider_fallback?: boolean | null;
   retrieval_zero_result?: boolean | null;
-}): void {
+}, consentStatus: ConsentStatus): void {
+  if (!shouldPersistChatSession(consentStatus, entry.session_id)) return;
   const supabase = getSupabase();
   if (!supabase) return;
   void Promise.resolve(supabase.from('chat_logs').insert(entry))
@@ -330,8 +331,9 @@ export async function POST(req: NextRequest) {
 
     const queryStr  = validation.sanitizedQuery;
     // session_id: frontend gửi kèm; fallback sang 'anonymous' cho widget
-    const sessionId = (typeof body.session_id === 'string' && body.session_id.trim())
-      ? body.session_id.trim()
+    const consentStatus = resolveConsentStatus({ body, req });
+    const sessionId = consentStatus === 'granted' && typeof body.session_id === 'string'
+      ? body.session_id.trim() || 'anonymous'
       : 'anonymous';
 
     const supabase = getSupabase();
@@ -356,7 +358,6 @@ export async function POST(req: NextRequest) {
 
     const t0 = startLatencyTimer(); // latency tracking (P04-013)
 
-    const consentStatus = resolveConsentStatus({ body, req });
     const canPersistSession = shouldPersistChatSession(consentStatus, sessionId);
     const canLoadHistory = shouldLoadChatHistory(consentStatus, sessionId);
 
@@ -380,7 +381,7 @@ export async function POST(req: NextRequest) {
         model_used: injectionModel,
         is_out_scope: true,
         latency_ms: injectionLatencyMs,
-      });
+      }, req.signal.aborted ? 'unset' : consentStatus);
       const injectionRes = NextResponse.json({
         text_response: injectionMessage,
         provider: injectionProvider,
@@ -416,7 +417,7 @@ export async function POST(req: NextRequest) {
         model_used: poisonedModel,
         is_out_scope: false,
         latency_ms: poisonedLatencyMs,
-      });
+      }, req.signal.aborted ? 'unset' : consentStatus);
       const poisonedRes = NextResponse.json({
         text_response: poisonedMessage,
         provider: poisonedProvider,
@@ -452,7 +453,7 @@ export async function POST(req: NextRequest) {
         model_used: oosModel,
         is_out_scope: true,
         latency_ms: oosLatencyMs,
-      });
+      }, req.signal.aborted ? 'unset' : consentStatus);
       const oosRes = NextResponse.json({
         text_response: oosMessage,
         provider: oosProvider,
@@ -779,7 +780,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Persist this turn to chat_sessions (P05-008: Chỉ lưu khi được phép theo consent guard, no-consent path tuyệt đối không ghi)
-    if (canPersistSession && (outValidation.isValid || aiTextResponse.trim().length > 0)) {
+    if (canPersistSession && !req.signal.aborted && (outValidation.isValid || aiTextResponse.trim().length > 0)) {
       saveHistory(sessionId, [
         ...history,
         { role: 'user',      content: queryStr },
@@ -812,7 +813,7 @@ export async function POST(req: NextRequest) {
       is_out_scope: false,
       provider_fallback: providerFallback,
       retrieval_zero_result: places.length === 0,
-    });
+    }, req.signal.aborted ? 'unset' : consentStatus);
 
     const mainPayload: StructuredChatResponse = {
       text_response: aiTextResponse,

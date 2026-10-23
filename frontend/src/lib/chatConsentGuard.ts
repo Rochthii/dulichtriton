@@ -5,9 +5,8 @@
  * 
  * Quy chuẩn: CHAT-CONSENT-GUARD-V1 (P05-008)
  * Bất biến:
- * 1. Khi người dùng từ chối đồng thuận (no-consent / incognito mode, consent = false / denied),
- *    hệ thống TUYỆT ĐỐI KHÔNG ghi bất kỳ bản ghi nào vào bảng public.chat_sessions trên máy chủ.
- * 2. Mọi chức năng hỏi đáp du lịch, trích dẫn bản đồ, gợi ý lịch trình vẫn hoạt động 100% trôi chảy.
+ * 1. Chỉ granted cho phép lưu/tải lịch sử. Unset/denied không được nâng thành granted.
+ * 2. Routes dùng cùng guard cho chat log; câu hỏi hiện tại vẫn có thể được gửi tới AI để trả lời.
  */
 
 export const CHAT_CONSENT_STORAGE_KEY = 'triton_chat_consent';
@@ -26,13 +25,15 @@ export interface ConsentResolutionOptions {
 export function resolveConsentStatus(options?: ConsentResolutionOptions): ConsentStatus {
   if (!options) return 'unset';
 
-  // 1. Kiểm tra Body JSON
+  let bodyStatus: ConsentStatus = 'unset';
+  let headerStatus: ConsentStatus = 'unset';
+  // Denial wins when body and header disagree.
   if (options.body && typeof options.body === 'object') {
     if (options.body.consent === false || options.body.consent === 'denied') {
-      return 'denied';
+      bodyStatus = 'denied';
     }
     if (options.body.consent === true || options.body.consent === 'granted') {
-      return 'granted';
+      bodyStatus = 'granted';
     }
   }
 
@@ -50,43 +51,36 @@ export function resolveConsentStatus(options?: ConsentResolutionOptions): Consen
     if (headerValue) {
       const normalized = headerValue.trim().toLowerCase();
       if (normalized === 'denied' || normalized === 'false' || normalized === 'no') {
-        return 'denied';
+        headerStatus = 'denied';
       }
       if (normalized === 'granted' || normalized === 'true' || normalized === 'yes') {
-        return 'granted';
+        headerStatus = 'granted';
       }
     }
   }
 
-  return 'unset';
+  if (bodyStatus === 'denied' || headerStatus === 'denied') return 'denied';
+  return bodyStatus === 'granted' || headerStatus === 'granted' ? 'granted' : 'unset';
 }
 
 /**
  * Thẩm định xem phiên hội thoại có được phép ghi vào bảng public.chat_sessions trên CSDL hay không.
- * Trả về false tuyệt đối nếu người dùng từ chối (no-consent) hoặc phiên là anonymous.
+ * Chỉ cho phép khi đã đồng ý rõ ràng và phiên không phải anonymous.
  */
 export function shouldPersistChatSession(status: ConsentStatus, sessionId?: string | null): boolean {
   if (!sessionId || sessionId === 'anonymous' || sessionId.trim() === '') {
     return false;
   }
-  // No-consent path: Nếu người dùng từ chối đồng thuận (denied), TUYỆT ĐỐI KHÔNG GHI
-  if (status === 'denied') {
-    return false;
-  }
-  // Mặc định hoặc khi đã đồng thuận (granted/unset), cho phép lưu nếu có sessionId hợp lệ
-  return true;
+  return status === 'granted';
 }
 
 /**
  * Thẩm định xem có được phép tải lịch sử hội thoại trước đó từ CSDL hay không.
- * Nếu người dùng đang ở chế độ từ chối đồng thuận (denied), không tải lịch sử máy chủ.
+ * Unset và denied đều không được tải lịch sử máy chủ.
  */
 export function shouldLoadChatHistory(status: ConsentStatus, sessionId?: string | null): boolean {
   if (!sessionId || sessionId === 'anonymous' || sessionId.trim() === '') {
     return false;
   }
-  if (status === 'denied') {
-    return false;
-  }
-  return true;
+  return status === 'granted';
 }

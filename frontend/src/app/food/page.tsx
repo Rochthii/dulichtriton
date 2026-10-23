@@ -1,5 +1,8 @@
 "use client";
 
+import PlaceListingImage from '@/components/PlaceListingImage';
+import { presentRating, presentPlaceImage, isFoodListing } from '@/lib/publicPlacePresentation';
+
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { 
@@ -18,7 +21,7 @@ interface FoodItem {
   category: string;
   tourism_category: string;
   commune: string;
-  rating: number;
+  rating?: number;
   image_url: string;
   video_url?: string;
   hours: string;
@@ -46,22 +49,9 @@ const SPECIALTY_FILTERS = [
 
 function getInitialFoodList(): FoodItem[] {
   const gastronomyList = (localMasterPois as any[])
-    .filter(
-      (p) =>
-        p.category === "gastronomy" ||
-        p.category === "food" ||
-        (p.id && (p.id.startsWith("AT") || p.id.startsWith("CF") || p.id.startsWith("DS"))) ||
-        (p.name && (p.name.toLowerCase().includes('gà đốt') || p.name.toLowerCase().includes('quán') || p.name.toLowerCase().includes('bò') || p.name.toLowerCase().includes('bún cá') || p.name.toLowerCase().includes('cà phê') || p.name.toLowerCase().includes('cafe')))
-    )
+    .filter(isFoodListing)
     .map((p) => {
-      let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
-      if (p.image_url && typeof p.image_url === "string" && p.image_url.startsWith("http")) {
-        img = p.image_url;
-      } else if (Array.isArray(p.photos) && p.photos.length > 0) {
-        const p0 = p.photos[0];
-        if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-        else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-      }
+      const img = presentPlaceImage(p);
 
       return {
         id: p.id,
@@ -70,16 +60,16 @@ function getInitialFoodList(): FoodItem[] {
         category: p.category || "gastronomy",
         tourism_category: p.tourism_category || "Ẩm Thực Đặc Sản",
         commune: p.commune || "Thị trấn Tri Tôn",
-        rating: p.rating ? Number(p.rating) : 4.8,
+        rating: presentRating(p.rating),
         image_url: img,
         video_url: p.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(p.name + " Tri Tôn")}`,
-        hours: p.night_hours || p.opening_hours || (p.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+        hours: p.night_hours || p.opening_hours || "Chưa có thông tin giờ mở cửa",
         description: p.description || "",
         detailed_story: p.detailed_story,
         open_late: !!p.open_late,
         night_hours: p.night_hours,
         phone: p.phone,
-        price_level: p.price_level || "35k - 150k",
+        price_level: p.price_level,
         address: p.address || "",
         is_hot: !!p.is_hot || (p.rating && p.rating >= 4.8),
       };
@@ -99,26 +89,7 @@ function getInitialFoodList(): FoodItem[] {
 }
 
 function getFoodPriceBadge(food: FoodItem): { priceText: string; note?: string } {
-  const n = food.name.toLowerCase();
-  if (n.includes('gà đốt') || n.includes('ô thum')) {
-    return { priceText: '~280k – 320k / con', note: 'Xôi/cơm lam gọi riêng' };
-  }
-  if (n.includes('bò 7 món') || n.includes('bò nướng')) {
-    return { priceText: '~120k – 180k / phần', note: 'Lẩu/Nướng than' };
-  }
-  if (n.includes('cháo bò') || n.includes('bún cá') || n.includes('bánh canh')) {
-    return { priceText: '~30k – 45k / tô', note: 'Ăn sáng 06:00–10:00' };
-  }
-  if (n.includes('bánh bò')) {
-    return { priceText: '~40k – 60k / ổ', note: 'Ra lò 9h & 14h' };
-  }
-  if (n.includes('đu đủ đâm')) {
-    return { priceText: '~20k – 35k / dĩa', note: 'Vị cay nồng Khmer' };
-  }
-  if (n.includes('cà phê') || n.includes('cafe') || n.includes('coffee') || n.includes('thốt nốt')) {
-    return { priceText: '~15k – 35k / ly', note: 'View ngắm lúa & hồ' };
-  }
-  return { priceText: food.price_level || '~35k – 150k', note: undefined };
+  return { priceText: food.price_level || 'Chưa có thông tin giá', note: 'Xác nhận với quán trước khi đến' };
 }
 
 export default function FoodPage() {
@@ -131,15 +102,8 @@ export default function FoodPage() {
   useEffect(() => {
     function processFoodData(json: any) {
       if (json?.food && json.food.length > 0) {
-        const formatted = json.food.map((item: any) => {
-          let img = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop";
-          if (item.image_url && typeof item.image_url === "string" && item.image_url.startsWith("http")) {
-            img = item.image_url;
-          } else if (Array.isArray(item.photos) && item.photos.length > 0) {
-            const p0 = item.photos[0];
-            if (typeof p0 === "string" && p0.startsWith("http")) img = p0;
-            else if (p0 && typeof p0 === "object" && p0.url) img = p0.url;
-          }
+        const formatted = json.food.filter(isFoodListing).map((item: any) => {
+          const img = presentPlaceImage(item);
 
           return {
             id: item.id,
@@ -148,16 +112,16 @@ export default function FoodPage() {
             category: item.category || "gastronomy",
             tourism_category: item.tourism_category || "Ẩm Thực Đặc Sản",
             commune: item.commune || "Thị trấn Tri Tôn",
-            rating: item.rating ? Number(item.rating) : 4.8,
+            rating: presentRating(item.rating),
             image_url: img,
             video_url: item.video_url || `https://www.tiktok.com/search/video?q=${encodeURIComponent(item.name + " Tri Tôn")}`,
-            hours: item.night_hours || item.opening_hours || (item.open_late ? "15:00 - 23:30" : "06:30 - 21:00"),
+            hours: item.night_hours || item.opening_hours || "Chưa có thông tin giờ mở cửa",
             description: item.description || "",
             detailed_story: item.detailed_story,
             open_late: !!item.open_late,
             night_hours: item.night_hours,
             phone: item.phone,
-            price_level: item.price_level || "35k - 150k",
+            price_level: item.price_level,
             address: item.address || "",
             is_hot: !!item.is_hot || (item.rating && item.rating >= 4.8),
           };
@@ -348,7 +312,7 @@ export default function FoodPage() {
                       className="block relative h-32 sm:h-44 w-full overflow-hidden bg-slate-200 cursor-pointer"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <PlaceListingImage
                         src={getOptimizedImageUrl(hotItem.image_url, { width: 900, dpr: 2, quality: 'best' })}
                         alt={hotItem.name}
                         className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
@@ -365,7 +329,7 @@ export default function FoodPage() {
 
                       <span className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 px-1.5 sm:px-2 py-0.5 rounded-md bg-[#FAF3E7]/95 text-[#26221B] font-extrabold text-[10px] sm:text-[11px] flex items-center gap-1 shadow-xs">
                         <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
-                        <span>{hotItem.rating}</span>
+                        <span>{hotItem.rating ?? "Chưa có đánh giá"}</span>
                       </span>
 
                       <div className="absolute bottom-2 sm:bottom-2.5 left-2 sm:left-3 right-2 sm:right-3 text-white">
@@ -496,7 +460,7 @@ export default function FoodPage() {
               <Utensils className="w-5 h-5 text-[#0E8C7F]" />
               <span>Danh Sách Quán Ăn & Đặc Sản ({filteredFoods.length} Địa Điểm)</span>
             </h2>
-            <span className="text-xs text-[#6B6355] font-medium font-mono">Dữ liệu thực địa 100%</span>
+            <span className="text-xs text-[#6B6355] font-medium font-mono">Đối chiếu giá và giờ mở cửa với quán</span>
           </div>
 
           {loading ? (
@@ -536,7 +500,7 @@ export default function FoodPage() {
                         className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 cursor-pointer"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <PlaceListingImage
                           src={getOptimizedImageUrl(food.image_url, { width: 800, dpr: 2, quality: 'best' })}
                           alt={food.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -563,7 +527,7 @@ export default function FoodPage() {
                         {/* Rating Badge */}
                         <span className="absolute top-2 sm:top-3 right-2 sm:right-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-0.5 sm:gap-1 shadow-sm font-display">
                           <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-500" />
-                          <span>{food.rating}</span>
+                          <span>{food.rating ?? "Chưa có đánh giá"}</span>
                         </span>
 
                         {/* Bottom Text on Photo */}

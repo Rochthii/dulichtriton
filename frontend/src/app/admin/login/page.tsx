@@ -46,7 +46,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[var(--night-bg)] text-slate-100 flex items-center justify-center p-4 relative overflow-hidden font-body">
       {/* Background Accent Gradients */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#1B4D3E]/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#D99B26]/20 rounded-full blur-3xl pointer-events-none" />
@@ -68,12 +68,12 @@ export default function AdminLoginPage() {
         {/* Security Indicator */}
         <div className="bg-emerald-950/40 border border-emerald-800/40 rounded-2xl p-3 text-xs text-emerald-300 flex items-center gap-2 font-medium">
           <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-          <span>Hệ thống Bảo mật Xác thực 2 Lớp • Quản Trị Tri Tôn</span>
+          <span>Đăng nhập bằng tài khoản quản trị được cấp</span>
         </div>
 
         {/* Error Alert */}
         {errorMsg && (
-          <div className="bg-rose-950/80 border border-rose-800 text-rose-200 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 font-medium animate-in fade-in duration-200">
+          <div role="alert" className="bg-rose-950/80 border border-rose-800 text-rose-200 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 font-medium animate-in fade-in duration-200">
             <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -82,12 +82,14 @@ export default function AdminLoginPage() {
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
+            <label htmlFor="admin-email" className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
               Email Quản Trị
             </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
               <input
+                id="admin-email"
+                autoComplete="username"
                 type="email"
                 required
                 value={email}
@@ -99,12 +101,14 @@ export default function AdminLoginPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
+            <label htmlFor="admin-password" className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider">
               Mật Khẩu Quản Trị
             </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
               <input
+                id="admin-password"
+                autoComplete="current-password"
                 type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
@@ -115,7 +119,9 @@ export default function AdminLoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-3 text-slate-500 hover:text-slate-300 transition-colors"
+                aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                aria-pressed={showPassword}
+                className="absolute right-0 top-0 min-h-11 min-w-11 flex items-center justify-center text-slate-400 hover:text-slate-200 transition-colors"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>

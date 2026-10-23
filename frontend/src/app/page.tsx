@@ -5,6 +5,8 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { fetchWithCache } from "@/lib/fastCache";
 import localMasterPois from "@/data/triton_pois_full.json";
+import EmergencyQuickLinks from '@/components/EmergencyQuickLinks';
+import { isFoodListing, presentRating } from '@/lib/publicPlacePresentation';
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import TriTonWeatherWidget from "@/components/TriTonWeatherWidget";
 import { resolvePlaceExternalLinks } from "@/lib/externalLinks";
@@ -46,7 +48,7 @@ interface PlaceItem {
   name: string;
   category: string;
   commune: string;
-  rating: number;
+  rating?: number;
   image_url: string;
   description?: string;
   golden_time_windows?: string[];
@@ -59,7 +61,7 @@ interface FoodItem {
   slug: string;
   name: string;
   commune: string;
-  rating: number;
+  rating?: number;
   image_url: string;
   description?: string;
   price_level?: string;
@@ -86,9 +88,8 @@ interface ItineraryCardItem {
   budget_range: string;
 }
 
-import { CLUSTER_DEFS, type TourismCluster } from "@/lib/clusterData";
+import { CLUSTER_DEFS } from "@/lib/clusterData";
 import { AUDIENCE_FILTERS, type AudienceFilter } from "@/lib/designSystemIcons";
-export { CLUSTER_DEFS, type TourismCluster };
 
 type TimeSlot = "morning" | "noon" | "afternoon" | "evening";
 
@@ -107,18 +108,18 @@ function getInitialHotPlaces(): PlaceItem[] {
         name: p.name,
         category: p.category || "check-in",
         commune: p.commune || "Tri Tôn, An Giang",
-        rating: p.rating ? Number(p.rating) : 4.8,
+        rating: presentRating(p.rating),
         image_url: img,
         description: sanitizeDescription(p.detailed_story || p.description, p.name, p.commune, p.category),
-        golden_time_windows: Array.isArray(p.golden_time_windows) ? p.golden_time_windows : ["06:00–08:30", "16:00–17:30"],
-        cost_vnd: p.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+        golden_time_windows: Array.isArray(p.golden_time_windows) ? p.golden_time_windows : [],
+        cost_vnd: p.price_level || "Chưa có giá",
       };
     });
 }
 
 function getInitialFoods(): FoodItem[] {
   return (localMasterPois as any[])
-    .filter((p) => p.category === "gastronomy" || p.category === "food" || p.name?.toLowerCase().includes("gà đốt") || p.name?.toLowerCase().includes("cháo bò"))
+    .filter(isFoodListing)
     .slice(0, 6)
     .map((f) => {
       let img = getCategoryFallbackImage("food", f.name);
@@ -130,10 +131,10 @@ function getInitialFoods(): FoodItem[] {
         slug: f.slug || f.id,
         name: f.name,
         commune: f.commune || "Tri Tôn",
-        rating: f.rating ? Number(f.rating) : 4.9,
+        rating: presentRating(f.rating),
         image_url: img,
         description: sanitizeDescription(f.detailed_story || f.description, f.name, f.commune, 'food'),
-        price_level: f.price_level || "Đặc sản bản địa",
+        price_level: f.price_level || "Chưa có giá",
       };
     });
 }
@@ -224,7 +225,7 @@ export default function HomePage() {
       try {
         Promise.allSettled([
           // 1. Fetch Hot Places live from Supabase
-          fetchWithCache("home-hot-places-live", async () => {
+          fetchWithCache("home-hot-places-live-v2", async () => {
             const { data } = await supabase
               .from("places")
               .select("id, slug, name, category, commune, rating, photos, image_url, description, golden_time_windows, tags_info, is_hot")
@@ -253,14 +254,14 @@ export default function HomePage() {
                   name: item.name,
                   category: item.category || "check-in",
                   commune: item.commune || "Tri Tôn, An Giang",
-                  rating: item.rating ? Number(item.rating) : 4.8,
+                  rating: presentRating(item.rating),
                   image_url: img,
                   description: cleanDesc,
                   has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
                   golden_time_windows: Array.isArray(item.golden_time_windows)
                     ? item.golden_time_windows
-                    : ["06:00–08:30", "16:00–17:30"],
-                  cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+                    : [],
+                  cost_vnd: item.price_level || "Chưa có giá",
                 };
               });
 
@@ -278,16 +279,19 @@ export default function HomePage() {
           }),
 
           // 2. Fetch Top Foods live from Supabase
-          fetchWithCache("home-foods-live", async () => {
+          fetchWithCache("home-foods-live-v2", async () => {
             const { data: foodsData } = await supabase
               .from("places")
-              .select("id, slug, name, commune, rating, photos, image_url, description, price_level")
+              .select("id, slug, name, category, commune, rating, photos, image_url, description, price_level")
               .ilike("category", "%food%")
               .order("rating", { ascending: false })
               .limit(10);
 
             if (foodsData && foodsData.length > 0) {
-              const mappedFoods = foodsData.map((f: any) => {
+              const mappedFoods = foodsData.filter((f: any) => {
+                const local = (localMasterPois as any[]).find(p => p.id === f.id || (f.slug && p.slug === f.slug));
+                return isFoodListing({ ...f, subcategory: local?.subcategory });
+              }).map((f: any) => {
                 let img = getCategoryFallbackImage("food", f.name);
                 if (f.image_url && typeof f.image_url === "string" && !f.image_url.includes("unsplash.com")) {
                   img = f.image_url;
@@ -304,10 +308,10 @@ export default function HomePage() {
                   slug: f.slug || f.id,
                   name: f.name,
                   commune: f.commune || "Tri Tôn",
-                  rating: f.rating ? Number(f.rating) : 4.9,
+                  rating: presentRating(f.rating),
                   image_url: img,
                   description: sanitizeDescription(localMatch?.detailed_story || f.description, f.name, f.commune, 'food'),
-                  price_level: f.price_level || "Đặc sản bản địa",
+                  price_level: f.price_level || "Chưa có giá",
                   has_story: Boolean(localMatch?.detailed_story && localMatch.detailed_story.length > 200),
                 };
               });
@@ -405,11 +409,11 @@ export default function HomePage() {
         name: item.name,
         category: item.category || "check-in",
         commune: item.commune || "Tri Tôn, An Giang",
-        rating: item.rating ? Number(item.rating) : 4.8,
+        rating: presentRating(item.rating),
         image_url: img,
         description: sanitizeDescription(item.description, item.name, item.commune, item.category),
-        golden_time_windows: Array.isArray(item.golden_time_windows) ? item.golden_time_windows : ["06:00–08:30", "16:00–17:30"],
-        cost_vnd: item.category === "food" ? "120.000đ - 250.000đ" : "Miễn phí vé",
+        golden_time_windows: Array.isArray(item.golden_time_windows) ? item.golden_time_windows : [],
+        cost_vnd: item.price_level || "Chưa có giá",
       };
     }).slice(0, 8);
   }, [selectedClusterId, allMasterPlaces]);
@@ -540,7 +544,7 @@ export default function HomePage() {
             </h1>
 
             <p className="font-body text-xs sm:text-sm text-[#FAF3E7]/90 max-w-2xl mx-auto font-medium leading-relaxed drop-shadow-xs">
-              149 thắng cảnh đã xác minh thực tế • 35 lịch trình gợi ý • Bản đồ ẩm thực Gà Đốt Ô Thum & Di sản Chùa Khmer.
+              Khám phá cảnh quan, ẩm thực và di sản Bảy Núi. Xem nguồn và trạng thái xác minh tại từng địa điểm.
             </p>
 
             {/* Smart Search Bar */}
@@ -759,7 +763,7 @@ export default function HomePage() {
                     <div className="pt-1.5 sm:pt-2 border-t border-[#26221B]/6 flex items-center justify-between text-[9px] sm:text-xs font-display">
                       <div className="flex items-center gap-1 text-[#0E8C7F] truncate">
                         <Clock className="w-3 h-3 shrink-0" />
-                        <span className="truncate">{place.golden_time_windows?.[0] || "06:00 - 08:30"}</span>
+                        <span className="truncate">{place.golden_time_windows?.[0] || "Chưa có giờ gợi ý"}</span>
                       </div>
                       <span className="font-bold text-[#D9822B] shrink-0 text-[10px] sm:text-[11px]">{place.cost_vnd}</span>
                     </div>
@@ -806,7 +810,7 @@ export default function HomePage() {
               prefetch={true}
               className="text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] flex items-center gap-1 transition-colors font-display"
             >
-              <span>Xem tất cả 149 điểm</span>
+              <span>Xem danh mục điểm đến</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -1053,29 +1057,11 @@ export default function HomePage() {
                 Đồng Hành An Toàn Trên Mọi Cung Đường Bảy Núi
               </h2>
               <p className="text-xs text-white/80 leading-relaxed">
-                Khi gặp sự cố hỏng xe giữa đèo, lạc đường hoặc cần trợ giúp y tế khẩn cấp, vui lòng liên hệ ngay đường dây nóng chính thức của Công an & Trung tâm Y tế Tri Tôn.
+                Khi gặp sự cố hỏng xe giữa đèo, lạc đường hoặc cần trợ giúp y tế khẩn cấp, hãy chọn tổng đài phù hợp trong danh bạ SOS.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 shrink-0 font-display">
-              <a
-                href="tel:0296.3874.113"
-                className="p-3.5 rounded-[20px] bg-white/10 hover:bg-[#F0A32F] hover:text-[#26221B] border border-white/15 text-center transition-all tap-bounce"
-              >
-                <Phone className="w-5 h-5 mx-auto mb-1 text-[#FFD37A]" />
-                <span className="text-[11px] block text-white/70">Công An Tri Tôn</span>
-                <strong className="text-xs block text-[#FFFDF7]">0296.3874.113</strong>
-              </a>
-
-              <a
-                href="tel:0296.3874.115"
-                className="p-3.5 rounded-[20px] bg-white/10 hover:bg-[#0E8C7F] hover:text-white border border-white/15 text-center transition-all tap-bounce"
-              >
-                <HeartHandshake className="w-5 h-5 mx-auto mb-1 text-[#FFD37A]" />
-                <span className="text-[11px] block text-white/70">Cấp Cứu Y Tế</span>
-                <strong className="text-xs block text-[#FFFDF7]">0296.3874.115</strong>
-              </a>
-            </div>
+            <EmergencyQuickLinks />
           </div>
         </section>
 

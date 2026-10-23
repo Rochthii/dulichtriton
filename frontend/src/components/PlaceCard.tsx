@@ -55,6 +55,12 @@ export interface Place {
   night_hours?: string;
   field_tips?: string;
   is_active?: boolean;
+  canonical_id?: string;
+  is_verified?: boolean;
+  verification_status?: string;
+  review_id?: string;
+  source_url?: string;
+  verified_at?: string;
 }
 
 interface PlaceCardProps {
@@ -72,8 +78,15 @@ const CATEGORY_LABELS: Record<string, string> = {
   'check-in': 'Check-in Hot',
 };
 
+const CATEGORY_TOKENS: Record<string, string> = {
+  nature: '--cat-nature', culture: '--cat-culture', spiritual: '--cat-culture',
+  history: '--cat-history', food: '--cat-food', gastronomy: '--cat-food',
+  stay: '--cat-stay', festival: '--cat-festival', 'check-in': '--cat-nature',
+};
+
 export default function PlaceCard({ place }: PlaceCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   useEffect(() => {
     try {
@@ -88,7 +101,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     e.preventDefault();
     e.stopPropagation();
     const nextState = !isLiked;
-    setIsLiked(nextState);
+    setSaveError('');
     try {
       const key = 'triton_fav_places';
       const favs: string[] = JSON.parse(localStorage.getItem(key) || '[]');
@@ -100,8 +113,9 @@ export default function PlaceCard({ place }: PlaceCardProps) {
         if (idx >= 0) favs.splice(idx, 1);
       }
       localStorage.setItem(key, JSON.stringify(favs));
+      setIsLiked(nextState);
     } catch {
-      // ignore
+      setSaveError('Chưa lưu được trên thiết bị này. Hãy kiểm tra quyền lưu trữ của trình duyệt.');
     }
   };
 
@@ -130,14 +144,16 @@ export default function PlaceCard({ place }: PlaceCardProps) {
     }
   }
 
-  const categoryLabel = place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến';
+  const categoryLabel = CATEGORY_LABELS[place.tourism_category || ''] || place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến';
+  const categoryColor = `var(${CATEGORY_TOKENS[place.category] || '--jade'})`;
   const detailUrl = `/places/${place.slug || place.id}`;
 
   return (
-    <div className="group relative bg-[#FFFDF7] rounded-[24px] sm:rounded-[28px] overflow-hidden border-2 border-amber-400/80 shadow-[0_4px_20px_rgba(240,163,47,0.12)] hover:shadow-[0_12px_32px_rgba(240,163,47,0.22)] hover:border-amber-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between font-body">
+    <div className="group relative bg-[var(--surface)] rounded-[var(--r-l)] overflow-hidden border border-[#26221B]/10 shadow-[var(--shadow-1)] hover:shadow-[var(--shadow-2)] hover:border-[#0E8C7F]/40 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between font-body">
       <div>
         {/* Image Header with Scrim */}
-        <Link href={detailUrl} prefetch={true} className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 cursor-pointer">
+        <div className="relative aspect-[4/3] overflow-hidden">
+        <Link href={detailUrl} prefetch={true} className="block relative h-full w-full overflow-hidden bg-slate-900 cursor-pointer">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={getOptimizedImageUrl(resolvedCoverUrl, { width: 800, dpr: 2, quality: 'best' })}
@@ -149,51 +165,49 @@ export default function PlaceCard({ place }: PlaceCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
           {/* Top Badges */}
-          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 flex items-center gap-1.5 pointer-events-none">
-            {place.is_hot ? (
-              <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
-                <Flame className="w-3 h-3 text-[#26221B] fill-[#26221B]" />
-                <span>HOT #{place.hot_rank || 1}</span>
-              </span>
-            ) : (
-              <span className="px-2.5 py-1 rounded-xl bg-[#F0A32F] text-[#26221B] font-black text-[10px] sm:text-xs uppercase tracking-wider flex items-center gap-1 shadow-sm font-display">
-                <Award className="w-3 h-3 text-[#26221B]" />
+          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 max-w-[45%] flex items-center gap-1.5 pointer-events-none">
+              <span style={{ backgroundColor: `color-mix(in srgb, ${categoryColor} 15%, var(--surface))`, borderColor: categoryColor }} className="px-2.5 py-1 rounded-full border text-[var(--ink)] font-bold text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display">
+                {place.is_hot ? <Flame className="w-3 h-3 shrink-0" /> : <Award className="w-3 h-3 shrink-0" />}
                 <span>{categoryLabel}</span>
               </span>
-            )}
           </div>
 
-          {/* Rating & Favorite Badges */}
+          </Link>
+          {/* Separate controls from the detail link for valid keyboard navigation. */}
           <div className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 flex items-center gap-1.5 z-10" onClick={(e) => e.stopPropagation()}>
             <span className="px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md text-[#26221B] font-black text-[10px] sm:text-xs flex items-center gap-1 shadow-sm font-display pointer-events-none">
               <Star className="w-3 h-3 fill-amber-400 text-amber-500" />
-              <span>{place.rating || 4.8}</span>
+              <span>{typeof place.rating === 'number' ? place.rating : 'Chưa có đánh giá'}</span>
             </span>
 
             <button
               type="button"
               onClick={handleToggleLike}
-              className={`p-1.5 rounded-xl backdrop-blur-md transition-all ${
+              className={`min-h-11 min-w-11 inline-flex items-center justify-center rounded-full backdrop-blur-md transition-all ${
                 isLiked
                   ? 'bg-[#F26B3A] text-white shadow-xs'
                   : 'bg-white/80 text-[#26221B] hover:text-[#F26B3A]'
               }`}
               title="Lưu địa điểm yêu thích"
+              aria-label={isLiked ? `Bỏ lưu ${place.name}` : `Lưu ${place.name}`}
+              aria-pressed={isLiked}
             >
               <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-white' : ''}`} />
             </button>
           </div>
 
           {/* Bottom Text on Photo */}
-          <div className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
+          <Link href={detailUrl} className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
             <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
               {place.commune}
             </span>
             <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
               {place.name}
             </h3>
-          </div>
-        </Link>
+          </Link>
+        </div>
+        <div className="sr-only" aria-live="polite">{isLiked ? `Đã lưu ${place.name}` : ''}</div>
+        {saveError && <p role="status" className="px-4 py-2 text-xs text-[#A6503A]">{saveError}</p>}
 
         {/* Content Details */}
         <Link href={detailUrl} prefetch={true} className="block p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355] cursor-pointer hover:bg-amber-50/30 transition-colors">
@@ -222,7 +236,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               target="_blank"
               rel="noreferrer"
               title="Xem Video TikTok"
-              className="p-1.5 sm:p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+              className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
             >
               <Play className="w-3 h-3 fill-rose-600 text-rose-600" />
             </a>
@@ -231,7 +245,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             href={maps.url}
             target="_blank"
             rel="noreferrer"
-            className="px-3 sm:px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/60 font-bold text-[11px] sm:text-xs flex items-center gap-1.5 transition-colors shadow-2xs"
+            className="min-h-11 px-3 sm:px-3.5 py-1.5 btn-palm text-[11px] sm:text-xs flex items-center gap-1.5"
           >
             <Navigation className="w-3 h-3 text-emerald-600" />
             <span>Chỉ đường</span>
