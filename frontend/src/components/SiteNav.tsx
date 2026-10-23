@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import {
   Compass,
+  Heart,
   Utensils,
   Hotel,
   Calendar,
@@ -44,6 +45,7 @@ export default function SiteNav() {
   const navLinks = [
     { name: "Trang Chủ", href: "/", icon: Home },
     { name: "Khám Phá", href: "/places", icon: Compass },
+    { name: "Đã lưu", href: "/places?saved=1", icon: Heart, mobileOnly: true },
     { name: "Ẩm Thực", href: "/food", icon: Utensils },
     { name: "Lưu Trú", href: "/stay", icon: Hotel },
     { name: "Lễ Hội", href: "/culture", icon: Calendar },
@@ -61,7 +63,7 @@ export default function SiteNav() {
 
         {/* Center Desktop Navigation Links */}
         <nav aria-label="Điều hướng chính" className="hidden xl:flex items-center gap-1 xl:gap-1.5 shrink-0">
-          {navLinks.map((link) => {
+          {navLinks.filter(link => !link.mobileOnly).map((link) => {
             const Icon = link.icon;
             const isActive = isCurrent(link.href);
 

@@ -2,6 +2,12 @@
 
 Tất cả những thay đổi, nâng cấp và cập nhật phiên bản của hệ thống **Du Lịch Tri Tôn** sẽ được ghi vết chi tiết tại tài liệu này.
 
+## 2026-10-23 — Shared saved-place experience (local)
+
+- `UX-FOLLOWUP-COMPONENTS` / Luồng A, phạm vi lưu POI: shared helper/hook/SavePlaceButton cho card/detail; nhận aliases hiện có, lưu mới ưu tiên slug, không ghi đè storage hỏng; same-tab/storage-event sync và feedback lỗi/đọc lại. Không gộp hoặc migration storage lịch trình.
+- Thêm `/places?saved=1`, tab tìm lại trên desktop và entry menu mobile; loại spotlight chưa lưu, phân biệt loading/empty/không khớp/error; reset filter theo URL và gỡ nested main. Không đổi data/schema/quyền/AI routing hoặc thêm dependency.
+- 10 tests mới, 42 combined tests pass; tsc pass, lint 7 source files 0 errors/27 warnings, Turbopack + TS 181/181 pass. Không browser/staging proof mới; chưa chốt readiness. Antigravity nhầm checkout, không dùng làm review evidence; CRT-30 Done. [Evidence/giới hạn](docs/technical-spec/SAVED_PLACES_UI_EVIDENCE_2026_10_23.md).
+
 ## 2026-10-23 — Data trust UI containment (local)
 
 - `UX-FOLLOWUP-DATA-TRUST` / Luồng A: dùng category/subtype gate thống nhất ở food/home/nearby để không đưa lễ hội/artwork thành quán; không sửa canonical category hoặc tự duyệt POI.

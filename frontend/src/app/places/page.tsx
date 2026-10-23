@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSavedPlaces } from "@/hooks/useSavedPlaces";
+import { isPlaceSaved } from "@/lib/savedPlaces";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import PlaceCard, { Place } from "@/components/PlaceCard";
@@ -55,6 +57,8 @@ const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: stri
 
 function PlacesPageContent() {
   const searchParams = useSearchParams();
+  const savedPlaces = useSavedPlaces();
+  const savedOnly = searchParams.get("saved") === "1";
   const initialCommune = searchParams.get("commune") || "Tất cả";
   const initialCategory = searchParams.get("category") || "Tất cả";
   const initialCluster = searchParams.get("cluster");
@@ -88,11 +92,11 @@ function PlacesPageContent() {
     const catParam = searchParams.get("category");
     const clParam = searchParams.get("cluster");
     setSearchQuery(searchParams.get("q") || "");
-    if (clParam && CLUSTERS_MAP[clParam]) {
-      setSelectedClusterId(clParam);
-    }
-    if (cParam) setSelectedCommune(cParam);
-    if (catParam) setActiveCategory(catParam);
+    setSelectedClusterId(clParam && CLUSTERS_MAP[clParam] ? clParam : null);
+    setSelectedCommune(cParam || "Tất cả");
+    setActiveCategory(catParam || "Tất cả");
+    setActiveAudience("all");
+    setTiktokOnlyFilter(false);
   }, [searchParams]);
 
   useEffect(() => {
@@ -199,6 +203,7 @@ function PlacesPageContent() {
   // Real-time filtering across POIs
   const filteredPlaces = useMemo(() => {
     return places.filter((p) => {
+      if (savedOnly && !isPlaceSaved(savedPlaces.saved, p)) return false;
       const name = (p.name || "").toLowerCase();
       const desc = (p.description || "").toLowerCase();
       const q = searchQuery.toLowerCase().trim();
@@ -245,7 +250,7 @@ function PlacesPageContent() {
 
       return true;
     });
-  }, [places, searchQuery, tiktokOnlyFilter, selectedCommune, activeCategory, activeAudience, selectedClusterId]);
+  }, [places, searchQuery, tiktokOnlyFilter, selectedCommune, activeCategory, activeAudience, selectedClusterId, savedOnly, savedPlaces.saved]);
 
   return (
     <div className="min-h-screen bg-[#FAF3E7] font-body text-[#26221B]">
@@ -255,7 +260,7 @@ function PlacesPageContent() {
         <div className="absolute top-1/3 -right-40 w-[30rem] h-[30rem] rounded-full bg-amber-300/15 blur-3xl" />
       </div>
 
-      <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10 space-y-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10 space-y-8">
         {/* Banner Section */}
         <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0E8C7F] to-[#085A52] p-6 text-white shadow-md md:p-10 border border-[#0B6B60]">
           <div className="relative z-10 max-w-3xl space-y-3">
@@ -271,9 +276,21 @@ function PlacesPageContent() {
             </p>
           </div>
         </section>
+        <section aria-label="Chế độ xem điểm đến" className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Link href="/places" aria-current={!savedOnly ? 'page' : undefined} className={`min-h-11 inline-flex items-center rounded-full px-4 text-sm font-bold border ${!savedOnly ? 'bg-[var(--jade-deep)] text-white' : 'bg-[var(--surface)] text-[var(--ink)]'}`}>Tất cả điểm</Link>
+            <Link href="/places?saved=1" aria-current={savedOnly ? 'page' : undefined} className={`min-h-11 inline-flex items-center rounded-full px-4 text-sm font-bold border ${savedOnly ? 'bg-[var(--jade-deep)] text-white' : 'bg-[var(--surface)] text-[var(--ink)]'}`}>Đã lưu trên thiết bị</Link>
+          </div>
+          {savedOnly && <p className="text-sm text-[var(--ink-soft)]">Danh sách chỉ nằm trên trình duyệt này. Điểm đã lưu và lịch trình nháp là hai mục riêng.</p>}
+          {savedOnly && savedPlaces.error && <div role="alert" className="rounded-[var(--r-m)] bg-[var(--surface)] border border-[var(--terracotta)] p-4 text-sm">
+            <p>{savedPlaces.error}</p>
+            <button type="button" className="min-h-11 underline text-[var(--jade-deep)]" onClick={savedPlaces.refresh}>Thử đọc lại danh sách</button>
+          </div>}
+        </section>
+
 
         {/* 🌟 TOP 4 KỲ QUAN & TỌA ĐỘ CHECK-IN HOT NHẤT (HOT SPOTLIGHT) 🌟 */}
-        {topSpotlightPlaces.length > 0 && !searchQuery && selectedCommune === "Tất cả" && activeCategory === "Tất cả" && activeAudience === "all" && (
+        {!savedOnly && topSpotlightPlaces.length > 0 && !searchQuery && selectedCommune === "Tất cả" && activeCategory === "Tất cả" && activeAudience === "all" && (
           <section className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -476,25 +493,28 @@ function PlacesPageContent() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0E8C7F]" />
-              <span>Danh sách điểm đến ({filteredPlaces.length} kết quả)</span>
+              <span>{savedOnly ? "Điểm đã lưu" : "Danh sách điểm đến"} ({filteredPlaces.length} kết quả)</span>
             </h2>
             <span className="text-xs text-[#6B6355] font-medium">Xem trạng thái xác minh tại chi tiết</span>
           </div>
 
-          {loading ? (
+          {loading || (savedOnly && !savedPlaces.ready) ? (
             <div className="py-16 text-center text-[#6B6355] font-bold">
-              Đang tải danh mục điểm đến...
+              {savedOnly ? "Đang đọc điểm đã lưu trên thiết bị..." : "Đang tải danh mục điểm đến..."}
             </div>
-          ) : filteredPlaces.length === 0 ? (
+          ) : savedOnly && savedPlaces.error ? null : filteredPlaces.length === 0 ? (
             <div className="py-16 text-center bg-[#FFFDF7] rounded-3xl border border-[#26221B]/8 p-8 space-y-3">
               <Compass className="w-8 h-8 text-[#6B6355]/40 mx-auto" />
-              <div className="font-bold text-sm text-[#26221B]">Không tìm thấy địa điểm nào phù hợp.</div>
+              <div className="font-bold text-sm text-[#26221B]">{savedOnly ? (savedPlaces.saved.length ? "Không có điểm đã lưu khớp danh mục hoặc bộ lọc hiện tại." : "Bạn chưa lưu điểm nào trên thiết bị này.") : "Không tìm thấy địa điểm nào phù hợp."}</div>
+              {savedOnly && !savedPlaces.saved.length && <Link href="/places" className="inline-flex min-h-11 items-center rounded-full bg-[var(--palm)] px-4 text-[var(--ink)] font-bold text-sm">Khám phá để lưu điểm</Link>}
               <button
                 onClick={() => {
                   setSelectedCommune("Tất cả");
                   setActiveCategory("Tất cả");
                   setActiveAudience("all");
                   setSearchQuery("");
+                  setSelectedClusterId(null);
+                  setTiktokOnlyFilter(false);
                 }}
                 className="px-4 py-2 rounded-xl bg-[#0E8C7F] text-white text-xs font-bold cursor-pointer"
               >
@@ -509,7 +529,7 @@ function PlacesPageContent() {
             </div>
           )}
         </section>
-      </main>
+      </div>
     </div>
   );
 }

@@ -45,6 +45,14 @@ Lỗi mặc định unset/fallback của audit 2026-10-20 đã có sửa local; 
 
 EV-UX-03 readiness tổng thể vẫn `DISPUTED`; metadata/contract tests cũ pass không đủ chứng minh số SOS đang hoạt động hay mọi POI chính xác. Không sửa source authority/canonical hoặc G2/G4 decision.
 
+## Evidence lưu điểm — 2026-10-23
+
+| ID | Claim/boundary | Evidence | State / giới hạn |
+|---|---|---|---|
+| EV-UX-06 | Card/detail và danh sách đã lưu dùng chung trạng thái, không ghi đè storage hỏng hoặc storage lịch trình | 10 tests helper/hook/SSR/source, trong 42 combined tests pass; tsc/lint 0 errors/build 181/181 pass | Code `IMPLEMENTED` local. Không browser/đa tab thật/WCAG/usability proof; last-writer-wins vẫn có thể xảy ra khi ghi đồng thời. [Evidence](SAVED_PLACES_UI_EVIDENCE_2026_10_23.md) |
+
+EV-UX-03 readiness vẫn `DISPUTED`; component convergence còn phạm vi khác và G2/source approval chưa đóng.
+
 ## Quy tắc benchmark
 
 Không trộn kết quả benchmark của data validator, DB/RLS, HTTP auth, provider latency hay UI build thành một con số “performance”. Mỗi benchmark phải ghi rõ boundary, fixture, môi trường và giới hạn kết luận.

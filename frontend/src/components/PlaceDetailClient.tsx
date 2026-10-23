@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import SavePlaceButton from '@/components/SavePlaceButton';
 import EmergencyQuickLinks from '@/components/EmergencyQuickLinks';
 import { isFoodListing, presentRating } from '@/lib/publicPlacePresentation';
 import { 
@@ -401,7 +402,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
       )}
 
       {/* Top Breadcrumbs & Action Bar */}
-      <div className="flex items-center justify-between py-4 border-b border-[#26221B]/8 font-display">
+      <div className="flex flex-wrap gap-3 items-center justify-between py-4 border-b border-[#26221B]/8 font-display">
         <Link
           href="/places"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6B6355] hover:text-[#0E8C7F] transition-colors"
@@ -411,6 +412,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
         </Link>
 
         <div className="flex items-center gap-2">
+          <SavePlaceButton place={place} />
           <button
             onClick={() => setShowReportModal(true)}
             className="p-2 rounded-full bg-[#FFFDF7] hover:bg-[#FAF3E7] text-[#6B6355] hover:text-[#A6503A] border border-[#26221B]/8 shadow-2xs transition-all"

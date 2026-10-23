@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import SavePlaceButton from '@/components/SavePlaceButton';
 import Link from 'next/link';
-import { MapPin, Star, Clock, Navigation, Play, Heart, ChevronRight, Award, Flame } from 'lucide-react';
+import { MapPin, Star, Clock, Navigation, Play, ChevronRight, Award, Flame } from 'lucide-react';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
 import { parseTravelGuide, sanitizeDescription, getCategoryFallbackImage } from '@/lib/dataSanitizer';
 import { getOptimizedImageUrl } from '@/lib/imageOptimizer';
@@ -85,40 +86,6 @@ const CATEGORY_TOKENS: Record<string, string> = {
 };
 
 export default function PlaceCard({ place }: PlaceCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [saveError, setSaveError] = useState('');
-
-  useEffect(() => {
-    try {
-      const favs: string[] = JSON.parse(localStorage.getItem('triton_fav_places') || '[]');
-      setIsLiked(favs.includes(place.id || place.slug || ''));
-    } catch {
-      // ignore
-    }
-  }, [place.id, place.slug]);
-
-  const handleToggleLike = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const nextState = !isLiked;
-    setSaveError('');
-    try {
-      const key = 'triton_fav_places';
-      const favs: string[] = JSON.parse(localStorage.getItem(key) || '[]');
-      const id = place.id || place.slug || '';
-      if (nextState) {
-        if (!favs.includes(id)) favs.push(id);
-      } else {
-        const idx = favs.indexOf(id);
-        if (idx >= 0) favs.splice(idx, 1);
-      }
-      localStorage.setItem(key, JSON.stringify(favs));
-      setIsLiked(nextState);
-    } catch {
-      setSaveError('Chưa lưu được trên thiết bị này. Hãy kiểm tra quyền lưu trữ của trình duyệt.');
-    }
-  };
-
   const { maps, tiktok } = resolvePlaceExternalLinks({
     name: place.name,
     commune: place.commune,
@@ -180,20 +147,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
               <span>{typeof place.rating === 'number' ? place.rating : 'Chưa có đánh giá'}</span>
             </span>
 
-            <button
-              type="button"
-              onClick={handleToggleLike}
-              className={`min-h-11 min-w-11 inline-flex items-center justify-center rounded-full backdrop-blur-md transition-all ${
-                isLiked
-                  ? 'bg-[#F26B3A] text-white shadow-xs'
-                  : 'bg-white/80 text-[#26221B] hover:text-[#F26B3A]'
-              }`}
-              title="Lưu địa điểm yêu thích"
-              aria-label={isLiked ? `Bỏ lưu ${place.name}` : `Lưu ${place.name}`}
-              aria-pressed={isLiked}
-            >
-              <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-white' : ''}`} />
-            </button>
+            <SavePlaceButton place={place} compact />
           </div>
 
           {/* Bottom Text on Photo */}
@@ -206,8 +160,6 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             </h3>
           </Link>
         </div>
-        <div className="sr-only" aria-live="polite">{isLiked ? `Đã lưu ${place.name}` : ''}</div>
-        {saveError && <p role="status" className="px-4 py-2 text-xs text-[#A6503A]">{saveError}</p>}
 
         {/* Content Details */}
         <Link href={detailUrl} prefetch={true} className="block p-3.5 sm:p-4 space-y-2 text-xs text-[#6B6355] cursor-pointer hover:bg-amber-50/30 transition-colors">

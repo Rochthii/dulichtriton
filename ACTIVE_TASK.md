@@ -1,5 +1,15 @@
 # ACTIVE TASK — UNIFIED EXECUTION STREAM (LUỒNG THỐNG NHẤT)
 
+### Completion — UX-FOLLOWUP-COMPONENTS, lưu điểm (2026-10-23)
+
+- **Luồng A, scope:** hội tụ lưu/tìm lại POI trên card/detail/list và entry điều hướng; không gộp hoặc di chuyển storage lịch trình. Giữ nguyên data/privacy/AI boundaries.
+- **Acceptance:** storage validation/error trung thực, alias id/slug không duplicate, same-tab/cross-tab sync, saved view/empty/reset có đường hoàn thành; kiểm source/hook/helper/SSR và build/lint phù hợp rồi commit.
+- **AI route đề xuất:** Sol · medium. Thực dùng Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash Low read-only `agy-24cf7b98`; Linear `CRT-30` Done.
+- **Kết quả:** phạm vi lưu điểm done/`IMPLEMENTED` local: shared helper/hook/button trên card/detail, danh sách `/places?saved=1`, entry mobile, empty/error/retry và URL reset; lịch trình storage giữ riêng. Chưa hoàn tất toàn bộ component convergence.
+- **Kiểm chứng:** 10 tests mới, 42/42 combined tests pass; tsc pass; lint 7 source files 0 errors/27 warnings; Turbopack + TS 181/181 pass; diff-check pass. [Evidence/phạm vi](docs/technical-spec/SAVED_PLACES_UI_EVIDENCE_2026_10_23.md). Không browser/staging proof mới hoặc readiness approval.
+- **Review:** CRT-30 Done; worker dùng checkout khác, kết quả không được dùng làm evidence source hiện tại; Codex tự đối chiếu implementation/test. User đã yêu cầu commit; commit trước `fcf1e34` giữ các sửa UI/build/consent/data trust tích lũy; task này commit riêng, không push/deploy.
+- **Next:** `UX-FOLLOWUP-COMPONENTS` phần card/filter/markdown còn lại (Sol · medium); browser acceptance khi công cụ cho phép. G2/data owner vẫn cần `UX-FOLLOWUP-DATA-TRUST-G2`; không tự mở thêm task hoặc nâng claim production.
+
 ### Completion — UX-FOLLOWUP-DATA-TRUST, phần UI (2026-10-23)
 
 - **Luồng A:** UI không biến candidate/conflicting metadata thành verified, không suy giá/giờ/rating/tiện ích/ảnh, không đưa số SOS địa phương chưa đối chiếu thành CTA. Giữ canonical/schema/AI routing và số tổng đài quốc gia đang có.

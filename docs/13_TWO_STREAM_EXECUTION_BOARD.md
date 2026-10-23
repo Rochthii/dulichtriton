@@ -10,6 +10,10 @@
 
 ## 1. Cách dùng
 
+### Component follow-up — lưu điểm, 2026-10-23
+
+`UX-FOLLOWUP-COMPONENTS` · Luồng A: phạm vi lưu/tìm lại POI done/implemented local; chưa hoàn tất component convergence toàn app. Shared card/detail save, `/places?saved=1`, mobile entry, honest storage/empty/error/retry và URL reset. 42 combined tests, tsc, lint 0 errors/27 warnings, Turbopack + TS 181/181 pass. Không browser/staging proof mới. [Evidence/giới hạn](technical-spec/SAVED_PLACES_UI_EVIDENCE_2026_10_23.md). Sol · medium đề xuất; Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash Low `agy-24cf7b98` / CRT-30 Done nhưng worker nhầm checkout, không dùng làm review evidence. Next component card/filter/markdown còn lại và browser acceptance; G2/source approval vẫn mở. User cho phép commit, không push/deploy.
+
 ### Data trust follow-up — 2026-10-23
 
 `UX-FOLLOWUP-DATA-TRUST` · Luồng A: phần UI done/implemented local, **G2/source approval vẫn mở**. Chặn food subtype mâu thuẫn, default giả và ảnh thay địa điểm; shared national SOS, ẩn local contacts đang tranh chấp trên public UI/PDF. 91 combined tests, lint 37 files 0 errors/132 warnings, Turbopack + TS 181/181 pass; không browser/staging/live-call proof. [Evidence và owner handoff](technical-spec/PUBLIC_DATA_TRUST_EVIDENCE_2026_10_23.md). Sol · xhigh đề xuất; Codex GPT-6 (effort không công bố), Antigravity Gemini 3.8 Flash Low `agy-af913405` / CRT-29 Done. User yêu cầu commit tích lũy, không push/deploy. Next `UX-FOLLOWUP-DATA-TRUST-G2` cần owner evidence; UI tiếp `UX-FOLLOWUP-COMPONENTS` · Sol medium.
