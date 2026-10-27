@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Phone, ShieldCheck, MapPin, Lock, Sparkles, Heart, Scale, Shield, Code, ExternalLink } from 'lucide-react';
+import { Phone, ShieldCheck, MapPin, Lock, Sparkles, Scale, Shield, Code, ExternalLink } from 'lucide-react';
 import AppLogo from './AppLogo';
 import { SITE_CONFIG } from '../lib/siteConfig';
 
