@@ -8,6 +8,40 @@ let placesMapCache: Map<string, Place> | null = null;
 let lastCacheTime = 0;
 
 /**
+ * Supabase is optional at build time: without real env vars the client in
+ * ./supabase falls back to placeholder.supabase.co, whose queries never
+ * resolve in time and kill Next.js SSG (build worker 60s limit, e.g. /map).
+ * Skip the network call entirely in that case, and race every live query
+ * against a 10s timeout, falling back to the verified local master POIs
+ * (the same fallback these functions already used on error/empty).
+ */
+const SUPABASE_CONFIGURED = Boolean(
+  process.env.NEXT_PUBLIC_SUPABASE_URL &&
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
+  !process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder')
+);
+
+function withTimeout<T>(promise: PromiseLike<T>, ms = 10000): Promise<T> {
+  return Promise.race([
+    Promise.resolve(promise),
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error('Supabase query timed out')), ms)
+    ),
+  ]);
+}
+
+function filterMasterPois(commune?: string, category?: string): Place[] {
+  let list = masterPois as Place[];
+  if (commune && commune !== 'Tất cả') {
+    list = list.filter(p => p.commune === commune);
+  }
+  if (category && category !== 'Tất cả') {
+    list = list.filter(p => p.category === category || p.tourism_category === category);
+  }
+  return list;
+}
+
+/**
  * Bulk fetch and cache all active places in memory.
  * Eliminates 500+ individual Supabase network roundtrips during Next.js SSG build,
  * speeding up build time from ~115s down to < 20s!
@@ -29,12 +63,17 @@ async function getCachedPlacesMap(): Promise<Map<string, Place>> {
     }
   }
 
-  // 2. Fetch live updates in ONE single bulk query
+  // 2. Fetch live updates in ONE single bulk query (skipped without real env)
+  if (!SUPABASE_CONFIGURED) {
+    placesMapCache = map;
+    lastCacheTime = now;
+    return map;
+  }
   try {
-    const { data, error } = await supabase
+    const { data, error } = await withTimeout(supabase
       .from('places')
       .select('*')
-      .eq('is_active', true);
+      .eq('is_active', true));
 
     if (!error && data && data.length > 0) {
       for (const p of data) {
@@ -63,13 +102,16 @@ async function getCachedPlacesMap(): Promise<Map<string, Place>> {
  * Fetch featured places dynamically from live Supabase database
  */
 export async function getFeaturedPlaces(limit: number = 6): Promise<Place[]> {
+  if (!SUPABASE_CONFIGURED) {
+    return (masterPois as Place[]).slice(0, limit);
+  }
   try {
-    const { data, error } = await supabase
+    const { data, error } = await withTimeout(supabase
       .from('places')
       .select('*')
       .eq('is_active', true)
       .order('rating', { ascending: false })
-      .limit(limit);
+      .limit(limit));
 
     if (error || !data || data.length === 0) {
       return (masterPois as Place[]).slice(0, limit);
@@ -93,6 +135,9 @@ export async function getPlacesByCommune(commune?: string): Promise<Place[]> {
  * Fetch all places filtered by commune and category dynamically from Supabase
  */
 export async function getPlacesFiltered(commune?: string, category?: string): Promise<Place[]> {
+  if (!SUPABASE_CONFIGURED) {
+    return filterMasterPois(commune, category);
+  }
   try {
     let query = supabase
       .from('places')
@@ -111,23 +156,16 @@ export async function getPlacesFiltered(commune?: string, category?: string): Pr
       }
     }
 
-    const { data, error } = await query;
+    const { data, error } = await withTimeout(query);
 
     if (error || !data || data.length === 0) {
-      let list = masterPois as Place[];
-      if (commune && commune !== 'Tất cả') {
-        list = list.filter(p => p.commune === commune);
-      }
-      if (category && category !== 'Tất cả') {
-        list = list.filter(p => p.category === category || p.tourism_category === category);
-      }
-      return list;
+      return filterMasterPois(commune, category);
     }
 
     return data as Place[];
   } catch (err) {
     console.error('Failed to query Supabase places:', err);
-    return masterPois as Place[];
+    return filterMasterPois(commune, category);
   }
 }
 

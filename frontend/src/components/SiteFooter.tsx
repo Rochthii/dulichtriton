@@ -3,8 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Phone, ShieldCheck, MapPin, Lock, Sparkles, Heart, Scale, Shield, Code, ExternalLink } from 'lucide-react';
+import { Phone, ShieldCheck, MapPin, Lock, Sparkles, Scale, Shield, Code, ExternalLink } from 'lucide-react';
 import AppLogo from './AppLogo';
+import { SITE_CONFIG } from '../lib/siteConfig';
 
 export default function SiteFooter() {
   const pathname = usePathname();
@@ -47,6 +48,35 @@ export default function SiteFooter() {
               <p className="text-[11px] text-[#FAF3E7]/60 font-body">
                 Developed with passion by <strong>Cham Roch Thi</strong> for Tri Tôn Tourism Community.
               </p>
+            </div>
+
+            {/* Kênh brand chính thức — lấy từ SITE_CONFIG.social (single source of truth),
+                không hardcode lại URL ở đây. Trước đây 2 link này chỉ có trong SEO
+                metadata (layout.tsx sameAs), footer chưa hề hiển thị cho người dùng. */}
+            <div className="pt-1 space-y-2">
+              <p className="text-[10px] font-bold tracking-widest text-[#FFD37A] uppercase font-display">
+                Kênh chính thức
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href={SITE_CONFIG.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 text-xs font-bold text-[#FAF3E7] hover:border-[#F0A32F] hover:text-[#FFD37A] transition-colors"
+                >
+                  Facebook
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href={SITE_CONFIG.social.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 text-xs font-bold text-[#FAF3E7] hover:border-[#F0A32F] hover:text-[#FFD37A] transition-colors"
+                >
+                  TikTok
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
 
             <div className="pt-1 space-y-1.5 text-xs">

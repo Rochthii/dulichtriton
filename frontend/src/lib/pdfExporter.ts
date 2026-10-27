@@ -164,7 +164,7 @@ export async function downloadItineraryPDF(itinerary: ItineraryData): Promise<vo
 
       <!-- Footer Note -->
       <div style="text-align: center; font-size: 10px; color: #6B6355; padding-top: 8px; border-top: 1px solid rgba(38,34,27,0.1);">
-        Bản quyền dữ liệu © 2026 Cổng thông tin Du lịch Tri Tôn • dulichtriton.vercel.app • Bấm trực tiếp vào các nút trên PDF để dẫn đường Maps
+        Bản quyền dữ liệu © 2026 Cổng thông tin Du lịch Tri Tôn • ${SITE_URL.replace(/^https?:\/\//, '')} • Bấm trực tiếp vào các nút trên PDF để dẫn đường Maps
       </div>
     </div>
   `;

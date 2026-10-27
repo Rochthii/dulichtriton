@@ -15,12 +15,36 @@ logger = logging.getLogger("triton_api")
 
 app = FastAPI(title="Tri Tôn Tourism AI — RAG API Gateway")
 
+# ─── CORS: allowlist, fail-closed, never "*" with credentials ───────────────
+# Trước đây: allow_origins=["*"] + allow_credentials=True.
+# Đó là cấu hình không an toàn và trình duyệt cũng không tôn trọng "*"
+# khi kèm credentials. Backend này vốn chỉ được frontend Next.js gọi
+# server-side (frontend/src/app/api/v1/chat/query/route.ts, BACKEND_API_URL
+# mặc định http://127.0.0.1:8000), nên thu hẹp CORS không ảnh hưởng luồng đó.
+# Cấu hình bằng biến môi trường, không hardcode domain production:
+#   BACKEND_CORS_ORIGINS="https://dulichtriton.vercel.app,https://example.com"
+# Nếu không đặt biến, chỉ cho phép localhost dev.
+def get_allowed_origins() -> list:
+    raw = os.getenv("BACKEND_CORS_ORIGINS", "")
+    origins: list = []
+    for item in raw.split(","):
+        origin = item.strip().rstrip("/")
+        if not origin or origin == "*":
+            continue
+        if origin not in origins:
+            origins.append(origin)
+    if not origins:
+        origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    return origins
+
+ALLOWED_ORIGINS = get_allowed_origins()
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 # ─── Supabase Client ─────────────────────────────────────────────────────────

@@ -6,6 +6,7 @@
  */
 
 import { AI_CONFIG, isKeyInCooldown, recordKeyUsage, setKeyCooldown, getRoundRobinGroqKeys } from './config';
+import { SITE_URL } from '@/lib/siteConfig';
 
 export interface FallbackCallResult {
   text: string;
@@ -258,7 +259,7 @@ export async function* streamOpenRouterNative(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
-        'HTTP-Referer': 'https://dulichtriton.vercel.app',
+        'HTTP-Referer': SITE_URL,
         'X-Title': 'Du Lich Tri Ton AI',
       },
       body: JSON.stringify({
@@ -356,7 +357,7 @@ export async function callOpenRouterFallback(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${AI_CONFIG.openRouterKey}`,
-        'HTTP-Referer': 'https://dulichtriton.vercel.app',
+        'HTTP-Referer': SITE_URL,
         'X-Title': 'Du Lich Tri Ton AI',
       },
       body: JSON.stringify({
