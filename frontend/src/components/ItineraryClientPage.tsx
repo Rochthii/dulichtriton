@@ -254,7 +254,7 @@ export default function ItineraryClientPage() {
   });
 
   return (
-    <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen">
+    <div className="font-body bg-[#FAF3E7] text-[#26221B] min-h-screen pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
       {/* Page Header Banner */}
       <PageHeaderBanner
         badgeText="Lịch trình gợi ý & Tối ưu tuyến đường"
@@ -370,7 +370,17 @@ export default function ItineraryClientPage() {
                   <div
                     key={p.slug}
                     onClick={() => setSelectedSlug(p.slug)}
-                    className={`snap-start shrink-0 w-[70vw] max-w-[260px] p-2.5 rounded-2xl border cursor-pointer transition-all duration-300 ${
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    aria-label={`Chọn tour ${p.title}`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedSlug(p.slug);
+                      }
+                    }}
+                    className={`snap-start shrink-0 w-[72vw] max-w-[270px] p-3 rounded-2xl border cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] ${
                       isSelected
                         ? 'bg-[#FFFDF7] border-[#0E8C7F] ring-2 ring-[#0E8C7F]/30 shadow-md'
                         : 'bg-[#FFFDF7] border-[#26221B]/8 hover:border-[#0E8C7F]/30'
@@ -382,12 +392,13 @@ export default function ItineraryClientPage() {
                       </span>
                       <span className="text-[10px] font-bold text-[#D9822B]">{p.budget_range}</span>
                     </div>
+                    <div className="pl-2 border-l border-dashed border-[#26221B]/15 ml-1">
                     <h3 className="font-display text-xs font-bold text-[#26221B] line-clamp-1 mb-0.5">
                       {p.title}
                     </h3>
                     <p className="text-[10px] text-[#6B6355] line-clamp-2 leading-relaxed">
                       {p.tagline}
-                    </p>
+                    </p></div>
                   </div>
                 );
               })}
@@ -404,25 +415,40 @@ export default function ItineraryClientPage() {
                   <div
                     key={p.slug}
                     onClick={() => setSelectedSlug(p.slug)}
-                    className={`ticket-stub p-4 rounded-[22px] border cursor-pointer transition-all duration-300 ${
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    aria-label={`Chọn tour ${p.title}`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedSlug(p.slug);
+                      }
+                    }}
+                    className={`relative overflow-hidden ticket-stub p-4 rounded-[22px] border cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] ${
                       isSelected
                         ? 'bg-[#FFFDF7] border-[#0E8C7F] ring-2 ring-[#0E8C7F]/30 shadow-md translate-x-1'
                         : 'bg-[#FFFDF7] border-[#26221B]/8 hover:border-[#0E8C7F]/30 hover:bg-white'
                     }`}
                   >
-                    <div className="flex items-center justify-between font-display mb-1.5">
+                    {/* Pure CSS Notch cutouts on top and bottom */}
+                    <div className="absolute left-6 -top-2 w-4 h-4 rounded-full bg-[#FAF3E7] border border-[#26221B]/10 z-10 pointer-events-none" aria-hidden="true" />
+                    <div className="absolute left-6 -bottom-2 w-4 h-4 rounded-full bg-[#FAF3E7] border border-[#26221B]/10 z-10 pointer-events-none" aria-hidden="true" />
+
+                    <div className="flex items-center justify-between font-display mb-1.5 pl-3">
                       <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F]/10 text-[#0E8C7F] text-[10px] font-bold">
                         {p.duration}
                       </span>
                       <span className="text-xs font-bold text-[#D9822B]">{p.budget_range}</span>
                     </div>
 
-                    <h3 className="font-display text-sm font-bold text-[#26221B] line-clamp-1 mb-1">
+                    <div className="pl-3 border-l border-dashed border-[#26221B]/15 ml-2">
+                      <h3 className="font-display text-sm font-bold text-[#26221B] line-clamp-1 mb-1">
                       {p.title}
                     </h3>
                     <p className="text-xs text-[#6B6355] line-clamp-2 leading-relaxed">
                       {p.tagline}
-                    </p>
+                    </p></div>
                   </div>
                 );
               })}
@@ -633,8 +659,7 @@ export default function ItineraryClientPage() {
                               <h4 className="font-display text-sm font-bold text-[#26221B]">{place.name}</h4>
                               <p className="text-xs text-[#6B6355] flex items-center gap-1">
                                 <MapPin className="w-3 h-3 text-[#F0A32F]" />
-                                <span>{place.commune}</span>
-                              </p>
+                                <span>{place.commune}</span></p>
                             </div>
                           </div>
 

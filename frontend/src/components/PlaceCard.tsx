@@ -3,6 +3,7 @@
 import React from 'react';
 import { CatalogCard } from '@/components/CatalogUI';
 import SavePlaceButton from '@/components/SavePlaceButton';
+import { VerifiedStamp } from '@/components/FolkModernDesignSystem';
 import Link from 'next/link';
 import { MapPin, Star, Clock, Navigation, Play, ChevronRight, Award, Flame } from 'lucide-react';
 import { resolvePlaceExternalLinks } from '@/lib/externalLinks';
@@ -151,6 +152,13 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             <SavePlaceButton place={place} compact />
           </div>
 
+          {/* Verified Stamp (12deg) if authenticated */}
+          {Boolean(place.is_verified || place.verification_status === 'VERIFIED') && (
+            <div className="absolute bottom-2 right-2 pointer-events-none z-10 scale-[0.65] origin-bottom-right">
+              <VerifiedStamp label="Xác minh" variant="jade" />
+            </div>
+          )}
+
           {/* Bottom Text on Photo */}
           <Link href={detailUrl} className="absolute bottom-2.5 sm:bottom-3 left-3 right-3 text-white space-y-0.5">
             <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono">
@@ -198,6 +206,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             href={maps.url}
             target="_blank"
             rel="noreferrer"
+            aria-label={`Chỉ đường đến ${place.name}`}
             className="min-h-11 px-3 sm:px-3.5 py-1.5 btn-palm text-[11px] sm:text-xs flex items-center gap-1.5"
           >
             <Navigation className="w-3 h-3 text-emerald-600" />

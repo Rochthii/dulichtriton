@@ -496,7 +496,7 @@ function PlacesPageContent() {
               {savedOnly && !savedPlaces.saved.length && <Link href="/places" className="inline-flex min-h-11 items-center rounded-full bg-[var(--palm)] px-4 text-[var(--ink)] font-bold text-sm">Khám phá để lưu điểm</Link>}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredPlaces.map((place) => (
                 <PlaceCard key={place.id} place={place} />
               ))}
