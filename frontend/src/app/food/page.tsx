@@ -485,7 +485,7 @@ export default function FoodPage() {
                   setSearchQuery("");
                 }} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredFoods.map((food, idx) => {
                 const priceInfo = getFoodPriceBadge(food);
                 const isGa = food.name.toLowerCase().includes('gà đốt');

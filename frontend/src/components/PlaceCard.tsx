@@ -209,7 +209,7 @@ export default function PlaceCard({ place }: PlaceCardProps) {
             aria-label={`Chỉ đường đến ${place.name}`}
             className="min-h-11 px-3 sm:px-3.5 py-1.5 btn-palm text-[11px] sm:text-xs flex items-center gap-1.5"
           >
-            <Navigation className="w-3 h-3 text-emerald-600" />
+            <Navigation className="w-3 h-3 text-emerald-700 stroke-[2.25] translate-y-[-0.5px] translate-x-[0.5px]" />
             <span>Chỉ đường</span>
           </a>
         </div>

@@ -864,7 +864,7 @@ export default function CulturePage() {
           ) : filteredCultures.length === 0 ? (
             <CatalogFeedback message="Chưa tìm thấy địa điểm phù hợp trong danh mục này." actionLabel="Xóa tất cả bộ lọc" onAction={() => setSelectedTab('ALL')} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredCultures.map((culture) => (
                 <CatalogCard
                   key={culture.id}

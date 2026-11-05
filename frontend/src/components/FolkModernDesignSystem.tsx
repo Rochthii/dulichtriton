@@ -107,7 +107,7 @@ export function PalmHeartButton({ isSaved, onToggle, placeName }: PalmHeartButto
       onClick={onToggle}
       aria-label={isSaved ? `Bỏ lưu ${placeName}` : `Lưu ${placeName} vào danh sách`}
       aria-pressed={isSaved}
-      className="group relative min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-[#FFFDF7]/95 hover:bg-[#FFFDF7] shadow-[0_2px_10px_rgba(38,34,27,0.14)] border border-[#26221B]/10 transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2"
+      className="group relative min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full bg-[#FFFDF7]/95 hover:bg-[#FFFDF7] shadow-[var(--shadow-elevation-sm)] hover:shadow-[var(--shadow-elevation-md)] border border-[#26221B]/10 transition-transform duration-150 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2"
     >
       <svg
         viewBox="0 0 24 24"
@@ -184,7 +184,7 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
   const categoryConfig = CATEGORY_META[place.category] ?? CATEGORY_META.nature;
 
   return (
-    <article className="group relative flex flex-col h-full bg-[#FFFDF7] rounded-[26px] overflow-hidden border border-[#26221B]/10 shadow-[0_2px_10px_rgba(38,34,27,0.06)] hover:shadow-[0_12px_32px_rgba(38,34,27,0.14)] transition-all duration-300">
+    <article className="group relative flex flex-col h-full bg-[#FFFDF7] rounded-[26px] overflow-hidden border border-[#26221B]/10 shadow-[var(--shadow-elevation-sm)] hover:shadow-[var(--shadow-elevation-md)] hover:-translate-y-0.5 transition-[transform,box-shadow] duration-250 ease-out">
       {/* Khung ảnh cố định tỷ lệ 4:3 chống giật khung hình (Zero CLS) */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#FAF3E7]">
         {imageError ? (
@@ -283,9 +283,9 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Chỉ đường đến ${place.name}`}
-            className="min-h-[44px] px-5 py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-xs inline-flex items-center gap-1.5 shadow-sm active:scale-95 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2"
+            className="min-h-[44px] px-5 py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-xs inline-flex items-center gap-1.5 shadow-sm active:scale-[0.98] transition-[transform,background-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2"
           >
-            <Navigation className="w-3.5 h-3.5 stroke-[2.5]" aria-hidden="true" />
+            <Navigation className="w-3.5 h-3.5 stroke-[2.5] translate-y-[-0.5px] translate-x-[0.5px]" aria-hidden="true" />
             <span>Chỉ đường</span>
           </a>
         </div>
@@ -304,7 +304,7 @@ export interface TicketStubCardProps {
 
 export function TicketStubCard({ ticket, onSelect }: TicketStubCardProps) {
   return (
-    <article className="relative flex flex-col md:flex-row bg-[#FFFDF7] rounded-[24px] border border-[#26221B]/12 shadow-[0_2px_12px_rgba(38,34,27,0.08)] overflow-hidden">
+    <article className="relative flex flex-col md:flex-row bg-[#FFFDF7] rounded-[24px] border border-[#26221B]/12 shadow-[var(--shadow-elevation-sm)] hover:shadow-[var(--shadow-elevation-md)] hover:-translate-y-0.5 transition-[transform,box-shadow] duration-250 ease-out overflow-hidden">
       {/* CUỐNG VÉ (STUB) - Bên trái trên desktop / Phía trên trên mobile */}
       <div className="relative flex md:flex-col justify-between items-center md:items-start p-5 bg-[#FAF3E7] md:w-48 border-b md:border-b-0 md:border-r border-dashed border-[#26221B]/25">
         <div>
@@ -373,7 +373,7 @@ export function TicketStubCard({ ticket, onSelect }: TicketStubCardProps) {
           <button
             type="button"
             onClick={onSelect}
-            className="min-h-[44px] px-5 py-2 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] text-xs font-bold transition-all shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F]"
+            className="min-h-[44px] px-5 py-2 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] text-xs font-bold shadow-sm active:scale-[0.98] transition-[transform,background-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F]"
           >
             Xem lịch trình
           </button>

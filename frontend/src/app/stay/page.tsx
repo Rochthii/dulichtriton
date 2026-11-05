@@ -360,7 +360,7 @@ export default function StayPage() {
           ) : filteredStays.length === 0 ? (
             <CatalogFeedback message="Chưa tìm thấy cơ sở lưu trú phù hợp trong danh mục này." actionLabel="Xóa tất cả bộ lọc" onAction={() => setActiveFilter('all')} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredStays.map((stay) => (
                 <CatalogCard
                   key={stay.id}
