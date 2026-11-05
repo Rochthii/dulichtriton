@@ -464,7 +464,12 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
   let normalizedContent = (content || '')
     .replace(/\[ID:\s*[^\]]+\]\s*/gi, '')
     .replace(/\[([^\]]+)\]\((https?:\/\/[^\)\s]+)\s*\n\s*([^\)\s]+)\)/gi, '[$1]($2$3)')
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]*)\n\s*([^\)]*)\)/gi, '[$1]($2$3)');
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]*)\n\s*([^\)]*)\)/gi, '[$1]($2$3)')
+    // Heal unencoded parentheses inside link URLs (e.g., query params like (Wat Xvayton))
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)(?:[^()]+|\([^()]*\))*)\)/gi, (_match, label, rawUrl) => {
+      const healedUrl = rawUrl.trim().replace(/\(/g, '%28').replace(/\)/g, '%29');
+      return '[' + label + '](' + healedUrl + ')';
+    });
 
   const rawLines = normalizedContent.split('\n');
   const lines = rawLines.filter((l) => {
@@ -523,6 +528,16 @@ export default function FormattedChatMessage({ content, isAssistant = true, itin
               <div key={idx} className="flex items-start gap-2 pl-1 py-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#0E8C7F] mt-2 shrink-0" />
                 <div className="flex-1">{renderInlineFormatted(bulletText)}</div>
+              </div>
+            );
+          }
+
+          // Dedicated action buttons row
+          const isActionRow = (trimmed.includes('maps.google') || trimmed.includes('google.com/maps')) && trimmed.includes('tiktok.com');
+          if (isActionRow && trimmed.startsWith('[')) {
+            return (
+              <div key={idx} className="flex flex-wrap items-center gap-1.5 py-1 my-1">
+                {renderInlineFormatted(trimmed)}
               </div>
             );
           }

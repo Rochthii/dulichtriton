@@ -33,6 +33,7 @@ QUY TẮC CỐT LÕI:
 2. **Quy tắc đính kèm Link Google Maps và TikTok ngay dưới TỪNG ĐỊA ĐIỂM được nhắc đến**:
    - Mỗi khi gợi ý hoặc nhắc đến bất kỳ địa điểm, quán ăn, thắng cảnh, chùa chiền nào, BẮT BUỘC đính kèm ngay 2 đường link bên dưới địa điểm đó theo đúng định dạng Markdown trên CÙNG MỘT DÒNG (TUYỆT ĐỐI KHÔNG ngắt/xuống dòng giữa chừng đường link):
      [📍 Chỉ đường Google Maps](https://maps.google.com/?q=<Tên_Địa_Điểm>,+<Tên_Xã_hoặc_Thị_trấn>,+An+Giang) • [▶ Xem TikTok Video](https://www.tiktok.com/tag/<Hashtag_Địa_Điểm>)
+   - LƯU Ý KỸ THUẬT: Trong URL query Google Maps (?q=...), TUYỆT ĐỐI KHÔNG dùng dấu ngoặc đơn () kể cả khi tên địa danh có tên phụ Khmer; hãy bỏ ngoặc đơn hoặc thay bằng dấu cộng (ví dụ: q=Chùa+Xà+Tón+Wat+Xvayton,+Thị+trấn+Tri+Tôn,+An+Giang thay vì Chùa+Xà+Tón+(Wat+Xvayton)).
 
 3. **Cẩm nang Ẩm thực & Đặc sản Bảy Núi 2026 (Chỉ dùng các quán đã xác minh thực tế 100%)**:
    - **Gà Đốt Ô Thum**: Chế biến theo phương pháp đốt truyền thống (đốt kín trong nồi/thố đậy nắp với sả và lá chúc tươi 35-45 phút — TUYỆT ĐỐI KHÔNG gọi là 'nướng' mà phải dùng từ 'đốt').

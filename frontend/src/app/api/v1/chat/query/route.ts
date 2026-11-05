@@ -43,6 +43,7 @@ QUY TẮC CỐT LÕI (MANDATORY RULES):
      [📍 Chỉ đường Google Maps](https://maps.google.com/?q=<Tên_Địa_Điểm>,+<Tên_Xã_hoặc_Thị_trấn>,+An+Giang) • [▶ Xem TikTok Video](https://www.tiktok.com/tag/<Hashtag_Địa_Điểm>)
    
    - QUAN TRỌNG: Không gom link về cuối bài mà phải để NGAY BÊN DƯỚI TỪNG ĐỊA ĐIỂM được gợi ý!
+   - LƯU Ý KỸ THUẬT: Trong URL query Google Maps (?q=...), TUYỆT ĐỐI KHÔNG dùng dấu ngoặc đơn () kể cả khi tên địa danh có tên phụ Khmer; hãy bỏ ngoặc đơn hoặc thay bằng dấu cộng (ví dụ: q=Chùa+Xà+Tón+Wat+Xvayton,+Thị+trấn+Tri+Tôn,+An+Giang thay vì Chùa+Xà+Tón+(Wat+Xvayton)).
    - Ví dụ:
      ### 1. Hồ Tà Pạ
      Hồ nước ngọt xanh màu ngọc bích nằm trên đỉnh đồi Tà Pạ, xã Núi Tô. Được mệnh danh là Tuyệt tình cốc của miền Tây.

@@ -54,6 +54,27 @@ test('Both markdown renderers share safe links, preserve internal navigation and
   }
 });
 
+test('Markdown renderers heal parenthesized URLs and render Maps/TikTok as accessible action pill buttons', () => {
+  const load = loader({ './ItineraryExportModal': { __esModule: true, default: () => null }, '@/lib/pdfExporter': {} });
+  const Chat = load('components/FormattedChatMessage.tsx').default;
+  const content = 'Điểm đến: Chùa Xà Tón (Wat Xvayton) (Thị trấn Tri Tôn) [📍 Chỉ đường Google Maps](https://maps.google.com/?q=Chùa+Xà+Tón+(Wat+Xvayton),+Thị+trấn+Tri+Tôn,+An+Giang) • [▶ Xem TikTok Video](https://www.tiktok.com/tag/chuaxvayton) đang mở cửa.';
+  const html = renderToStaticMarkup(React.createElement(Chat, { content }));
+  
+  // Must render Maps pill button with navigation aria label and emerald pill styling
+  assert.match(html, /aria-label="Chỉ đường Google Maps: Chỉ đường Google Maps"/);
+  assert.match(html, /href="https:\/\/maps\.google\.com\/\?q=Chùa\+Xà\+Tón\+(?:%28|\()Wat\+Xvayton(?:%29|\)),\+Thị\+trấn\+Tri\+Tôn,\+An\+Giang"/);
+  assert.match(html, /bg-emerald-50/);
+  
+  // Must render TikTok pill button with play icon aria label and rose pill styling
+  assert.match(html, /aria-label="Xem video TikTok: Xem TikTok Video"/);
+  assert.match(html, /href="https:\/\/www\.tiktok\.com\/tag\/chuaxvayton"/);
+  assert.match(html, /bg-rose-50/);
+  
+  // Must NEVER leak the parenthesized tail fragment into plain text
+  assert.doesNotMatch(html, />,\s*\+Th%E1%BB%8B/);
+  assert.doesNotMatch(html, />,\s*\+Thị\+trấn/);
+});
+
 test('Chat time retains minutes; detail lists and tables expose keyboard-readable structure', () => {
   const load = loader({ './ItineraryExportModal': { __esModule: true, default: () => null }, '@/lib/pdfExporter': {} });
   const Chat = load('components/FormattedChatMessage.tsx').default;
