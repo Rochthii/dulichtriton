@@ -68,6 +68,7 @@ export interface Place {
 
 interface PlaceCardProps {
   place: Place;
+  layout?: 'grid' | 'list';
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -87,7 +88,7 @@ const CATEGORY_TOKENS: Record<string, string> = {
   stay: '--cat-stay', festival: '--cat-festival', 'check-in': '--cat-nature',
 };
 
-export default function PlaceCard({ place }: PlaceCardProps) {
+export default function PlaceCard({ place, layout = 'grid' }: PlaceCardProps) {
   const { maps, tiktok } = resolvePlaceExternalLinks({
     name: place.name,
     commune: place.commune,
@@ -116,6 +117,105 @@ export default function PlaceCard({ place }: PlaceCardProps) {
   const categoryLabel = CATEGORY_LABELS[place.tourism_category || ''] || place.tourism_category || CATEGORY_LABELS[place.category] || 'Điểm Đến';
   const categoryColor = `var(${CATEGORY_TOKENS[place.category] || '--jade'})`;
   const detailUrl = `/places/${place.slug || place.id}`;
+
+  if (layout === 'list') {
+    return (
+      <CatalogCard data-place={place.slug || place.id} className="!flex-row items-center p-2.5 sm:p-3.5 gap-2.5 sm:gap-4">
+        {/* Thumbnail Square */}
+        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 shrink-0">
+          <Link href={detailUrl} prefetch={true} className="block relative h-full w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={getOptimizedImageUrl(resolvedCoverUrl, { width: 400, dpr: 2, quality: 'best' })}
+              alt={place.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+            <div className="absolute top-1.5 left-1.5">
+              <span style={{ backgroundColor: `color-mix(in srgb, ${categoryColor} 20%, var(--surface))`, borderColor: categoryColor }} className="px-1.5 py-0.5 rounded-md border text-[var(--ink)] font-bold text-[8.5px] sm:text-[9.5px] flex items-center gap-0.5 shadow-xs font-display">
+                {place.is_hot ? <Flame className="w-2.5 h-2.5 shrink-0 text-amber-500" /> : <Award className="w-2.5 h-2.5 shrink-0" />}
+                <span className="truncate max-w-[65px]">{categoryLabel}</span>
+              </span>
+            </div>
+
+            {Boolean(place.is_verified || place.verification_status === 'VERIFIED') && (
+              <div className="absolute bottom-1 right-1 pointer-events-none z-10 scale-[0.45] origin-bottom-right">
+                <VerifiedStamp label="Xác minh" variant="jade" />
+              </div>
+            )}
+          </Link>
+        </div>
+
+        {/* Content & Action Right */}
+        <div className="flex-1 min-w-0 flex flex-col justify-between self-stretch py-0.5">
+          <div>
+            <div className="flex items-center justify-between gap-1.5 mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#D9822B] font-mono truncate">
+                {place.commune}
+              </span>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="px-1.5 py-0.5 rounded-md bg-[#FAF3E7] text-[#26221B] font-black text-[9px] sm:text-[10px] flex items-center gap-0.5 border border-[#EBE1D0]">
+                  <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500 shrink-0" />
+                  <span>{typeof place.rating === 'number' ? place.rating : '—'}</span>
+                </span>
+                <SavePlaceButton place={place} compact />
+              </div>
+            </div>
+
+            <Link href={detailUrl} prefetch={true} className="block group-hover:text-[#0E8C7F] transition-colors">
+              <h3 className="font-display font-extrabold text-xs sm:text-base text-[#26221B] line-clamp-1">
+                {place.name}
+              </h3>
+            </Link>
+
+            {cleanDescription && (
+              <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-1 mt-0.5 font-body">
+                {cleanDescription}
+              </p>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#EBE1D0]/60 mt-1.5">
+            <Link
+              href={detailUrl}
+              className="min-h-8 sm:min-h-9 inline-flex items-center text-[11px] sm:text-xs font-extrabold text-[#0E8C7F] hover:text-[#085A52] gap-0.5 transition-colors font-display"
+            >
+              <span>Xem chi tiết</span>
+              <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+            </Link>
+
+            <div className="flex items-center gap-1.5">
+              {tiktok?.url && (
+                <a
+                  href={tiktok.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Xem Video TikTok"
+                  className="min-h-8 min-w-8 inline-flex items-center justify-center rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200/60 transition-colors"
+                >
+                  <Play className="w-2.5 h-2.5 fill-rose-600 text-rose-600" />
+                </a>
+              )}
+              <a
+                href={maps.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Chỉ đường đến ${place.name}`}
+                className="min-h-8 sm:min-h-9 px-2.5 sm:px-3 py-1 btn-palm text-[11px] sm:text-xs flex items-center justify-center gap-1 rounded-full shrink-0"
+              >
+                <Navigation className="w-2.5 h-2.5 text-emerald-700 stroke-[2.25] shrink-0" />
+                <span>Chỉ đường</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </CatalogCard>
+    );
+  }
 
   return (
     <CatalogCard data-place={place.slug || place.id}>

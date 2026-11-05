@@ -985,17 +985,17 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 <span className="text-xs text-[#6B6355] font-semibold">{dynamicNearbyAttractions.length} Điểm đến liền kề &lt; 6km</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
                 {dynamicNearbyAttractions.map((spot, idx) => {
                   const spotMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${spot.name} Tri Tôn An Giang`)}`;
                   return (
                     <div
                       key={idx}
-                      className="p-4 rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/8 flex flex-col justify-between space-y-3 hover:shadow-md transition-all"
+                      className="p-2.5 sm:p-4 rounded-[18px] sm:rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/8 flex flex-col justify-between space-y-2 sm:space-y-3 hover:shadow-md transition-all"
                     >
                       <div className="space-y-1.5">
                         <div className="flex items-center justify-between">
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#0E8C7F] text-white text-[10px] font-bold font-display">
+                          <span className="px-2 py-0.5 rounded-full bg-[#0E8C7F] text-white text-[9px] sm:text-[10px] font-bold font-display">
                             {spot.distanceLabel}
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-[#26221B] font-display">
@@ -1004,12 +1004,12 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           </div>
                         </div>
 
-                        <h3 className="font-display text-base font-bold text-[#26221B] line-clamp-1">{spot.name}</h3>
-                        <p className="text-xs text-[#6B6355] line-clamp-1">{spot.address}</p>
+                        <h3 className="font-display text-xs sm:text-base font-bold text-[#26221B] line-clamp-1">{spot.name}</h3>
+                        <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-1">{spot.address}</p>
 
                         <div className="flex flex-wrap gap-1 pt-1 font-display">
                           {spot.specialties && spot.specialties.map((spec: string, sIdx: number) => (
-                            <span key={sIdx} className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8">
+                            <span key={sIdx} className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8 truncate max-w-[85px] sm:max-w-none">
                               {spec}
                             </span>
                           ))}
@@ -1019,16 +1019,16 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                       <div className="flex items-center gap-2 pt-2 border-t border-[#26221B]/6 font-display">
                         <Link
                           href={`/places/${spot.slug || spot.id}`}
-                          className="flex-1 py-2 rounded-full bg-[#0E8C7F] hover:bg-[#085A52] text-white font-bold text-xs flex items-center justify-center gap-1 shadow-2xs transition-all tap-bounce"
+                          className="flex-1 min-h-8 sm:min-h-9 py-1.5 sm:py-2 px-1.5 rounded-full bg-[#0E8C7F] hover:bg-[#085A52] text-white font-bold text-[10px] sm:text-xs flex items-center justify-center gap-0.5 sm:gap-1 shadow-2xs transition-all tap-bounce truncate"
                         >
                           <Compass className="w-3 h-3" />
-                          <span>Xem Chi Tiết</span>
+                          <span>Chi Tiết</span>
                         </Link>
                         <a
                           href={spotMapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="py-2 px-3 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 hover:border-[#0E8C7F] text-[#26221B] text-xs font-bold flex items-center gap-1 transition-all"
+                          className="min-h-8 sm:min-h-9 py-1.5 sm:py-2 px-2 sm:px-3 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 hover:border-[#0E8C7F] text-[#26221B] text-[10px] sm:text-xs font-bold flex items-center justify-center gap-0.5 sm:gap-1 transition-all shrink-0"
                         >
                           <Navigation className="w-3 h-3 text-[#0E8C7F]" />
                           <span>Chỉ Đường</span>
@@ -1056,17 +1056,17 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                 <span className="text-xs text-[#6B6355] font-semibold">{dynamicNearbyFoods.length} Quán đặc sản đã xác minh</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
                 {dynamicNearbyFoods.map((food, idx) => {
                   const foodMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${food.name} Tri Tôn An Giang`)}`;
                   return (
                     <div
                       key={idx}
-                      className="p-4 rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/8 flex flex-col justify-between space-y-3 hover:shadow-md transition-all"
+                      className="p-2.5 sm:p-4 rounded-[18px] sm:rounded-[22px] bg-[#FAF3E7] border border-[#26221B]/8 flex flex-col justify-between space-y-2 sm:space-y-3 hover:shadow-md transition-all"
                     >
                       <div className="space-y-1.5">
                         <div className="flex items-center justify-between">
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#F26B3A] text-white text-[10px] font-bold font-display">
+                          <span className="px-2 py-0.5 rounded-full bg-[#F26B3A] text-white text-[9px] sm:text-[10px] font-bold font-display">
                             {food.distanceLabel}
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-[#26221B] font-display">
@@ -1075,12 +1075,12 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           </div>
                         </div>
 
-                        <h3 className="font-display text-base font-bold text-[#26221B] line-clamp-1">{food.name}</h3>
-                        <p className="text-xs text-[#6B6355] line-clamp-1">{food.address}</p>
+                        <h3 className="font-display text-xs sm:text-base font-bold text-[#26221B] line-clamp-1">{food.name}</h3>
+                        <p className="text-[10px] sm:text-xs text-[#6B6355] line-clamp-1">{food.address}</p>
 
                         <div className="flex flex-wrap gap-1 pt-1 font-display">
                           {food.specialties.map((spec, sIdx) => (
-                            <span key={sIdx} className="text-[10px] px-2 py-0.5 rounded-full bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8">
+                            <span key={sIdx} className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-[#FFFDF7] text-[#26221B] border border-[#26221B]/8 truncate max-w-[85px] sm:max-w-none">
                               {spec}
                             </span>
                           ))}
@@ -1092,7 +1092,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           href={foodMapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 py-2 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-xs flex items-center justify-center gap-1 shadow-2xs transition-all tap-bounce"
+                          className="flex-1 min-h-8 sm:min-h-9 py-1.5 sm:py-2 px-1.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] hover:text-white font-bold text-[10px] sm:text-xs flex items-center justify-center gap-0.5 sm:gap-1 shadow-2xs transition-all tap-bounce truncate"
                         >
                           <Navigation className="w-3 h-3" />
                           <span>Chỉ Đường</span>
@@ -1101,7 +1101,7 @@ export default function PlaceDetailClient({ place: initialPlace, nearbyPlaces = 
                           href={`https://www.tiktok.com/search?q=${encodeURIComponent(`${food.name} Tri Tôn`)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="py-2 px-3 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 hover:border-[#F26B3A] text-[#26221B] text-xs font-bold flex items-center gap-1 transition-all"
+                          className="min-h-8 sm:min-h-9 py-1.5 sm:py-2 px-2 sm:px-3 rounded-full bg-[#FFFDF7] border border-[#26221B]/15 hover:border-[#F26B3A] text-[#26221B] text-[10px] sm:text-xs font-bold flex items-center justify-center gap-0.5 sm:gap-1 transition-all shrink-0"
                         >
                           <Play className="w-3 h-3 fill-[#F26B3A] text-[#F26B3A]" />
                           <span>Review</span>

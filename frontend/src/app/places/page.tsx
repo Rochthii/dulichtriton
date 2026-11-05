@@ -25,7 +25,9 @@ import {
   Search,
   Filter,
   Flame,
-  Award
+  Award,
+  LayoutGrid,
+  List
 } from "lucide-react";
 
 type AudienceFilter = "all" | "night" | "youth" | "family" | "trekking" | "spiritual";
@@ -73,6 +75,7 @@ function PlacesPageContent() {
   const [activeAudience, setActiveAudience] = useState<AudienceFilter>("all");
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [places, setPlaces] = useState<Place[]>(() => {
     const list: Place[] = (localMasterPois as any[]).map((p) => ({
       ...p,
@@ -476,12 +479,46 @@ function PlacesPageContent() {
             </div>
           )}
 
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center justify-between gap-3">
+            <div>
             <h2 className="text-base md:text-lg font-black text-[#26221B] font-display flex items-center gap-2">
               <Compass className="w-5 h-5 text-[#0E8C7F]" />
               <span>{savedOnly ? "Điểm đã lưu" : "Danh sách điểm đến"} ({filteredPlaces.length} kết quả)</span>
             </h2>
-            <span className="text-xs text-[#6B6355] font-medium">Xem trạng thái xác minh tại chi tiết</span>
+            <span className="text-xs text-[#6B6355] font-medium hidden sm:inline-block">Xem trạng thái xác minh tại chi tiết</span>
+            </div>
+
+            {/* Segmented View Mode Toggle: Grid vs List */}
+            <div className="inline-flex items-center p-1 rounded-xl bg-[#FAF3E7] border border-[#26221B]/10 shrink-0" role="group" aria-label="Chế độ hiển thị danh sách">
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                aria-pressed={viewMode === 'grid'}
+                aria-label="Chế độ hiển thị lưới 2 cột"
+                className={`min-h-9 px-2.5 py-1 rounded-lg text-xs font-bold font-display flex items-center gap-1.5 transition-all ${
+                  viewMode === 'grid'
+                    ? 'bg-white text-[#0E8C7F] shadow-xs'
+                    : 'text-[#6B6355] hover:text-[#26221B]'
+                }`}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span className="hidden xs:inline sm:inline">Lưới</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('list')}
+                aria-pressed={viewMode === 'list'}
+                aria-label="Chế độ hiển thị danh sách hàng ngang"
+                className={`min-h-9 px-2.5 py-1 rounded-lg text-xs font-bold font-display flex items-center gap-1.5 transition-all ${
+                  viewMode === 'list'
+                    ? 'bg-white text-[#0E8C7F] shadow-xs'
+                    : 'text-[#6B6355] hover:text-[#26221B]'
+                }`}
+              >
+                <List className="w-3.5 h-3.5" />
+                <span className="hidden xs:inline sm:inline">Danh sách</span>
+              </button>
+            </div>
           </div>
 
           {loading || (savedOnly && !savedPlaces.ready) ? (
@@ -496,9 +533,9 @@ function PlacesPageContent() {
               {savedOnly && !savedPlaces.saved.length && <Link href="/places" className="inline-flex min-h-11 items-center rounded-full bg-[var(--palm)] px-4 text-[var(--ink)] font-bold text-sm">Khám phá để lưu điểm</Link>}
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
+            <div className={viewMode === 'list' ? "flex flex-col gap-2.5 sm:gap-3.5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]" : "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]"}>
               {filteredPlaces.map((place) => (
-                <PlaceCard key={place.id} place={place} />
+                <PlaceCard key={place.id} place={place} layout={viewMode} />
               ))}
             </div>
           )}
