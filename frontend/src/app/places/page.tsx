@@ -59,6 +59,8 @@ const CLUSTERS_MAP: Record<string, { name: string; badge: string; communes: stri
   },
 };
 
+const PLACES_VIEW_MODE_KEY = "triton_places_view_mode";
+
 function PlacesPageContent() {
   const searchParams = useSearchParams();
   const savedPlaces = useSavedPlaces();
@@ -76,6 +78,30 @@ function PlacesPageContent() {
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [tiktokOnlyFilter, setTiktokOnlyFilter] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem(PLACES_VIEW_MODE_KEY);
+        if (saved === 'grid' || saved === 'list') {
+          setViewMode(saved);
+        }
+      }
+    } catch {
+      // Storage access blocked or restricted
+    }
+  }, []);
+
+  const handleViewModeChange = (mode: 'grid' | 'list') => {
+    setViewMode(mode);
+    try {
+      if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+        localStorage.setItem(PLACES_VIEW_MODE_KEY, mode);
+      }
+    } catch {
+      // Storage access blocked or quota exceeded
+    }
+  };
   const [places, setPlaces] = useState<Place[]>(() => {
     const list: Place[] = (localMasterPois as any[]).map((p) => ({
       ...p,
@@ -492,7 +518,7 @@ function PlacesPageContent() {
             <div className="inline-flex items-center p-1 rounded-xl bg-[#FAF3E7] border border-[#26221B]/10 shrink-0" role="group" aria-label="Chế độ hiển thị danh sách">
               <button
                 type="button"
-                onClick={() => setViewMode('grid')}
+                onClick={() => handleViewModeChange('grid')}
                 aria-pressed={viewMode === 'grid'}
                 aria-label="Chế độ hiển thị lưới 2 cột"
                 className={`min-h-9 px-2.5 py-1 rounded-lg text-xs font-bold font-display flex items-center gap-1.5 transition-all ${
@@ -506,7 +532,7 @@ function PlacesPageContent() {
               </button>
               <button
                 type="button"
-                onClick={() => setViewMode('list')}
+                onClick={() => handleViewModeChange('list')}
                 aria-pressed={viewMode === 'list'}
                 aria-label="Chế độ hiển thị danh sách hàng ngang"
                 className={`min-h-9 px-2.5 py-1 rounded-lg text-xs font-bold font-display flex items-center gap-1.5 transition-all ${
