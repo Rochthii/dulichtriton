@@ -184,7 +184,7 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
   const categoryConfig = CATEGORY_META[place.category] ?? CATEGORY_META.nature;
 
   return (
-    <article className="group relative flex flex-col h-full bg-[#FFFDF7] rounded-[26px] overflow-hidden border border-[#26221B]/10 shadow-[var(--shadow-elevation-sm)] hover:shadow-[var(--shadow-elevation-md)] hover:-translate-y-0.5 transition-[transform,box-shadow] duration-250 ease-out">
+    <article className="group relative flex flex-col h-full bg-[#FFFDF7] rounded-[26px] overflow-hidden border border-[#26221B]/10 shadow-[var(--shadow-elevation-sm)] hover:shadow-[var(--shadow-elevation-md)] hover:-translate-y-0.5 transition-[transform,box-shadow] duration-250 ease-out" data-place={place.slug || place.id}>
       {/* Khung ảnh cố định tỷ lệ 4:3 chống giật khung hình (Zero CLS) */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#FAF3E7]">
         {imageError ? (
@@ -212,9 +212,9 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
         />
 
         {/* Góc trên bên trái: Chip Category độc bản */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
           <span
-            className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase ${categoryConfig.bgClass} ${categoryConfig.textClass} shadow-sm`}
+            className={`inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[11px] font-bold tracking-wide uppercase ${categoryConfig.bgClass} ${categoryConfig.textClass} shadow-sm`}
           >
             {categoryConfig.label}
           </span>
@@ -222,7 +222,7 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
 
         {/* Góc trên bên phải: Nút lưu (Touch Target 48px) */}
         {onSaveToggle && (
-          <div className="absolute top-2.5 right-2.5 z-10">
+          <div className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 z-10">
             <PalmHeartButton
               isSaved={isSaved}
               onToggle={onSaveToggle}
@@ -240,14 +240,14 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
       </div>
 
       {/* Nội dung chi tiết (Defensive Layout) */}
-      <div className="flex flex-col flex-1 p-5">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-[#6B6355] mb-1">
-          <MapPin className="w-3.5 h-3.5 text-[#0E8C7F] shrink-0" aria-hidden="true" />
+      <div className="flex flex-col flex-1 p-2.5 sm:p-5">
+        <div className="flex items-center gap-1 text-[10px] sm:text-xs font-semibold text-[#6B6355] mb-0.5 sm:mb-1">
+          <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#0E8C7F] shrink-0" aria-hidden="true" />
           <span className="truncate">{place.commune}, Tri Tôn</span>
         </div>
 
         {/* Tiêu đề chống tràn chữ Khmer */}
-        <h3 className="font-['Bricolage_Grotesque',sans-serif] text-xl font-bold text-[#26221B] leading-snug line-clamp-1 group-hover:text-[#0E8C7F] transition-colors">
+        <h3 className="font-['Bricolage_Grotesque',sans-serif] text-xs sm:text-xl font-bold text-[#26221B] leading-snug line-clamp-1 group-hover:text-[#0E8C7F] transition-colors">
           <Link
             href={`/places/${place.slug}`}
             className="focus-visible:outline-none focus-visible:underline"
@@ -257,7 +257,7 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
         </h3>
 
         {/* Địa chỉ rút gọn */}
-        <p className="mt-1 text-xs text-[#6B6355] line-clamp-1 leading-relaxed">
+        <p className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-[#6B6355] line-clamp-1 leading-relaxed">
           {place.address}
         </p>
 
@@ -269,10 +269,10 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
         )}
 
         {/* Hàng CTA cuối thẻ: Duy nhất 1 nút Solid Vàng Thốt Nốt */}
-        <div className="mt-auto pt-4 border-t border-[#26221B]/8 flex items-center justify-between gap-3">
+        <div className="mt-auto pt-2 sm:pt-4 border-t border-[#26221B]/8 flex items-center justify-between gap-1.5 sm:gap-3">
           <Link
             href={`/places/${place.slug}`}
-            className="min-h-[44px] inline-flex items-center gap-1 text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] rounded-md px-1"
+            className="min-h-8 sm:min-h-[44px] inline-flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-xs font-bold text-[#0E8C7F] hover:text-[#0B6B60] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] rounded-md px-1 truncate"
           >
             <span>Chi tiết</span>
             <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -283,9 +283,9 @@ export function POICard({ place, isSaved = false, onSaveToggle }: POICardProps) 
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Chỉ đường đến ${place.name}`}
-            className="min-h-[44px] px-5 py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-xs inline-flex items-center gap-1.5 shadow-sm active:scale-[0.98] transition-[transform,background-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2"
+            className="min-h-8 sm:min-h-[44px] px-2.5 sm:px-5 py-1 sm:py-2.5 rounded-full bg-[#F0A32F] hover:bg-[#C97F1B] text-[#26221B] font-bold text-[10px] sm:text-xs inline-flex items-center gap-1 sm:gap-1.5 shadow-sm active:scale-[0.98] transition-[transform,background-color] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0E8C7F] focus-visible:ring-offset-2 shrink-0"
           >
-            <Navigation className="w-3.5 h-3.5 stroke-[2.5] translate-y-[-0.5px] translate-x-[0.5px]" aria-hidden="true" />
+            <Navigation className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.25] translate-y-[-0.5px] translate-x-[0.5px] shrink-0" aria-hidden="true" />
             <span>Chỉ đường</span>
           </a>
         </div>
@@ -469,13 +469,13 @@ export function POICardSkeleton() {
       className="flex flex-col h-full bg-[#FFFDF7] rounded-[26px] overflow-hidden border border-[#26221B]/8 animate-pulse"
     >
       <div className="aspect-[4/3] bg-[#26221B]/10 w-full" />
-      <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+      <div className="p-2.5 sm:p-5 space-y-2 sm:space-y-3 flex-1 flex flex-col justify-between">
         <div className="space-y-2">
           <div className="h-3 w-1/3 bg-[#26221B]/10 rounded-full" />
           <div className="h-5 w-3/4 bg-[#26221B]/10 rounded-full" />
           <div className="h-3 w-1/2 bg-[#26221B]/10 rounded-full" />
         </div>
-        <div className="pt-4 flex justify-between items-center border-t border-[#26221B]/6">
+        <div className="pt-2 sm:pt-4 flex justify-between items-center border-t border-[#26221B]/6">
           <div className="h-4 w-12 bg-[#26221B]/10 rounded-full" />
           <div className="h-9 w-24 bg-[#26221B]/10 rounded-full" />
         </div>

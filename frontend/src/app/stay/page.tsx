@@ -244,7 +244,7 @@ export default function StayPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 md:gap-5">
               {topHotStays.map((hotStay, sidx) => (
                 <div
                   key={hotStay.id}
@@ -360,14 +360,14 @@ export default function StayPage() {
           ) : filteredStays.length === 0 ? (
             <CatalogFeedback message="Chưa tìm thấy cơ sở lưu trú phù hợp trong danh mục này." actionLabel="Xóa tất cả bộ lọc" onAction={() => setActiveFilter('all')} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredStays.map((stay) => (
-                <CatalogCard
+                <CatalogCard data-place={stay.slug || stay.id}
                   key={stay.id}
 
                 >
                   <div>
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <PlaceListingImage
                         src={stay.image_url ? getOptimizedImageUrl(stay.image_url, { width: 800, dpr: 2, quality: 'best' }) : undefined}
@@ -392,7 +392,7 @@ export default function StayPage() {
                         <span className="text-[10px] font-black uppercase tracking-wider text-[#FFD37A] font-mono truncate block">
                           {stay.commune}
                         </span>
-                        <h3 className="font-display font-extrabold text-sm sm:text-base leading-snug text-white line-clamp-1">
+                        <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white line-clamp-1">
                           {stay.name}
                         </h3>
                       </div>
@@ -427,7 +427,7 @@ export default function StayPage() {
                     </div>
                   </div>
 
-                  <div className="p-3.5 pt-0 border-t border-[#EBE1D0]/60 flex flex-wrap items-center justify-between gap-2">
+                  <div className="p-2 sm:p-3 md:p-3.5 pt-0 border-t border-[#EBE1D0]/60 flex items-center justify-between gap-1 sm:gap-2">
 
                     <SavePlaceButton place={stay} compact feedbackPlacement="above" />
                     {stay.phone ? (

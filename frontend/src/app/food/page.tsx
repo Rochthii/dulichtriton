@@ -316,7 +316,7 @@ export default function FoodPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5">
               {topSignatureHotFoods.map((hotItem, hidx) => {
                 const priceInfo = getFoodPriceBadge(hotItem);
                 return (
@@ -485,12 +485,12 @@ export default function FoodPage() {
                   setSearchQuery("");
                 }} />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-6 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 md:gap-5 pb-24 pb-[calc(5rem+env(safe-area-inset-bottom))]">
               {filteredFoods.map((food, idx) => {
                 const priceInfo = getFoodPriceBadge(food);
                 const isGa = food.name.toLowerCase().includes('gà đốt');
                 return (
-                  <CatalogCard
+                  <CatalogCard data-place={food.slug || food.id}
                     key={food.id}
 
                   >
@@ -537,7 +537,7 @@ export default function FoodPage() {
                           <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-wider text-[#FFD37A] drop-shadow-sm block font-mono truncate">
                             {food.commune}
                           </span>
-                          <h3 className="font-display font-extrabold text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
+                          <h3 className="font-display font-extrabold text-xs sm:text-base leading-snug text-white group-hover:text-[#FFD37A] transition-colors line-clamp-1 drop-shadow-md">
                             {food.name}
                           </h3>
                         </div>
@@ -555,7 +555,7 @@ export default function FoodPage() {
                         </div>
 
                         {food.description && (
-                          <p className="text-sm text-[#6B6355] line-clamp-2 leading-relaxed font-body">
+                          <p className="text-[11px] sm:text-xs text-[#6B6355] line-clamp-2 leading-relaxed font-body">
                             {food.description}
                           </p>
                         )}
@@ -563,7 +563,7 @@ export default function FoodPage() {
                     </div>
 
                     {/* Card Footer Actions */}
-                    <div className="p-2.5 sm:p-4 pt-0 border-t border-[#EBE1D0]/70 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+                    <div className="p-2 sm:p-3 md:p-4 pt-0 border-t border-[#EBE1D0]/70 flex items-center justify-between gap-1 sm:gap-2">
                     <SavePlaceButton place={food} compact feedbackPlacement="above" />
 
                       <Link
