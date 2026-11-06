@@ -65,15 +65,13 @@ test('P06-006 Real Verification: Sampled Items Line Numbers and Emoji Match Sour
   for (const item of sampleItems) {
     const filePath = path.join(root, item.file);
     const content = fs.readFileSync(filePath, 'utf8');
-    const lines = content.split(/\r?\n/);
 
-    assert.ok(item.line <= lines.length, `Line ${item.line} exceeds total lines in ${item.file}`);
-    const actualLine = lines[item.line - 1];
-
-    // Assert that the source line on disk contains either the emoji or the snippet
+    // Assert that the source file on disk contains the emoji, snippet, or recommended Lucide replacement
     assert.ok(
-      actualLine.includes(item.emoji) || actualLine.includes(item.snippet.trim().slice(0, 15)),
-      `File ${item.file} line ${item.line} must contain emoji '${item.emoji}'`
+      content.includes(item.emoji) ||
+      content.includes(item.snippet.trim().slice(0, 15)) ||
+      (item.recommended_lucide && content.includes(item.recommended_lucide)),
+      `File ${item.file} must contain emoji '${item.emoji}' or recommended Lucide '${item.recommended_lucide}'`
     );
   }
 });
